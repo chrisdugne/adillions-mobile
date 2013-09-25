@@ -21,67 +21,14 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-
 	viewManager.initBack()
-	
-	---------------------------------------------------------------
-	
-   local percentText = display.newText( {
-		parent = hud,
-		text = APP_NAME,     
-		x = display.contentWidth*0.5,
-		y = 35,
-		font = FONT,   
-		fontSize = 55,
-	} )
-	
-	---------------------------------------------------------------
-	
-	viewManager.drawButton("test video", display.contentWidth*0.5, display.contentHeight *0.3, router.openVideo)
-	viewManager.drawButton("Login", display.contentWidth*0.5, display.contentHeight *0.7, router.openLogin)
-	viewManager.drawButton("Signin", display.contentWidth*0.5, display.contentHeight *0.8, router.openSignin)
-	
-	---------------------------------------------------------------
-	
-	hud.whyText = display.newText( {
-		parent = hud,
-		text = "Pourquoi s'inscrire ?",     
-		x = display.contentWidth*0.5,
-		y = display.contentHeight *0.9,
-		font = FONT,   
-		fontSize = 18,
-	} )
 
-	utils.onTouch(hud.whyText,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
+	viewManager.buildMenu(1)
+	viewManager.drawButton("_Jouer !", display.contentWidth*0.5, display.contentHeight *0.5, router.openGame)
 
-	---------------------------------------------------------------
-	
-	hud.CGU = display.newText( {
-		parent = hud,
-		text = "CGU",     
-		x = display.contentWidth*0.5,
-		y = display.contentHeight *0.94,
-		font = FONT,   
-		fontSize = 21,
-	} )
-
-	utils.onTouch(hud.CGU,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
-	
-	---------------------------------------------------------------
+	------------------
 
 	self.view:insert(hud)
-	
-	---------------------------------------------------------------
-end
-
-------------------------------------------
-
-function scene:openOptions()
-	router.openOptions()	
-end
-
-function scene:openPodiums()
-	router.openPodiums()	
 end
 
 ------------------------------------------

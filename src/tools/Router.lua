@@ -15,9 +15,9 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function openHome()
+function openOutside()
 	resetScreen()
-	storyboard.gotoScene( "src.views.Home" )
+	storyboard.gotoScene( "src.views.Outside" )
 end
 
 -----------------------------------------------------------------------------------------
@@ -36,9 +36,51 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function openHome()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Home" )
+end
+
+-----------------------------------------------------------------------------------------
+
+function openMyTickets()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.MyTickets" )
+end
+
+-----------------------------------------------------------------------------------------
+
+function openResults()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Results" )
+end
+
+-----------------------------------------------------------------------------------------
+
+function openProfile()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Profile" )
+end
+
+-----------------------------------------------------------------------------------------
+
+function openInfo()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Info" )
+end
+
+-----------------------------------------------------------------------------------------
+
 function openVideo()
 	resetScreen()
-	storyboard.gotoScene( "src.views.Video" )
+	storyboard.gotoScene( "src.views.inside.Video" )
+end
+
+-----------------------------------------------------------------------------------------
+
+function openGame()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Game" )
 end
 
 ---------------------------------------------

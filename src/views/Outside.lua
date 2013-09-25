@@ -21,34 +21,69 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "msignin" )
-	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+
+	viewManager.initBack()
+	
+	---------------------------------------------------------------
+	
+   local percentText = display.newText( {
+		parent = hud,
+		text = APP_NAME,     
+		x = display.contentWidth*0.5,
+		y = 35,
+		font = FONT,   
+		fontSize = 55,
+	} )
+	
+	---------------------------------------------------------------
+	
+	viewManager.drawButton("test video", display.contentWidth*0.5, display.contentHeight *0.3, router.openVideo)
+	viewManager.drawButton("test home", display.contentWidth*0.5, display.contentHeight *0.4, router.openHome)
+	
+	viewManager.drawButton("_Login", display.contentWidth*0.5, display.contentHeight *0.7, router.openLogin)
+	viewManager.drawButton("_Signin", display.contentWidth*0.5, display.contentHeight *0.8, router.openSignin)
+	
+	---------------------------------------------------------------
+	
+	hud.whyText = display.newText( {
+		parent = hud,
+		text = "_Pourquoi s'inscrire ?",     
+		x = display.contentWidth*0.5,
+		y = display.contentHeight *0.9,
+		font = FONT,   
+		fontSize = 18,
+	} )
+
+	utils.onTouch(hud.whyText,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
+
+	---------------------------------------------------------------
+	
+	hud.CGU = display.newText( {
+		parent = hud,
+		text = "_CGU",     
+		x = display.contentWidth*0.5,
+		y = display.contentHeight *0.94,
+		font = FONT,   
+		fontSize = 21,
+	} )
+
+	utils.onTouch(hud.CGU,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
+	
+	---------------------------------------------------------------
+
+	self.view:insert(hud)
+	
+	---------------------------------------------------------------
 end
 
 ------------------------------------------
 
-function scene:loginViewListener( event )
-
-    if event.url then
-
-    	if event.url == SERVER_URL .. "signedIn" then
-			self:closeWebView()    		
-      	router.openLogin()
-
-    	elseif event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()    		
-      	router.openOutside()
-		
-		end
-
-    end
+function scene:openOptions()
+	router.openOptions()	
 end
 
-function scene:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-	self.webView:removeSelf()
-	self.webView = nil
+function scene:openPodiums()
+	router.openPodiums()	
 end
 
 ------------------------------------------

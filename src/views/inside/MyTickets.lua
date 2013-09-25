@@ -21,34 +21,14 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "msignin" )
-	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-end
+	viewManager.initBack()
 
-------------------------------------------
+	viewManager.buildMenu(2)
+	viewManager.drawButton("2", display.contentWidth*0.5, display.contentHeight *0.5, router.openOutside)
 
-function scene:loginViewListener( event )
+	------------------
 
-    if event.url then
-
-    	if event.url == SERVER_URL .. "signedIn" then
-			self:closeWebView()    		
-      	router.openLogin()
-
-    	elseif event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()    		
-      	router.openOutside()
-		
-		end
-
-    end
-end
-
-function scene:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-	self.webView:removeSelf()
-	self.webView = nil
+	self.view:insert(hud)
 end
 
 ------------------------------------------

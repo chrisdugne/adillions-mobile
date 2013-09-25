@@ -49,7 +49,7 @@ function scene:closeWebView()
 	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
 	self.webView:removeSelf()
 	self.webView = nil
-	router.openHome()
+	router.openOutside()
 end
 
 ------------------------------------------
