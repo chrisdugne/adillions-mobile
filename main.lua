@@ -10,6 +10,7 @@ APP_VERSION 		= "1.0"
 -----------------------------------------------------------------------------------------
 
 SERVER_URL 			= "http://192.168.0.4:9000/"
+AUTH_TOKEN			= ""
 
 -----------------------------------------------------------------------------------------
 
@@ -66,6 +67,13 @@ end
 router 			= require "src.tools.Router"
 viewManager		= require "src.tools.ViewManager"
 
+UserManager		= require "src.managers.UserManager"
+
+-----------------------------------------------------------------------------------------
+
+userManager = UserManager:new()
+hud = display.newGroup()
+
 -----------------------------------------------------------------------------------------
 ---- App globals
 
@@ -75,27 +83,16 @@ GLOBALS = {
 
 -----------------------------------------------------------------------------------------
 
-function initGameData()
-
-	GLOBALS.savedData = {
-		requireTutorial 	= true,
-		user 					= {}
-	}
-
-	utils.saveTable(GLOBALS.savedData, "savedData.json")
-end
-
 if(not GLOBALS.savedData) then
-	initGameData()
+	utils.initGameData()
+   router.openOutside()
+else
+	if(GLOBALS.savedData.user.uid) then
+		userManager:fetchPlayer()
+	else
+      router.openOutside()
+	end
 end
-
------------------------------------------------------------------------------------------
-
-hud = display.newGroup()
-
------------------------------------------------------------------------------------------
-
-router.openOutside()
 
 -----------------------------------------------------------------------------------------
 --- iOS Status Bar

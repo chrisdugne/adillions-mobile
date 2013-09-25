@@ -166,3 +166,57 @@ function buildMenu(tabSelected)
 end
 
 -----------------------------------------------------------------------------------------
+
+function drawBall(num,x,y)
+
+	local ball = display.newCircle(hud, x,y, 45)
+	
+	ball.num = display.newText( {
+		parent = hud,
+		text = num,     
+		x = x,
+		y = y,
+		font = FONT,   
+		fontSize = 40,
+	} )
+	
+	ball.num:setTextColor(0)
+	ball.alpha = 0.3
+	ball.selected = false
+
+	utils.onTouch(ball, function()
+   	ball.selected = not ball.selected
+		
+		if(ball.selected) then
+      	ball.alpha = 1
+		else
+      	ball.alpha = 0.3
+		end
+		
+	end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function drawThemeSelection(num,x,y)
+
+	local ball = display.newCircle(hud, x,y, 65)
+	
+	ball.image = display.newImage(hud,"assets/demos/tabIcon-down.png")
+	ball.image.x = x
+	ball.image.y = y
+	
+	ball.alpha = 0.3
+	ball.selected = false
+
+	utils.onTouch(ball, function()
+   	ball.selected = not ball.selected
+		
+		if(ball.selected) then
+      	ball.alpha = 1
+		else
+      	ball.alpha = 0.3
+		end
+		
+	end)
+end

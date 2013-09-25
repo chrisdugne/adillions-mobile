@@ -35,10 +35,16 @@ function scene:loginViewListener( event )
     	if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
 			self:closeWebView()    		
 			local params = utils.getUrlParams(event.url);
-			utils.tprint(params)
+			
+			GLOBALS.savedData.authToken 	= params.authToken         
+			GLOBALS.savedData.user.email 	= params.email   
+      	utils.saveTable(GLOBALS.savedData, "savedData.json")
+
+			userManager:fetchPlayer()
 
     	elseif event.url == SERVER_URL .. "backToMobile" then
 			self:closeWebView()    		
+      	router.openOutside()
 		
 		end
 
@@ -49,7 +55,6 @@ function scene:closeWebView()
 	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
 	self.webView:removeSelf()
 	self.webView = nil
-	router.openOutside()
 end
 
 ------------------------------------------

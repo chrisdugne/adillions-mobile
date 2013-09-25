@@ -26,6 +26,62 @@ function scene:refreshScene()
 	viewManager.drawButton("_back", display.contentWidth*0.3, display.contentHeight *0.04, router.openHome)
 	
 	------------------
+	
+	local marginLeft = display.contentWidth * 0.02
+	local marginTop =  display.contentHeight * 0.1
+	local xGap =  display.contentWidth *0.12
+	local yGap =  display.contentHeight *0.08
+	
+	--------------------------------------------------------------
+	-- Classic nums
+
+	local totalNums = 49  
+	local nbNumPerLine = 7
+	  
+	------------------
+
+	local nbLines =  totalNums/nbNumPerLine
+	local nbRows =  totalNums/nbLines
+	local nbOnlastLine = totalNums - math.floor(nbLines)*nbRows
+	
+	------------------
+	
+	for i = 1,nbRows do
+   	for j = 1,nbLines do
+   		viewManager.drawBall((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*j)
+   	end
+	end
+
+	for i = 1,nbOnlastLine do
+		viewManager.drawBall(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
+	end
+	
+	--------------------------------------------------------------
+	-- Additional nums
+	
+	marginTop =  display.contentHeight * 0.7
+	
+	totalNums 	= 7
+	nbNumPerLine = 4
+	
+	nbLines =  totalNums/nbNumPerLine
+	nbRows =  totalNums/nbLines
+	nbOnlastLine = totalNums - math.floor(nbLines)*nbRows
+	
+	------------------
+	
+	for i = 1,nbRows do
+   	for j = 1,nbLines do
+   		viewManager.drawThemeSelection((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*j)
+   	end
+	end
+
+	for i = 1,nbOnlastLine do
+		viewManager.drawThemeSelection(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
+	end
+	
+
+	------------------
 
 	self.view:insert(hud)
 end

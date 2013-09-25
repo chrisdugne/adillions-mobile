@@ -15,6 +15,18 @@ module(..., package.seeall)
 
 -----------------------------------------------------------------------------------------
 
+function initGameData()
+
+	GLOBALS.savedData = {
+		requireTutorial 	= true,
+		user 					= {}
+	}
+
+	utils.saveTable(GLOBALS.savedData, "savedData.json")
+end
+
+-----------------------------------------------------------------------------------------
+
 function onTouch(object, action)
 	object:addEventListener	("touch", function(event)
 		if(event.phase == "began") then
@@ -226,6 +238,7 @@ function post(url, data, next, type)
 		headers["Content-Type"] = "application/x-www-form-urlencoded"
 	elseif(type == "json") then
 		headers["Content-Type"] = "application/json"
+		headers["X-AUTH-TOKEN"] = GLOBALS.savedData.authToken
 	end
 
 	local params = {}
