@@ -26,7 +26,7 @@ settings = {
             
 	        UIAppFonts = 
             {
-                "helveticalight.ttf"
+                "Helvetica_Light-Normal.ttf"
             }
 
             --[[

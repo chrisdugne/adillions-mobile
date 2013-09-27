@@ -38,7 +38,6 @@ function scene:refreshScene()
 	---------------------------------------------------------------
 	
 	viewManager.drawButton("test video", display.contentWidth*0.5, display.contentHeight *0.3, router.openVideo)
-	viewManager.drawButton("test home", display.contentWidth*0.5, display.contentHeight *0.4, router.openHome)
 	
 	viewManager.drawButton("_Login", display.contentWidth*0.5, display.contentHeight *0.7, router.openLogin)
 	viewManager.drawButton("_Signin", display.contentWidth*0.5, display.contentHeight *0.8, router.openSignin)

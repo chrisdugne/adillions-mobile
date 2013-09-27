@@ -35,8 +35,8 @@ function scene:refreshScene()
 	--------------------------------------------------------------
 	-- Classic nums
 
-	local totalNums = 49  
-	local nbNumPerLine = 7
+	local totalNums = 32  
+	local nbNumPerLine = 6
 	  
 	------------------
 
