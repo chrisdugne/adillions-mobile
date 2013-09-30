@@ -38,6 +38,7 @@ storyboard 			= require "storyboard"
 ---- Additional libs
 xml 					= require "src.libs.Xml"
 utils 				= require "src.libs.Utils"
+facebook 			= require "facebook" 
 
 ---- Game libs
 
@@ -80,6 +81,10 @@ hud = display.newGroup()
 GLOBALS = {
 	savedData 		= utils.loadUserData("savedData.json"),
 }
+
+-----------------------------------------------------------------------------------------
+
+FB_APP_ID = "170148346520274" 
 
 -----------------------------------------------------------------------------------------
 

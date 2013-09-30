@@ -15,8 +15,10 @@ settings = {
 
 			--UIStatusBarHidden = false,
 			--UIPrerenderedIcon = true, -- set to false for "shine" overlay
-			--UIApplicationExitsOnSuspend = true, -- uncomment to quit app on suspend
+            UIApplicationExitsOnSuspend = false,
 
+			FacebookAppID = "170148346520274",
+						
 			CFBundleIconFile = "Icon.png",
             CFBundleIconFiles = {
                     "Icon.png" , 
@@ -36,7 +38,7 @@ settings = {
                 {
                     CFBundleURLSchemes =
                     {
-                        "fbXXXXXXXXXXXXXX", -- example scheme for facebook
+                        "fb170148346520274", -- facebook
                         "coronasdkapp", -- example second scheme
                     }
                 }
@@ -45,6 +47,18 @@ settings = {
 		}
 	},
 	
+	-- Plugins
+	
+	plugins =
+    {
+        --key is the name passed to Lua's 'require()'
+        ["CoronaProvider.native.popup.social"] =
+        {
+            --required
+            publisherId = "com.coronalabs",
+        },
+    },
+    
 	-- Android permissions
 
 	androidPermissions = {
