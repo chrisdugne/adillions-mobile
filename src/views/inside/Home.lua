@@ -28,6 +28,12 @@ function scene:refreshScene()
 
 	------------------
 
+	if(userManager.user.facebookId) then
+   	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)	hud:insert(event.target) end, "profilePicture", system.TemporaryDirectory)
+	end
+
+	------------------
+
 	self.view:insert(hud)
 end
 

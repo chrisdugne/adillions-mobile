@@ -22,44 +22,29 @@ end
 
 function scene:refreshScene()
 	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "mlogin" )
-	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+	self.webView:request( SERVER_URL .. "msigninFB" )
+	self.webView:addEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
 end
 
 ------------------------------------------
 
-function scene:loginViewListener( event )
+function scene:signinFBViewListener( event )
 
     if event.url then
-		print(event.url)
-		print(tostring(string.find(event.url, "oauth??redirect_uri")))
-    	if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
-			self:closeWebView()    		
-			local params = utils.getUrlParams(event.url);
-			
-			GLOBALS.savedData.authToken 	= params.authToken         
-			GLOBALS.savedData.user.email 	= params.email   
-      	utils.saveTable(GLOBALS.savedData, "savedData.json")
 
-			userManager:fetchPlayer()
-
-    	elseif event.url == SERVER_URL .. "backToMobile" then
+   	if event.url == SERVER_URL .. "backToMobile" then
 			self:closeWebView()    		
       	router.openOutside()
 
-    	elseif string.find(event.url, "access_token") then
+    	elseif string.find(event.url, "signedIn") then
 			self:closeWebView()    		
-			local params = utils.getUrlParams(event.url);
+			local playerRealNames = utils.getUrlParams(event.url);
 			
-			GLOBALS.savedData.facebookAccessToken 	= params.access_token         
+			GLOBALS.savedData.user.firstName 		= playerRealNames.firstName
+			GLOBALS.savedData.user.lastName 			= playerRealNames.lastName
       	utils.saveTable(GLOBALS.savedData, "savedData.json")
 
-			facebook.getMe()
-
-    	elseif string.find(event.url, "oauth??redirect_uri") then
-    		-- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
-			self.webView:request( SERVER_URL .. "mlogin" )
-			
+			router.openHome()
 		end
 
     end

@@ -38,7 +38,7 @@ storyboard 			= require "storyboard"
 ---- Additional libs
 xml 					= require "src.libs.Xml"
 utils 				= require "src.libs.Utils"
-facebook 			= require "facebook" 
+facebook 			= require "src.libs.Facebook" 
 
 ---- Game libs
 
@@ -84,19 +84,17 @@ GLOBALS = {
 
 -----------------------------------------------------------------------------------------
 
-FB_APP_ID = "170148346520274" 
-
------------------------------------------------------------------------------------------
-
 if(not GLOBALS.savedData) then
 	utils.initGameData()
    router.openOutside()
 else
-	if(GLOBALS.savedData.user.uid) then
-		userManager:fetchPlayer()
-	else
-      router.openOutside()
-	end
+	facebook.getMe(function()
+   	if(GLOBALS.savedData.user.uid) then
+   		userManager:fetchPlayer()
+   	else
+         router.openOutside()
+   	end
+	end)
 end
 
 -----------------------------------------------------------------------------------------

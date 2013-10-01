@@ -27,19 +27,11 @@ function UserManager:fetchPlayer()
 			router.openOutside()
 		else
 
-			local params = json.decode(result.response)
-			if(not params) then 
+			local player = json.decode(result.response)
+			if(not player) then 
 				router.openOutside()
 			else 
-				GLOBALS.savedData.user.firstName 		= params.firstName
-				GLOBALS.savedData.user.lastName 			= params.lastName
-				GLOBALS.savedData.user.uid 				= params.uid
-				GLOBALS.savedData.user.referrerId 		= params.referrerId
-				GLOBALS.savedData.user.birthDate 		= params.birthDate
-
-				utils.saveTable(GLOBALS.savedData, "savedData.json")
-				self.user = GLOBALS.savedData.user
-				router.openHome()	
+				userManager:receivedPlayer(player)
 			end
 		end
 	end
@@ -49,35 +41,47 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:facebookListener( event )
+function UserManager:getPlayerByFacebookId()
+	utils.postWithJSON({
+		facebookData = facebook.data
+	}, 
+	SERVER_URL .. "playerFromFB", 
+	function(result)
+		if(result.isError) then
+			router.openOutside()
+		else
+			local player = json.decode(result.response)
+			if(not player) then 
+				router.openSigninFB()
+			else 
+				userManager:receivedPlayer(player)
+   		end
+		end
+	end
+	)
 
-    print( "event.name", event.name )  --"fbconnect"
-    print( "event.type:", event.type ) --type is either "session", "request", or "dialog"
-    print( "isError: " .. tostring( event.isError ) )
-    print( "didComplete: " .. tostring( event.didComplete ) )
+end
 
-    --"session" events cover various login/logout events
-    --"request" events handle calls to various Graph API calls
-    --"dialog" events are standard popup boxes that can be displayed
+-----------------------------------------------------------------------------------------
 
-    if ( "session" == event.type ) then
-        --options are: "login", "loginFailed", "loginCancelled", or "logout"
-        if ( "login" == event.phase ) then
-            local access_token = event.token
-            --code for tasks following a successful login
-        end
+function UserManager:receivedPlayer(player)
+	GLOBALS.savedData.user.uid 				= player.uid
+	GLOBALS.savedData.user.email 				= player.email
+	GLOBALS.savedData.user.userName 			= player.userName
+	GLOBALS.savedData.user.firstName 		= player.firstName
+	GLOBALS.savedData.user.lastName 			= player.lastName
+	GLOBALS.savedData.user.draws 				= player.draws
 
-    elseif ( "request" == event.type ) then
-        print("facebook request")
-        if ( not event.isError ) then
-            local response = json.decode( event.response )
-            --process response data here
-        end
+	GLOBALS.savedData.user.currentPoints 	= player.currentPoints
+	GLOBALS.savedData.user.idlePoints 		= player.idlePoints
+	GLOBALS.savedData.user.totalPoints 		= player.totalPoints
 
-    elseif ( "dialog" == event.type ) then
-        print( "dialog", event.response )
-        --handle dialog results here
-    end
+	GLOBALS.savedData.user.facebookId 		= player.facebookId
+
+	utils.saveTable(GLOBALS.savedData, "savedData.json")
+	self.user = GLOBALS.savedData.user
+	
+	router.openHome()	
 end
 
 -----------------------------------------------------------------------------------------

@@ -17,22 +17,17 @@ local scene = storyboard.newScene()
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 
-	local isFacebookAvailable = native.canShowPopup( "social", "facebook" )
+--   	native.showPopup( "social", {
+--   		service = "facebook",
+--   		message = "Check out this photo!",
+--   		listener = eventListener,
+--   		image = {
+--   			{ filename = "/assets/images/hud/button.png" },
+--   			{ filename = "/assets/images/hud/ko.png" },
+--   		},
+--   		url = "http://uralys.com"
+--   	} )
 
-	if(isFacebookAvailable) then
-   	native.showPopup( "social", {
-   		service = "facebook",
-   		message = "Check out this photo!",
-   		listener = eventListener,
-   		image = {
-   			{ filename = "/assets/images/hud/button.png" },
-   			{ filename = "/assets/images/hud/ko.png" },
-   		},
-   		url = "http://uralys.com"
-   	} )
-	end
-
-	facebook.login( FB_APP_ID, userManager.facebookListener, { "publish_actions, email" } )
 end
 
 -----------------------------------------------------------------------------------------
@@ -88,7 +83,7 @@ function scene:refreshScene()
 	---------------------------------------------------------------
 
 	self.view:insert(hud)
-	
+		
 	---------------------------------------------------------------
 end
 

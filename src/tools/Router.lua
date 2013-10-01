@@ -36,6 +36,13 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function openSigninFB()
+	resetScreen()
+	storyboard.gotoScene( "src.views.SigninFB" )
+end
+
+-----------------------------------------------------------------------------------------
+
 function openHome()
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.Home" )

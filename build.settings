@@ -29,21 +29,16 @@ settings = {
 	        UIAppFonts = 
             {
                 "Helvetica_Light-Normal.ttf"
-            }
+            },
 
-            --[[
             -- iOS app URL schemes:
             CFBundleURLTypes =
             {
+                CFBundleURLSchemes =
                 {
-                    CFBundleURLSchemes =
-                    {
-                        "fb170148346520274", -- facebook
-                        "coronasdkapp", -- example second scheme
-                    }
+                    "fb170148346520274" -- facebook
                 }
             }
-            --]]
 		}
 	},
 	
