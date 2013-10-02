@@ -171,7 +171,7 @@ function drawBall(num,x,y)
 
 	local ball = display.newCircle(hud, x,y, 45)
 	
-	ball.num = display.newText( {
+	ball.text = display.newText( {
 		parent = hud,
 		text = num,     
 		x = x,
@@ -180,17 +180,22 @@ function drawBall(num,x,y)
 		fontSize = 40,
 	} )
 	
-	ball.num:setTextColor(0)
+	ball.text:setTextColor(0)
+	ball.num = num
 	ball.alpha = 0.3
 	ball.selected = false
 
 	utils.onTouch(ball, function()
-   	ball.selected = not ball.selected
-		
 		if(ball.selected) then
-      	ball.alpha = 1
-		else
+      	ball.selected = false
       	ball.alpha = 0.3
+			drawManager:removeFromSelection(ball.num)
+		else
+   		if(drawManager:canAddToSelection()) then
+   			drawManager:addToSelection(ball.num)
+         	ball.selected = true
+         	ball.alpha = 1
+   		end
 		end
 		
 	end)

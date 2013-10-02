@@ -69,10 +69,15 @@ router 			= require "src.tools.Router"
 viewManager		= require "src.tools.ViewManager"
 
 UserManager		= require "src.managers.UserManager"
+DrawManager		= require "src.managers.DrawManager"
 
 -----------------------------------------------------------------------------------------
 
 userManager = UserManager:new()
+drawManager = DrawManager:new()
+
+-----------------------------------------------------------------------------------------
+
 hud = display.newGroup()
 
 -----------------------------------------------------------------------------------------

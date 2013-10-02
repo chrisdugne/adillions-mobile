@@ -35,8 +35,8 @@ function scene:refreshScene()
 	--------------------------------------------------------------
 	-- Classic nums
 
-	local totalNums = 32  
-	local nbNumPerLine = 6
+	local totalNums 		 = drawManager.nextDraw.maxNumbers  
+	local nbNumPerLine	 = 7
 	  
 	------------------
 
@@ -80,7 +80,10 @@ function scene:refreshScene()
 		viewManager.drawThemeSelection(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
 	end
 	
-
+	------------------
+	
+	drawManager:startSelection()
+	
 	------------------
 
 	self.view:insert(hud)

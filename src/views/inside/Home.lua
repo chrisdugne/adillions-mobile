@@ -29,6 +29,7 @@ function scene:refreshScene()
 	------------------
 	
 	utils.tprint(userManager.user)
+	drawManager:getNextDraw()
 	
 	------------------
 
