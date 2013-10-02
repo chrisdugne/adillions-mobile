@@ -27,6 +27,10 @@ function scene:refreshScene()
 	viewManager.drawButton("_Jouer !", display.contentWidth*0.5, display.contentHeight *0.5, router.openGame)
 
 	------------------
+	
+	utils.tprint(userManager.user)
+	
+	------------------
 
 	if(userManager.user.facebookId) then
    	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)	hud:insert(event.target) end, "profilePicture", system.TemporaryDirectory)

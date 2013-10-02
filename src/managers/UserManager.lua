@@ -50,10 +50,15 @@ function UserManager:getPlayerByFacebookId()
 		if(result.isError) then
 			router.openOutside()
 		else
-			local player = json.decode(result.response)
+			utils.tprint(result.response)
+			local player = json.decode(result.response.player)
 			if(not player) then 
+   			print("openSigninFB")
 				router.openSigninFB()
 			else 
+				GLOBALS.savedData.authToken 	= json.decode(result.response.authToken)     
+   			print("getPlayerByFacebookId | got token", GLOBALS.savedData.authToken)
+      		utils.saveTable(GLOBALS.savedData, "savedData.json")
 				userManager:receivedPlayer(player)
    		end
 		end
@@ -65,12 +70,21 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:receivedPlayer(player)
+	
+	print("---")
+	utils.tprint(player)
+	print("---")
+
 	GLOBALS.savedData.user.uid 				= player.uid
 	GLOBALS.savedData.user.email 				= player.email
 	GLOBALS.savedData.user.userName 			= player.userName
 	GLOBALS.savedData.user.firstName 		= player.firstName
 	GLOBALS.savedData.user.lastName 			= player.lastName
-	GLOBALS.savedData.user.draws 				= player.draws
+	GLOBALS.savedData.user.birthDate 		= player.birthDate
+	GLOBALS.savedData.user.referrerId 		= player.referrerId
+	
+	GLOBALS.savedData.user.drawTickets 		= player.drawTickets
+	GLOBALS.savedData.user.lotteryTickets 	= player.lotteryTickets
 
 	GLOBALS.savedData.user.currentPoints 	= player.currentPoints
 	GLOBALS.savedData.user.idlePoints 		= player.idlePoints

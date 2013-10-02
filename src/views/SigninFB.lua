@@ -42,6 +42,9 @@ function scene:signinFBViewListener( event )
 			
 			GLOBALS.savedData.user.firstName 		= playerRealNames.firstName
 			GLOBALS.savedData.user.lastName 			= playerRealNames.lastName
+			GLOBALS.savedData.authToken 				= playerRealNames.authToken
+			     
+			print("signinFBViewListener | got token", GLOBALS.savedData.authToken)
       	utils.saveTable(GLOBALS.savedData, "savedData.json")
 
 			router.openHome()

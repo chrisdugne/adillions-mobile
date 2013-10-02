@@ -31,8 +31,7 @@ end
 function scene:loginViewListener( event )
 
     if event.url then
-		print(event.url)
-		print(tostring(string.find(event.url, "oauth??redirect_uri")))
+
     	if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
 			self:closeWebView()    		
 			local params = utils.getUrlParams(event.url);
