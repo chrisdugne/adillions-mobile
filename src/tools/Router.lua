@@ -10,6 +10,7 @@ module(..., package.seeall)
 
 function resetScreen()
 	utils.emptyGroup(hud)
+	utils.emptyGroup(hud.selection)
 	hud.buttons = {}
 end
 
@@ -85,9 +86,16 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function openGame()
+function openFillDrawTicket()
 	resetScreen()
-	storyboard.gotoScene( "src.views.inside.Game" )
+	storyboard.gotoScene( "src.views.inside.FillDrawTicket" )
+end
+
+-----------------------------------------------------------------------------------------
+
+function openSelectAdditionalNumber()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.SelectAdditionalNumber" )
 end
 
 ---------------------------------------------

@@ -16,18 +16,61 @@ local scene = storyboard.newScene()
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
+	hud.selection = display.newGroup()
 end
 
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
 	
-	viewManager.initView(2)
-
+	viewManager.initView(0)
+	
 	------------------
 
-	viewManager.drawButton("2", display.contentWidth*0.5, display.contentHeight *0.5, router.openOutside)
+	utils.emptyGroup(hud.selection)
 
+	--------------------------------------------------------------
+	-- Additional nums
+
+	local totalNums 	= #drawManager.nextDraw.theme.icons
+	local nbNumPerLine = 3
+	
+	local marginLeft =  display.contentWidth * 0.08
+	local marginTop =  display.contentHeight * 0.14
+	local xGap =  display.contentWidth *0.21
+	local yGap =  display.contentHeight *0.17
+	
+	local nbLines =  totalNums/nbNumPerLine
+	local nbRows =  totalNums/nbLines
+	local nbOnlastLine = totalNums - math.floor(nbLines)*nbRows
+	
+	------------------
+	
+	for i = 1,nbRows do
+   	for j = 1,nbLines do
+   		viewManager.drawTheme((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*j)
+   	end
+	end
+
+	for i = 1,nbOnlastLine do
+		viewManager.drawTheme(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
+	end
+	
+	------------------
+	
+	local selectionText = display.newText( {
+		parent = hud,
+		text = "_Selection :",     
+		x = display.contentWidth*0.17,
+		y = display.contentHeight*0.64,
+		font = FONT,   
+		fontSize = 45,
+	} )
+	
+	------------------
+	
+	drawManager:refreshSelectionDisplay()
+	
 	------------------
 
 	self.view:insert(hud)

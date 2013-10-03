@@ -21,9 +21,11 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	viewManager.initBack()
 
-	viewManager.buildMenu(3)
+	viewManager.initView(3)
+
+	------------------
+	--
 	viewManager.drawButton("3", display.contentWidth*0.5, display.contentHeight *0.5, router.openOutside)
 
 	------------------

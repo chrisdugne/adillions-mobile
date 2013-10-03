@@ -21,10 +21,12 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	viewManager.initBack()
 
-	viewManager.buildMenu(1)
-	viewManager.drawButton("_Jouer !", display.contentWidth*0.5, display.contentHeight *0.5, router.openGame)
+	viewManager.initView(1)
+
+	------------------
+
+	viewManager.drawButton("_Jouer !", display.contentWidth*0.5, display.contentHeight *0.5, router.openFillDrawTicket)
 
 	------------------
 	
