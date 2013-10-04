@@ -5,6 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 local scene = storyboard.newScene()
+local widget = require "widget"
 
 -----------------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
@@ -22,15 +23,79 @@ end
 
 function scene:refreshScene()
 	
-	viewManager.initView(2)
+--	local board = display.newGroup()
+
+	-- Our ScrollView listener
+   local function scrollListener( event )
+       local phase = event.phase
+       local direction = event.direction
+   
+       if "began" == phase then
+           print( "Began" )
+       elseif "moved" == phase then
+           print( "Moved" )
+       elseif "ended" == phase then
+           print( "Ended" )
+       end
+   
+       -- If we have reached one of the scrollViews limits
+       if event.limitReached then
+           if "up" == direction then
+               print( "Reached Top Limit" )
+           elseif "down" == direction then
+               print( "Reached Bottom Limit" )
+           elseif "left" == direction then
+               print( "Reached Left Limit" )
+           elseif "right" == direction then
+               print( "Reached Right Limit" )
+           end
+       end
+
+		return true
+	end
+
+	local board = widget.newScrollView
+	{
+		top = 0,
+		left = 0,
+		width = display.contentWidth,
+		height = display.contentHeight - HEADER_HEIGHT - MENU_HEIGHT,
+		bottomPadding = HEADER_HEIGHT,
+		hideBackground = true,
+		id = "onBottom",
+		listener = scrollListener,
+		horizontalScrollDisabled = true,
+		verticalScrollDisabled = false,
+	}
 
 	------------------
 
-	viewManager.drawButton("2", display.contentWidth*0.5, display.contentHeight *0.5, router.openOutside)
+	local marginLeft = display.contentWidth * 0.02
+	local marginTop =  30
+	local xGap =  display.contentWidth *0.12
+	local yGap =  display.contentHeight *0.10
+	
+	------------------
+
+	for i = 1,#userManager.user.drawTickets do
+		local ticket = userManager.user.drawTickets[i]
+   	local numbers = json.decode(ticket.numbers)
+   	
+   	for j = 1,#numbers-1 do
+   		print (numbers[j])
+			viewManager.drawBall(board, numbers[j], marginLeft + xGap*j, marginTop + yGap*i)
+   	end
+	end
 
 	------------------
 
+	hud:insert(board)
+   
+	------------------
+	
+	viewManager.setupView(2)
 	self.view:insert(hud)
+	
 end
 
 ------------------------------------------

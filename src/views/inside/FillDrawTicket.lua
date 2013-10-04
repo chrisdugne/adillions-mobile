@@ -23,7 +23,7 @@ end
 
 function scene:refreshScene()
 	
-	viewManager.initView(0)
+	viewManager.setupView(0)
 	
 	------------------
 
@@ -52,12 +52,12 @@ function scene:refreshScene()
 	
 	for i = 1,nbRows do
    	for j = 1,nbLines do
-   		viewManager.drawBall((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*j)
+   		viewManager.drawBallToPick((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*j)
    	end
 	end
 
 	for i = 1,nbOnlastLine do
-		viewManager.drawBall(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
+		viewManager.drawBallToPick(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
 	end
 	
 	------------------

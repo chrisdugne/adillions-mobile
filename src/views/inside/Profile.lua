@@ -22,7 +22,7 @@ end
 
 function scene:refreshScene()
 
-	viewManager.initView(4)
+	viewManager.setupView(4)
 
 	------------------
 	--

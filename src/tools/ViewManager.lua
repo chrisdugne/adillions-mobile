@@ -8,7 +8,7 @@ local widget = require( "widget" )
 
 -----------------------------------------------------------------------------------------
 
-function initView(selectedTab)
+function setupView(selectedTab)
 	initBack()
 	initHeader()
 	buildMenu(selectedTab)
@@ -18,15 +18,16 @@ end
 
 function initBack()
 	hud.back = display.newImageRect( hud, "assets/images/blur.jpg", display.contentWidth, display.contentHeight)  
-	hud.back.x = display.viewableContentWidth/2  
-	hud.back.y = display.viewableContentHeight/2
+	hud.back.x = display.viewableContentWidth*0.5 
+	hud.back.y = display.viewableContentHeight*0.5
+	hud.back:toBack()
 end
 	
 -----------------------------------------------------------------------------------------
 
 function initHeader()
 
-   hud.headerRect = display.newRect(hud, 0, 0, display.contentWidth, 90)
+   hud.headerRect = display.newRect(hud, 0, 0, display.contentWidth, HEADER_HEIGHT)
    hud.headerRect.alpha = 0.2
    hud.headerRect:setFillColor(0)
 
@@ -36,7 +37,7 @@ function initHeader()
 		x = display.contentWidth*0.5,
 		y = 45,
 		font = FONT,   
-		fontSize = 45,
+		fontSize = HEADER_HEIGHT * 0.5,
 	} )
 end
 
@@ -213,15 +214,15 @@ function buildMenu(tabSelected)
 	-- Create a tabBar
 	local tabBar = widget.newTabBar({
 		left = 0,
-		top = display.contentHeight - 170,
+		top = display.contentHeight - MENU_HEIGHT,
 		width = display.contentWidth,
-		height = 170,
+		height = MENU_HEIGHT,
 		backgroundFile = "assets/demos/woodbg.png",
 		tabSelectedLeftFile = leftEdge,
 		tabSelectedRightFile = rightEdge,
 		tabSelectedMiddleFile = middle,
 		tabSelectedFrameWidth = 20,
-		tabSelectedFrameHeight = 170,
+		tabSelectedFrameHeight = MENU_HEIGHT,
 		buttons = tabButtons,
 	})
 
@@ -235,7 +236,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function drawBall(num,x,y)
+function drawBallToPick(num,x,y)
 
 	local ball = display.newCircle(hud, x,y, 45)
 	
@@ -273,6 +274,28 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function drawBall(parent, num,x,y)
+
+	local ball = display.newCircle(x,y, 45)
+	parent:insert(ball)
+	
+	ball.text = display.newText( {
+		text = num,     
+		x = x,
+		y = y,
+		font = FONT,   
+		fontSize = 40,
+	} )
+
+	parent:insert(ball.text)
+	
+	ball.text:setTextColor(0)
+	ball.num = num
+	ball.alpha = 1
+end
+
+-----------------------------------------------------------------------------------------
+
 function drawTheme(num,x,y)
 
 	local ball = display.newCircle(hud, x,y, 65)
@@ -292,7 +315,7 @@ function drawTheme(num,x,y)
 end
 
 function drawThemeIcon(num, parent, x, y, scale)
-	drawRemoteImage(drawManager.nextDraw.theme.icons[num],parent, x, y, scale)
+	drawRemoteImage(drawManager.nextDraw.theme[num],parent, x, y, scale)
 end
 
 -----------------------------------------------------------------------------------------

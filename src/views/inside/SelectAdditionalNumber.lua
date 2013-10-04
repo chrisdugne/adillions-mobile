@@ -23,7 +23,7 @@ end
 
 function scene:refreshScene()
 	
-	viewManager.initView(0)
+	viewManager.setupView(0)
 	
 	------------------
 
@@ -32,7 +32,7 @@ function scene:refreshScene()
 	--------------------------------------------------------------
 	-- Additional nums
 
-	local totalNums 	= #drawManager.nextDraw.theme.icons
+	local totalNums 	= #drawManager.nextDraw.theme
 	local nbNumPerLine = 3
 	
 	local marginLeft =  display.contentWidth * 0.08

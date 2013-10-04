@@ -22,7 +22,7 @@ end
 
 function scene:refreshScene()
 
-	viewManager.initView(1)
+	viewManager.setupView(1)
 
 	------------------
 
@@ -30,7 +30,6 @@ function scene:refreshScene()
 
 	------------------
 	
-	utils.tprint(userManager.user)
 	drawManager:getNextDraw()
 	
 	------------------
