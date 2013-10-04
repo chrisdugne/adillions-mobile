@@ -50,10 +50,12 @@ function scene:refreshScene()
    	local numbers = json.decode(ticket.numbers)
    	
    	for j = 1,#numbers-1 do
-   		print (numbers[j])
 			viewManager.drawBall(board, numbers[j], marginLeft + xGap*j, marginTop + yGap*i)
    	end
+   	
+   	viewManager.drawTheme(board, numbers[6], marginLeft + xGap*6, marginTop + yGap*i)
 	end
+
 
 	------------------
 

@@ -256,20 +256,51 @@ function drawBallToPick(num,x,y)
 
 	utils.onTouch(ball, function()
 		if(ball.selected) then
-      	ball.selected = false
-      	ball.alpha = 0.3
 			drawManager:removeFromSelection(ball.num)
 		else
    		if(drawManager:canAddToSelection()) then
    			drawManager:addToSelection(ball.num)
-         	ball.selected = true
-         	ball.alpha = 1
    		end
 		end
 		
 	end)
 	
 	hud.balls[num] = ball
+end
+
+-----------------------------------------------------------------------------------------
+
+function drawThemeToPick(num,x,y)
+
+	local ball = display.newCircle(hud, x,y, 65)
+	ball.alpha = 0.3
+	ball.selected = false
+	ball.num = num
+	
+	drawThemeIcon(num, hud, x, y)
+	
+	utils.onTouch(ball, function()
+		if(ball.selected) then
+			drawManager:cancelAdditionalSelection()
+		else
+			drawManager:addToAdditionalSelection(ball)
+		end
+	end)
+end
+
+function drawThemeIcon(num, parent, x, y, scale)
+	drawRemoteImage(drawManager.nextDraw.theme[num],parent, x, y, scale)
+end
+
+-----------------------------------------------------------------------------------------
+
+function drawTheme(parent, num,x,y)
+
+	local ball = display.newCircle(x,y, 45)
+	ball.num = num
+	parent:insert(ball)
+	
+	drawThemeIcon(num, parent, x, y, 0.7)
 end
 
 -----------------------------------------------------------------------------------------
@@ -292,30 +323,6 @@ function drawBall(parent, num,x,y)
 	ball.text:setTextColor(0)
 	ball.num = num
 	ball.alpha = 1
-end
-
------------------------------------------------------------------------------------------
-
-function drawTheme(num,x,y)
-
-	local ball = display.newCircle(hud, x,y, 65)
-	ball.alpha = 0.3
-	ball.selected = false
-	ball.num = num
-	
-	drawThemeIcon(num, hud, x, y)
-	
-	utils.onTouch(ball, function()
-		if(ball.selected) then
-			drawManager:cancelAdditionalSelection()
-		else
-			drawManager:addToAdditionalSelection(ball)
-		end
-	end)
-end
-
-function drawThemeIcon(num, parent, x, y, scale)
-	drawRemoteImage(drawManager.nextDraw.theme[num],parent, x, y, scale)
 end
 
 -----------------------------------------------------------------------------------------

@@ -46,12 +46,12 @@ function scene:refreshScene()
 	
 	for i = 1,nbRows do
    	for j = 1,nbLines do
-   		viewManager.drawTheme((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*j)
+   		viewManager.drawThemeToPick((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*j)
    	end
 	end
 
 	for i = 1,nbOnlastLine do
-		viewManager.drawTheme(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
+		viewManager.drawThemeToPick(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
 	end
 	
 	------------------
@@ -67,7 +67,7 @@ function scene:refreshScene()
 	
 	------------------
 	
-	drawManager:refreshSelectionDisplay()
+	drawManager:refreshThemeSelectionDisplay()
 	
 	------------------
 

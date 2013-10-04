@@ -31,7 +31,10 @@ end
 
 function DrawManager:addToSelection(num)
 	self.currentSelection[#self.currentSelection+1] = num
-	self:refreshSelectionOkButton()
+	self:refreshNumberSelectionDisplay()
+	
+	hud.balls[num].alpha = 1
+	hud.balls[num].selected = true
 end
 
 function DrawManager:removeFromSelection(num)
@@ -42,15 +45,76 @@ function DrawManager:removeFromSelection(num)
 		end 
 	end
 	table.remove(self.currentSelection, indexToDelete)
-	self:refreshSelectionOkButton()
+	self:refreshNumberSelectionDisplay()
+
+	hud.balls[num].alpha = 0.3
+	hud.balls[num].selected = false
 end
 
 function DrawManager:canAddToSelection()
 	return #self.currentSelection < self.nextDraw.maxPicks
 end
 
-function DrawManager:refreshSelectionOkButton()
+-----------------------------------------------------------------------------------------
+
+function DrawManager:addToAdditionalSelection(ball)
+	if(self.currentAdditionalBall) then
+		self.currentAdditionalBall.selected = false
+		self.currentAdditionalBall.alpha = 0.3
+	end
+	
+	self.currentAdditionalBall = ball
+	self.currentAdditionalBall.selected = true
+	self.currentAdditionalBall.alpha = 1
+	self:refreshThemeSelectionDisplay()
+end
+
+function DrawManager:cancelAdditionalSelection()
+	self.currentAdditionalBall.selected = false
+	self.currentAdditionalBall.alpha = 0.3
+	self.currentAdditionalBall = nil
+	self:refreshThemeSelectionDisplay()
+end
+
+-----------------------------------------------------------------------------------------
+
+function DrawManager:startSelection()
+	self.currentSelection = {}
+	self.currentAdditionalBall = nil
+	self:refreshNumberSelectionDisplay()
+end
+
+-----------------------------------------------------------------------------------------
+
+function DrawManager:refreshNumberSelectionDisplay()
+
+	-------------------------------------
+	-- erase
+	
 	utils.emptyGroup(hud.selection)
+
+	-------------------------------------
+	-- display
+	
+	local nbSelected  = 0
+	local marginLeft 	=  -display.contentWidth *0.02
+	local xGap 			=  display.contentWidth *0.12
+	
+	-------------------------------------
+	-- numbers
+	
+	for i = 1,drawManager.nextDraw.maxPicks do
+		local num = self.currentSelection[i]
+		if(self.currentSelection[i]) then
+			viewManager.drawSelectedBall(num, marginLeft + xGap*i, display.contentHeight*0.7, function()
+   			self:removeFromSelection(num)
+			end)
+			nbSelected = nbSelected + 1 
+		end
+	end
+
+	-------------------------------------
+	-- ok button
 	
 	if(#self.currentSelection == drawManager.nextDraw.maxPicks) then 
    	viewManager.drawSelectedBall("_ok", display.contentWidth*0.8, display.contentHeight*0.75, function()
@@ -67,40 +131,17 @@ function DrawManager:refreshSelectionOkButton()
    		fontSize = 40,
    	} )
 	end
+--	
+--	if(nbSelected == drawManager.nextDraw.maxPicks+1) then
+--   	viewManager.drawSelectedBall("_OK !", display.contentWidth*0.9, display.contentHeight*0.7, function()
+--   		self:validateSelection()
+--   	end)
+--   end
 end
 
 -----------------------------------------------------------------------------------------
 
-function DrawManager:addToAdditionalSelection(ball)
-	if(self.currentAdditionalBall) then
-		self.currentAdditionalBall.selected = false
-		self.currentAdditionalBall.alpha = 0.3
-	end
-	
-	self.currentAdditionalBall = ball
-	self.currentAdditionalBall.selected = true
-	self.currentAdditionalBall.alpha = 1
-	self:refreshSelectionDisplay()
-end
-
-function DrawManager:cancelAdditionalSelection()
-	self.currentAdditionalBall.selected = false
-	self.currentAdditionalBall.alpha = 0.3
-	self.currentAdditionalBall = nil
-	self:refreshSelectionDisplay()
-end
-
------------------------------------------------------------------------------------------
-
-function DrawManager:startSelection()
-	self.currentSelection = {}
-	self.currentAdditionalBall = nil
-	self:refreshSelectionOkButton()
-end
-
------------------------------------------------------------------------------------------
-
-function DrawManager:refreshSelectionDisplay()
+function DrawManager:refreshThemeSelectionDisplay()
 
 	-------------------------------------
 	-- erase
