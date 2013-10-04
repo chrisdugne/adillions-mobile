@@ -23,37 +23,6 @@ end
 
 function scene:refreshScene()
 	
---	local board = display.newGroup()
-
-	-- Our ScrollView listener
-   local function scrollListener( event )
-       local phase = event.phase
-       local direction = event.direction
-   
-       if "began" == phase then
-           print( "Began" )
-       elseif "moved" == phase then
-           print( "Moved" )
-       elseif "ended" == phase then
-           print( "Ended" )
-       end
-   
-       -- If we have reached one of the scrollViews limits
-       if event.limitReached then
-           if "up" == direction then
-               print( "Reached Top Limit" )
-           elseif "down" == direction then
-               print( "Reached Bottom Limit" )
-           elseif "left" == direction then
-               print( "Reached Left Limit" )
-           elseif "right" == direction then
-               print( "Reached Right Limit" )
-           end
-       end
-
-		return true
-	end
-
 	local board = widget.newScrollView
 	{
 		top = 0,
@@ -63,7 +32,6 @@ function scene:refreshScene()
 		bottomPadding = HEADER_HEIGHT,
 		hideBackground = true,
 		id = "onBottom",
-		listener = scrollListener,
 		horizontalScrollDisabled = true,
 		verticalScrollDisabled = false,
 	}

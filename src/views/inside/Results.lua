@@ -22,14 +22,13 @@ end
 
 function scene:refreshScene()
 
-	viewManager.setupView(3)
-
 	------------------
 	--
 	viewManager.drawButton("3", display.contentWidth*0.5, display.contentHeight *0.5, router.openOutside)
 
 	------------------
 
+	viewManager.setupView(3)
 	self.view:insert(hud)
 end
 

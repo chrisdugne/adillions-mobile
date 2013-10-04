@@ -22,8 +22,6 @@ end
 
 function scene:refreshScene()
 
-	viewManager.setupView(1)
-
 	------------------
 
 	viewManager.drawButton("_Jouer !", display.contentWidth*0.5, display.contentHeight *0.5, router.openFillDrawTicket)
@@ -40,6 +38,7 @@ function scene:refreshScene()
 
 	------------------
 
+	viewManager.setupView(1)
 	self.view:insert(hud)
 end
 

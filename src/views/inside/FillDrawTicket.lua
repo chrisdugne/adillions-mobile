@@ -23,8 +23,6 @@ end
 
 function scene:refreshScene()
 	
-	viewManager.setupView(0)
-	
 	------------------
 
 	hud.balls = {}
@@ -66,6 +64,7 @@ function scene:refreshScene()
 	
 	------------------
 
+	viewManager.setupView(0)
 	self.view:insert(hud)
 end
 
