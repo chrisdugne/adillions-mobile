@@ -24,7 +24,7 @@ DEV					= 1
 
 -----------------------------------------------------------------------------------------
 
-HEADER_HEIGHT		= 90
+HEADER_HEIGHT		= 120
 MENU_HEIGHT			= 170
 
 -----------------------------------------------------------------------------------------
@@ -74,12 +74,12 @@ router 			= require "src.tools.Router"
 viewManager		= require "src.tools.ViewManager"
 
 UserManager		= require "src.managers.UserManager"
-DrawManager		= require "src.managers.DrawManager"
+LotteryManager		= require "src.managers.LotteryManager"
 
 -----------------------------------------------------------------------------------------
 
 userManager = UserManager:new()
-drawManager = DrawManager:new()
+lotteryManager = LotteryManager:new()
 
 -----------------------------------------------------------------------------------------
 

@@ -86,9 +86,9 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function openFillDrawTicket()
+function openFillLotteryTicket()
 	resetScreen()
-	storyboard.gotoScene( "src.views.inside.FillDrawTicket" )
+	storyboard.gotoScene( "src.views.inside.FillLotteryTicket" )
 end
 
 -----------------------------------------------------------------------------------------

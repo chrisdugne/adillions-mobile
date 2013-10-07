@@ -37,11 +37,23 @@ local FB_APP_ID = "170148346520274"
 --}
 function getMe(failure)
 	if(GLOBALS.savedData.facebookAccessToken) then
+		print("token -->", GLOBALS.savedData.facebookAccessToken)
    	local url = "https://graph.facebook.com/me?fields=name,first_name,last_name,picture,locale,birthday,email&access_token=" .. GLOBALS.savedData.facebookAccessToken
    	network.request(url , "GET", function(result)
-   		if(not result.isError) then
+   		
+   		response = json.decode(result.response)
+   		
+   		print("----------")
+   		utils.tprint(response)
+   		print("----------")
+   		utils.tprint(response.error)
+   		print("----------")
+   	
+   		if(not response.error) then
    			print("--> connected to FB")
-      		data = json.decode(result.response)
+      		utils.tprint(response)
+				facebook.data = response
+	      		
       		userManager:getPlayerByFacebookId()
       	elseif(failure) then
    			print("--> old FB token")

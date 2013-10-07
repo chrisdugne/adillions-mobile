@@ -1,35 +1,35 @@
 -----------------------------------------------------------------------------------------
 
-DrawManager = {}	
+LotteryManager = {}	
 
 -----------------------------------------------------------------------------------------
 
-function DrawManager:new()  
+function LotteryManager:new()  
 
 	local object = {
-		nextDraw = {},
+		nextLottery = {},
 		currentSelection = {}
 	}
 
-	setmetatable(object, { __index = DrawManager })
+	setmetatable(object, { __index = LotteryManager })
 	return object
 end
 
 -----------------------------------------------------------------------------------------
 
-function DrawManager:getNextDraw()
+function LotteryManager:getNextLottery()
 	utils.postWithJSON(
 	{}, 
-	SERVER_URL .. "nextDraw", 
+	SERVER_URL .. "nextLottery", 
 	function(result)
-		drawManager.nextDraw = json.decode(result.response)
-		drawManager.nextDraw.theme = json.decode(drawManager.nextDraw.theme)
+		self.nextLottery = json.decode(result.response)
+		self.nextLottery.theme = json.decode(self.nextLottery.theme)
 	end)
 end
 
 -----------------------------------------------------------------------------------------
 
-function DrawManager:addToSelection(num)
+function LotteryManager:addToSelection(num)
 	self.currentSelection[#self.currentSelection+1] = num
 	self:refreshNumberSelectionDisplay()
 	
@@ -37,7 +37,7 @@ function DrawManager:addToSelection(num)
 	hud.balls[num].selected = true
 end
 
-function DrawManager:removeFromSelection(num)
+function LotteryManager:removeFromSelection(num)
 	local indexToDelete
 	for k,n in pairs(self.currentSelection) do
 		if(num == n) then
@@ -51,13 +51,13 @@ function DrawManager:removeFromSelection(num)
 	hud.balls[num].selected = false
 end
 
-function DrawManager:canAddToSelection()
-	return #self.currentSelection < self.nextDraw.maxPicks
+function LotteryManager:canAddToSelection()
+	return #self.currentSelection < self.nextLottery.maxPicks
 end
 
 -----------------------------------------------------------------------------------------
 
-function DrawManager:addToAdditionalSelection(ball)
+function LotteryManager:addToAdditionalSelection(ball)
 	if(self.currentAdditionalBall) then
 		self.currentAdditionalBall.selected = false
 		self.currentAdditionalBall.alpha = 0.3
@@ -69,7 +69,7 @@ function DrawManager:addToAdditionalSelection(ball)
 	self:refreshThemeSelectionDisplay()
 end
 
-function DrawManager:cancelAdditionalSelection()
+function LotteryManager:cancelAdditionalSelection()
 	self.currentAdditionalBall.selected = false
 	self.currentAdditionalBall.alpha = 0.3
 	self.currentAdditionalBall = nil
@@ -78,7 +78,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function DrawManager:startSelection()
+function LotteryManager:startSelection()
 	self.currentSelection = {}
 	self.currentAdditionalBall = nil
 	self:refreshNumberSelectionDisplay()
@@ -86,7 +86,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function DrawManager:refreshNumberSelectionDisplay()
+function LotteryManager:refreshNumberSelectionDisplay()
 
 	-------------------------------------
 	-- erase
@@ -103,10 +103,10 @@ function DrawManager:refreshNumberSelectionDisplay()
 	-------------------------------------
 	-- numbers
 	
-	for i = 1,drawManager.nextDraw.maxPicks do
+	for i = 1,self.nextLottery.maxPicks do
 		local num = self.currentSelection[i]
 		if(self.currentSelection[i]) then
-			viewManager.drawSelectedBall(num, marginLeft + xGap*i, display.contentHeight*0.7, function()
+			viewManager.drawSelectedBall(num, marginLeft + xGap*i, display.contentHeight*0.78, function()
    			self:removeFromSelection(num)
 			end)
 			nbSelected = nbSelected + 1 
@@ -116,15 +116,15 @@ function DrawManager:refreshNumberSelectionDisplay()
 	-------------------------------------
 	-- ok button
 	
-	if(#self.currentSelection == drawManager.nextDraw.maxPicks) then 
-   	viewManager.drawSelectedBall("_ok", display.contentWidth*0.8, display.contentHeight*0.75, function()
+	if(#self.currentSelection == self.nextLottery.maxPicks) then 
+   	viewManager.drawSelectedBall("_ok", display.contentWidth*0.8, display.contentHeight*0.82, function()
    		table.sort(self.currentSelection)
    		router.openSelectAdditionalNumber()
    	end)
    else
       local text = display.newText( {
    		parent = hud.selection,
-   		text = "_PICK " .. (drawManager.nextDraw.maxPicks - #self.currentSelection) .. " more numbers",     
+   		text = "_PICK " .. (self.nextLottery.maxPicks - #self.currentSelection) .. " more numbers",     
    		x = display.contentWidth*0.7,
    		y = display.contentHeight*0.75,
    		font = FONT,   
@@ -132,7 +132,7 @@ function DrawManager:refreshNumberSelectionDisplay()
    	} )
 	end
 --	
---	if(nbSelected == drawManager.nextDraw.maxPicks+1) then
+--	if(nbSelected == LotteryManager.nextLottery.maxPicks+1) then
 --   	viewManager.drawSelectedBall("_OK !", display.contentWidth*0.9, display.contentHeight*0.7, function()
 --   		self:validateSelection()
 --   	end)
@@ -141,7 +141,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function DrawManager:refreshThemeSelectionDisplay()
+function LotteryManager:refreshThemeSelectionDisplay()
 
 	-------------------------------------
 	-- erase
@@ -158,7 +158,7 @@ function DrawManager:refreshThemeSelectionDisplay()
 	-------------------------------------
 	-- numbers
 	
-	for i = 1,drawManager.nextDraw.maxPicks do
+	for i = 1,self.nextLottery.maxPicks do
 		local num = self.currentSelection[i]
 		viewManager.drawSelectedBall(num, marginLeft + xGap*i, display.contentHeight*0.7)
 		if(self.currentSelection[i]) then nbSelected = nbSelected + 1 end
@@ -167,7 +167,7 @@ function DrawManager:refreshThemeSelectionDisplay()
 	-------------------------------------
 	-- additional theme
 
-	viewManager.drawSelectedAdditional(self.currentAdditionalBall, marginLeft + xGap*(drawManager.nextDraw.maxPicks+1), display.contentHeight*0.7, function()
+	viewManager.drawSelectedAdditional(self.currentAdditionalBall, marginLeft + xGap*(self.nextLottery.maxPicks+1), display.contentHeight*0.7, function()
 		self:cancelAdditionalSelection()
 	end)
 	
@@ -176,7 +176,7 @@ function DrawManager:refreshThemeSelectionDisplay()
 	-------------------------------------
 	-- ok button
 	
-	if(nbSelected == drawManager.nextDraw.maxPicks+1) then
+	if(nbSelected == self.nextLottery.maxPicks+1) then
    	viewManager.drawSelectedBall("_OK !", display.contentWidth*0.9, display.contentHeight*0.7, function()
    		self:validateSelection()
    	end)
@@ -185,11 +185,11 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function DrawManager:validateSelection()
-	self.currentSelection[drawManager.nextDraw.maxPicks+1] = self.currentAdditionalBall.num
-	userManager:storeDrawTicket(self.currentSelection)
+function LotteryManager:validateSelection()
+	self.currentSelection[self.nextLottery.maxPicks+1] = self.currentAdditionalBall.num
+	userManager:storeLotteryTicket(self.currentSelection)
 end
 
 -----------------------------------------------------------------------------------------
 
-return DrawManager
+return LotteryManager

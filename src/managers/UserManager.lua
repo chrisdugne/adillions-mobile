@@ -18,22 +18,21 @@ end
 
 function UserManager:fetchPlayer()
 
-	utils.postWithJSON({
-		email = GLOBALS.savedData.user.email
-	}, 
-	SERVER_URL .. "player", 
-	function(result)
-		if(result.isError) then
-			router.openOutside()
-		else
-
-			local player = json.decode(result.response)
-			if(not player) then 
-				router.openOutside()
-			else 
-				userManager:receivedPlayer(player)
-			end
-		end
+	utils.postWithJSON(
+   	{}, 
+   	SERVER_URL .. "player", 
+   	function(result)
+   		if(result.isError) then
+   			router.openOutside()
+   		else
+   
+   			local player = json.decode(result.response)
+   			if(not player) then 
+   				router.openOutside()
+   			else 
+   				userManager:receivedPlayer(player)
+   			end
+   		end
 	end
 	)
 
@@ -42,24 +41,25 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:getPlayerByFacebookId()
+	
 	utils.postWithJSON({
-		facebookData = facebook.data
+		facebookData = facebook.data,
+		accessToken = GLOBALS.savedData.facebookAccessToken
 	}, 
 	SERVER_URL .. "playerFromFB", 
 	function(result)
+			
 		if(result.isError) then
 			router.openOutside()
+		elseif(result.status == 401) then
+			print("openSigninFB")
+			router.openSigninFB()
 		else
-			local player = json.decode(result.response.player)
-			if(not player) then 
-   			print("openSigninFB")
-				router.openSigninFB()
-			else 
-				GLOBALS.savedData.authToken 	= json.decode(result.response.authToken)     
-   			print("getPlayerByFacebookId | got token", GLOBALS.savedData.authToken)
-      		utils.saveTable(GLOBALS.savedData, "savedData.json")
-				userManager:receivedPlayer(player)
-   		end
+			response 							= json.decode(result.response)
+			local player 						= response.player
+			GLOBALS.savedData.authToken 	= response.authToken     
+			utils.saveTable(GLOBALS.savedData, "savedData.json")
+			userManager:receivedPlayer(player)
 		end
 	end
 	)
@@ -93,9 +93,18 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:storeDrawTicket(selection)
+function UserManager:storeLotteryTicket(ticket)
 	print("-")
-	utils.tprint(selection)
+	utils.tprint(ticket)
+
+	utils.postWithJSON({
+   		ticket = ticket,
+   	}, 
+   	SERVER_URL .. "storeLotteryTicket", 
+   	function(result)
+   
+   	end
+	)
 end
 
 -----------------------------------------------------------------------------------------

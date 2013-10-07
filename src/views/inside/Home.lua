@@ -24,11 +24,11 @@ function scene:refreshScene()
 
 	------------------
 
-	viewManager.drawButton("_Jouer !", display.contentWidth*0.5, display.contentHeight *0.5, router.openFillDrawTicket)
+	viewManager.drawButton("_Jouer !", display.contentWidth*0.5, display.contentHeight *0.5, router.openFillLotteryTicket)
 
 	------------------
 	
-	drawManager:getNextDraw()
+	lotteryManager:getNextLottery()
 	
 	------------------
 

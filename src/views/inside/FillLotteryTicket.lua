@@ -30,14 +30,14 @@ function scene:refreshScene()
 	------------------
 	
 	local marginLeft = display.contentWidth * 0.02
-	local marginTop =  display.contentHeight * 0.05
+	local marginTop =  HEADER_HEIGHT * 2
 	local xGap =  display.contentWidth *0.12
 	local yGap =  display.contentHeight *0.08
 	
 	--------------------------------------------------------------
 	-- Classic nums
 
-	local totalNums 		 = drawManager.nextDraw.maxNumbers  
+	local totalNums 		 = lotteryManager.nextLottery.maxNumbers  
 	local nbNumPerLine	 = 7
 	  
 	------------------
@@ -60,7 +60,7 @@ function scene:refreshScene()
 	
 	------------------
 	
-	drawManager:startSelection()
+	lotteryManager:startSelection()
 	
 	------------------
 

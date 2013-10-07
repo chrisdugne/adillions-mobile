@@ -39,14 +39,14 @@ function scene:refreshScene()
 	------------------
 
 	local marginLeft = display.contentWidth * 0.02
-	local marginTop =  30
+	local marginTop =  HEADER_HEIGHT * 2 
 	local xGap =  display.contentWidth *0.12
 	local yGap =  display.contentHeight *0.10
 	
 	------------------
 
-	for i = 1,#userManager.user.drawTickets do
-		local ticket = userManager.user.drawTickets[i]
+	for i = 1,#userManager.user.lotteryTickets do
+		local ticket = userManager.user.lotteryTickets[i]
    	local numbers = json.decode(ticket.numbers)
    	
    	for j = 1,#numbers-1 do

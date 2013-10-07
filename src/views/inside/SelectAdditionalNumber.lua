@@ -30,7 +30,7 @@ function scene:refreshScene()
 	--------------------------------------------------------------
 	-- Additional nums
 
-	local totalNums 	= #drawManager.nextDraw.theme
+	local totalNums 	= #lotteryManager.nextLottery.theme
 	local nbNumPerLine = 3
 	
 	local marginLeft =  display.contentWidth * 0.08
@@ -67,7 +67,7 @@ function scene:refreshScene()
 	
 	------------------
 	
-	drawManager:refreshThemeSelectionDisplay()
+	lotteryManager:refreshThemeSelectionDisplay()
 	
 	------------------
 

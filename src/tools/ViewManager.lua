@@ -6,6 +6,8 @@ module(..., package.seeall)
 
 local widget = require( "widget" )
 
+local ICON_SIZE = 100
+
 -----------------------------------------------------------------------------------------
 
 function setupView(selectedTab)
@@ -28,16 +30,35 @@ end
 function initHeader()
 
    hud.headerRect = display.newRect(hud, 0, 0, display.contentWidth, HEADER_HEIGHT)
-   hud.headerRect.alpha = 0.2
+   hud.headerRect.alpha = 0.7
+--   hud.headerRect:setFillColor(0,100,0)
    hud.headerRect:setFillColor(0)
+   
+	hud.logo = display.newImage( hud, "assets/images/logo.png")  
+	hud.logo:scale(0.5,0.5)
+	hud.logo.x = hud.logo.contentWidth*0.6
+	hud.logo.y = HEADER_HEIGHT*0.5
 
 	hud.headerTitle = display.newText( {
 		parent = hud,
 		text = "Adillions",     
-		x = display.contentWidth*0.5,
-		y = 45,
+		x = display.contentWidth*0.3,
+		y = HEADER_HEIGHT * 0.5,
 		font = FONT,   
-		fontSize = HEADER_HEIGHT * 0.5,
+		fontSize = 60,
+	} )
+
+   hud.headerRect2 = display.newRect(hud, 0, HEADER_HEIGHT, display.contentWidth, HEADER_HEIGHT)
+   hud.headerRect2.alpha = 0.2
+   hud.headerRect2:setFillColor(0,150,0)
+
+	hud.headerTitle2 = display.newText( {
+		parent = hud,
+		text = "Action",     
+		x = display.contentWidth*0.5,
+		y = HEADER_HEIGHT * 1.5,
+		font = FONT,   
+		fontSize = 35,
 	} )
 end
 
@@ -100,8 +121,8 @@ function buildMenu(tabSelected)
 	local tabButtons = 
 	{
 		{
-			width = 64, 
-			height = 64,
+			width = ICON_SIZE, 
+			height = ICON_SIZE,
 			defaultFile = "assets/demos/tabIcon.png",
 			overFile = "assets/demos/tabIcon-down.png",
 			label = "_Home",
@@ -120,8 +141,8 @@ function buildMenu(tabSelected)
 			selected = tabSelected == 1
 		},
 		{
-			width = 64, 
-			height = 64,
+			width = ICON_SIZE, 
+			height = ICON_SIZE,
 			defaultFile = "assets/demos/tabIcon.png",
 			overFile = "assets/demos/tabIcon-down.png",
 			label = "_My tickets",
@@ -140,8 +161,8 @@ function buildMenu(tabSelected)
 			selected =  tabSelected == 2
 		},
 		{
-			width = 64, 
-			height = 64,
+			width = ICON_SIZE, 
+			height = ICON_SIZE,
 			defaultFile = "assets/demos/tabIcon.png",
 			overFile = "assets/demos/tabIcon-down.png",
 			label = "_Results",
@@ -160,8 +181,8 @@ function buildMenu(tabSelected)
 			selected =  tabSelected == 3
 		},
 		{
-			width = 64, 
-			height = 64,
+			width = ICON_SIZE, 
+			height = ICON_SIZE,
 			defaultFile = "assets/demos/tabIcon.png",
 			overFile = "assets/demos/tabIcon-down.png",
 			label = "_Profile",
@@ -180,8 +201,8 @@ function buildMenu(tabSelected)
 			selected =  tabSelected == 4
 		},
 		{
-			width = 64, 
-			height = 64,
+			width = ICON_SIZE, 
+			height = ICON_SIZE,
 			defaultFile = "assets/demos/tabIcon.png",
 			overFile = "assets/demos/tabIcon-down.png",
 			label = "_Info",
@@ -238,16 +259,25 @@ end
 
 function drawBallToPick(num,x,y)
 
-	local ball = display.newCircle(hud, x,y, 45)
+--	local ball = display.newCircle(hud, x,y, 45)
+	
+	local i = random(1,4)
+
+	local ball = display.newImage(hud, "assets/images/game/balls3/ball"..i..".png")
+	ball:scale(0.4,0.4)
+	ball.x = x
+	ball.y = y
 	
 	ball.text = display.newText( {
 		parent = hud,
 		text = num,     
-		x = x,
-		y = y,
+		x = x+12,
+		y = y-24,
 		font = FONT,   
-		fontSize = 40,
+		fontSize = 23,
 	} )
+	
+	ball.text.rotation = -16
 	
 	ball.text:setTextColor(0)
 	ball.num = num
@@ -256,10 +286,10 @@ function drawBallToPick(num,x,y)
 
 	utils.onTouch(ball, function()
 		if(ball.selected) then
-			drawManager:removeFromSelection(ball.num)
+			lotteryManager:removeFromSelection(ball.num)
 		else
-   		if(drawManager:canAddToSelection()) then
-   			drawManager:addToSelection(ball.num)
+   		if(lotteryManager:canAddToSelection()) then
+   			lotteryManager:addToSelection(ball.num)
    		end
 		end
 		
@@ -281,15 +311,15 @@ function drawThemeToPick(num,x,y)
 	
 	utils.onTouch(ball, function()
 		if(ball.selected) then
-			drawManager:cancelAdditionalSelection()
+			lotteryManager:cancelAdditionalSelection()
 		else
-			drawManager:addToAdditionalSelection(ball)
+			lotteryManager:addToAdditionalSelection(ball)
 		end
 	end)
 end
 
 function drawThemeIcon(num, parent, x, y, scale)
-	drawRemoteImage(drawManager.nextDraw.theme[num],parent, x, y, scale)
+	drawRemoteImage(lotteryManager.nextLottery.theme[num],parent, x, y, scale)
 end
 
 -----------------------------------------------------------------------------------------
@@ -307,7 +337,13 @@ end
 
 function drawBall(parent, num,x,y)
 
-	local ball = display.newCircle(x,y, 45)
+--	local ball = display.newCircle(x,y, 45)
+
+	local ball = display.newImage(hud, "assets/images/game/balls3/ball1.png")
+	ball:scale(0.4,0.4)
+	ball.x = x
+	ball.y = y
+	
 	parent:insert(ball)
 	
 	ball.text = display.newText( {
