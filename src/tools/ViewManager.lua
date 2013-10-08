@@ -408,8 +408,8 @@ function drawBall(parent, num,x,y)
 
 --	local ball = display.newCircle(x,y, 45)
 
-	local ball = display.newImage(hud, "assets/images/game/balls3/ball1.png")
-	ball:scale(0.4,0.4)
+	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
+	ball:scale(0.6,0.6)
 	ball.x = x
 	ball.y = y
 	
