@@ -93,12 +93,10 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:storeLotteryTicket(ticket)
-	print("-")
-	utils.tprint(ticket)
+function UserManager:storeLotteryTicket(numbers)
 
 	utils.postWithJSON({
-   		ticket = ticket,
+   		numbers = numbers,
    	}, 
    	SERVER_URL .. "storeLotteryTicket", 
    	function(result)

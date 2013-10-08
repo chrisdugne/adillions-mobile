@@ -39,21 +39,43 @@ function scene:refreshScene()
 	------------------
 
 	local marginLeft = display.contentWidth * 0.02
-	local marginTop =  HEADER_HEIGHT * 2 
+	local marginTop =  HEADER_HEIGHT - 20
 	local xGap =  display.contentWidth *0.12
 	local yGap =  display.contentHeight *0.10
 	
 	------------------
 
+	local currentLottery = nil
+	local nbLotteries 	= 0
+	
+	utils.tprint(userManager.user.lotteryTickets)
+
 	for i = 1,#userManager.user.lotteryTickets do
+		
 		local ticket = userManager.user.lotteryTickets[i]
    	local numbers = json.decode(ticket.numbers)
+
+		if(currentLottery ~= ticket.lottery.uid) then
+			currentLottery = ticket.lottery.uid
+			nbLotteries = nbLotteries + 1
+			
+      	local title = display.newText( {
+      		text = "_Tirage du " .. os.date("%d/%m/%Y", ticket.lottery.date/1000),     
+      		x = display.contentWidth*0.5,
+      		y = marginTop + yGap*(i+nbLotteries-1),
+      		font = FONT,   
+      		fontSize = 48,
+      	} )
+      
+      	title:setTextColor(0,100,0)
+      	board:insert(title)
+		end
    	
    	for j = 1,#numbers-1 do
-			viewManager.drawBall(board, numbers[j], marginLeft + xGap*j, marginTop + yGap*i)
+			viewManager.drawBall(board, numbers[j], marginLeft + xGap*j, marginTop + yGap*(i+nbLotteries))
    	end
    	
-   	viewManager.drawTheme(board, numbers[6], marginLeft + xGap*6, marginTop + yGap*i)
+   	viewManager.drawTheme(board, numbers[6], marginLeft + xGap*6, marginTop + yGap*(i+nbLotteries))
 	end
 
 

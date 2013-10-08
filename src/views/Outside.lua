@@ -35,17 +35,20 @@ end
 function scene:refreshScene()
 
 	viewManager.initBack()
+	viewManager.initHeader()
 	
 	---------------------------------------------------------------
 	
-   local percentText = display.newText( {
-		parent = hud,
-		text = APP_NAME,     
-		x = display.contentWidth*0.5,
-		y = 35,
-		font = FONT,   
-		fontSize = 55,
-	} )
+--   hud.titleText = display.newText( {
+--		parent = hud,
+--		text = APP_NAME,     
+--		x = display.contentWidth*0.5,
+--		y = HEADER_HEIGHT*0.5,
+--		font = FONT,   
+--		fontSize = 55,
+--	} )
+--	
+--	hud.titleText:setTextColor(0,100,0)
 	
 	---------------------------------------------------------------
 	
@@ -65,6 +68,7 @@ function scene:refreshScene()
 		fontSize = 18,
 	} )
 
+	hud.whyText:setTextColor(0,100,0)
 	utils.onTouch(hud.whyText,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
 
 	---------------------------------------------------------------
@@ -78,6 +82,7 @@ function scene:refreshScene()
 		fontSize = 21,
 	} )
 
+	hud.CGU:setTextColor(0,100,0)
 	utils.onTouch(hud.CGU,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
 	
 	---------------------------------------------------------------

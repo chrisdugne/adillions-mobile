@@ -19,7 +19,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function initBack()
-	hud.back = display.newImageRect( hud, "assets/images/blur.jpg", display.contentWidth, display.contentHeight)  
+	hud.back = display.newImageRect( hud, "assets/images/bg.jpg", display.contentWidth, display.contentHeight)  
 	hud.back.x = display.viewableContentWidth*0.5 
 	hud.back.y = display.viewableContentHeight*0.5
 	hud.back:toBack()
@@ -29,10 +29,70 @@ end
 
 function initHeader()
 
-   hud.headerRect = display.newRect(hud, 0, 0, display.contentWidth, HEADER_HEIGHT)
-   hud.headerRect.alpha = 0.7
---   hud.headerRect:setFillColor(0,100,0)
-   hud.headerRect:setFillColor(0)
+	hud.headerRect = display.newImageRect( hud, "assets/demos/woodbg.white.png", display.contentWidth, HEADER_HEIGHT)  
+	hud.headerRect.x = display.viewableContentWidth*0.5 
+	hud.headerRect.y = HEADER_HEIGHT*0.5 
+
+	--------------- vertfonce/transparent
+	
+--	HEADER_ALPHA = 0.9
+--	HEADER_R = 0
+--	HEADER_G = 80
+--	HEADER_B = 0
+--	SUBHEADER_ALPHA = 0.1
+--	SUBHEADER_R = 0
+--	SUBHEADER_G = 0
+--	SUBHEADER_B = 0
+	
+	--------------- vertfonce/vertpomme
+	
+--	HEADER_ALPHA = 0.8
+--	HEADER_R = 0
+--	HEADER_G = 20
+--	HEADER_B = 0
+--	SUBHEADER_ALPHA = 0.4
+--	SUBHEADER_R = 0
+--	SUBHEADER_G = 170
+--	SUBHEADER_B = 0
+
+	--------------- vertfonce/vertleger
+
+--	HEADER_ALPHA = 0.8
+--	HEADER_R = 0
+--	HEADER_G = 20
+--	HEADER_B = 0
+--	SUBHEADER_ALPHA = 0.4
+--	SUBHEADER_R = 0
+--	SUBHEADER_G = 70
+--	SUBHEADER_B = 0
+
+	--------------- grey/vertfonce
+	
+--	HEADER_ALPHA = 0.2
+--	HEADER_R = 0
+--	HEADER_G = 0
+--	HEADER_B = 0
+--	SUBHEADER_ALPHA = 0.4
+--	SUBHEADER_R = 0
+--	SUBHEADER_G = 50
+--	SUBHEADER_B = 0
+
+	--------------- noir/vertpomme
+	
+--	HEADER_ALPHA = 0.7
+--	HEADER_R = 0
+--	HEADER_G = 0
+--	HEADER_B = 0
+--	SUBHEADER_ALPHA = 0.4
+--	SUBHEADER_R = 0
+--	SUBHEADER_G = 150
+--	SUBHEADER_B = 0
+
+	---------------
+
+--   hud.headerRect = display.newRect(hud, 0, 0, display.contentWidth, HEADER_HEIGHT)
+--   hud.headerRect:setFillColor(HEADER_R, HEADER_G, HEADER_B)
+--   hud.headerRect.alpha = HEADER_ALPHA
    
 	hud.logo = display.newImage( hud, "assets/images/logo.png")  
 	hud.logo:scale(0.5,0.5)
@@ -47,19 +107,22 @@ function initHeader()
 		font = FONT,   
 		fontSize = 60,
 	} )
+	
+	hud.headerTitle:setTextColor(0,100,0)
 
-   hud.headerRect2 = display.newRect(hud, 0, HEADER_HEIGHT, display.contentWidth, HEADER_HEIGHT)
-   hud.headerRect2.alpha = 0.2
-   hud.headerRect2:setFillColor(0,150,0)
-
-	hud.headerTitle2 = display.newText( {
-		parent = hud,
-		text = "Action",     
-		x = display.contentWidth*0.5,
-		y = HEADER_HEIGHT * 1.5,
-		font = FONT,   
-		fontSize = 35,
-	} )
+--   hud.headerRect2 = display.newRect(hud, 0, HEADER_HEIGHT, display.contentWidth, HEADER_HEIGHT)
+--   hud.headerRect2:setFillColor(SUBHEADER_R, SUBHEADER_G, SUBHEADER_B)
+--   hud.headerRect2.alpha = SUBHEADER_ALPHA
+--
+--	hud.headerTitle2 = display.newText( {
+--		parent = hud,
+--		text = "Action",     
+--		x = display.contentWidth*0.5,
+--		y = HEADER_HEIGHT * 1.5,
+--		font = FONT,   
+--		fontSize = 35,
+--	} )
+--	
 end
 
 ------------------------------------------------------------------
@@ -70,7 +133,7 @@ function drawButton(text, x, y, action)
 	button.x = x
 	button.y = y
 	
-	button.loginText = display.newText( {
+	button.text = display.newText( {
 		parent = hud,
 		text = text,     
 		x = x,
@@ -79,6 +142,7 @@ function drawButton(text, x, y, action)
 		fontSize = 45,
 	} )
 
+	button.text:setTextColor(0,100,0)
 	utils.onTouch(button, action)
 
 	hud.buttons[#hud.buttons] = button 
@@ -222,15 +286,19 @@ function buildMenu(tabSelected)
 		},
 	}
 
-	local leftEdge 	= "assets/demos/tabBar_tabSelectedLeftEdge.png"
-	local rightEdge 	= "assets/demos/tabBar_tabSelectedRightEdge.png"
-	local middle 		= "assets/demos/tabBar_tabSelectedMiddle.png"
-	
-	if(tabSelected == 0) then
+--	local leftEdge 	= "assets/demos/tabBar_tabSelectedLeftEdge.png"
+--	local rightEdge 	= "assets/demos/tabBar_tabSelectedRightEdge.png"
+--	local middle 		= "assets/demos/tabBar_tabSelectedMiddle.png"
+--	
+--	if(tabSelected == 0) then
+--		leftEdge 	= "assets/demos/tabBar_noSelection.png"
+--		rightEdge 	= "assets/demos/tabBar_noSelection.png"
+--		middle 		= "assets/demos/tabBar_noSelection.png"
+--	end
+		
 		leftEdge 	= "assets/demos/tabBar_noSelection.png"
 		rightEdge 	= "assets/demos/tabBar_noSelection.png"
 		middle 		= "assets/demos/tabBar_noSelection.png"
-	end
 
 	-- Create a tabBar
 	local tabBar = widget.newTabBar({
@@ -238,7 +306,8 @@ function buildMenu(tabSelected)
 		top = display.contentHeight - MENU_HEIGHT,
 		width = display.contentWidth,
 		height = MENU_HEIGHT,
-		backgroundFile = "assets/demos/woodbg.png",
+--		backgroundFile = "assets/demos/woodbg.png",
+		backgroundFile = "assets/demos/woodbg.white.jpg",
 		tabSelectedLeftFile = leftEdge,
 		tabSelectedRightFile = rightEdge,
 		tabSelectedMiddleFile = middle,
