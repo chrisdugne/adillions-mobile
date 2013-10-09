@@ -22,20 +22,9 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	
-	local board = widget.newScrollView
-	{
-		top = 0,
-		left = 0,
-		width = display.contentWidth,
-		height = display.contentHeight - HEADER_HEIGHT - MENU_HEIGHT,
-		bottomPadding = HEADER_HEIGHT,
-		hideBackground = true,
-		id = "onBottom",
-		horizontalScrollDisabled = true,
-		verticalScrollDisabled = false,
-	}
 
+	viewManager.initBoard()
+	
 	------------------
 
 	local marginLeft = display.contentWidth * 0.02
@@ -48,8 +37,6 @@ function scene:refreshScene()
 	local currentLottery = nil
 	local nbLotteries 	= 0
 	
-	utils.tprint(userManager.user.lotteryTickets)
-
 	for i = 1,#userManager.user.lotteryTickets do
 		
 		local ticket = userManager.user.lotteryTickets[i]
@@ -59,29 +46,25 @@ function scene:refreshScene()
 			currentLottery = ticket.lottery.uid
 			nbLotteries = nbLotteries + 1
 			
-      	local title = display.newText( {
-      		text = "_Tirage du " .. os.date("%d/%m/%Y", ticket.lottery.date/1000),     
+			viewManager.newText({
+				parent = hud.board, 
+				text = lotteryManager:date(ticket.lottery), 
       		x = display.contentWidth*0.5,
-      		y = marginTop + yGap*(i+nbLotteries-1),
-      		font = FONT,   
-      		fontSize = 48,
-      	} )
+      		y = marginTop + yGap*(i+nbLotteries-1), 
+			})
       
-      	title:setTextColor(0,100,0)
-      	board:insert(title)
 		end
    	
    	for j = 1,#numbers-1 do
-			viewManager.drawBall(board, numbers[j], marginLeft + xGap*j, marginTop + yGap*(i+nbLotteries))
+			viewManager.drawBall(hud.board, numbers[j], marginLeft + xGap*j, marginTop + yGap*(i+nbLotteries))
    	end
    	
-   	viewManager.drawTheme(board, numbers[6], marginLeft + xGap*6, marginTop + yGap*(i+nbLotteries))
+   	viewManager.drawTheme(hud.board, numbers[6], marginLeft + xGap*6, marginTop + yGap*(i+nbLotteries))
 	end
-
 
 	------------------
 
-	hud:insert(board)
+	hud:insert(hud.board)
    
 	------------------
 	

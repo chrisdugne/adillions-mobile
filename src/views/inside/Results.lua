@@ -16,20 +16,79 @@ local scene = storyboard.newScene()
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
+	lotteryManager:getFinishedLotteries()
 end
 
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-
-	------------------
-	--
-	viewManager.drawButton("3", display.contentWidth*0.5, display.contentHeight *0.5, router.openOutside)
-
-	------------------
+	utils.emptyGroup(hud)
+	native.setActivityIndicator( true )
+	
+	if(lotteryManager.finishedLotteries) then
+   	native.setActivityIndicator( false )
+   	self:drawBoard()
+   else
+   	print("waiting for lotteries")
+   	timer.performWithDelay(1000, function() self:refreshScene() end)
+	end
 
 	viewManager.setupView(3)
 	self.view:insert(hud)
+end
+-----------------------------------------------------------------------------------------
+
+function scene:drawBoard()
+
+	viewManager.initBoard()
+	
+	------------------
+
+	local marginLeft = display.contentWidth * 0.02
+	local marginTop =  HEADER_HEIGHT + 70
+	local xGap =  display.contentWidth *0.12
+	local yGap =  display.contentHeight *0.4/aspectRatio
+
+	------------------
+	
+	for i = 1,#lotteryManager.finishedLotteries do
+		local lottery 	= lotteryManager.finishedLotteries[i]
+		local numbers 	= json.decode(lottery.result)
+		local theme 	= json.decode(lottery.theme)
+
+		local price = lotteryManager:price(lottery)
+
+		viewManager.newText({
+			parent = hud.board, 
+			text = lotteryManager:date(lottery), 
+			x = display.contentWidth*0.5,
+			y = marginTop + yGap*(i-1), 
+		})
+
+		viewManager.newText({
+			parent = hud.board, 
+			text = price, 
+			x = display.contentWidth*0.75,
+			y = marginTop + yGap*(i-1)+80, 
+		})
+
+		viewManager.newText({
+			parent = hud.board, 
+			text = lottery.nbWinners .. " _winners", 
+			x = display.contentWidth*0.25,
+			y = marginTop + yGap*(i-1)+80, 
+		})
+
+		for j = 1,#numbers-1 do
+			viewManager.drawBall(hud.board, numbers[j], marginLeft + xGap*j, marginTop + yGap*(i-1) + 200)
+		end
+   	
+   	viewManager.drawTheme(hud.board, numbers[6], marginLeft + xGap*6, marginTop + yGap*(i-1) + 200)
+   end
+   
+	------------------
+
+	hud:insert(hud.board)
 end
 
 ------------------------------------------

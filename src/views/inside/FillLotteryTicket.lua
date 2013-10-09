@@ -30,7 +30,7 @@ function scene:refreshScene()
 	------------------
 	
 	local marginLeft = display.contentWidth * 0.02
-	local marginTop =  HEADER_HEIGHT * 2
+	local marginTop =  HEADER_HEIGHT + 70
 	local xGap =  display.contentWidth *0.12
 	local yGap =  display.contentHeight *0.08
 	
@@ -50,7 +50,7 @@ function scene:refreshScene()
 	
 	for i = 1,nbRows do
    	for j = 1,nbLines do
-   		viewManager.drawBallToPick((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*j)
+   		viewManager.drawBallToPick((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(j-1))
    	end
 	end
 

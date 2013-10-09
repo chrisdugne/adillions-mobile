@@ -30,34 +30,49 @@ function LotteryManager:refreshNextLottery()
 
 		-------------------------------
 		
-   	hud.nbPlayers = display.newText( {
-   		parent = hud,
-   		text = self.nextLottery.nbPlayers .. "    _Players",     
+		viewManager.newText({
+			parent = hud, 
+			text = self.nextLottery.nbPlayers .. "    _Players",    
    		x = display.contentWidth*0.3,
    		y = display.contentHeight * 0.2,
-   		font = FONT,   
    		fontSize = 40,
-   	} )
-   	
-   	hud.nbPlayers:setTextColor(0,100,0)
+		})
 
 		-------------------------------
 		
-		local price = math.min(self.nextLottery.maxPrice, math.max(self.nextLottery.minPrice, self.nextLottery.nbTickets/1000 * self.nextLottery.cpm))
+		local price = self:price(self.nextLottery)
 		
-   	hud.price = display.newText( {
-   		parent = hud,
-   		text = price .. "  $",     
+		viewManager.newText({
+			parent = hud, 
+   		text = price,     
    		x = display.contentWidth*0.3,
    		y = display.contentHeight * 0.3,
-   		font = FONT,   
    		fontSize = 40,
-   	} )
-   	
-   	hud.price:setTextColor(0,100,0)
-
+		})
+		
 		-------------------------------
 	end)
+end
+
+function LotteryManager:getFinishedLotteries()
+	utils.postWithJSON(
+	{}, 
+	SERVER_URL .. "finishedLotteries", 
+	function(result)
+		self.finishedLotteries = json.decode(result.response)
+		
+		utils.tprint(self.finishedLotteries)
+	end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function LotteryManager:price(lottery)
+	return math.min(lottery.maxPrice, math.max(lottery.minPrice, lottery.nbTickets/1000 * lottery.cpm))  .. "  $"
+end
+
+function LotteryManager:date(lottery)
+	return "_Tirage du " .. os.date("%d/%m/%Y", lottery.date/1000)
 end
 
 -----------------------------------------------------------------------------------------
@@ -148,28 +163,29 @@ function LotteryManager:refreshNumberSelectionDisplay()
 
 	-------------------------------------
 	-- ok button
-	
+
 	if(#self.currentSelection == self.nextLottery.maxPicks) then 
-   	viewManager.drawSelectedBall("_ok", display.contentWidth*0.8, display.contentHeight*0.82, function()
-   		table.sort(self.currentSelection)
-   		router.openSelectAdditionalNumber()
-   	end)
-   else
-      local text = display.newText( {
-   		parent = hud.selection,
-   		text = "_PICK " .. (self.nextLottery.maxPicks - #self.currentSelection) .. " more numbers",     
-   		x = display.contentWidth*0.7,
-   		y = display.contentHeight*0.75,
-   		font = FONT,   
-   		fontSize = 40,
-   	} )
+		viewManager.drawSelectedBall("_ok", display.contentWidth*0.8, display.contentHeight*0.78, function()
+			table.sort(self.currentSelection)
+			router.openSelectAdditionalNumber()
+		end)
+	else
+
+		viewManager.newText({
+			parent = hud.selection, 
+			text = "_PICK " .. (self.nextLottery.maxPicks - #self.currentSelection) .. " more numbers",  
+			x = display.contentWidth*0.3,
+			y = display.contentHeight*0.71,
+			fontSize = 30,
+		})
+
 	end
---	
---	if(nbSelected == LotteryManager.nextLottery.maxPicks+1) then
---   	viewManager.drawSelectedBall("_OK !", display.contentWidth*0.9, display.contentHeight*0.7, function()
---   		self:validateSelection()
---   	end)
---   end
+	--	
+	--	if(nbSelected == LotteryManager.nextLottery.maxPicks+1) then
+	--   	viewManager.drawSelectedBall("_OK !", display.contentWidth*0.9, display.contentHeight*0.7, function()
+	--   		self:validateSelection()
+	--   	end)
+	--   end
 end
 
 -----------------------------------------------------------------------------------------

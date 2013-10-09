@@ -27,6 +27,23 @@ end
 	
 -----------------------------------------------------------------------------------------
 
+function initBoard()
+	hud.board = widget.newScrollView
+	{
+		top = 0,
+		left = 0,
+		width = display.contentWidth,
+		height = display.contentHeight - HEADER_HEIGHT - MENU_HEIGHT,
+		bottomPadding = HEADER_HEIGHT,
+		hideBackground = true,
+		id = "onBottom",
+		horizontalScrollDisabled = true,
+		verticalScrollDisabled = false,
+	}
+end
+	
+-----------------------------------------------------------------------------------------
+
 function initHeader()
 
 	hud.headerRect = display.newImageRect( hud, "assets/demos/woodbg.white.png", display.contentWidth, HEADER_HEIGHT)  
@@ -123,6 +140,25 @@ function initHeader()
 --		fontSize = 35,
 --	} )
 --	
+end
+
+------------------------------------------------------------------
+
+function newText(options)
+
+	local text = display.newText( {
+		text = options.text,     
+		x = options.x,
+		y = options.y,
+		font = FONT,   
+		fontSize = options.fontSize or 48
+	} )
+
+	text:setTextColor(0,100,0)
+
+	if(options.parent) then
+		options.parent:insert(text)
+	end
 end
 
 ------------------------------------------------------------------
@@ -328,25 +364,21 @@ end
 
 function drawBallToPick(num,x,y)
 
---	local ball = display.newCircle(hud, x,y, 45)
-	
 	local i = random(1,4)
 
-	local ball = display.newImage(hud, "assets/images/game/balls3/ball"..i..".png")
-	ball:scale(0.4,0.4)
+	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
+	ball:scale(0.5,0.5)
 	ball.x = x
 	ball.y = y
 	
 	ball.text = display.newText( {
 		parent = hud,
 		text = num,     
-		x = x+12,
-		y = y-24,
+		x = x,
+		y = y,
 		font = FONT,   
-		fontSize = 23,
+		fontSize = 44,
 	} )
-	
-	ball.text.rotation = -16
 	
 	ball.text:setTextColor(0)
 	ball.num = num
@@ -371,10 +403,14 @@ end
 
 function drawThemeToPick(num,x,y)
 
-	local ball = display.newCircle(hud, x,y, 65)
-	ball.alpha = 0.3
-	ball.selected = false
-	ball.num = num
+	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
+	ball:scale(0.7,0.7)
+	ball.x = x
+	ball.y = y
+
+	ball.alpha 		= 0.3
+	ball.selected 	= false
+	ball.num 		= num
 	
 	drawThemeIcon(num, hud, x, y)
 	
@@ -395,7 +431,10 @@ end
 
 function drawTheme(parent, num,x,y)
 
-	local ball = display.newCircle(x,y, 45)
+	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
+	ball:scale(0.7,0.7)
+	ball.x = x
+	ball.y = y
 	ball.num = num
 	parent:insert(ball)
 	
@@ -406,10 +445,8 @@ end
 
 function drawBall(parent, num,x,y)
 
---	local ball = display.newCircle(x,y, 45)
-
 	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
-	ball:scale(0.6,0.6)
+	ball:scale(0.5,0.5)
 	ball.x = x
 	ball.y = y
 	
@@ -434,7 +471,10 @@ end
 
 function drawSelectedBall(selected, x, y, action)
 
-	local ball = display.newCircle(hud.selection, x,y, 45)
+	local ball = display.newImage(hud.selection, "assets/images/game/balls3/ball.c.png")
+	ball:scale(0.5,0.5)
+	ball.x = x
+	ball.y = y
 	
 	if(not selected) then
 		selected = ""
@@ -466,7 +506,11 @@ function drawSelectedAdditional(ball,x,y, action)
 	if(not ball) then
 		drawSelectedBall(nil,x,y)
 	else
-   	local ballInSelection = display.newCircle(hud.selection, x,y, 45)
+   	local ballInSelection = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
+   	ballInSelection:scale(0.7,0.7)
+   	ballInSelection.x = x
+   	ballInSelection.y = y
+   	
 		drawThemeIcon(ball.num, hud.selection, x, y, 0.7)
 		
 		if(action) then
