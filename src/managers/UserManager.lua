@@ -30,7 +30,7 @@ function UserManager:fetchPlayer()
    			if(not player) then 
    				router.openOutside()
    			else 
-   				userManager:receivedPlayer(player)
+   				userManager:receivedPlayer(player, router.openHome)
    			end
    		end
 	end
@@ -59,7 +59,7 @@ function UserManager:getPlayerByFacebookId()
 			local player 						= response.player
 			GLOBALS.savedData.authToken 	= response.authToken     
 			utils.saveTable(GLOBALS.savedData, "savedData.json")
-			userManager:receivedPlayer(player)
+			userManager:receivedPlayer(player, router.openHome)
 		end
 	end
 	)
@@ -68,7 +68,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:receivedPlayer(player)
+function UserManager:receivedPlayer(player, next)
 	
 	self.user = player
 	
@@ -88,19 +88,30 @@ function UserManager:receivedPlayer(player)
 
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 	
-	router.openHome()	
+	next()	
 end
 
 -----------------------------------------------------------------------------------------
 
 function UserManager:storeLotteryTicket(numbers)
 
+	native.setActivityIndicator( true )
+
 	utils.postWithJSON({
    		numbers = numbers,
    	}, 
    	SERVER_URL .. "storeLotteryTicket", 
    	function(result)
-   
+				
+				native.setActivityIndicator( false )
+   			
+   			local player = json.decode(result.response)
+   			if(player) then 
+   				utils.tprint(player)
+   				userManager:receivedPlayer(player, router.openMyTickets)
+   			else 
+   				router.openOutside() -- pirate ?
+   			end
    	end
 	)
 end

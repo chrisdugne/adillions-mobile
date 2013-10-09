@@ -28,7 +28,7 @@ function scene:refreshScene()
 
 	------------------
 	
-	lotteryManager:getNextLottery()
+	lotteryManager:refreshNextLottery()
 	
 	------------------
 

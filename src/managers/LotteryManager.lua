@@ -17,13 +17,46 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function LotteryManager:getNextLottery()
+function LotteryManager:refreshNextLottery()
 	utils.postWithJSON(
 	{}, 
 	SERVER_URL .. "nextLottery", 
 	function(result)
+		
+		-------------------------------
+		
 		self.nextLottery = json.decode(result.response)
 		self.nextLottery.theme = json.decode(self.nextLottery.theme)
+
+		-------------------------------
+		
+   	hud.nbPlayers = display.newText( {
+   		parent = hud,
+   		text = self.nextLottery.nbPlayers .. "    _Players",     
+   		x = display.contentWidth*0.3,
+   		y = display.contentHeight * 0.2,
+   		font = FONT,   
+   		fontSize = 40,
+   	} )
+   	
+   	hud.nbPlayers:setTextColor(0,100,0)
+
+		-------------------------------
+		
+		local price = math.min(self.nextLottery.maxPrice, math.max(self.nextLottery.minPrice, self.nextLottery.nbTickets/1000 * self.nextLottery.cpm))
+		
+   	hud.price = display.newText( {
+   		parent = hud,
+   		text = price .. "  $",     
+   		x = display.contentWidth*0.3,
+   		y = display.contentHeight * 0.3,
+   		font = FONT,   
+   		fontSize = 40,
+   	} )
+   	
+   	hud.price:setTextColor(0,100,0)
+
+		-------------------------------
 	end)
 end
 
