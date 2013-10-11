@@ -46,86 +46,25 @@ end
 
 function initHeader()
 
-	hud.headerRect = display.newImageRect( hud, "assets/demos/woodbg.white.png", display.contentWidth, HEADER_HEIGHT)  
+	hud.headerRect = display.newImageRect( hud, "assets/images/menus/woodbg.white.png", display.contentWidth, HEADER_HEIGHT)  
 	hud.headerRect.x = display.viewableContentWidth*0.5 
 	hud.headerRect.y = HEADER_HEIGHT*0.5 
 
-	--------------- vertfonce/transparent
-	
---	HEADER_ALPHA = 0.9
---	HEADER_R = 0
---	HEADER_G = 80
---	HEADER_B = 0
---	SUBHEADER_ALPHA = 0.1
---	SUBHEADER_R = 0
---	SUBHEADER_G = 0
---	SUBHEADER_B = 0
-	
-	--------------- vertfonce/vertpomme
-	
---	HEADER_ALPHA = 0.8
---	HEADER_R = 0
---	HEADER_G = 20
---	HEADER_B = 0
---	SUBHEADER_ALPHA = 0.4
---	SUBHEADER_R = 0
---	SUBHEADER_G = 170
---	SUBHEADER_B = 0
-
-	--------------- vertfonce/vertleger
-
---	HEADER_ALPHA = 0.8
---	HEADER_R = 0
---	HEADER_G = 20
---	HEADER_B = 0
---	SUBHEADER_ALPHA = 0.4
---	SUBHEADER_R = 0
---	SUBHEADER_G = 70
---	SUBHEADER_B = 0
-
-	--------------- grey/vertfonce
-	
---	HEADER_ALPHA = 0.2
---	HEADER_R = 0
---	HEADER_G = 0
---	HEADER_B = 0
---	SUBHEADER_ALPHA = 0.4
---	SUBHEADER_R = 0
---	SUBHEADER_G = 50
---	SUBHEADER_B = 0
-
-	--------------- noir/vertpomme
-	
---	HEADER_ALPHA = 0.7
---	HEADER_R = 0
---	HEADER_G = 0
---	HEADER_B = 0
---	SUBHEADER_ALPHA = 0.4
---	SUBHEADER_R = 0
---	SUBHEADER_G = 150
---	SUBHEADER_B = 0
-
-	---------------
-
---   hud.headerRect = display.newRect(hud, 0, 0, display.contentWidth, HEADER_HEIGHT)
---   hud.headerRect:setFillColor(HEADER_R, HEADER_G, HEADER_B)
---   hud.headerRect.alpha = HEADER_ALPHA
-   
-	hud.logo = display.newImage( hud, "assets/images/logo.png")  
-	hud.logo:scale(0.5,0.5)
-	hud.logo.x = hud.logo.contentWidth*0.6
+	hud.logo = display.newImage( hud, "assets/images/logo.1.png")  
+	hud.logo:scale(0.4,0.4)
+	hud.logo.x = display.contentWidth*0.5
 	hud.logo.y = HEADER_HEIGHT*0.5
 
-	hud.headerTitle = display.newText( {
-		parent = hud,
-		text = "Adillions",     
-		x = display.contentWidth*0.3,
-		y = HEADER_HEIGHT * 0.5,
-		font = FONT,   
-		fontSize = 60,
-	} )
-	
-	hud.headerTitle:setTextColor(0,100,0)
+--	hud.headerTitle = display.newText( {
+--		parent = hud,
+--		text = "Adillions",     
+--		x = display.contentWidth*0.3,
+--		y = HEADER_HEIGHT * 0.5,
+--		font = FONT,   
+--		fontSize = 60,
+--	} )
+--	
+--	hud.headerTitle:setTextColor(0,100,0)
 
 --   hud.headerRect2 = display.newRect(hud, 0, HEADER_HEIGHT, display.contentWidth, HEADER_HEIGHT)
 --   hud.headerRect2:setFillColor(SUBHEADER_R, SUBHEADER_G, SUBHEADER_B)
@@ -154,7 +93,7 @@ function newText(options)
 		fontSize = options.fontSize or 48
 	} )
 
-	text:setTextColor(0,100,0)
+	text:setTextColor(100)
 
 	if(options.parent) then
 		options.parent:insert(text)
@@ -163,14 +102,55 @@ end
 
 ------------------------------------------------------------------
 
-function drawButton(text, x, y, action)
+function drawBorder(parent, x, y, width, height)
 
-	local button = display.newImage(hud, "assets/images/hud/button.png")
-	button.x = x
-	button.y = y
+	if(not width) then
+		width = 250
+	end
+
+	if(not height) then
+		height = 90
+	end
+	
+	-----------------------------------
+	-- square gradient buttons
+	 	
+--	local g = graphics.newGradient(
+--     { 255, 255, 255 },
+--     { 239, 239, 239 },
+--     "down" )
+--
+--	local button = display.newRect(parent, 0, 0,width, height)
+--   button.x, button.y = x, y
+--   button.strokeWidth = 3
+--   button:setFillColor(g)
+--   button:setStrokeColor(220)
+
+	-----------------------------------
+	-- rounded buttons 1 color
+	
+	local border = display.newRoundedRect(parent, 0, 0,width, height, 12)
+   border.x = x 
+   border.y = y
+   border.strokeWidth = 3
+   border:setFillColor(250)
+   border:setStrokeColor(220)
+   
+   return border
+end
+
+------------------------------------------------------------------
+
+function drawButton(parent, text, x, y, action, width, height)
+
+	-----------------------------------
+
+	local button = drawBorder(parent, x, y, width, height)
+
+	-----------------------------------
 	
 	button.text = display.newText( {
-		parent = hud,
+		parent = parent,
 		text = text,     
 		x = x,
 		y = y - display.contentHeight*0.01,
@@ -181,7 +161,9 @@ function drawButton(text, x, y, action)
 	button.text:setTextColor(0,100,0)
 	utils.onTouch(button, action)
 
-	hud.buttons[#hud.buttons] = button 
+--	hud.buttons[#hud.buttons] = button 
+	parent:insert(button)
+	parent:insert(button.text)
 
 	return button
 end
@@ -223,8 +205,8 @@ function buildMenu(tabSelected)
 		{
 			width = ICON_SIZE, 
 			height = ICON_SIZE,
-			defaultFile = "assets/demos/tabIcon.png",
-			overFile = "assets/demos/tabIcon-down.png",
+			defaultFile = "assets/images/menus/tabIcon.png",
+			overFile = "assets/images/menus/tabIcon-down.png",
 			label = "_Home",
 			labelColor =
 			{
@@ -243,8 +225,8 @@ function buildMenu(tabSelected)
 		{
 			width = ICON_SIZE, 
 			height = ICON_SIZE,
-			defaultFile = "assets/demos/tabIcon.png",
-			overFile = "assets/demos/tabIcon-down.png",
+			defaultFile = "assets/images/menus/tabIcon.png",
+			overFile = "assets/images/menus/tabIcon-down.png",
 			label = "_My tickets",
 			labelColor =
 			{
@@ -263,8 +245,8 @@ function buildMenu(tabSelected)
 		{
 			width = ICON_SIZE, 
 			height = ICON_SIZE,
-			defaultFile = "assets/demos/tabIcon.png",
-			overFile = "assets/demos/tabIcon-down.png",
+			defaultFile = "assets/images/menus/tabIcon.png",
+			overFile = "assets/images/menus/tabIcon-down.png",
 			label = "_Results",
 			labelColor =
 			{
@@ -283,8 +265,8 @@ function buildMenu(tabSelected)
 		{
 			width = ICON_SIZE, 
 			height = ICON_SIZE,
-			defaultFile = "assets/demos/tabIcon.png",
-			overFile = "assets/demos/tabIcon-down.png",
+			defaultFile = "assets/images/menus/tabIcon.png",
+			overFile = "assets/images/menus/tabIcon-down.png",
 			label = "_Profile",
 			labelColor =
 			{
@@ -303,8 +285,8 @@ function buildMenu(tabSelected)
 		{
 			width = ICON_SIZE, 
 			height = ICON_SIZE,
-			defaultFile = "assets/demos/tabIcon.png",
-			overFile = "assets/demos/tabIcon-down.png",
+			defaultFile = "assets/images/menus/tabIcon.png",
+			overFile = "assets/images/menus/tabIcon-down.png",
 			label = "_Info",
 			labelColor =
 			{
@@ -322,19 +304,19 @@ function buildMenu(tabSelected)
 		},
 	}
 
---	local leftEdge 	= "assets/demos/tabBar_tabSelectedLeftEdge.png"
---	local rightEdge 	= "assets/demos/tabBar_tabSelectedRightEdge.png"
---	local middle 		= "assets/demos/tabBar_tabSelectedMiddle.png"
+--	local leftEdge 	= "assets/images/menus/tabBar_tabSelectedLeftEdge.png"
+--	local rightEdge 	= "assets/images/menus/tabBar_tabSelectedRightEdge.png"
+--	local middle 		= "assets/images/menus/tabBar_tabSelectedMiddle.png"
 --	
 --	if(tabSelected == 0) then
---		leftEdge 	= "assets/demos/tabBar_noSelection.png"
---		rightEdge 	= "assets/demos/tabBar_noSelection.png"
---		middle 		= "assets/demos/tabBar_noSelection.png"
+--		leftEdge 	= "assets/images/menus/tabBar_noSelection.png"
+--		rightEdge 	= "assets/images/menus/tabBar_noSelection.png"
+--		middle 		= "assets/images/menus/tabBar_noSelection.png"
 --	end
 		
-		leftEdge 	= "assets/demos/tabBar_noSelection.png"
-		rightEdge 	= "assets/demos/tabBar_noSelection.png"
-		middle 		= "assets/demos/tabBar_noSelection.png"
+		leftEdge 	= "assets/images/menus/tabBar_noSelection.png"
+		rightEdge 	= "assets/images/menus/tabBar_noSelection.png"
+		middle 		= "assets/images/menus/tabBar_noSelection.png"
 
 	-- Create a tabBar
 	local tabBar = widget.newTabBar({
@@ -342,8 +324,8 @@ function buildMenu(tabSelected)
 		top = display.contentHeight - MENU_HEIGHT,
 		width = display.contentWidth,
 		height = MENU_HEIGHT,
---		backgroundFile = "assets/demos/woodbg.png",
-		backgroundFile = "assets/demos/woodbg.white.jpg",
+--		backgroundFile = "assets/images/menus/woodbg.png",
+		backgroundFile = "assets/images/menus/woodbg.white.jpg",
 		tabSelectedLeftFile = leftEdge,
 		tabSelectedRightFile = rightEdge,
 		tabSelectedMiddleFile = middle,
@@ -429,10 +411,12 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function drawTheme(parent, num,x,y)
+function drawTheme(parent, num,x,y, scale)
+	
+	if(not scale) then scale = 0.7 end
 
 	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
-	ball:scale(0.7,0.7)
+	ball:scale(scale,scale)
 	ball.x = x
 	ball.y = y
 	ball.num = num
@@ -506,7 +490,7 @@ function drawSelectedAdditional(ball,x,y, action)
 	if(not ball) then
 		drawSelectedBall(nil,x,y)
 	else
-   	local ballInSelection = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
+   	local ballInSelection = display.newImage(hud.selection, "assets/images/game/balls3/ball.c.png")
    	ballInSelection:scale(0.7,0.7)
    	ballInSelection.x = x
    	ballInSelection.y = y

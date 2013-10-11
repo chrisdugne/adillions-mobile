@@ -23,23 +23,104 @@ end
 function scene:refreshScene()
 
 	------------------
+	
+	hud.friendsRect = display.newImageRect( hud, "assets/images/menus/panel.subheader.png", display.contentWidth, HEADER_HEIGHT*2)  
+	hud.friendsRect.x = display.contentWidth*0.5
+	hud.friendsRect.y = HEADER_HEIGHT * 1.5
+	
+	hud.friendsIcon = display.newImage(hud, "assets/images/icons/friends.png")
+	hud.friendsIcon.x = display.contentWidth*0.12
+	hud.friendsIcon.y = HEADER_HEIGHT * 1.7
 
-	viewManager.drawButton("_Jouer !", display.contentWidth*0.5, display.contentHeight *0.5, router.openFillLotteryTicket)
+	hud.friendsText = viewManager.newText({
+		parent = hud, 
+		text = " _Invite your friends !",    
+		x = display.contentWidth*0.5,
+		y = HEADER_HEIGHT * 1.7,
+		fontSize = 55,
+	})
+
+	hud.arrowIcon = display.newImage(hud, "assets/images/icons/right.arrow.png")
+	hud.arrowIcon.x = display.contentWidth*0.9
+	hud.arrowIcon.y = HEADER_HEIGHT * 1.7	
 
 	------------------
 	
-	lotteryManager:refreshNextLottery()
+	lotteryManager:refreshNextLottery(function() self:drawNextLottery() end)
 	
 	------------------
 
-	if(userManager.user.facebookId) then
-   	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)	hud:insert(event.target) end, "profilePicture", system.TemporaryDirectory)
-	end
+--	if(userManager.user.facebookId) then
+--   	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)	hud:insert(event.target) end, "profilePicture", system.TemporaryDirectory)
+--	end
 
 	------------------
 
 	viewManager.setupView(1)
 	self.view:insert(hud)
+end
+
+------------------------------------------
+
+function scene:drawNextLottery( event )
+
+		local y = HEADER_HEIGHT * 4
+		
+		hud.lotteryPanel = display.newImageRect( hud, "assets/images/menus/panel.simple.png", display.contentWidth, HEADER_HEIGHT*3)  
+		hud.lotteryPanel.x = display.contentWidth*0.5
+		hud.lotteryPanel.y = y
+	
+--	
+--		viewManager.drawBorder(
+--			hud, 
+--			display.contentWidth*0.5, 
+--			y, 
+--			display.contentWidth*0.7, 
+--			display.contentHeight*0.17
+--		)
+
+		-------------------------------
+		
+		viewManager.newText({
+			parent = hud, 
+			text = lotteryManager.nextLottery.nbPlayers .. "    _Players",    
+   		x = display.contentWidth*0.3,
+   		y = y - 30,
+   		fontSize = 40,
+		})
+
+		-------------------------------
+		
+		local price = lotteryManager:price(lotteryManager.nextLottery)
+		
+		viewManager.newText({
+			parent = hud, 
+   		text = price,     
+   		x = display.contentWidth*0.3,
+   		y = y + 30,
+   		fontSize = 40,
+		})
+		
+		-------------------------------
+	
+		viewManager.drawButton(hud, "_Jouer !", display.contentWidth*0.7, display.contentHeight *0.5, router.openFillLotteryTicket)
+		
+		-------------------------------
+   	-- theme
+   	
+		viewManager.newText({
+			parent = hud, 
+			text = "_THIS WEEK'S THEME",    
+   		x = display.contentWidth*0.25,
+   		y = display.contentHeight * 0.67,
+   		fontSize = 32,
+		})
+		
+   	------------------
+   	
+		viewManager.drawRemoteImage("http://www.uralys.com/adillions/themes/theme1/eyes.png", hud, display.contentWidth*0.5, display.contentHeight * 0.75)
+	   	
+   	------------------
 end
 
 ------------------------------------------

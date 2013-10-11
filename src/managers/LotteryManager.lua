@@ -17,40 +17,16 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function LotteryManager:refreshNextLottery()
+function LotteryManager:refreshNextLottery(draw)
 	utils.postWithJSON(
 	{}, 
 	SERVER_URL .. "nextLottery", 
 	function(result)
-		
-		-------------------------------
-		
+	
 		self.nextLottery = json.decode(result.response)
 		self.nextLottery.theme = json.decode(self.nextLottery.theme)
-
-		-------------------------------
 		
-		viewManager.newText({
-			parent = hud, 
-			text = self.nextLottery.nbPlayers .. "    _Players",    
-   		x = display.contentWidth*0.3,
-   		y = display.contentHeight * 0.2,
-   		fontSize = 40,
-		})
-
-		-------------------------------
-		
-		local price = self:price(self.nextLottery)
-		
-		viewManager.newText({
-			parent = hud, 
-   		text = price,     
-   		x = display.contentWidth*0.3,
-   		y = display.contentHeight * 0.3,
-   		fontSize = 40,
-		})
-		
-		-------------------------------
+		draw()
 	end)
 end
 
@@ -145,8 +121,9 @@ function LotteryManager:refreshNumberSelectionDisplay()
 	-- display
 	
 	local nbSelected  = 0
-	local marginLeft 	=  -display.contentWidth *0.02
-	local xGap 			=  display.contentWidth *0.12
+	local marginLeft 	=  -display.contentWidth *0.014
+	local xGap 			=  display.contentWidth *0.11
+	local y 				= 	hud.gridPanel.contentHeight + HEADER_HEIGHT/2
 	
 	-------------------------------------
 	-- numbers
@@ -154,8 +131,8 @@ function LotteryManager:refreshNumberSelectionDisplay()
 	for i = 1,self.nextLottery.maxPicks do
 		local num = self.currentSelection[i]
 		if(self.currentSelection[i]) then
-			viewManager.drawSelectedBall(num, marginLeft + xGap*i, display.contentHeight*0.78, function()
-   			self:removeFromSelection(num)
+			viewManager.drawSelectedBall(num, marginLeft + xGap*i, y, function()
+				self:removeFromSelection(num)
 			end)
 			nbSelected = nbSelected + 1 
 		end
@@ -164,20 +141,24 @@ function LotteryManager:refreshNumberSelectionDisplay()
 	-------------------------------------
 	-- ok button
 
-	if(#self.currentSelection == self.nextLottery.maxPicks) then 
-		viewManager.drawSelectedBall("_ok", display.contentWidth*0.8, display.contentHeight*0.78, function()
+	if(#self.currentSelection == self.nextLottery.maxPicks) then
+		viewManager.drawButton(hud.selection, "_ok !", display.contentWidth*0.9, y, function()
 			table.sort(self.currentSelection)
 			router.openSelectAdditionalNumber()
-		end)
-	else
+		end,
+		110)
 
-		viewManager.newText({
-			parent = hud.selection, 
-			text = "_PICK " .. (self.nextLottery.maxPicks - #self.currentSelection) .. " more numbers",  
-			x = display.contentWidth*0.3,
-			y = display.contentHeight*0.71,
-			fontSize = 30,
-		})
+		-------------------------------------
+		-- text pick more
+
+--	else
+--		viewManager.newText({
+--			parent = hud.selection, 
+--			text = "_PICK " .. (self.nextLottery.maxPicks - #self.currentSelection) .. " more numbers",  
+--			x = display.contentWidth*0.3,
+--			y = display.contentHeight*0.71,
+--			fontSize = 30,
+--		})
 
 	end
 	--	
@@ -201,8 +182,8 @@ function LotteryManager:refreshThemeSelectionDisplay()
 	-- display
 	
 	local nbSelected  = 0
-	local marginLeft 	=  -display.contentWidth *0.02
-	local xGap 			=  display.contentWidth *0.12
+	local marginLeft 	=  -display.contentWidth *0.014
+	local xGap 			=  display.contentWidth *0.11
 	
 	-------------------------------------
 	-- numbers
@@ -216,7 +197,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
 	-------------------------------------
 	-- additional theme
 
-	viewManager.drawSelectedAdditional(self.currentAdditionalBall, marginLeft + xGap*(self.nextLottery.maxPicks+1), display.contentHeight*0.7, function()
+	viewManager.drawSelectedAdditional(self.currentAdditionalBall, marginLeft + xGap*(self.nextLottery.maxPicks+1) + 20, display.contentHeight*0.7, function()
 		self:cancelAdditionalSelection()
 	end)
 	
@@ -226,9 +207,12 @@ function LotteryManager:refreshThemeSelectionDisplay()
 	-- ok button
 	
 	if(nbSelected == self.nextLottery.maxPicks+1) then
-   	viewManager.drawSelectedBall("_OK !", display.contentWidth*0.9, display.contentHeight*0.7, function()
+	
+		viewManager.drawButton(hud.selection, "_ok !", display.contentWidth*0.5, display.contentHeight*0.8, function()
    		self:validateSelection()
-   	end)
+		end,
+		110)
+	
    end
 end
 

@@ -29,7 +29,7 @@ function scene:refreshScene()
 
 	local marginLeft = display.contentWidth * 0.02
 	local marginTop =  HEADER_HEIGHT - 20
-	local xGap =  display.contentWidth *0.12
+	local xGap =  display.contentWidth *0.1
 	local yGap =  display.contentHeight *0.10
 	
 	------------------
@@ -59,7 +59,7 @@ function scene:refreshScene()
 			viewManager.drawBall(hud.board, numbers[j], marginLeft + xGap*j, marginTop + yGap*(i+nbLotteries))
    	end
    	
-   	viewManager.drawTheme(hud.board, numbers[6], marginLeft + xGap*6, marginTop + yGap*(i+nbLotteries))
+   	viewManager.drawTheme(hud.board, numbers[#numbers], marginLeft + xGap*#numbers + 20, marginTop + yGap*(i+nbLotteries))
 	end
 
 	------------------

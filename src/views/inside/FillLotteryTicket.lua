@@ -30,7 +30,7 @@ function scene:refreshScene()
 	------------------
 	
 	local marginLeft = display.contentWidth * 0.02
-	local marginTop =  HEADER_HEIGHT + 70
+	local marginTop =  HEADER_HEIGHT + 60
 	local xGap =  display.contentWidth *0.12
 	local yGap =  display.contentHeight *0.08
 	
@@ -48,20 +48,29 @@ function scene:refreshScene()
 	
 	------------------
 	
+	local gridHeight = marginTop + (nbLines) * yGap
+	hud.gridPanel = display.newImageRect( hud, "assets/images/menus/panel.simple.png", display.contentWidth, gridHeight)  
+	hud.gridPanel.x = display.contentWidth*0.5
+	hud.gridPanel.y = gridHeight*0.5
+
+	------------------
+	
 	for i = 1,nbRows do
    	for j = 1,nbLines do
-   		viewManager.drawBallToPick((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(j-1))
-   	end
+   		local ballNum = (j-1)*nbRows+i
+			viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, marginTop + yGap*(j-1))
+		end
 	end
 
 	for i = 1,nbOnlastLine do
-		viewManager.drawBallToPick(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
+		local ballNum = math.floor(nbLines)*nbRows+i
+		viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, marginTop + yGap*math.floor(nbLines))
 	end
-	
+
 	------------------
-	
+
 	lotteryManager:startSelection()
-	
+
 	------------------
 
 	viewManager.setupView(0)

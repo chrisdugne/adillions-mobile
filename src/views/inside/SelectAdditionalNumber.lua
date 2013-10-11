@@ -31,17 +31,24 @@ function scene:refreshScene()
 	-- Additional nums
 
 	local totalNums 	= #lotteryManager.nextLottery.theme
-	local nbNumPerLine = 3
+	local nbNumPerLine = math.floor((totalNums + 1)/2)
 	
-	local marginLeft =  display.contentWidth * 0.08
-	local marginTop =  display.contentHeight * 0.14
-	local xGap =  display.contentWidth *0.21
-	local yGap =  display.contentHeight *0.17
+	local marginLeft =  display.contentWidth * 0.12/nbNumPerLine
+	local marginTop =  HEADER_HEIGHT + 50
+	local xGap =  display.contentWidth *0.7/nbNumPerLine
+	local yGap =  display.contentHeight *0.15
 	
 	local nbLines =  totalNums/nbNumPerLine
 	local nbRows =  totalNums/nbLines
 	local nbOnlastLine = totalNums - math.floor(nbLines)*nbRows
 	
+	------------------
+
+	local gridHeight = marginTop + (nbLines+1) * yGap
+	hud.gridPanel = display.newImageRect( hud, "assets/images/menus/panel.simple.png", display.contentWidth, gridHeight)  
+	hud.gridPanel.x = display.contentWidth*0.5
+	hud.gridPanel.y = gridHeight*0.5
+
 	------------------
 	
 	for i = 1,nbRows do
