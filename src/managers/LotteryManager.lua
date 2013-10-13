@@ -53,6 +53,26 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function LotteryManager:isGameAvailable()
+
+	local nbPlayedTickets = 0
+	
+	if(userManager.user.lotteryTickets) then
+   	
+   	for i = 1,#userManager.user.lotteryTickets do
+   		if(userManager.user.lotteryTickets[i].lottery.uid == self.nextLottery.uid) then
+   			nbPlayedTickets = nbPlayedTickets + 1
+   		end
+   	end
+   	
+	end
+	
+	print (userManager.user.availableTickets - nbPlayedTickets .. " remaining tickets to play")
+	return nbPlayedTickets < userManager.user.availableTickets
+end
+
+-----------------------------------------------------------------------------------------
+
 function LotteryManager:addToSelection(num)
 	self.currentSelection[#self.currentSelection+1] = num
 	self:refreshNumberSelectionDisplay()
@@ -118,7 +138,8 @@ function LotteryManager:refreshNumberSelectionDisplay()
 	-- erase
 	
 	utils.emptyGroup(hud.selection)
-
+	table.sort(self.currentSelection)
+	
 	-------------------------------------
 	-- display
 	
@@ -126,6 +147,10 @@ function LotteryManager:refreshNumberSelectionDisplay()
 	local marginLeft 	=  -display.contentWidth *0.014
 	local xGap 			=  display.contentWidth *0.11
 	local y 				= 	hud.gridPanel.contentHeight + HEADER_HEIGHT/2
+	
+	-------------------------------------
+	
+	viewManager.drawBorder(hud.selection, display.contentWidth*0.4, y, display.contentWidth*0.78, TICKET_HEIGHT)
 	
 	-------------------------------------
 	-- numbers
@@ -144,8 +169,7 @@ function LotteryManager:refreshNumberSelectionDisplay()
 	-- ok button
 
 	if(#self.currentSelection == self.nextLottery.maxPicks) then
-		viewManager.drawButton(hud.selection, "_ok !", display.contentWidth*0.9, y, function()
-			table.sort(self.currentSelection)
+		viewManager.drawButton(hud.selection, "_ok !", display.contentWidth*0.89, y, function()
 			router.openSelectAdditionalNumber()
 		end,
 		110)

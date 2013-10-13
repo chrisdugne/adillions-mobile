@@ -101,6 +101,8 @@ function UserManager:receivedPlayer(player, next)
 
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 	
+	facebook.isFacebookFan()
+   	
 	next()	
 end
 

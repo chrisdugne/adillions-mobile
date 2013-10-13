@@ -31,7 +31,7 @@ end
 function scene:loginViewListener( event )
 
     if event.url then
-
+		print(event.url)
     	if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
 			self:closeWebView()    		
 			local params = utils.getUrlParams(event.url);

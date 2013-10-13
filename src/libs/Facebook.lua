@@ -69,8 +69,10 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function isFacebookFan(failure)
+function isFacebookFan()
+	print("isFacebookFan")
 	if(GLOBALS.savedData.facebookAccessToken) then
+   	print("-> check")
    	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
    	network.request(url , "GET", function(result)
    		
@@ -84,12 +86,7 @@ function isFacebookFan(failure)
    	
    		if(not response.error) then
    			print("1")
-      	elseif(failure) then
-   			print("f1")
       	end
    	end)
-   elseif(failure) then
-		print("f2")
-   	failure()
    end
 end

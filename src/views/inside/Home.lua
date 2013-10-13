@@ -28,6 +28,8 @@ function scene:refreshScene()
 	hud.friendsIcon.x = display.contentWidth*0.12
 	hud.friendsIcon.y = HEADER_HEIGHT * 1.7
 
+	------------------
+	
 	hud.friendsText = viewManager.newText({
 		parent = hud, 
 		text = " _Invite your friends !",    
@@ -37,6 +39,8 @@ function scene:refreshScene()
 	})
 
 	hud.friendsText:setReferencePoint(display.CenterReferencePoint);
+
+	------------------
 
 	hud.arrowIcon = display.newImage(hud, "assets/images/icons/right.arrow.png")
 	hud.arrowIcon.x = display.contentWidth*0.9
@@ -66,29 +70,25 @@ end
 
 function scene:drawNextLottery( event )
 
-		local y = HEADER_HEIGHT * 4
+		local y = HEADER_HEIGHT * 3.7
+		local top = HEADER_HEIGHT * 3
 		
-		hud.lotteryPanel = display.newImageRect( hud, "assets/images/menus/panel.simple.png", display.contentWidth, HEADER_HEIGHT*3)  
+		hud.lotteryPanel = display.newImageRect( hud, "assets/images/menus/panel.simple.png", display.contentWidth, HEADER_HEIGHT*2.5)  
 		hud.lotteryPanel.x = display.contentWidth*0.5
 		hud.lotteryPanel.y = y
-	
---	
---		viewManager.drawBorder(
---			hud, 
---			display.contentWidth*0.5, 
---			y, 
---			display.contentWidth*0.7, 
---			display.contentHeight*0.17
---		)
-
-		-------------------------------
 		
+---		
+--		viewManager.drawBorder(hud, display.contentWidth*0.5, y, display.contentWidth*0.95, 350)
+--	
+----		------------------------------------------------
+--
 		viewManager.newText({
 			parent = hud, 
-			text = lotteryManager.nextLottery.nbPlayers .. "    _Players",    
-   		x = display.contentWidth*0.3,
-   		y = y - 30,
-   		fontSize = 40,
+			text = lotteryManager:date(lotteryManager.nextLottery), 
+			x = display.contentWidth*0.05,
+   		y = top,
+			fontSize = 33,
+			referencePoint = display.CenterLeftReferencePoint
 		})
 
 		-------------------------------
@@ -98,14 +98,26 @@ function scene:drawNextLottery( event )
 		viewManager.newText({
 			parent = hud, 
    		text = price,     
-   		x = display.contentWidth*0.3,
-   		y = y + 30,
-   		fontSize = 40,
+			x = display.contentWidth*0.95,
+   		y = top,
+			fontSize = 83,
+			referencePoint = display.CenterRightReferencePoint
+		})
+
+		-------------------------------
+		
+		viewManager.newText({
+			parent = hud, 
+			text = lotteryManager.nextLottery.nbPlayers .. "    _Players", 
+			x = display.contentWidth*0.05,
+   		y = top + 70,
+			fontSize = 33,
+			referencePoint = display.CenterLeftReferencePoint
 		})
 		
 		-------------------------------
 	
-		viewManager.drawButton(hud, "_Jouer !", display.contentWidth*0.7, display.contentHeight *0.5, router.openFillLotteryTicket)
+		viewManager.drawButton(hud, "_Jouer !", display.contentWidth*0.5, top + 250, router.openFillLotteryTicket)
 		
 		-------------------------------
    	-- theme

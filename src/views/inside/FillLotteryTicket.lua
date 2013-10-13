@@ -23,6 +23,8 @@ end
 
 function scene:refreshScene()
 	
+	if(not lotteryManager:isGameAvailable()) then router.openHome() return end	
+	
 	------------------
 
 	hud.balls = {}

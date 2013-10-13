@@ -28,6 +28,7 @@ DEV					= 1
 
 HEADER_HEIGHT		= display.contentHeight * 0.125
 MENU_HEIGHT			= 170
+TICKET_HEIGHT		= 100
 
 -----------------------------------------------------------------------------------------
 
@@ -101,16 +102,19 @@ if(not GLOBALS.savedData) then
    router.openOutside()
 else
 	native.setActivityIndicator( true )
+	
 	if(GLOBALS.savedData.user.facebookId) then
    	facebook.getMe(function()
    		native.setActivityIndicator( false )
          router.openOutside()
    	end)
 	
-	else
-   	if(GLOBALS.savedData.user.uid) then
-   		userManager:fetchPlayer()
-   	end
+	elseif(GLOBALS.savedData.user.uid) then
+		userManager:fetchPlayer()
+   
+   else
+   	native.setActivityIndicator( false )
+      router.openOutside()
 	end
 		
 end

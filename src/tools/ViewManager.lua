@@ -514,7 +514,7 @@ function drawTicket(numbers, x, y)
 
 	local xGap =  display.contentWidth *0.1
 	
-	viewManager.drawBorder(hud.board, display.contentWidth*0.5, y, display.contentWidth*0.95, 120)
+	viewManager.drawBorder(hud.board, display.contentWidth*0.5, y, display.contentWidth*0.95, TICKET_HEIGHT)
    	
 	for j = 1,#numbers-1 do
 		drawBall(hud.board, numbers[j], x + xGap*j, y)
