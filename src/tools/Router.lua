@@ -98,4 +98,9 @@ function openSelectAdditionalNumber()
 	storyboard.gotoScene( "src.views.inside.SelectAdditionalNumber" )
 end
 
----------------------------------------------
+-----------------------------------------------------------------------------------------
+
+function openInviteFriends()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.InviteFriends" )
+end

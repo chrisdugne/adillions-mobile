@@ -24,10 +24,6 @@ function scene:refreshScene()
 
 	------------------
 	
-	hud.friendsRect = display.newImageRect( hud, "assets/images/menus/panel.subheader.png", display.contentWidth, HEADER_HEIGHT*2)  
-	hud.friendsRect.x = display.contentWidth*0.5
-	hud.friendsRect.y = HEADER_HEIGHT * 1.5
-	
 	hud.friendsIcon = display.newImage(hud, "assets/images/icons/friends.png")
 	hud.friendsIcon.x = display.contentWidth*0.12
 	hud.friendsIcon.y = HEADER_HEIGHT * 1.7
@@ -40,10 +36,16 @@ function scene:refreshScene()
 		fontSize = 55,
 	})
 
+	hud.friendsText:setReferencePoint(display.CenterReferencePoint);
+
 	hud.arrowIcon = display.newImage(hud, "assets/images/icons/right.arrow.png")
 	hud.arrowIcon.x = display.contentWidth*0.9
 	hud.arrowIcon.y = HEADER_HEIGHT * 1.7	
 
+	utils.onTouch(hud.arrowIcon, function()
+		router.openInviteFriends()
+	end)
+	
 	------------------
 	
 	lotteryManager:refreshNextLottery(function() self:drawNextLottery() end)

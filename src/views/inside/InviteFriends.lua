@@ -1,11 +1,8 @@
 -----------------------------------------------------------------------------------------
 --
--- AppHome.lua
---
 -----------------------------------------------------------------------------------------
 
 local scene = storyboard.newScene()
-local widget = require "widget"
 
 -----------------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
@@ -22,55 +19,36 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
+	local message = utils.urlEncode("Watch ads, and win real money, it's free !")
+	local url = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&redirect_uri=" .. SERVER_URL.."backToMobile"
+	
+	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
+	self.webView:request( url )
+	self.webView:addEventListener( "urlRequest", function(event) self:inviteListener(event) end )
+end
 
-	viewManager.initBoard()
-	
-	------------------
-	
-	if(userManager.user.lotteryTickets) then
+------------------------------------------
 
-   	local marginLeft = display.contentWidth * 0.02
-   	local marginTop =  HEADER_HEIGHT - 20
-   	local xGap =  display.contentWidth *0.1
-   	local yGap =  display.contentHeight *0.10
-   	
-   	------------------
-   
-   	local currentLottery = nil
-   	local nbLotteries 	= 0
-   	
-   	for i = 1,#userManager.user.lotteryTickets do
-   		
-   		local ticket = userManager.user.lotteryTickets[i]
-      	local numbers = json.decode(ticket.numbers)
-   
-   		if(currentLottery ~= ticket.lottery.uid) then
-   			currentLottery = ticket.lottery.uid
-   			nbLotteries = nbLotteries + 1
-   			
-   			viewManager.newText({
-   				parent = hud.board, 
-   				text = lotteryManager:date(ticket.lottery), 
-         		x = display.contentWidth*0.5,
-         		y = marginTop + yGap*(i+nbLotteries-1), 
-   			})
-         
-   		end
-      	
-      	viewManager.drawTicket(numbers, marginLeft, marginTop + yGap*(i+nbLotteries))
-   	end
-   
-   	------------------
-   
-   	hud:insert(hud.board)
-   
-   end
-   
-	------------------
-	
-	viewManager.setupView(2)
-	self.view:insert(hud)
-	
+function scene:inviteListener( event )
+
+    if event.url then
+		print (event.url)
+    	if string.startsWith(event.url, SERVER_URL .. "backToMobile") then
+			self:closeWebView()    		
+			
+			local result = utils.getUrlParams(event.url);
+			utils.tprint(result)
+			
+      	router.openHome()
+		end
+
+    end
+end
+
+function scene:closeWebView()
+	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+	self.webView:removeSelf()
+	self.webView = nil
 end
 
 ------------------------------------------

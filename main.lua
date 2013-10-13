@@ -9,8 +9,10 @@ APP_VERSION 		= "1.0"
 
 -----------------------------------------------------------------------------------------
 
-SERVER_URL 			= "http://192.168.0.7:9000/"
+SERVER_URL 			= "http://192.168.0.9:9000/"
 AUTH_TOKEN			= ""
+FACEBOOK_APP_ID 	= "170148346520274"
+FACEBOOK_PAGE_ID 	= "1418002011761117"
 
 -----------------------------------------------------------------------------------------
 
@@ -24,7 +26,7 @@ DEV					= 1
 
 -----------------------------------------------------------------------------------------
 
-HEADER_HEIGHT		= display.contentHeight * 0.115
+HEADER_HEIGHT		= display.contentHeight * 0.125
 MENU_HEIGHT			= 170
 
 -----------------------------------------------------------------------------------------
@@ -74,12 +76,12 @@ router 			= require "src.tools.Router"
 viewManager		= require "src.tools.ViewManager"
 
 UserManager		= require "src.managers.UserManager"
-LotteryManager		= require "src.managers.LotteryManager"
+LotteryManager	= require "src.managers.LotteryManager"
 
 -----------------------------------------------------------------------------------------
 
-userManager = UserManager:new()
-lotteryManager = LotteryManager:new()
+userManager 		= UserManager:new()
+lotteryManager 	= LotteryManager:new()
 
 -----------------------------------------------------------------------------------------
 
@@ -98,13 +100,19 @@ if(not GLOBALS.savedData) then
 	utils.initGameData()
    router.openOutside()
 else
-	facebook.getMe(function()
+	native.setActivityIndicator( true )
+	if(GLOBALS.savedData.user.facebookId) then
+   	facebook.getMe(function()
+   		native.setActivityIndicator( false )
+         router.openOutside()
+   	end)
+	
+	else
    	if(GLOBALS.savedData.user.uid) then
    		userManager:fetchPlayer()
-   	else
-         router.openOutside()
    	end
-	end)
+	end
+		
 end
 
 -----------------------------------------------------------------------------------------

@@ -95,7 +95,7 @@ function fillNextParam(params, paramsString)
 	if ( indexEqual ~= nil ) then
 		local varName = paramsString:sub(0, indexEqual-1)
 		local value = paramsString:sub(indexEqual+1, indexEndValue)
-		params[varName] = url_decode(value)
+		params[varName] = urlDecode(value)
 
 		if (indexAnd ~= nil) then
 			paramsString = paramsString:sub(indexAnd+1, string.len(paramsString) )
@@ -257,7 +257,7 @@ end
 
 --------------------------------------------------------
 
-function url_decode(str)
+function urlDecode(str)
 	str = string.gsub (str, "+", " ")
 	str = string.gsub (str, "%%(%x%x)",
 	function(h) return string.char(tonumber(h,16)) end)

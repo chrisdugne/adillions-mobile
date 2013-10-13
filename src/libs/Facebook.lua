@@ -53,7 +53,8 @@ function getMe(failure)
    			print("--> connected to FB")
       		utils.tprint(response)
 				facebook.data = response
-	      		
+
+				native.setActivityIndicator( false )	      		
       		userManager:getPlayerByFacebookId()
       	elseif(failure) then
    			print("--> old FB token")
@@ -67,45 +68,28 @@ function getMe(failure)
 end
 
 -----------------------------------------------------------------------------------------
---
---Facebook.getAppAccessToken = function()
---{
---   $.ajax({  
---      type: "GET",  
---      url: "https://graph.facebook.com/oauth/access_token?client_id=" + this.FACEBOOK_APP_ID + "&client_secret=" + this.FACEBOOK_APP_SECRET + "&grant_type=client_credentials",
---      success: function (data, textStatus, jqXHR)
---      {
---         if(data.indexOf("access_token") == -1){
---            Facebook.appAccessToken = data 
---         }
---         else{
---            // IE
---            Facebook.appAccessToken = data.split("=")[1] 
---         }
---
---      },
---      error: function(jqXHR, textStatus, errorThrown)
---      {
---         alert(textStatus);
---      }
---   });
---}
---
---Facebook.getMe = function(next)
---{
---   $.ajax({  
---      type: "GET",  
---      url: "https://graph.facebook.com/me?fields=name,first_name,last_name,picture,locale,birthday,email&access_token="+ this.accessToken,
---      dataType: "jsonp",
---      success: function (data, textStatus, jqXHR)
---      {
---         Facebook.data = data
---         next();
---      },
---      error: function(jqXHR, textStatus, errorThrown)
---      {
---         alert(textStatus);
---      }
---   });
---}
 
+function isFacebookFan(failure)
+	if(GLOBALS.savedData.facebookAccessToken) then
+   	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
+   	network.request(url , "GET", function(result)
+   		
+   		response = json.decode(result.response)
+   		
+   		print("----------")
+   		utils.tprint(response)
+   		print("----------")
+   		utils.tprint(response.error)
+   		print("----------")
+   	
+   		if(not response.error) then
+   			print("1")
+      	elseif(failure) then
+   			print("f1")
+      	end
+   	end)
+   elseif(failure) then
+		print("f2")
+   	failure()
+   end
+end

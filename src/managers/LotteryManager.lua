@@ -58,6 +58,7 @@ function LotteryManager:addToSelection(num)
 	self:refreshNumberSelectionDisplay()
 	
 	hud.balls[num].alpha = 1
+	hud.balls[num].text:setTextColor(255)
 	hud.balls[num].selected = true
 end
 
@@ -72,6 +73,7 @@ function LotteryManager:removeFromSelection(num)
 	self:refreshNumberSelectionDisplay()
 
 	hud.balls[num].alpha = 0.3
+	hud.balls[num].text:setTextColor(0)
 	hud.balls[num].selected = false
 end
 

@@ -48,10 +48,10 @@ function initHeader()
 
 	hud.headerRect = display.newImageRect( hud, "assets/images/menus/woodbg.white.png", display.contentWidth, HEADER_HEIGHT)  
 	hud.headerRect.x = display.viewableContentWidth*0.5 
-	hud.headerRect.y = HEADER_HEIGHT*0.5 
+	hud.headerRect.y = HEADER_HEIGHT*0.5
 
 	hud.logo = display.newImage( hud, "assets/images/logo.1.png")  
-	hud.logo:scale(0.4,0.4)
+	hud.logo:scale(0.5,0.5)
 	hud.logo.x = display.contentWidth*0.5
 	hud.logo.y = HEADER_HEIGHT*0.5
 
@@ -87,17 +87,20 @@ function newText(options)
 
 	local text = display.newText( {
 		text = options.text,     
-		x = options.x,
-		y = options.y,
 		font = FONT,   
 		fontSize = options.fontSize or 48
 	} )
 
 	text:setTextColor(100)
+	text:setReferencePoint(options.referencePoint or display.CenterReferencePoint);
+	text.x = options.x
+	text.y = options.y
 
 	if(options.parent) then
 		options.parent:insert(text)
 	end
+	
+	return text
 end
 
 ------------------------------------------------------------------
@@ -129,12 +132,13 @@ function drawBorder(parent, x, y, width, height)
 	-----------------------------------
 	-- rounded buttons 1 color
 	
-	local border = display.newRoundedRect(parent, 0, 0,width, height, 12)
+	local border = display.newRoundedRect(parent, 0, 0, width, height, 12)
    border.x = x 
    border.y = y
    border.strokeWidth = 3
    border:setFillColor(250)
    border:setStrokeColor(220)
+   parent:insert(border)
    
    return border
 end
@@ -348,8 +352,8 @@ function drawBallToPick(num,x,y)
 
 	local i = random(1,4)
 
-	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
-	ball:scale(0.5,0.5)
+	local ball = display.newImage(hud, "assets/images/game/ball.png")
+	ball:scale(0.23, 0.23)
 	ball.x = x
 	ball.y = y
 	
@@ -385,8 +389,8 @@ end
 
 function drawThemeToPick(num,x,y)
 
-	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
-	ball:scale(0.7,0.7)
+	local ball = display.newImage(hud, "assets/images/game/ball.png")
+	ball:scale(0.2,0.2)
 	ball.x = x
 	ball.y = y
 
@@ -413,9 +417,9 @@ end
 
 function drawTheme(parent, num,x,y, scale)
 	
-	if(not scale) then scale = 0.7 end
+	if(not scale) then scale = 0.2 end
 
-	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
+	local ball = display.newImage(hud, "assets/images/game/ball.png")
 	ball:scale(scale,scale)
 	ball.x = x
 	ball.y = y
@@ -429,8 +433,8 @@ end
 
 function drawBall(parent, num,x,y)
 
-	local ball = display.newImage(hud, "assets/images/game/balls3/ball.c.png")
-	ball:scale(0.5,0.5)
+	local ball = display.newImage(hud, "assets/images/game/ball.png")
+	ball:scale(0.2,0.2)
 	ball.x = x
 	ball.y = y
 	
@@ -444,9 +448,9 @@ function drawBall(parent, num,x,y)
 		fontSize = 40,
 	} )
 
+	ball.text:setTextColor(255)
 	parent:insert(ball.text)
 	
-	ball.text:setTextColor(0)
 	ball.num = num
 	ball.alpha = 1
 end
@@ -455,8 +459,8 @@ end
 
 function drawSelectedBall(selected, x, y, action)
 
-	local ball = display.newImage(hud.selection, "assets/images/game/balls3/ball.c.png")
-	ball:scale(0.5,0.5)
+	local ball = display.newImage(hud.selection, "assets/images/game/ball.png")
+	ball:scale(0.2,0.2)
 	ball.x = x
 	ball.y = y
 	
@@ -478,7 +482,7 @@ function drawSelectedBall(selected, x, y, action)
 		fontSize = 40,
 	} )
 	
-	ball.text:setTextColor(0)
+	ball.text:setTextColor(255)
 	
 	return ball
 end
@@ -490,8 +494,8 @@ function drawSelectedAdditional(ball,x,y, action)
 	if(not ball) then
 		drawSelectedBall(nil,x,y)
 	else
-   	local ballInSelection = display.newImage(hud.selection, "assets/images/game/balls3/ball.c.png")
-   	ballInSelection:scale(0.7,0.7)
+   	local ballInSelection = display.newImage(hud.selection, "assets/images/game/ball.png")
+   	ballInSelection:scale(0.2,0.2)
    	ballInSelection.x = x
    	ballInSelection.y = y
    	
@@ -503,3 +507,21 @@ function drawSelectedAdditional(ball,x,y, action)
 	end
 	
 end
+
+-----------------------------------------------------------------------------------------
+
+function drawTicket(numbers, x, y)
+
+	local xGap =  display.contentWidth *0.1
+	
+	viewManager.drawBorder(hud.board, display.contentWidth*0.5, y, display.contentWidth*0.95, 120)
+   	
+	for j = 1,#numbers-1 do
+		drawBall(hud.board, numbers[j], x + xGap*j, y)
+	end
+	
+	drawTheme(hud.board, numbers[#numbers], x + xGap*#numbers + 20, y)
+	
+end
+
+-----------------------------------------------------------------------------------------

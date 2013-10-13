@@ -45,45 +45,66 @@ function scene:drawBoard()
 	------------------
 
 	local marginLeft = display.contentWidth * 0.02
-	local marginTop =  HEADER_HEIGHT + 70
-	local xGap =  display.contentWidth *0.12
-	local yGap =  display.contentHeight *0.4/aspectRatio
+	local marginTop =  HEADER_HEIGHT + 90
+	local xGap =  display.contentWidth *0.1
+	local yGap =  display.contentHeight *0.5/aspectRatio
 
 	------------------
 	
 	for i = 1,#lotteryManager.finishedLotteries do
+
+		------------------------------------------------
+
 		local lottery 	= lotteryManager.finishedLotteries[i]
 		local numbers 	= json.decode(lottery.result)
 		local theme 	= json.decode(lottery.theme)
 
 		local price = lotteryManager:price(lottery)
+		local y = marginTop + yGap*(i-1) + 95
+	
+		------------------------------------------------
+	
+		viewManager.drawBorder(hud.board, display.contentWidth*0.5, y, display.contentWidth*0.95, 350)
+	
+		------------------------------------------------
 
 		viewManager.newText({
 			parent = hud.board, 
 			text = lotteryManager:date(lottery), 
-			x = display.contentWidth*0.5,
+			x = display.contentWidth*0.1,
 			y = marginTop + yGap*(i-1), 
+			fontSize = 33,
+			referencePoint = display.CenterLeftReferencePoint
 		})
+
+		------------------------------------------------
+		
+   	for j = 1,#numbers-1 do
+   		viewManager.drawBall(hud.board, numbers[j], marginLeft + xGap*j, y)
+   	end
+   	
+   	viewManager.drawTheme(hud.board, numbers[#numbers], marginLeft + xGap*#numbers + 20, y)
+
+		------------------------------------------------
 
 		viewManager.newText({
 			parent = hud.board, 
 			text = price, 
 			x = display.contentWidth*0.75,
-			y = marginTop + yGap*(i-1)+80, 
+			y = marginTop + yGap*(i-1)+200, 
+			fontSize = 36,
 		})
 
 		viewManager.newText({
 			parent = hud.board, 
 			text = lottery.nbWinners .. " _winners", 
 			x = display.contentWidth*0.25,
-			y = marginTop + yGap*(i-1)+80, 
+			y = marginTop + yGap*(i-1)+200, 
+			fontSize = 33,
 		})
 
-		for j = 1,#numbers-1 do
-			viewManager.drawBall(hud.board, numbers[j], marginLeft + xGap*j, marginTop + yGap*(i-1) + 200)
-		end
+		------------------------------------------------
    	
-   	viewManager.drawTheme(hud.board, numbers[6], marginLeft + xGap*6, marginTop + yGap*(i-1) + 200)
    end
    
 	------------------

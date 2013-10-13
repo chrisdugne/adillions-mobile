@@ -18,14 +18,19 @@ end
 
 function UserManager:fetchPlayer()
 
+	native.setActivityIndicator( true )
+	
+	print("fetchPlayer")
 	utils.postWithJSON(
    	{}, 
    	SERVER_URL .. "player", 
    	function(result)
+   		print("result", result)
+      	native.setActivityIndicator( false )
+   		
    		if(result.isError) then
    			router.openOutside()
    		else
-   
    			local player = json.decode(result.response)
    			if(not player) then 
    				router.openOutside()
@@ -42,13 +47,19 @@ end
 
 function UserManager:getPlayerByFacebookId()
 	
+	print("getPlayerByFacebookId")
+	native.setActivityIndicator( true )
+	
 	utils.postWithJSON({
 		facebookData = facebook.data,
 		accessToken = GLOBALS.savedData.facebookAccessToken
 	}, 
 	SERVER_URL .. "playerFromFB", 
 	function(result)
-			
+		
+		print("result", result)
+		native.setActivityIndicator( false )	
+		
 		if(result.isError) then
 			router.openOutside()
 		elseif(result.status == 401) then
@@ -56,9 +67,9 @@ function UserManager:getPlayerByFacebookId()
 			router.openSigninFB()
 		else
 			response 							= json.decode(result.response)
-			local player 						= response.player
+			local player 						= json.decode(response.player)
 			GLOBALS.savedData.authToken 	= response.authToken     
-			utils.saveTable(GLOBALS.savedData, "savedData.json")
+			
 			userManager:receivedPlayer(player, router.openHome)
 		end
 	end
@@ -70,6 +81,8 @@ end
 
 function UserManager:receivedPlayer(player, next)
 	
+	print("-->receivedPlayer")
+	utils.tprint(player)
 	self.user = player
 	
 	GLOBALS.savedData.user.uid 				= player.uid
