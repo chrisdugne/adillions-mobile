@@ -12,7 +12,7 @@ APP_VERSION 		= "1.0"
 SERVER_URL 			= "http://192.168.0.9:9000/"
 AUTH_TOKEN			= ""
 FACEBOOK_APP_ID 	= "170148346520274"
-FACEBOOK_PAGE_ID 	= "1418002011761117"
+FACEBOOK_PAGE_ID 	= "379432705492888"
 
 -----------------------------------------------------------------------------------------
 
@@ -29,6 +29,15 @@ DEV					= 1
 HEADER_HEIGHT		= display.contentHeight * 0.125
 MENU_HEIGHT			= 170
 TICKET_HEIGHT		= 100
+
+-----------------------------------------------------------------------------------------
+
+POINTS_TO_EARN_A_TICKET		= 8
+NB_POINTS_PER_TICKET			= 1
+START_AVAILABLE_TICKETS		= 10
+
+FACEBOOK_FAN_TICKETS			= 4
+TWITTER_FAN_TICKETS			= 4
 
 -----------------------------------------------------------------------------------------
 

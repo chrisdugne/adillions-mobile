@@ -24,6 +24,7 @@ function scene:refreshScene()
 	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
 	self.webView:request( SERVER_URL .. "msigninFB" )
 	self.webView:addEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
+	facebook.initWeb()
 end
 
 ------------------------------------------
@@ -32,6 +33,11 @@ function scene:signinFBViewListener( event )
 
     if event.url then
 
+		print("---   signinFBViewListener")
+		print(event.url)
+	
+    	facebook.newUrl()
+    
    	if event.url == SERVER_URL .. "backToMobile" then
 			self:closeWebView()    		
       	router.openOutside()
@@ -40,23 +46,30 @@ function scene:signinFBViewListener( event )
 			self:closeWebView()    		
 			local playerRealNames = utils.getUrlParams(event.url);
 			
-			GLOBALS.savedData.user.firstName 		= playerRealNames.firstName
-			GLOBALS.savedData.user.lastName 			= playerRealNames.lastName
+--			GLOBALS.savedData.user.firstName 		= playerRealNames.firstName
+--			GLOBALS.savedData.user.lastName 			= playerRealNames.lastName
 			GLOBALS.savedData.authToken 				= playerRealNames.authToken
-			     
-			print("signinFBViewListener | got token", GLOBALS.savedData.authToken)
       	utils.saveTable(GLOBALS.savedData, "savedData.json")
 
-			router.openHome()
+			userManager:fetchPlayer()
+			
+    	else
+    		facebook.checkWebUrl(event.url, function() self:askToLoginAgain() end)
+    		
 		end
 
     end
 end
 
 function scene:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+	self.webView:removeEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
 	self.webView:removeSelf()
 	self.webView = nil
+end
+
+function scene:askToLoginAgain()
+	self:closeWebView()
+	router.openLogin()  
 end
 
 ------------------------------------------

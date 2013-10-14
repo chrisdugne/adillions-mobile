@@ -58,6 +58,13 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function openConfirmation()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Confirmation" )
+end
+
+-----------------------------------------------------------------------------------------
+
 function openResults()
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.Results" )

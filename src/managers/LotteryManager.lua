@@ -26,6 +26,7 @@ function LotteryManager:refreshNextLottery(draw)
 		self.nextLottery = json.decode(result.response)
 		self.nextLottery.theme = json.decode(self.nextLottery.theme)
 		
+		userManager:checkUserCurrentLottery()
 		draw()
 	end)
 end
@@ -54,21 +55,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function LotteryManager:isGameAvailable()
-
-	local nbPlayedTickets = 0
-	
-	if(userManager.user.lotteryTickets) then
-   	
-   	for i = 1,#userManager.user.lotteryTickets do
-   		if(userManager.user.lotteryTickets[i].lottery.uid == self.nextLottery.uid) then
-   			nbPlayedTickets = nbPlayedTickets + 1
-   		end
-   	end
-   	
-	end
-	
-	print (userManager.user.availableTickets - nbPlayedTickets .. " remaining tickets to play")
-	return nbPlayedTickets < userManager.user.availableTickets
+	return userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets  > 0
 end
 
 -----------------------------------------------------------------------------------------

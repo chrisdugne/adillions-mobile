@@ -245,6 +245,7 @@ function post(url, data, next, type)
 	params.headers = headers
 	params.body = data
 
+	print("post", url)
 	network.request( url, "POST", next, params)
 end
 

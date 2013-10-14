@@ -5,6 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 local scene = storyboard.newScene()
+local widget = require "widget"
 
 -----------------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
@@ -21,62 +22,26 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "mlogin" )
-	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-	facebook.initWeb()
-end
 
-------------------------------------------
+	viewManager.initBoard()
 
-function scene:loginViewListener( event )
+	------------------
 
-    if event.url then
-    	
-		print("---   login listener")
-		print(event.url)
-		
-    	facebook.newUrl()
-    
-    	if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
-			self:closeWebView()    		
-			local params = utils.getUrlParams(event.url);
-			
-			GLOBALS.savedData.authToken 	= params.authToken         
-			GLOBALS.savedData.user.email 	= params.email   
-      	utils.saveTable(GLOBALS.savedData, "savedData.json")
+	viewManager.drawTicket(hud.board, lotteryManager.currentSelection, display.contentWidth*0.1, display.contentHeight*0.5)
+	hud:insert(hud.board)
 
-			userManager:fetchPlayer()
+	------------------
 
-    	elseif event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()    		
-      	router.openOutside()
+	viewManager.setupView(0)
 
-    	elseif string.find(event.url, "access_token") then
-			self:closeWebView()    		
-			local params = utils.getUrlParams(event.url);
-			
-			GLOBALS.savedData.facebookAccessToken 	= params.access_token         
-      	utils.saveTable(GLOBALS.savedData, "savedData.json")
+	------------------
+	
+	viewManager.showPoints(NB_POINTS_PER_TICKET)
 
-			facebook.getMe()
+	------------------
+	
+	self.view:insert(hud)
 
-    	else
-    		facebook.checkWebUrl(event.url, function() self:askToLoginAgain() end)
-    		
-		end
-
-    end
-end
-
-function scene:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-	self.webView:removeSelf()
-	self.webView = nil
-end
-
-function scene:askToLoginAgain()
-	self.webView:request( SERVER_URL .. "mlogin" )
 end
 
 ------------------------------------------

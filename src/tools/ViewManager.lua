@@ -55,41 +55,91 @@ function initHeader()
 	hud.logo.x = display.contentWidth*0.5
 	hud.logo.y = HEADER_HEIGHT*0.5
 
---	hud.headerTitle = display.newText( {
---		parent = hud,
---		text = "Adillions",     
---		x = display.contentWidth*0.3,
---		y = HEADER_HEIGHT * 0.5,
---		font = FONT,   
---		fontSize = 60,
---	} )
---	
---	hud.headerTitle:setTextColor(0,100,0)
-
---   hud.headerRect2 = display.newRect(hud, 0, HEADER_HEIGHT, display.contentWidth, HEADER_HEIGHT)
---   hud.headerRect2:setFillColor(SUBHEADER_R, SUBHEADER_G, SUBHEADER_B)
---   hud.headerRect2.alpha = SUBHEADER_ALPHA
---
---	hud.headerTitle2 = display.newText( {
---		parent = hud,
---		text = "Action",     
---		x = display.contentWidth*0.5,
---		y = HEADER_HEIGHT * 1.5,
---		font = FONT,   
---		fontSize = 35,
---	} )
---	
 end
 
+-----------------------------------------------------------------------------------------
+
+function showPoints(nbPoints)
+	local text = viewManager.newText({
+		parent 			= hud, 
+		text	 			= "+ " .. nbPoints,     
+		x 					= display.contentWidth*0.97,
+		y 					= display.contentHeight*0.05,
+		fontSize 		= 65
+	})
+
+	transition.to(text, { time=1500, alpha=0, x=display.contentWidth*0.84 })
+end
+
+-----------------------------------------------------------------------------------------
+
+function showPopup(title, text, action)
+
+	utils.emptyGroup(hud.popup)
+	hud.popup = display.newGroup()
+	hud.popup.alpha = 0
+
+	hud.popupRect = display.newImageRect( hud.popup, "assets/images/menus/panel.popup.png", display.contentWidth*0.8, display.viewableContentHeight*0.7)  
+	hud.popupRect.x = display.viewableContentWidth*0.5 
+	hud.popupRect.y = display.viewableContentHeight*0.5
+	
+	viewManager.newText({
+		parent 			= hud.popup, 
+		text	 			= title,     
+		x 					= display.contentWidth*0.12,
+		y 					= display.contentHeight*0.2,
+		fontSize 		= 35,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent 			= hud.popup, 
+		text	 			= text,     
+		x 					= display.contentWidth*0.13,
+		y 					= display.contentHeight*0.3,
+		fontSize 		= 30,
+		width				= display.contentWidth*0.7,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+		
+	hud.popupClose = display.newImage( hud.popup, "assets/images/hud/ko.png")
+  	hud.popupClose.x = display.contentWidth*0.8 
+  	hud.popupClose.y = display.contentHeight*0.2
+  	hud.popupClose:scale(0.3,0.3)
+  	
+	utils.onTouch(hud.popupClose, function()
+		display.remove(hud.popupClose)
+		transition.to(hud.popup, {time=250, alpha=0, onComplete=function()
+   		utils.emptyGroup(hud.popup)
+   		
+   		if(action) then
+   			action()
+   		end
+		end})
+	end)	
+	
+	hud.popup:toFront()
+	transition.to(hud.popup, {time=250, alpha=1})
+end
+	
 ------------------------------------------------------------------
 
 function newText(options)
 
-	local text = display.newText( {
-		text = options.text,     
-		font = FONT,   
-		fontSize = options.fontSize or 48
-	} )
+	local finalOptions = {}
+	finalOptions.text 		= options.text
+	finalOptions.font 		= FONT
+	finalOptions.fontSize 	= options.fontSize or 48
+
+	if(options.width) then
+		finalOptions.width	= options.width
+	end
+
+	if(options.height) then
+		finalOptions.height	= options.height
+	end
+
+	local text = display.newText( finalOptions )
 
 	text:setTextColor(100)
 	text:setReferencePoint(options.referencePoint or display.CenterReferencePoint);
@@ -99,6 +149,7 @@ function newText(options)
 	if(options.parent) then
 		options.parent:insert(text)
 	end
+
 	
 	return text
 end
@@ -157,7 +208,7 @@ function drawButton(parent, text, x, y, action, width, height)
 		parent = parent,
 		text = text,     
 		x = x,
-		y = y - display.contentHeight*0.01,
+		y = y,
 		font = FONT,   
 		fontSize = 45,
 	} )
@@ -510,17 +561,17 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function drawTicket(numbers, x, y)
+function drawTicket(parent, numbers, x, y)
 
 	local xGap =  display.contentWidth *0.1
 	
-	viewManager.drawBorder(hud.board, display.contentWidth*0.5, y, display.contentWidth*0.95, TICKET_HEIGHT)
+	viewManager.drawBorder(parent, x+#numbers*display.contentWidth*0.06, y, #numbers * display.contentWidth*0.12, TICKET_HEIGHT)
    	
 	for j = 1,#numbers-1 do
-		drawBall(hud.board, numbers[j], x + xGap*j, y)
+		drawBall(parent, numbers[j], x + xGap*j, y)
 	end
 	
-	drawTheme(hud.board, numbers[#numbers], x + xGap*#numbers + 20, y)
+	drawTheme(parent, numbers[#numbers], x + xGap*#numbers + 20, y)
 	
 end
 

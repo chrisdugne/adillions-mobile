@@ -57,7 +57,7 @@ function scene:refreshScene()
          
    		end
       	
-      	viewManager.drawTicket(numbers, marginLeft, marginTop + yGap*(i+nbLotteries))
+      	viewManager.drawTicket(hud.board, numbers, marginLeft, marginTop + yGap*(i+nbLotteries))
    	end
    
    	------------------

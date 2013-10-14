@@ -69,24 +69,115 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function isFacebookFan()
-	print("isFacebookFan")
+function initWeb()
+	facebook.lastUrlNb = 0
+end
+
+function newUrl()
+	facebook.lastUrlNb = facebook.lastUrlNb + 1
+end
+
+-----------------------------------------------------------------------------------------
+
+function checkWebUrl(url, askToLoginFunction)
+
+    	if string.startsWith(url, "https://www.facebook.com/logout.php") then
+			print("logout")
+    		askToLoginFunction()
+			
+    	elseif url == "https://m.facebook.com/dialog/oauth/read"
+    	or url == "https://m.facebook.com/dialog/oauth/write" -- FB doesnt redirect here ... ex : Cancel during permissions
+--    	or string.startsWith(url, "https://m.facebook.com/dialog/oauth??redirect_uri") -- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
+    	or string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri") -- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
+    	then 
+    		print("-----> force relogin ?")
+    		local urlNb = facebook.lastUrlNb
+    		timer.performWithDelay(15000, function()
+    			if(facebook.lastUrlNb == urlNb) then
+    				print("stuck ! redirecting to login again ")
+    				askToLoginFunction()
+   			end
+    		end)
+			
+    	elseif string.find(url, "error") then
+    		print("-----> contains error ?")
+    	
+    	end
+    	
+end
+-----------------------------------------------------------------------------------------
+
+function isFacebookFan(next)
+
 	if(GLOBALS.savedData.facebookAccessToken) then
-   	print("-> check")
    	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
+   	print(url)
    	network.request(url , "GET", function(result)
    		
    		response = json.decode(result.response)
-   		
-   		print("----------")
    		utils.tprint(response)
-   		print("----------")
-   		utils.tprint(response.error)
-   		print("----------")
-   	
+   		
    		if(not response.error) then
-   			print("1")
+   			if(response.data[0] ~= nil) then
+   				print("fan!")
+   				userManager.user.facebookFan = true
+   				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_FAN_TICKETS
+   			else
+					userManager.user.facebookFan = false 
+   			end
       	end
+
+			next()
+   	end)
+   else
+   	next()
+   end
+end
+
+-----------------------------------------------------------------------------------------
+
+function like()
+	
+	if(GLOBALS.savedData.facebookAccessToken) then
+
+   	native.setActivityIndicator( true )
+
+   	local url = "https://graph.facebook.com/".. FACEBOOK_PAGE_ID .."/likes?method=post&access_token=" .. GLOBALS.savedData.facebookAccessToken
+   	print (url)
+   	
+   	network.request(url , "GET", function(result)
+      	native.setActivityIndicator( false )
+   		local response = json.decode(result.response)
+   		
+   		if(response.id) then
+   			isFacebookFan()
+   		end
+   		
    	end)
    end
+
+end
+
+-----------------------------------------------------------------------------------------
+
+--/PROFILE_ID/feed
+function postOnWall(message, next)
+	
+	if(GLOBALS.savedData.facebookAccessToken) then
+
+   	native.setActivityIndicator( true )
+
+   	local url = "https://graph.facebook.com/"..userManager.user.facebookId .."/feed?method=post&message="..utils.urlEncode(message).."&access_token=" .. GLOBALS.savedData.facebookAccessToken
+   	print (url)
+   	network.request(url , "GET", function(result)
+      	native.setActivityIndicator( false )
+   		local response = json.decode(result.response)
+
+   		if(response.id) then
+   			next()
+   		end
+   		
+   	end)
+   end
+	
 end
