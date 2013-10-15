@@ -41,7 +41,8 @@ function initBoard()
 		verticalScrollDisabled = false,
 	}
 end
-	
+
+
 -----------------------------------------------------------------------------------------
 
 function initHeader()
@@ -451,6 +452,14 @@ function drawThemeToPick(num,x,y)
 	
 	drawThemeIcon(num, hud, x, y)
 	
+	viewManager.newText({
+		parent 			= hud, 
+		text	 			= lotteryManager.nextLottery.theme.icons[num].name,     
+		x 					= x,
+		y 					= y + display.contentHeight*0.05,
+		fontSize 		= 30
+	})
+	
 	utils.onTouch(ball, function()
 		if(ball.selected) then
 			lotteryManager:cancelAdditionalSelection()
@@ -461,7 +470,7 @@ function drawThemeToPick(num,x,y)
 end
 
 function drawThemeIcon(num, parent, x, y, scale)
-	drawRemoteImage(lotteryManager.nextLottery.theme[num],parent, x, y, scale)
+	drawRemoteImage(lotteryManager.nextLottery.theme.icons[num].image, parent, x, y, scale)
 end
 
 -----------------------------------------------------------------------------------------
@@ -564,14 +573,15 @@ end
 function drawTicket(parent, numbers, x, y)
 
 	local xGap =  display.contentWidth *0.1
+--	local center =  display.contentWidth*0.5
 	
-	viewManager.drawBorder(parent, x+#numbers*display.contentWidth*0.06, y, #numbers * display.contentWidth*0.12, TICKET_HEIGHT)
+	viewManager.drawBorder(parent, x+(#numbers+1)/2*display.contentWidth*0.1, y, #numbers * display.contentWidth*0.105, TICKET_HEIGHT)
    	
 	for j = 1,#numbers-1 do
 		drawBall(parent, numbers[j], x + xGap*j, y)
 	end
 	
-	drawTheme(parent, numbers[#numbers], x + xGap*#numbers + 20, y)
+	drawTheme(parent, numbers[#numbers], x + xGap*#numbers, y)
 	
 end
 

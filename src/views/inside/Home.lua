@@ -21,7 +21,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-
+	
 	------------------
 
 	hud.friendsIcon = display.newImage(hud, "assets/images/icons/friends.png")
@@ -53,8 +53,6 @@ function scene:refreshScene()
 	------------------
 
 	lotteryManager:refreshNextLottery(function() self:drawNextLottery() end)
-
-	------------------
 
 	------------------
 
@@ -139,12 +137,19 @@ function scene:drawNextLottery( event )
 		fontSize = 32,
 	})
 
-	------------------
-
-	viewManager.drawRemoteImage("http://www.uralys.com/adillions/themes/theme1/eyes.png", hud, display.contentWidth*0.5, display.contentHeight * 0.75)
 
 	------------------
+	
+--	facebook.likeTheme(theme)
+	
+	------------------
 
+	viewManager.drawRemoteImage(lotteryManager.nextLottery.theme.image, hud, display.contentWidth*0.5, display.contentHeight * 0.75)
+
+	------------------
+
+	lotteryManager.currentSelection = {3,18,32,39,46,5}
+	router.openConfirmation()
 end
 
 ------------------------------------------

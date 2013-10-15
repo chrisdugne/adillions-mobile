@@ -20,14 +20,14 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function scene:drawTextEntry(title, value, position)
+function scene:drawTextEntry(title, value, position, fontSize)
 
 	viewManager.newText({
 		parent 			= hud.board, 
 		text 				= title,         
 		x 					= self.column1,
 		y 					= self.top + self.yGap*position,
-		fontSize 		= self.fontSize,
+		fontSize 		= fontSize or self.fontSize,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 
@@ -36,7 +36,7 @@ function scene:drawTextEntry(title, value, position)
 		text	 			= value,     
 		x 					= self.column2,
 		y 					= self.top + self.yGap*position,
-		fontSize 		= self.fontSize,
+		fontSize 		= fontSize or self.fontSize,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 	
@@ -71,24 +71,24 @@ function scene:refreshScene()
 	self:drawTextEntry("_currentPoints : ", userManager.user.currentPoints, 6)
 	self:drawTextEntry("_totalPoints : ", userManager.user.totalPoints, 7)
 
-	------------------
+	---------------------------------------------------------------
+	-- FACEBOOK
+	---------------------------------------------------------------
 	
 	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*9.5, display.contentWidth*0.9, self.yGap * 2.5)
 	self:drawTextEntry("_FB connection : ", self:isFBConnection(), 9 )
 	
 	if(userManager.user.facebookId) then
+	   	
    	if(userManager.user.facebookFan) then
       	self:drawTextEntry("_FB fan : ", "_Yes!", 10 )
       else
-      	self:drawTextEntry("Like now us and get " .. FACEBOOK_FAN_TICKETS .. " more tickets each lottery !", "", 10 )
-      	hud.likeIcon = display.newImage(hud.board, "assets/images/icons/like.png", display.contentWidth*0.72, self.top + self.yGap*8.5)
-      	utils.onTouch(hud.likeIcon, function()
-      		facebook.like()
-      	end)
-   	end
+      	self:drawTextEntry("_Like us now and get " .. FACEBOOK_FAN_TICKETS .. " more tickets each lottery !", "", 10, 27 )
+      end
 	end
 	
 	hud.fbIcon = display.newImage(hud.board, "assets/images/icons/facebook.png", display.contentWidth*0.011, self.top + self.yGap*7.9)
+	hud.board:insert(hud.fbIcon)
 	
 	if(userManager.user.facebookId) then
    	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)
@@ -100,7 +100,9 @@ function scene:refreshScene()
    	"profilePicture", system.TemporaryDirectory)
 	end
 
-	------------------
+	---------------------------------------------------------------------------------
+	-- REFERRER
+	---------------------------------------------------------------
 	
 	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*12, display.contentWidth*0.9, self.yGap * 1.5)
 	self:drawTextEntry("_my referrerId : ", userManager.user.uid, 12 )
@@ -152,6 +154,15 @@ function scene:refreshScene()
 
 	hud:insert(hud.board)
    	
+	------------------
+	--
+	
+   local likeButtonUrl = "http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FAdillions%2F379432705492888&layout=button_count&action=like&send=false&appId=170148346520274"
+	hud.likePageWebview = native.newWebView( 0, display.contentHeight - MENU_HEIGHT - display.contentHeight*0.05, display.contentWidth, display.contentHeight*0.05 )
+	hud.likePageWebview:request( likeButtonUrl )
+--	hud.likePageWebview:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+	
+	
 	------------------
 
 	viewManager.setupView(4)

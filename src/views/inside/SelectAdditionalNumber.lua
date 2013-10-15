@@ -30,7 +30,7 @@ function scene:refreshScene()
 	--------------------------------------------------------------
 	-- Additional nums
 
-	local totalNums 	= #lotteryManager.nextLottery.theme
+	local totalNums 	= #lotteryManager.nextLottery.theme.icons
 	local nbNumPerLine = math.floor((totalNums + 1)/2)
 	
 	local marginLeft =  display.contentWidth * 0.12/nbNumPerLine

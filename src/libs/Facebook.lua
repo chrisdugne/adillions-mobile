@@ -15,10 +15,6 @@ module(..., package.seeall)
  
 -----------------------------------------------------------------------------------------
 
-local FB_APP_ID = "170148346520274"
-
------------------------------------------------------------------------------------------
-
 --- Data returned if success
 ---{
 --   "name": "Christophe Dugne-Esquevin",
@@ -69,6 +65,144 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function isFacebookFan(next)
+
+	if(GLOBALS.savedData.facebookAccessToken) then
+   	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
+   	network.request(url , "GET", function(result)
+   		
+   		response = json.decode(result.response)
+   		
+   		if(not response.error) then
+   			if(response.data[1] ~= nil) then
+   				userManager.user.facebookFan = true
+   				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_FAN_TICKETS
+   			else
+					userManager.user.facebookFan = false 
+   			end
+      	end
+
+			next()
+   	end)
+   else
+   	next()
+   end
+end
+
+-----------------------------------------------------------------------------------------
+-- like de la page : ne marche pas : rediriger vers la page
+-- 
+function beFan()
+	
+	if(GLOBALS.savedData.facebookAccessToken) then
+
+   	native.setActivityIndicator( true )
+
+   	local url = "https://graph.facebook.com/".. FACEBOOK_PAGE_ID .."/likes?method=post&access_token=" .. GLOBALS.savedData.facebookAccessToken
+   	print (url)
+   	
+   	network.request(url , "GET", function(result)
+      	native.setActivityIndicator( false )
+   		local response = json.decode(result.response)
+   		
+   		if(response.id) then
+   			isFacebookFan()
+   		end
+   		
+   	end)
+   end
+
+end
+
+-----------------------------------------------------------------------------------------
+
+function checkThemeLiked(theme, like)
+	
+	print("--------------------------")
+	print("themeAlreadyLiked")
+	
+   local url = "https://graph.facebook.com/me/"..FACEBOOK_APP_NAMESPACE..":enjoy?"
+   	    ..  "access_token=" .. GLOBALS.savedData.facebookAccessToken
+   	    
+	network.request(url , "GET", function(result)
+   	native.setActivityIndicator( false )
+   	local response = json.decode(result.response)
+   	utils.tprint(response)
+   	
+   	local liked = false
+   	
+   	if(#response.data > 0) then 
+   		for i = 1,#response.data do
+   			if(response.data[i].data.theme.title == theme.title) then
+   				liked = true
+   			end
+   		end 
+   	end
+   	
+   	if(not liked) then
+   		like()
+   	end
+	end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function likeTheme(theme)
+
+	checkThemeLiked(theme, function()
+
+		print("-----> Like theme !!!!")
+		local locale			= facebook.data.locale
+
+		local themeURL =  SERVER_OG_URL .. 'theme'
+		.. '?title=' 			.. theme.title
+		.. '&description=' 	.. theme.description
+		.. '&imageURL='		.. theme.imageURL 
+		.. '&locale='			.. locale
+
+		themeURL = utils.urlEncode(themeURL)
+
+		local url = "https://graph.facebook.com/me/"..FACEBOOK_APP_NAMESPACE..":enjoy?method=post"
+		..  "&theme=" .. themeURL
+		..  "&access_token=" .. GLOBALS.savedData.facebookAccessToken
+
+		native.setActivityIndicator( true )
+
+		network.request(url , "GET", function(result)
+			native.setActivityIndicator( false )
+			utils.tprint(result)
+		end)
+	end)
+end
+
+-----------------------------------------------------------------------------------------
+
+--/PROFILE_ID/feed
+function postOnWall(message, next)
+
+	if(GLOBALS.savedData.facebookAccessToken) then
+
+   	native.setActivityIndicator( true )
+
+   	local url = "https://graph.facebook.com/"..userManager.user.facebookId .."/feed?method=post&message="..utils.urlEncode(message).."&access_token=" .. GLOBALS.savedData.facebookAccessToken
+   	print (url)
+   	network.request(url , "GET", function(result)
+      	native.setActivityIndicator( false )
+   		local response = json.decode(result.response)
+
+   		if(response.id) then
+   			next()
+   		end
+   		
+   	end)
+   end
+	
+end
+
+-----------------------------------------------------------------------------------------
+-- WEB VIEW LISTENING - AUTH
+-----------------------------------------------------------------------------------------
+
 function initWeb()
 	facebook.lastUrlNb = 0
 end
@@ -104,80 +238,4 @@ function checkWebUrl(url, askToLoginFunction)
     	
     	end
     	
-end
------------------------------------------------------------------------------------------
-
-function isFacebookFan(next)
-
-	if(GLOBALS.savedData.facebookAccessToken) then
-   	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
-   	print(url)
-   	network.request(url , "GET", function(result)
-   		
-   		response = json.decode(result.response)
-   		utils.tprint(response)
-   		
-   		if(not response.error) then
-   			if(response.data[0] ~= nil) then
-   				print("fan!")
-   				userManager.user.facebookFan = true
-   				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_FAN_TICKETS
-   			else
-					userManager.user.facebookFan = false 
-   			end
-      	end
-
-			next()
-   	end)
-   else
-   	next()
-   end
-end
-
------------------------------------------------------------------------------------------
-
-function like()
-	
-	if(GLOBALS.savedData.facebookAccessToken) then
-
-   	native.setActivityIndicator( true )
-
-   	local url = "https://graph.facebook.com/".. FACEBOOK_PAGE_ID .."/likes?method=post&access_token=" .. GLOBALS.savedData.facebookAccessToken
-   	print (url)
-   	
-   	network.request(url , "GET", function(result)
-      	native.setActivityIndicator( false )
-   		local response = json.decode(result.response)
-   		
-   		if(response.id) then
-   			isFacebookFan()
-   		end
-   		
-   	end)
-   end
-
-end
-
------------------------------------------------------------------------------------------
-
---/PROFILE_ID/feed
-function postOnWall(message, next)
-	
-	if(GLOBALS.savedData.facebookAccessToken) then
-
-   	native.setActivityIndicator( true )
-
-   	local url = "https://graph.facebook.com/"..userManager.user.facebookId .."/feed?method=post&message="..utils.urlEncode(message).."&access_token=" .. GLOBALS.savedData.facebookAccessToken
-   	print (url)
-   	network.request(url , "GET", function(result)
-      	native.setActivityIndicator( false )
-   		local response = json.decode(result.response)
-
-   		if(response.id) then
-   			next()
-   		end
-   		
-   	end)
-   end
-	
 end

@@ -9,8 +9,12 @@ module(..., package.seeall)
 -----------------------------------------------------------------------------------------
 
 function resetScreen()
+
+	display.remove(hud.likePageWebview)
+
 	utils.emptyGroup(hud)
 	utils.emptyGroup(hud.selection)
+	
 	hud.buttons = {}
 end
 

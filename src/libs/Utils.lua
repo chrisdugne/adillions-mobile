@@ -238,14 +238,13 @@ function post(url, data, next, type)
 		headers["Content-Type"] = "application/x-www-form-urlencoded"
 	elseif(type == "json") then
 		headers["Content-Type"] = "application/json"
-		headers["X-AUTH-TOKEN"] = GLOBALS.savedData.authToken
+		headers["X-Auth-Token"] = GLOBALS.savedData.authToken
 	end
 
 	local params = {}
 	params.headers = headers
 	params.body = data
 
-	print("post", url)
 	network.request( url, "POST", next, params)
 end
 
