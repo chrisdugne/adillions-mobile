@@ -13,14 +13,14 @@ AUTH_TOKEN			= ""
 FACEBOOK_PAGE_ID 	= "379432705492888"
 
 -- PROD
-FACEBOOK_APP_ID 			= "170148346520274"
-FACEBOOK_API_SECRET 		= "887e8f7abb9b1cb9238a097e06585ae2"
-SERVER_URL 					= "http://adillions.herokuapp.com/"
+--FACEBOOK_APP_ID 			= "170148346520274"
+--FACEBOOK_API_SECRET 		= "887e8f7abb9b1cb9238a097e06585ae2"
+--SERVER_URL 					= "http://adillions.herokuapp.com/"
 
 -- DEV
---FACEBOOK_APP_ID 			= "534196239997712"
---FACEBOOK_API_SECRET 		= "46383d827867d50ef5d87b66c81f1a8e"
---SERVER_URL 					= "http://192.168.0.9:9000/"
+FACEBOOK_APP_ID 			= "534196239997712"
+FACEBOOK_API_SECRET 		= "46383d827867d50ef5d87b66c81f1a8e"
+SERVER_URL 					= "http://192.168.0.9:9000/"
 
 -----------------------------------------------------------------------------------------
 

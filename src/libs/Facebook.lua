@@ -216,7 +216,6 @@ end
 function checkWebUrl(url, askToLoginFunction)
 
     	if string.startsWith(url, "https://www.facebook.com/logout.php") then
-			print("logout")
     		askToLoginFunction()
 			
     	elseif url == "https://m.facebook.com/dialog/oauth/read"

@@ -241,4 +241,39 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function UserManager:logout()
+
+	if(self.user.facebookId) then
+   	native.setActivityIndicator( true )
+   	
+   	self.webView = native.newWebView( 0, 0, 1, 1 )
+   	self.webView:request( SERVER_URL .. "mlogout" )
+   	self.webView:addEventListener( "urlRequest", function(event) self:logoutViewListener(event) end )
+   	
+--   	local url = "https://www.facebook.com/logout.php?access_token=" .. GLOBALS.savedData.facebookAccessToken
+--   	print(url)
+--   	network.request(url , "GET", function(result)
+--      	GLOBALS.savedData.facebookAccessToken = nil
+--			utils.saveTable(GLOBALS.savedData, "savedData.json")
+--
+--      	native.setActivityIndicator( false )
+--   		router.openOutside()
+--   	end)
+   else
+		router.openOutside()
+   end
+   
+end
+
+function UserManager:logoutViewListener( event )
+
+    if event.url then
+		print("---   logout listener")
+		print(event.url)
+	end
+	
+end
+
+-----------------------------------------------------------------------------------------
+
 return UserManager
