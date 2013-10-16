@@ -148,8 +148,6 @@ function scene:drawNextLottery( event )
 
 	------------------
 
-	lotteryManager.currentSelection = {3,18,32,39,46,5}
-	router.openConfirmation()
 end
 
 ------------------------------------------

@@ -157,11 +157,10 @@ function scene:refreshScene()
 	------------------
 	--
 	
-   local likeButtonUrl = "http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FAdillions%2F379432705492888&layout=button_count&action=like&send=false&appId=170148346520274"
-	hud.likePageWebview = native.newWebView( 0, display.contentHeight - MENU_HEIGHT - display.contentHeight*0.05, display.contentWidth, display.contentHeight*0.05 )
-	hud.likePageWebview:request( likeButtonUrl )
+--   local likeButtonUrl = "http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FAdillions%2F379432705492888&layout=button_count&action=like&send=false&appId=170148346520274"
+--	hud.likePageWebview = native.newWebView( 0, display.contentHeight - MENU_HEIGHT - display.contentHeight*0.05, display.contentWidth, display.contentHeight*0.05 )
+--	hud.likePageWebview:request( likeButtonUrl )
 --	hud.likePageWebview:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-	
 	
 	------------------
 
