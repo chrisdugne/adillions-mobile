@@ -22,7 +22,7 @@ end
 
 function scene:refreshScene()
 	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "mlogin" )
+	self.webView:request( SERVER_URL .. "mlogin" .. "?nocache=" .. system.getTimer()*1000 )
 	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
 	facebook.initWeb()
 end

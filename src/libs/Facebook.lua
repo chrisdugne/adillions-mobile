@@ -67,8 +67,14 @@ end
 
 function isFacebookFan(next)
 
+	native.showAlert( "facebook", "isFacebookFan" )	
+	
 	if(GLOBALS.savedData.facebookAccessToken) then
+	
+	
    	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
+		native.showAlert( "facebook", url )
+			
    	network.request(url , "GET", function(result)
    		
    		response = json.decode(result.response)
@@ -81,10 +87,12 @@ function isFacebookFan(next)
 					userManager.user.facebookFan = false 
    			end
       	end
-
+			
+			native.showAlert( "facebook", "isFacebookFan | next" )
 			next()
    	end)
    else
+		native.showAlert( "facebook", "isFacebookFan | NOT FB | next" )
    	next()
    end
 end
@@ -225,7 +233,7 @@ function checkWebUrl(url, askToLoginFunction)
     	then 
     		print("-----> force relogin ?")
     		local urlNb = facebook.lastUrlNb
-    		timer.performWithDelay(15000, function()
+    		timer.performWithDelay(8000, function()
     			if(facebook.lastUrlNb == urlNb) then
     				print("stuck ! redirecting to login again ")
     				askToLoginFunction()

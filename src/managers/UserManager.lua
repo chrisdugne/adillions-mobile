@@ -57,6 +57,7 @@ function UserManager:getPlayerByFacebookId()
 	SERVER_URL .. "playerFromFB", 
 	function(result)
 
+		native.showAlert( "UserManager", "getPlayerByFacebookId | result" )	
 		print("result", result)
 		native.setActivityIndicator( false )	
 
@@ -81,6 +82,7 @@ end
 
 function UserManager:receivedPlayer(player, next)
 
+	native.showAlert( "UserManager", "receivedPlayer" )
 	print("--> receivedPlayer")
 	utils.tprint(player)
 	
