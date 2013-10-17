@@ -21,7 +21,7 @@ if(PROD) then
 	print("prod")
    FACEBOOK_APP_ID 			= "170148346520274"
    FACEBOOK_API_SECRET 		= "887e8f7abb9b1cb9238a097e06585ae2"
-   SERVER_URL 					= "http://adillions.herokuapp.com/"
+   SERVER_URL 					= "http://www.adillions.com/"
 else
 	print("dev")
 	FACEBOOK_APP_ID 			= "534196239997712"
@@ -32,7 +32,7 @@ end
 -----------------------------------------------------------------------------------------
 
 FACEBOOK_APP_NAMESPACE 	= "adillions"
-SERVER_OG_URL 				= "http://adillions.herokuapp.com/"
+SERVER_OG_URL 				= "http://www.adillions.com/"
 
 -----------------------------------------------------------------------------------------
 
