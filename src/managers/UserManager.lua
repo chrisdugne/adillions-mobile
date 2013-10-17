@@ -250,15 +250,6 @@ function UserManager:logout()
    	self.webView:request( SERVER_URL .. "mlogout" )
    	self.webView:addEventListener( "urlRequest", function(event) self:logoutViewListener(event) end )
    	
---   	local url = "https://www.facebook.com/logout.php?access_token=" .. GLOBALS.savedData.facebookAccessToken
---   	print(url)
---   	network.request(url , "GET", function(result)
---      	GLOBALS.savedData.facebookAccessToken = nil
---			utils.saveTable(GLOBALS.savedData, "savedData.json")
---
---      	native.setActivityIndicator( false )
---   		router.openOutside()
---   	end)
    else
 		router.openOutside()
    end
@@ -268,10 +259,19 @@ end
 function UserManager:logoutViewListener( event )
 
     if event.url then
-		print("---   logout listener")
-		print(event.url)
+    	if event.url == SERVER_URL .. "backToMobile" then
+			self:closeWebView()    		
+      	router.openOutside()
+      end
 	end
 	
+end
+
+
+function UserManager:closeWebView()
+	self.webView:removeEventListener( "urlRequest", function(event) self:logoutViewListener(event) end )
+	self.webView:removeSelf()
+	self.webView = nil
 end
 
 -----------------------------------------------------------------------------------------
