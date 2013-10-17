@@ -67,13 +67,9 @@ end
 
 function isFacebookFan(next)
 
-	native.showAlert( "facebook", "isFacebookFan", { "Ok" } )	
-	
 	if(GLOBALS.savedData.facebookAccessToken) then
 	
-	
    	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
-		native.showAlert( "facebook", url, { "Ok" } )
 			
    	network.request(url , "GET", function(result)
    		
@@ -88,11 +84,9 @@ function isFacebookFan(next)
    			end
       	end
 			
-			native.showAlert( "facebook", "isFacebookFan | next", { "Ok" } )
 			next()
    	end)
    else
-		native.showAlert( "facebook", "isFacebookFan | NOT FB | next", { "Ok" } )
    	next()
    end
 end

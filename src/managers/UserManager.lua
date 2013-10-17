@@ -57,9 +57,6 @@ function UserManager:getPlayerByFacebookId()
 	SERVER_URL .. "playerFromFB", 
 	function(result)
 
-		native.showAlert( "UserManager", "getPlayerByFacebookId | result" , { "Ok" } )	
-		print("result")
-		utils.tprint(result)
 		native.setActivityIndicator( false )	
 
 		if(result.isError) then
@@ -83,10 +80,6 @@ end
 
 function UserManager:receivedPlayer(player, next)
 
-	native.showAlert( "UserManager", "receivedPlayer", { "Ok" }  )
-	print("--> receivedPlayer")
-	utils.tprint(player)
-	
 	self.user 							= player
 	self.user.totalBonusTickets 	= 0
 
