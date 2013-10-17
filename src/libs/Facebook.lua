@@ -67,13 +67,13 @@ end
 
 function isFacebookFan(next)
 
-	native.showAlert( "facebook", "isFacebookFan" )	
+	native.showAlert( "facebook", "isFacebookFan", { "Ok" } )	
 	
 	if(GLOBALS.savedData.facebookAccessToken) then
 	
 	
    	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
-		native.showAlert( "facebook", url )
+		native.showAlert( "facebook", url, { "Ok" } )
 			
    	network.request(url , "GET", function(result)
    		
@@ -88,11 +88,11 @@ function isFacebookFan(next)
    			end
       	end
 			
-			native.showAlert( "facebook", "isFacebookFan | next" )
+			native.showAlert( "facebook", "isFacebookFan | next", { "Ok" } )
 			next()
    	end)
    else
-		native.showAlert( "facebook", "isFacebookFan | NOT FB | next" )
+		native.showAlert( "facebook", "isFacebookFan | NOT FB | next", { "Ok" } )
    	next()
    end
 end
@@ -232,8 +232,14 @@ function checkWebUrl(url, askToLoginFunction)
     	or string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri") -- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
     	then 
     		print("-----> force relogin ?")
+    		
+    		local time = 8000
+    		if(string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri")) then
+    			time = 100
+    		end
+    		
     		local urlNb = facebook.lastUrlNb
-    		timer.performWithDelay(8000, function()
+    		timer.performWithDelay(time, function()
     			if(facebook.lastUrlNb == urlNb) then
     				print("stuck ! redirecting to login again ")
     				askToLoginFunction()

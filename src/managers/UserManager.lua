@@ -57,8 +57,9 @@ function UserManager:getPlayerByFacebookId()
 	SERVER_URL .. "playerFromFB", 
 	function(result)
 
-		native.showAlert( "UserManager", "getPlayerByFacebookId | result" )	
-		print("result", result)
+		native.showAlert( "UserManager", "getPlayerByFacebookId | result" , { "Ok" } )	
+		print("result")
+		utils.tprint(result)
 		native.setActivityIndicator( false )	
 
 		if(result.isError) then
@@ -68,7 +69,7 @@ function UserManager:getPlayerByFacebookId()
 			router.openSigninFB()
 		else
 			response 							= json.decode(result.response)
-			local player 						= json.decode(response.player)
+			local player 						= response.player
 			GLOBALS.savedData.authToken 	= response.authToken     
 
 			userManager:receivedPlayer(player, router.openHome)
@@ -82,7 +83,7 @@ end
 
 function UserManager:receivedPlayer(player, next)
 
-	native.showAlert( "UserManager", "receivedPlayer" )
+	native.showAlert( "UserManager", "receivedPlayer", { "Ok" }  )
 	print("--> receivedPlayer")
 	utils.tprint(player)
 	
@@ -261,11 +262,10 @@ end
 function UserManager:logoutViewListener( event )
 
     if event.url then
-    		native.showAlert( "logout", event.url )
     	if event.url == SERVER_URL .. "backToMobile" then
-    		native.showAlert( "logout", "backToMobile")
 			self:closeWebView()    		
       	router.openOutside()
+   		native.setActivityIndicator( false )
       end
 	end
 	
