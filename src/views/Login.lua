@@ -39,6 +39,7 @@ function scene:loginViewListener( event )
     	facebook.newUrl()
     
     	if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
+    		native.showAlert( "login", "loggedin" )
 			self:closeWebView()    		
 			local params = utils.getUrlParams(event.url);
 			
@@ -53,6 +54,7 @@ function scene:loginViewListener( event )
       	router.openOutside()
 
     	elseif string.find(event.url, "access_token") then
+    		native.showAlert( "login", "access_token" )
 			self:closeWebView()    		
 			local params = utils.getUrlParams(event.url);
 			
