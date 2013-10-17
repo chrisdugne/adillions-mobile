@@ -9,18 +9,25 @@ APP_VERSION 		= "1.0"
 
 -----------------------------------------------------------------------------------------
 
+DEV					= 1
+PROD					= 1
+
+-----------------------------------------------------------------------------------------
+
 AUTH_TOKEN			= ""
 FACEBOOK_PAGE_ID 	= "379432705492888"
 
--- PROD
-FACEBOOK_APP_ID 			= "170148346520274"
-FACEBOOK_API_SECRET 		= "887e8f7abb9b1cb9238a097e06585ae2"
-SERVER_URL 					= "http://adillions.herokuapp.com/"
-
--- DEV
---FACEBOOK_APP_ID 			= "534196239997712"
---FACEBOOK_API_SECRET 		= "46383d827867d50ef5d87b66c81f1a8e"
---SERVER_URL 					= "http://192.168.0.9:9000/"
+if(PROD) then
+	print("prod")
+   FACEBOOK_APP_ID 			= "170148346520274"
+   FACEBOOK_API_SECRET 		= "887e8f7abb9b1cb9238a097e06585ae2"
+   SERVER_URL 					= "http://adillions.herokuapp.com/"
+else
+	print("dev")
+	FACEBOOK_APP_ID 			= "534196239997712"
+	FACEBOOK_API_SECRET 		= "46383d827867d50ef5d87b66c81f1a8e"
+	SERVER_URL 					= "http://192.168.0.9:9000/"
+end
 
 -----------------------------------------------------------------------------------------
 
@@ -32,10 +39,6 @@ SERVER_OG_URL 				= "http://adillions.herokuapp.com/"
 IOS 					= system.getInfo( "platformName" )  == "iPhone OS"
 ANDROID 				= system.getInfo( "platformName" )  == "Android"
 SIMULATOR 			= system.getInfo( "environment" )  	== "simulator"
-
------------------------------------------------------------------------------------------
-
-DEV					= 1
 
 -----------------------------------------------------------------------------------------
 
