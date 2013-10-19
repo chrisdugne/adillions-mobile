@@ -67,13 +67,16 @@ end
 --- Corona's libraries
 json 					= require "json"
 storyboard 			= require "storyboard"
+coronaFacebook		= require "facebook"
 
 ---- Additional libs
 xml 					= require "src.libs.Xml"
 utils 				= require "src.libs.Utils"
 facebook 			= require "src.libs.Facebook" 
 
+
 ---- Game libs
+
 
 -----------------------------------------------------------------------------------------
 

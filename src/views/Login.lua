@@ -21,10 +21,12 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "mlogin" .. "?nocache=" .. system.getTimer()*1000 )
-	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-	facebook.initWeb()
+--	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
+--	self.webView:request( SERVER_URL .. "mlogin" .. "?nocache=" .. system.getTimer()*1000 )
+--	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+--	facebook.initWeb()
+
+	facebook.login()
 end
 
 ------------------------------------------
@@ -62,7 +64,11 @@ function scene:loginViewListener( event )
 			facebook.getMe()
 
     	else
-    		facebook.checkWebUrl(event.url, function() self:askToLoginAgain() end)
+    		facebook.checkWebUrl(event.url, function() self:askToLoginAgain() end,
+    		function()
+    			print("REDIRECT READ")
+    			self.webView:request("https://m.facebook.com/dialog/oauth/read")
+    		end)
     		
 		end
 

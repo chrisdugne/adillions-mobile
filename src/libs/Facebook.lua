@@ -14,6 +14,61 @@
 module(..., package.seeall)
  
 -----------------------------------------------------------------------------------------
+--
+
+---
+-- todo from mlogin and msignin
+-- 1 - open mlogin
+-- 2 - remove FB.popupLogin and window.href "/connectWithFB"
+-- 3 - listen here and call login
+--
+-- todo logout
+-- todo cleanup login/signin/signinFB remove listeners + webviews
+-- todo test android
+--
+function login()
+	coronaFacebook.login( FACEBOOK_APP_ID, fblistener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
+end
+
+-- listener for "fbconnect" events
+function fblistener( event )
+	
+	print("----->   fblistener")
+	utils.tprint(event)
+	
+    if ( "session" == event.type ) then
+        -- upon successful login, request list of friends of the signed in user
+        if ( "login" == event.phase ) then
+            -- Fetch access token for use in Facebook's API
+            local access_token = event.token
+            print( access_token )
+            
+   			GLOBALS.savedData.facebookAccessToken 	= event.token
+         	utils.saveTable(GLOBALS.savedData, "savedData.json")
+   
+   			facebook.getMe()
+        end
+    elseif ( "request" == event.type ) then
+        -- event.response is a JSON object from the FB server
+        local response = event.response
+
+        -- if request succeeds, create a scrolling list of friend names
+        if ( not event.isError ) then
+            response = json.decode( event.response )
+
+            local data = response.data
+            for i=1,#data do
+                local name = data[i].name
+                print( name )
+            end
+        end
+    elseif ( "dialog" == event.type ) then
+        print( "dialog", event.response )
+    end
+end
+
+--
+-----------------------------------------------------------------------------------------
 
 --- Data returned if success
 ---{
@@ -215,22 +270,26 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function checkWebUrl(url, askToLoginFunction)
+function checkWebUrl(url, askToLoginFunction, askOauthRead)
 
     	if string.startsWith(url, "https://www.facebook.com/logout.php") then
     		askToLoginFunction()
 			
+    	elseif string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri") then -- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
+    		print("-----> contains oauth?redirect_uri")
+			local params = utils.getUrlParams(url);
+			print(utils.urlDecode(params.redirect_uri))
+			askOauthRead()
+    	
     	elseif url == "https://m.facebook.com/dialog/oauth/read"
     	or url == "https://m.facebook.com/dialog/oauth/write" -- FB doesnt redirect here ... ex : Cancel during permissions
---    	or string.startsWith(url, "https://m.facebook.com/dialog/oauth??redirect_uri") -- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
-    	or string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri") -- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
     	then 
     		print("-----> force relogin ?")
     		
     		local time = 8000
-    		if(string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri")) then
-    			time = 100
-    		end
+--    		if(string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri")) then
+--    			time = 100
+--    		end
     		
     		local urlNb = facebook.lastUrlNb
     		timer.performWithDelay(time, function()

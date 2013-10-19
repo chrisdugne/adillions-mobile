@@ -20,7 +20,7 @@ end
 
 function scene:refreshScene()
 	local message = utils.urlEncode("Watch ads, and win real money, it's free !")
-	local url = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&redirect_uri=" .. SERVER_URL.."backToMobile"
+	local url = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&redirect_uri=" .. SERVER_URL.."backToMobile&access_token=" .. GLOBALS.savedData.facebookAccessToken 
 	
 	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
 	self.webView:request( url )
@@ -35,10 +35,6 @@ function scene:inviteListener( event )
 		print (event.url)
     	if string.startsWith(event.url, SERVER_URL .. "backToMobile") then
 			self:closeWebView()    		
-			
-			local result = utils.getUrlParams(event.url);
-			utils.tprint(result)
-			
       	router.openHome()
 		end
 

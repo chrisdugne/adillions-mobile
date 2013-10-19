@@ -253,8 +253,12 @@ function UserManager:logout()
 end
 
 function UserManager:logoutViewListener( event )
-
+	
     if event.url then
+   	
+   	print("userManager.logout")
+	   print(event.url)
+    	
     	if event.url == SERVER_URL .. "backToMobile" then
 			self:closeWebView()    		
       	router.openOutside()

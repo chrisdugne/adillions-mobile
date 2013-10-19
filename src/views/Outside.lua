@@ -90,6 +90,8 @@ function scene:refreshScene()
 	self.view:insert(hud)
 		
 	---------------------------------------------------------------
+	--
+	-- TEST sponsorpay
 end
 
 ------------------------------------------

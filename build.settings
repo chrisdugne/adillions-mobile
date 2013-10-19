@@ -2,57 +2,66 @@
 -- portrait, portraitUpsideDown, landscapeLeft, landscapeRight
 
 settings = {
-	
+
 	orientation = {
 		default = "portrait",
 		supported = { "portrait", "portraitUpsideDown" }
 	},
-	
+
 	iphone = {
 		components = {},
 		plist = {
 			--CFBundleExecutable = "Adillions",
-
 			--UIStatusBarHidden = false,
 			--UIPrerenderedIcon = true, -- set to false for "shine" overlay
-            UIApplicationExitsOnSuspend = false,
+			UIApplicationExitsOnSuspend = false,
 
 			FacebookAppID = "170148346520274",
-						
-			CFBundleIconFile = "Icon.png",
-            CFBundleIconFiles = {
-                    "Icon.png" , 
-                    "Icon@2x.png" , 
-                    "Icon-72.png" , 
-            },
-            
-	        UIAppFonts = 
-            {
-                "Helvetica_Light-Normal.ttf"
-            },
 
-			--[[
-            -- iOS app URL schemes:
-            CFBundleURLTypes =
-            {
-                CFBundleURLSchemes =
-                {
-                    "fb170148346520274" -- facebook
-                }
-            }
-            --]]
+			CFBundleIconFile = "Icon.png",
+			CFBundleIconFiles = {
+				"Icon.png" , 
+				"Icon@2x.png" , 
+				"Icon-72.png" , 
+			},
+
+			UIAppFonts = 
+			{
+				"Helvetica_Light-Normal.ttf"
+			},
+
+
+
+			CFBundleURLTypes =
+			{
+				{
+					CFBundleURLSchemes =
+					{
+						"fb170148346520274",	-- replace XXXXXXXXX with your facebook appId
+						
+					}
+				}
+			}
+			
 		}
 	},
-	
+
 	-- Plugins
-	
+
 	plugins =
-    {
-        --key is the name passed to Lua's 'require()'
-        ["CoronaProvider.native.popup.social"] =
-        {
+	{
+		--[[
+		["CoronaProvider.native.popup.social"] =
+		{
             --required
             publisherId = "com.coronalabs",
+        },
+        ]]--
+
+        ["plugin.sponsorpay"] =
+        {
+            -- required
+            publisherId = "com.sponsorpay",
         },
     },
     
