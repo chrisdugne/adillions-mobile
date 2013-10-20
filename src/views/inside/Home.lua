@@ -124,7 +124,7 @@ function scene:drawNextLottery( event )
 
 	-------------------------------
 
-	viewManager.drawButton(hud, "_Jouer !", display.contentWidth*0.5, top + 250, router.openFillLotteryTicket)
+	viewManager.drawButton(hud, "_Jouer !", display.contentWidth*0.5, top + 250, function() self:play() end)
 
 	-------------------------------
 	-- theme
@@ -148,6 +148,13 @@ function scene:drawNextLottery( event )
 
 	------------------
 
+end
+
+------------------------------------------
+
+function scene:play( )
+	vungle.afterVideoSeen = router.openFillLotteryTicket
+	vungle:showAd()
 end
 
 ------------------------------------------

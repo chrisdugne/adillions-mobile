@@ -16,18 +16,6 @@ local scene = storyboard.newScene()
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-
---   	native.showPopup( "social", {
---   		service = "facebook",
---   		message = "Check out this photo!",
---   		listener = eventListener,
---   		image = {
---   			{ filename = "/assets/images/hud/button.png" },
---   			{ filename = "/assets/images/hud/ko.png" },
---   		},
---   		url = "http://uralys.com"
---   	} )
-
 end
 
 -----------------------------------------------------------------------------------------
@@ -36,29 +24,14 @@ function scene:refreshScene()
 
 	viewManager.initBack()
 	viewManager.initHeader()
-	
+
 	---------------------------------------------------------------
-	
---   hud.titleText = display.newText( {
---		parent = hud,
---		text = APP_NAME,     
---		x = display.contentWidth*0.5,
---		y = HEADER_HEIGHT*0.5,
---		font = FONT,   
---		fontSize = 55,
---	} )
---	
---	hud.titleText:setTextColor(0,100,0)
-	
-	---------------------------------------------------------------
-	
---	viewManager.drawButton(hud, "test video", display.contentWidth*0.5, display.contentHeight *0.3, router.openVideo)
-	
+
 	viewManager.drawButton(hud, "_Login", display.contentWidth*0.5, display.contentHeight *0.7, router.openLogin)
 	viewManager.drawButton(hud, "_Signin", display.contentWidth*0.5, display.contentHeight *0.8, router.openSignin)
-	
+
 	---------------------------------------------------------------
-	
+
 	hud.whyText = display.newText( {
 		parent = hud,
 		text = "_Pourquoi s'inscrire ?",     
@@ -72,7 +45,7 @@ function scene:refreshScene()
 	utils.onTouch(hud.whyText,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
 
 	---------------------------------------------------------------
-	
+
 	hud.CGU = display.newText( {
 		parent = hud,
 		text = "_CGU",     
@@ -84,14 +57,43 @@ function scene:refreshScene()
 
 	hud.CGU:setTextColor(0,100,0)
 	utils.onTouch(hud.CGU,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
-	
+
 	---------------------------------------------------------------
 
 	self.view:insert(hud)
-		
+
 	---------------------------------------------------------------
 	--
 	-- TEST sponsorpay
+	-- 
+	--  
+
+	local appId = "16796dd"
+	local userId = "141c2c3a8c230fe60ba"
+	local securityToken = "7e10113fe4f9d215497ef336ce22b9aa"
+	local token = sponsorpay.start( appId, userId, securityToken )
+	print ( "Credentials token = " .. token)
+
+	self:requestOffers()
+
+end
+
+------------------------------------------
+-- TEST sponsorpay
+-- 
+function scene:requestOffers()
+	sponsorpay.requestMBEOffers( function(event) self:mbeListener(event) end )
+end
+
+function scene:mbeListener( event )
+	local message = ""
+	if event.success then
+		message = "Has offers? " .. tostring(event.mbe.hasOffers)
+	else
+		message = "Error\nMessage: " .. event.error.message .. "\nType: " .. event.error.type .. "\nCode: " .. event.error.code
+	end
+	print( message )
+	utils.tprint(event)
 end
 
 ------------------------------------------

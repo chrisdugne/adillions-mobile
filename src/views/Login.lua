@@ -51,7 +51,8 @@ function scene:loginViewListener( event )
 			userManager:fetchPlayer()
 
     	elseif event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()    		
+			self:closeWebView()    	
+			print("login : backToMobile : outside")		
       	router.openOutside()
 
     	elseif event.url == SERVER_URL .. "connectWithFB" then

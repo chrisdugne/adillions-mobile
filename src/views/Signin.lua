@@ -45,6 +45,7 @@ function scene:signinViewListener( event )
 
     	elseif event.url == SERVER_URL .. "backToMobile" then
 			self:closeWebView()    		
+			print("signin : backToMobile : outside")		
       	router.openOutside()
 		
     	elseif event.url == SERVER_URL .. "connectWithFB" then

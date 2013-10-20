@@ -24,8 +24,6 @@ function scene:refreshScene()
 
 	------------------
 
-	viewManager.drawButton(hud, "5", display.contentWidth*0.5, display.contentHeight *0.5, router.openOutside)
-
 	------------------
 
 	viewManager.setupView(5)

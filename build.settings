@@ -50,18 +50,14 @@ settings = {
 
 	plugins =
 	{
-		--[[
-		["CoronaProvider.native.popup.social"] =
-		{
-            --required
-            publisherId = "com.coronalabs",
-        },
-        ]]--
-
         ["plugin.sponsorpay"] =
         {
-            -- required
             publisherId = "com.sponsorpay",
+        },
+        
+        ["CoronaProvider.ads.vungle"] =
+        {
+            publisherId = "com.vungle",
         },
     },
     

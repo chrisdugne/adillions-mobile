@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.0"
+APP_VERSION 		= "1.8.14"
 
 -----------------------------------------------------------------------------------------
 
@@ -14,8 +14,9 @@ PROD					= 1
 
 -----------------------------------------------------------------------------------------
 
-AUTH_TOKEN			= ""
 FACEBOOK_PAGE_ID 	= "379432705492888"
+
+-----------------------------------------------------------------------------------------
 
 if(PROD) then
 	print("prod")
@@ -72,12 +73,14 @@ end
 json 					= require "json"
 storyboard 			= require "storyboard"
 coronaFacebook		= require "facebook"
+sponsorpay 			= require "plugin.sponsorpay"
+ads 					= require "ads"
 
 ---- Additional libs
 xml 					= require "src.libs.Xml"
 utils 				= require "src.libs.Utils"
 facebook 			= require "src.libs.Facebook" 
-
+vungle 				= require "src.libs.Vungle" 
 
 ---- Game libs
 
@@ -102,8 +105,6 @@ function T(enText)
 end
 
 -----------------------------------------------------------------------------------------
----- Server access Managers
-
 ---- App Tools
 router 			= require "src.tools.Router"
 viewManager		= require "src.tools.ViewManager"
@@ -112,15 +113,21 @@ UserManager		= require "src.managers.UserManager"
 LotteryManager	= require "src.managers.LotteryManager"
 
 -----------------------------------------------------------------------------------------
+---- Server access Managers
 
 userManager 		= UserManager:new()
 lotteryManager 	= LotteryManager:new()
 
 -----------------------------------------------------------------------------------------
+--- Display
 
 hud = display.newGroup()
-
 viewManager.initGlobalBack()
+
+-----------------------------------------------------------------------------------------
+--- Vungle
+
+vungle:init()
 
 -----------------------------------------------------------------------------------------
 ---- App globals
@@ -133,6 +140,7 @@ GLOBALS = {
 
 if(not GLOBALS.savedData) then
 	utils.initGameData()
+	print("start : initGameData")		 
    router.openOutside()
 else
 	native.setActivityIndicator( true )
@@ -140,6 +148,7 @@ else
 	if(GLOBALS.savedData.user.facebookId) then
    	facebook.getMe(function()
    		native.setActivityIndicator( false )
+			print("start : getMe : fail : outside")		 
          router.openOutside()
    	end)
 	
@@ -148,6 +157,7 @@ else
    
    else
    	native.setActivityIndicator( false )
+		print("start : no user data : outside")		 
       router.openOutside()
 	end
 		

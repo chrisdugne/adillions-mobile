@@ -46,7 +46,7 @@ function scene:refreshScene()
 
 	-------------------------------
 
-	viewManager.drawButton(hud, "_Jouer !", display.contentWidth*0.5, display.contentHeight*0.5, router.openFillLotteryTicket)
+	viewManager.drawButton(hud, "_Jouer !", display.contentWidth*0.5, display.contentHeight*0.5, function() self:play() end)
 
 	-------------------------------
 
@@ -83,6 +83,13 @@ function scene:refreshScene()
 
 	self.view:insert(hud)
 
+end
+
+------------------------------------------
+
+function scene:play( )
+	vungle.afterVideoSeen = router.openFillLotteryTicket
+	vungle:showAd()
 end
 
 ------------------------------------------

@@ -29,10 +29,12 @@ function UserManager:fetchPlayer()
 		native.setActivityIndicator( false )
 
 		if(result.isError) then
+			print("fetchPlayer error : outside")
 			router.openOutside()
 		else
 			local player = json.decode(result.response)
 			if(not player) then 
+   			print("fetchPlayer no player : outside")
 				router.openOutside()
 			else 
 				userManager:receivedPlayer(player, router.openHome)
@@ -60,6 +62,7 @@ function UserManager:getPlayerByFacebookId()
 		native.setActivityIndicator( false )	
 
 		if(result.isError) then
+			print("getPlayerByFacebookId error : outside")
 			router.openOutside()
 		elseif(result.status == 401) then
 			print("openSigninFB")
@@ -253,7 +256,8 @@ function UserManager:logoutViewListener( event )
 	   print(event.url)
     	
     	if event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()    		
+			self:closeWebView()    	
+			print("logoutViewListener backToMobile : outside")	
       	router.openOutside()
    		native.setActivityIndicator( false )
       end

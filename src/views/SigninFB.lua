@@ -39,12 +39,14 @@ function scene:signinFBViewListener( event )
 		print(event.url)
 	
    	if event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()    		
+			self:closeWebView()   
+			print("signinFB : backToMobile : outside")		 		
       	router.openOutside()
 
    	elseif event.url == SERVER_URL .. "requireLogout" then  -- changeAccount
 			self:closeWebView()    		
 			facebook.logout()
+			print("signinFB : requireLogout : outside")		 		
       	router.openOutside()
 
     	elseif string.find(event.url, "signedIn") then

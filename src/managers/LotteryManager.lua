@@ -20,11 +20,13 @@ end
 function LotteryManager:refreshNextLottery(draw)
 	utils.postWithJSON(
 	{}, 
-	SERVER_URL .. "nextLottery", 
+	SERVER_URL .. "nextLottery" .. "?nocache=" .. system.getTimer(), 
 	function(result)
-	
+		utils.vardump(result)
 		self.nextLottery = json.decode(result.response)
 		self.nextLottery.theme = json.decode(self.nextLottery.theme)
+		
+		utils.vardump(self.nextLottery)
 		
 		userManager:checkUserCurrentLottery()
 		draw()
@@ -157,7 +159,8 @@ function LotteryManager:refreshNumberSelectionDisplay()
 
 	if(#self.currentSelection == self.nextLottery.maxPicks) then
 		viewManager.drawButton(hud.selection, "_ok !", display.contentWidth*0.89, y, function()
-			router.openSelectAdditionalNumber()
+			vungle.afterVideoSeen = router.openSelectAdditionalNumber
+			vungle:showAd()
 		end,
 		110)
 

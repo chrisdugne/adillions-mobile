@@ -22,6 +22,7 @@ end
 
 function openOutside()
 	resetScreen()
+	print("router : openOutside")	
 	storyboard.gotoScene( "src.views.Outside" )
 end
 

@@ -131,11 +131,11 @@ end
 function destroyFromDisplay(object)
 	if(object) then
 		display.remove(object)
-   	object = nil
-   end
+		object = nil
+	end
 end
-      
-      
+
+
 -----------------------------------------------------------------------------------------
 
 function string.startsWith(String,Start)
@@ -219,7 +219,7 @@ function tprint (tbl, indent)
 end
 
 -----------------------------------------------------------------------------------------
-	
+
 function postWithJSON(data, url, next)
 	post(url, json.encode(data), next, "json")
 end
@@ -342,16 +342,16 @@ end
 --------------------------------------------------------
 
 function getPointsBetween(from, to, nbPoints)
-	
+
 	if(from.x > to.x) then
 		local swap = from
 		from = to
 		to = swap
 	end
-	
+
 	local x1,y1 = from.x,from.y
 	local x2,y2 = to.x,to.y
-	
+
 	local step = math.abs(x2-x1)/nbPoints
 	local points = {}
 
@@ -381,8 +381,48 @@ end
 
 -- returns the distance between points a and b
 function distanceBetween( a, b )
-    local width, height = b.x-a.x, b.y-a.y
-    return (width*width + height*height)^0.5 -- math.sqrt(width*width + height*height)
-        -- nothing wrong with math.sqrt, but I believe the ^.5 is faster
+	local width, height = b.x-a.x, b.y-a.y
+	return (width*width + height*height)^0.5 -- math.sqrt(width*width + height*height)
+	-- nothing wrong with math.sqrt, but I believe the ^.5 is faster
 end
- 
+
+--------------------------------------------------------
+--
+-- merci Vungle
+
+function vardump(value, depth, key)
+	local linePrefix = ""
+	local spaces = ""
+
+	if key ~= nil then
+		linePrefix = "["..key.."] = "
+	end
+
+	if depth == nil then
+		depth = 0
+	else
+		depth = depth + 1
+		for i=1, depth do spaces = spaces .. "  " end
+	end
+
+	if type(value) == 'table' then
+		mTable = getmetatable(value)
+		if mTable == nil then
+			print(spaces ..linePrefix.."(table) ")
+		else
+			print(spaces .."(metatable) ")
+			value = mTable
+		end
+		for tableKey, tableValue in pairs(value) do
+			vardump(tableValue, depth, tableKey)
+		end
+	elseif type(value)    == 'function' or
+	type(value)       == 'thread' or
+	type(value)       == 'userdata' or
+	value             == nil
+	then
+		print(spaces..tostring(value))
+	else
+		print(spaces..linePrefix.."("..type(value)..") "..tostring(value))
+	end
+end
