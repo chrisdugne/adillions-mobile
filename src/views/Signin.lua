@@ -23,22 +23,22 @@ end
 function scene:refreshScene()
 	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
 	self.webView:request( SERVER_URL .. "msignin" )
-	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-	facebook.initWeb()
+	self.webView:addEventListener( "urlRequest", function(event) self:signinViewListener(event) end )
+	
+	viewManager.initHeader()
+	self.view:insert(hud)
+	
 end
 
 ------------------------------------------
 
-function scene:loginViewListener( event )
+function scene:signinViewListener( event )
 
     if event.url then
 
 		print("---   signin listener")
 		print(event.url)
 
-    	facebook.newUrl()
-    
-		
     	if event.url == SERVER_URL .. "signedIn" then
 			self:closeWebView()    		
       	router.openLogin()
@@ -47,23 +47,18 @@ function scene:loginViewListener( event )
 			self:closeWebView()    		
       	router.openOutside()
 		
-    	else
-    		facebook.checkWebUrl(event.url, function() self:askToLoginAgain() end)
-			
+    	elseif event.url == SERVER_URL .. "connectWithFB" then
+			self:closeWebView()    
+    		facebook.login()
 		end
 
     end
 end
 
 function scene:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+	self.webView:removeEventListener( "urlRequest", function(event) self:signinViewListener(event) end )
 	self.webView:removeSelf()
 	self.webView = nil
-end
-
-function scene:askToLoginAgain()
-	self:closeWebView()
-	router.openLogin()  
 end
 
 ------------------------------------------

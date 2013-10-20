@@ -21,12 +21,14 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
---	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
---	self.webView:request( SERVER_URL .. "mlogin" .. "?nocache=" .. system.getTimer()*1000 )
---	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
---	facebook.initWeb()
 
-	facebook.login()
+	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
+	self.webView:request( SERVER_URL .. "mlogin"  )
+	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+	
+	viewManager.initHeader()
+	self.view:insert(hud)
+	
 end
 
 ------------------------------------------
@@ -38,8 +40,6 @@ function scene:loginViewListener( event )
 		print("---   login listener")
 		print(event.url)
 		
-    	facebook.newUrl()
-    
     	if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
 			self:closeWebView()    		
 			local params = utils.getUrlParams(event.url);
@@ -54,22 +54,10 @@ function scene:loginViewListener( event )
 			self:closeWebView()    		
       	router.openOutside()
 
-    	elseif string.find(event.url, "access_token") then
+    	elseif event.url == SERVER_URL .. "connectWithFB" then
 			self:closeWebView()    		
-			local params = utils.getUrlParams(event.url);
-			
-			GLOBALS.savedData.facebookAccessToken 	= params.access_token         
-      	utils.saveTable(GLOBALS.savedData, "savedData.json")
+      	facebook.login()
 
-			facebook.getMe()
-
-    	else
-    		facebook.checkWebUrl(event.url, function() self:askToLoginAgain() end,
-    		function()
-    			print("REDIRECT READ")
-    			self.webView:request("https://m.facebook.com/dialog/oauth/read")
-    		end)
-    		
 		end
 
     end
@@ -79,10 +67,6 @@ function scene:closeWebView()
 	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
 	self.webView:removeSelf()
 	self.webView = nil
-end
-
-function scene:askToLoginAgain()
-	self.webView:request( SERVER_URL .. "mlogin" )
 end
 
 ------------------------------------------

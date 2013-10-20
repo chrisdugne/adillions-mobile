@@ -27,6 +27,7 @@ module(..., package.seeall)
 -- todo test android
 --
 function login()
+	native.setActivityIndicator( true )
 	coronaFacebook.login( FACEBOOK_APP_ID, fblistener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
 end
 
@@ -39,14 +40,22 @@ function fblistener( event )
     if ( "session" == event.type ) then
         -- upon successful login, request list of friends of the signed in user
         if ( "login" == event.phase ) then
+        
+        		if(event.token) then
             -- Fetch access token for use in Facebook's API
-            local access_token = event.token
-            print( access_token )
+	            print( "got the token" )
             
-   			GLOBALS.savedData.facebookAccessToken 	= event.token
-         	utils.saveTable(GLOBALS.savedData, "savedData.json")
-   
-   			facebook.getMe()
+      			GLOBALS.savedData.facebookAccessToken 	= event.token
+            	utils.saveTable(GLOBALS.savedData, "savedData.json")
+      
+      			facebook.getMe()
+      		end
+
+        elseif ( "loginFailed" == event.phase ) then
+				native.setActivityIndicator( false )
+				userManager:logout()
+        		
+        
         end
     elseif ( "request" == event.type ) then
         -- event.response is a JSON object from the FB server
@@ -260,48 +269,48 @@ end
 -- WEB VIEW LISTENING - AUTH
 -----------------------------------------------------------------------------------------
 
-function initWeb()
-	facebook.lastUrlNb = 0
-end
-
-function newUrl()
-	facebook.lastUrlNb = facebook.lastUrlNb + 1
-end
+--function initWeb()
+--	facebook.lastUrlNb = 0
+--end
+--
+--function newUrl()
+--	facebook.lastUrlNb = facebook.lastUrlNb + 1
+--end
 
 -----------------------------------------------------------------------------------------
 
-function checkWebUrl(url, askToLoginFunction, askOauthRead)
-
-    	if string.startsWith(url, "https://www.facebook.com/logout.php") then
-    		askToLoginFunction()
-			
-    	elseif string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri") then -- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
-    		print("-----> contains oauth?redirect_uri")
-			local params = utils.getUrlParams(url);
-			print(utils.urlDecode(params.redirect_uri))
-			askOauthRead()
-    	
-    	elseif url == "https://m.facebook.com/dialog/oauth/read"
-    	or url == "https://m.facebook.com/dialog/oauth/write" -- FB doesnt redirect here ... ex : Cancel during permissions
-    	then 
-    		print("-----> force relogin ?")
-    		
-    		local time = 8000
---    		if(string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri")) then
---    			time = 100
---    		end
-    		
-    		local urlNb = facebook.lastUrlNb
-    		timer.performWithDelay(time, function()
-    			if(facebook.lastUrlNb == urlNb) then
-    				print("stuck ! redirecting to login again ")
-    				askToLoginFunction()
-   			end
-    		end)
-			
-    	elseif string.find(url, "error") then
-    		print("-----> contains error ?")
-    	
-    	end
-    	
-end
+--function checkWebUrl(url, askToLoginFunction, askOauthRead)
+--
+--    	if string.startsWith(url, "https://www.facebook.com/logout.php") then
+--    		askToLoginFunction()
+--			
+--    	elseif string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri") then -- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
+--    		print("-----> contains oauth?redirect_uri")
+--			local params = utils.getUrlParams(url);
+--			print(utils.urlDecode(params.redirect_uri))
+--			askOauthRead()
+--    	
+--    	elseif url == "https://m.facebook.com/dialog/oauth/read"
+--    	or url == "https://m.facebook.com/dialog/oauth/write" -- FB doesnt redirect here ... ex : Cancel during permissions
+--    	then 
+--    		print("-----> force relogin ?")
+--    		
+--    		local time = 8000
+----    		if(string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri")) then
+----    			time = 100
+----    		end
+--    		
+--    		local urlNb = facebook.lastUrlNb
+--    		timer.performWithDelay(time, function()
+--    			if(facebook.lastUrlNb == urlNb) then
+--    				print("stuck ! redirecting to login again ")
+--    				askToLoginFunction()
+--   			end
+--    		end)
+--			
+--    	elseif string.find(url, "error") then
+--    		print("-----> contains error ?")
+--    	
+--    	end
+--    	
+--end

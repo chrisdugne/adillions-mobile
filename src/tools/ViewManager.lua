@@ -18,6 +18,16 @@ end
 	
 -----------------------------------------------------------------------------------------
 
+-- globalBack not to have a black screen while changing views
+function initGlobalBack()
+	local globalBack = display.newImageRect( "assets/images/bg.jpg", display.contentWidth, display.contentHeight)  
+	globalBack.x = display.viewableContentWidth*0.5 
+	globalBack.y = display.viewableContentHeight*0.5
+	globalBack:toBack()
+end
+	
+-----------------------------------------------------------------------------------------
+
 function initBack()
 	hud.back = display.newImageRect( hud, "assets/images/bg.jpg", display.contentWidth, display.contentHeight)  
 	hud.back.x = display.viewableContentWidth*0.5 

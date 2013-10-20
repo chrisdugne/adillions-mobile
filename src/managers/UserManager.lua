@@ -239,17 +239,10 @@ end
 
 function UserManager:logout()
 
-	if(self.user.facebookId) then
-   	native.setActivityIndicator( true )
-   	
-   	self.webView = native.newWebView( 0, 0, 1, 1 )
-   	self.webView:request( SERVER_URL .. "mlogout" )
-   	self.webView:addEventListener( "urlRequest", function(event) self:logoutViewListener(event) end )
-   	
-   else
-		router.openOutside()
-   end
-   
+	print("userManager:logout")
+	router.openOutside()
+	coronaFacebook.logout()
+	utils.initGameData()	
 end
 
 function UserManager:logoutViewListener( event )
