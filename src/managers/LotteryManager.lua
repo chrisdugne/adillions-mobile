@@ -159,8 +159,11 @@ function LotteryManager:refreshNumberSelectionDisplay()
 
 	if(#self.currentSelection == self.nextLottery.maxPicks) then
 		viewManager.drawButton(hud.selection, "_ok !", display.contentWidth*0.89, y, function()
+			
+			sponsorpayTools.afterVideoSeen = router.openSelectAdditionalNumber
 			vungle.afterVideoSeen = router.openSelectAdditionalNumber
-			vungle:showAd()
+			
+			sponsorpayTools:requestOffers()
 		end,
 		110)
 

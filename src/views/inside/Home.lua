@@ -153,8 +153,10 @@ end
 ------------------------------------------
 
 function scene:play( )
+	sponsorpayTools.afterVideoSeen = router.openFillLotteryTicket
 	vungle.afterVideoSeen = router.openFillLotteryTicket
-	vungle:showAd()
+
+	sponsorpayTools:requestOffers()
 end
 
 ------------------------------------------

@@ -63,37 +63,7 @@ function scene:refreshScene()
 	self.view:insert(hud)
 
 	---------------------------------------------------------------
-	--
-	-- TEST sponsorpay
-	-- 
-	--  
 
-	local appId = "16796dd"
-	local userId = "141c2c3a8c230fe60ba"
-	local securityToken = "7e10113fe4f9d215497ef336ce22b9aa"
-	local token = sponsorpay.start( appId, userId, securityToken )
-	print ( "Credentials token = " .. token)
-
-	self:requestOffers()
-
-end
-
-------------------------------------------
--- TEST sponsorpay
--- 
-function scene:requestOffers()
-	sponsorpay.requestMBEOffers( function(event) self:mbeListener(event) end )
-end
-
-function scene:mbeListener( event )
-	local message = ""
-	if event.success then
-		message = "Has offers? " .. tostring(event.mbe.hasOffers)
-	else
-		message = "Error\nMessage: " .. event.error.message .. "\nType: " .. event.error.type .. "\nCode: " .. event.error.code
-	end
-	print( message )
-	utils.tprint(event)
 end
 
 ------------------------------------------

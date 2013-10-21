@@ -29,7 +29,7 @@ function scene:refreshScene()
 	-- REJOUER
 	------------------
 
-	viewManager.drawTicket(hud.board, lotteryManager.currentSelection, display.contentWidth*0.14, display.contentHeight*0.25)
+	viewManager.drawTicket(hud, lotteryManager.currentSelection, display.contentWidth*0.14, display.contentHeight*0.25)
 	hud:insert(hud.board)
 
 	-------------------------------
@@ -88,8 +88,9 @@ end
 ------------------------------------------
 
 function scene:play( )
+	sponsorpayTools.afterVideoSeen = router.openFillLotteryTicket
 	vungle.afterVideoSeen = router.openFillLotteryTicket
-	vungle:showAd()
+	sponsorpayTools:requestOffers()
 end
 
 ------------------------------------------

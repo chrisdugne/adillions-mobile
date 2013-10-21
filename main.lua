@@ -81,6 +81,7 @@ xml 					= require "src.libs.Xml"
 utils 				= require "src.libs.Utils"
 facebook 			= require "src.libs.Facebook" 
 vungle 				= require "src.libs.Vungle" 
+sponsorpayTools 	= require "src.libs.SponsorpayTools" 
 
 ---- Game libs
 

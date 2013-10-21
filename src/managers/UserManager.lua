@@ -98,6 +98,11 @@ function UserManager:receivedPlayer(player, next)
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 
 	facebook.isFacebookFan(next)
+	
+	print("=====================================================")
+	print("receivedPlayer")
+	print("sponsorpayTools init")
+	sponsorpayTools:init()
 end
 
 -----------------------------------------------------------------------------------------

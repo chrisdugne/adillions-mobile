@@ -48,7 +48,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function Vungle:showAd()
+function Vungle:tryToShowAd()
 	native.setActivityIndicator( true )
 	ads.show( "incentivized", { 
 		isBackButtonEnabled = true, 
