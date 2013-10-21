@@ -16,25 +16,23 @@ local scene = storyboard.newScene()
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-	lotteryManager:getFinishedLotteries()
 end
 
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	utils.emptyGroup(hud)
 	native.setActivityIndicator( true )
-	
-	if(lotteryManager.finishedLotteries) then
-   	native.setActivityIndicator( false )
-   	self:drawBoard()
-   else
-   	print("waiting for lotteries")
-   	timer.performWithDelay(1000, function() self:refreshScene() end)
-	end
-
 	viewManager.setupView(3)
 	self.view:insert(hud)
+
+	lotteryManager:getFinishedLotteries(function()
+   	native.setActivityIndicator( false )
+   	self:drawBoard()
+
+   	viewManager.setupView(3)
+   	self.view:insert(hud)
+	end)
+
 end
 -----------------------------------------------------------------------------------------
 

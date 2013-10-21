@@ -33,14 +33,14 @@ function LotteryManager:refreshNextLottery(draw)
 	end)
 end
 
-function LotteryManager:getFinishedLotteries()
+function LotteryManager:getFinishedLotteries(next)
 	utils.postWithJSON(
 	{}, 
 	SERVER_URL .. "finishedLotteries", 
 	function(result)
 		self.finishedLotteries = json.decode(result.response)
-		
 		utils.tprint(self.finishedLotteries)
+		next()
 	end)
 end
 
