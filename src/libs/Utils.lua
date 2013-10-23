@@ -25,6 +25,17 @@ function initGameData()
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 end
 
+
+function initOptions()
+
+	GLOBALS.options = {
+		notificationBeforeDraw 	= true,
+		notificationAfterDraw 	= true,
+	}
+
+	utils.saveTable(GLOBALS.options, "options.json")
+end
+
 -----------------------------------------------------------------------------------------
 
 function onTouch(object, action)
@@ -384,6 +395,32 @@ function distanceBetween( a, b )
 	local width, height = b.x-a.x, b.y-a.y
 	return (width*width + height*height)^0.5 -- math.sqrt(width*width + height*height)
 	-- nothing wrong with math.sqrt, but I believe the ^.5 is faster
+end
+
+--------------------------------------------------------
+
+function formatPositionNum(num)
+	
+	local suffix = ""
+	num = tonumber(num)
+	 
+	if(LANG == "en") then
+   	if(num == 1) then
+   		suffix = "st"
+   	elseif(num == 2) then
+   		suffix = "nd"
+   	elseif(num == 3) then
+   		suffix = "rd"
+   	else
+   		suffix = "th"
+		end
+	end
+	
+	if(num < 10) then
+		num = "0" .. num
+	end
+	
+	return num .. suffix
 end
 
 --------------------------------------------------------

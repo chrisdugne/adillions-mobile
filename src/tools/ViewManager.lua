@@ -49,6 +49,7 @@ function initBoard()
 		id = "onBottom",
 		horizontalScrollDisabled = true,
 		verticalScrollDisabled = false,
+		hideScrollBar = true,
 	}
 end
 
@@ -66,14 +67,6 @@ function initHeader()
 	hud.logo.x = display.contentWidth*0.5
 	hud.logo.y = HEADER_HEIGHT*0.4
 	
-	hud.logout = display.newImage( hud, "assets/images/hud/logout.png")  
-	hud.logout:scale(0.3,0.3)
-	hud.logout.x = display.contentWidth*0.93
-	hud.logout.y = HEADER_HEIGHT*0.4
-
-	utils.onTouch(hud.logout, function()
-		userManager:logout()
-	end)
 end
 
 -----------------------------------------------------------------------------------------

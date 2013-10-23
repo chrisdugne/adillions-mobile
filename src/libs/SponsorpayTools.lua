@@ -22,8 +22,8 @@ function SponsorpayTools:init()
 	local userId = userManager.user.uid
 	local securityToken = "7e10113fe4f9d215497ef336ce22b9aa"
 	local token = sponsorpay.start( appId, userId, securityToken )
-	print ( "SponsorpayTools credentials token : " .. token)
-	
+	  
+	sponsorpay.setShowMBERewardNotification( false )
 end
 
 -----------------------------------------------------------------------------------------

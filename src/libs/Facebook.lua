@@ -14,27 +14,28 @@
 module(..., package.seeall)
  
 -----------------------------------------------------------------------------------------
---
 
----
--- todo from mlogin and msignin
--- 1 - open mlogin
--- 2 - remove FB.popupLogin and window.href "/connectWithFB"
--- 3 - listen here and call login
---
--- todo logout
--- todo cleanup login/signin/signinFB remove listeners + webviews
--- todo test android
---
-function login()
+local afterFacebookConnection
+
+function connect(next)
 	native.setActivityIndicator( true )
-	coronaFacebook.login( FACEBOOK_APP_ID, fblistener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
+	coronaFacebook.login( FACEBOOK_APP_ID, connectListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
+	afterFacebookConnection = next
 end
 
+------------------------------------
+
+function login()
+	native.setActivityIndicator( true )
+	coronaFacebook.login( FACEBOOK_APP_ID, loginListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
+end
+
+------------------------------------
+
 -- listener for "fbconnect" events
-function fblistener( event )
+function loginListener( event )
 	
-	print("----->   fblistener")
+	print("----->   loginListener")
 	utils.tprint(event)
 	
     if ( "session" == event.type ) then
@@ -48,13 +49,57 @@ function fblistener( event )
       			GLOBALS.savedData.facebookAccessToken 	= event.token
             	utils.saveTable(GLOBALS.savedData, "savedData.json")
       
-      			facebook.getMe()
+      			getMe()
       		end
 
         elseif ( "loginFailed" == event.phase ) then
 				native.setActivityIndicator( false )
 				userManager:logout()
         		
+        
+        end
+    elseif ( "request" == event.type ) then
+        -- event.response is a JSON object from the FB server
+        local response = event.response
+
+        -- if request succeeds, create a scrolling list of friend names
+        if ( not event.isError ) then
+            response = json.decode( event.response )
+
+            local data = response.data
+            for i=1,#data do
+                local name = data[i].name
+                print( name )
+            end
+        end
+    elseif ( "dialog" == event.type ) then
+        print( "dialog", event.response )
+    end
+end
+------------------------------------
+
+-- listener for "fbconnect" events
+function connectListener( event )
+	
+	print("----->   connectListener")
+	utils.tprint(event)
+	
+    if ( "session" == event.type ) then
+        -- upon successful login, request list of friends of the signed in user
+        if ( "login" == event.phase ) then
+        
+        		if(event.token) then
+            -- Fetch access token for use in Facebook's API
+	            print( "got the token" )
+            
+      			GLOBALS.savedData.facebookAccessToken 	= event.token
+            	utils.saveTable(GLOBALS.savedData, "savedData.json")
+      
+      			mergeMe(afterFacebookConnection)
+      		end
+
+        elseif ( "loginFailed" == event.phase ) then
+				native.setActivityIndicator( false )
         
         end
     elseif ( "request" == event.type ) then
@@ -116,6 +161,40 @@ function getMe(failure)
 
 				native.setActivityIndicator( false )	      		
       		userManager:getPlayerByFacebookId()
+      	elseif(failure) then
+   			print("--> old FB token")
+   			failure()
+      	end
+   	end)
+   elseif(failure) then
+		print("--> no FB token")
+   	failure()
+   end
+end
+
+-----------------------------------------------------------------------------------------
+
+function mergeMe(next)
+	if(GLOBALS.savedData.facebookAccessToken) then
+		print("token -->", GLOBALS.savedData.facebookAccessToken)
+   	local url = "https://graph.facebook.com/me?fields=name,first_name,last_name,picture,locale,birthday,email&access_token=" .. GLOBALS.savedData.facebookAccessToken
+   	network.request(url , "GET", function(result)
+   		
+   		response = json.decode(result.response)
+   		
+   		print("----------")
+   		utils.tprint(response)
+   		print("----------")
+   		utils.tprint(response.error)
+   		print("----------")
+   	
+   		if(not response.error) then
+   			print("--> connected to FB")
+      		utils.tprint(response)
+				facebook.data = response
+
+				native.setActivityIndicator( false )	      		
+      		userManager:mergePlayerWithFacebook(next)
       	elseif(failure) then
    			print("--> old FB token")
    			failure()
@@ -266,51 +345,3 @@ function postOnWall(message, next)
 end
 
 -----------------------------------------------------------------------------------------
--- WEB VIEW LISTENING - AUTH
------------------------------------------------------------------------------------------
-
---function initWeb()
---	facebook.lastUrlNb = 0
---end
---
---function newUrl()
---	facebook.lastUrlNb = facebook.lastUrlNb + 1
---end
-
------------------------------------------------------------------------------------------
-
---function checkWebUrl(url, askToLoginFunction, askOauthRead)
---
---    	if string.startsWith(url, "https://www.facebook.com/logout.php") then
---    		askToLoginFunction()
---			
---    	elseif string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri") then -- FB DE *&^%$ ne donne pas de access_token qd logout + login again (-> changeAccount)
---    		print("-----> contains oauth?redirect_uri")
---			local params = utils.getUrlParams(url);
---			print(utils.urlDecode(params.redirect_uri))
---			askOauthRead()
---    	
---    	elseif url == "https://m.facebook.com/dialog/oauth/read"
---    	or url == "https://m.facebook.com/dialog/oauth/write" -- FB doesnt redirect here ... ex : Cancel during permissions
---    	then 
---    		print("-----> force relogin ?")
---    		
---    		local time = 8000
-----    		if(string.startsWith(url, "https://m.facebook.com/dialog/oauth?redirect_uri")) then
-----    			time = 100
-----    		end
---    		
---    		local urlNb = facebook.lastUrlNb
---    		timer.performWithDelay(time, function()
---    			if(facebook.lastUrlNb == urlNb) then
---    				print("stuck ! redirecting to login again ")
---    				askToLoginFunction()
---   			end
---    		end)
---			
---    	elseif string.find(url, "error") then
---    		print("-----> contains error ?")
---    	
---    	end
---    	
---end

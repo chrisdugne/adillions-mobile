@@ -10,7 +10,7 @@ APP_VERSION 		= "1.8.14"
 -----------------------------------------------------------------------------------------
 
 DEV					= 1
-PROD					= 1
+--PROD					= 1
 
 -----------------------------------------------------------------------------------------
 
@@ -63,15 +63,16 @@ TWITTER_FAN_TICKETS			= 4
 -----------------------------------------------------------------------------------------
 
 if ANDROID then
-   FONT = "Helvetica_Light-Normal"
+   FONT = "GillSans"
 else
-	FONT = "Helvetica_Light-Normal"
+	FONT = "GillSans"
 end
 
 -----------------------------------------------------------------------------------------
 --- Corona's libraries
 json 					= require "json"
 storyboard 			= require "storyboard"
+widget		 		= require "widget"
 coronaFacebook		= require "facebook"
 sponsorpay 			= require "plugin.sponsorpay"
 ads 					= require "ads"
@@ -82,9 +83,9 @@ utils 				= require "src.libs.Utils"
 facebook 			= require "src.libs.Facebook" 
 vungle 				= require "src.libs.Vungle" 
 sponsorpayTools 	= require "src.libs.SponsorpayTools" 
+twitter 				= require "src.libs.Twitter" 
 
 ---- Game libs
-
 
 -----------------------------------------------------------------------------------------
 
@@ -98,8 +99,8 @@ random 	= math.random
 -----------------------------------------------------------------------------------------
 -- Translations
 
-local translations = require("assets.Translations")
-local LANG =  userDefinedLanguage or system.getPreference("ui", "language")
+translations = require("assets.Translations")
+LANG =  userDefinedLanguage or system.getPreference("ui", "language")
 
 function T(enText)
 	return translations[enText][LANG] or enText
@@ -135,13 +136,14 @@ vungle:init()
 
 GLOBALS = {
 	savedData 		= utils.loadUserData("savedData.json"),
+	options 			= utils.loadUserData("options.json"),
 }
 
 -----------------------------------------------------------------------------------------
 
 if(not GLOBALS.savedData) then
 	utils.initGameData()
-	print("start : initGameData")		 
+	utils.initOptions()
    router.openOutside()
 else
 	native.setActivityIndicator( true )
@@ -161,8 +163,46 @@ else
 		print("start : no user data : outside")		 
       router.openOutside()
 	end
-		
+
 end
+
+-----------------------------------------------------------------------------------------
+--- NOTIFICATIONS
+
+local function notificationListener( event )
+
+   print("------------------ notificationListener")
+	utils.tprint(event)
+	if ( event.type == "remote" ) then
+		native.showPopup("Notification", "remote", { "Ok" })
+
+	elseif ( event.type == "local" ) then
+		native.showPopup("Notification", "local", { "Ok" })
+
+	elseif ( event.type == "remoteRegistration" ) then 
+		native.showPopup("Notification", "remoteRegistration", { "Ok" })
+
+	end
+   
+   native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
+end
+
+Runtime:addEventListener( "notification", notificationListener )
+
+-----------------------------------------------------------------------------------------
+
+-- create a function to handle all of the system events
+local onSystem = function( event )
+    if event.type == "applicationSuspend" then
+    
+    elseif event.type == "applicationStart" or event.type == "applicationResume" then
+      native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
+    
+    end
+end
+
+-- setup a system event listener
+Runtime:addEventListener( "system", onSystem )
 
 -----------------------------------------------------------------------------------------
 --- iOS Status Bar

@@ -22,11 +22,9 @@ function LotteryManager:refreshNextLottery(draw)
 	{}, 
 	SERVER_URL .. "nextLottery" .. "?nocache=" .. system.getTimer(), 
 	function(result)
-		utils.vardump(result)
+	
 		self.nextLottery = json.decode(result.response)
 		self.nextLottery.theme = json.decode(self.nextLottery.theme)
-		
-		utils.vardump(self.nextLottery)
 		
 		userManager:checkUserCurrentLottery()
 		draw()
@@ -51,7 +49,51 @@ function LotteryManager:price(lottery)
 end
 
 function LotteryManager:date(lottery)
-	return "_Tirage du " .. os.date("%d/%m/%Y", lottery.date/1000)
+
+	local day		   = T (os.date("%A", lottery.date/1000))
+	local numDay 		= utils.formatPositionNum(os.date("%d", lottery.date/1000))
+	local month 		= T (os.date("%B", lottery.date/1000))
+	local year 			= os.date("%Y", lottery.date/1000)
+
+	if (LANG == "fr") then
+		return day .. " " .. numDay .. " " .. month .. " " .. year
+	else
+		return day .. ", " .. month .. " " .. numDay .. ", " .. year
+   end
+   
+end
+
+-----------------------------------------------------------------------------------------
+
+function LotteryManager:refreshNotifications(lotteryDateMillis)
+
+	system.cancelNotification()
+	
+	if(GLOBALS.options.notificationBeforeDraw) then
+		
+		local notificationTimeSeconds = os.date( "!*t", lotteryDateMillis/1000 - 48 * 60 * 60 )
+		local previousCount = native.getProperty( "applicationIconBadgeNumber" ) or 0 
+
+		local options = {
+			alert = T "Next draw in 48h !",
+			badge = previousCount + 1,
+		}
+
+		system.scheduleNotification( notificationTimeSeconds, options )
+	end
+
+	if(GLOBALS.options.notificationAfterDraw) then
+		
+		local notificationTimeSeconds = os.date( "!*t", lotteryDateMillis/1000 + 3 * 60)
+		local previousCount = native.getProperty( "applicationIconBadgeNumber" ) or 0 
+
+		local options = {
+			alert = T "This week's results are published !",
+			badge = previousCount + 1,
+		}
+
+		system.scheduleNotification( notificationTimeSeconds, options )
+	end
 end
 
 -----------------------------------------------------------------------------------------

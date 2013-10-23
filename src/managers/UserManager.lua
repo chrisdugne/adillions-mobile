@@ -83,6 +83,20 @@ end
 
 function UserManager:receivedPlayer(player, next)
 
+	self:updatedPlayer(player)
+	
+	facebook.isFacebookFan(next)
+	
+	print("=====================================================")
+	print("receivedPlayer")
+	print("sponsorpayTools init")
+	sponsorpayTools:init()
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:updatedPlayer(player, next)
+
 	self.user 							= player
 	self.user.totalBonusTickets 	= 0
 
@@ -94,15 +108,17 @@ function UserManager:receivedPlayer(player, next)
 	GLOBALS.savedData.user.birthDate 		= player.birthDate
 	GLOBALS.savedData.user.referrerId 		= player.referrerId
 	GLOBALS.savedData.user.facebookId 		= player.facebookId
+	GLOBALS.savedData.user.twitterId 		= player.twitterId
+	GLOBALS.savedData.user.twitterName 		= player.twitterName
 
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 
-	facebook.isFacebookFan(next)
+	self:checkIdlePoints()
 	
-	print("=====================================================")
-	print("receivedPlayer")
-	print("sponsorpayTools init")
-	sponsorpayTools:init()
+	if(next) then
+		next()
+	end
+	
 end
 
 -----------------------------------------------------------------------------------------
@@ -113,13 +129,29 @@ end
 function UserManager:checkUserCurrentLottery()
 
 	if(self.user.currentLotteryUID ~= lotteryManager.nextLottery.uid) then
+
+		----------------------------------------
+
 		self.user.currentLotteryUID 			= lotteryManager.nextLottery.uid
 		self.user.availableTickets 			= START_AVAILABLE_TICKETS 
 		self.user.playedBonusTickets 			= 0
 		
 		self:updatePlayer()
+      
+   	----------------------------------------
+   	
+   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
+
 	end
-	
+
+	--------------------------------------------------------------------------------------
+
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:checkIdlePoints(numbers)
+
 	if(userManager.user.idlePoints > 0) then
 		local title 	= "_New points !"
 		local text		= ""
@@ -133,28 +165,28 @@ function UserManager:checkUserCurrentLottery()
 			fontSize 		= 120,
 		})
 
-		viewManager.newText({
-			parent 			= hud.popup, 
-			text	 			= "=",     
-			x 					= display.contentWidth*0.5,
-			y 					= display.contentHeight*0.5,
-			fontSize 		= 90,
-		})
-
-		local plural = ""
-		local nbTickets = math.floor(userManager.user.idlePoints/POINTS_TO_EARN_A_TICKET)
-		if(nbTickets > 1) then plural = "s" end
-
-		viewManager.newText({
-			parent 			= hud.popup, 
-			text	 			= nbTickets .. " ticket" .. plural,     
-			x 					= display.contentWidth*0.5,
-			y 					= display.contentHeight*0.6,
-			fontSize 		= 80,
-		})
+		if(math.floor(userManager.user.idlePoints/POINTS_TO_EARN_A_TICKET) > 0) then
+   		viewManager.newText({
+   			parent 			= hud.popup, 
+   			text	 			= "=",     
+   			x 					= display.contentWidth*0.5,
+   			y 					= display.contentHeight*0.5,
+   			fontSize 		= 90,
+   		})
+   
+   		local plural = ""
+   		local nbTickets = math.floor(userManager.user.idlePoints/POINTS_TO_EARN_A_TICKET)
+   		if(nbTickets > 1) then plural = "s" end
+   
+   		viewManager.newText({
+   			parent 			= hud.popup, 
+   			text	 			= nbTickets .. " ticket" .. plural,     
+   			x 					= display.contentWidth*0.5,
+   			y 					= display.contentHeight*0.6,
+   			fontSize 		= 80,
+   		})
+   	end
 	end
-
-
 end
 
 -----------------------------------------------------------------------------------------
@@ -235,12 +267,41 @@ function UserManager:updatePlayer(next)
 	}, 
 	SERVER_URL .. "updatePlayer", 
 	function(result)
-		if(next) then
-			next()
-		end
+		local player = json.decode(result.response)
+		userManager:updatedPlayer(player, next)
 	end
 	)
 
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:twitterConnection(twitterId, twitterName, accessToken, next)
+
+	print("twitterConnection")
+
+	GLOBALS.savedData.user.twitterId 					= twitterId
+	GLOBALS.savedData.user.twitterName 					= twitterName
+	GLOBALS.savedData.user.twitterAccessToken 		= accessToken
+	
+	utils.saveTable(GLOBALS.savedData, "savedData.json")
+	
+	self.user.twitterId 		= twitterId
+	self.user.twitterName 	= twitterName
+	
+	self:updatePlayer(next)
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:mergePlayerWithFacebook(next)
+
+	GLOBALS.savedData.user.facebookId = facebook.data.id
+	utils.saveTable(GLOBALS.savedData, "savedData.json")
+	
+	self.user.facebookId = facebook.data.id
+	
+	self:updatePlayer(next)
 end
 
 -----------------------------------------------------------------------------------------

@@ -61,6 +61,18 @@ function scene:refreshScene()
 	
 	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top, display.contentWidth*0.9, self.yGap * 1.5)
 	self:drawTextEntry("_userName : ", userManager.user.userName, 0)
+
+	hud.board.logout = display.newImage( hud.board, "assets/images/hud/logout.png")  
+	hud.board.logout:scale(0.23,0.23)
+	hud.board.logout.x = display.contentWidth*0.87
+	hud.board.logout.y = self.yGap * 4.15
+	hud.board:insert( hud.board.logout )	
+
+	utils.onTouch(hud.board.logout, function()
+		userManager:logout()
+	end)	
+
+	------------------
 	
 	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*3, display.contentWidth*0.9, self.yGap * 3.5)
 	self:drawTextEntry("_firstName : ", userManager.user.firstName, 2)
@@ -75,41 +87,87 @@ function scene:refreshScene()
 	-- FACEBOOK
 	---------------------------------------------------------------
 	
-	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*9.5, display.contentWidth*0.9, self.yGap * 2.5)
-	self:drawTextEntry("_FB connection : ", self:isFBConnection(), 9 )
+	local facebookTop 		= 9.5
+	local facebookHeight		= 2.5
+	
+	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*facebookTop, display.contentWidth*0.9, self.yGap * facebookHeight)
+	
 	
 	if(userManager.user.facebookId) then
 	   	
+   	self:drawTextEntry("_Facebook : ", self:isFBConnection(), facebookTop-0.5 )
    	if(userManager.user.facebookFan) then
-      	self:drawTextEntry("_FB fan : ", "_Yes!", 10 )
+      	self:drawTextEntry("_FB fan : ", "_Yes!", facebookTop+0.5 )
       else
-      	self:drawTextEntry("_Like us now and get " .. FACEBOOK_FAN_TICKETS .. " more tickets each lottery !", "", 10, 27 )
+      	self:drawTextEntry("_Like us now and get " .. FACEBOOK_FAN_TICKETS .. " more tickets each lottery !", "", facebookTop+0.5 , 27 )
       end
+   else
+		hud.fbConnect = display.newImage(hud.board, "assets/images/icons/facebook.png", display.contentWidth*0.7, self.top + self.yGap*(facebookTop-0.5))
+		hud.board:insert(hud.fbConnect)
+		
+		utils.onTouch(hud.fbConnect, function() 
+			facebook.connect(function()
+				router.resetScreen()
+				self:refreshScene()
+			end) 
+		end)
 	end
 	
-	hud.fbIcon = display.newImage(hud.board, "assets/images/icons/facebook.png", display.contentWidth*0.011, self.top + self.yGap*7.9)
+	hud.fbIcon = display.newImage(hud.board, "assets/images/icons/facebook.png", display.contentWidth*0.011, self.top + self.yGap*(facebookTop-1.6))
 	hud.board:insert(hud.fbIcon)
-	
+
 	if(userManager.user.facebookId) then
    	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)
    		local picture = event.target	
    		hud.board:insert(picture)
    		picture.x = display.contentWidth*0.9
-   		picture.y = self.top + self.yGap*8.8
+   		picture.y = self.top + self.yGap*(facebookTop-0.7)
    	end, 
    	"profilePicture", system.TemporaryDirectory)
+	end
+
+	---------------------------------------------------------------
+	-- TWITTER
+	---------------------------------------------------------------
+	
+	local twitterTop 		= 12.5
+	local twitterHeight	= 2.5
+	
+	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*twitterTop, display.contentWidth*0.9, self.yGap * twitterHeight)
+
+	hud.twitterIcon = display.newImage(hud.board, "assets/images/icons/facebook.png", display.contentWidth*0.011, self.top + self.yGap*(twitterTop-1.6))
+	hud.board:insert(hud.twitterIcon)
+	
+	utils.tprint(userManager.user)
+	
+	if(userManager.user.twitterId) then
+   	self:drawTextEntry("_Twitter : ", self:isTwitterConnection(), twitterTop-0.5 )
+   else
+		hud.twitterConnect = display.newImage(hud.board, "assets/images/icons/facebook.png", display.contentWidth*0.7, self.top + self.yGap*(twitterTop-0.5))
+		hud.board:insert(hud.twitterConnect)
+		
+		utils.onTouch(hud.twitterConnect, function() 
+			twitter.connect(function()
+   			print("refresh profile")
+				router.resetScreen()
+				self:refreshScene()
+			end) 
+		end)
 	end
 
 	---------------------------------------------------------------------------------
 	-- REFERRER
 	---------------------------------------------------------------
 	
-	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*12, display.contentWidth*0.9, self.yGap * 1.5)
-	self:drawTextEntry("_my referrerId : ", userManager.user.uid, 12 )
+	local referringTop 		= 15
+	local referringHeight	= 1.5
+	
+	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*referringTop, display.contentWidth*0.9, self.yGap * referringHeight)
+	self:drawTextEntry("_my referrerId : ", userManager.user.uid, referringTop )
 	
 	hud.shareIcon = display.newImage(hud.board, "assets/images/icons/friends.png")
 	hud.shareIcon.x = display.contentWidth*0.89
-	hud.shareIcon.y =  self.top + self.yGap*12
+	hud.shareIcon.y =  self.top + self.yGap*referringTop
 	hud.board:insert(hud.shareIcon)
 		
 	utils.onTouch(hud.shareIcon, function()
@@ -145,23 +203,96 @@ function scene:refreshScene()
 
 		if(userManager.user.twitterId) then
    		viewManager.drawButton(hud.popup, "Twitter", display.contentWidth*0.5, display.contentHeight*0.7, function()
-   			facebook.postOnWall("teitwee")
+   			twitter.tweetMessage("_Join me on www.adillions.com !\n Please use my referrer code when you sign in : " .. userManager.user.uid, function()
+	   			viewManager.showPopup("_Thank you !", "_Successfully tweeted")
+   			end)
    		end)
    	end
 	end)
+
+	---------------------------------------------------------------------------------
+	-- Options
+	---------------------------------------------------------------
+
+	local optionsTop 		= 18
+	local optionsHeight	= 2.5
+
+	local function beforeDrawSwitchListener( event )
+		GLOBALS.options.notificationBeforeDraw = event.target.isOn
+		utils.saveTable(GLOBALS.options, "options.json")
+		
+		utils.tprint(GLOBALS.options)
+		
+   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
+	end
 	
+	local function afterDrawSwitchListener( event )
+		GLOBALS.options.notificationAfterDraw = event.target.isOn
+		utils.saveTable(GLOBALS.options, "options.json")
+
+		utils.tprint(GLOBALS.options)
+	
+   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)	
+	end
+
+	---------------------------------------------------------------
+	
+	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*optionsTop, display.contentWidth*0.9, self.yGap * optionsHeight)
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Notification 48h before the next draw",         
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(optionsTop-0.5),
+		fontSize 		= self.fontSize,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	local beforeDrawSwitch = widget.newSwitch
+	{
+		left 							= display.contentWidth*0.8,
+		top 							= self.top + self.yGap*(optionsTop-0.7),
+		initialSwitchState	 	= GLOBALS.options.notificationBeforeDraw,
+		onPress 						= beforeDrawSwitchListener,
+		onRelease 					= beforeDrawSwitchListener,
+	}
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Notification for the results",         
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(optionsTop+0.5),
+		fontSize 		= self.fontSize,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+
+	local afterDrawSwitch = widget.newSwitch
+	{
+		left 							= display.contentWidth*0.8,
+		top 							= self.top + self.yGap*(optionsTop+0.3),
+		initialSwitchState	 	= GLOBALS.options.notificationAfterDraw,
+		onPress 						= afterDrawSwitchListener,
+		onRelease 					= afterDrawSwitchListener,
+	}
+	
+	-----------------------------------------------
+
+	hud.board:insert( beforeDrawSwitch )	
+	hud.board:insert( afterDrawSwitch )	
+
 	------------------
 
 	hud:insert(hud.board)
-   	
+
 	------------------
 	--
-	
---   local likeButtonUrl = "http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FAdillions%2F379432705492888&layout=button_count&action=like&send=false&appId=170148346520274"
---	hud.likePageWebview = native.newWebView( 0, display.contentHeight - MENU_HEIGHT - display.contentHeight*0.05, display.contentWidth, display.contentHeight*0.05 )
---	hud.likePageWebview:request( likeButtonUrl )
---	hud.likePageWebview:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-	
+
+	--   local likeButtonUrl = "http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FAdillions%2F379432705492888&layout=button_count&action=like&send=false&appId=170148346520274"
+	--	hud.likePageWebview = native.newWebView( 0, display.contentHeight - MENU_HEIGHT - display.contentHeight*0.05, display.contentWidth, display.contentHeight*0.05 )
+	--	hud.likePageWebview:request( likeButtonUrl )
+	--	hud.likePageWebview:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+
 	------------------
 
 	viewManager.setupView(4)
@@ -173,6 +304,17 @@ end
 function scene:isFBConnection( event )
 	local text = "_No"
 	if(userManager.user.facebookId) then
+		text = "_Yes !"
+	end
+	
+	return text
+end
+
+------------------------------------------
+
+function scene:isTwitterConnection( event )
+	local text = "_No"
+	if(userManager.user.twitterId) then
 		text = "_Yes !"
 	end
 	
