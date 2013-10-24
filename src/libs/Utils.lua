@@ -298,6 +298,35 @@ function parseDateTime(str)
 	return os.time({year=Y, month=M, day=D})
 end
 
+---
+-- Y-M-D to readableDate
+function readableDate(date)
+	return timestampToReadableDate(parseDateTime(date)*1000, false)
+end
+
+function timestampToReadableDate(date, withDay)
+	
+	local day		   = T (os.date("%A", date/1000))
+	local numDay 		= utils.formatPositionNum(os.date("%d", date/1000))
+	local month 		= T (os.date("%B", date/1000))
+	local year 			= os.date("%Y", date/1000)
+	
+	if (LANG == "fr") then
+   	if(withDay) then 
+			return day .. " " .. numDay .. " " .. month .. " " .. year
+		else
+			return numDay .. " " .. month .. " " .. year
+      end
+	else
+   	if(withDay) then 
+			return day .. ", " .. month .. " " .. numDay .. ", " .. year
+		else
+   		return month .. " " .. numDay .. ", " .. year
+      end
+   end
+   
+end
+
 --------------------------------------------------------
 
 function saveTable(t, filename, directory)

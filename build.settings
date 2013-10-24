@@ -27,7 +27,8 @@ settings = {
 
 			UIAppFonts = 
 			{
-				"GillSans.ttf"
+				"GillSans.ttf",
+				"HelveticaBold.ttf"
 			},
 
 			CFBundleURLTypes =

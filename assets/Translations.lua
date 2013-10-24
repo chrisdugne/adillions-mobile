@@ -1,5 +1,13 @@
 local translations =
 {
+    ["Welcome"] = {
+        ["fr"] = "Bienvenue",
+    },
+    
+    ["Next drawing"] = {
+        ["fr"] = "Prochain tirage",
+    },
+    
     ["Next draw in 48h !"] = {
         ["fr"] = "Prochain tirage dans 48h !",
     },

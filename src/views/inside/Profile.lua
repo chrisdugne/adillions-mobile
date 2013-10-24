@@ -37,7 +37,8 @@ function scene:drawTextEntry(title, value, position, fontSize)
 		x 					= self.column2,
 		y 					= self.top + self.yGap*position,
 		fontSize 		= fontSize or self.fontSize,
-		referencePoint = display.CenterLeftReferencePoint
+		font				= NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
 	})
 	
 end
@@ -54,18 +55,20 @@ function scene:refreshScene()
 	self.yGap 		= 60
 	self.fontSize 	= 35
 
-	self.column1 = display.contentWidth*0.08
-	self.column2 = display.contentWidth*0.4 
+	self.column1 = display.contentWidth*0.1
+	self.column2 = display.contentWidth*0.9 
 	
-	------------------
+	---------------------------------------------------------------
+	-- Personal Details
+	---------------------------------------------------------------
 	
-	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top, display.contentWidth*0.9, self.yGap * 1.5)
-	self:drawTextEntry("_userName : ", userManager.user.userName, 0)
-
+	local detailsTop 			= 0
+	local detailsHeight 		= 3
+	
 	hud.board.logout = display.newImage( hud.board, "assets/images/hud/logout.png")  
 	hud.board.logout:scale(0.23,0.23)
-	hud.board.logout.x = display.contentWidth*0.87
-	hud.board.logout.y = self.yGap * 4.15
+	hud.board.logout.x = display.contentWidth*0.93
+	hud.board.logout.y = self.yGap * (detailsTop+1)
 	hud.board:insert( hud.board.logout )	
 
 	utils.onTouch(hud.board.logout, function()
@@ -73,21 +76,112 @@ function scene:refreshScene()
 	end)	
 
 	------------------
+
+	self:drawTextEntry("_userName : ", userManager.user.userName, detailsTop+1)
+
+	------------------
 	
-	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*3, display.contentWidth*0.9, self.yGap * 3.5)
-	self:drawTextEntry("_firstName : ", userManager.user.firstName, 2)
-	self:drawTextEntry("_lastName : ", userManager.user.lastName, 3)
-	self:drawTextEntry("_birthDate : ", userManager.user.birthDate, 4)
+	self:drawTextEntry("_firstName : ", userManager.user.firstName, detailsTop+2)
+	self:drawTextEntry("_lastName : ", userManager.user.lastName, detailsTop+3)
+	self:drawTextEntry("_birthDate : ", utils.readableDate(utils.userManager.user.birthDate), detailsTop+4)
+	self:drawTextEntry("_email : ", userManager.user.email, detailsTop+5)
 
-	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*6.5, display.contentWidth*0.9, self.yGap * 2.5)
-	self:drawTextEntry("_currentPoints : ", userManager.user.currentPoints, 6)
-	self:drawTextEntry("_totalPoints : ", userManager.user.totalPoints, 7)
+	---------------------------------------------------------------
+	-- Status
+	---------------------------------------------------------------
 
+	local statusTop 			= 7
+	local statusHeight 		= 3
+
+	--------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= "_totalPoints : ",         
+		x 					= self.column1,
+		y 					= self.top + self.yGap*statusTop,
+		fontSize 		= self.fontSize,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= userManager.user.totalPoints .. " pts",     
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(statusTop+1),
+		fontSize 		= self.fontSize,
+		font				= NUM_FONT,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+	
+	--------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= "_currentPoints : ",         
+		x 					= self.column2,
+		y 					= self.top + self.yGap*statusTop,
+		fontSize 		= self.fontSize,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= userManager.user.currentPoints .. " pts",     
+		x 					= self.column2,
+		y 					= self.top + self.yGap*(statusTop+1),
+		fontSize 		= self.fontSize,
+		font				= NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+	--------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= "_bonus Tickets : ",         
+		x 					= self.column2,
+		y 					= self.top + self.yGap*(statusTop+2),
+		fontSize 		= self.fontSize,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= "+ " .. userManager.user.totalBonusTickets,     
+		x 					= self.column2,
+		y 					= self.top + self.yGap*(statusTop+3),
+		fontSize 		= self.fontSize,
+		font				= NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	--------------------------
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= "_charity time : ",         
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(statusTop+2),
+		fontSize 		= self.fontSize,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= userManager.user.totalPoints .. " min sec",     
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(statusTop+3),
+		fontSize 		= self.fontSize,
+		font				= NUM_FONT,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+	
 	---------------------------------------------------------------
 	-- FACEBOOK
 	---------------------------------------------------------------
 	
-	local facebookTop 		= 9.5
+	local facebookTop 		= 12.5
 	local facebookHeight		= 2.5
 	
 	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*facebookTop, display.contentWidth*0.9, self.yGap * facebookHeight)
@@ -130,7 +224,7 @@ function scene:refreshScene()
 	-- TWITTER
 	---------------------------------------------------------------
 	
-	local twitterTop 		= 12.5
+	local twitterTop 		= 15.5
 	local twitterHeight	= 2.5
 	
 	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*twitterTop, display.contentWidth*0.9, self.yGap * twitterHeight)
@@ -159,7 +253,7 @@ function scene:refreshScene()
 	-- REFERRER
 	---------------------------------------------------------------
 	
-	local referringTop 		= 15
+	local referringTop 		= 18
 	local referringHeight	= 1.5
 	
 	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*referringTop, display.contentWidth*0.9, self.yGap * referringHeight)
@@ -199,22 +293,41 @@ function scene:refreshScene()
 	   			viewManager.showPopup("_Thank you !", "_Successfully posted on your wall")
    			end)
    		end)
+   	else
+   		viewManager.drawButton(hud.popup, "_Connect with Facebook", display.contentWidth*0.5, display.contentHeight*0.6, function()
+      		facebook.connect(function()
+   				router.resetScreen()
+   				self:refreshScene()
+   			end) 
+   		end,
+   		display.contentWidth*0.6)
    	end
+
+
 
 		if(userManager.user.twitterId) then
    		viewManager.drawButton(hud.popup, "Twitter", display.contentWidth*0.5, display.contentHeight*0.7, function()
    			twitter.tweetMessage("_Join me on www.adillions.com !\n Please use my referrer code when you sign in : " .. userManager.user.uid, function()
-	   			viewManager.showPopup("_Thank you !", "_Successfully tweeted")
+					viewManager.showPopup("_Thank you !", "_Successfully tweeted")
+				end)
+			end)
+		else
+			viewManager.drawButton(hud.popup, "_Connect with Twitter", display.contentWidth*0.5, display.contentHeight*0.7, function()
+				twitter.connect(function()
+      			print("refresh profile")
+   				router.resetScreen()
+   				self:refreshScene()
    			end)
-   		end)
-   	end
+			end,
+			display.contentWidth*0.6)
+		end
 	end)
 
 	---------------------------------------------------------------------------------
 	-- Options
 	---------------------------------------------------------------
 
-	local optionsTop 		= 18
+	local optionsTop 		= 21
 	local optionsHeight	= 2.5
 
 	local function beforeDrawSwitchListener( event )

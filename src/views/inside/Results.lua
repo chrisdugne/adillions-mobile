@@ -30,6 +30,7 @@ function scene:refreshScene()
    	self:drawBoard()
 
    	viewManager.setupView(3)
+   	viewManager.darkerBack()
    	self.view:insert(hud)
 	end)
 

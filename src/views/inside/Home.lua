@@ -24,32 +24,35 @@ function scene:refreshScene()
 	
 	------------------
 
-	hud.friendsIcon = display.newImage(hud, "assets/images/icons/friends.png")
-	hud.friendsIcon.x = display.contentWidth*0.12
-	hud.friendsIcon.y = HEADER_HEIGHT * 1.7
+	hud.subheaderImage 		= display.newImageRect(hud, "assets/images/01_SubHeader_Background.png", display.contentWidth, display.viewableContentHeight*0.14)
+	hud.subheaderImage.x 	= display.contentWidth*0.5
+	hud.subheaderImage.y 	= HEADER_HEIGHT * 1.75
 
+	hud.subheaderText 		= display.newImage(hud, I "01_SubHeader_Txt.png")
+	hud.subheaderText.x 		= display.contentWidth*0.5
+	hud.subheaderText.y 		= HEADER_HEIGHT * 1.7
+	
 	------------------
 
-	hud.friendsText = viewManager.newText({
-		parent = hud, 
-		text = " _Invite your friends !",    
-		x = display.contentWidth*0.5,
-		y = HEADER_HEIGHT * 1.7,
-		fontSize = 55,
-	})
-
-	hud.friendsText:setReferencePoint(display.CenterReferencePoint);
-
-	------------------
-
-	hud.arrowIcon = display.newImage(hud, "assets/images/icons/right.arrow.png")
-	hud.arrowIcon.x = display.contentWidth*0.9
-	hud.arrowIcon.y = HEADER_HEIGHT * 1.7	
-
-	utils.onTouch(hud.arrowIcon, function()
+	utils.onTouch(hud.subheaderImage, function()
 		router.openInviteFriends()
 	end)
 
+	utils.onTouch(hud.subheaderText, function()
+		router.openInviteFriends()
+	end)
+
+	------------------
+
+	viewManager.newText({
+		parent = hud, 
+		text = T ("Welcome") .. " " .. userManager.user.firstName .. " !", 
+		x = display.contentWidth*0.05,
+		y = display.contentHeight*0.28,
+		fontSize = 43,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+	
 	------------------
 
 	lotteryManager:refreshNextLottery(function() self:drawNextLottery() end)
@@ -65,23 +68,16 @@ end
 function scene:drawNextLottery( event )
 
 	local y = HEADER_HEIGHT * 3.7
-	local top = HEADER_HEIGHT * 3
+	local top = HEADER_HEIGHT * 3.3
 
-	hud.lotteryPanel = display.newImageRect( hud, "assets/images/menus/panel.simple.png", display.contentWidth, HEADER_HEIGHT*2.5)  
-	hud.lotteryPanel.x = display.contentWidth*0.5
-	hud.lotteryPanel.y = y
-
-	---		
-	--		viewManager.drawBorder(hud, display.contentWidth*0.5, y, display.contentWidth*0.95, 350)
-	--	
-	----		------------------------------------------------
-	--
+	----------------------------------------------------
+	
 	viewManager.newText({
 		parent = hud, 
-		text = lotteryManager:date(lotteryManager.nextLottery), 
+		text = T("Next drawing") .. " " .. lotteryManager:date(lotteryManager.nextLottery), 
 		x = display.contentWidth*0.05,
 		y = top,
-		fontSize = 33,
+		fontSize = 23,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 
@@ -92,51 +88,58 @@ function scene:drawNextLottery( event )
 	viewManager.newText({
 		parent = hud, 
 		text = price,     
-		x = display.contentWidth*0.95,
-		y = top,
-		fontSize = 83,
+		x = display.contentWidth*0.5,
+		y = top + display.contentHeight*0.08,
+		fontSize = 73,
+		font = NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
 	})
 
 	-------------------------------
+	
+	hud.pictoCagnotte = display.newImage( hud, "assets/images/icons/02_Main_PictoCagnotte.png")  
+	hud.pictoCagnotte.x = display.contentWidth*0.56
+	hud.pictoCagnotte.y = top + display.contentHeight*0.08
+	
+	hud.separateur = display.newImage( hud, "assets/images/icons/02_Main_Separateur.png")  
+	hud.separateur.x = display.contentWidth*0.65
+	hud.separateur.y = top + display.contentHeight*0.08
+	
+	-------------------------------
 
+	hud.pictoPlayers = display.newImage( hud, "assets/images/icons/02_Main_PictoPlayers.png")  
+	hud.pictoPlayers.x = display.contentWidth*0.75
+	hud.pictoPlayers.y = top + display.contentHeight*0.05
+	
 	viewManager.newText({
 		parent = hud, 
-		text = lotteryManager.nextLottery.nbPlayers .. "    _Players", 
-		x = display.contentWidth*0.05,
-		y = top + 70,
-		fontSize = 33,
-		referencePoint = display.CenterLeftReferencePoint
+		text = "Players" .. " :", 
+		x = display.contentWidth*0.75,
+		y = top + display.contentHeight*0.08,
+		fontSize = 19,
+	})
+	
+	viewManager.newText({
+		parent = hud, 
+		text = lotteryManager.nextLottery.nbPlayers , 
+		x = display.contentWidth*0.75,
+		y = top + display.contentHeight*0.11,
+		fontSize = 43,
+		font = NUM_FONT
 	})
 
 	-------------------------------
 
-	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets) .. "    _tickets to play"
-
-	viewManager.newText({
-		parent = hud, 
-		text = nbTickets, 
-		x = display.contentWidth*0.05,
-		y = top + 140,
-		fontSize = 33,
-		referencePoint = display.CenterLeftReferencePoint
-	})
-
-	-------------------------------
-
-	viewManager.drawButton(hud, "_Jouer !", display.contentWidth*0.5, top + 250, function() self:play() end)
-
+	hud.playButton = display.newImage( hud, I "02_Main_BoutonTicket.png")  
+	hud.playButton.x = display.contentWidth*0.5
+	hud.playButton.y = top + display.contentHeight*0.25
+	
+	utils.onTouch(hud.playButton, function()
+		self:play()
+	end)
+	
 	-------------------------------
 	-- theme
-
-	viewManager.newText({
-		parent = hud, 
-		text = "_THIS WEEK'S THEME",    
-		x = display.contentWidth*0.25,
-		y = display.contentHeight * 0.67,
-		fontSize = 32,
-	})
-
 
 	------------------
 	
@@ -145,6 +148,10 @@ function scene:drawNextLottery( event )
 	------------------
 
 	viewManager.drawRemoteImage(lotteryManager.nextLottery.theme.image, hud, display.contentWidth*0.5, display.contentHeight * 0.75)
+
+	hud.playButton = display.newImage( hud, I "02_Main_BoutonTicket.png")  
+	hud.playButton.x = display.contentWidth*0.5
+	hud.playButton.y = top + display.contentHeight*0.25
 
 	------------------
 

@@ -153,7 +153,7 @@ local function webListener(event)
 			end
 		
 			userManager:twitterConnection(user_id, screen_name, access_token, proceed)
-
+			delegate.twitterSuccess()
 		end -- end of callback listener
 		
 		----------------------------------------------------
@@ -269,6 +269,8 @@ end
 
 function connect(next)
 
+	native.setActivityIndicator(true)
+	delegate = callback
 	proceed = next
 	
 	----------------------------------------------------
@@ -292,6 +294,9 @@ function connect(next)
 		--
 		native.showWebPopup(0, 0, display.contentWidth, display.contentHeight, "https://api.twitter.com/oauth/authenticate?oauth_token="
 		.. twitter_request_token, {urlRequest = webListener})
+		
+		
+		native.setActivityIndicator(false)
 
 	end --  end of tweetAuth_ret callback
 

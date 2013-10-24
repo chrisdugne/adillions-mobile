@@ -6,7 +6,7 @@ module(..., package.seeall)
 
 local widget = require( "widget" )
 
-local ICON_SIZE = 100
+local ICON_SIZE = 122
 
 -----------------------------------------------------------------------------------------
 
@@ -20,19 +20,22 @@ end
 
 -- globalBack not to have a black screen while changing views
 function initGlobalBack()
-	local globalBack = display.newImageRect( "assets/images/bg.jpg", display.contentWidth, display.contentHeight)  
-	globalBack.x = display.viewableContentWidth*0.5 
-	globalBack.y = display.viewableContentHeight*0.5
-	globalBack:toBack()
+--	local globalBack = display.newImageRect( "assets/images/bg.jpg", display.contentWidth, display.contentHeight)  
+--	globalBack.x = display.viewableContentWidth*0.5 
+--	globalBack.y = display.viewableContentHeight*0.5
+--	globalBack:toBack()
+
+--	display.setDefault( "background", 227, 225, 226 )
 end
 	
 -----------------------------------------------------------------------------------------
 
 function initBack()
-	hud.back = display.newImageRect( hud, "assets/images/bg.jpg", display.contentWidth, display.contentHeight)  
-	hud.back.x = display.viewableContentWidth*0.5 
-	hud.back.y = display.viewableContentHeight*0.5
-	hud.back:toBack()
+	display.setDefault( "background", 237, 235, 236 )
+end
+	
+function darkerBack()
+	display.setDefault( "background", 227, 225, 226 )
 end
 	
 -----------------------------------------------------------------------------------------
@@ -58,15 +61,31 @@ end
 
 function initHeader()
 
-	hud.headerRect = display.newImageRect( hud, "assets/images/menus/woodbg.white.png", display.contentWidth, HEADER_HEIGHT)  
+	hud.headerRect = display.newImageRect( hud, "assets/images/menus/00_Header_Background.png", display.contentWidth, HEADER_HEIGHT)  
 	hud.headerRect.x = display.viewableContentWidth*0.5 
 	hud.headerRect.y = HEADER_HEIGHT*0.5
 
-	hud.logo = display.newImage( hud, "assets/images/logo.2.png")  
-	hud.logo:scale(0.33,0.33)
+	hud.logo = display.newImage( hud, "assets/images/00_Header_Logo.png")  
 	hud.logo.x = display.contentWidth*0.5
-	hud.logo.y = HEADER_HEIGHT*0.4
+	hud.logo.y = HEADER_HEIGHT*0.5
 	
+	refreshHeaderPoints()
+	
+end
+
+-----------------------------------------------------------------------------------------
+
+function refreshHeaderPoints()
+	
+	local points = userManager.user.currentPoints
+	if(not points) then return end
+	
+	hud.points = display.newImage( hud, "assets/images/game/points/points.".. points ..".png")  
+	hud.points.x = display.contentWidth*0.9
+	hud.points.y = HEADER_HEIGHT*0.5
+	
+	hud.points:toFront()
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -140,7 +159,7 @@ function newText(options)
 
 	local finalOptions = {}
 	finalOptions.text 		= options.text
-	finalOptions.font 		= FONT
+	finalOptions.font 		= options.font or FONT
 	finalOptions.fontSize 	= options.fontSize or 48
 
 	if(options.width) then
@@ -153,7 +172,7 @@ function newText(options)
 
 	local text = display.newText( finalOptions )
 
-	text:setTextColor(100)
+	text:setTextColor(0)
 	text:setReferencePoint(options.referencePoint or display.CenterReferencePoint);
 	text.x = options.x
 	text.y = options.y
@@ -179,27 +198,13 @@ function drawBorder(parent, x, y, width, height)
 	end
 	
 	-----------------------------------
-	-- square gradient buttons
-	 	
---	local g = graphics.newGradient(
---     { 255, 255, 255 },
---     { 239, 239, 239 },
---     "down" )
---
---	local button = display.newRect(parent, 0, 0,width, height)
---   button.x, button.y = x, y
---   button.strokeWidth = 3
---   button:setFillColor(g)
---   button:setStrokeColor(220)
-
-	-----------------------------------
 	-- rounded buttons 1 color
 	
-	local border = display.newRoundedRect(parent, 0, 0, width, height, 12)
+	local border = display.newRoundedRect(parent, 0, 0, width, height, 17)
    border.x = x 
    border.y = y
-   border.strokeWidth = 3
-   border:setFillColor(250)
+   border.strokeWidth = 1
+   border:setFillColor(239,237,238)
    border:setStrokeColor(220)
    parent:insert(border)
    
@@ -220,12 +225,12 @@ function drawButton(parent, text, x, y, action, width, height)
 		parent = parent,
 		text = text,     
 		x = x,
-		y = y,
+		y = y-6,
 		font = FONT,   
 		fontSize = 45,
 	} )
 
-	button.text:setTextColor(0,100,0)
+	button.text:setTextColor(0,0,0)
 	utils.onTouch(button, action)
 
 --	hud.buttons[#hud.buttons] = button 
@@ -266,22 +271,17 @@ end
 
 function buildMenu(tabSelected)
 
+	local buttonWidth = display.contentWidth/5 - 1
+	print (buttonWidth)
+	
 	-- Create the tabBar's buttons
 	local tabButtons = 
 	{
 		{
-			width = ICON_SIZE, 
-			height = ICON_SIZE,
-			defaultFile = "assets/images/menus/tabIcon.png",
-			overFile = "assets/images/menus/tabIcon-down.png",
-			label = "_Home",
-			labelColor =
-			{
-				default = { 0, 0, 0 },
-				over = { 255, 255, 255 },
-			},
-			font = FONT,
-			size = 17,
+			width 				= buttonWidth, 
+			height 				= MENU_HEIGHT,
+			defaultFile 		= I "OFF1.png",
+			overFile 			= I "ON1.png",
 			onPress = function( event )
 				if(tabSelected ~= 1) then 
 					router.openHome() 
@@ -290,18 +290,10 @@ function buildMenu(tabSelected)
 			selected = tabSelected == 1
 		},
 		{
-			width = ICON_SIZE, 
-			height = ICON_SIZE,
-			defaultFile = "assets/images/menus/tabIcon.png",
-			overFile = "assets/images/menus/tabIcon-down.png",
-			label = "_My tickets",
-			labelColor =
-			{
-				default = { 0, 0, 0 },
-				over = { 255, 255, 255 },
-			},
-			font = FONT,
-			size = 17,
+			width 				= buttonWidth, 
+			height 				= MENU_HEIGHT,
+			defaultFile 		= I "OFF2.png",
+			overFile 			= I "ON2.png",
 			onPress = function( event )
 				if(tabSelected ~= 2) then 
 					router.openMyTickets() 
@@ -310,18 +302,10 @@ function buildMenu(tabSelected)
 			selected =  tabSelected == 2
 		},
 		{
-			width = ICON_SIZE, 
-			height = ICON_SIZE,
-			defaultFile = "assets/images/menus/tabIcon.png",
-			overFile = "assets/images/menus/tabIcon-down.png",
-			label = "_Results",
-			labelColor =
-			{
-				default = { 0, 0, 0 },
-				over = { 255, 255, 255 },
-			},
-			font = FONT,
-			size = 17,
+			width 				= buttonWidth, 
+			height 				= MENU_HEIGHT,
+			defaultFile 		= I "OFF3.png",
+			overFile 			= I "ON3.png",
 			onPress = function( event )
 				if(tabSelected ~= 3) then 
 					router.openResults() 
@@ -330,18 +314,10 @@ function buildMenu(tabSelected)
 			selected =  tabSelected == 3
 		},
 		{
-			width = ICON_SIZE, 
-			height = ICON_SIZE,
-			defaultFile = "assets/images/menus/tabIcon.png",
-			overFile = "assets/images/menus/tabIcon-down.png",
-			label = "_Profile",
-			labelColor =
-			{
-				default = { 0, 0, 0 },
-				over = { 255, 255, 255 },
-			},
-			font = FONT,
-			size = 17,
+			width 				= buttonWidth, 
+			height 				= MENU_HEIGHT,
+			defaultFile 		= I "OFF4.png",
+			overFile 			= I "ON4.png",
 			onPress = function( event )
 				if(tabSelected ~= 4) then 
 					router.openProfile() 
@@ -350,18 +326,10 @@ function buildMenu(tabSelected)
 			selected =  tabSelected == 4
 		},
 		{
-			width = ICON_SIZE, 
-			height = ICON_SIZE,
-			defaultFile = "assets/images/menus/tabIcon.png",
-			overFile = "assets/images/menus/tabIcon-down.png",
-			label = "_Info",
-			labelColor =
-			{
-				default = { 0, 0, 0 },
-				over = { 255, 255, 255 },
-			},
-			font = FONT,
-			size = 17,
+			width 				= buttonWidth, 
+			height 				= MENU_HEIGHT,
+			defaultFile 		= I "OFF5.png",
+			overFile 			= I "ON5.png",
 			onPress = function( event )
 				if(tabSelected ~= 5) then 
 					router.openInfo() 

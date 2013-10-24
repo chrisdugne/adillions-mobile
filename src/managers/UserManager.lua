@@ -115,6 +115,8 @@ function UserManager:updatedPlayer(player, next)
 
 	self:checkIdlePoints()
 	
+	viewManager.refreshHeaderPoints(player.currentPoints)
+	
 	if(next) then
 		next()
 	end
@@ -268,7 +270,14 @@ function UserManager:updatePlayer(next)
 	SERVER_URL .. "updatePlayer", 
 	function(result)
 		local player = json.decode(result.response)
-		userManager:updatedPlayer(player, next)
+		if(player) then
+			userManager:updatedPlayer(player, next)
+		else
+   		if(next) then
+				next()
+   		end
+		end
+		
 	end
 	)
 

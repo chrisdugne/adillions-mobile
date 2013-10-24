@@ -49,18 +49,7 @@ function LotteryManager:price(lottery)
 end
 
 function LotteryManager:date(lottery)
-
-	local day		   = T (os.date("%A", lottery.date/1000))
-	local numDay 		= utils.formatPositionNum(os.date("%d", lottery.date/1000))
-	local month 		= T (os.date("%B", lottery.date/1000))
-	local year 			= os.date("%Y", lottery.date/1000)
-
-	if (LANG == "fr") then
-		return day .. " " .. numDay .. " " .. month .. " " .. year
-	else
-		return day .. ", " .. month .. " " .. numDay .. ", " .. year
-   end
-   
+	return utils.timestampToReadableDate(lottery.date, true)
 end
 
 -----------------------------------------------------------------------------------------

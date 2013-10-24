@@ -10,7 +10,7 @@ APP_VERSION 		= "1.9.3"
 -----------------------------------------------------------------------------------------
 
 DEV					= 1
-PROD					= 1
+--PROD					= 1
 
 -----------------------------------------------------------------------------------------
 
@@ -47,8 +47,8 @@ SIMULATOR 			= system.getInfo( "environment" )  	== "simulator"
 
 -----------------------------------------------------------------------------------------
 
-HEADER_HEIGHT		= display.contentHeight * 0.125
-MENU_HEIGHT			= 170
+HEADER_HEIGHT		= display.contentHeight * 0.095
+MENU_HEIGHT			= 122
 TICKET_HEIGHT		= 100
 
 -----------------------------------------------------------------------------------------
@@ -63,9 +63,11 @@ TWITTER_FAN_TICKETS			= 4
 -----------------------------------------------------------------------------------------
 
 if ANDROID then
-   FONT = "GillSans"
+   FONT 		= "GillSans"
+   NUM_FONT = "HelveticaBold"
 else
-	FONT = "GillSans"
+	FONT 		= "Gill Sans"
+   NUM_FONT = "Helvetica Bold"
 end
 
 -----------------------------------------------------------------------------------------
@@ -100,10 +102,19 @@ random 	= math.random
 -- Translations
 
 translations = require("assets.Translations")
-LANG =  userDefinedLanguage or system.getPreference("ui", "language")
+
+if(ANDROID) then
+	LANG =  userDefinedLanguage or system.getPreference("locale", "language")
+else
+	LANG =  userDefinedLanguage or system.getPreference("ui", "language")
+end
 
 function T(enText)
 	return translations[enText][LANG] or enText
+end
+
+function I(asset)
+	return "assets/images/bylang/"..LANG.."/"..asset
 end
 
 -----------------------------------------------------------------------------------------
@@ -221,8 +232,33 @@ local function onKeyEvent( event )
       if ( storyboard.currentScene == "splash" ) then
          native.requestExit()
       else
---      	native.setKeyboardFocus( nil )
--- 		nothing
+         if ( storyboard.isOverlay ) then
+            storyboard.hideOverlay()
+         else
+            local lastScene = storyboard.returnTo
+            print( "previous scene", lastScene )
+            if ( lastScene ) then
+               storyboard.gotoScene( lastScene, { effect="crossFade", time=500 } )
+            else
+               native.requestExit()
+            end
+         end
+      end
+   end
+
+   if ( keyName == "volumeUp" and phase == "down" ) then
+      local masterVolume = audio.getVolume()
+      print( "volume:", masterVolume )
+      if ( masterVolume < 1.0 ) then
+         masterVolume = masterVolume + 0.1
+         audio.setVolume( masterVolume )
+      end
+   elseif ( keyName == "volumeDown" and phase == "down" ) then
+      local masterVolume = audio.getVolume()
+      print( "volume:", masterVolume )
+      if ( masterVolume > 0.0 ) then
+         masterVolume = masterVolume - 0.1
+         audio.setVolume( masterVolume )
       end
    end
 
