@@ -610,7 +610,7 @@ function drawSelection(parent, numbers)
 		drawBall(parent, numbers[j], xGap*j, y)
 	end
 	
-	drawTheme(parent, numbers[#numbers], xGap*#numbers, y)
+	drawTheme(parent, lotteryManager.nextLottery, numbers[#numbers], xGap*#numbers, y)
 	
 end
 
