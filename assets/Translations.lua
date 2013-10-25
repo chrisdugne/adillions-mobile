@@ -11,6 +11,14 @@ local translations =
     ["Players"] = {
         ["fr"] = "Joueurs",
     },
+
+    ["Winners"] = {
+        ["fr"] = "Gagnants",
+    },
+    
+    ["Charity"] = {
+        ["fr"] = "Charité",
+    },
     
     ["Select your lucky ball !"] = {
         ["fr"] = "Choisissez votre balle bonus !",

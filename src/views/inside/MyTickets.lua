@@ -28,38 +28,33 @@ function scene:refreshScene()
 	------------------
 	
 	if(userManager.user.lotteryTickets) then
-
-   	local marginLeft = display.contentWidth * 0.02
-   	local marginTop =  HEADER_HEIGHT - 20
-   	local xGap =  display.contentWidth *0.1
-   	local yGap =  display.contentHeight *0.10
-   	
+	
    	------------------
    
    	local currentLottery = nil
-   	local nbLotteries 	= 0
+   	self.lotteries 		= {}
+
+   	------------------
+   	-- compte le nombre de tickets pour calculer la hauteur de drawBorder
    	
    	for i = 1,#userManager.user.lotteryTickets do
    		
    		local ticket = userManager.user.lotteryTickets[i]
-      	local numbers = json.decode(ticket.numbers)
-   
+   		
    		if(currentLottery ~= ticket.lottery.uid) then
    			currentLottery = ticket.lottery.uid
-   			nbLotteries = nbLotteries + 1
-   			
-   			viewManager.newText({
-   				parent = hud.board, 
-   				text = lotteryManager:date(ticket.lottery), 
-         		x = display.contentWidth*0.5,
-         		y = marginTop + yGap*(i+nbLotteries-1), 
-   			})
-         
-   		end
-      	
-      	viewManager.drawTicket(hud.board, numbers, marginLeft, marginTop + yGap*(i+nbLotteries))
+   			self.lotteries[ticket.lottery.uid] = {}
+   			self.lotteries[ticket.lottery.uid].nbTickets = 1
+   		else
+   			self.lotteries[ticket.lottery.uid].nbTickets = self.lotteries[ticket.lottery.uid].nbTickets + 1 
+      	end
    	end
-   
+   	
+   	------------------
+
+		local nextLotteryHeight = self:drawNextLottery()
+		self:drawPreviousLotteries(nextLotteryHeight)
+
    	------------------
    
    	hud:insert(hud.board)
@@ -72,6 +67,132 @@ function scene:refreshScene()
 	viewManager.darkerBack()
 	self.view:insert(hud)
 	
+end
+
+-----------------------------------------------------------------------------------------
+
+function scene:drawNextLottery()
+
+	local marginLeft 		= display.contentWidth * 0.02
+	local xGap 				= display.contentWidth *0.1
+	local yGap 				= display.contentHeight *0.08
+	local top 				= HEADER_HEIGHT + 80
+
+	local nbNewTickets	= 0
+	local currentLottery	= nil
+	local borderHeight 	= 0
+	
+	for i = 1,#userManager.user.lotteryTickets do
+
+		local ticket = userManager.user.lotteryTickets[i]
+		
+		if(ticket.lottery.uid == lotteryManager.nextLottery.uid) then
+		
+      	local numbers 	= json.decode(ticket.numbers)
+			nbNewTickets 	= nbNewTickets + 1
+
+   		if(type(ticket.lottery.theme) == "string") then ticket.lottery.theme	= json.decode(ticket.lottery.theme) end
+   
+   		if(currentLottery ~= ticket.lottery.uid) then
+   			
+   			-----
+   			-- juste pour le premier ticket du coup.
+   			
+   			currentLottery 		= ticket.lottery.uid
+   			local nbLotteries 	= 1
+   			local nbTickets 		= self.lotteries[currentLottery].nbTickets
+   			borderHeight			= yGap + yGap*nbTickets + 20
+   			
+				viewManager.drawBorder(
+					hud.board, 
+					display.contentWidth*0.5,													-- x 
+					top + (yGap)*(nbNewTickets+nbLotteries-2) + borderHeight/2 - 55, 	-- y
+					display.contentWidth*0.95, 												-- width
+					borderHeight,																	-- height
+					240,240,240
+				)
+   	
+   			viewManager.newText({
+   				parent = hud.board, 
+   				text = T "Drawing" .. " " .. lotteryManager:date(ticket.lottery), 
+         		x = display.contentWidth*0.4,
+         		y = top + yGap*(nbNewTickets+nbLotteries-2), 
+         		fontSize = 35
+   			})
+         
+   		end
+      	
+      	viewManager.drawTicket(hud.board, ticket.lottery, numbers, marginLeft, top + 50 + yGap*(nbNewTickets-0.5))
+   	
+   	end
+	end
+   
+   	
+	return top + borderHeight + 20
+	
+end
+
+-----------------------------------------------------------------------------------------
+
+function scene:drawPreviousLotteries(top)
+
+   	local marginLeft = display.contentWidth * 0.02
+   	local xGap =  display.contentWidth *0.1
+   	local yGap =  display.contentHeight *0.17
+   	
+   	------------------
+   
+   	local currentLottery 		= nil
+   	local nbLotteries 			= 0
+		local nbPreviousTickets		= 0
+		
+   	for i = 1,#userManager.user.lotteryTickets do
+
+   		local ticket = userManager.user.lotteryTickets[i]
+   		
+   		if(ticket.lottery.uid ~= lotteryManager.nextLottery.uid) then
+   		
+         	local numbers 	= json.decode(ticket.numbers)
+   			nbPreviousTickets = nbPreviousTickets + 1
+
+      		if(type(ticket.lottery.theme) == "string") then ticket.lottery.theme	= json.decode(ticket.lottery.theme) end
+      
+      		if(currentLottery ~= ticket.lottery.uid) then
+      			
+      			currentLottery 		= ticket.lottery.uid
+      			nbLotteries 			= nbLotteries + 1
+      			local nbTickets 		= self.lotteries[currentLottery].nbTickets
+      			local borderHeight	= yGap + yGap*nbTickets - 80
+      			
+   				viewManager.drawBorder(
+   					hud.board, 
+   					display.contentWidth*0.5,													-- x 
+   					top + (yGap)*(nbPreviousTickets+nbLotteries-2) + borderHeight/2 - 55, 	-- y
+   					display.contentWidth*0.95, 												-- width
+   					borderHeight																	-- height
+   				)
+      	
+      			viewManager.newText({
+      				parent = hud.board, 
+      				text = T "Drawing" .. " " .. lotteryManager:date(ticket.lottery), 
+            		x = display.contentWidth*0.4,
+            		y = top + yGap*(nbPreviousTickets+nbLotteries-2), 
+            		fontSize = 35
+      			})
+            
+            else
+            
+            	local separator = display.newImage(hud.board, "assets/images/icons/separateur.horizontal.png")
+            	separator.x = display.contentWidth*0.5
+            	separator.y = top + yGap*(nbPreviousTickets+nbLotteries-1.82)
+            	hud.board:insert(separator)
+      		end
+         	
+         	viewManager.drawTicket(hud.board, ticket.lottery, numbers, marginLeft, top + yGap*(nbPreviousTickets+nbLotteries-1.5))
+      	
+      	end
+   	end
+   
 end
 
 ------------------------------------------

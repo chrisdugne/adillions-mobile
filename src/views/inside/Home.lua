@@ -186,9 +186,7 @@ end
 
 function scene:play( )
 	if(lotteryManager:isGameAvailable()) then
---		videoManager:play(router.openFillLotteryTicket)
-		lotteryManager.currentSelection = {11,22,33,44,25,6}
-		videoManager:play(router.openConfirmation)
+		videoManager:play(router.openFillLotteryTicket)
 	end
 end
 

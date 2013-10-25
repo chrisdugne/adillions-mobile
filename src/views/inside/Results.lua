@@ -43,9 +43,9 @@ function scene:drawBoard()
 	
 	------------------
 
-	local marginLeft = display.contentWidth * 0.02
-	local marginTop =  HEADER_HEIGHT + 90
-	local xGap =  display.contentWidth *0.1
+	local marginLeft = display.contentWidth * 0.04
+	local marginTop =  HEADER_HEIGHT + 70
+	local xGap =  display.contentWidth *0.12
 	local yGap =  display.contentHeight *0.5/aspectRatio
 
 	------------------
@@ -54,12 +54,11 @@ function scene:drawBoard()
 
 		------------------------------------------------
 
-		local lottery 	= lotteryManager.finishedLotteries[i]
-		local numbers 	= json.decode(lottery.result)
-		local theme 	= json.decode(lottery.theme)
+		local lottery 				= lotteryManager.finishedLotteries[i]
+		local numbers 				= json.decode(lottery.result)
+		lottery.theme 				= json.decode(lottery.theme)
 
-		local price = lotteryManager:price(lottery)
-		local y = marginTop + yGap*(i-1) + 95
+		local y = marginTop + yGap*(i-1) + 115
 	
 		------------------------------------------------
 	
@@ -69,10 +68,10 @@ function scene:drawBoard()
 
 		viewManager.newText({
 			parent = hud.board, 
-			text = lotteryManager:date(lottery), 
+			text = T "Drawing" .. " " .. lotteryManager:date(lottery), 
 			x = display.contentWidth*0.1,
 			y = marginTop + yGap*(i-1), 
-			fontSize = 33,
+			fontSize = 38,
 			referencePoint = display.CenterLeftReferencePoint
 		})
 
@@ -82,27 +81,76 @@ function scene:drawBoard()
    		viewManager.drawBall(hud.board, numbers[j], marginLeft + xGap*j, y)
    	end
    	
-   	viewManager.drawTheme(hud.board, numbers[#numbers], marginLeft + xGap*#numbers + 20, y)
+   	 utils.tprint(lottery)
+   	viewManager.drawTheme(hud.board, lottery, numbers[#numbers], marginLeft + xGap*#numbers + 20, y)
 
 		------------------------------------------------
+
+   	hud.iconWinners = display.newImage( hud.board, "assets/images/icons/winners.png")  
+   	hud.iconWinners.x = display.contentWidth*0.1
+   	hud.iconWinners.y = marginTop + yGap*(i-1)+200,
+   	hud.board:insert(hud.iconWinners)
+
+		viewManager.newText({
+			parent = hud.board, 
+			text = lottery.nbWinners, 
+			x = display.contentWidth*0.25,
+			y = marginTop + yGap*(i-1)+200, 
+			fontSize = 45,
+			font = NUM_FONT
+		})
+
+		viewManager.newText({
+			parent = hud.board, 
+			text = T "Winners", 
+			x = display.contentWidth*0.35,
+			y = marginTop + yGap*(i-1)+200, 
+			fontSize = 27,
+		})
+		
+		------------------------------------------------
+
+		local price = lotteryManager:finalPrice(lottery)
+		
+   	hud.iconMoney = display.newImage( hud.board, "assets/images/icons/money.png")  
+   	hud.iconMoney.x = display.contentWidth*0.1
+   	hud.iconMoney.y = marginTop + yGap*(i-1)+250,
+   	hud.board:insert(hud.iconMoney)
 
 		viewManager.newText({
 			parent = hud.board, 
 			text = price, 
+			x = display.contentWidth*0.25,
+			y = marginTop + yGap*(i-1)+250, 
+			fontSize = 45,
+			font = NUM_FONT
+		})
+
+		------------------------------------------------
+
+   	hud.iconCharity = display.newImage( hud.board, "assets/images/icons/charity.png")  
+   	hud.iconCharity.x = display.contentWidth*0.9
+   	hud.iconCharity.y = marginTop + yGap*(i-1)+225,
+   	hud.board:insert(hud.iconCharity)
+
+		viewManager.newText({
+			parent = hud.board, 
+			text = (lottery.charity or 0) .. " $", 
 			x = display.contentWidth*0.75,
-			y = marginTop + yGap*(i-1)+200, 
-			fontSize = 36,
+			y = marginTop + yGap*(i-1)+225, 
+			fontSize = 45,
+			font = NUM_FONT
 		})
 
 		viewManager.newText({
 			parent = hud.board, 
-			text = lottery.nbWinners .. " _winners", 
-			x = display.contentWidth*0.25,
-			y = marginTop + yGap*(i-1)+200, 
-			fontSize = 33,
+			text = T "Charity", 
+			x = display.contentWidth*0.75,
+			y = marginTop + yGap*(i-1)+190, 
+			fontSize = 27,
 		})
-
-		------------------------------------------------
+		
+	
    	
    end
    

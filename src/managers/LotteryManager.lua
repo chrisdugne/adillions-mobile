@@ -48,6 +48,10 @@ function LotteryManager:price(lottery)
 	return math.min(lottery.maxPrice, math.max(lottery.minPrice, lottery.nbTickets/1000 * lottery.cpm))  .. "  $"
 end
 
+function LotteryManager:finalPrice(lottery)
+	return lottery.finalPrice or '000'  .. "  $"
+end
+
 function LotteryManager:date(lottery)
 	return utils.timestampToReadableDate(lottery.date, true)
 end

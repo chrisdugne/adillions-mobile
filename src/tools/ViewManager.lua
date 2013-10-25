@@ -46,11 +46,12 @@ function initBoard()
 	{
 		top = 0,
 		left = 0,
+		friction = 1.5,
 		width = display.contentWidth,
 		height = display.contentHeight - HEADER_HEIGHT - MENU_HEIGHT,
-		bottomPadding = HEADER_HEIGHT,
+		bottomPadding = MENU_HEIGHT,
 		hideBackground = true,
-		id = "onBottom",
+		id = "board",
 		horizontalScrollDisabled = true,
 		verticalScrollDisabled = false,
 		hideScrollBar = true,
@@ -257,27 +258,30 @@ end
 
 ------------------------------------------------------------------
 
-function drawRemoteImage( url, parent, x, y, scale, next )
+function drawRemoteImage( url, parent, x, y, scale, alpha, next )
 
 	if(not scale) then scale = 1 end
+	if(not alpha) then alpha = 1 end
 	
 	local fileName = utils.imageName(url)
 	local image = display.newImage( parent, fileName, system.TemporaryDirectory)
 	
 	if not image then
-		local imageReceived = function(event) return insertImage(event.target, parent, x, y, scale,next) end
+		local imageReceived = function(event) return insertImage(event.target, parent, x, y, scale, alpha, next) end
 		display.loadRemoteImage( url, "GET", imageReceived, fileName, system.TemporaryDirectory )
 	else
-		insertImage(image, parent, x, y, scale, next)
+		insertImage(image, parent, x, y, scale, alpha, next)
 	end
 	
 end	
 
-function insertImage(image, parent, x, y, scale, next)
-	image.x = x
-	image.y = y
-	image.xScale = scale
-	image.yScale = scale
+function insertImage(image, parent, x, y, scale, alpha, next)
+	
+	image.x 			= x
+	image.y	 		= y
+	image.xScale 	= scale
+	image.yScale 	= scale
+	image.alpha 	= alpha
 
 	parent:insert(image)
 	
@@ -464,7 +468,7 @@ function drawThemeToPick(num,x,y)
 	ball.selected 	= false
 	ball.num 		= num
 
-	drawThemeIcon(num, hud, x, y, 1, function()
+	drawThemeIcon(num, hud, lotteryManager.nextLottery, x, y, 1, 1, function()
 		local themeMask = display.newImage(hud, "assets/images/balls/ball.mask.png")
 		themeMask.x = x
 		themeMask.y = y
@@ -489,22 +493,23 @@ function drawThemeToPick(num,x,y)
 
 end
 
-function drawThemeIcon(num, parent, x, y, scale, next)
-	drawRemoteImage(lotteryManager.nextLottery.theme.icons[num].image, parent, x, y, scale, next)
+function drawThemeIcon(num, parent, lottery, x, y, scale, alpha, next)
+	drawRemoteImage(lottery.theme.icons[num].image, parent, x, y, scale, alpha, next)
 end
 
 -----------------------------------------------------------------------------------------
 
 --- 
 -- theme sur un ticket ou un result
-function drawTheme(parent, num,x,y, scale)
-	
-	if(not scale) then scale = 0.2 end
+function drawTheme(parent, lottery, num,x,y, alpha)
 
-	drawThemeIcon(num, parent, x, y, SMALL_THEME_SCALE, function()
+	if(not alpha) then alpha = 1 end
+
+	drawThemeIcon(num, parent, lottery, x, y, SMALL_THEME_SCALE, alpha, function()
 		local themeMask = display.newImage(parent, "assets/images/balls/ball.mask.png")
 		themeMask.x = x
 		themeMask.y = y
+		themeMask.alpha = alpha
 		themeMask:scale(SMALL_THEME_SCALE, SMALL_THEME_SCALE)
 		parent:insert(themeMask)
 	end)
@@ -534,6 +539,8 @@ function drawBall(parent, num,x,y)
 	
 	ball.num = num
 	ball.alpha = 1
+	
+	return ball
 end
 
 -----------------------------------------------------------------------------------------
@@ -572,7 +579,7 @@ end
 function drawSelectedAdditional(ball,x,y, action)
 	
 	if(ball) then
-		drawThemeIcon(ball.num, hud.selection, x, y, SMALL_THEME_SCALE, function()
+		drawThemeIcon(ball.num, hud.selection, lotteryManager.nextLottery, x, y, SMALL_THEME_SCALE, 1, function()
       	local themeMask = display.newImage(hud.selection, "assets/images/balls/ball.mask.png")
       	themeMask.x = x
       	themeMask.y = y
@@ -609,18 +616,58 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function drawTicket(parent, numbers, x, y)
-
-	local xGap =  display.contentWidth *0.1
---	local center =  display.contentWidth*0.5
+function drawTicket(parent, lottery, numbers, x, y)
 	
-	viewManager.drawBorder(parent, x+(#numbers+1)/2*display.contentWidth*0.1, y, #numbers * display.contentWidth*0.105, TICKET_HEIGHT)
-   	
+	local xGap =  display.contentWidth *0.12
+
 	for j = 1,#numbers-1 do
-		drawBall(parent, numbers[j], x + xGap*j, y)
+		
+		local ball = drawBall(parent, numbers[j], x + xGap*j, y)
+		
+		local goodNumber = true
+		
+		if(lottery.result) then
+   		if type(lottery.result) == "string" then lottery.result = json.decode(lottery.result) end
+			
+			goodNumber = false
+			for w = 1, #lottery.result-1 do
+				if(lottery.result[w] == numbers[j]) then
+					goodNumber = true
+				end
+   		end
+		end
+		
+		if(goodNumber) then
+			ball.alpha = 1
+			
+			if(lottery.result) then
+   			local check = display.newImage(parent, "assets/images/icons/check.png")
+         	check.x = x + xGap*j + 20
+         	check.y = y - 30
+         	parent:insert(check)
+         end
+		else
+			ball.alpha = 0.34
+   	end
 	end
 	
-	drawTheme(parent, numbers[#numbers], x + xGap*#numbers, y)
+	local alpha = 1	
+	
+	if(lottery.result) then
+		local themeWon = lottery.result[#lottery.result] == numbers[#numbers]
+		if(not themeWon) then
+			alpha = 0.34
+		else
+			if(lottery.result) then
+   			local check = display.newImage(parent, "assets/images/icons/check.png")
+         	check.x = x + xGap*#numbers + 20
+         	check.y = y - 30
+         	parent:insert(check)
+         end
+		end 
+	end
+	
+	drawTheme(parent, lottery, numbers[#numbers], x + xGap*#numbers, y, alpha)
 	
 end
 

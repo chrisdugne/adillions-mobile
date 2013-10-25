@@ -64,16 +64,6 @@ function scene:refreshScene()
 	
 	local detailsTop 			= 0
 	local detailsHeight 		= 3
-	
-	hud.board.logout = display.newImage( hud.board, "assets/images/hud/logout.png")  
-	hud.board.logout:scale(0.23,0.23)
-	hud.board.logout.x = display.contentWidth*0.93
-	hud.board.logout.y = self.yGap * (detailsTop+1)
-	hud.board:insert( hud.board.logout )	
-
-	utils.onTouch(hud.board.logout, function()
-		userManager:logout()
-	end)	
 
 	------------------
 
@@ -334,6 +324,21 @@ function scene:refreshScene()
 		onRelease 					= afterDrawSwitchListener,
 	}
 	
+	-----------------------------------------------
+
+	local logoutTop 		= 28
+	
+	hud.board.logout = display.newImage( hud.board, "assets/images/hud/logout.png")  
+	hud.board.logout:scale(0.43,0.43)
+	hud.board.logout.x = display.contentWidth*0.5
+	hud.board.logout.y = self.yGap * (logoutTop)
+	hud.board:insert( hud.board.logout )	
+
+	utils.onTouch(hud.board.logout, function()
+		userManager:logout()
+	end)	
+	
+
 	-----------------------------------------------
 
 	hud.board:insert( beforeDrawSwitch )	
