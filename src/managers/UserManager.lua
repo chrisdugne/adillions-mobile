@@ -112,7 +112,7 @@ function UserManager:updatedPlayer(player, next)
 	GLOBALS.savedData.user.twitterName 		= player.twitterName
 
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
-
+	
 	self:checkIdlePoints()
 	
 	viewManager.refreshHeaderPoints(player.currentPoints)
@@ -153,6 +153,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:checkIdlePoints(numbers)
+	
+	print("checkIdlePoints", userManager.user.idlePoints)
 
 	if(userManager.user.idlePoints > 0) then
 		local title 	= "_New points !"

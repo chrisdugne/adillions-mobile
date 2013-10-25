@@ -23,8 +23,6 @@ end
 
 function scene:refreshScene()
 	
-	if(not lotteryManager:isGameAvailable()) then router.openHome() return end	
-	
 	------------------
 
 	hud.balls = {}
@@ -32,9 +30,44 @@ function scene:refreshScene()
 	------------------
 	
 	local marginLeft = display.contentWidth * 0.02
-	local marginTop =  HEADER_HEIGHT + 60
+	local top =  HEADER_HEIGHT * 2
 	local xGap =  display.contentWidth *0.12
-	local yGap =  display.contentHeight *0.08
+	local yGap =  display.contentHeight *0.07
+	
+	--------------------------------------------------------------
+	-- Actions
+	
+	viewManager.newText({
+		parent = hud, 
+		text = T "Random",     
+		x = display.contentWidth*0.2,
+		y = top - display.contentHeight*0.07,
+		fontSize = 33,
+	})
+
+	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+	hud.separateur.x = display.contentWidth*0.35
+	hud.separateur.y = top - display.contentHeight*0.065
+
+	viewManager.newText({
+		parent = hud, 
+		text = T "Favorites",     
+		x = display.contentWidth*0.5,
+		y = top - display.contentHeight*0.07,
+		fontSize = 33,
+	})
+
+	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+	hud.separateur.x = display.contentWidth*0.65
+	hud.separateur.y = top - display.contentHeight*0.065
+
+	viewManager.newText({
+		parent = hud, 
+		text = T "Restart",     
+		x = display.contentWidth*0.8,
+		y = top - display.contentHeight*0.07,
+		fontSize = 33,
+	})
 	
 	--------------------------------------------------------------
 	-- Classic nums
@@ -50,24 +83,23 @@ function scene:refreshScene()
 	
 	------------------
 	
-	local gridHeight = marginTop + (nbLines) * yGap
-	hud.gridPanel = display.newImageRect( hud, "assets/images/menus/panel.simple.png", display.contentWidth, gridHeight)  
-	hud.gridPanel.x = display.contentWidth*0.5
-	hud.gridPanel.y = gridHeight*0.5
-
-	------------------
-	
 	for i = 1,nbRows do
    	for j = 1,nbLines do
    		local ballNum = (j-1)*nbRows+i
-			viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, marginTop + yGap*(j-1))
+			viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, top + yGap*(j-1))
 		end
 	end
 
 	for i = 1,nbOnlastLine do
 		local ballNum = math.floor(nbLines)*nbRows+i
-		viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, marginTop + yGap*math.floor(nbLines))
+		viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, top + yGap*math.floor(nbLines))
 	end
+
+	------------------
+
+	hud.selector = display.newImage( hud, "assets/images/hud/selector.green.png")  
+	hud.selector.x = display.contentWidth*0.5
+	hud.selector.y = top + display.contentHeight*0.55
 
 	------------------
 

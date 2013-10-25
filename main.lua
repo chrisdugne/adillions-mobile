@@ -5,12 +5,12 @@
 -----------------------------------------------------------------------------------------
 
 APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.9.3"
+APP_VERSION 		= "1.11.0"
 
 -----------------------------------------------------------------------------------------
 
 DEV					= 1
---PROD					= 1
+PROD					= 1
 
 -----------------------------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ SIMULATOR 			= system.getInfo( "environment" )  	== "simulator"
 -----------------------------------------------------------------------------------------
 
 HEADER_HEIGHT		= display.contentHeight * 0.095
-MENU_HEIGHT			= 122
+MENU_HEIGHT			= 124
 TICKET_HEIGHT		= 100
 
 -----------------------------------------------------------------------------------------
@@ -124,12 +124,16 @@ viewManager		= require "src.tools.ViewManager"
 
 UserManager		= require "src.managers.UserManager"
 LotteryManager	= require "src.managers.LotteryManager"
+VideoManager	= require "src.managers.VideoManager"
+ShareManager	= require "src.managers.ShareManager"
 
 -----------------------------------------------------------------------------------------
 ---- Server access Managers
 
 userManager 		= UserManager:new()
 lotteryManager 	= LotteryManager:new()
+videoManager 		= VideoManager:new()
+shareManager 		= ShareManager:new()
 
 -----------------------------------------------------------------------------------------
 --- Display
@@ -157,20 +161,20 @@ if(not GLOBALS.savedData) then
 	utils.initOptions()
    router.openOutside()
 else
-	native.setActivityIndicator( true )
 	
 	if(GLOBALS.savedData.user.facebookId) then
+   	native.setActivityIndicator( true )
    	facebook.getMe(function()
-   		native.setActivityIndicator( false )
+      	native.setActivityIndicator( false )
 			print("start : getMe : fail : outside")		 
          router.openOutside()
    	end)
 	
 	elseif(GLOBALS.savedData.user.uid) then
+   	native.setActivityIndicator( true )
 		userManager:fetchPlayer()
    
    else
-   	native.setActivityIndicator( false )
 		print("start : no user data : outside")		 
       router.openOutside()
 	end

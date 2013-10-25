@@ -27,50 +27,53 @@ function scene:refreshScene()
 
 	utils.emptyGroup(hud.selection)
 
+	------------------
+	
+	local top =  HEADER_HEIGHT
+	local xGap =  display.contentWidth *0.25
+	local yGap =  display.contentHeight *0.19
+	
+	--------------------------------------------------------------
+	
+	viewManager.newText( {
+		parent = hud,
+		text = T "Select your lucky ball !",     
+		x = display.contentWidth*0.1,
+		y = top + 90,
+		font = FONT,   
+		fontSize = 55,
+		referencePoint = display.CenterLeftReferencePoint
+	} )
+	
 	--------------------------------------------------------------
 	-- Additional nums
 
-	local totalNums 	= #lotteryManager.nextLottery.theme.icons
-	local nbNumPerLine = math.floor((totalNums + 1)/2)
-	
-	local marginLeft =  display.contentWidth * 0.12/nbNumPerLine
-	local marginTop =  HEADER_HEIGHT + 50
-	local xGap =  display.contentWidth *0.7/nbNumPerLine
-	local yGap =  display.contentHeight *0.15
-	
+	local totalNums 		 = #lotteryManager.nextLottery.theme.icons  
+	local nbNumPerLine	 = 3
+	  
+	------------------
+
 	local nbLines =  totalNums/nbNumPerLine
 	local nbRows =  totalNums/nbLines
 	local nbOnlastLine = totalNums - math.floor(nbLines)*nbRows
 	
 	------------------
 
-	local gridHeight = marginTop + (nbLines+1) * yGap
-	hud.gridPanel = display.newImageRect( hud, "assets/images/menus/panel.simple.png", display.contentWidth, gridHeight)  
-	hud.gridPanel.x = display.contentWidth*0.5
-	hud.gridPanel.y = gridHeight*0.5
-
-	------------------
-	
 	for i = 1,nbRows do
    	for j = 1,nbLines do
-   		viewManager.drawThemeToPick((j-1)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*j)
+   		viewManager.drawThemeToPick((j-1)*nbRows+i,  xGap*i, top + yGap*j)
    	end
 	end
 
 	for i = 1,nbOnlastLine do
-		viewManager.drawThemeToPick(math.floor(nbLines)*nbRows+i, marginLeft + xGap*i, marginTop + yGap*(math.floor(nbLines)+1))
+		viewManager.drawThemeToPick(math.floor(nbLines)*nbRows+i, xGap*i, top + yGap*(math.floor(nbLines)+1))
 	end
 	
 	------------------
-	
-	local selectionText = display.newText( {
-		parent = hud,
-		text = "_Selection :",     
-		x = display.contentWidth*0.17,
-		y = display.contentHeight*0.64,
-		font = FONT,   
-		fontSize = 45,
-	} )
+
+	hud.selector = display.newImage( hud, "assets/images/hud/selector.white.png")  
+	hud.selector.x = display.contentWidth*0.5
+	hud.selector.y = top + display.contentHeight*0.605
 	
 	------------------
 	

@@ -24,6 +24,7 @@ function scene:refreshScene()
 
 	viewManager.initBack()
 	viewManager.initHeader()
+	viewManager.darkerBack()
 
 	---------------------------------------------------------------
 

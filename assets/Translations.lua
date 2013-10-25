@@ -3,7 +3,39 @@ local translations =
     ["Welcome"] = {
         ["fr"] = "Bienvenue",
     },
+
+    ["Tickets to play"] = {
+        ["fr"] = "Tickets restants",
+    },
+
+    ["Players"] = {
+        ["fr"] = "Joueurs",
+    },
     
+    ["Select your lucky ball !"] = {
+        ["fr"] = "Choisissez votre balle bonus !",
+    },
+    
+    ["Your selection !"] = {
+        ["fr"] = "Votre sélection !",
+    },
+    
+    ["Drawing"] = {
+        ["fr"] = "Tirage du",
+    },
+    
+    ["Random"] = {
+        ["fr"] = "Aléatoire",
+    },
+    
+    ["Favorites"] = {
+        ["fr"] = "Favoris",
+    },
+    
+    ["Restart"] = {
+        ["fr"] = "Recommencer",
+    },
+
     ["Next drawing"] = {
         ["fr"] = "Prochain tirage",
     },

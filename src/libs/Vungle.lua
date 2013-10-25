@@ -28,7 +28,7 @@ function Vungle:adListener(event)
 	if event.type == "adStart" and event.isError then
 		print("Downloading video ad ...")
 		-- wait 5 seconds before retrying to display ad
-		timer.performWithDelay(1000, function() self.showAd() end)
+		timer.performWithDelay(1000, function() self.tryToShowAd() end)
 		-- video ad displayed and then closed
 
 	elseif event.type == "adEnd" then

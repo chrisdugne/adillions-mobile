@@ -6,7 +6,8 @@ module(..., package.seeall)
 
 local widget = require( "widget" )
 
-local ICON_SIZE = 122
+local ICON_SIZE = 95
+local SMALL_THEME_SCALE = 0.59
 
 -----------------------------------------------------------------------------------------
 
@@ -61,11 +62,11 @@ end
 
 function initHeader()
 
-	hud.headerRect = display.newImageRect( hud, "assets/images/menus/00_Header_Background.png", display.contentWidth, HEADER_HEIGHT)  
+	hud.headerRect = display.newImageRect( hud, "assets/images/header.png", display.contentWidth, HEADER_HEIGHT)  
 	hud.headerRect.x = display.viewableContentWidth*0.5 
 	hud.headerRect.y = HEADER_HEIGHT*0.5
 
-	hud.logo = display.newImage( hud, "assets/images/00_Header_Logo.png")  
+	hud.logo = display.newImage( hud, "assets/images/logo.png")  
 	hud.logo.x = display.contentWidth*0.5
 	hud.logo.y = HEADER_HEIGHT*0.5
 	
@@ -80,7 +81,7 @@ function refreshHeaderPoints()
 	local points = userManager.user.currentPoints
 	if(not points) then return end
 	
-	hud.points = display.newImage( hud, "assets/images/game/points/points.".. points ..".png")  
+	hud.points = display.newImage( hud, "assets/images/points/points.".. points ..".png")  
 	hud.points.x = display.contentWidth*0.9
 	hud.points.y = HEADER_HEIGHT*0.5
 	
@@ -110,9 +111,13 @@ function showPopup(title, text, action)
 	hud.popup = display.newGroup()
 	hud.popup.alpha = 0
 
-	hud.popupRect = display.newImageRect( hud.popup, "assets/images/menus/panel.popup.png", display.contentWidth*0.8, display.viewableContentHeight*0.7)  
-	hud.popupRect.x = display.viewableContentWidth*0.5 
-	hud.popupRect.y = display.viewableContentHeight*0.5
+	hud.popupRect 		= drawBorder( hud.popup, 
+		display.contentWidth*0.1, display.contentHeight*15, 
+		display.contentWidth*0.8, display.viewableContentHeight*0.7,
+		250,250,250
+	)  
+	hud.popupRect.x 	= display.viewableContentWidth*0.5 
+	hud.popupRect.y 	= display.viewableContentHeight*0.5
 	
 	viewManager.newText({
 		parent 			= hud.popup, 
@@ -187,7 +192,9 @@ end
 
 ------------------------------------------------------------------
 
-function drawBorder(parent, x, y, width, height)
+function drawBorder(parent, x, y, width, height, r, g, b)
+
+	-----------------------------------
 
 	if(not width) then
 		width = 250
@@ -196,6 +203,14 @@ function drawBorder(parent, x, y, width, height)
 	if(not height) then
 		height = 90
 	end
+
+	-----------------------------------
+	
+	if(not r) then r = 239 end
+	if(not g) then g = 237 end
+	if(not b) then b = 238 end
+	
+	local gray = r - 19
 	
 	-----------------------------------
 	-- rounded buttons 1 color
@@ -204,8 +219,8 @@ function drawBorder(parent, x, y, width, height)
    border.x = x 
    border.y = y
    border.strokeWidth = 1
-   border:setFillColor(239,237,238)
-   border:setStrokeColor(220)
+   border:setFillColor(r,g,b)
+   border:setStrokeColor(gray)
    parent:insert(border)
    
    return border
@@ -242,7 +257,7 @@ end
 
 ------------------------------------------------------------------
 
-function drawRemoteImage( url, parent, x, y, scale )
+function drawRemoteImage( url, parent, x, y, scale, next )
 
 	if(not scale) then scale = 1 end
 	
@@ -250,21 +265,25 @@ function drawRemoteImage( url, parent, x, y, scale )
 	local image = display.newImage( parent, fileName, system.TemporaryDirectory)
 	
 	if not image then
-		local imageReceived = function(event) return insertImage(event.target, parent, x, y, scale)  end
+		local imageReceived = function(event) return insertImage(event.target, parent, x, y, scale,next) end
 		display.loadRemoteImage( url, "GET", imageReceived, fileName, system.TemporaryDirectory )
 	else
-		insertImage(image, parent, x, y, scale)
+		insertImage(image, parent, x, y, scale, next)
 	end
 	
 end	
 
-function insertImage(image, parent, x, y, scale)
+function insertImage(image, parent, x, y, scale, next)
 	image.x = x
 	image.y = y
 	image.xScale = scale
 	image.yScale = scale
 
 	parent:insert(image)
+	
+	if(next) then
+		next()
+	end
 end
 
 ------------------------------------------------------------------
@@ -279,7 +298,7 @@ function buildMenu(tabSelected)
 	{
 		{
 			width 				= buttonWidth, 
-			height 				= MENU_HEIGHT,
+			height 				= ICON_SIZE,
 			defaultFile 		= I "OFF1.png",
 			overFile 			= I "ON1.png",
 			onPress = function( event )
@@ -291,7 +310,7 @@ function buildMenu(tabSelected)
 		},
 		{
 			width 				= buttonWidth, 
-			height 				= MENU_HEIGHT,
+			height 				= ICON_SIZE,
 			defaultFile 		= I "OFF2.png",
 			overFile 			= I "ON2.png",
 			onPress = function( event )
@@ -303,7 +322,7 @@ function buildMenu(tabSelected)
 		},
 		{
 			width 				= buttonWidth, 
-			height 				= MENU_HEIGHT,
+			height 				= ICON_SIZE,
 			defaultFile 		= I "OFF3.png",
 			overFile 			= I "ON3.png",
 			onPress = function( event )
@@ -315,7 +334,7 @@ function buildMenu(tabSelected)
 		},
 		{
 			width 				= buttonWidth, 
-			height 				= MENU_HEIGHT,
+			height 				= ICON_SIZE,
 			defaultFile 		= I "OFF4.png",
 			overFile 			= I "ON4.png",
 			onPress = function( event )
@@ -327,7 +346,7 @@ function buildMenu(tabSelected)
 		},
 		{
 			width 				= buttonWidth, 
-			height 				= MENU_HEIGHT,
+			height 				= ICON_SIZE,
 			defaultFile 		= I "OFF5.png",
 			overFile 			= I "ON5.png",
 			onPress = function( event )
@@ -349,9 +368,9 @@ function buildMenu(tabSelected)
 --		middle 		= "assets/images/menus/tabBar_noSelection.png"
 --	end
 		
-		leftEdge 	= "assets/images/menus/tabBar_noSelection.png"
-		rightEdge 	= "assets/images/menus/tabBar_noSelection.png"
-		middle 		= "assets/images/menus/tabBar_noSelection.png"
+		leftEdge 	= "assets/images/menus/empty.png"
+		rightEdge 	= "assets/images/menus/empty.png"
+		middle 		= "assets/images/menus/empty.png"
 
 	-- Create a tabBar
 	local tabBar = widget.newTabBar({
@@ -359,8 +378,7 @@ function buildMenu(tabSelected)
 		top = display.contentHeight - MENU_HEIGHT,
 		width = display.contentWidth,
 		height = MENU_HEIGHT,
---		backgroundFile = "assets/images/menus/woodbg.png",
-		backgroundFile = "assets/images/menus/woodbg.white.jpg",
+		backgroundFile = "assets/images/menus/menu.bg.png",
 		tabSelectedLeftFile = leftEdge,
 		tabSelectedRightFile = rightEdge,
 		tabSelectedMiddleFile = middle,
@@ -381,10 +399,7 @@ end
 
 function drawBallToPick(num,x,y)
 
-	local i = random(1,4)
-
-	local ball = display.newImage(hud, "assets/images/game/ball.png")
-	ball:scale(0.23, 0.23)
+	local ball = display.newImage(hud, "assets/images/balls/ball.small.white.png")
 	ball.x = x
 	ball.y = y
 	
@@ -393,24 +408,49 @@ function drawBallToPick(num,x,y)
 		text = num,     
 		x = x,
 		y = y,
-		font = FONT,   
-		fontSize = 44,
+		font = NUM_FONT,   
+		fontSize = 37,
 	} )
 	
 	ball.text:setTextColor(0)
 	ball.num = num
-	ball.alpha = 0.3
 	ball.selected = false
 
 	utils.onTouch(ball, function()
-		if(ball.selected) then
-			lotteryManager:removeFromSelection(ball.num)
-		else
-   		if(lotteryManager:canAddToSelection()) then
-   			lotteryManager:addToSelection(ball.num)
-   		end
+		if(lotteryManager:canAddToSelection()) then
+			lotteryManager:addToSelection(ball.num)
 		end
-		
+	end)
+	
+	hud.balls[num] = ball
+end
+
+
+function drawBallPicked(num)
+	
+	local x = hud.balls[num].x
+	local y = hud.balls[num].y
+	display.remove(hud.balls[num])
+	
+	local ball = display.newImage(hud, "assets/images/balls/ball.small.green.png")
+	ball.x = x
+	ball.y = y
+	
+	ball.text = display.newText( {
+		parent = hud,
+		text = num,     
+		x = x,
+		y = y,
+		font = NUM_FONT,   
+		fontSize = 33,
+	} )
+	
+	ball.text:setTextColor(255)
+	ball.num = num
+	ball.selected = true
+
+	utils.onTouch(ball, function()
+		lotteryManager:removeFromSelection(ball.num)
 	end)
 	
 	hud.balls[num] = ball
@@ -420,60 +460,62 @@ end
 
 function drawThemeToPick(num,x,y)
 
-	local ball = display.newImage(hud, "assets/images/game/ball.png")
-	ball:scale(0.2,0.2)
-	ball.x = x
-	ball.y = y
-
-	ball.alpha 		= 0.3
+	local ball = {}
 	ball.selected 	= false
 	ball.num 		= num
-	
-	drawThemeIcon(num, hud, x, y)
-	
+
+	drawThemeIcon(num, hud, x, y, 1, function()
+		local themeMask = display.newImage(hud, "assets/images/balls/ball.mask.png")
+		themeMask.x = x
+		themeMask.y = y
+
+		utils.onTouch(themeMask, function()
+			if(ball.selected) then
+				lotteryManager:cancelAdditionalSelection()
+			else
+				lotteryManager:addToAdditionalSelection(ball)
+			end
+		end)
+	end)
+
 	viewManager.newText({
 		parent 			= hud, 
 		text	 			= lotteryManager.nextLottery.theme.icons[num].name,     
 		x 					= x,
-		y 					= y + display.contentHeight*0.05,
-		fontSize 		= 30
+		y 					= y + 120,
+		fontSize 		= 40
 	})
-	
-	utils.onTouch(ball, function()
-		if(ball.selected) then
-			lotteryManager:cancelAdditionalSelection()
-		else
-			lotteryManager:addToAdditionalSelection(ball)
-		end
-	end)
+
+
 end
 
-function drawThemeIcon(num, parent, x, y, scale)
-	drawRemoteImage(lotteryManager.nextLottery.theme.icons[num].image, parent, x, y, scale)
+function drawThemeIcon(num, parent, x, y, scale, next)
+	drawRemoteImage(lotteryManager.nextLottery.theme.icons[num].image, parent, x, y, scale, next)
 end
 
 -----------------------------------------------------------------------------------------
 
+--- 
+-- theme sur un ticket ou un result
 function drawTheme(parent, num,x,y, scale)
 	
 	if(not scale) then scale = 0.2 end
 
-	local ball = display.newImage(hud, "assets/images/game/ball.png")
-	ball:scale(scale,scale)
-	ball.x = x
-	ball.y = y
-	ball.num = num
-	parent:insert(ball)
+	drawThemeIcon(num, parent, x, y, SMALL_THEME_SCALE, function()
+		local themeMask = display.newImage(parent, "assets/images/balls/ball.mask.png")
+		themeMask.x = x
+		themeMask.y = y
+		themeMask:scale(SMALL_THEME_SCALE, SMALL_THEME_SCALE)
+		parent:insert(themeMask)
+	end)
 	
-	drawThemeIcon(num, parent, x, y, 0.7)
 end
 
 -----------------------------------------------------------------------------------------
 
 function drawBall(parent, num,x,y)
 
-	local ball = display.newImage(hud, "assets/images/game/ball.png")
-	ball:scale(0.2,0.2)
+	local ball = display.newImage(hud, "assets/images/balls/ball.small.green.png")
 	ball.x = x
 	ball.y = y
 	
@@ -483,8 +525,8 @@ function drawBall(parent, num,x,y)
 		text = num,     
 		x = x,
 		y = y,
-		font = FONT,   
-		fontSize = 40,
+		font = NUM_FONT,   
+		fontSize = 37,
 	} )
 
 	ball.text:setTextColor(255)
@@ -498,8 +540,7 @@ end
 
 function drawSelectedBall(selected, x, y, action)
 
-	local ball = display.newImage(hud.selection, "assets/images/game/ball.png")
-	ball:scale(0.2,0.2)
+	local ball = display.newImage(hud.selection, "assets/images/balls/ball.big.green.png")
 	ball.x = x
 	ball.y = y
 	
@@ -517,8 +558,8 @@ function drawSelectedBall(selected, x, y, action)
 		text = selected,     
 		x = x,
 		y = y,
-		font = FONT,   
-		fontSize = 40,
+		font = NUM_FONT,   
+		fontSize = 47,
 	} )
 	
 	ball.text:setTextColor(255)
@@ -530,20 +571,39 @@ end
 
 function drawSelectedAdditional(ball,x,y, action)
 	
-	if(not ball) then
-		drawSelectedBall(nil,x,y)
-	else
-   	local ballInSelection = display.newImage(hud.selection, "assets/images/game/ball.png")
-   	ballInSelection:scale(0.2,0.2)
-   	ballInSelection.x = x
-   	ballInSelection.y = y
-   	
-		drawThemeIcon(ball.num, hud.selection, x, y, 0.7)
-		
-		if(action) then
-   		utils.onTouch(ballInSelection, action)
-   	end
+	if(ball) then
+		drawThemeIcon(ball.num, hud.selection, x, y, SMALL_THEME_SCALE, function()
+      	local themeMask = display.newImage(hud.selection, "assets/images/balls/ball.mask.png")
+      	themeMask.x = x
+      	themeMask.y = y
+      	themeMask:scale(SMALL_THEME_SCALE, SMALL_THEME_SCALE)
+      	
+   		if(action) then
+      		utils.onTouch(themeMask, action)
+      	end
+		end)
 	end
+	
+end
+
+-----------------------------------------------------------------------------------------
+
+function drawSelection(parent, numbers)
+
+	-------------------------------------
+	-- display
+	
+	local nbSelected  = 0
+	local xGap 			= display.contentWidth*0.14
+	local y 				= display.contentHeight*0.22
+
+	-------------------------------------
+
+	for j = 1,#numbers-1 do
+		drawBall(parent, numbers[j], xGap*j, y)
+	end
+	
+	drawTheme(parent, numbers[#numbers], xGap*#numbers, y)
 	
 end
 

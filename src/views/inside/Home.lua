@@ -24,22 +24,32 @@ function scene:refreshScene()
 	
 	------------------
 
-	hud.subheaderImage 		= display.newImageRect(hud, "assets/images/01_SubHeader_Background.png", display.contentWidth, display.viewableContentHeight*0.14)
+	hud.subheaderImage 		= display.newImageRect(hud, "assets/images/subheader/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.14)
 	hud.subheaderImage.x 	= display.contentWidth*0.5
-	hud.subheaderImage.y 	= HEADER_HEIGHT * 1.75
+	hud.subheaderImage.y 	= HEADER_HEIGHT * 1.5
 
-	hud.subheaderText 		= display.newImage(hud, I "01_SubHeader_Txt.png")
+	hud.subheaderText 		= display.newImage(hud, I "Questions.png")
 	hud.subheaderText.x 		= display.contentWidth*0.5
-	hud.subheaderText.y 		= HEADER_HEIGHT * 1.7
+	hud.subheaderText.y 		= HEADER_HEIGHT * 1.4
 	
+	
+	local subheaderAnimConfig 	= require("src.tools.Subheader")
+	local subheaderSheet 		= graphics.newImageSheet( "assets/images/subheader/anim.sheet.png", subheaderAnimConfig.sheet )
+
+   hud.subheaderAnim 		= display.newSprite( hud, subheaderSheet, subheaderAnimConfig:newSequence() )
+   hud.subheaderAnim.x 		= display.contentWidth*0.5
+   hud.subheaderAnim.y 		= HEADER_HEIGHT * 1.8
+
+	hud.subheaderArrow 		= display.newImage(hud, "assets/images/subheader/Fleche.png")
+	hud.subheaderArrow.x 	= display.contentWidth*0.715
+	hud.subheaderArrow.y 	= HEADER_HEIGHT * 1.805
+	
+	self:animateSubheader()
+
 	------------------
 
 	utils.onTouch(hud.subheaderImage, function()
-		router.openInviteFriends()
-	end)
-
-	utils.onTouch(hud.subheaderText, function()
-		router.openInviteFriends()
+		shareManager:invite()
 	end)
 
 	------------------
@@ -48,7 +58,7 @@ function scene:refreshScene()
 		parent = hud, 
 		text = T ("Welcome") .. " " .. userManager.user.firstName .. " !", 
 		x = display.contentWidth*0.05,
-		y = display.contentHeight*0.28,
+		y = display.contentHeight*0.25,
 		fontSize = 43,
 		referencePoint = display.CenterLeftReferencePoint
 	})
@@ -65,10 +75,25 @@ end
 
 ------------------------------------------
 
+function scene:animateSubheader()
+	if(hud.subheaderAnim and hud.subheaderAnim.play) then
+   	
+   	hud.subheaderAnim:play()
+   	
+   	if(self.subheaderTimer) then
+   		timer.cancel(self.subheaderTimer)
+   	end
+   	
+   	self.subheaderTimer = timer.performWithDelay(4000, function() self:animateSubheader() end)
+   end
+end
+
+------------------------------------------
+
 function scene:drawNextLottery( event )
 
 	local y = HEADER_HEIGHT * 3.7
-	local top = HEADER_HEIGHT * 3.3
+	local top = HEADER_HEIGHT * 3
 
 	----------------------------------------------------
 	
@@ -88,7 +113,7 @@ function scene:drawNextLottery( event )
 	viewManager.newText({
 		parent = hud, 
 		text = price,     
-		x = display.contentWidth*0.5,
+		x = display.contentWidth*0.47,
 		y = top + display.contentHeight*0.08,
 		fontSize = 73,
 		font = NUM_FONT,
@@ -97,26 +122,26 @@ function scene:drawNextLottery( event )
 
 	-------------------------------
 	
-	hud.pictoCagnotte = display.newImage( hud, "assets/images/icons/02_Main_PictoCagnotte.png")  
+	hud.pictoCagnotte = display.newImage( hud, "assets/images/icons/cagnotte.png")  
 	hud.pictoCagnotte.x = display.contentWidth*0.56
 	hud.pictoCagnotte.y = top + display.contentHeight*0.08
 	
-	hud.separateur = display.newImage( hud, "assets/images/icons/02_Main_Separateur.png")  
+	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
 	hud.separateur.x = display.contentWidth*0.65
 	hud.separateur.y = top + display.contentHeight*0.08
 	
 	-------------------------------
 
-	hud.pictoPlayers = display.newImage( hud, "assets/images/icons/02_Main_PictoPlayers.png")  
+	hud.pictoPlayers = display.newImage( hud, "assets/images/icons/players.png")  
 	hud.pictoPlayers.x = display.contentWidth*0.75
 	hud.pictoPlayers.y = top + display.contentHeight*0.05
 	
 	viewManager.newText({
 		parent = hud, 
-		text = "Players" .. " :", 
+		text = T "Players" .. " :", 
 		x = display.contentWidth*0.75,
 		y = top + display.contentHeight*0.08,
-		fontSize = 19,
+		fontSize = 24,
 	})
 	
 	viewManager.newText({
@@ -130,9 +155,9 @@ function scene:drawNextLottery( event )
 
 	-------------------------------
 
-	hud.playButton = display.newImage( hud, I "02_Main_BoutonTicket.png")  
+	hud.playButton = display.newImage( hud, I "filloutticket.button.png")  
 	hud.playButton.x = display.contentWidth*0.5
-	hud.playButton.y = top + display.contentHeight*0.25
+	hud.playButton.y = top + display.contentHeight*0.21
 	
 	utils.onTouch(hud.playButton, function()
 		self:play()
@@ -148,10 +173,10 @@ function scene:drawNextLottery( event )
 	------------------
 
 	viewManager.drawRemoteImage(lotteryManager.nextLottery.theme.image, hud, display.contentWidth*0.5, display.contentHeight * 0.75)
-
-	hud.playButton = display.newImage( hud, I "02_Main_BoutonTicket.png")  
-	hud.playButton.x = display.contentWidth*0.5
-	hud.playButton.y = top + display.contentHeight*0.25
+	
+	hud.themeTitle = display.newImage( hud, I "theme.png")
+	hud.themeTitle.x = display.contentWidth*0.5
+	hud.themeTitle.y = display.contentHeight*0.85
 
 	------------------
 
@@ -160,10 +185,11 @@ end
 ------------------------------------------
 
 function scene:play( )
-	sponsorpayTools.afterVideoSeen = router.openFillLotteryTicket
-	vungle.afterVideoSeen = router.openFillLotteryTicket
-
-	sponsorpayTools:requestOffers()
+	if(lotteryManager:isGameAvailable()) then
+--		videoManager:play(router.openFillLotteryTicket)
+		lotteryManager.currentSelection = {11,22,33,44,25,6}
+		videoManager:play(router.openConfirmation)
+	end
 end
 
 ------------------------------------------

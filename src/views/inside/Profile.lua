@@ -259,68 +259,13 @@ function scene:refreshScene()
 	viewManager.drawBorder(hud.board, display.contentWidth*0.5, self.top + self.yGap*referringTop, display.contentWidth*0.9, self.yGap * referringHeight)
 	self:drawTextEntry("_my referrerId : ", userManager.user.uid, referringTop )
 	
-	hud.shareIcon = display.newImage(hud.board, "assets/images/icons/friends.png")
-	hud.shareIcon.x = display.contentWidth*0.89
-	hud.shareIcon.y =  self.top + self.yGap*referringTop
-	hud.board:insert(hud.shareIcon)
+	hud.inviteIcon = display.newImage(hud.board, "assets/images/icons/friends.png")
+	hud.inviteIcon.x = display.contentWidth*0.89
+	hud.inviteIcon.y =  self.top + self.yGap*referringTop
+	hud.board:insert(hud.inviteIcon)
 		
-	utils.onTouch(hud.shareIcon, function()
-		local title = "_Be an Adillions' Ambassador !"
-		local text	= "_Earn free additional tickets by referring people to Adillions"
-		viewManager.showPopup(title, text)
-
-		viewManager.drawButton(hud.popup, "SMS", display.contentWidth*0.5, display.contentHeight*0.4, function()
-			local options =
-			{
-				body = "_Join me on www.adillions.com !\n Please use my referrer code when you sign in : " .. userManager.user.uid
-			}
-			native.showPopup("sms", options)
-		end)
-
-		viewManager.drawButton(hud.popup, "email", display.contentWidth*0.5, display.contentHeight*0.5, function()
-			local options =
-			{
-				body = "<html><body>_Join me on <a href='http://www.adillions.com'>Adillions</a> !<br/> Please use my referrer code when you sign in : " .. userManager.user.uid .. "</body></html>",
-   			isBodyHtml = true,
-   			subject = "Adillions",
-			}
-			native.showPopup("mail", options)
-		end)
-
-		if(userManager.user.facebookId) then
-   		viewManager.drawButton(hud.popup, "Facebook", display.contentWidth*0.5, display.contentHeight*0.6, function()
-   			facebook.postOnWall("_Join me on www.adillions.com !\n Please use my referrer code when you sign in : " .. userManager.user.uid, function()
-	   			viewManager.showPopup("_Thank you !", "_Successfully posted on your wall")
-   			end)
-   		end)
-   	else
-   		viewManager.drawButton(hud.popup, "_Connect with Facebook", display.contentWidth*0.5, display.contentHeight*0.6, function()
-      		facebook.connect(function()
-   				router.resetScreen()
-   				self:refreshScene()
-   			end) 
-   		end,
-   		display.contentWidth*0.6)
-   	end
-
-
-
-		if(userManager.user.twitterId) then
-   		viewManager.drawButton(hud.popup, "Twitter", display.contentWidth*0.5, display.contentHeight*0.7, function()
-   			twitter.tweetMessage("_Join me on www.adillions.com !\n Please use my referrer code when you sign in : " .. userManager.user.uid, function()
-					viewManager.showPopup("_Thank you !", "_Successfully tweeted")
-				end)
-			end)
-		else
-			viewManager.drawButton(hud.popup, "_Connect with Twitter", display.contentWidth*0.5, display.contentHeight*0.7, function()
-				twitter.connect(function()
-      			print("refresh profile")
-   				router.resetScreen()
-   				self:refreshScene()
-   			end)
-			end,
-			display.contentWidth*0.6)
-		end
+	utils.onTouch(hud.inviteIcon, function()
+		shareManager:invite()
 	end)
 
 	---------------------------------------------------------------------------------

@@ -23,51 +23,98 @@ end
 
 function scene:refreshScene()
 
-	viewManager.initBoard()
-
-	-------------------------------
-	-- REJOUER
-	------------------
-
-	viewManager.drawTicket(hud, lotteryManager.currentSelection, display.contentWidth*0.14, display.contentHeight*0.25)
-	hud:insert(hud.board)
-
 	-------------------------------
 
-	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets) .. "    _tickets to play"
+	viewManager.newText({
+		parent = hud, 
+		text = T ("Your selection !"), 
+		x = display.contentWidth*0.05,
+		y = display.contentHeight*0.12,
+		fontSize = 43,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+	
+	viewManager.newText({
+		parent = hud, 
+		text = T("Drawing") .. " " .. lotteryManager:date(lotteryManager.nextLottery), 
+		x = display.contentWidth*0.05,
+		y = display.contentHeight*0.15,
+		fontSize = 23,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+	
+	-------------------------------
 
+	viewManager.drawSelection(hud, lotteryManager.currentSelection)
+
+	-------------------------------
+
+	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.horizontal.png")  
+	hud.separateur.x = display.contentWidth*0.5
+	hud.separateur.y = display.contentHeight*0.3
+	
+	-------------------------------
+
+	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
+
+	hud.pictoTicket = display.newImage( hud, "assets/images/icons/ticket.png")  
+	hud.pictoTicket.x = display.contentWidth*0.5
+	hud.pictoTicket.y = display.contentHeight*0.35
+	
+	viewManager.newText({
+		parent = hud, 
+		text = T "Tickets to play" .. " :", 
+		x = display.contentWidth*0.5,
+		y = display.contentHeight*0.38,
+		fontSize = 24,
+	})
+	
 	viewManager.newText({
 		parent = hud, 
 		text = nbTickets, 
 		x = display.contentWidth*0.5,
-		y = display.contentHeight*0.35,
-		fontSize = 33
+		y = display.contentHeight*0.41,
+		fontSize = 43,
+		font = NUM_FONT
 	})
 
 	-------------------------------
 
-	viewManager.drawButton(hud, "_Jouer !", display.contentWidth*0.5, display.contentHeight*0.5, function() self:play() end)
+	hud.playButton = display.newImage( hud, I "filloutnewticket.button.png")  
+	hud.playButton.x = display.contentWidth*0.5
+	hud.playButton.y = display.contentHeight*0.5
+	
+	utils.onTouch(hud.playButton, function()
+		self:play()
+	end)
+	
+	-------------------------------
+
+	hud.separateur2 = display.newImage( hud, "assets/images/icons/separateur.horizontal.png")  
+	hud.separateur2.x = display.contentWidth*0.5
+	hud.separateur2.y = display.contentHeight*0.6
+	
+	hud.more = display.newImage( hud, I "more.png")  
+	hud.more.x = display.contentWidth*0.5
+	hud.more.y = display.contentHeight*0.65
 
 	-------------------------------
 
-	hud.sharePanel = display.newImageRect( hud, "assets/images/menus/panel.simple.png", display.contentWidth, display.contentHeight*0.4)  
-	hud.sharePanel.x = display.contentWidth*0.5
-	hud.sharePanel.y = display.contentHeight*0.8
+	hud.inviteButton = display.newImage( hud, I "invite.button.png")  
+	hud.inviteButton.x = display.contentWidth*0.3
+	hud.inviteButton.y = display.contentHeight*0.78
 
-	viewManager.newText({
-		parent = hud, 
-		text = "_Share with friends to get VIP points and more tickets !", 
-		x = display.contentWidth*0.5,
-		y = display.contentHeight*0.7,
-		fontSize = 29
-	})
+	hud.shareButton = display.newImage( hud, I "share.button.png")  
+	hud.shareButton.x = display.contentWidth*0.7
+	hud.shareButton.y = display.contentHeight*0.78
+	
+	utils.onTouch(hud.inviteButton, function()
+		shareManager:invite()
+	end)
 
-	viewManager.drawButton(hud, "_Share", display.contentWidth*0.5, display.contentHeight*0.8, function() self:openShareMenu() end)
-
-	-------------------------------
-	-- PARTAGER
-	------------------
-
+	utils.onTouch(hud.shareButton, function()
+		shareManager:share()
+	end)
 
 	-------------------------------
 	-- Setup
@@ -87,78 +134,8 @@ end
 
 ------------------------------------------
 
-function scene:play( )
-	sponsorpayTools.afterVideoSeen = router.openFillLotteryTicket
-	vungle.afterVideoSeen = router.openFillLotteryTicket
-	sponsorpayTools:requestOffers()
-end
-
-------------------------------------------
-
-function scene:openShareMenu()
-
-	-----------------------------------
-
-	local title = "_Share"
-	local text = "_Share with friends to get VIP points and more tickets !"
-	viewManager.showPopup(title, text)
-
-	-----------------------------------
-	-- SMS
-	-----------------------------------
-
-	viewManager.drawButton(hud.popup, "SMS", display.contentWidth*0.5, display.contentHeight*0.4, function()
-		local options =
-		{
-			body = "_I've just played a ticket on Adillions !\n Join me and please use my referrer code when you sign in : " .. userManager.user.uid
-		}
-		native.showPopup("sms", options)
-	end)
-
-	-----------------------------------
-	-- Email
-	-----------------------------------
-	
-	viewManager.drawButton(hud.popup, "Email", display.contentWidth*0.5, display.contentHeight*0.5, function()
-		local options =
-		{
-			body = "<html><body>I've just played a ticket on Adillions !\n _Join me on <a href='http://www.adillions.com'>Adillions</a> !<br/> Please use my referrer code when you sign in : " .. userManager.user.uid .. "</body></html>",
-			isBodyHtml = true,
-			subject = "Adillions",
-		}
-		native.showPopup("mail", options)
-	end)
-
-	-----------------------------------
-	-- Facebook
-	-----------------------------------
-
-	if(userManager.user.facebookId) then
-		viewManager.drawButton(hud.popup, "Facebook", display.contentWidth*0.5, display.contentHeight*0.6, function()
-			facebook.postOnWall("_I've just played a ticket on Adillions !\n Next Lottery : ".. lotteryManager:date(lotteryManager.nextLottery) .." \n_Join me there and please use my referrer code when you sign in : " .. userManager.user.uid, function()
-				viewManager.showPopup("_Thank you !", "_Successfully posted on your wall")
-			end)
-		end)
-	else
-		viewManager.drawButton(hud.popup, "_Connect with Facebook", display.contentWidth*0.5, display.contentHeight*0.6, function()
-		end,
-		display.contentWidth*0.6)
-	end
-
-	-----------------------------------
-	-- Twitter
-	-----------------------------------
-	
-	if(userManager.user.twitterId) then
-		viewManager.drawButton(hud.popup, "Twitter", display.contentWidth*0.5, display.contentHeight*0.7, function()
-		end)
-	else
-		viewManager.drawButton(hud.popup, "_Connect with Twitter", display.contentWidth*0.5, display.contentHeight*0.7, function()
-		end,
-		display.contentWidth*0.6)
-	end
-
-
+function scene:play()
+	videoManager:play(router.openFillLotteryTicket)
 end
 
 ------------------------------------------
