@@ -4,12 +4,68 @@ local translations =
         ["fr"] = "Bienvenue",
     },
 
+    ["Thank you"] = {
+        ["fr"] = "Merci",
+    },
+
+    ["Successfully posted on your wall !"] = {
+        ["fr"] = "Posté sur votre mur !",
+    },
+
+    ["Successfully tweeted"] = {
+        ["fr"] = "Tweeté !",
+    },
+
     ["Tickets to play"] = {
         ["fr"] = "Tickets restants",
     },
 
+    ["Free ticket"] = {
+        ["fr"] = "Ticket gratuit",
+    },
+
+    ["New Points"] = {
+        ["fr"] = "Nouveaux points",
+    },
+
     ["Players"] = {
         ["fr"] = "Joueurs",
+    },
+
+    ["User name"] = {
+        ["fr"] = "Surnom",
+    },
+
+    ["First name"] = {
+        ["fr"] = "Prénom",
+    },
+
+    ["Last name"] = {
+        ["fr"] = "Nom",
+    },
+
+    ["Email"] = {
+        ["fr"] = "Email",
+    },
+
+    ["Birthday"] = {
+        ["fr"] = "Date de naissance",
+    },
+
+    ["Total points"] = {
+        ["fr"] = "Points",
+    },
+
+    ["Charity time"] = {
+        ["fr"] = "Charité",
+    },
+
+    ["Total gains"] = {
+        ["fr"] = "Total des gains",
+    },
+
+    ["Bonus tickets"] = {
+        ["fr"] = "Tickets bonus",
     },
 
     ["Winners"] = {
@@ -18,6 +74,30 @@ local translations =
     
     ["Charity"] = {
         ["fr"] = "Charité",
+    },
+    
+    ["Account not linked"] = {
+        ["fr"] = "Compte non lié",
+    },
+    
+    ["Account linked"] = {
+        ["fr"] = "Compte relié",
+    },
+    
+    ["Not connected"] = {
+        ["fr"] = "Non connecté",
+    },
+    
+    ["Connected"] = {
+        ["fr"] = "Connecté",
+    },
+    
+    ["Not fan yet"] = {
+        ["fr"] = "Pas encore fan",
+    },
+    
+    ["Thank you for being a fan !"] = {
+        ["fr"] = "Merci d'être fan !",
     },
     
     ["Select your lucky ball !"] = {

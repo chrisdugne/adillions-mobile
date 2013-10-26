@@ -61,11 +61,9 @@ function UserManager:getPlayerByFacebookId()
 
 		native.setActivityIndicator( false )	
 
-		if(result.isError) then
-			print("getPlayerByFacebookId error : outside")
-			router.openOutside()
-		elseif(result.status == 401) then
-			print("openSigninFB")
+		utils.tprint(result)
+
+		if(result.isError or result.status == 401) then
 			router.openSigninFB()
 		else
 			response 							= json.decode(result.response)
@@ -100,6 +98,8 @@ function UserManager:updatedPlayer(player, next)
 	self.user 							= player
 	self.user.totalBonusTickets 	= 0
 
+	utils.tprint(self.user)
+
 	GLOBALS.savedData.user.uid 				= player.uid
 	GLOBALS.savedData.user.email 				= player.email
 	GLOBALS.savedData.user.userName 			= player.userName
@@ -107,6 +107,7 @@ function UserManager:updatedPlayer(player, next)
 	GLOBALS.savedData.user.lastName 			= player.lastName
 	GLOBALS.savedData.user.birthDate 		= player.birthDate
 	GLOBALS.savedData.user.referrerId 		= player.referrerId
+	GLOBALS.savedData.user.sponsorCode 		= player.sponsorCode
 	GLOBALS.savedData.user.facebookId 		= player.facebookId
 	GLOBALS.savedData.user.twitterId 		= player.twitterId
 	GLOBALS.savedData.user.twitterName 		= player.twitterName
@@ -116,6 +117,7 @@ function UserManager:updatedPlayer(player, next)
 	self:checkIdlePoints()
 	
 	viewManager.refreshHeaderPoints(player.currentPoints)
+	lotteryManager:sumPrices()
 	
 	if(next) then
 		next()
@@ -154,10 +156,8 @@ end
 
 function UserManager:checkIdlePoints(numbers)
 	
-	print("checkIdlePoints", userManager.user.idlePoints)
-
 	if(userManager.user.idlePoints > 0) then
-		local title 	= "_New points !"
+		local title 	= T "New Points" .. " !"
 		local text		= ""
 		viewManager.showPopup(title, text, function() userManager:convertIdlePoints() end)
 
@@ -190,6 +190,45 @@ function UserManager:checkIdlePoints(numbers)
    			fontSize 		= 80,
    		})
    	end
+
+	elseif(userManager.user.currentPoints >= POINTS_TO_EARN_A_TICKET) then
+		local title 	= T "Free ticket" .. " !"
+		local text		= ""
+		viewManager.showPopup(title, text, function() userManager:convertCurrentPoints() end)
+
+		hud.popup.iconPoints 			= display.newImage( hud.popup, "assets/images/points/points.".. POINTS_TO_EARN_A_TICKET .. ".png")
+		hud.popup.iconPoints.x 			= display.contentWidth*0.3
+		hud.popup.iconPoints.y 			= display.contentHeight*0.41
+		hud.popup.iconPoints:scale(1.5,1.5)
+
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text	 			= POINTS_TO_EARN_A_TICKET .. " pts",     
+			x 					= display.contentWidth*0.6,
+			y 					= display.contentHeight*0.4,
+			fontSize 		= 120,
+		})
+		
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text	 			= "=",     
+			x 					= display.contentWidth*0.5,
+			y 					= display.contentHeight*0.5,
+			fontSize 		= 90,
+		})
+
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text	 			= "1 ticket",     
+			x 					= display.contentWidth*0.4,
+			y 					= display.contentHeight*0.6,
+			fontSize 		= 80,
+		})
+
+		hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
+		hud.popup.iconTicket.x 			= display.contentWidth*0.65
+		hud.popup.iconTicket.y 			= display.contentHeight*0.605
+		hud.popup.iconTicket:scale(1.5,1.5)
 	end
 end
 
@@ -249,6 +288,30 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function UserManager:convertCurrentPoints()
+
+	local bonus = viewManager.newText({
+		parent 			= hud, 
+		text	 			= "+ 1 Ticket",     
+		x 					= display.contentWidth*0.97,
+		y 					= display.contentHeight*0.05,
+		fontSize 		= 65
+	})
+
+	transition.to(bonus, { time=1000, alpha=0, x=display.contentWidth*0.78 })
+
+	---------------------------------------------
+
+	self:convertPointsToTickets()
+
+	---------------------------------------------
+
+	self:updatePlayer()
+
+end
+
+-----------------------------------------------------------------------------------------
+
 function UserManager:convertPointsToTickets()
 
 	local conversion = false
@@ -287,13 +350,10 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:twitterConnection(twitterId, twitterName, accessToken, next)
-
-	print("twitterConnection")
+function UserManager:twitterConnection(twitterId, twitterName, next)
 
 	GLOBALS.savedData.user.twitterId 					= twitterId
 	GLOBALS.savedData.user.twitterName 					= twitterName
-	GLOBALS.savedData.user.twitterAccessToken 		= accessToken
 	
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 	
@@ -307,10 +367,13 @@ end
 
 function UserManager:mergePlayerWithFacebook(next)
 
-	GLOBALS.savedData.user.facebookId = facebook.data.id
+	GLOBALS.savedData.user.facebookId 		= facebook.data.id
+	GLOBALS.savedData.user.facebookName	 	= facebook.data.name
+	
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 	
-	self.user.facebookId = facebook.data.id
+	self.user.facebookId 	= facebook.data.id
+	self.user.facebookName 	= facebook.data.name
 	
 	self:updatePlayer(next)
 end

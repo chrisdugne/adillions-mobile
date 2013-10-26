@@ -21,8 +21,19 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
+	
+	local url = SERVER_URL .. "msigninFB"
+	url = url .. "?last_name=" 	.. facebook.data.last_name
+	url = url .. "&first_name=" 	.. facebook.data.first_name
+	url = url .. "&picture_url=" 	.. utils.urlEncode(facebook.data.picture.data.url)
+	url = url .. "&birth_date=" 	.. facebook.data.birthday
+	url = url .. "&email=" 			.. facebook.data.email
+	url = url .. "&facebookName=" .. facebook.data.name
+	url = url .. "&facebookId=" 	.. facebook.data.id
+	url = url .. "&lang=" 			.. LANG
+
 	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "msigninFB" )
+	self.webView:request( url )
 	self.webView:addEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
 	
 	viewManager.initHeader()
@@ -44,10 +55,9 @@ function scene:signinFBViewListener( event )
       	router.openOutside()
 
    	elseif event.url == SERVER_URL .. "requireLogout" then  -- changeAccount
-			self:closeWebView()    		
-			facebook.logout()
-			print("signinFB : requireLogout : outside")		 		
-      	router.openOutside()
+			self:closeWebView()
+			print("signinFB : requireLogout")		 		
+			userManager:logout()    		
 
     	elseif string.find(event.url, "signedIn") then
 			self:closeWebView()    		

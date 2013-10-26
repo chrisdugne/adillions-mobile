@@ -123,9 +123,9 @@ function showPopup(title, text, action)
 	viewManager.newText({
 		parent 			= hud.popup, 
 		text	 			= title,     
-		x 					= display.contentWidth*0.12,
+		x 					= display.contentWidth*0.16,
 		y 					= display.contentHeight*0.2,
-		fontSize 		= 35,
+		fontSize 		= 40,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 
@@ -140,9 +140,9 @@ function showPopup(title, text, action)
 	})
 		
 	hud.popupClose = display.newImage( hud.popup, "assets/images/hud/ko.png")
-  	hud.popupClose.x = display.contentWidth*0.8 
-  	hud.popupClose.y = display.contentHeight*0.2
-  	hud.popupClose:scale(0.3,0.3)
+  	hud.popupClose.x = display.contentWidth*0.83 
+  	hud.popupClose.y = display.contentHeight*0.18
+  	hud.popupClose:scale(0.42,0.42)
   	
 	utils.onTouch(hud.popupClose, function()
 		display.remove(hud.popupClose)
@@ -187,8 +187,8 @@ function newText(options)
 		options.parent:insert(text)
 	end
 
-	
 	return text
+	
 end
 
 ------------------------------------------------------------------
@@ -295,7 +295,6 @@ end
 function buildMenu(tabSelected)
 
 	local buttonWidth = display.contentWidth/5 - 1
-	print (buttonWidth)
 	
 	-- Create the tabBar's buttons
 	local tabButtons = 

@@ -36,38 +36,77 @@ function scene:refreshScene()
 	
 	--------------------------------------------------------------
 	-- Actions
-	
-	viewManager.newText({
+	-- 
+--	 3 actions random / favorites / restart
+--	 
+--	viewManager.newText({
+--		parent = hud, 
+--		text = T "Random",     
+--		x = display.contentWidth*0.2,
+--		y = top - display.contentHeight*0.07,
+--		fontSize = 33,
+--	})
+--
+--	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+--	hud.separateur.x = display.contentWidth*0.35
+--	hud.separateur.y = top - display.contentHeight*0.065
+--
+--	viewManager.newText({
+--		parent = hud, 
+--		text = T "Favorites",     
+--		x = display.contentWidth*0.5,
+--		y = top - display.contentHeight*0.07,
+--		fontSize = 33,
+--	})
+--
+--	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+--	hud.separateur.x = display.contentWidth*0.65
+--	hud.separateur.y = top - display.contentHeight*0.065
+--
+--	viewManager.newText({
+--		parent = hud, 
+--		text = T "Restart",     
+--		x = display.contentWidth*0.8,
+--		y = top - display.contentHeight*0.07,
+--		fontSize = 33,
+--	})
+--	
+--	
+	--------------------------------------------------------------
+	-- Actions
+	-- 
+--	 2 actions random / restart
+
+	local random = viewManager.newText({
 		parent = hud, 
 		text = T "Random",     
-		x = display.contentWidth*0.2,
+		x = display.contentWidth*0.3,
 		y = top - display.contentHeight*0.07,
 		fontSize = 33,
 	})
+	
+	utils.onTouch(random, function()
+		router.resetScreen()
+		self:refreshScene()
+		self:randomSelection()
+	end)
 
 	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
-	hud.separateur.x = display.contentWidth*0.35
+	hud.separateur.x = display.contentWidth*0.5
 	hud.separateur.y = top - display.contentHeight*0.065
 
-	viewManager.newText({
-		parent = hud, 
-		text = T "Favorites",     
-		x = display.contentWidth*0.5,
-		y = top - display.contentHeight*0.07,
-		fontSize = 33,
-	})
-
-	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
-	hud.separateur.x = display.contentWidth*0.65
-	hud.separateur.y = top - display.contentHeight*0.065
-
-	viewManager.newText({
+	local restart = viewManager.newText({
 		parent = hud, 
 		text = T "Restart",     
-		x = display.contentWidth*0.8,
+		x = display.contentWidth*0.7,
 		y = top - display.contentHeight*0.07,
 		fontSize = 33,
 	})
+	
+	utils.onTouch(restart, function()
+		router.resetScreen()
+		self:refreshScene()
+	end)
 	
 	--------------------------------------------------------------
 	-- Classic nums
@@ -109,6 +148,34 @@ function scene:refreshScene()
 
 	viewManager.setupView(0)
 	self.view:insert(hud)
+end
+
+------------------------------------------
+
+function scene:getNum()
+
+	local num 				= math.random(1,49)
+	local alreadyChosen 	= false
+
+	for n = 1,#lotteryManager.currentSelection do
+		if(num == lotteryManager.currentSelection[n]) then
+			alreadyChosen = true
+		end
+	end
+
+	if not alreadyChosen then
+		return num
+	else  
+		return self:getNum()
+	end
+end
+
+------------------------------------------
+
+function scene:randomSelection()
+	for i=1,5 do
+		lotteryManager:addToSelection (self:getNum())
+	end
 end
 
 ------------------------------------------

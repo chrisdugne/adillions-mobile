@@ -176,18 +176,12 @@ end
 
 function mergeMe(next)
 	if(GLOBALS.savedData.facebookAccessToken) then
-		print("token -->", GLOBALS.savedData.facebookAccessToken)
+		print("mergeMe ! token -->", GLOBALS.savedData.facebookAccessToken)
    	local url = "https://graph.facebook.com/me?fields=name,first_name,last_name,picture,locale,birthday,email&access_token=" .. GLOBALS.savedData.facebookAccessToken
    	network.request(url , "GET", function(result)
    		
    		response = json.decode(result.response)
    		
-   		print("----------")
-   		utils.tprint(response)
-   		print("----------")
-   		utils.tprint(response.error)
-   		print("----------")
-   	
    		if(not response.error) then
    			print("--> connected to FB")
       		utils.tprint(response)

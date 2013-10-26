@@ -37,7 +37,6 @@ function LotteryManager:getFinishedLotteries(next)
 	SERVER_URL .. "finishedLotteries", 
 	function(result)
 		self.finishedLotteries = json.decode(result.response)
-		utils.tprint(self.finishedLotteries)
 		next()
 	end)
 end
@@ -48,8 +47,12 @@ function LotteryManager:price(lottery)
 	return math.min(lottery.maxPrice, math.max(lottery.minPrice, lottery.nbTickets/1000 * lottery.cpm))  .. "  $"
 end
 
+function LotteryManager:charityPerTicket(lottery)
+	return lottery.charity / lottery.nbTickets
+end
+
 function LotteryManager:finalPrice(lottery)
-	return lottery.finalPrice or '000'  .. "  $"
+	return lottery.finalPrice .. "  $"
 end
 
 function LotteryManager:date(lottery)
@@ -93,6 +96,21 @@ end
 
 function LotteryManager:isGameAvailable()
 	return userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets  > 0
+end
+
+-----------------------------------------------------------------------------------------
+
+function LotteryManager:sumPrices()
+
+	userManager.user.totalGains = 0
+
+	if(userManager.user.lotteryTickets) then
+   	for i = 1,#userManager.user.lotteryTickets do
+   		local ticket = userManager.user.lotteryTickets[i]
+		  	userManager.user.totalGains = userManager.user.totalGains + (ticket.price or 0)
+   	end
+   end
+   
 end
 
 -----------------------------------------------------------------------------------------

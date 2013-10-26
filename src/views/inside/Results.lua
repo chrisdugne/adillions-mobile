@@ -135,7 +135,7 @@ function scene:drawBoard()
 
 		viewManager.newText({
 			parent = hud.board, 
-			text = (lottery.charity or 0) .. " $", 
+			text = lottery.charity .. " $", 
 			x = display.contentWidth*0.75,
 			y = marginTop + yGap*(i-1)+225, 
 			fontSize = 45,

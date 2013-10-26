@@ -57,6 +57,12 @@ function scene:refreshScene()
 
 	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
 
+	-- juste au moment ou le player gagne son 8e point
+	-- avant le record -> refresh du nbTickets ici a la mano
+	if(userManager.user.currentPoints == POINTS_TO_EARN_A_TICKET) then
+		nbTickets = nbTickets + 1
+	end
+
 	hud.pictoTicket = display.newImage( hud, "assets/images/icons/ticket.png")  
 	hud.pictoTicket.x = display.contentWidth*0.5
 	hud.pictoTicket.y = display.contentHeight*0.35
@@ -84,9 +90,11 @@ function scene:refreshScene()
 	hud.playButton.x = display.contentWidth*0.5
 	hud.playButton.y = display.contentHeight*0.5
 	
-	utils.onTouch(hud.playButton, function()
-		self:play()
-	end)
+	if(nbTickets > 0) then
+   	utils.onTouch(hud.playButton, function()
+   		self:play()
+   	end)
+   end
 	
 	-------------------------------
 
