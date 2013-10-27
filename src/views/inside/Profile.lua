@@ -349,6 +349,17 @@ function scene:drawScene()
          hud.twitterFollow.x 	= display.contentWidth*0.35
          hud.twitterFollow.y	= self.top + self.yGap*(socialTop+10.7)
          hud.board:insert(hud.twitterFollow)
+         
+   		utils.onTouch(hud.twitterFollow, function()
+   		
+				native.setActivityIndicator( true )	 
+   			twitter.follow(function()
+					native.setActivityIndicator( false )		
+   				userManager.user.twitterFan = true
+   				router.resetScreen()
+   				self:refreshScene()
+   			end) 
+   		end)
 		end
 	end
 	

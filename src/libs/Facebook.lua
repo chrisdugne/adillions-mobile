@@ -35,7 +35,7 @@ end
 -- listener for "fbconnect" events
 function loginListener( event )
 	
-	print("----->   loginListener")
+	print("----->  FB loginListener")
 	utils.tprint(event)
 	
     if ( "session" == event.type ) then
@@ -52,12 +52,12 @@ function loginListener( event )
       			getMe()
       		end
 
-        elseif ( "loginFailed" == event.phase ) then
+        elseif ( "loginFailed" == event.phase or "loginCancelled" == event.phase ) then
 				native.setActivityIndicator( false )
 				userManager:logout()
-        		
         
         end
+
     elseif ( "request" == event.type ) then
         -- event.response is a JSON object from the FB server
         local response = event.response
@@ -81,7 +81,7 @@ end
 -- listener for "fbconnect" events
 function connectListener( event )
 	
-	print("----->   connectListener")
+	print("-----> FB  connectListener")
 	utils.tprint(event)
 	
     if ( "session" == event.type ) then
@@ -204,12 +204,15 @@ end
 
 function isFacebookFan(next)
 
+	print("------------------------ isFacebookFan ")
 	if(GLOBALS.savedData.facebookAccessToken) then
 	
+		native.setActivityIndicator( true )	
    	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
 			
    	network.request(url , "GET", function(result)
    		
+			native.setActivityIndicator( false )	
    		response = json.decode(result.response)
    		
    		if(not response.error) then
@@ -221,10 +224,15 @@ function isFacebookFan(next)
    			end
       	end
 			
-			next()
+			if(next) then
+				next()
+			end
    	end)
    else
-   	next()
+		print("------------------------ gonext ")
+		if(next) then
+			next()
+		end
    end
 end
 

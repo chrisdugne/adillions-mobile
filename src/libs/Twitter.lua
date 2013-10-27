@@ -63,9 +63,6 @@ function callback.twitterSuccess( requestType, name, response )
 		results = "Tweet Posted"
 	end
 
-	print( results )
-	print( name )
-
 	if(callback.next) then
 		callback.next()
 	end	
@@ -76,18 +73,17 @@ function callback.twitterFailed()
 end
 
 -----------------------------------------------------------------------------------------
---
---function testConnection(next)
---	
---	print("testConnection")
---	
---	if(GLOBALS.savedData.user.twitterAccessToken) then
---		getInfo(next)
---	else
---		connected = false
---		next()
---   end
---end
+
+function follow( next )
+	
+	callback.next = next
+	
+	local params = {"follow", "friendships/create.json", "POST",
+		{"user_id", TWITTER_ID}, {"follow", "true" } }
+	
+	tweet(callback, params)
+	
+end
 
 -----------------------------------------------------------------------------------------
 
@@ -99,21 +95,8 @@ function tweetMessage( message, next )
 		{"status", message} }
 	
 	tweet(callback, params)
+	
 end
---
---function getInfo(next)
---
---	print("getInfo")
---	
---	callback.next = next
---	next()
---	
---	local params = {"users", "users/show.json", "GET",
---		{"screen_name", "SELF"}, {"skip_status", "true"},
---		{"include_entities", "false"} }
---		
-----	tweet(callback, params)
---end
 
 -----------------------------------------------------------------------------------------
 
@@ -186,6 +169,22 @@ function tweet(del, msg)
 end
 
 -----------------------------------------------------------------------------------------
+
+function reconnect()
+	if(GLOBALS.savedData.twitterAccessToken) then
+   	print("twitter reconnect", GLOBALS.savedData.twitterAccessToken, GLOBALS.savedData.twitterAccessTokenSecret)
+   	access_token 			= GLOBALS.savedData.twitterAccessToken
+   	access_token_secret 	= GLOBALS.savedData.twitterAccessTokenSecret
+   	connected = true
+   end
+end
+
+function logout()
+	print("twitter logout")
+	GLOBALS.savedData.twitterAccessToken 			= nil
+	GLOBALS.savedData.twitterAccessTokenSecret 	= nil
+	connected = false
+end
 
 function connect(next)
 
@@ -325,8 +324,8 @@ function twitterListener(event)
 			----------------------------------------------		
 			-- Specific Adillions
 			
---			GLOBALS.savedData.user.twitterAccessToken 		= access_response.oauth_token
---			GLOBALS.savedData.user.twitterAccessTokenSecret = access_response.oauth_token_secret
+			GLOBALS.savedData.twitterAccessToken 		= access_response.oauth_token
+			GLOBALS.savedData.twitterAccessTokenSecret = access_response.oauth_token_secret
 		
 			connected = true
 			userManager:twitterConnection(user_id, screen_name, proceed)

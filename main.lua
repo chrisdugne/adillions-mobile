@@ -15,6 +15,7 @@ PROD					= 1
 -----------------------------------------------------------------------------------------
 
 FACEBOOK_PAGE_ID 	= "379432705492888"
+TWITTER_ID 			= "1922939570"
 
 -----------------------------------------------------------------------------------------
 
@@ -215,9 +216,11 @@ local onSystem = function( event )
     
     elseif event.type == "applicationStart" or event.type == "applicationResume" then
       native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
+--      
+--      facebook.isFacebookFan(function() 
+--      end)
       
-      facebook.isFacebookFan(function() 
-      end)
+   	twitter.reconnect()
     
     end
 end

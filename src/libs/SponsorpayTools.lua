@@ -16,10 +16,10 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function SponsorpayTools:init()
+function SponsorpayTools:init(userUID)
 
 	local appId = "16796"
-	local userId = userManager.user.uid
+	local userId = userUID
 	local securityToken = "7e10113fe4f9d215497ef336ce22b9aa"
 	local token = sponsorpay.start( appId, userId, securityToken )
 	  

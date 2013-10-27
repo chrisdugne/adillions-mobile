@@ -80,15 +80,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:receivedPlayer(player, next)
-
-	self:updatedPlayer(player)
-	
-	facebook.isFacebookFan(next)
-	
-	print("=====================================================")
-	print("receivedPlayer")
-	print("sponsorpayTools init")
-	sponsorpayTools:init()
+	sponsorpayTools:init(player.uid)
+	self:updatedPlayer(player, next)
 end
 
 -----------------------------------------------------------------------------------------
@@ -98,6 +91,7 @@ function UserManager:updatedPlayer(player, next)
 	self.user 							= player
 	self.user.totalBonusTickets 	= 0
 
+	print("------------------------ updatedPlayer ")
 	utils.tprint(self.user)
 
 	GLOBALS.savedData.user.uid 				= player.uid
@@ -118,10 +112,8 @@ function UserManager:updatedPlayer(player, next)
 	
 	viewManager.refreshHeaderPoints(player.currentPoints)
 	lotteryManager:sumPrices()
-	
-	if(next) then
-		next()
-	end
+
+	facebook.isFacebookFan(next)
 	
 end
 
@@ -329,11 +321,16 @@ end
 
 function UserManager:updatePlayer(next)
 
+	native.setActivityIndicator( true )	
+		
 	utils.postWithJSON({
 		user = self.user,
 	}, 
 	SERVER_URL .. "updatePlayer", 
 	function(result)
+
+		native.setActivityIndicator( false )
+			
 		local player = json.decode(result.response)
 		if(player) then
 			userManager:updatedPlayer(player, next)
@@ -385,6 +382,7 @@ function UserManager:logout()
 	print("userManager:logout")
 	router.openOutside()
 	coronaFacebook.logout()
+	twitter.logout()
 	utils.initGameData()	
 end
 
