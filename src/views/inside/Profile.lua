@@ -33,11 +33,11 @@ function scene:drawScene()
 	------------------
 
 	local statusTop 			= 0
-	local socialTop 			= 6.5
-	local sponsorTop 			= 19.5
-	local detailsTop 			= 25.5
-	local optionsTop 			= 33.5
-	local logoutTop 			= 41
+	local detailsTop 			= 7.5
+	local socialTop 			= 15
+	local sponsorTop 			= 28
+	local optionsTop 			= 35
+	local logoutTop 			= 43
 		
 	------------------
 
@@ -143,59 +143,9 @@ function scene:drawScene()
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Bonus tickets" .. " : ",         
-		x 					= self.column2,
-		y 					= self.top + self.yGap*(statusTop+1),
-		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterRightReferencePoint
-	})
-
-
-	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/ticket.png")
-	hud.iconTicket.x 			= self.column2 - 110
-	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+2)
-	hud.board:insert(hud.iconTicket)
-	
-	viewManager.newText({
-		parent 			= hud.board, 
-		text	 			= "+ " .. userManager.user.totalBonusTickets,     
-		x 					= self.column2,
-		y 					= self.top + self.yGap*(statusTop+2),
-		fontSize 		= self.fontSizeRight,
-		font				= NUM_FONT,
-		fontSize 		= 40,
-		referencePoint = display.CenterRightReferencePoint
-	})
-
-	--------------------------
-
-	viewManager.newText({
-		parent 			= hud.board, 
-		text 				= T "Charity time" .. " : ",         
-		x 					= self.column1,
-		y 					= self.top + self.yGap*(statusTop+3.5),
-		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
-	})
-
-	viewManager.newText({
-		parent 			= hud.board, 
-		text	 			= userManager.user.totalPoints .. " min sec",     
-		x 					= self.column1,
-		y 					= self.top + self.yGap*(statusTop+4.5),
-		fontSize 		= self.fontSizeRight,
-		font				= NUM_FONT,
-		fontSize 		= 40,
-		referencePoint = display.CenterLeftReferencePoint
-	})
-	
-	--------------------------
-	
-	viewManager.newText({
-		parent 			= hud.board, 
 		text 				= T "Total gains" .. " : ",         
 		x 					= self.column2,
-		y 					= self.top + self.yGap*(statusTop+3.5),
+		y 					= self.top + self.yGap*(statusTop+1),
 		fontSize 		= self.fontSizeLeft,
 		referencePoint = display.CenterRightReferencePoint
 	})
@@ -204,7 +154,7 @@ function scene:drawScene()
 		parent 			= hud.board, 
 		text	 			= "$ " .. userManager.user.totalGains ,     
 		x 					= self.column2 - 50,
-		y 					= self.top + self.yGap*(statusTop+4.5),
+		y 					= self.top + self.yGap*(statusTop+2),
 		fontSize 		= self.fontSizeRight,
 		font				= NUM_FONT,
 		fontSize 		= 40,
@@ -213,8 +163,67 @@ function scene:drawScene()
 	
 	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/money.png")
 	hud.iconMoney.x 		= self.column2 
-	hud.iconMoney.y 		= self.top + self.yGap*(statusTop+4.5)
+	hud.iconMoney.y 		= self.top + self.yGap*(statusTop+2)
 	hud.board:insert(hud.iconMoney)
+	
+	--------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Bonus tickets" .. " : ",         
+		x 					= self.column2,
+		y 					= self.top + self.yGap*(statusTop+3.5),
+		fontSize 		= self.fontSizeLeft,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+
+	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/ticket.png")
+	hud.iconTicket.x 			= self.column2 - 30
+	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+4.5)
+	hud.board:insert(hud.iconTicket)
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= "+ " .. userManager.user.totalBonusTickets,     
+		x 					= self.column2,
+		y 					= self.top + self.yGap*(statusTop+5.5),
+		fontSize 		= self.fontSizeRight,
+		font				= NUM_FONT,
+		fontSize 		= 40,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	--------------------------
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Charity" .. " : ",         
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(statusTop+3.5),
+		fontSize 		= self.fontSizeLeft,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+
+	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/charity.png")
+	hud.iconTicket.x 			= self.column1 + 30
+	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+4.5)
+	hud.board:insert(hud.iconTicket)
+	
+	local charity = {"Starter"}
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= T(charity[1]),     
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(statusTop+5.7),
+		fontSize 		= self.fontSizeRight,
+		font				= NUM_FONT,
+		fontSize 		= 30,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+	
 	
 	---------------------------------------------------------------
 	-- SOCIALS

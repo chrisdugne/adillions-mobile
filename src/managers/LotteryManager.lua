@@ -289,12 +289,17 @@ function LotteryManager:refreshThemeSelectionDisplay()
    	hud.validate.x = display.contentWidth*0.5
    	hud.validate.y = display.contentHeight*0.85
    	
+   	hud.selector.alpha = 0.3
+   	
    	utils.onTouch(hud.validate, function()
 			self:validateSelection()
 			self.currentTicketIsFree = false
    	end)
    	
 	else
+	
+   	hud.selector.alpha = 1
+   	
    	hud.validate = display.newImage( hud.selection, I "ValidateOFF.png")  
    	hud.validate.x = display.contentWidth*0.5
    	hud.validate.y = display.contentHeight*0.85

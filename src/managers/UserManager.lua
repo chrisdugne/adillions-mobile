@@ -253,7 +253,7 @@ function UserManager:checkIdlePoints(numbers)
    	end
 
 	elseif(userManager.user.currentPoints >= POINTS_TO_EARN_A_TICKET) then
-		local title 	= T "You've earned a ticket" .. " !"
+		local title 	= T "You've earned an Extra Ticket" .. " !"
 		local text		= ""
 		viewManager.showPopup(title, text, function() userManager:convertCurrentPoints() end)
 

@@ -24,12 +24,8 @@ local translations =
         ["fr"] = "Vous avez gagné",
     },
 
-    ["You've earned a ticket"] = {
-        ["fr"] = "Vous avez gagné un ticket",
-    },
-
-    ["New Points"] = {
-        ["fr"] = "Nouveaux points",
+    ["You've earned an Extra Ticket"] = {
+        ["fr"] = "Vous avez gagné un Extra Ticket",
     },
 
     ["Players"] = {
@@ -60,7 +56,7 @@ local translations =
         ["fr"] = "Points",
     },
 
-    ["Charity time"] = {
+    ["Charity"] = {
         ["fr"] = "Charité",
     },
 
@@ -109,7 +105,7 @@ local translations =
     },
     
     ["Select your lucky ball !"] = {
-        ["fr"] = "Choisissez votre balle bonus !",
+        ["fr"] = "Choisissez votre boule chance !",
     },
     
     ["Your selection !"] = {
@@ -119,6 +115,8 @@ local translations =
     ["Drawing"] = {
         ["fr"] = "Tirage du",
     },
+    
+    --------------------------------
     
     ["Random"] = {
         ["fr"] = "Aléatoire",
@@ -132,6 +130,8 @@ local translations =
         ["fr"] = "Recommencer",
     },
 
+    --------------------------------
+    
     ["Next drawing"] = {
         ["fr"] = "Prochain tirage",
     },
@@ -152,6 +152,7 @@ local translations =
         ["fr"] = "Notification des résultats",
     },
 
+    --------------------------------
 
     ["Monday"] = {
         ["fr"] = "Lundi",
@@ -228,6 +229,12 @@ local translations =
 
     ["December"] = {
         ["fr"] = "Décembre",
+    },
+    
+    --------------------------------
+
+    ["Starter"] = {
+        ["fr"] = "Débutant",
     },
     
 }
