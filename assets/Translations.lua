@@ -68,6 +68,10 @@ local translations =
         ["fr"] = "Total des gains",
     },
 
+    ["Gain"] = {
+        ["fr"] = "Gain",
+    },
+
     ["Bonus tickets"] = {
         ["fr"] = "Tickets bonus",
     },

@@ -152,10 +152,14 @@ function scene:drawPreviousLotteries(top)
    		
    		if(ticket.lottery.uid ~= lotteryManager.nextLottery.uid) then
    		
+         	-----------------------------------------------------------
+
          	local numbers 	= json.decode(ticket.numbers)
    			nbPreviousTickets = nbPreviousTickets + 1
 
       		if(type(ticket.lottery.theme) == "string") then ticket.lottery.theme	= json.decode(ticket.lottery.theme) end
+
+         	-----------------------------------------------------------
       
       		if(currentLottery ~= ticket.lottery.uid) then
       			
@@ -187,9 +191,37 @@ function scene:drawPreviousLotteries(top)
             	separator.y = top + yGap*(nbPreviousTickets+nbLotteries-1.82)
             	hud.board:insert(separator)
       		end
-         	
+         
+         	-----------------------------------------------------------
+         		
          	viewManager.drawTicket(hud.board, ticket.lottery, numbers, marginLeft, top + yGap*(nbPreviousTickets+nbLotteries-1.5))
+
+         	-----------------------------------------------------------
       	
+   			viewManager.newText({
+   				parent = hud.board, 
+   				text = T "Gain" .. " :", 
+         		x = display.contentWidth*0.1,
+         		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
+         		fontSize = 29,
+					referencePoint = display.CenterLeftReferencePoint
+   			})
+   		
+   			viewManager.newText({
+   				parent = hud.board, 
+   				text =  "$ " .. (ticket.price or 0), 
+         		x = display.contentWidth*0.87,
+         		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
+         		fontSize = 32,
+         		font = NUM_FONT,
+					referencePoint = display.CenterRightReferencePoint
+   			})
+   		
+         	local iconMoney 	= display.newImage( hud.board, "assets/images/icons/money.png")
+         	iconMoney.x 		= display.contentWidth*0.92
+         	iconMoney.y	 		= top + yGap*(nbPreviousTickets+nbLotteries-1.12)
+         	hud.board:insert(iconMoney)
+   			
       	end
    	end
    

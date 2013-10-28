@@ -24,6 +24,32 @@ function scene:refreshScene()
 
 	------------------
 
+	hud.facebookIcon 			= display.newImage( hud, "assets/images/icons/facebook.png")  
+	hud.facebookIcon.x 		= display.contentWidth*0.5
+	hud.facebookIcon.y		= display.contentHeight*0.2
+
+	utils.onTouch(hud.facebookIcon, function()
+		system.openURL( "https://www.facebook.com/pages/Adillions/379432705492888" )
+	end)
+
+	------------------
+
+	hud.twitterIcon 			= display.newImage( hud, "assets/images/icons/twitter.png")  
+	hud.twitterIcon.x 		= display.contentWidth*0.5
+	hud.twitterIcon.y		= display.contentHeight*0.3
+
+	utils.onTouch(hud.twitterIcon, function()
+		system.openURL( "http://www.twitter.com/adillions" )
+	end)
+	
+	------------------
+	
+	viewManager.drawButton(hud, "_Reglement", display.contentWidth*0.5, display.contentHeight *0.4, function() system.openURL( "http://www.adillions.com" ) end)
+
+	------------------
+	
+	viewManager.drawButton(hud, "_FAQ", display.contentWidth*0.5, display.contentHeight *0.5, function() system.openURL( "http://www.adillions.com" ) end)
+
 	------------------
 
 	viewManager.setupView(5)

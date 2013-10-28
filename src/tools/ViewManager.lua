@@ -500,7 +500,7 @@ end
 
 --- 
 -- theme sur un ticket ou un result
-function drawTheme(parent, lottery, num,x,y, alpha)
+function drawTheme(parent, lottery, num,x,y, alpha, requireCheck)
 
 	if(not alpha) then alpha = 1 end
 
@@ -511,6 +511,13 @@ function drawTheme(parent, lottery, num,x,y, alpha)
 		themeMask.alpha = alpha
 		themeMask:scale(SMALL_THEME_SCALE, SMALL_THEME_SCALE)
 		parent:insert(themeMask)
+		
+		if(requireCheck) then
+			local check = display.newImage(parent, "assets/images/icons/check.png")
+      	check.x = x + 20
+      	check.y = y - 30
+      	parent:insert(check)
+      end
 	end)
 	
 end
@@ -651,22 +658,16 @@ function drawTicket(parent, lottery, numbers, x, y)
 	end
 	
 	local alpha = 1	
+	local themeWon = false
 	
 	if(lottery.result) then
-		local themeWon = lottery.result[#lottery.result] == numbers[#numbers]
+		themeWon = lottery.result[#lottery.result] == numbers[#numbers]
 		if(not themeWon) then
 			alpha = 0.34
-		else
-			if(lottery.result) then
-   			local check = display.newImage(parent, "assets/images/icons/check.png")
-         	check.x = x + xGap*#numbers + 20
-         	check.y = y - 30
-         	parent:insert(check)
-         end
 		end 
 	end
 	
-	drawTheme(parent, lottery, numbers[#numbers], x + xGap*#numbers, y, alpha)
+	drawTheme(parent, lottery, numbers[#numbers], x + xGap*#numbers, y, alpha, themeWon)
 	
 end
 

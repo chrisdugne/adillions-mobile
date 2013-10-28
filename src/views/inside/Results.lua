@@ -134,20 +134,20 @@ function scene:drawBoard()
    	hud.board:insert(hud.iconCharity)
 
 		viewManager.newText({
-			parent = hud.board, 
-			text = lottery.charity .. " $", 
-			x = display.contentWidth*0.75,
-			y = marginTop + yGap*(i-1)+225, 
-			fontSize = 45,
-			font = NUM_FONT
+			parent			= hud.board, 
+			text 				= "$ " .. lottery.charity , 
+			x 					= display.contentWidth*0.75,
+			y 					= marginTop + yGap*(i-1)+225, 
+			fontSize 		= 45,
+			font 				= NUM_FONT
 		})
 
 		viewManager.newText({
-			parent = hud.board, 
-			text = T "Charity", 
-			x = display.contentWidth*0.75,
-			y = marginTop + yGap*(i-1)+190, 
-			fontSize = 27,
+			parent 			= hud.board, 
+			text 				= T "Charity", 
+			x 					= display.contentWidth*0.75,
+			y 					= marginTop + yGap*(i-1)+190, 
+			fontSize 		= 27,
 		})
 		
 	

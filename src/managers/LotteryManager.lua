@@ -51,7 +51,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function LotteryManager:price(lottery)
-	return math.min(lottery.maxPrice, math.max(lottery.minPrice, lottery.nbTickets/1000 * lottery.cpm))  .. "  $"
+	return "$ " .. math.min(lottery.maxPrice, math.max(lottery.minPrice, lottery.nbTickets/1000 * lottery.cpm)) 
 end
 
 function LotteryManager:charityPerTicket(lottery)
@@ -59,7 +59,7 @@ function LotteryManager:charityPerTicket(lottery)
 end
 
 function LotteryManager:finalPrice(lottery)
-	return lottery.finalPrice .. "  $"
+	return "$ " .. lottery.finalPrice
 end
 
 function LotteryManager:date(lottery)
