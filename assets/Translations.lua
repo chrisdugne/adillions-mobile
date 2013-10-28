@@ -20,8 +20,12 @@ local translations =
         ["fr"] = "Tickets restants",
     },
 
-    ["Free ticket"] = {
-        ["fr"] = "Ticket gratuit",
+    ["You have earned"] = {
+        ["fr"] = "Vous avez gagné",
+    },
+
+    ["You've earned a ticket"] = {
+        ["fr"] = "Vous avez gagné un ticket",
     },
 
     ["New Points"] = {

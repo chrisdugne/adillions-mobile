@@ -341,7 +341,7 @@ function scene:drawScene()
 	end
 
 	if(userManager.user.twitterFan) then
-		twitterLinkedTitle = T "Thank you for being a fan !"
+		twitterFanTitle = T "Thank you for being a fan !"
 		twitterFanState = "on"
 	else
 		if(twitter.connected) then

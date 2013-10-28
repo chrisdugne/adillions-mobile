@@ -113,7 +113,66 @@ function UserManager:updatedPlayer(player, next)
 	viewManager.refreshHeaderPoints(player.currentPoints)
 	lotteryManager:sumPrices()
 
-	facebook.isFacebookFan(next)
+	self:checkFanStatus(next)
+	
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:checkFanStatus(next)
+	
+	local facebookFan 	= self.user.isFacebookFan
+	local twitterFan 		= self.user.isTwitterFan
+   
+   userManager.user.totalBonusTickets = 0
+	
+	facebook.isFacebookFan(function()
+		twitter.isTwitterFan(function(response)
+				
+			---------------------------------------------------------
+			
+			if(response) then
+				utils.tprint(response)
+				self.user.twitterFan = response.relationship.source.following
+			end
+
+			---------------------------------------------------------
+
+			if(self.user.twitterFan) then
+				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_FAN_TICKETS
+			end
+
+			if(self.user.facebookFan) then
+				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + TWITTER_FAN_TICKETS
+			end
+
+			---------------------------------------------------------
+         
+			local statusChanged = false
+			
+			if(self.user.facebookFan ~= facebookFan) then
+				statusChanged = true
+				self.user.isFacebookFan = self.user.facebookFan
+			end
+
+			if(self.user.twitterFan ~= twitterFan) then
+				statusChanged = true
+				self.user.isTwitterFan = self.user.twitterFan
+			end
+
+			---------------------------------------------------------
+		
+			if(statusChanged) then
+				self:updateFanStatus(next)
+			else
+				if(next) then
+					next()
+				end
+			end
+
+			---------------------------------------------------------
+		end)
+	end)
 	
 end
 
@@ -132,6 +191,11 @@ function UserManager:checkUserCurrentLottery()
 		self.user.availableTickets 			= START_AVAILABLE_TICKETS 
 		self.user.playedBonusTickets 			= 0
 		
+		self.user.hasTweet						= false
+		self.user.hasPostOnFacebook			= false
+		self.user.hasTweetAnInvite				= false
+		self.user.hasInvitedOnFacebook		= false
+		
 		self:updatePlayer()
       
    	----------------------------------------
@@ -149,7 +213,7 @@ end
 function UserManager:checkIdlePoints(numbers)
 	
 	if(userManager.user.idlePoints > 0) then
-		local title 	= T "New Points" .. " !"
+		local title 	= T "You have earned" .. " :"
 		local text		= ""
 		viewManager.showPopup(title, text, function() userManager:convertIdlePoints() end)
 
@@ -177,14 +241,19 @@ function UserManager:checkIdlePoints(numbers)
    		viewManager.newText({
    			parent 			= hud.popup, 
    			text	 			= nbTickets .. " ticket" .. plural,     
-   			x 					= display.contentWidth*0.5,
+   			x 					= display.contentWidth*0.4,
    			y 					= display.contentHeight*0.6,
    			fontSize 		= 80,
    		})
+   		
+   		hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
+   		hud.popup.iconTicket.x 			= display.contentWidth*0.65
+   		hud.popup.iconTicket.y 			= display.contentHeight*0.605
+   		hud.popup.iconTicket:scale(1.5,1.5)
    	end
 
 	elseif(userManager.user.currentPoints >= POINTS_TO_EARN_A_TICKET) then
-		local title 	= T "Free ticket" .. " !"
+		local title 	= T "You've earned a ticket" .. " !"
 		local text		= ""
 		viewManager.showPopup(title, text, function() userManager:convertCurrentPoints() end)
 
@@ -221,6 +290,17 @@ function UserManager:checkIdlePoints(numbers)
 		hud.popup.iconTicket.x 			= display.contentWidth*0.65
 		hud.popup.iconTicket.y 			= display.contentHeight*0.605
 		hud.popup.iconTicket:scale(1.5,1.5)
+		
+		hud.validate = display.newImage( hud.popup, I "ValidateON.png")  
+   	hud.validate.x = display.contentWidth*0.5
+   	hud.validate.y = display.contentHeight*0.75
+   	
+   	utils.onTouch(hud.validate, function()
+   		utils.emptyGroup(hud.popup)
+   		userManager:convertCurrentPoints()
+   		lotteryManager.currentTicketIsFree = true
+			router.openFillLotteryTicket()
+   	end)
 	end
 end
 
@@ -269,8 +349,9 @@ function UserManager:convertIdlePoints()
 	self.user.idlePoints 	= 0
 
 	---------------------------------------------
-
-	self:convertPointsToTickets()
+	-- recheck -> pour compter les currentPoints et convert to 1 more ticket !
+	
+	self:checkIdlePoints()
 
 	---------------------------------------------
 
@@ -340,9 +421,27 @@ function UserManager:updatePlayer(next)
    		end
 		end
 		
-	end
-	)
+	end)
 
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:updateFanStatus(next)
+
+	native.setActivityIndicator( true )	
+
+	utils.postWithJSON({
+		user = self.user,
+	}, 
+	SERVER_URL .. "updateFanStatus", 
+	function(result)
+		native.setActivityIndicator( false )
+		if(next) then
+			next()
+		end
+
+	end)
 end
 
 -----------------------------------------------------------------------------------------

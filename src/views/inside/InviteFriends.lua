@@ -33,7 +33,22 @@ function scene:inviteListener( event )
 
     if event.url then
 		print (event.url)
-    	if string.startsWith(event.url, SERVER_URL .. "backToMobile") then
+    	
+    	if string.startsWith(event.url, SERVER_URL .. "backToMobile?request=") then
+			self:closeWebView()    		
+      	router.openHome()
+
+    		if(not userManager.user.hasInvitedOnFacebook) then
+    			timer.performWithDelay(800, function()
+      			viewManager.showPoints(NB_POINTS_PER_FB_INVITATION)
+      			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_FB_INVITATION
+      			userManager.user.hasInvitedOnFacebook = true
+      			userManager:updatePlayer()
+      			userManager:checkIdlePoints()
+    			end)
+   		end 
+    	
+    	elseif string.startsWith(event.url, SERVER_URL .. "backToMobile") then
 			self:closeWebView()    		
       	router.openHome()
 		end

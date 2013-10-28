@@ -165,18 +165,25 @@ function scene:drawNextLottery( event )
 	
 	-------------------------------
 	-- theme
-
-	------------------
 	
---	facebook.likeTheme(theme)
-	
-	------------------
-
 	viewManager.drawRemoteImage(lotteryManager.nextLottery.theme.image, hud, display.contentWidth*0.5, display.contentHeight * 0.75)
 	
 	hud.themeTitle = display.newImage( hud, I "theme.png")
 	hud.themeTitle.x = display.contentWidth*0.5
 	hud.themeTitle.y = display.contentHeight*0.85
+
+	------------------
+
+	facebook.checkThemeLiked(lotteryManager.nextLottery.theme, function()
+		hud.likeThemeButton		= display.newImage( hud, "assets/images/icons/like.png")  
+		hud.likeThemeButton.x 	= display.contentWidth*0.1
+		hud.likeThemeButton.y 	= display.contentHeight*0.85
+		
+   	utils.onTouch(hud.likeThemeButton, function()
+   		facebook.likeTheme()
+   		display.remove(hud.likeThemeButton)
+   	end)
+	end)
 
 	------------------
 

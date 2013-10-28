@@ -203,7 +203,9 @@ end
 -----------------------------------------------------------------------------------------
 
 function isFacebookFan(next)
-
+	
+	userManager.user.facebookFan = false
+	
 	print("------------------------ isFacebookFan ")
 	if(GLOBALS.savedData.facebookAccessToken) then
 	
@@ -218,9 +220,6 @@ function isFacebookFan(next)
    		if(not response.error) then
    			if(response.data[1] ~= nil) then
    				userManager.user.facebookFan = true
-   				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_FAN_TICKETS
-   			else
-					userManager.user.facebookFan = false 
    			end
       	end
 			
@@ -237,88 +236,74 @@ function isFacebookFan(next)
 end
 
 -----------------------------------------------------------------------------------------
--- like de la page : ne marche pas : rediriger vers la page
--- 
-function beFan()
+
+function checkThemeLiked(theme, notLiked)
 	
 	if(GLOBALS.savedData.facebookAccessToken) then
-
-   	native.setActivityIndicator( true )
-
-   	local url = "https://graph.facebook.com/".. FACEBOOK_PAGE_ID .."/likes?method=post&access_token=" .. GLOBALS.savedData.facebookAccessToken
-   	print (url)
    	
+      local url = "https://graph.facebook.com/me/"..FACEBOOK_APP_NAMESPACE..":enjoy?"
+      	    ..  "access_token=" .. GLOBALS.savedData.facebookAccessToken
+      	    
    	network.request(url , "GET", function(result)
       	native.setActivityIndicator( false )
-   		local response = json.decode(result.response)
-   		
-   		if(response.id) then
-   			isFacebookFan()
-   		end
-   		
+      	local response = json.decode(result.response)
+      	local liked = false
+      	
+      	if(#response.data > 0) then 
+      		for i = 1,#response.data do
+      		-- FB.OG BUG pas possible de rajouter uid today... check title pour linstant
+   --   			if(response.data[i].data.theme.uid == theme.uid) then
+      			if(response.data[i].data.theme.title == theme.title) then
+      				liked = true
+      			end
+      		end 
+      	end
+      	
+      	if(not liked) then
+      		notLiked()
+      	else
+      		print("themeAlreadyLiked")
+      	end
    	end)
-   end
-
+	end
 end
 
 -----------------------------------------------------------------------------------------
 
-function checkThemeLiked(theme, like)
+function likeTheme()
+
+	local theme = lotteryManager.nextLottery.theme
 	
-	print("--------------------------")
-	print("themeAlreadyLiked")
-	
-   local url = "https://graph.facebook.com/me/"..FACEBOOK_APP_NAMESPACE..":enjoy?"
-   	    ..  "access_token=" .. GLOBALS.savedData.facebookAccessToken
-   	    
+	native.setActivityIndicator( true )
+	print("-----> Like theme !!!!")
+	utils.tprint(theme)
+
+	local locale			= facebook.data.locale
+
+	local themeURL =  SERVER_OG_URL .. 'theme'
+	.. '?title=' 			.. theme.title
+	.. '&uid=' 				.. theme.uid
+	.. '&description=' 	.. theme.description
+	.. '&imageURL='		.. theme.image 
+	.. '&locale='			.. locale
+
+	themeURL = utils.urlEncode(themeURL)
+
+	local url = "https://graph.facebook.com/me/"..FACEBOOK_APP_NAMESPACE..":enjoy?method=post"
+	..  "&theme=" .. themeURL
+	..  "&access_token=" .. GLOBALS.savedData.facebookAccessToken
+
+
 	network.request(url , "GET", function(result)
-   	native.setActivityIndicator( false )
-   	local response = json.decode(result.response)
-   	utils.tprint(response)
-   	
-   	local liked = false
-   	
-   	if(#response.data > 0) then 
-   		for i = 1,#response.data do
-   			if(response.data[i].data.theme.title == theme.title) then
-   				liked = true
-   			end
-   		end 
-   	end
-   	
-   	if(not liked) then
-   		like()
-   	end
-	end)
-end
+		local response = json.decode(result.response)
+		native.setActivityIndicator( false )
 
------------------------------------------------------------------------------------------
-
-function likeTheme(theme)
-
-	checkThemeLiked(theme, function()
-
-		print("-----> Like theme !!!!")
-		local locale			= facebook.data.locale
-
-		local themeURL =  SERVER_OG_URL .. 'theme'
-		.. '?title=' 			.. theme.title
-		.. '&description=' 	.. theme.description
-		.. '&imageURL='		.. theme.imageURL 
-		.. '&locale='			.. locale
-
-		themeURL = utils.urlEncode(themeURL)
-
-		local url = "https://graph.facebook.com/me/"..FACEBOOK_APP_NAMESPACE..":enjoy?method=post"
-		..  "&theme=" .. themeURL
-		..  "&access_token=" .. GLOBALS.savedData.facebookAccessToken
-
-		native.setActivityIndicator( true )
-
-		network.request(url , "GET", function(result)
-			native.setActivityIndicator( false )
-			utils.tprint(result)
-		end)
+		if(response.id) then
+			viewManager.showPoints(NB_POINTS_PER_THEME_LIKED)
+			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_THEME_LIKED
+			userManager:updatePlayer()
+			userManager:checkIdlePoints()
+		end
 	end)
 end
 

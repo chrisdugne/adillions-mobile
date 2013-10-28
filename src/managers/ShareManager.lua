@@ -30,7 +30,7 @@ function ShareManager:share()
 	viewManager.drawButton(hud.popup, "SMS", display.contentWidth*0.5, display.contentHeight*0.4, function()
 		local options =
 		{
-			body = "_I've just played a ticket on Adillions !\n Join me and please use my referrer code when you sign in : " .. userManager.user.sponsorCode
+			body = "_I've just played a ticket on Adillions !\n Join me and please use my sponsor code when you sign in : " .. userManager.user.sponsorCode
 		}
 		native.showPopup("sms", options)
 	end)
@@ -42,7 +42,7 @@ function ShareManager:share()
 	viewManager.drawButton(hud.popup, "Email", display.contentWidth*0.5, display.contentHeight*0.5, function()
 		local options =
 		{
-			body = "<html><body>I've just played a ticket on Adillions !\n _Join me on <a href='http://www.adillions.com'>Adillions</a> !<br/> Please use my referrer code when you sign in : " .. userManager.user.sponsorCode .. "</body></html>",
+			body = "<html><body>I've just played a ticket on Adillions !\n _Join me on <a href='http://www.adillions.com'>Adillions</a> !<br/> Please use my sponsor code when you sign in : " .. userManager.user.sponsorCode .. "</body></html>",
 			isBodyHtml = true,
 			subject = "Adillions",
 		}
@@ -77,7 +77,7 @@ function ShareManager:share()
 	-- Twitter
 	-----------------------------------
 
-	if(userManager.user.twitterId) then
+	if(twitter.connected) then
 		viewManager.drawButton(hud.popup, "Twitter", display.contentWidth*0.5, display.contentHeight*0.77, function()
    		self:tweetShare()
 		end)
@@ -119,7 +119,7 @@ function ShareManager:invite()
 	viewManager.drawButton(hud.popup, "SMS", display.contentWidth*0.5, display.contentHeight*0.4, function()
 		local options =
 		{
-			body = "_Join me on www.adillions.com !\n Please use my referrer code when you sign in : " .. userManager.user.sponsorCode
+			body = "_Join me on www.adillions.com !\n Please use my sponsor code when you sign in : " .. userManager.user.sponsorCode
 		}
 		native.showPopup("sms", options)
 	end)
@@ -129,7 +129,7 @@ function ShareManager:invite()
 	viewManager.drawButton(hud.popup, "email", display.contentWidth*0.5, display.contentHeight*0.5, function()
 		local options =
 		{
-			body = "<html><body>_Join me on <a href='http://www.adillions.com'>Adillions</a> !<br/> Please use my referrer code when you sign in : " .. userManager.user.sponsorCode .. "</body></html>",
+			body = "<html><body>_Join me on <a href='http://www.adillions.com'>Adillions</a> !<br/> Please use my sponsor code when you sign in : " .. userManager.user.sponsorCode .. "</body></html>",
 			isBodyHtml = true,
 			subject = "Adillions",
 		}
@@ -162,7 +162,7 @@ function ShareManager:invite()
 
 	----------------------------------------------------------------------------------------------------
 
-	if(userManager.user.twitterId) then
+	if(twitter.connected) then
 		viewManager.drawButton(hud.popup, "Twitter", display.contentWidth*0.5, display.contentHeight*0.77, function()
    		self:tweetInvite()
 		end)
@@ -189,7 +189,7 @@ end
 
 function ShareManager:shareOnWall()
 	
-	facebook.postOnWall("I've just played a ticket on Adillions !\n Next Lottery : ".. lotteryManager:date(lotteryManager.nextLottery) .." \n_Join me there and please use my referrer code when you sign in : " .. userManager.user.sponsorCode, function()
+	facebook.postOnWall("I've just played a ticket on Adillions !\n Next Lottery : ".. lotteryManager:date(lotteryManager.nextLottery) .." \n_Join me there and please use my sponsor code when you sign in : " .. userManager.user.sponsorCode, function()
 		
 		viewManager.showPopup(T "Thank you" .. "  !", T "Successfully posted on your wall !", function()
 			if(not userManager.user.hasPostOnFacebook) then
@@ -213,7 +213,7 @@ end
 
 function ShareManager:tweetInvite()
 	
-	twitter.tweetMessage("_Join me on www.adillions.com !\n Please use my referrer code when you sign in : " .. userManager.user.sponsorCode, function()
+	twitter.tweetMessage("_Join me on www.adillions.com !\n Please use my sponsor code when you sign in : " .. userManager.user.sponsorCode, function()
 		
 		viewManager.showPopup(T "Thank you" .. " !", T "Successfully tweeted", function()
 			if(not userManager.user.hasTweetAnInvite) then
@@ -235,7 +235,7 @@ end
 
 function ShareManager:tweetShare()
 	
-	twitter.tweetMessage("_I've just played a ticket on Adillions !\n Join me and please use my referrer code when you sign in : " .. userManager.user.sponsorCode, function()
+	twitter.tweetMessage("_I've just played a ticket on Adillions !\n Join me and please use my sponsor code when you sign in : " .. userManager.user.sponsorCode, function()
 	
 		viewManager.showPopup(T "Thank you" .. " !", T "Successfully tweeted", function()
 			if(not userManager.user.hasTweet) then

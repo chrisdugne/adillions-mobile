@@ -64,12 +64,40 @@ function callback.twitterSuccess( requestType, name, response )
 	end
 
 	if(callback.next) then
-		callback.next()
+		print("-----> callback")
+		callback.next(response)
 	end	
 end
 
 function callback.twitterFailed()
 	print( "Failed: Invalid Token" )
+end
+
+-----------------------------------------------------------------------------------------
+
+function isTwitterFan( next )
+	
+	-- default : celui de la db, meme si non connecte
+	-- triche possible : cancel fan et ne plus se connecter avec twitter.
+	userManager.user.twitterFan = userManager.user.isTwitterFan
+	
+	if(connected) then
+   	print("------------------------ isTwitterFan ")
+   	
+   	callback.next = next
+   	
+   	local params = {"isFollowing", "friendships/show.json", "GET",
+   		{"source_id", userManager.user.twitterId}, {"target_id", TWITTER_ID } }
+   	
+   	tweet(callback, params)
+  
+   else
+   	if(next) then
+   		next()
+      end
+  
+   end
+	
 end
 
 -----------------------------------------------------------------------------------------
@@ -255,12 +283,31 @@ function doTweet()
 	function doTweetCallback( status, result )
 		
 		local response = json.decode( result )
---		printTable( response, "Request", 3 )
 		utils.tprint(response)
 		
-		-- Return the following: type of request, screen name, response
-		delegate.twitterSuccess( values[1], screen_name, response )
-
+		if(response.errors) then
+			
+			twitter.logout()
+			
+			if(values[1] == "isFollowing") then
+				-- pas connecte lors du check isTwitterFan
+				if(callback.next) then
+					callback.next()
+				end
+				
+			else
+   			twitter.connect(function()
+   				tweet(callback, postMessage)
+   			end)
+   			
+   		end
+		
+		else
+   		-- Return the following: type of request, screen name, response
+   		delegate.twitterSuccess( values[1], screen_name, response )
+		
+		end
+		
 	end
 
 	-- Build the parameter table for the Twitter Request
