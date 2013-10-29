@@ -131,8 +131,12 @@ function scene:refreshScene()
 	viewManager.setupView(0)
 
 	------------------
-
-	viewManager.showPoints(NB_POINTS_PER_TICKET)
+	
+	if(not lotteryManager.wasExtraTicket) then
+		viewManager.showPoints(NB_POINTS_PER_TICKET)
+	end
+	
+	lotteryManager.wasExtraTicket = false
 
 	------------------
 

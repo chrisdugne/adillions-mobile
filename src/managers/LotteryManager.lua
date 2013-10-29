@@ -8,8 +8,7 @@ function LotteryManager:new()
 
 	local object = {
 		nextLottery = {},
-		currentSelection = {},
-		currentTicketIsFree
+		currentSelection = {}
 	}
 
 	setmetatable(object, { __index = LotteryManager })
@@ -224,11 +223,7 @@ function LotteryManager:refreshNumberSelectionDisplay()
    	hud.validate.y = display.contentHeight*0.85
    	
    	utils.onTouch(hud.validate, function()
-   		if(self.currentTicketIsFree) then
-				router.openSelectAdditionalNumber()
-   		else
-				videoManager:play(router.openSelectAdditionalNumber)
-			end
+			videoManager:play(router.openSelectAdditionalNumber)
    	end)
    	
    	hud.selector.alpha = 0.3
@@ -293,7 +288,6 @@ function LotteryManager:refreshThemeSelectionDisplay()
    	
    	utils.onTouch(hud.validate, function()
 			self:validateSelection()
-			self.currentTicketIsFree = false
    	end)
    	
 	else

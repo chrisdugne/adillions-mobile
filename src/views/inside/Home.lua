@@ -155,6 +155,8 @@ function scene:drawNextLottery( event )
 
 	-------------------------------
 
+	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
+
 	hud.playButton = display.newImage( hud, I "filloutticket.button.png")  
 	hud.playButton.x = display.contentWidth*0.5
 	hud.playButton.y = top + display.contentHeight*0.21
@@ -162,6 +164,15 @@ function scene:drawNextLottery( event )
 	utils.onTouch(hud.playButton, function()
 		self:play()
 	end)
+	
+	viewManager.newText({
+		parent = hud, 
+		text = "(" .. nbTickets .. ")", 
+		x = hud.playButton.x - 160,
+		y = top + display.contentHeight*0.23,
+		fontSize = 23,
+		font = NUM_FONT
+	})
 	
 	-------------------------------
 	-- theme

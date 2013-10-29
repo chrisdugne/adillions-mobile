@@ -213,19 +213,20 @@ end
 function UserManager:checkIdlePoints(numbers)
 	
 	if(userManager.user.idlePoints > 0) then
+		local points 	= userManager.user.idlePoints + userManager.user.currentPoints
 		local title 	= T "You have earned" .. " :"
 		local text		= ""
 		viewManager.showPopup(title, text, function() userManager:convertIdlePoints() end)
 
 		viewManager.newText({
 			parent 			= hud.popup, 
-			text	 			= userManager.user.idlePoints .. " pts",     
+			text	 			= points .. " pts",     
 			x 					= display.contentWidth*0.5,
 			y 					= display.contentHeight*0.4,
 			fontSize 		= 120,
 		})
 
-		if(math.floor(userManager.user.idlePoints/POINTS_TO_EARN_A_TICKET) > 0) then
+		if(math.floor(points/POINTS_TO_EARN_A_TICKET) > 0) then
    		viewManager.newText({
    			parent 			= hud.popup, 
    			text	 			= "=",     
@@ -235,7 +236,7 @@ function UserManager:checkIdlePoints(numbers)
    		})
    
    		local plural = ""
-   		local nbTickets = math.floor(userManager.user.idlePoints/POINTS_TO_EARN_A_TICKET)
+   		local nbTickets = math.floor(points/POINTS_TO_EARN_A_TICKET)
    		if(nbTickets > 1) then plural = "s" end
    
    		viewManager.newText({
@@ -255,7 +256,7 @@ function UserManager:checkIdlePoints(numbers)
 	elseif(userManager.user.currentPoints >= POINTS_TO_EARN_A_TICKET) then
 		local title 	= T "You've earned an Extra Ticket" .. " !"
 		local text		= ""
-		viewManager.showPopup(title, text, function() userManager:convertCurrentPoints() end)
+		viewManager.showPopup(title, text, function() end)
 
 		hud.popup.iconPoints 			= display.newImage( hud.popup, "assets/images/points/points.".. POINTS_TO_EARN_A_TICKET .. ".png")
 		hud.popup.iconPoints.x 			= display.contentWidth*0.3
@@ -290,17 +291,28 @@ function UserManager:checkIdlePoints(numbers)
 		hud.popup.iconTicket.x 			= display.contentWidth*0.65
 		hud.popup.iconTicket.y 			= display.contentHeight*0.605
 		hud.popup.iconTicket:scale(1.5,1.5)
-		
-		hud.validate = display.newImage( hud.popup, I "ValidateON.png")  
-   	hud.validate.x = display.contentWidth*0.5
-   	hud.validate.y = display.contentHeight*0.75
+
+   	userManager:convertCurrentPoints()
+
+		--[[
+		if(lotteryManager:isGameAvailable()) then		
+   		hud.validate = display.newImage( hud.popup, I "ValidateON.png")  
+      	hud.validate.x = display.contentWidth*0.5
+      	hud.validate.y = display.contentHeight*0.75
+      	
+      	utils.onTouch(hud.validate, function()
+      		utils.emptyGroup(hud.popup)
+   			router.openFillLotteryTicket()
+      	end)
+
+      else
+   		hud.validate = display.newImage( hud.popup, I "ValidateOFF.png")  
+      	hud.validate.x = display.contentWidth*0.5
+      	hud.validate.y = display.contentHeight*0.75
+
+      end
    	
-   	utils.onTouch(hud.validate, function()
-   		utils.emptyGroup(hud.popup)
-   		userManager:convertCurrentPoints()
-   		lotteryManager.currentTicketIsFree = true
-			router.openFillLotteryTicket()
-   	end)
+   	]]--
 	end
 end
 
@@ -308,10 +320,12 @@ end
 
 function UserManager:storeLotteryTicket(numbers)
 
+	local extraTicket = userManager.user.extraTickets > 0
 	native.setActivityIndicator( true )
 
 	utils.postWithJSON({
 		numbers = numbers,
+		extraTicket = extraTicket
 	}, 
 	SERVER_URL .. "storeLotteryTicket", 
 	function(result)
@@ -320,9 +334,10 @@ function UserManager:storeLotteryTicket(numbers)
 
 		local player = json.decode(result.response)
 		if(player) then 
+			lotteryManager.wasExtraTicket = extraTicket
 			userManager:receivedPlayer(player, router.openConfirmation)
 		else 
-			router.openOutside() -- pirate ?
+			userManager:logout()
 		end
 	end
 	)
@@ -349,14 +364,8 @@ function UserManager:convertIdlePoints()
 	self.user.idlePoints 	= 0
 
 	---------------------------------------------
-	-- recheck -> pour compter les currentPoints et convert to 1 more ticket !
-	
-	self:checkIdlePoints()
 
-	---------------------------------------------
-
-	self:updatePlayer()
-
+	self:convertCurrentPoints()
 end
 
 -----------------------------------------------------------------------------------------
@@ -390,8 +399,8 @@ function UserManager:convertPointsToTickets()
 	local conversion = false
 
 	while (self.user.currentPoints >= POINTS_TO_EARN_A_TICKET) do
-		self.user.currentPoints 		= self.user.currentPoints - POINTS_TO_EARN_A_TICKET
-		self.user.availableTickets 	= self.user.availableTickets + 1
+		self.user.currentPoints = self.user.currentPoints - POINTS_TO_EARN_A_TICKET
+		self.user.extraTickets 	= self.user.extraTickets + 1
 		conversion = true
 	end
 
@@ -477,8 +486,6 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:logout()
-
-	print("userManager:logout")
 	router.openOutside()
 	coronaFacebook.logout()
 	twitter.logout()

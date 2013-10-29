@@ -20,6 +20,10 @@ local translations =
         ["fr"] = "Tickets restants",
     },
 
+    ["Extra Tickets"] = {
+        ["fr"] = "Extra Tickets",
+    },
+
     ["You have earned"] = {
         ["fr"] = "Vous avez gagné",
     },

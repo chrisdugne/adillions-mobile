@@ -113,11 +113,11 @@ function scene:drawScene()
 	
 	--------------------------
 	
-	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
+--	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Tickets to play" .. " : ",         
+		text 				= T "Extra Tickets" .. " : ",         
 		x 					= display.contentWidth * 0.5,
 		y 					= self.top + self.yGap*(statusTop+1),
 		fontSize 		= self.fontSizeLeft,
@@ -130,7 +130,7 @@ function scene:drawScene()
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= nbTickets,     
+		text	 			= userManager.user.extraTickets,     
 		x 					= display.contentWidth * 0.5 + 55,
 		y 					= self.top + self.yGap*(statusTop+2),
 		fontSize 		= self.fontSizeRight,

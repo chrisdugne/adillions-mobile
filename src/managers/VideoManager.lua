@@ -17,8 +17,8 @@ end
 
 function VideoManager:play(afterVideoSeen)
 	print("videoManager.play")
-	if(SIMULATOR) then
-   	print("simulator : afterVideoSeen")
+	if(userManager.user.extraTickets > 0) then
+   	print("extraTicket !")
 		afterVideoSeen()
 	else
    	sponsorpayTools.afterVideoSeen = afterVideoSeen
