@@ -130,8 +130,8 @@ local translations =
         ["fr"] = "Favoris",
     },
     
-    ["Restart"] = {
-        ["fr"] = "Recommencer",
+    ["Clear"] = {
+        ["fr"] = "Effacer",
     },
 
     --------------------------------

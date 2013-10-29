@@ -97,7 +97,7 @@ function scene:refreshScene()
 
 	local restart = viewManager.newText({
 		parent = hud, 
-		text = T "Restart",     
+		text = T "Clear",     
 		x = display.contentWidth*0.7,
 		y = top - display.contentHeight*0.07,
 		fontSize = 33,
