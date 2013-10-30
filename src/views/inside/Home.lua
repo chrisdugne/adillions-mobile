@@ -107,13 +107,20 @@ function scene:drawNextLottery( event )
 	})
 
 	-------------------------------
-
+	local priceX
+	
+	if(lotteryManager.nextLottery.nbPlayers > lotteryManager.nextLottery.toolPlayers) then
+		priceX = display.contentWidth*0.47
+	else
+		priceX = display.contentWidth*0.58
+	end
+	
 	local price = lotteryManager:price(lotteryManager.nextLottery)
 
 	viewManager.newText({
 		parent = hud, 
 		text = price,     
-		x = display.contentWidth*0.47,
+		x = priceX,
 		y = top + display.contentHeight*0.08,
 		fontSize = 73,
 		font = NUM_FONT,
@@ -123,39 +130,43 @@ function scene:drawNextLottery( event )
 	-------------------------------
 	
 	hud.pictoCagnotte = display.newImage( hud, "assets/images/icons/cagnotte.png")  
-	hud.pictoCagnotte.x = display.contentWidth*0.56
+	hud.pictoCagnotte.x = priceX + display.contentWidth*0.09
 	hud.pictoCagnotte.y = top + display.contentHeight*0.08
 	
-	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
-	hud.separateur.x = display.contentWidth*0.65
-	hud.separateur.y = top + display.contentHeight*0.08
-	
 	-------------------------------
-
-	hud.pictoPlayers = display.newImage( hud, "assets/images/icons/players.png")  
-	hud.pictoPlayers.x = display.contentWidth*0.75
-	hud.pictoPlayers.y = top + display.contentHeight*0.05
 	
-	viewManager.newText({
-		parent = hud, 
-		text = T "Players" .. " :", 
-		x = display.contentWidth*0.75,
-		y = top + display.contentHeight*0.08,
-		fontSize = 24,
-	})
+	if(lotteryManager.nextLottery.nbPlayers > lotteryManager.nextLottery.toolPlayers) then	
 	
-	viewManager.newText({
-		parent = hud, 
-		text = lotteryManager.nextLottery.nbPlayers , 
-		x = display.contentWidth*0.75,
-		y = top + display.contentHeight*0.11,
-		fontSize = 43,
-		font = NUM_FONT
-	})
+   	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+   	hud.separateur.x = display.contentWidth*0.65
+   	hud.separateur.y = top + display.contentHeight*0.08
+   	
+   	-------------------------------
+   
+   	hud.pictoPlayers = display.newImage( hud, "assets/images/icons/players.png")  
+   	hud.pictoPlayers.x = display.contentWidth*0.75
+   	hud.pictoPlayers.y = top + display.contentHeight*0.05
+   	
+   	viewManager.newText({
+   		parent = hud, 
+   		text = T "Players" .. " :", 
+   		x = display.contentWidth*0.75,
+   		y = top + display.contentHeight*0.08,
+   		fontSize = 24,
+   	})
+   	
+   	viewManager.newText({
+   		parent = hud, 
+   		text = lotteryManager.nextLottery.nbPlayers , 
+   		x = display.contentWidth*0.75,
+   		y = top + display.contentHeight*0.11,
+   		fontSize = 43,
+   		font = NUM_FONT
+   	})
+   
+   end
 
 	-------------------------------
-
-	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
 
 	hud.playButton = display.newImage( hud, I "filloutticket.button.png")  
 	hud.playButton.x = display.contentWidth*0.5
@@ -164,15 +175,6 @@ function scene:drawNextLottery( event )
 	utils.onTouch(hud.playButton, function()
 		self:play()
 	end)
-	
-	viewManager.newText({
-		parent = hud, 
-		text = "(" .. nbTickets .. ")", 
-		x = hud.playButton.x - 160,
-		y = top + display.contentHeight*0.23,
-		fontSize = 23,
-		font = NUM_FONT
-	})
 	
 	-------------------------------
 	-- theme
@@ -205,6 +207,8 @@ end
 function scene:play( )
 	if(lotteryManager:isGameAvailable()) then
 		videoManager:play(router.openFillLotteryTicket)
+   else
+   	shareManager:noMoreTickets()
 	end
 end
 

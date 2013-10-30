@@ -36,8 +36,7 @@ function scene:drawScene()
 	local detailsTop 			= 7.5
 	local socialTop 			= 15
 	local sponsorTop 			= 28
-	local optionsTop 			= 35
-	local logoutTop 			= 43
+	local logoutTop 			= 39
 		
 	------------------
 
@@ -109,34 +108,6 @@ function scene:drawScene()
 		fontSize 		= 40,
 		font				= NUM_FONT,
 		referencePoint = display.CenterLeftReferencePoint
-	})
-	
-	--------------------------
-	
---	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
-	
-	viewManager.newText({
-		parent 			= hud.board, 
-		text 				= T "Extra Tickets" .. " : ",         
-		x 					= display.contentWidth * 0.5,
-		y 					= self.top + self.yGap*(statusTop+1),
-		fontSize 		= self.fontSizeLeft,
-	})
-
-	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/ticket.png")
-	hud.iconTicket.x 			= display.contentWidth * 0.5 - 40
-	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+2)
-	hud.board:insert(hud.iconTicket)
-	
-	viewManager.newText({
-		parent 			= hud.board, 
-		text	 			= userManager.user.extraTickets,     
-		x 					= display.contentWidth * 0.5 + 55,
-		y 					= self.top + self.yGap*(statusTop+2),
-		fontSize 		= self.fontSizeRight,
-		font				= NUM_FONT,
-		fontSize 		= 40,
-		referencePoint = display.CenterRightReferencePoint
 	})
 	
 	--------------------------
@@ -229,15 +200,15 @@ function scene:drawScene()
 	-- SOCIALS
 	---------------------------------------------------------------
 	
-	hud.lineSocials 			= display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
+	hud.lineSocials 				= display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
 	hud.lineSocials.x 			= display.contentWidth*0.5
 	hud.lineSocials.y 			= self.top + self.yGap*socialTop
 	hud.board:insert(hud.lineSocials)
 
-	hud.titleSocials 			= display.newImage( hud.board, I "socials.png")  
+	hud.titleSocials 				= display.newImage( hud.board, I "socials.png")  
 	hud.titleSocials:setReferencePoint(display.CenterLeftReferencePoint);
-	hud.titleSocials.x 		= display.contentWidth*0.05
-	hud.titleSocials.y		= self.top + self.yGap*socialTop
+	hud.titleSocials.x 			= display.contentWidth*0.05
+	hud.titleSocials.y			= self.top + self.yGap*socialTop
 	hud.board:insert(hud.titleSocials)
 	
 	---------------------------------------------------------------
@@ -419,63 +390,6 @@ function scene:drawScene()
 	utils.onTouch(hud.sponsorButton, function()
 		shareManager:invite()
 	end)
-
-	---------------------------------------------------------------------------------
-	-- Options
-	---------------------------------------------------------------
-
-	local function beforeDrawSwitchListener( event )
-		GLOBALS.options.notificationBeforeDraw = event.target.isOn
-		utils.saveTable(GLOBALS.options, "options.json")
-		
-   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
-	end
-	
-	local function afterDrawSwitchListener( event )
-		GLOBALS.options.notificationAfterDraw = event.target.isOn
-		utils.saveTable(GLOBALS.options, "options.json")
-	
-   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)	
-	end
-
-	---------------------------------------------------------------
-	
-	viewManager.newText({
-		parent 			= hud.board, 
-		text 				= T "Notification 48h before the next draw",         
-		x 					= self.column1,
-		y 					= self.top + self.yGap*(optionsTop-0.5),
-		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
-	})
-
-	local beforeDrawSwitch = widget.newSwitch
-	{
-		left 							= display.contentWidth*0.8,
-		top 							= self.top + self.yGap*(optionsTop-0.7),
-		initialSwitchState	 	= GLOBALS.options.notificationBeforeDraw,
-		onPress 						= beforeDrawSwitchListener,
-		onRelease 					= beforeDrawSwitchListener,
-	}
-
-	viewManager.newText({
-		parent 			= hud.board, 
-		text 				= T "Notification for the results",         
-		x 					= self.column1,
-		y 					= self.top + self.yGap*(optionsTop+0.5),
-		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
-	})
-
-
-	local afterDrawSwitch = widget.newSwitch
-	{
-		left 							= display.contentWidth*0.8,
-		top 							= self.top + self.yGap*(optionsTop+0.3),
-		initialSwitchState	 	= GLOBALS.options.notificationAfterDraw,
-		onPress 						= afterDrawSwitchListener,
-		onRelease 					= afterDrawSwitchListener,
-	}
 	
 	-----------------------------------------------
 	
@@ -489,12 +403,6 @@ function scene:drawScene()
 		userManager:logout()
 	end)	
 	
-
-	-----------------------------------------------
-
-	hud.board:insert( beforeDrawSwitch )	
-	hud.board:insert( afterDrawSwitch )	
-
 	------------------
 
 	hud:insert(hud.board)

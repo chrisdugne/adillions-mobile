@@ -1,11 +1,31 @@
 local translations =
 {
+    ["Log In"] = {
+        ["fr"] = "S'identifier",
+    },
+  	
+    ["Log Out"] = {
+        ["fr"] = "Déconnexion",
+    },
+
+    ["Sign Up"] = {
+        ["fr"] = "S'inscrire",
+    },
+
     ["Welcome"] = {
         ["fr"] = "Bienvenue",
     },
 
     ["Thank you"] = {
         ["fr"] = "Merci",
+    },
+
+    ["You have reached the maximum number of tickets for this draw."] = {
+        ["fr"] = "Vous avez atteint le nombre maximal de tickets pour ce tirage.",
+    },
+
+    ["You can gain bonus tickets by liking our Facebook page or following us on Twitter."] = {
+        ["fr"] = "Vous pouvez gagner des tickets bonus en aimant notre page Facebook ou en nous suivant sur Twitter.",
     },
 
     ["Successfully posted on your wall !"] = {

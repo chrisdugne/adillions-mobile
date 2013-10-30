@@ -41,6 +41,22 @@ end
 	
 -----------------------------------------------------------------------------------------
 
+function initHeader()
+
+	hud.headerRect = display.newImageRect( hud, "assets/images/header.png", display.contentWidth, HEADER_HEIGHT)  
+	hud.headerRect.x = display.viewableContentWidth*0.5 
+	hud.headerRect.y = HEADER_HEIGHT*0.5
+
+	hud.logo = display.newImage( hud, "assets/images/logo.png")  
+	hud.logo.x = display.contentWidth*0.5
+	hud.logo.y = HEADER_HEIGHT*0.5
+	
+	refreshHeaderPoints()
+	
+end
+
+-----------------------------------------------------------------------------------------
+
 function initBoard()
 	hud.board = widget.newScrollView
 	{
@@ -58,23 +74,6 @@ function initBoard()
 	}
 end
 
-
------------------------------------------------------------------------------------------
-
-function initHeader()
-
-	hud.headerRect = display.newImageRect( hud, "assets/images/header.png", display.contentWidth, HEADER_HEIGHT)  
-	hud.headerRect.x = display.viewableContentWidth*0.5 
-	hud.headerRect.y = HEADER_HEIGHT*0.5
-
-	hud.logo = display.newImage( hud, "assets/images/logo.png")  
-	hud.logo.x = display.contentWidth*0.5
-	hud.logo.y = HEADER_HEIGHT*0.5
-	
-	refreshHeaderPoints()
-	
-end
-
 -----------------------------------------------------------------------------------------
 
 function refreshHeaderPoints()
@@ -87,6 +86,78 @@ function refreshHeaderPoints()
 	hud.points.y = HEADER_HEIGHT*0.5
 	
 	hud.points:toFront()
+	
+	local title 	= ""
+	local text		= ""
+
+	utils.onTouch(hud.points, function()
+		viewManager.showPopup(title, text, function() end)
+
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text	 			= userManager.user.currentPoints .. " pts",     
+			x 					= display.contentWidth*0.54,
+			y 					= display.contentHeight*0.25,
+			fontSize 		= 60,
+		})
+
+		hud.iconPoints 			= display.newImage( hud.popup, "assets/images/points/points.".. userManager.user.currentPoints .. ".png")
+		hud.iconPoints.x 			= display.contentWidth * 0.4
+		hud.iconPoints.y 			= display.contentHeight*0.255
+
+		--------------------------
+
+		local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
+
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text 				= T "Tickets to play" .. " : ",         
+			x 					= display.contentWidth * 0.5,
+			y 					= display.contentHeight*0.35,
+		})
+
+		hud.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
+		hud.iconTicket.x 			= display.contentWidth * 0.5 - 40
+		hud.iconTicket.y 			= display.contentHeight*0.4
+
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text	 			= nbTickets,     
+			x 					= display.contentWidth * 0.5 + 55,
+			y 					= display.contentHeight*0.4,
+			font				= NUM_FONT,
+			fontSize 		= 40,
+			referencePoint = display.CenterRightReferencePoint
+		})
+
+		--------------------------
+
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text 				= T "Extra Tickets" .. " : ",         
+			x 					= display.contentWidth * 0.5,
+			y 					= display.contentHeight*0.5,
+		})
+
+		hud.iconExtraTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
+		hud.iconExtraTicket.x 		= display.contentWidth * 0.5 - 40
+		hud.iconExtraTicket.y 		= display.contentHeight*0.55
+
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text	 			= userManager.user.extraTickets,     
+			x 					= display.contentWidth * 0.5 + 55,
+			y 					= display.contentHeight*0.55,
+			font				= NUM_FONT,
+			fontSize 		= 40,
+			referencePoint = display.CenterRightReferencePoint
+		})
+
+		--------------------------
+		
+		viewManager.drawButton(hud.popup, "Ok", display.contentWidth*0.5, display.contentHeight *0.7, function() utils.emptyGroup(hud.popup) end)
+
+	end)
 
 end
 

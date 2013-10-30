@@ -216,7 +216,7 @@ function UserManager:checkIdlePoints(numbers)
 		local points 	= userManager.user.idlePoints + userManager.user.currentPoints
 		local title 	= T "You have earned" .. " :"
 		local text		= ""
-		viewManager.showPopup(title, text, function() userManager:convertIdlePoints() end)
+		viewManager.showPopup(title, text, function() end)
 
 		viewManager.newText({
 			parent 			= hud.popup, 
@@ -252,6 +252,13 @@ function UserManager:checkIdlePoints(numbers)
    		hud.popup.iconTicket.y 			= display.contentHeight*0.605
    		hud.popup.iconTicket:scale(1.5,1.5)
    	end
+   	
+		userManager:convertIdlePoints() 
+		
+		viewManager.drawButton(hud.popup, "Ok", display.contentWidth*0.5, display.contentHeight *0.7, function() 
+			utils.emptyGroup(hud.popup)
+		end)
+   	
 
 	elseif(userManager.user.currentPoints >= POINTS_TO_EARN_A_TICKET) then
 		local title 	= T "You've earned an Extra Ticket" .. " !"
@@ -293,6 +300,9 @@ function UserManager:checkIdlePoints(numbers)
 		hud.popup.iconTicket:scale(1.5,1.5)
 
    	userManager:convertCurrentPoints()
+   	
+		viewManager.drawButton(hud.popup, "Ok", display.contentWidth*0.5, display.contentHeight *0.7, function() utils.emptyGroup(hud.popup) end)
+   	
 
 		--[[
 		if(lotteryManager:isGameAvailable()) then		
@@ -372,9 +382,15 @@ end
 
 function UserManager:convertCurrentPoints()
 
+	---------------------------------------------
+
+	local nbTickets = self:convertPointsToTickets()
+
+	---------------------------------------------
+
 	local bonus = viewManager.newText({
-		parent 			= hud, 
-		text	 			= "+ 1 Ticket",     
+		parent 			= hud.popup, 
+		text	 			= "+ " .. nbTickets .. "Tickets",     
 		x 					= display.contentWidth*0.97,
 		y 					= display.contentHeight*0.05,
 		fontSize 		= 65
@@ -383,11 +399,7 @@ function UserManager:convertCurrentPoints()
 	transition.to(bonus, { time=1000, alpha=0, x=display.contentWidth*0.78 })
 
 	---------------------------------------------
-
-	self:convertPointsToTickets()
-
-	---------------------------------------------
-
+	
 	self:updatePlayer()
 
 end
@@ -396,14 +408,16 @@ end
 
 function UserManager:convertPointsToTickets()
 
-	local conversion = false
+	print("convertPointsToTickets")
+	local conversion = 0
 
 	while (self.user.currentPoints >= POINTS_TO_EARN_A_TICKET) do
 		self.user.currentPoints = self.user.currentPoints - POINTS_TO_EARN_A_TICKET
 		self.user.extraTickets 	= self.user.extraTickets + 1
-		conversion = true
+		conversion = conversion + 1
 	end
 
+	print(conversion)
 	return conversion
 end
 

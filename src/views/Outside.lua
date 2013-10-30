@@ -28,8 +28,8 @@ function scene:refreshScene()
 
 	---------------------------------------------------------------
 
-	viewManager.drawButton(hud, "_Login", display.contentWidth*0.5, display.contentHeight *0.7, router.openLogin)
-	viewManager.drawButton(hud, "_Signin", display.contentWidth*0.5, display.contentHeight *0.8, router.openSignin)
+	viewManager.drawButton(hud, T "Log In", display.contentWidth*0.5, display.contentHeight *0.7, router.openLogin)
+	viewManager.drawButton(hud, T "Sign Up", display.contentWidth*0.5, display.contentHeight *0.8, router.openSignin)
 
 	---------------------------------------------------------------
 
