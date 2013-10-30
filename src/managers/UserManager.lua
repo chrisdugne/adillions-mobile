@@ -210,7 +210,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:checkIdlePoints(numbers)
+function UserManager:checkIdlePoints()
 	
 	if(userManager.user.idlePoints > 0) then
 		local points 	= userManager.user.idlePoints + userManager.user.currentPoints
