@@ -186,20 +186,10 @@ function scene:drawNextLottery( event )
 	hud.themeTitle.y = display.contentHeight*0.85
 
 	------------------
-
-	facebook.checkThemeLiked(lotteryManager.nextLottery.theme, function()
-		hud.likeThemeButton		= display.newImage( hud, "assets/images/icons/like.png")  
-		hud.likeThemeButton.x 	= display.contentWidth*0.1
-		hud.likeThemeButton.y 	= display.contentHeight*0.85
-		
-   	utils.onTouch(hud.likeThemeButton, function()
-   		facebook.likeTheme()
-   		display.remove(hud.likeThemeButton)
-   	end)
-	end)
+	
+	facebook.checkThemeLiked()
 
 	------------------
-
 end
 
 ------------------------------------------

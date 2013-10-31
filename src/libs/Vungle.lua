@@ -36,7 +36,8 @@ function Vungle:adListener(event)
 		if(self.afterVideoSeen) then
 			self.afterVideoSeen()
 		end
-		
+
+		print("--- vungle false")
 		native.setActivityIndicator( false )
 		self.afterVideoSeen = nil
 
@@ -49,6 +50,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function Vungle:tryToShowAd()
+
+	print("--- vungle true")
 	native.setActivityIndicator( true )
 	ads.show( "incentivized", { 
 		isBackButtonEnabled = true, 

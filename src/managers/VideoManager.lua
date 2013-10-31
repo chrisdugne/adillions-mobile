@@ -16,9 +16,11 @@ end
 -----------------------------------------------------------------------------------------
 
 function VideoManager:play(afterVideoSeen)
-	print("videoManager.play")
-	if(userManager.user.extraTickets > 0) then
-   	print("extraTicket !")
+
+	if(SIMULATOR or userManager.user.extraTickets > 0) then
+		if(afterVideoSeen == router.openFillLotteryTicket) then
+			viewManager.message(T "Extra Ticket" .. "!")
+		end
 		afterVideoSeen()
 	else
    	sponsorpayTools.afterVideoSeen = afterVideoSeen

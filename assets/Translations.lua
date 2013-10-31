@@ -16,6 +16,10 @@ local translations =
         ["fr"] = "Bienvenue",
     },
 
+    ["Welcome back"] = {
+        ["fr"] = "Bienvenue",
+    },
+
     ["Thank you"] = {
         ["fr"] = "Merci",
     },
@@ -42,6 +46,10 @@ local translations =
 
     ["Extra Tickets"] = {
         ["fr"] = "Extra Tickets",
+    },
+
+    ["Extra Ticket"] = {
+        ["fr"] = "Extra Ticket",
     },
 
     ["You have earned"] = {

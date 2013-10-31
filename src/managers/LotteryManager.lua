@@ -19,21 +19,23 @@ end
 
 function LotteryManager:refreshNextLottery(draw)
 
+	print("--- refreshNextLottery true")
 	native.setActivityIndicator( true )	
-	
+
 	utils.postWithJSON(
 	{}, 
 	SERVER_URL .. "nextLottery" .. "?nocache=" .. system.getTimer(), 
 	function(result)
-	
-				
+
 		self.nextLottery = json.decode(result.response)
 		self.nextLottery.theme = json.decode(self.nextLottery.theme)
-		
-		userManager:checkUserCurrentLottery()
-		draw()
 
+		userManager:checkUserCurrentLottery()
+
+		print("--- refreshNextLottery false")
 		native.setActivityIndicator( false )
+
+		draw()
 	end)
 end
 
@@ -70,10 +72,10 @@ end
 function LotteryManager:refreshNotifications(lotteryDateMillis)
 
 	system.cancelNotification()
-	
+
 	if(GLOBALS.options.notificationBeforeDraw) then
 		print("---> refresh notificationBeforeDraw")
-		
+
 		local notificationTimeSeconds = os.date( "!*t", lotteryDateMillis/1000 - 48 * 60 * 60 )
 		local previousCount = native.getProperty( "applicationIconBadgeNumber" ) or 0 
 
@@ -87,7 +89,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
 
 	if(GLOBALS.options.notificationAfterDraw) then
 		print("---> refresh notificationBeforeDraw")
-		
+
 		local notificationTimeSeconds = os.date( "!*t", lotteryDateMillis/1000 + 3 * 60)
 		local previousCount = native.getProperty( "applicationIconBadgeNumber" ) or 0 
 
@@ -113,12 +115,12 @@ function LotteryManager:sumPrices()
 	userManager.user.totalGains = 0
 
 	if(userManager.user.lotteryTickets) then
-   	for i = 1,#userManager.user.lotteryTickets do
-   		local ticket = userManager.user.lotteryTickets[i]
-		  	userManager.user.totalGains = userManager.user.totalGains + (ticket.price or 0)
-   	end
-   end
-   
+		for i = 1,#userManager.user.lotteryTickets do
+			local ticket = userManager.user.lotteryTickets[i]
+			userManager.user.totalGains = userManager.user.totalGains + (ticket.price or 0)
+		end
+	end
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -145,7 +147,7 @@ function LotteryManager:removeFromSelection(num)
 	display.remove(hud.balls[num])
 
 	viewManager.drawBallToPick(num,x,y)
-	
+
 end
 
 function LotteryManager:canAddToSelection()
@@ -159,7 +161,7 @@ function LotteryManager:addToAdditionalSelection(ball)
 		self.currentAdditionalBall.selected = false
 		self.currentAdditionalBall.alpha = 0.3
 	end
-	
+
 	self.currentAdditionalBall = ball
 	self.currentAdditionalBall.selected = true
 	self.currentAdditionalBall.alpha = 1
@@ -187,21 +189,21 @@ function LotteryManager:refreshNumberSelectionDisplay()
 
 	-------------------------------------
 	-- erase
-	
+
 	utils.emptyGroup(hud.selection)
 	table.sort(self.currentSelection)
-	
+
 	-------------------------------------
 	-- display
-	
+
 	local nbSelected  = 0
 	local marginLeft 	=  hud.selector.x - 360
 	local xGap 			=  120
 	local top 			= 	hud.selector.y
-	
+
 	-------------------------------------
 	-- numbers
-	
+
 	for i = 1,self.nextLottery.maxPicks do
 		local num = self.currentSelection[i]
 		if(self.currentSelection[i]) then
@@ -220,23 +222,23 @@ function LotteryManager:refreshNumberSelectionDisplay()
 	-- ok button
 
 	if(#self.currentSelection == self.nextLottery.maxPicks) then
-   	hud.validate = display.newImage( hud.selection, I "ValidateON.png")  
-   	hud.validate.x = display.contentWidth*0.5
-   	hud.validate.y = display.contentHeight*0.85
-   	
-   	utils.onTouch(hud.validate, function()
-			videoManager:play(router.openSelectAdditionalNumber)
-   	end)
-   	
-   	hud.selector.alpha = 0.3
-	else
-   	hud.validate = display.newImage( hud.selection, I "ValidateOFF.png")  
-   	hud.validate.x = display.contentWidth*0.5
-   	hud.validate.y = display.contentHeight*0.85
+		hud.validate = display.newImage( hud.selection, I "ValidateON.png")  
+		hud.validate.x = display.contentWidth*0.5
+		hud.validate.y = display.contentHeight*0.85
 
-   	hud.selector.alpha = 1
+		utils.onTouch(hud.validate, function()
+			videoManager:play(router.openSelectAdditionalNumber)
+		end)
+
+		hud.selector.alpha = 0.3
+	else
+		hud.validate = display.newImage( hud.selection, I "ValidateOFF.png")  
+		hud.validate.x = display.contentWidth*0.5
+		hud.validate.y = display.contentHeight*0.85
+
+		hud.selector.alpha = 1
 	end
-	
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -245,28 +247,28 @@ function LotteryManager:refreshThemeSelectionDisplay()
 
 	-------------------------------------
 	-- erase
-	
+
 	utils.emptyGroup(hud.selection)
 
 	-------------------------------------
 	-- display
-	
+
 	local nbSelected  = 0
 	local marginLeft 	=  hud.selector.x - 360
 	local xGap 			=  100
 	local top 			= 	hud.selector.y
-	
+
 	-------------------------------------
 	-- numbers
-	
+
 	for i = 1,self.nextLottery.maxPicks do
-		
+
 		local num = self.currentSelection[i]
 		local x = marginLeft + i*xGap
-		
+
 		viewManager.drawBall(hud, num, marginLeft + xGap*i, display.contentHeight*0.7)
 		if(self.currentSelection[i]) then nbSelected = nbSelected + 1 end
-		
+
 	end
 
 	-------------------------------------
@@ -275,32 +277,33 @@ function LotteryManager:refreshThemeSelectionDisplay()
 	viewManager.drawSelectedAdditional(self.currentAdditionalBall, marginLeft + xGap*(self.nextLottery.maxPicks+1), display.contentHeight*0.7, function()
 		self:cancelAdditionalSelection()
 	end)
-	
+
 	if(self.currentAdditionalBall) then nbSelected = nbSelected + 1 end
 
 	-------------------------------------
 	-- ok button
 
 	if(nbSelected == self.nextLottery.maxPicks+1) then
-   	hud.validate = display.newImage( hud.selection, I "ValidateON.png")  
-   	hud.validate.x = display.contentWidth*0.5
-   	hud.validate.y = display.contentHeight*0.85
-   	
-   	hud.selector.alpha = 0.3
-   	
-   	utils.onTouch(hud.validate, function()
+		hud.validate = display.newImage( hud.selection, I "ValidateON.png")  
+		hud.validate.x = display.contentWidth*0.5
+		hud.validate.y = display.contentHeight*0.85
+
+		hud.selector.alpha = 0.3
+
+		utils.onTouch(hud.validate, function()
 			self:validateSelection()
-   	end)
-   	
+			display.remove(hud.validate)
+		end)
+
 	else
-	
-   	hud.selector.alpha = 1
-   	
-   	hud.validate = display.newImage( hud.selection, I "ValidateOFF.png")  
-   	hud.validate.x = display.contentWidth*0.5
-   	hud.validate.y = display.contentHeight*0.85
+
+		hud.selector.alpha = 1
+
+		hud.validate = display.newImage( hud.selection, I "ValidateOFF.png")  
+		hud.validate.x = display.contentWidth*0.5
+		hud.validate.y = display.contentHeight*0.85
 	end
-	
+
 end
 
 -----------------------------------------------------------------------------------------

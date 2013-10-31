@@ -18,6 +18,7 @@ end
 
 function UserManager:fetchPlayer()
 
+	print("--- fetchPlayer true")
 	native.setActivityIndicator( true )
 
 	print("fetchPlayer")
@@ -26,6 +27,7 @@ function UserManager:fetchPlayer()
 	SERVER_URL .. "player", 
 	function(result)
 		print("result", result)
+		print("--- fetchPlayer false")
 		native.setActivityIndicator( false )
 
 		if(result.isError) then
@@ -34,7 +36,7 @@ function UserManager:fetchPlayer()
 		else
 			local player = json.decode(result.response)
 			if(not player) then 
-   			print("fetchPlayer no player : outside")
+				print("fetchPlayer no player : outside")
 				router.openOutside()
 			else 
 				userManager:receivedPlayer(player, router.openHome)
@@ -49,7 +51,7 @@ end
 
 function UserManager:getPlayerByFacebookId()
 
-	print("getPlayerByFacebookId")
+	print("--- getPlayerByFacebookId true")
 	native.setActivityIndicator( true )
 
 	utils.postWithJSON({
@@ -59,6 +61,7 @@ function UserManager:getPlayerByFacebookId()
 	SERVER_URL .. "playerFromFB", 
 	function(result)
 
+		print("--- getPlayerByFacebookId false")
 		native.setActivityIndicator( false )	
 
 		utils.tprint(result)
@@ -80,7 +83,12 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:receivedPlayer(player, next)
-	sponsorpayTools:init(player.uid)
+	
+	if(next == router.openHome) then
+		sponsorpayTools:init(player.uid)
+		viewManager.message(T "Welcome back" .. " " .. player.userName .. " !")
+	end
+	
 	self:updatedPlayer(player, next)
 end
 
@@ -107,30 +115,30 @@ function UserManager:updatedPlayer(player, next)
 	GLOBALS.savedData.user.twitterName 		= player.twitterName
 
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
-	
+
 	self:checkIdlePoints()
-	
+
 	viewManager.refreshHeaderPoints(player.currentPoints)
 	lotteryManager:sumPrices()
 
 	self:checkFanStatus(next)
-	
+
 end
 
 -----------------------------------------------------------------------------------------
 
 function UserManager:checkFanStatus(next)
-	
+
 	local facebookFan 	= self.user.isFacebookFan
 	local twitterFan 		= self.user.isTwitterFan
-   
-   userManager.user.totalBonusTickets = 0
-	
+
+	userManager.user.totalBonusTickets = 0
+
 	facebook.isFacebookFan(function()
 		twitter.isTwitterFan(function(response)
-				
+
 			---------------------------------------------------------
-			
+
 			if(response) then
 				utils.tprint(response)
 				self.user.twitterFan = response.relationship.source.following
@@ -147,9 +155,9 @@ function UserManager:checkFanStatus(next)
 			end
 
 			---------------------------------------------------------
-         
+
 			local statusChanged = false
-			
+
 			if(self.user.facebookFan ~= facebookFan) then
 				statusChanged = true
 				self.user.isFacebookFan = self.user.facebookFan
@@ -161,7 +169,7 @@ function UserManager:checkFanStatus(next)
 			end
 
 			---------------------------------------------------------
-		
+
 			if(statusChanged) then
 				self:updateFanStatus(next)
 			else
@@ -173,7 +181,7 @@ function UserManager:checkFanStatus(next)
 			---------------------------------------------------------
 		end)
 	end)
-	
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -190,15 +198,15 @@ function UserManager:checkUserCurrentLottery()
 		self.user.currentLotteryUID 			= lotteryManager.nextLottery.uid
 		self.user.availableTickets 			= START_AVAILABLE_TICKETS 
 		self.user.playedBonusTickets 			= 0
-		
+
 		self.user.hasTweet						= false
 		self.user.hasPostOnFacebook			= false
 		self.user.hasTweetAnInvite				= false
 		self.user.hasInvitedOnFacebook		= false
-		
+
 		self:updatePlayer()
-      
-   	----------------------------------------
+
+		----------------------------------------
 
 	end
 
@@ -210,7 +218,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:checkIdlePoints()
-	
+
 	if(userManager.user.idlePoints > 0) then
 		local points 	= userManager.user.idlePoints + userManager.user.currentPoints
 		local title 	= T "You have earned" .. " :"
@@ -226,38 +234,38 @@ function UserManager:checkIdlePoints()
 		})
 
 		if(math.floor(points/POINTS_TO_EARN_A_TICKET) > 0) then
-   		viewManager.newText({
-   			parent 			= hud.popup, 
-   			text	 			= "=",     
-   			x 					= display.contentWidth*0.5,
-   			y 					= display.contentHeight*0.5,
-   			fontSize 		= 90,
-   		})
-   
-   		local plural = ""
-   		local nbTickets = math.floor(points/POINTS_TO_EARN_A_TICKET)
-   		if(nbTickets > 1) then plural = "s" end
-   
-   		viewManager.newText({
-   			parent 			= hud.popup, 
-   			text	 			= nbTickets .. " ticket" .. plural,     
-   			x 					= display.contentWidth*0.4,
-   			y 					= display.contentHeight*0.6,
-   			fontSize 		= 80,
-   		})
-   		
-   		hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
-   		hud.popup.iconTicket.x 			= display.contentWidth*0.65
-   		hud.popup.iconTicket.y 			= display.contentHeight*0.605
-   		hud.popup.iconTicket:scale(1.5,1.5)
-   	end
-   	
+			viewManager.newText({
+				parent 			= hud.popup, 
+				text	 			= "=",     
+				x 					= display.contentWidth*0.5,
+				y 					= display.contentHeight*0.5,
+				fontSize 		= 90,
+			})
+
+			local plural = ""
+			local nbTickets = math.floor(points/POINTS_TO_EARN_A_TICKET)
+			if(nbTickets > 1) then plural = "s" end
+
+			viewManager.newText({
+				parent 			= hud.popup, 
+				text	 			= nbTickets .. " ticket" .. plural,     
+				x 					= display.contentWidth*0.4,
+				y 					= display.contentHeight*0.6,
+				fontSize 		= 80,
+			})
+
+			hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
+			hud.popup.iconTicket.x 			= display.contentWidth*0.65
+			hud.popup.iconTicket.y 			= display.contentHeight*0.605
+			hud.popup.iconTicket:scale(1.5,1.5)
+		end
+
 		userManager:convertIdlePoints() 
-		
+
 		viewManager.drawButton(hud.popup, "Ok", display.contentWidth*0.5, display.contentHeight *0.7, function() 
 			utils.emptyGroup(hud.popup)
 		end)
-   	
+
 
 	elseif(userManager.user.currentPoints >= POINTS_TO_EARN_A_TICKET) then
 		local title 	= T "You've earned an Extra Ticket" .. " !"
@@ -276,7 +284,7 @@ function UserManager:checkIdlePoints()
 			y 					= display.contentHeight*0.4,
 			fontSize 		= 120,
 		})
-		
+
 		viewManager.newText({
 			parent 			= hud.popup, 
 			text	 			= "=",     
@@ -298,30 +306,11 @@ function UserManager:checkIdlePoints()
 		hud.popup.iconTicket.y 			= display.contentHeight*0.605
 		hud.popup.iconTicket:scale(1.5,1.5)
 
-   	userManager:convertCurrentPoints()
-   	
-		viewManager.drawButton(hud.popup, "Ok", display.contentWidth*0.5, display.contentHeight *0.7, function() utils.emptyGroup(hud.popup) end)
-   	
+		viewManager.drawButton(hud.popup, "Ok", display.contentWidth*0.5, display.contentHeight *0.7, function() 
+			utils.emptyGroup(hud.popup) 
+   		userManager:convertCurrentPoints()
+		end)
 
-		--[[
-		if(lotteryManager:isGameAvailable()) then		
-   		hud.validate = display.newImage( hud.popup, I "ValidateON.png")  
-      	hud.validate.x = display.contentWidth*0.5
-      	hud.validate.y = display.contentHeight*0.75
-      	
-      	utils.onTouch(hud.validate, function()
-      		utils.emptyGroup(hud.popup)
-   			router.openFillLotteryTicket()
-      	end)
-
-      else
-   		hud.validate = display.newImage( hud.popup, I "ValidateOFF.png")  
-      	hud.validate.x = display.contentWidth*0.5
-      	hud.validate.y = display.contentHeight*0.75
-
-      end
-   	
-   	]]--
 	end
 end
 
@@ -386,19 +375,23 @@ function UserManager:convertCurrentPoints()
 	local nbTickets = self:convertPointsToTickets()
 
 	---------------------------------------------
-
-	local bonus = viewManager.newText({
-		parent 			= hud.popup, 
-		text	 			= "+ " .. nbTickets .. "Tickets",     
-		x 					= display.contentWidth*0.97,
-		y 					= display.contentHeight*0.05,
-		fontSize 		= 65
-	})
-
-	transition.to(bonus, { time=1000, alpha=0, x=display.contentWidth*0.78 })
+	
+	local plural = ""
+	if(nbTickets > 1) then plural = 's' end
+	viewManager.message("+ " .. nbTickets .. "Ticket" .. plural)
+--
+--	local bonus = viewManager.newText({
+--		parent 			= hud.popup, 
+--		text	 			= "+ " .. nbTickets .. "Tickets",     
+--		x 					= display.contentWidth*0.97,
+--		y 					= display.contentHeight*0.05,
+--		fontSize 		= 65
+--	})
+--
+--	transition.to(bonus, { time=1000, alpha=0, x=display.contentWidth*0.78 })
 
 	---------------------------------------------
-	
+
 	self:updatePlayer()
 
 end
@@ -424,25 +417,27 @@ end
 
 function UserManager:updatePlayer(next)
 
+	print("--- updatePlayer true")
 	native.setActivityIndicator( true )	
-		
+
 	utils.postWithJSON({
 		user = self.user,
 	}, 
 	SERVER_URL .. "updatePlayer", 
 	function(result)
 
+		print("--- updatePlayer false")
 		native.setActivityIndicator( false )
-			
+
 		local player = json.decode(result.response)
 		if(player) then
 			userManager:updatedPlayer(player, next)
 		else
-   		if(next) then
+			if(next) then
 				next()
-   		end
+			end
 		end
-		
+
 	end)
 
 end
@@ -451,6 +446,7 @@ end
 
 function UserManager:updateFanStatus(next)
 
+	print("--- updateFanStatus true")
 	native.setActivityIndicator( true )	
 
 	utils.postWithJSON({
@@ -458,6 +454,7 @@ function UserManager:updateFanStatus(next)
 	}, 
 	SERVER_URL .. "updateFanStatus", 
 	function(result)
+		print("--- updateFanStatus false")
 		native.setActivityIndicator( false )
 		if(next) then
 			next()
@@ -472,12 +469,12 @@ function UserManager:twitterConnection(twitterId, twitterName, next)
 
 	GLOBALS.savedData.user.twitterId 					= twitterId
 	GLOBALS.savedData.user.twitterName 					= twitterName
-	
+
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
-	
+
 	self.user.twitterId 		= twitterId
 	self.user.twitterName 	= twitterName
-	
+
 	self:updatePlayer(next)
 end
 
@@ -487,12 +484,12 @@ function UserManager:mergePlayerWithFacebook(next)
 
 	GLOBALS.savedData.user.facebookId 		= facebook.data.id
 	GLOBALS.savedData.user.facebookName	 	= facebook.data.name
-	
+
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
-	
+
 	self.user.facebookId 	= facebook.data.id
 	self.user.facebookName 	= facebook.data.name
-	
+
 	self:updatePlayer(next)
 end
 
@@ -506,20 +503,23 @@ function UserManager:logout()
 end
 
 function UserManager:logoutViewListener( event )
-	
-    if event.url then
-   	
-   	print("userManager.logout")
-	   print(event.url)
-    	
-    	if event.url == SERVER_URL .. "backToMobile" then
+
+	if event.url then
+
+		print("userManager.logout")
+		print(event.url)
+
+		if event.url == SERVER_URL .. "backToMobile" then
 			self:closeWebView()    	
 			print("logoutViewListener backToMobile : outside")	
-      	router.openOutside()
-   		native.setActivityIndicator( false )
-      end
+			router.openOutside()
+			
+			
+			print("--- logout false")	
+			native.setActivityIndicator( false )
+		end
 	end
-	
+
 end
 
 

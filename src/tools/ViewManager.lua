@@ -164,15 +164,55 @@ end
 -----------------------------------------------------------------------------------------
 
 function showPoints(nbPoints)
-	local text = viewManager.newText({
-		parent 			= hud, 
-		text	 			= "+ " .. nbPoints,     
-		x 					= display.contentWidth*0.97,
-		y 					= display.contentHeight*0.05,
-		fontSize 		= 65
+--	local text = viewManager.newText({
+--		parent 			= hud, 
+--		text	 			= "+ " .. nbPoints,     
+--		x 					= display.contentWidth*0.97,
+--		y 					= display.contentHeight*0.05,
+--		fontSize 		= 65
+--	})
+--
+--	transition.to(text, { time=1500, alpha=0, x=display.contentWidth*0.84 })
+
+	local plural = ""
+	if(nbPoints > 1) then plural = 's' end
+	message("+ " .. nbPoints .. " pt" .. plural)
+end
+
+-----------------------------------------------------------------------------------------
+
+function message(message)
+
+	if(hud.messager) then
+		transition.to(hud.messager, { time=300, alpha=0 } )
+	end
+	
+	hud.messager = display.newGroup()
+	hud.messager.y = -200
+
+	hud.messager.popupRect 		= drawBorder( hud.messager, 
+		0, HEADER_HEIGHT, 
+		display.contentWidth+100, HEADER_HEIGHT*0.6,
+		50,50,50
+	)  
+	hud.messager.popupRect.x = display.contentWidth*0.5
+	hud.messager.popupRect.alpha = 0.85
+	
+	hud.messager.text = viewManager.newText({
+		parent 			= hud.messager, 
+		text	 			= message,     
+		x 					= display.contentWidth*0.5,
+		y 					= HEADER_HEIGHT - 12,
+		fontSize 		= 35
 	})
 
-	transition.to(text, { time=1500, alpha=0, x=display.contentWidth*0.84 })
+	hud.messager.text:setTextColor(255)
+	
+	transition.to(hud.messager, { time=500, y=-HEADER_HEIGHT/2 - 5, onComplete=function()
+		timer.performWithDelay(2000, function()
+			transition.to(hud.messager, { time=500, y=-200} )
+		end)
+	end })
 end
 
 -----------------------------------------------------------------------------------------
