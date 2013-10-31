@@ -367,7 +367,7 @@ function scene:drawScene()
 	-----------------------------------------------------------------
 	
 	viewManager.drawBorder(hud.board, 
-		display.contentWidth*0.3, self.top + self.yGap*(sponsorTop+2.4), 
+		display.contentWidth*0.76, self.top + self.yGap*(sponsorTop+2.4), 
 		display.contentWidth*0.4, 120,
 		250,250,250
 	)
@@ -375,7 +375,7 @@ function scene:drawScene()
 	viewManager.newText({
 		parent 			= hud.board, 
 		text	 			= userManager.user.sponsorCode,     
-		x 					= display.contentWidth*0.3,
+		x 					= display.contentWidth*0.76,
 		y 					= self.top + self.yGap*(sponsorTop+2.4),
 		fontSize 		= 45,
 		font				= NUM_FONT,
@@ -383,7 +383,7 @@ function scene:drawScene()
 	
 	
 	hud.sponsorButton 		= display.newImage(hud.board, I "sponsor.button.png")
-	hud.sponsorButton.x 		= display.contentWidth*0.76
+	hud.sponsorButton.x 		= display.contentWidth*0.3
 	hud.sponsorButton.y 		=  self.top + self.yGap*(sponsorTop+2.4)
 	hud.board:insert(hud.sponsorButton)
 		

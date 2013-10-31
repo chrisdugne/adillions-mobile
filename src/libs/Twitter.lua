@@ -77,12 +77,13 @@ end
 
 function isTwitterFan( next )
 	
+	print("------------------------ isTwitterFan ")
 	-- default : celui de la db, meme si non connecte
 	-- triche possible : cancel fan et ne plus se connecter avec twitter.
 	userManager.user.twitterFan = userManager.user.isTwitterFan
 	
 	if(connected) then
-   	print("------------------------ isTwitterFan ")
+		print("------------------------ connected ")
    	
    	callback.next = next
    	
@@ -92,6 +93,9 @@ function isTwitterFan( next )
    	tweet(callback, params)
   
    else
+   
+		print("------------------------ not connected : next  ")
+		
    	if(next) then
    		next()
       end

@@ -109,6 +109,13 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function openOptions()
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Options" )
+end
+
+-----------------------------------------------------------------------------------------
+
 function openSelectAdditionalNumber()
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.SelectAdditionalNumber" )

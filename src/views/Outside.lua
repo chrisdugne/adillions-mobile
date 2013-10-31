@@ -33,34 +33,6 @@ function scene:refreshScene()
 
 	---------------------------------------------------------------
 
-	hud.whyText = display.newText( {
-		parent = hud,
-		text = "_Pourquoi s'inscrire ?",     
-		x = display.contentWidth*0.5,
-		y = display.contentHeight *0.9,
-		font = FONT,   
-		fontSize = 18,
-	} )
-
-	hud.whyText:setTextColor(0,100,0)
-	utils.onTouch(hud.whyText,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
-
-	---------------------------------------------------------------
-
-	hud.CGU = display.newText( {
-		parent = hud,
-		text = "_CGU",     
-		x = display.contentWidth*0.5,
-		y = display.contentHeight *0.94,
-		font = FONT,   
-		fontSize = 21,
-	} )
-
-	hud.CGU:setTextColor(0,100,0)
-	utils.onTouch(hud.CGU,  function(event) system.openURL( "http://soundcloud.com/velvetcoffee" ) end)
-
-	---------------------------------------------------------------
-
 	self.view:insert(hud)
 
 	---------------------------------------------------------------

@@ -24,10 +24,10 @@ function scene:refreshScene()
 
 	------------------
 
-	local optionsTop 		= 13
+	local optionsTop 		= 1
 
 	self.top 				= HEADER_HEIGHT + 70
-	self.yGap 				= 60
+	self.yGap 				= 120
 	self.fontSizeLeft 	= 27
 	self.fontSizeRight 	= 29
 
@@ -38,57 +38,77 @@ function scene:refreshScene()
 
 	viewManager.initBoard()
 
-	------------------
-	
-	hud.facebookIcon 			= display.newImage( hud.board, "assets/images/icons/facebook.png")  
-	hud.facebookIcon.x 		= display.contentWidth*0.5
-	hud.facebookIcon.y		= display.contentHeight*0.2
-	hud.board:insert(hud.facebookIcon)
-
-	utils.onTouch(hud.facebookIcon, function()
-		system.openURL( "https://www.facebook.com/pages/Adillions/379432705492888" )
-	end)
-
-	------------------
-
-	hud.twitterIcon 			= display.newImage( hud.board, "assets/images/icons/twitter.png")  
-	hud.twitterIcon.x 		= display.contentWidth*0.5
-	hud.twitterIcon.y		= display.contentHeight*0.3
-	hud.board:insert(hud.twitterIcon)
-
-	utils.onTouch(hud.twitterIcon, function()
-		system.openURL( "http://www.twitter.com/adillions" )
-	end)
-	
-	------------------
-	
-	viewManager.drawButton(hud.board, "_Reglement", display.contentWidth*0.5, display.contentHeight *0.4, function() system.openURL( "http://www.adillions.com" ) end)
-
-	------------------
-	
-	viewManager.drawButton(hud.board, "_FAQ", display.contentWidth*0.5, display.contentHeight *0.5, function() system.openURL( "http://www.adillions.com" ) end)
-
-	viewManager.drawButton(hud.board, "_Write a review", display.contentWidth*0.5, display.contentHeight *0.5, function()
-		local options =
-		{
-			iOSAppId = "670243309",
-			androidAppPackageName = "com.android",
-			supportedAndroidStores = { "google" },
-		}
-		native.showPopup("appStore", options) 
-	end)
-
 	---------------------------------------------------------------------------------
+	-- Options
+	---------------------------------------------------------------
 
-	viewManager.drawButton(hud.board, "_Options", display.contentWidth*0.5, display.contentHeight *0.6, function() router.openOptions() end)
+	local function beforeDrawSwitchListener( event )
+		GLOBALS.options.notificationBeforeDraw = event.target.isOn
+		utils.saveTable(GLOBALS.options, "options.json")
+		
+   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
+	end
+	
+	local function afterDrawSwitchListener( event )
+		GLOBALS.options.notificationAfterDraw = event.target.isOn
+		utils.saveTable(GLOBALS.options, "options.json")
+	
+   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)	
+	end
 
-	---------------------------------------------------------------------------------
+	---------------------------------------------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Notification 48h before the next draw",         
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(optionsTop-0.5),
+		fontSize 		= self.fontSizeLeft,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	local beforeDrawSwitch = widget.newSwitch
+	{
+		left 							= display.contentWidth*0.8,
+		top 							= self.top + self.yGap*(optionsTop-0.55),
+		initialSwitchState	 	= GLOBALS.options.notificationBeforeDraw,
+		onPress 						= beforeDrawSwitchListener,
+		onRelease 					= beforeDrawSwitchListener,
+	}
+	
+	beforeDrawSwitch:scale(2,2)	
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Notification for the results",         
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(optionsTop+0.5),
+		fontSize 		= self.fontSizeLeft,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+
+	local afterDrawSwitch = widget.newSwitch
+	{
+		left 							= display.contentWidth*0.8,
+		top 							= self.top + self.yGap*(optionsTop+0.45),
+		initialSwitchState	 	= GLOBALS.options.notificationAfterDraw,
+		onPress 						= afterDrawSwitchListener,
+		onRelease 					= afterDrawSwitchListener,
+	}
+
+	afterDrawSwitch:scale(2,2)	
+
+	hud.board:insert( beforeDrawSwitch )	
+	hud.board:insert( afterDrawSwitch )	
+
+	------------------
 
 	hud:insert(hud.board)
 	
 	-----------------------------
 
-	viewManager.setupView(5)
+	viewManager.setupView(0)
 	self.view:insert(hud)
 end
 

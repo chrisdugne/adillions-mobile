@@ -183,6 +183,16 @@ function showPopup(title, text, action)
 	hud.popup = display.newGroup()
 	hud.popup.alpha = 0
 
+	hud.backGrey 		= drawBorder( hud.popup, 
+		0, 0, 
+		display.contentWidth+50, display.viewableContentHeight+50,
+		50,50,50
+	)  
+	hud.backGrey.x 	= display.viewableContentWidth*0.5 
+	hud.backGrey.y 	= display.viewableContentHeight*0.5
+	hud.backGrey.alpha=0.85
+	
+	
 	hud.popupRect 		= drawBorder( hud.popup, 
 		display.contentWidth*0.1, display.contentHeight*15, 
 		display.contentWidth*0.8, display.viewableContentHeight*0.7,
@@ -210,10 +220,18 @@ function showPopup(title, text, action)
 		referencePoint = display.CenterLeftReferencePoint
 	})
 		
+	hud.popup:toFront()
+	transition.to(hud.popup, {time=250, alpha=1})
+end
+
+------------------------------------------------------------------
+
+function addCloseButton()
+
 	hud.popupClose = display.newImage( hud.popup, "assets/images/hud/ko.png")
   	hud.popupClose.x = display.contentWidth*0.83 
   	hud.popupClose.y = display.contentHeight*0.18
-  	hud.popupClose:scale(0.42,0.42)
+  	hud.popupClose:scale(0.4,0.4)
   	
 	utils.onTouch(hud.popupClose, function()
 		display.remove(hud.popupClose)
@@ -226,8 +244,6 @@ function showPopup(title, text, action)
 		end})
 	end)	
 	
-	hud.popup:toFront()
-	transition.to(hud.popup, {time=250, alpha=1})
 end
 	
 ------------------------------------------------------------------

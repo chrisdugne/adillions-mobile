@@ -199,13 +199,12 @@ function UserManager:checkUserCurrentLottery()
 		self:updatePlayer()
       
    	----------------------------------------
-   	
-   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
 
 	end
 
 	--------------------------------------------------------------------------------------
 
+	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
 end
 
 -----------------------------------------------------------------------------------------

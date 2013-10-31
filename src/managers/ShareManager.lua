@@ -100,6 +100,7 @@ function ShareManager:share()
 		
 	end
 
+	viewManager.addCloseButton()
 
 end
 
@@ -182,6 +183,8 @@ function ShareManager:invite()
 			end) 
 		end)
 	end
+	
+	viewManager.addCloseButton()
 
 end
 

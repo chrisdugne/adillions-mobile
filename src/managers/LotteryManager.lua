@@ -72,6 +72,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
 	system.cancelNotification()
 	
 	if(GLOBALS.options.notificationBeforeDraw) then
+		print("---> refresh notificationBeforeDraw")
 		
 		local notificationTimeSeconds = os.date( "!*t", lotteryDateMillis/1000 - 48 * 60 * 60 )
 		local previousCount = native.getProperty( "applicationIconBadgeNumber" ) or 0 
@@ -85,6 +86,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
 	end
 
 	if(GLOBALS.options.notificationAfterDraw) then
+		print("---> refresh notificationBeforeDraw")
 		
 		local notificationTimeSeconds = os.date( "!*t", lotteryDateMillis/1000 + 3 * 60)
 		local previousCount = native.getProperty( "applicationIconBadgeNumber" ) or 0 

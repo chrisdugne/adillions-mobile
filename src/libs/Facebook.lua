@@ -209,12 +209,10 @@ function isFacebookFan(next)
 	print("------------------------ isFacebookFan ")
 	if(GLOBALS.savedData.facebookAccessToken) then
 	
-		native.setActivityIndicator( true )	
    	local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
 			
    	network.request(url , "GET", function(result)
    		
-			native.setActivityIndicator( false )	
    		response = json.decode(result.response)
    		
    		if(not response.error) then
@@ -321,9 +319,14 @@ function postOnWall(message, next)
    	network.request(url , "GET", function(result)
       	native.setActivityIndicator( false )
    		local response = json.decode(result.response)
-
+			utils.tprint(response)
+			print(response.error.code)
+			
    		if(response.id) then
    			next()
+   		elseif(response.error.code == 200) then
+   			print('test relogin')
+				coronaFacebook.login( FACEBOOK_APP_ID, askPermissionListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )   			
    		end
    		
    	end)
@@ -332,3 +335,25 @@ function postOnWall(message, next)
 end
 
 -----------------------------------------------------------------------------------------
+
+function askPermissionListener( event )
+	
+	print("----->  FB askPermissionListener")
+	
+    if ( "session" == event.type ) then
+        -- upon successful login, request list of friends of the signed in user
+        if ( "login" == event.phase ) then
+        
+        		if(event.token) then
+            -- Fetch access token for use in Facebook's API
+	            print( "got the token" )
+            
+      			GLOBALS.savedData.facebookAccessToken 	= event.token
+            	utils.saveTable(GLOBALS.savedData, "savedData.json")
+            	
+            	print("OK")
+      		end
+
+        end
+    end
+end
