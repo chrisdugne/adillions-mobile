@@ -12,6 +12,10 @@ local translations =
         ["fr"] = "S'inscrire",
     },
 
+    ["Close"] = {
+        ["fr"] = "Fermer",
+    },
+
     ["Welcome"] = {
         ["fr"] = "Bienvenue",
     },

@@ -262,7 +262,7 @@ function UserManager:checkIdlePoints()
 
 		userManager:convertIdlePoints() 
 
-		viewManager.drawButton(hud.popup, "Ok", display.contentWidth*0.5, display.contentHeight *0.7, function() 
+		viewManager.drawButton(hud.popup, T "Close", display.contentWidth*0.5, display.contentHeight *0.7, function() 
 			utils.emptyGroup(hud.popup)
 		end)
 
@@ -306,7 +306,7 @@ function UserManager:checkIdlePoints()
 		hud.popup.iconTicket.y 			= display.contentHeight*0.605
 		hud.popup.iconTicket:scale(1.5,1.5)
 
-		viewManager.drawButton(hud.popup, "Ok", display.contentWidth*0.5, display.contentHeight *0.7, function() 
+		viewManager.drawButton(hud.popup, T "Close", display.contentWidth*0.5, display.contentHeight *0.7, function() 
 			utils.emptyGroup(hud.popup) 
    		userManager:convertCurrentPoints()
 		end)

@@ -226,7 +226,7 @@ function ShareManager:noMoreTickets()
 	
 	--------------------------
 		
-	viewManager.drawButton(hud.popup, "Ok", display.contentWidth*0.5, display.contentHeight *0.5, function() utils.emptyGroup(hud.popup) end)
+	viewManager.drawButton(hud.popup, T "Close", display.contentWidth*0.5, display.contentHeight *0.5, function() utils.emptyGroup(hud.popup) end)
 	
 	----------------------------------------------------------------------------------------------------
 
