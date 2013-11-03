@@ -72,34 +72,71 @@ end
 function LotteryManager:refreshNotifications(lotteryDateMillis)
 
 	system.cancelNotification()
+	local now = os.time()
 
-	if(GLOBALS.options.notificationBeforeDraw) then
-		print("---> refresh notificationBeforeDraw")
-
-		local notificationTimeSeconds = os.date( "!*t", lotteryDateMillis/1000 - 48 * 60 * 60 )
-		local previousCount = native.getProperty( "applicationIconBadgeNumber" ) or 0 
+	---------------------------------------------------------------------------------
+	-- notif next lottery
+		
+	local _48hBefore = lotteryDateMillis/1000 - 48 * 60 * 60
+	local _3minAfter = lotteryDateMillis/1000 + 3 * 60
+	
+	if(GLOBALS.options.notificationBeforeDraw and now < _48hBefore) then
+		local notificationTimeSeconds = os.date( "!*t",  _48hBefore)
 
 		local options = {
 			alert = T "Next draw in 48h !",
-			badge = previousCount + 1,
+			badge = 1,
 		}
 
 		system.scheduleNotification( notificationTimeSeconds, options )
 	end
 
-	if(GLOBALS.options.notificationAfterDraw) then
-		print("---> refresh notificationBeforeDraw")
 
-		local notificationTimeSeconds = os.date( "!*t", lotteryDateMillis/1000 + 3 * 60)
-		local previousCount = native.getProperty( "applicationIconBadgeNumber" ) or 0 
+	if(GLOBALS.options.notificationAfterDraw and now < _3minAfter) then
+		local notificationTimeSeconds = os.date( "!*t", _3minAfter)
 
 		local options = {
 			alert = T "This week's results are published !",
-			badge = previousCount + 1,
+			badge = 1,
 		}
 
 		system.scheduleNotification( notificationTimeSeconds, options )
 	end
+
+	---------------------------------------------------------------------------------
+	-- notif lottery weeks later
+		
+	for week=1,4 do
+   	
+   	local _48hBefore = lotteryDateMillis/1000 - 48 * 60 * 60 + week * 7 * 24 * 60 * 60
+   	local _3minAfter = lotteryDateMillis/1000 + 3 * 60 + week * 7 * 24 * 60 * 60
+   	
+   	if(GLOBALS.options.notificationBeforeDraw) then
+   		local notificationTimeSeconds = os.date( "!*t",  _48hBefore)
+   
+   		local options = {
+   			alert = T "Next draw in 48h !",
+   			badge = 1,
+   		}
+   
+   		system.scheduleNotification( notificationTimeSeconds, options )
+   	end
+   
+   
+   	if(GLOBALS.options.notificationAfterDraw) then
+   		local notificationTimeSeconds = os.date( "!*t", _3minAfter)
+   
+   		local options = {
+   			alert = T "This week's results are published !",
+   			badge = 1,
+   		}
+   
+   		system.scheduleNotification( notificationTimeSeconds, options )
+   	end
+	end
+
+	---------------------------------------------------------------------------------
+
 end
 
 -----------------------------------------------------------------------------------------

@@ -189,26 +189,26 @@ end
 
 -----------------------------------------------------------------------------------------
 --- NOTIFICATIONS
-
-local function notificationListener( event )
-
-   print("------------------ notificationListener")
-	utils.tprint(event)
-	if ( event.type == "remote" ) then
-		native.showPopup("Notification", "remote", { "Ok" })
-
-	elseif ( event.type == "local" ) then
-		native.showPopup("Notification", "local", { "Ok" })
-
-	elseif ( event.type == "remoteRegistration" ) then 
-		native.showPopup("Notification", "remoteRegistration", { "Ok" })
-
-	end
-   
-   native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
-end
-
-Runtime:addEventListener( "notification", notificationListener )
+--- pas d'ecoute des notifs In-APP : pas besoin.
+--local function notificationListener( event )
+--
+--   print("------------------ notificationListener")
+--	utils.tprint(event)
+--	if ( event.type == "remote" ) then
+--		native.showPopup("Notification", "remote", { "Ok" })
+--
+--	elseif ( event.type == "local" ) then
+--		native.showPopup("Notification", "local", { "Ok" })
+--
+--	elseif ( event.type == "remoteRegistration" ) then 
+--		native.showPopup("Notification", "remoteRegistration", { "Ok" })
+--
+--	end
+--   
+--   native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
+--end
+--
+--Runtime:addEventListener( "notification", notificationListener )
 
 -----------------------------------------------------------------------------------------
 
