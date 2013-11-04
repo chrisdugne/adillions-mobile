@@ -168,21 +168,26 @@ if(not GLOBALS.savedData) then
    router.openOutside()
 else
 	
-	if(GLOBALS.savedData.user.facebookId) then
-   	native.setActivityIndicator( true )
-   	facebook.getMe(function()
-      	native.setActivityIndicator( false )
-			print("start : getMe : fail : outside")		 
-         router.openOutside()
-   	end)
+	if(GLOBALS.savedData.requireTutorial) then
+      router.openTutorial()
 	
-	elseif(GLOBALS.savedData.user.uid) then
-   	native.setActivityIndicator( true )
-		userManager:fetchPlayer()
-   
-   else
-		print("start : no user data : outside")		 
-      router.openOutside()
+	else
+   	if(GLOBALS.savedData.user.facebookId) then
+      	native.setActivityIndicator( true )
+      	facebook.getMe(function()
+         	native.setActivityIndicator( false )
+   			print("start : getMe : fail : outside")		 
+            router.openOutside()
+      	end)
+   	
+   	elseif(GLOBALS.savedData.user.uid) then
+      	native.setActivityIndicator( true )
+   		userManager:fetchPlayer()
+      
+      else
+   		print("start : no user data : outside")		 
+         router.openOutside()
+   	end
 	end
 
 end

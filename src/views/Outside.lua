@@ -41,16 +41,6 @@ end
 
 ------------------------------------------
 
-function scene:openOptions()
-	router.openOptions()	
-end
-
-function scene:openPodiums()
-	router.openPodiums()	
-end
-
-------------------------------------------
-
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	self:refreshScene()

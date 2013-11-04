@@ -32,6 +32,13 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function openTutorial()
+	resetScreen()
+	storyboard.gotoScene( "src.views.tutorial.Tutorial" )
+end
+
+-----------------------------------------------------------------------------------------
+
 function openLogin()
 	resetScreen()
 	storyboard.gotoScene( "src.views.Login" )

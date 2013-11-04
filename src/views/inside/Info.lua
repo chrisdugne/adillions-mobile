@@ -84,6 +84,10 @@ function scene:refreshScene()
 
 	---------------------------------------------------------------------------------
 
+	viewManager.drawButton(hud.board, "tuto", display.contentWidth*0.5, display.contentHeight *0.7, function() router.openTutorial() end)
+
+	---------------------------------------------------------------------------------
+
 	hud:insert(hud.board)
 	
 	-----------------------------
