@@ -69,7 +69,7 @@ local translations =
     },
 
     ["User name"] = {
-        ["fr"] = "Surnom",
+        ["fr"] = "Nom d'utilisateur",
     },
 
     ["First name"] = {
