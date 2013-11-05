@@ -133,6 +133,14 @@ function UserManager:checkFanStatus(next)
 	local twitterFan 		= self.user.isTwitterFan
 
 	userManager.user.totalBonusTickets = 0
+	
+	if(userManager.user.facebookId) then
+		userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_CONNECTION_TICKETS
+	end
+
+	if(userManager.user.twitterId) then
+		userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + TWITTER_CONNECTION_TICKETS
+	end
 
 	facebook.isFacebookFan(function()
 		twitter.isTwitterFan(function(response)

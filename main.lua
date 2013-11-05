@@ -5,11 +5,11 @@
 -----------------------------------------------------------------------------------------
 
 APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.12.7"
+APP_VERSION 		= "1.13.7"
 
 -----------------------------------------------------------------------------------------
 
-DEV					= 1
+--DEV					= 1
 PROD					= 1
 
 -----------------------------------------------------------------------------------------
@@ -23,22 +23,23 @@ if(PROD) then
 	print("prod")
    FACEBOOK_APP_ID 			= "170148346520274"
    FACEBOOK_API_SECRET 		= "887e8f7abb9b1cb9238a097e06585ae2"
-   SERVER_URL 					= "http://www.adillions.com/"
+   FACEBOOK_APP_NAMESPACE 	= "adillions"
+   SERVER_URL 					= "http://www.watchtocash.com/"
+   SERVER_OG_URL 				= "http://www.watchtocash.com/"
+--   SERVER_URL 					= "http://www.adillions.com/"
+--   SERVER_OG_URL 				= "http://www.adillions.com/"
 else
 	print("dev")
 	FACEBOOK_APP_ID 			= "534196239997712"
 	FACEBOOK_API_SECRET 		= "46383d827867d50ef5d87b66c81f1a8e"
+   FACEBOOK_APP_NAMESPACE 	= "adillions-dev"
 	SERVER_URL 					= "http://192.168.0.9:9000/"
+   SERVER_OG_URL 				= "http://192.168.0.9:9000/"
 end
 
 if(DEV) then
 	print(SERVER_URL)
 end
-
------------------------------------------------------------------------------------------
-
-FACEBOOK_APP_NAMESPACE 	= "adillions"
-SERVER_OG_URL 				= "http://www.adillions.com/"
 
 -----------------------------------------------------------------------------------------
 
@@ -54,17 +55,18 @@ TICKET_HEIGHT		= 100
 
 -----------------------------------------------------------------------------------------
 
+START_AVAILABLE_TICKETS			= 10
 POINTS_TO_EARN_A_TICKET			= 8
 NB_POINTS_PER_TICKET				= 1
 NB_POINTS_PER_TWEET				= 2
 NB_POINTS_PER_POST				= 2
 NB_POINTS_PER_LIKE				= 2
-NB_POINTS_PER_FB_INVITATION	= 2
 NB_POINTS_PER_THEME_LIKED		= 2
-START_AVAILABLE_TICKETS			= 10
 
-FACEBOOK_FAN_TICKETS				= 4
-TWITTER_FAN_TICKETS				= 4
+FACEBOOK_FAN_TICKETS				= 2
+TWITTER_FAN_TICKETS				= 2
+FACEBOOK_CONNECTION_TICKETS	= 2
+TWITTER_CONNECTION_TICKETS		= 2
 
 -----------------------------------------------------------------------------------------
 

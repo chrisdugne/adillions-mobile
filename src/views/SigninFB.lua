@@ -22,6 +22,15 @@ end
 
 function scene:refreshScene()
 	
+	-- not facebook.data.birthday permission
+	if(not facebook.data.birthday) then
+		facebook.data.birthday = ""
+	end
+	-- not facebook.data.email permission
+	if(not facebook.data.email) then
+		facebook.data.email = ""
+	end
+	
 	local url = SERVER_URL .. "msigninFB"
 	url = url .. "?last_name=" 	.. facebook.data.last_name
 	url = url .. "&first_name=" 	.. facebook.data.first_name
