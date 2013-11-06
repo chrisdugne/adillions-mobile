@@ -71,8 +71,8 @@ function scene:refreshScene()
 	viewManager.drawButton(hud.board, "_Write a review", display.contentWidth*0.5, display.contentHeight *0.5, function()
 		local options =
 		{
-			iOSAppId = "670243309",
-			androidAppPackageName = "com.android",
+			iOSAppId = "739060819",
+			androidAppPackageName = "com.adillions.v1",
 			supportedAndroidStores = { "google" },
 		}
 		native.showPopup("appStore", options) 

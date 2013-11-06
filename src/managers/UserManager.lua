@@ -425,7 +425,6 @@ end
 
 function UserManager:updatePlayer(next)
 
-	print("--- updatePlayer true")
 	native.setActivityIndicator( true )	
 
 	utils.postWithJSON({
@@ -434,7 +433,6 @@ function UserManager:updatePlayer(next)
 	SERVER_URL .. "updatePlayer", 
 	function(result)
 
-		print("--- updatePlayer false")
 		native.setActivityIndicator( false )
 
 		local player = json.decode(result.response)

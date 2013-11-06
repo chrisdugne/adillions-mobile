@@ -323,7 +323,7 @@ function ShareManager:shareOnWall()
 	   		userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_POST
    			userManager.user.hasPostOnFacebook = true
    			userManager:updatePlayer()
-   			userManager:checkIdlePoints()
+--   			userManager:checkIdlePoints() fait au retour de updatePlayer non ?
    		end 
 		end)
 		
@@ -347,7 +347,7 @@ function ShareManager:tweetInvite()
       		userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_TWEET
    			userManager.user.hasTweetAnInvite = true
    			userManager:updatePlayer()
-      		userManager:checkIdlePoints() 
+--   			userManager:checkIdlePoints() fait au retour de updatePlayer non ?
    		end
 		end)
 		
