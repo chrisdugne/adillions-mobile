@@ -512,7 +512,7 @@ function UserManager:logout()
 	router.openOutside()
 	coronaFacebook.logout()
 	twitter.logout()
-	utils.initGameData()	
+	gameManager.initGameData()	
 end
 
 function UserManager:logoutViewListener( event )

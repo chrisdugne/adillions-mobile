@@ -74,7 +74,7 @@ function scene:createTuto1()
 
 	hud.tuto1.welcome 			= display.newImage( hud.tuto1, I "Tuto_Welcome.png")
 	hud.tuto1.welcome.x 			= display.contentWidth*0.5
-	hud.tuto1.welcome.y 			= display.contentHeight*0.1
+	hud.tuto1.welcome.y 			= display.contentHeight*0.08
 	
 	hud.tuto1.logo 				= display.newImage( hud.tuto1, "assets/images/logo.png")
 	hud.tuto1.logo.x 				= display.contentWidth*0.5
@@ -124,7 +124,7 @@ function scene:createTuto1()
 	})
 	
 	hud.tuto1.youtube 			= display.newImage( hud.tuto1, "assets/images/hud/Youtube.png")
-	hud.tuto1.youtube.x 			= display.contentWidth*0.8
+	hud.tuto1.youtube.x 			= display.contentWidth*0.4 + hud.tuto1.theme.contentWidth + 90
 	hud.tuto1.youtube.y 			= display.contentHeight*0.675
 	
 	hud.tuto1.ball3 				= display.newImage( hud.tuto1, "assets/images/hud/TutoBall1.png")
@@ -142,21 +142,20 @@ function scene:createTuto1()
 	
 	-------------------
 	-- controls
-	
-	hud.tuto1.arrowright 		= display.newImage( hud.tuto1, "assets/images/hud/Tuto_ArrowRight.png")
-	hud.tuto1.arrowright.x 		= display.contentWidth*0.64
-	hud.tuto1.arrowright.y 		= display.contentHeight*0.935
-	
 	hud.tuto1.next = viewManager.newText({
 		parent 			= hud.tuto1,
 		text 				= T "NEXT", 
 		fontSize			= 49,  
-		x 					= display.contentWidth * 0.6,
+		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.93,
-		referencePoint = display.CenterRightReferencePoint
 	})
 	
 	hud.tuto1.next:setTextColor(255)
+	
+	hud.tuto1.arrowright 		= display.newImage( hud.tuto1, "assets/images/hud/Tuto_ArrowRight.png")
+	hud.tuto1.arrowright.x 		= display.contentWidth*0.5 + hud.tuto1.next.contentWidth/2 + 50
+	hud.tuto1.arrowright.y 		= display.contentHeight*0.93
+	
 
 	utils.onTouch(hud.tuto1.next, 			function() 	self:goTuto(2) end)
 	utils.onTouch(hud.tuto1.arrowright, 	function() 	self:goTuto(2) end)
@@ -249,7 +248,7 @@ function scene:createTuto2()
 	
 	hud.tuto2.arrowright 		= display.newImage( hud.tuto2, "assets/images/hud/Tuto_ArrowRight.png")
 	hud.tuto2.arrowright.x 		= display.contentWidth*0.9
-	hud.tuto2.arrowright.y 		= display.contentHeight*0.935
+	hud.tuto2.arrowright.y 		= display.contentHeight*0.93
 	
 	hud.tuto2.next = viewManager.newText({
 		parent 			= hud.tuto2,
@@ -264,7 +263,7 @@ function scene:createTuto2()
 	
 	hud.tuto2.arrowleft 		= display.newImage( hud.tuto2, "assets/images/hud/Tuto_ArrowLeft.png")
 	hud.tuto2.arrowleft.x 	= display.contentWidth*0.1
-	hud.tuto2.arrowleft.y 	= display.contentHeight*0.935
+	hud.tuto2.arrowleft.y 	= display.contentHeight*0.93
 	
 	hud.tuto2.previous = viewManager.newText({
 		parent 			= hud.tuto2,
@@ -326,11 +325,11 @@ function scene:createTuto3()
 	
 	hud.tuto3.play 			= display.newImage( hud.tuto3, I "Tuto_bt_Play.png")
 	hud.tuto3.play.x 			= display.contentWidth*0.75
-	hud.tuto3.play.y 			= display.contentHeight*0.935
+	hud.tuto3.play.y 			= display.contentHeight*0.93
 
 	hud.tuto3.arrowleft 		= display.newImage( hud.tuto3, "assets/images/hud/Tuto_ArrowLeft.png")
 	hud.tuto3.arrowleft.x 	= display.contentWidth*0.1
-	hud.tuto3.arrowleft.y 	= display.contentHeight*0.935
+	hud.tuto3.arrowleft.y 	= display.contentHeight*0.93
 	
 	hud.tuto3.previous = viewManager.newText({
 		parent 			= hud.tuto3,
@@ -345,7 +344,7 @@ function scene:createTuto3()
 
 	utils.onTouch(hud.tuto3.previous, 	function()	self:goTuto(2) end)
 	utils.onTouch(hud.tuto3.arrowleft, 	function()	self:goTuto(2) end)
-	utils.onTouch(hud.tuto3.play, 		function()	self:exit() end)
+	utils.onTouch(hud.tuto3.play, 		function()	self:play() end)
 	
 end
 
@@ -367,25 +366,31 @@ function scene:exit()
 	if(hud.tuto1.transition) then transition.cancel(hud.tuto1.transition) end
 	if(hud.tuto2.transition) then transition.cancel(hud.tuto2.transition) end
 	if(hud.tuto3.transition) then transition.cancel(hud.tuto3.transition) end
-	
+
 	GLOBALS.savedData.requireTutorial = false
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
-
-	if(userManager.user.uid) then
+	
+	if(userManager.user and userManager.user.uid) then
 		router.openInfo()
 	else
 		router.openOutside()
 	end
+
 end
 
-------------------------------------------
+function scene:play()
+	if(hud.tuto1.transition) then transition.cancel(hud.tuto1.transition) end
+	if(hud.tuto2.transition) then transition.cancel(hud.tuto2.transition) end
+	if(hud.tuto3.transition) then transition.cancel(hud.tuto3.transition) end
 
-function scene:openOptions()
-	router.openOptions()	
-end
-
-function scene:openPodiums()
-	router.openPodiums()	
+	GLOBALS.savedData.requireTutorial = false
+	utils.saveTable(GLOBALS.savedData, "savedData.json")
+	
+	if(userManager.user and userManager.user.uid) then
+		router.openHome()
+	else
+		router.openOutside()
+	end
 end
 
 ------------------------------------------

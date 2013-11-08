@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.15.2"
+APP_VERSION 		= "1.15.11"
 
 -----------------------------------------------------------------------------------------
 
@@ -16,6 +16,12 @@ PROD					= 1
 
 FACEBOOK_PAGE_ID 	= "379432705492888"
 TWITTER_ID 			= "1922939570"
+
+-----------------------------------------------------------------------------------------
+
+ANALYTICS_VERSION 		= 1
+ANALYTICS_TRACKING_ID 	= "UA-45586817-2"
+ANALYTICS_PROFILE_ID 	= "78871292"
 
 -----------------------------------------------------------------------------------------
 
@@ -87,7 +93,7 @@ else
 end
 
 if(DEV) then
-	LANG = "fr"
+	LANG = "en"
 end
 
 -----------------------------------------------------------------------------------------
@@ -106,6 +112,7 @@ facebook 			= require "src.libs.Facebook"
 vungle 				= require "src.libs.Vungle" 
 sponsorpayTools 	= require "src.libs.SponsorpayTools" 
 twitter 				= require "src.libs.Twitter" 
+analytics 			= require "src.libs.google.Analytics"
 
 ---- Game libs
 

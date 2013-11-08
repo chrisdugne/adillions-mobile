@@ -25,6 +25,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openOutside()
+	analytics.pageview("Outside")
+	
 	resetScreen()
 	print("router : openOutside")	
 	storyboard.gotoScene( "src.views.Outside" )
@@ -33,6 +35,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openTutorial()
+	analytics.pageview("Tutorial")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.tutorial.Tutorial" )
 end
@@ -40,6 +44,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openLogin()
+	analytics.pageview("Login")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.Login" )
 end
@@ -47,6 +53,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openSignin()
+	analytics.pageview("Signin")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.Signin" )
 end
@@ -54,6 +62,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openSigninFB()
+	analytics.pageview("SigninFB")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.SigninFB" )
 end
@@ -61,6 +71,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openHome()
+	analytics.pageview("Home")
+
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.Home" )
 end
@@ -68,6 +80,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openMyTickets()
+	analytics.pageview("MyTickets")
+
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.MyTickets" )
 end
@@ -75,6 +89,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openConfirmation()
+	analytics.pageview("Confirmation")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.Confirmation" )
 end
@@ -82,6 +98,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openResults()
+	analytics.pageview("Results")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.Results" )
 end
@@ -89,6 +107,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openProfile()
+	analytics.pageview("Profile")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.Profile" )
 end
@@ -96,6 +116,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openInfo()
+	analytics.pageview("Info")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.Info" )
 end
@@ -103,6 +125,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openVideo()
+	analytics.pageview("Video")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.Video" )
 end
@@ -110,6 +134,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openFillLotteryTicket()
+	analytics.pageview("FillLotteryTicket")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.FillLotteryTicket" )
 end
@@ -117,6 +143,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openOptions()
+	analytics.pageview("Options")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.Options" )
 end
@@ -124,6 +152,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openSelectAdditionalNumber()
+	analytics.pageview("SelectAdditionalNumber")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.SelectAdditionalNumber" )
 end
@@ -131,6 +161,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function openInviteFriends()
+	analytics.pageview("InviteFriends")
+	
 	resetScreen()
 	storyboard.gotoScene( "src.views.inside.InviteFriends" )
 end

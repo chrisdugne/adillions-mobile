@@ -22,6 +22,8 @@ function ShareManager:share()
 	local title = "_Share"
 	local text = "_Share with friends to get VIP points and more tickets !"
 	viewManager.showPopup(title, text)
+	analytics.event("Social", "popupShare") 
+	
 
 	-----------------------------------
 	-- SMS
@@ -110,10 +112,14 @@ function ShareManager:invite()
 
 	----------------------------------------------------------------------------------------------------
 
-	local title = "_Be an Adillions' Ambassador !"
-	local text	= "_Earn free additional tickets by referring people to Adillions"
-
-	viewManager.showPopup(title, text)
+	viewManager.showPopup()
+	analytics.event("Social", "popupInvite") 
+	
+	----------------------------------------------------------------------------------------------------
+	
+	hud.popup.facebookIcon 			= display.newImage( hud.popup, "assets/images/icons/PictoInvite.png")  
+	hud.popup.facebookIcon.x 		= display.contentWidth*0.5
+	hud.popup.facebookIcon.y		= display.contentHeight*0.3
 	
 	----------------------------------------------------------------------------------------------------
 
@@ -123,6 +129,7 @@ function ShareManager:invite()
 			body = "_Join me on www.adillions.com !\n Please use my sponsor code when you sign in : " .. userManager.user.sponsorCode
 		}
 		native.showPopup("sms", options)
+		analytics.event("Social", "askSMS") 
 	end)
 
 	----------------------------------------------------------------------------------------------------
@@ -135,6 +142,7 @@ function ShareManager:invite()
 			subject = "Adillions",
 		}
 		native.showPopup("mail", options)
+		analytics.event("Social", "askEmail") 
 	end)
 
 	----------------------------------------------------------------------------------------------------
@@ -142,6 +150,7 @@ function ShareManager:invite()
 	if(userManager.user.facebookId) then
 		viewManager.drawButton(hud.popup, "Facebook", display.contentWidth*0.5, display.contentHeight*0.65, function()
    		router.openInviteFriends()
+			analytics.event("Social", "openFacebookFriendList") 
 		end)
 		
 		hud.popup.facebookIcon 			= display.newImage( hud.popup, "assets/images/icons/facebook.png")  
@@ -156,6 +165,7 @@ function ShareManager:invite()
 		utils.onTouch(hud.popup.facebookConnect, function() 
 			facebook.connect(function()
       		router.openInviteFriends()
+				analytics.event("Social", "openFacebookFriendListAfterConnection") 
 			end) 
 		end)
 		
@@ -166,6 +176,7 @@ function ShareManager:invite()
 	if(twitter.connected) then
 		viewManager.drawButton(hud.popup, "Twitter", display.contentWidth*0.5, display.contentHeight*0.77, function()
    		self:tweetInvite()
+			analytics.event("Social", "tweetInvite") 
 		end)
 
 		hud.popup.twitterIcon 			= display.newImage( hud.popup, "assets/images/icons/twitter.png")  
@@ -180,6 +191,7 @@ function ShareManager:invite()
 		utils.onTouch(hud.popup.twitterConnect, function() 
 			twitter.connect(function()
       		self:tweetInvite()
+				analytics.event("Social", "tweetInviteAfterConnection") 
 			end) 
 		end)
 	end

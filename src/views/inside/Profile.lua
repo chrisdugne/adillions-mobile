@@ -123,7 +123,7 @@ function scene:drawScene()
 
 	viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= "$ " .. userManager.user.totalGains ,     
+		text	 			= "US$ " .. userManager.user.totalGains ,     
 		x 					= self.column2 - 50,
 		y 					= self.top + self.yGap*(statusTop+2),
 		fontSize 		= self.fontSizeRight,

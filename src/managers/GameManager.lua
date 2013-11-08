@@ -13,16 +13,34 @@ function GameManager:new()
 	return object
 end
 
+-----------------------------------------------------------------------------------------
+
+function GameManager:initGameData()
+
+	GLOBALS.savedData = {
+		requireTutorial 	= true,
+		user 					= {}
+	}
+
+	utils.saveTable(GLOBALS.savedData, "savedData.json")
+end
+
+
+function GameManager:initOptions()
+
+	GLOBALS.options = {
+		notificationBeforeDraw 	= true,
+		notificationAfterDraw 	= true,
+	}
+
+	utils.saveTable(GLOBALS.options, "options.json")
+end
 
 -----------------------------------------------------------------------------------------
 
 function GameManager:start()
-   router.openTutorial()
-end
 
-function GameManager:start3()
-
-   router.openTutorial()
+	analytics.init(ANALYTICS_VERSION, ANALYTICS_TRACKING_ID, ANALYTICS_PROFILE_ID, APP_NAME, APP_VERSION)
 	viewManager.initGlobalBack()
 	vungle:init()
 
@@ -41,8 +59,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function GameManager:firstStart()
-	utils.initGameData()
-	utils.initOptions()
+	self.initGameData()
+	self.initOptions()
    router.openTutorial()
 end
 

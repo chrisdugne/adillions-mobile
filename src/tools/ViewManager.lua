@@ -91,7 +91,9 @@ function refreshHeaderPoints()
 	local text		= ""
 
 	utils.onTouch(hud.points, function()
+	
 		viewManager.showPopup(title, text, function() end)
+   	analytics.event("Gaming", "popupPoints") 
 
 		viewManager.newText({
 			parent 			= hud.popup, 
@@ -217,7 +219,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function showPopup(title, text, action)
+function showPopup(action)
 
 	utils.emptyGroup(hud.popup)
 	hud.popup = display.newGroup()
@@ -232,34 +234,10 @@ function showPopup(title, text, action)
 	hud.backGrey.y 	= display.viewableContentHeight*0.5
 	hud.backGrey.alpha=0.85
 	
+	hud.popupRect = display.newImage( hud.popup, "assets/images/hud/Popup_BG.png", display.contentWidth*0.8, display.contentHeight*0.7)
+  	hud.popupRect.x = display.contentWidth*0.5 
+  	hud.popupRect.y = display.contentHeight*0.5
 	
-	hud.popupRect 		= drawBorder( hud.popup, 
-		display.contentWidth*0.1, display.contentHeight*15, 
-		display.contentWidth*0.8, display.viewableContentHeight*0.7,
-		250,250,250
-	)  
-	hud.popupRect.x 	= display.viewableContentWidth*0.5 
-	hud.popupRect.y 	= display.viewableContentHeight*0.5
-	
-	viewManager.newText({
-		parent 			= hud.popup, 
-		text	 			= title,     
-		x 					= display.contentWidth*0.16,
-		y 					= display.contentHeight*0.2,
-		fontSize 		= 40,
-		referencePoint = display.CenterLeftReferencePoint
-	})
-
-	viewManager.newText({
-		parent 			= hud.popup, 
-		text	 			= text,     
-		x 					= display.contentWidth*0.13,
-		y 					= display.contentHeight*0.3,
-		fontSize 		= 30,
-		width				= display.contentWidth*0.7,
-		referencePoint = display.CenterLeftReferencePoint
-	})
-		
 	hud.popup:toFront()
 	transition.to(hud.popup, {time=250, alpha=1})
 end

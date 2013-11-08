@@ -17,7 +17,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function Vungle:init()
-	ads.init( "vungle", "com.adillions" , function(event) self:adListener(event) end )
+	ads.init( "vungle", "com.adillions.v1" , function(event) self:adListener(event) end )
 end
 
 -----------------------------------------------------------------------------------------

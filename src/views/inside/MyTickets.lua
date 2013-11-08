@@ -209,7 +209,7 @@ function scene:drawPreviousLotteries(top)
    		
    			viewManager.newText({
    				parent = hud.board, 
-   				text =  "$ " .. (ticket.price or 0), 
+   				text =  "US$ " .. (ticket.price or 0), 
          		x = display.contentWidth*0.87,
          		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
          		fontSize = 32,
