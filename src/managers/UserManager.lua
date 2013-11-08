@@ -51,8 +51,8 @@ end
 
 function UserManager:getPlayerByFacebookId()
 
-	print("--- getPlayerByFacebookId true")
 	native.setActivityIndicator( true )
+	utils.tprint("getPlayerByFacebookId")
 
 	utils.postWithJSON({
 		facebookData = facebook.data,
@@ -60,15 +60,22 @@ function UserManager:getPlayerByFacebookId()
 	}, 
 	SERVER_URL .. "playerFromFB", 
 	function(result)
-
-		print("--- getPlayerByFacebookId false")
+		print("received PlayerByFacebookId")
+		utils.tprint(result)
+		print("-------------")
+		print(result.isError)
+		print(result.status)
+		print(tostring(result.status == 401))
+		print(tostring(result.status == '401'))
+		print("-------------")
+		
 		native.setActivityIndicator( false )	
 
-		utils.tprint(result)
-
-		if(result.isError or result.status == 401) then
+		if(result.isError or result.status == 401 or result.status == '401') then
+			print("--> signinFB")
 			router.openSigninFB()
 		else
+			print("--> test player")
 			response 							= json.decode(result.response)
 			local player 						= response.player
 			GLOBALS.savedData.authToken 	= response.authToken     

@@ -321,7 +321,7 @@ function likeTheme()
 			viewManager.showPoints(NB_POINTS_PER_THEME_LIKED)
 			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_THEME_LIKED
 			userManager:updatePlayer()
-			userManager:checkIdlePoints()
+--			userManager:checkIdlePoints() ? pas besoin ici ?
 		elseif(response.error.code == 200) then
 			facebook.reloginDone = function() facebook.checkThemeLiked() end
 			coronaFacebook.login( FACEBOOK_APP_ID, askPermissionListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )   			

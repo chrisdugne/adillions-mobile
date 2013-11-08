@@ -16,6 +16,58 @@ local translations =
         ["fr"] = "Fermer",
     },
 
+    ["NEXT"] = {
+        ["fr"] = "SUIVANT",
+    },
+
+    ["PREVIOUS"] = {
+        ["fr"] = "PRECEDENT",
+    },
+
+    ["Each week"] = {
+        ["fr"] = "Chaque semaine",
+    },
+
+    ["Watch an ad"] = {
+        ["fr"] = "Visualisez une pub",
+    },
+
+    ["Obtain a lottery ticket"] = {
+        ["fr"] = "Remplissez votre ticket de loterie",
+    },
+
+    ["Win the Jackpot"] = {
+        ["fr"] = "Gagnez le Jackpot",
+    },
+
+    ["Several prize categories and lottery"] = {
+        ["fr"] = "Plusieurs rangs de gain et tickets",
+    },
+
+    ["tickets are available for each draw"] = {
+        ["fr"] = "disponibles par tirage",
+    },
+
+    ["Invite your friends to make"] = {
+        ["fr"] = "Invitez vos amis pour faire",
+    },
+
+    ["the jackpot bigger"] = {
+        ["fr"] = "grossir la cagnotte",
+    },
+
+    ["theme"] = {
+        ["fr"] = "thème",
+    },
+
+    ["draw live on"] = {
+        ["fr"] = "tirage sur",
+    },
+
+    ["chance to win"] = {
+        ["fr"] = "chance de gagner",
+    },
+
     ["Welcome"] = {
         ["fr"] = "Bienvenue",
     },

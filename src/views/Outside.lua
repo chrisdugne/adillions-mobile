@@ -22,14 +22,51 @@ end
 
 function scene:refreshScene()
 
-	viewManager.initBack()
-	viewManager.initHeader()
-	viewManager.darkerBack()
+	hud.bg = display.newImageRect( hud, "assets/images/hud/Tuto_2_Bg.png", display.contentWidth, display.contentHeight)  
+	hud.bg.x = display.viewableContentWidth*0.5 
+	hud.bg.y = display.viewableContentHeight*0.5
 
+	hud.logo = display.newImage( hud, "assets/images/hud/Sign_Logo.png")  
+	hud.logo.x = display.contentWidth*0.5 
+	hud.logo.y = display.contentHeight*0.15
+	
+	---------------------------------------------------------------
+	
+	hud.fb = display.newImage( hud, I "Sign_Facebook.png")  
+	hud.fb.x = display.contentWidth*0.5 
+	hud.fb.y = display.contentHeight*0.6
+	
+	utils.onTouch(hud.fb, facebook.login)
+	
 	---------------------------------------------------------------
 
-	viewManager.drawButton(hud, T "Log In", display.contentWidth*0.5, display.contentHeight *0.7, router.openLogin)
-	viewManager.drawButton(hud, T "Sign Up", display.contentWidth*0.5, display.contentHeight *0.8, router.openSignin)
+	hud.line = display.newImage( hud, "assets/images/hud/Sign_Filet.png")  
+	hud.line.x = display.contentWidth*0.5 
+	hud.line.y = display.contentHeight*0.7
+	
+	hud.textor = viewManager.newText({
+		parent 			= hud,
+		text 				= "or",       
+		fontSize			= 39,  
+		x 					= display.contentWidth * 0.5,
+		y 					= display.contentHeight*0.694
+	})
+	
+	hud.textor.alpha = 0.4
+	
+	---------------------------------------------------------------
+
+	hud.login = display.newImage( hud, I "Sign_Login.png")  
+	hud.login.x = display.contentWidth*0.5 
+	hud.login.y = display.contentHeight*0.79
+	
+	utils.onTouch(hud.login, router.openLogin)
+
+	hud.signin = display.newImage( hud, I "Sign_Signup.png")  
+	hud.signin.x = display.contentWidth*0.5 
+	hud.signin.y = display.contentHeight*0.91
+	
+	utils.onTouch(hud.signin, router.openSignin)
 
 	---------------------------------------------------------------
 

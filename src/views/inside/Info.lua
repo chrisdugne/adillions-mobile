@@ -37,6 +37,12 @@ function scene:refreshScene()
 	------------------
 
 	viewManager.initBoard()
+	
+	------------------
+
+	hud.bg 		= display.newImageRect(hud, "assets/images/hud/Infos_Bg.png", display.contentWidth, display.viewableContentHeight*0.14)
+	hud.bg.x 	= display.contentWidth*0.5
+	hud.bg.y 	= HEADER_HEIGHT * 1.5
 
 	------------------
 	

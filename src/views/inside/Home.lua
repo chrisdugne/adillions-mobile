@@ -34,7 +34,7 @@ function scene:refreshScene()
 	
 	
 	local subheaderAnimConfig 	= require("src.tools.Subheader")
-	local subheaderSheet 		= graphics.newImageSheet( "assets/images/subheader/anim.sheet.png", subheaderAnimConfig.sheet )
+	local subheaderSheet 		= graphics.newImageSheet( "assets/images/subheader/anim.sheet."..LANG..".png", subheaderAnimConfig.sheet )
 
    hud.subheaderAnim 		= display.newSprite( hud, subheaderSheet, subheaderAnimConfig:newSequence() )
    hud.subheaderAnim.x 		= display.contentWidth*0.5

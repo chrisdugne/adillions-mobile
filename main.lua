@@ -5,12 +5,12 @@
 -----------------------------------------------------------------------------------------
 
 APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.13.7"
+APP_VERSION 		= "1.15.1"
 
 -----------------------------------------------------------------------------------------
 
 DEV					= 1
-PROD					= 1
+--PROD					= 1
 
 -----------------------------------------------------------------------------------------
 
@@ -70,12 +70,24 @@ TWITTER_CONNECTION_TICKETS		= 2
 
 -----------------------------------------------------------------------------------------
 
+translations = require("assets.Translations")
+
 if ANDROID then
    FONT 		= "GillSans"
    NUM_FONT = "HelveticaBold"
 else
 	FONT 		= "Gill Sans"
    NUM_FONT = "Helvetica-Bold"
+end
+
+if(ANDROID) then
+	LANG =  userDefinedLanguage or system.getPreference("locale", "language")
+else
+	LANG =  userDefinedLanguage or system.getPreference("ui", "language")
+end
+
+if(DEV) then
+	LANG = "fr"
 end
 
 -----------------------------------------------------------------------------------------
@@ -109,14 +121,6 @@ random 	= math.random
 -----------------------------------------------------------------------------------------
 -- Translations
 
-translations = require("assets.Translations")
-
-if(ANDROID) then
-	LANG =  userDefinedLanguage or system.getPreference("locale", "language")
-else
-	LANG =  userDefinedLanguage or system.getPreference("ui", "language")
-end
-
 function T(enText)
 	return translations[enText][LANG] or enText
 end
@@ -130,6 +134,7 @@ end
 router 			= require "src.tools.Router"
 viewManager		= require "src.tools.ViewManager"
 
+GameManager		= require "src.managers.GameManager"
 UserManager		= require "src.managers.UserManager"
 LotteryManager	= require "src.managers.LotteryManager"
 VideoManager	= require "src.managers.VideoManager"
@@ -138,21 +143,16 @@ ShareManager	= require "src.managers.ShareManager"
 -----------------------------------------------------------------------------------------
 ---- Server access Managers
 
+gameManager 		= GameManager:new()
 userManager 		= UserManager:new()
 lotteryManager 	= LotteryManager:new()
 videoManager 		= VideoManager:new()
 shareManager 		= ShareManager:new()
 
 -----------------------------------------------------------------------------------------
---- Display
+--- Display Container
 
 hud = display.newGroup()
-viewManager.initGlobalBack()
-
------------------------------------------------------------------------------------------
---- Vungle
-
-vungle:init()
 
 -----------------------------------------------------------------------------------------
 ---- App globals
@@ -164,35 +164,7 @@ GLOBALS = {
 
 -----------------------------------------------------------------------------------------
 
-if(not GLOBALS.savedData) then
-	utils.initGameData()
-	utils.initOptions()
-   router.openOutside()
-else
-	
-	if(GLOBALS.savedData.requireTutorial) then
-      router.openTutorial()
-	
-	else
-   	if(GLOBALS.savedData.user.facebookId) then
-      	native.setActivityIndicator( true )
-      	facebook.getMe(function()
-         	native.setActivityIndicator( false )
-   			print("start : getMe : fail : outside")		 
-            router.openOutside()
-      	end)
-   	
-   	elseif(GLOBALS.savedData.user.uid) then
-      	native.setActivityIndicator( true )
-   		userManager:fetchPlayer()
-      
-      else
-   		print("start : no user data : outside")		 
-         router.openOutside()
-   	end
-	end
-
-end
+gameManager:start()
 
 -----------------------------------------------------------------------------------------
 --- NOTIFICATIONS

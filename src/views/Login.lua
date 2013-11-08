@@ -26,9 +26,6 @@ function scene:refreshScene()
 	self.webView:request( SERVER_URL .. "mlogin"  )
 	self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
 	
-	viewManager.initHeader()
-	self.view:insert(hud)
-	
 end
 
 ------------------------------------------
@@ -58,7 +55,6 @@ function scene:loginViewListener( event )
     	elseif event.url == SERVER_URL .. "connectWithFB" then
 			self:closeWebView()    		
       	facebook.login()
-
 		end
 
     end

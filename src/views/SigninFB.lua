@@ -22,6 +22,8 @@ end
 
 function scene:refreshScene()
 	
+	print("signinFB")
+	
 	-- not facebook.data.birthday permission
 	if(not facebook.data.birthday) then
 		facebook.data.birthday = ""
@@ -30,29 +32,31 @@ function scene:refreshScene()
 	if(not facebook.data.email) then
 		facebook.data.email = ""
 	end
-	
+
 	local url = SERVER_URL .. "msigninFB"
-	url = url .. "?last_name=" 	.. facebook.data.last_name
-	url = url .. "&first_name=" 	.. facebook.data.first_name
+	url = url .. "?last_name=" 	.. utils.urlEncode(facebook.data.last_name)
+	url = url .. "&first_name=" 	.. utils.urlEncode(facebook.data.first_name)
 	url = url .. "&picture_url=" 	.. utils.urlEncode(facebook.data.picture.data.url)
 	url = url .. "&birth_date=" 	.. facebook.data.birthday
 	url = url .. "&email=" 			.. facebook.data.email
-	url = url .. "&facebookName=" .. facebook.data.name
+	url = url .. "&facebookName=" .. utils.urlEncode(facebook.data.name)
 	url = url .. "&facebookId=" 	.. facebook.data.id
 	url = url .. "&lang=" 			.. LANG
-
-	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( url )
-	self.webView:addEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
 	
-	viewManager.initHeader()
-	self.view:insert(hud)
+	print(url)
+
+	self.signinFBWebView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
+	self.signinFBWebView:request(url)
+	self.signinFBWebView:addEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
+
+	print("-------------------------")
 end
 
 ------------------------------------------
 
 function scene:signinFBViewListener( event )
 
+   print("----->")
     if event.url then
 
 		print("---   signinFBViewListener")
@@ -83,9 +87,9 @@ function scene:signinFBViewListener( event )
 end
 
 function scene:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
-	self.webView:removeSelf()
-	self.webView = nil
+	self.signinFBWebView:removeEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
+	self.signinFBWebView:removeSelf()
+	self.signinFBWebView = nil
 end
 
 ------------------------------------------
