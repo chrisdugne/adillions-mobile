@@ -130,9 +130,10 @@ end
 -----------------------------------------------------------------------------------------
 
 function emptyGroup( group )
-	if(group ~= nil) then
+	if(group ~= nil and group.numChildren ~= nil and group.numChildren > 0) then
 		for i=group.numChildren,1,-1 do
 			local child = group[i]
+			transition.cancel(child)
 			child:removeSelf()
 			child = nil
 		end

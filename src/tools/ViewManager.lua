@@ -136,7 +136,7 @@ function refreshHeaderPoints()
 
 		viewManager.newText({
 			parent 			= hud.popup, 
-			text 				= T "Extra Tickets" .. " : ",         
+			text 				= T "Instant Tickets" .. " : ",         
 			x 					= display.contentWidth * 0.5,
 			y 					= display.contentHeight*0.5,
 		})
@@ -156,8 +156,12 @@ function refreshHeaderPoints()
 		})
 
 		--------------------------
-		
-		viewManager.drawButton(hud.popup, T "Close", display.contentWidth*0.5, display.contentHeight *0.7, function() utils.emptyGroup(hud.popup) end)
+
+		hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+		hud.popup.close.x 			= display.contentWidth*0.5
+		hud.popup.close.y 			= display.contentHeight*0.7
+
+		utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 
 	end)
 
@@ -219,9 +223,33 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function closePopup(now, action)
+
+	if(hud.popup) then
+   	display.remove(hud.popup.close)
+   	transition.cancel(hud.popup)
+   	
+   	if(not now) then
+      	transition.to(hud.popup, {time=250, alpha=0, onComplete=function()
+      		utils.emptyGroup(hud.popup)
+      		if(action) then
+      			action()
+      		end
+      	end})
+      
+      else
+   		utils.emptyGroup(hud.popup)
+   		if(action) then
+   			action()
+   		end
+      end
+   end
+   
+end
+
 function showPopup(action)
 
-	utils.emptyGroup(hud.popup)
+	closePopup(true)
 	hud.popup = display.newGroup()
 	hud.popup.alpha = 0
 
@@ -242,28 +270,6 @@ function showPopup(action)
 	transition.to(hud.popup, {time=250, alpha=1})
 end
 
-------------------------------------------------------------------
-
-function addCloseButton()
-
-	hud.popupClose = display.newImage( hud.popup, "assets/images/hud/ko.png")
-  	hud.popupClose.x = display.contentWidth*0.83 
-  	hud.popupClose.y = display.contentHeight*0.18
-  	hud.popupClose:scale(0.4,0.4)
-  	
-	utils.onTouch(hud.popupClose, function()
-		display.remove(hud.popupClose)
-		transition.to(hud.popup, {time=250, alpha=0, onComplete=function()
-   		utils.emptyGroup(hud.popup)
-   		
-   		if(action) then
-   			action()
-   		end
-		end})
-	end)	
-	
-end
-	
 ------------------------------------------------------------------
 
 function newText(options)

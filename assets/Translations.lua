@@ -56,6 +56,14 @@ local translations =
         ["fr"] = "grossir la cagnotte",
     },
 
+    ["Earn points and increase the jackpot"] = {
+        ["fr"] = "Gagnez des points et faites augmenter la cagnotte",
+    },
+
+    ["Earn points and get Instant Tickets"] = {
+        ["fr"] = "Gagnez des points et obtenez des Tickets Instantanés",
+    },
+
     ["theme"] = {
         ["fr"] = "thème",
     },
@@ -81,11 +89,11 @@ local translations =
     },
 
     ["You have reached the maximum number of tickets for this draw."] = {
-        ["fr"] = "Vous avez atteint le nombre maximal de tickets pour ce tirage.",
+        ["fr"] = "Vous avez atteint le nombre maximum de tickets pour ce tirage.",
     },
 
-    ["You can gain bonus tickets by liking our Facebook page or following us on Twitter."] = {
-        ["fr"] = "Vous pouvez gagner des tickets bonus en aimant notre page Facebook ou en nous suivant sur Twitter.",
+    ["You can gain Bonus Tickets by liking our Facebook page or following us on Twitter."] = {
+        ["fr"] = "Vous pouvez gagner des Tickets Bonus en likant notre page Facebook ou en nous suivant sur Twitter.",
     },
 
     ["Successfully posted on your wall !"] = {
@@ -100,20 +108,20 @@ local translations =
         ["fr"] = "Tickets restants",
     },
 
-    ["Extra Tickets"] = {
-        ["fr"] = "Extra Tickets",
+    ["Instant Tickets"] = {
+        ["fr"] = "Tickets Instantanés",
     },
 
-    ["Extra Ticket"] = {
-        ["fr"] = "Extra Ticket",
+    ["Instant Ticket"] = {
+        ["fr"] = "Ticket Instantané",
     },
 
     ["You have earned"] = {
         ["fr"] = "Vous avez gagné",
     },
 
-    ["You've earned an Extra Ticket"] = {
-        ["fr"] = "Vous avez gagné un Extra Ticket",
+    ["You've earned an Instant Ticket"] = {
+        ["fr"] = "Vous avez gagné un Ticket Instantané",
     },
 
     ["Players"] = {

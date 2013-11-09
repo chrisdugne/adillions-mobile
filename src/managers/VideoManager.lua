@@ -19,7 +19,7 @@ function VideoManager:play(afterVideoSeen)
 
 	if(SIMULATOR or userManager.user.extraTickets > 0) then
 		if(afterVideoSeen == router.openFillLotteryTicket) then
-			viewManager.message(T "Extra Ticket" .. "!")
+			viewManager.message(T "Instant Ticket" .. "!")
 		end
 		afterVideoSeen()
 	else

@@ -234,21 +234,34 @@ end
 
 function UserManager:checkIdlePoints()
 
-	if(userManager.user.idlePoints > 0) then
+	if(userManager.user.idlePoints > 0
+	or userManager.user.currentPoints >= POINTS_TO_EARN_A_TICKET)  then
+		
 		local points 	= userManager.user.idlePoints + userManager.user.currentPoints
-		local title 	= T "You have earned" .. " :"
-		local text		= ""
-		viewManager.showPopup(title, text, function() end)
+		viewManager.showPopup()
 
-		viewManager.newText({
+   	hud.popup.congratz 			= display.newImage( hud.popup, I "popup.Txt1.png")  
+   	hud.popup.congratz.x 		= display.contentWidth*0.5
+   	hud.popup.congratz.y			= display.contentHeight*0.25
+   	
+   	hud.popup.earnText = viewManager.newText({
+   		parent 			= hud.popup,
+   		text 				= T "You have earned" .. " :", 
+   		fontSize			= 54,  
+   		x 					= display.contentWidth * 0.5,
+   		y 					= display.contentHeight*0.3,
+   	})
+
+		hud.popup.pointsText = viewManager.newText({
 			parent 			= hud.popup, 
 			text	 			= points .. " pts",     
 			x 					= display.contentWidth*0.5,
 			y 					= display.contentHeight*0.4,
-			fontSize 		= 120,
+			fontSize 		= 90,
 		})
 
 		if(math.floor(points/POINTS_TO_EARN_A_TICKET) > 0) then
+
 			viewManager.newText({
 				parent 			= hud.popup, 
 				text	 			= "=",     
@@ -256,6 +269,19 @@ function UserManager:checkIdlePoints()
 				y 					= display.contentHeight*0.5,
 				fontSize 		= 90,
 			})
+			
+			if(points == POINTS_TO_EARN_A_TICKET) then
+      		hud.popup.iconPoints 			= display.newImage( hud.popup, "assets/images/icons/Points.png")
+      		hud.popup.iconPoints.x 			= display.contentWidth*0.37
+      		hud.popup.iconPoints.y 			= display.contentHeight*0.41
+         	
+         	hud.popup.pointsText:setReferencePoint(display.CenterLeftReferencePoint);
+      		hud.popup.pointsText.x			= display.contentWidth*0.48
+   		end
+
+			hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/instant.ticket.png")
+			hud.popup.iconTicket.x 			= display.contentWidth*0.3
+			hud.popup.iconTicket.y 			= display.contentHeight*0.605
 
 			local plural = ""
 			local nbTickets = math.floor(points/POINTS_TO_EARN_A_TICKET)
@@ -263,68 +289,39 @@ function UserManager:checkIdlePoints()
 
 			viewManager.newText({
 				parent 			= hud.popup, 
-				text	 			= nbTickets .. " ticket" .. plural,     
+				text	 			= nbTickets .. " " .. T "Instant Ticket" .. plural,     
 				x 					= display.contentWidth*0.4,
-				y 					= display.contentHeight*0.6,
-				fontSize 		= 80,
+				y 					= display.contentHeight*0.605,
+				fontSize 		= 40,
+				font 				= NUM_FONT,
+				referencePoint = display.CenterLeftReferencePoint 
 			})
-
-			hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
-			hud.popup.iconTicket.x 			= display.contentWidth*0.65
-			hud.popup.iconTicket.y 			= display.contentHeight*0.605
-			hud.popup.iconTicket:scale(1.5,1.5)
 		end
 
-		userManager:convertIdlePoints() 
+		--------------------------
+		
+		local onClose = nil
+		
+		if(userManager.user.idlePoints > 0) then
+   		userManager:convertIdlePoints()
+   		onClose = function() 
+   			viewManager.closePopup() 
+   		end 
+   	else
+   		onClose = function() 
+   			viewManager.closePopup()
+      		userManager:convertCurrentPoints()
+   		end
+		end
 
-		viewManager.drawButton(hud.popup, T "Close", display.contentWidth*0.5, display.contentHeight *0.7, function() 
-			utils.emptyGroup(hud.popup)
-		end)
+		--------------------------
 
+		hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+		hud.popup.close.x 			= display.contentWidth*0.5
+		hud.popup.close.y 			= display.contentHeight*0.75
 
-	elseif(userManager.user.currentPoints >= POINTS_TO_EARN_A_TICKET) then
-		local title 	= T "You've earned an Extra Ticket" .. " !"
-		local text		= ""
-		viewManager.showPopup(title, text, function() end)
+		utils.onTouch(hud.popup.close, onClose)
 
-		hud.popup.iconPoints 			= display.newImage( hud.popup, "assets/images/points/points.".. POINTS_TO_EARN_A_TICKET .. ".png")
-		hud.popup.iconPoints.x 			= display.contentWidth*0.3
-		hud.popup.iconPoints.y 			= display.contentHeight*0.41
-		hud.popup.iconPoints:scale(1.5,1.5)
-
-		viewManager.newText({
-			parent 			= hud.popup, 
-			text	 			= POINTS_TO_EARN_A_TICKET .. " pts",     
-			x 					= display.contentWidth*0.6,
-			y 					= display.contentHeight*0.4,
-			fontSize 		= 120,
-		})
-
-		viewManager.newText({
-			parent 			= hud.popup, 
-			text	 			= "=",     
-			x 					= display.contentWidth*0.5,
-			y 					= display.contentHeight*0.5,
-			fontSize 		= 90,
-		})
-
-		viewManager.newText({
-			parent 			= hud.popup, 
-			text	 			= "1 ticket",     
-			x 					= display.contentWidth*0.4,
-			y 					= display.contentHeight*0.6,
-			fontSize 		= 80,
-		})
-
-		hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
-		hud.popup.iconTicket.x 			= display.contentWidth*0.65
-		hud.popup.iconTicket.y 			= display.contentHeight*0.605
-		hud.popup.iconTicket:scale(1.5,1.5)
-
-		viewManager.drawButton(hud.popup, T "Close", display.contentWidth*0.5, display.contentHeight *0.7, function() 
-			utils.emptyGroup(hud.popup) 
-   		userManager:convertCurrentPoints()
-		end)
 
 	end
 end
