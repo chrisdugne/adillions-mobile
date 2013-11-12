@@ -336,23 +336,29 @@ function postOnWall(message, next)
 
 	if(GLOBALS.savedData.facebookAccessToken) then
 
-		print("--- true")
 		native.setActivityIndicator( true )
 
 		local url = "https://graph.facebook.com/"..userManager.user.facebookId .."/feed?method=post&message="..utils.urlEncode(message).."&access_token=" .. GLOBALS.savedData.facebookAccessToken
 		print (url)
 		network.request(url , "GET", function(result)
 			native.setActivityIndicator( false )
-			print("--- false")
 			local response = json.decode(result.response)
 			utils.tprint(response)
-			print(response.error.code)
 
-			if(response.id) then
+			if(response.id ~= nil) then
+   			print("---> next !")
 				next()
 			elseif(response.error.code == 200) then
-				facebook.reloginDone = null
-				coronaFacebook.login( FACEBOOK_APP_ID, askPermissionListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )   			
+				facebook.reloginDone = nil
+				coronaFacebook.login( FACEBOOK_APP_ID, askPermissionListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
+			else   			
+   			print(response.id)
+   			
+   			if(response.error ~= nil) then
+   				print(response.error.code)
+   			end
+   			
+   			print("???")
 			end
 
 		end)

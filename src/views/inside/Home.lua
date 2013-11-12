@@ -33,7 +33,7 @@ function scene:refreshScene()
 	hud.subheaderText.y 		= HEADER_HEIGHT * 1.4
 	
 	
-	local subheaderAnimConfig 	= require("src.tools.Subheader")
+	local subheaderAnimConfig 	= require("src.tools.Subheader_"..LANG)
 	local subheaderSheet 		= graphics.newImageSheet( "assets/images/subheader/anim.sheet."..LANG..".png", subheaderAnimConfig.sheet )
 
    hud.subheaderAnim 		= display.newSprite( hud, subheaderSheet, subheaderAnimConfig:newSequence() )
@@ -41,8 +41,8 @@ function scene:refreshScene()
    hud.subheaderAnim.y 		= HEADER_HEIGHT * 1.8
 
 	hud.subheaderArrow 		= display.newImage(hud, "assets/images/subheader/Fleche.png")
-	hud.subheaderArrow.x 	= display.contentWidth*0.715
-	hud.subheaderArrow.y 	= HEADER_HEIGHT * 1.805
+	hud.subheaderArrow.x 	= display.contentWidth*0.5 + hud.subheaderAnim.contentWidth/2 + 20
+	hud.subheaderArrow.y 	= HEADER_HEIGHT * 1.82
 	
 	self:animateSubheader()
 
@@ -110,22 +110,35 @@ function scene:drawNextLottery( event )
 	local priceX
 	
 	if(lotteryManager.nextLottery.nbPlayers > lotteryManager.nextLottery.toolPlayers) then
-		priceX = display.contentWidth*0.47
+		priceX = display.contentWidth*0.5
 	else
 		priceX = display.contentWidth*0.58
 	end
 	
-	local price = lotteryManager:price(lotteryManager.nextLottery)
+	-------------------------------
 
 	viewManager.newText({
 		parent = hud, 
-		text = price,     
-		x = priceX,
+		text = 'US$',     
+		x = priceX - 200,
 		y = top + display.contentHeight*0.08,
 		fontSize = 73,
 		font = NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
 	})
+	
+	hud.priceDisplay = viewManager.newText({
+		parent = hud, 
+		text = '0',     
+		x = priceX - 35,
+		y = top + display.contentHeight*0.08,
+		fontSize = 73,
+		font = NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+	hud.priceCurrentDisplay = 0
+	viewManager.animatePrice()
 
 	-------------------------------
 	
@@ -138,19 +151,19 @@ function scene:drawNextLottery( event )
 	if(lotteryManager.nextLottery.nbPlayers > lotteryManager.nextLottery.toolPlayers) then	
 	
    	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
-   	hud.separateur.x = display.contentWidth*0.65
+   	hud.separateur.x = display.contentWidth*0.7
    	hud.separateur.y = top + display.contentHeight*0.08
    	
    	-------------------------------
    
    	hud.pictoPlayers = display.newImage( hud, "assets/images/icons/players.png")  
-   	hud.pictoPlayers.x = display.contentWidth*0.75
+   	hud.pictoPlayers.x = display.contentWidth*0.8
    	hud.pictoPlayers.y = top + display.contentHeight*0.05
    	
    	viewManager.newText({
    		parent = hud, 
    		text = T "Players" .. " :", 
-   		x = display.contentWidth*0.75,
+   		x = display.contentWidth*0.8,
    		y = top + display.contentHeight*0.08,
    		fontSize = 24,
    	})
@@ -158,7 +171,7 @@ function scene:drawNextLottery( event )
    	viewManager.newText({
    		parent = hud, 
    		text = lotteryManager.nextLottery.nbPlayers , 
-   		x = display.contentWidth*0.75,
+   		x = display.contentWidth*0.8,
    		y = top + display.contentHeight*0.11,
    		fontSize = 43,
    		font = NUM_FONT
@@ -196,7 +209,7 @@ end
 
 function scene:play( )
 	if(lotteryManager:isGameAvailable()) then
-		videoManager:play(router.openFillLotteryTicket)
+		videoManager:play(router.openFillLotteryTicket, true)
    else
    	shareManager:noMoreTickets()
 	end

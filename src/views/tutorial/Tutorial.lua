@@ -165,7 +165,7 @@ end
 
 function scene:createTuto2()
 
-	hud.tuto2.bg 		= display.newImageRect( hud.tuto2, "assets/images/hud/Tuto_2_Bg.png", display.contentWidth, display.contentHeight*0.88)  
+	hud.tuto2.bg 		= display.newImageRect( hud.tuto2, "assets/images/hud/Tuto_2_Bg.jpg", display.contentWidth, display.contentHeight*0.88)  
 	hud.tuto2.bg.x	 	= display.viewableContentWidth*0.5 
 	hud.tuto2.bg.y 	= display.viewableContentHeight*0.44
 	
@@ -197,7 +197,7 @@ function scene:createTuto2()
 
 	hud.tuto2.obtain = viewManager.newText({
 		parent 			= hud.tuto2,
-		text 				= T "Obtain a lottery ticket", 
+		text 				= T "Get a lottery ticket", 
 		fontSize			= 39,  
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.52

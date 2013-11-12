@@ -272,6 +272,25 @@ end
 
 ------------------------------------------------------------------
 
+function animatePrice()
+	
+	timer.performWithDelay(20, function()
+   	local lotteryPrice = lotteryManager:priceInt(lotteryManager.nextLottery)
+		hud.priceCurrentDisplay = math.floor(hud.priceCurrentDisplay + lotteryPrice/13)
+		
+		if(hud.priceCurrentDisplay >= lotteryPrice) then
+			hud.priceCurrentDisplay = lotteryPrice 		
+		else
+   		animatePrice()
+   	end
+		
+		hud.priceDisplay.text = hud.priceCurrentDisplay
+		
+	end)
+end
+
+------------------------------------------------------------------
+
 function newText(options)
 
 	local finalOptions = {}

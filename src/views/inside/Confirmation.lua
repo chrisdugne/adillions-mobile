@@ -153,7 +153,7 @@ end
 ------------------------------------------
 
 function scene:play()
-	videoManager:play(router.openFillLotteryTicket)
+	videoManager:play(router.openFillLotteryTicket, true)
 end
 
 ------------------------------------------

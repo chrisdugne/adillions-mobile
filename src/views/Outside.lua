@@ -22,13 +22,34 @@ end
 
 function scene:refreshScene()
 
-	hud.bg = display.newImageRect( hud, "assets/images/hud/Tuto_2_Bg.png", display.contentWidth, display.contentHeight)  
+	hud.bg = display.newImageRect( hud, "assets/images/hud/SignUp_Bg.jpg", display.contentWidth, display.contentHeight)  
 	hud.bg.x = display.viewableContentWidth*0.5 
 	hud.bg.y = display.viewableContentHeight*0.5
 
 	hud.logo = display.newImage( hud, "assets/images/hud/Sign_Logo.png")  
 	hud.logo.x = display.contentWidth*0.5 
 	hud.logo.y = display.contentHeight*0.15
+
+	hud.logo = display.newImage( hud, "assets/images/hud/SignUp_Earth.png")  
+	hud.logo.x = display.contentWidth*0.5 
+	hud.logo.y = display.contentHeight*0.38
+	
+	hud.logo = display.newImage( hud, "assets/images/hud/SignUp_BigBall.png")  
+	hud.logo.x = display.contentWidth*0.27 
+	hud.logo.y = display.contentHeight*0.38
+
+	hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall.png")  
+	hud.logo.x = display.contentWidth*0.17 
+	hud.logo.y = display.contentHeight*0.04
+
+	hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall2.png")  
+	hud.logo.x = display.contentWidth*0.96 
+	hud.logo.y = display.contentHeight*0.25
+
+	hud.logo = display.newImage( hud, "assets/images/hud/SignUp_SmallBall.png")  
+	hud.logo.x = display.contentWidth*0.9 
+	hud.logo.y = display.contentHeight*0.05
+
 	
 	---------------------------------------------------------------
 	

@@ -19,8 +19,9 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	local title 		= utils.urlEncode("Join me on Adillions !")
-	local message 		= utils.urlEncode("Watch ads, and win real money, it's free !")
+	
+	local title 		= utils.urlEncode(T "Join me on Adillions !")
+	local message 		= utils.urlEncode(T "Free, fun and easy - Sign up now using my sponsorship code : " .. userManager.user.sponsorCode)
 	local redirect_uri = utils.urlEncode(SERVER_URL.."backToMobile")
 	local url = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorCode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
 	

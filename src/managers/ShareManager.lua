@@ -320,9 +320,20 @@ end
 
 function ShareManager:sms()
 	analytics.event("Social", "askSMS") 
+
+	local body = T "Join me on Adillions and get a chance to win the jackpot !" 
+	body = body .. "\n\n" 
+	body = body .. T "Free, fun and easy - Sign up now using my sponsorship code : " 
+	body = body .. userManager.user.sponsorCode
+	body = body .. "\n\n" 
+	body = body .. T "More players = a bigger jackpot !"
+	body = body .. "\n\n" 
+	body = body .. T "Dowload the free app on the App Store or Google Play / Play on Facebook and on www.adillions.com"
+	body = body .. "\n\n" 
+	body = body .. T "Adillions in a few words: A global, responsible and viral lottery funded by advertising" 
 	
 	local options = {
-		body = "_Join me on www.adillions.com !\n Please use my sponsor code when you sign in : " .. userManager.user.sponsorCode
+		body = body
 	}
 
 	native.showPopup("sms", options)
@@ -332,10 +343,23 @@ end
 
 function ShareManager:email()
 	analytics.event("Social", "askEmail")
+
+	local body = "<html><body>" 
+	body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
+	body = body .. "<br/><br/>" 
+	body = body .. T "Free, fun and easy - Sign up now using my sponsorship code : " 
+	body = body .. userManager.user.sponsorCode
+	body = body .. "<br/><br/>" 
+	body = body .. T "More players = a bigger jackpot !"
+	body = body .. "<br/><br/>" 
+	body = body .. T "Dowload the free app on the App Store or Google Play / Play on Facebook and on www.adillions.com"
+	body = body .. "<br/><br/>" 
+	body = body .. T "Adillions in a few words: A global, responsible and viral lottery funded by advertising" 
+	body = body .. "</body></html>" 
 	 
 	local options =
 	{
-		body = "<html><body>_Join me on <a href='http://www.adillions.com'>Adillions</a> !<br/> Please use my sponsor code when you sign in : " .. userManager.user.sponsorCode .. "</body></html>",
+		body = body,
 		isBodyHtml = true,
 		subject = "Adillions",
 	}
@@ -347,69 +371,42 @@ end
 
 function ShareManager:shareOnWall()
 	
-	facebook.postOnWall("I've just played a ticket on Adillions !\n Next Lottery : ".. lotteryManager:date(lotteryManager.nextLottery) .." \n_Join me there and please use my sponsor code when you sign in : " .. userManager.user.sponsorCode, function()
-		
-		viewManager.showPopup(T "Thank you" .. "  !", T "Successfully posted on your wall !", function()
-			if(not userManager.user.hasPostOnFacebook) then
-      		viewManager.showPoints(NB_POINTS_PER_POST)
-	   		userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_POST
-   			userManager.user.hasPostOnFacebook = true
-   			userManager:updatePlayer()
---   			userManager:checkIdlePoints() fait au retour de updatePlayer non ?
-   		end 
-		end)
-		
-		hud.popup.facebookIcon 			= display.newImage( hud.popup, "assets/images/icons/facebook.png")  
-   	hud.popup.facebookIcon.x 		= display.contentWidth*0.5
-   	hud.popup.facebookIcon.y			= display.contentHeight*0.5
-   	hud.popup.facebookIcon:scale(1.5,1.5)
-		
+	local text = T "I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot !" 
+	text = text .. "\n\n" 
+	text = text .. T "Dowload the free app on the App Store or Google Play or play on Facebook and on www.adillions.com" 
+	text = text .. "\n\n" 
+	text = text .. T "Adillions in a few words: A global, responsible and viral lottery funded by advertising"
+	
+	facebook.postOnWall(text, function()
+	
+		print("---> postOnWall next")
+		viewManager.closePopup()
+		viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
+		if(not userManager.user.hasPostOnFacebook) then
+			viewManager.showPoints(NB_POINTS_PER_POST)
+			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_POST
+			userManager.user.hasPostOnFacebook = true
+			userManager:updatePlayer()
+		end 
 	end)
 end
 
 -----------------------------------------------------------------------------------------
 
-function ShareManager:tweetInvite()
-	
-	twitter.tweetMessage("_Join me on www.adillions.com !\n Please use my sponsor code when you sign in : " .. userManager.user.sponsorCode, function()
-		
-		viewManager.showPopup(T "Thank you" .. " !", T "Successfully tweeted", function()
-			if(not userManager.user.hasTweetAnInvite) then
-      		viewManager.showPoints(NB_POINTS_PER_TWEET)
-      		userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_TWEET
-   			userManager.user.hasTweetAnInvite = true
-   			userManager:updatePlayer()
---   			userManager:checkIdlePoints() fait au retour de updatePlayer non ?
-   		end
-		end)
-		
-		hud.popup.twitterIcon 			= display.newImage( hud.popup, "assets/images/icons/twitter.png")  
-   	hud.popup.twitterIcon.x 		= display.contentWidth*0.5
-   	hud.popup.twitterIcon.y			= display.contentHeight*0.5
-   	hud.popup.twitterIcon:scale(1.5,1.5)
-		
-	end)
-end
-
 function ShareManager:tweetShare()
-	
-	twitter.tweetMessage("_I've just played a ticket on Adillions !\n Join me and please use my sponsor code when you sign in : " .. userManager.user.sponsorCode, function()
-	
-		viewManager.showPopup(T "Thank you" .. " !", T "Successfully tweeted", function()
-			if(not userManager.user.hasTweet) then
-   			viewManager.showPoints(NB_POINTS_PER_TWEET)
-   			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_TWEET
-   			userManager.user.hasTweet = true
-   			userManager:updatePlayer()
-   			userManager:checkIdlePoints()
-   		end 
-		end)
-		
-		hud.popup.twitterIcon 			= display.newImage( hud.popup, "assets/images/icons/twitter.png")  
-   	hud.popup.twitterIcon.x 		= display.contentWidth*0.5
-   	hud.popup.twitterIcon.y			= display.contentHeight*0.5
-   	hud.popup.twitterIcon:scale(1.5,1.5)
-   	
+
+	local text = T "I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot !" .. "\n www.adillions.com"
+
+	twitter.tweetMessage(text, function()
+
+		viewManager.closePopup()
+		viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
+		if(not userManager.user.hasTweet) then
+			viewManager.showPoints(NB_POINTS_PER_TWEET)
+			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_TWEET
+			userManager.user.hasTweet = true
+			userManager:updatePlayer()
+		end 
 	end)
 end
 
