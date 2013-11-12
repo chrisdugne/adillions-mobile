@@ -272,20 +272,26 @@ end
 
 ------------------------------------------------------------------
 
-function animatePrice()
+function animatePrice(nextMillis)
 	
-	timer.performWithDelay(20, function()
+	if(not nextMillis) then nextMillis = 3 end
+	
+	timer.performWithDelay(nextMillis, function()
    	local lotteryPrice = lotteryManager:priceInt(lotteryManager.nextLottery)
-		hud.priceCurrentDisplay = math.floor(hud.priceCurrentDisplay + lotteryPrice/13)
+   	local ratio = (20 * lotteryPrice)/(lotteryPrice - hud.priceCurrentDisplay)
+   	local toAdd = math.floor(lotteryPrice/ratio)
+   	if(toAdd == 0) then toAdd = 1 end
+   	
+		hud.priceCurrentDisplay = hud.priceCurrentDisplay + toAdd 
 		
 		if(hud.priceCurrentDisplay >= lotteryPrice) then
 			hud.priceCurrentDisplay = lotteryPrice 		
 		else
-   		animatePrice()
+			nextMillis = 1000/(lotteryPrice - hud.priceCurrentDisplay)
+   		animatePrice(nextMillis)
    	end
 		
 		hud.priceDisplay.text = hud.priceCurrentDisplay
-		
 	end)
 end
 
