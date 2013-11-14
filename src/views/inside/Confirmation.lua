@@ -24,24 +24,23 @@ end
 function scene:refreshScene()
 
 	-------------------------------
+	viewManager.newText({
+		parent = hud, 
+		text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery), 
+		x = display.contentWidth*0.5,
+		y = display.contentHeight*0.13,
+		fontSize = 33,
+		font = NUM_FONT,
+	})
 
 	viewManager.newText({
 		parent = hud, 
 		text = T ("Your selection !"), 
-		x = display.contentWidth*0.05,
-		y = display.contentHeight*0.12,
+		x = display.contentWidth*0.5,
+		y = display.contentHeight*0.175,
 		fontSize = 43,
-		referencePoint = display.CenterLeftReferencePoint
 	})
 	
-	viewManager.newText({
-		parent = hud, 
-		text = T("Drawing") .. " " .. lotteryManager:date(lotteryManager.nextLottery), 
-		x = display.contentWidth*0.05,
-		y = display.contentHeight*0.15,
-		fontSize = 23,
-		referencePoint = display.CenterLeftReferencePoint
-	})
 	
 	-------------------------------
 
@@ -51,7 +50,7 @@ function scene:refreshScene()
 
 	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.horizontal.png")  
 	hud.separateur.x = display.contentWidth*0.5
-	hud.separateur.y = display.contentHeight*0.3
+	hud.separateur.y = display.contentHeight*0.34
 	
 	-------------------------------
 
@@ -64,31 +63,33 @@ function scene:refreshScene()
 	end
 
 	hud.pictoTicket = display.newImage( hud, "assets/images/icons/ticket.png")  
-	hud.pictoTicket.x = display.contentWidth*0.5
-	hud.pictoTicket.y = display.contentHeight*0.35
+	hud.pictoTicket.x = display.contentWidth*0.62
+	hud.pictoTicket.y = display.contentHeight*0.38
 	
 	viewManager.newText({
 		parent = hud, 
-		text = T "Tickets to play" .. " :", 
+		text = T "Remaining tickets" .. " :", 
 		x = display.contentWidth*0.5,
 		y = display.contentHeight*0.38,
 		fontSize = 24,
+		referencePoint = display.CenterRightReferencePoint
 	})
 	
 	viewManager.newText({
 		parent = hud, 
 		text = nbTickets, 
-		x = display.contentWidth*0.5,
-		y = display.contentHeight*0.41,
+		x = display.contentWidth*0.57,
+		y = display.contentHeight*0.38,
 		fontSize = 43,
-		font = NUM_FONT
+		font = NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
 	})
 
 	-------------------------------
 
 	hud.playButton = display.newImage( hud, I "filloutnewticket.button.png")  
 	hud.playButton.x = display.contentWidth*0.5
-	hud.playButton.y = display.contentHeight*0.5
+	hud.playButton.y = display.contentHeight*0.48
 	
 	if(nbTickets > 0) then
    	utils.onTouch(hud.playButton, function()
@@ -106,11 +107,11 @@ function scene:refreshScene()
 
 	hud.separateur2 = display.newImage( hud, "assets/images/icons/separateur.horizontal.png")  
 	hud.separateur2.x = display.contentWidth*0.5
-	hud.separateur2.y = display.contentHeight*0.6
+	hud.separateur2.y = display.contentHeight*0.56
 	
 	hud.more = display.newImage( hud, I "more.png")  
 	hud.more.x = display.contentWidth*0.5
-	hud.more.y = display.contentHeight*0.65
+	hud.more.y = display.contentHeight*0.63
 
 	-------------------------------
 

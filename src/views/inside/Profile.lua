@@ -32,21 +32,52 @@ function scene:drawScene()
 
 	------------------
 
-	local statusTop 			= 0
-	local detailsTop 			= 7.5
-	local socialTop 			= 15
-	local sponsorTop 			= 28
-	local logoutTop 			= 39
+	local statusTop 			= 3
+	local gainsTop 			= 10.5
+	local detailsTop 			= 20
+	local socialTop 			= 27
+	local sponsorTop 			= 40
+	local logoutTop 			= 49
 		
 	------------------
 
-	self.top 				= HEADER_HEIGHT + 70
+	self.top 				= HEADER_HEIGHT + display.contentHeight*0.1
 	self.yGap 				= 60
-	self.fontSizeLeft 	= 27
-	self.fontSizeRight 	= 29
+	self.fontSizeLeft 	= 37
+	self.fontSizeRight 	= 35
 
-	self.column1 = display.contentWidth*0.1
+	self.column1 = display.contentWidth*0.07
 	self.column2 = display.contentWidth*0.9 
+	
+	---------------------------------------------------------------
+	-- Top picture
+	---------------------------------------------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= userManager.user.userName,         
+		x 					= display.contentWidth*0.4,
+		y 					= self.top + display.contentHeight*0.02,
+		fontSize 		= 35,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+
+	if(userManager.user.facebookId) then
+   	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)
+   		local picture = event.target	
+   		hud.board:insert(picture)
+   		picture.x = display.contentWidth*0.2
+   		picture.y = self.top + display.contentHeight*0.02
+   	end, 
+   	"profilePicture", system.TemporaryDirectory)
+   else
+   	hud.dummyPicture 			= display.newImage( hud.board, "assets/images/hud/dummy.profile.png")
+   	hud.dummyPicture.x 		= display.contentWidth*0.2
+   	hud.dummyPicture.y 		= self.top + display.contentHeight*0.02
+   	hud.board:insert(hud.dummyPicture)
+   	
+	end
 	
 	---------------------------------------------------------------
 	-- Personal Details
@@ -64,15 +95,11 @@ function scene:drawScene()
 	hud.board:insert(hud.titleDetails)
 
 	------------------
-
-	self:drawTextEntry(T "User name" .. " : ", userManager.user.userName, detailsTop+1.5, 27, 27)
-
-	------------------
 	
-	self:drawTextEntry(T "First name" 	.. " : ", userManager.user.firstName, detailsTop+2.5)
-	self:drawTextEntry(T "Last name" 	.. " : ", userManager.user.lastName, detailsTop+3.5)
-	self:drawTextEntry(T "Email" 			.. " : ", userManager.user.email, detailsTop+4.5)
-	self:drawTextEntry(T "Birthday" 		.. " : ", utils.readableDate(utils.userManager.user.birthDate), detailsTop+5.5)
+	self:drawTextEntry(T "First name" 	.. " : ", userManager.user.firstName, detailsTop+2)
+	self:drawTextEntry(T "Last name" 	.. " : ", userManager.user.lastName, detailsTop+3)
+	self:drawTextEntry(T "Email" 			.. " : ", userManager.user.email, detailsTop+4)
+	self:drawTextEntry(T "Birthday" 		.. " : ", utils.readableDate(utils.userManager.user.birthDate), detailsTop+5)
 
 	---------------------------------------------------------------
 	-- Status
@@ -102,40 +129,13 @@ function scene:drawScene()
 
 	viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= userManager.user.totalPoints .. " Pts",     
-		x 					= self.column1,
+		text	 			= userManager.user.totalPoints .. " pts",     
+		x 					= self.column1 + display.contentWidth*0.05,
 		y 					= self.top + self.yGap*(statusTop+2),
 		fontSize 		= 40,
 		font				= NUM_FONT,
 		referencePoint = display.CenterLeftReferencePoint
 	})
-	
-	--------------------------
-	
-	viewManager.newText({
-		parent 			= hud.board, 
-		text 				= T "Total gains" .. " : ",         
-		x 					= self.column2,
-		y 					= self.top + self.yGap*(statusTop+1),
-		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterRightReferencePoint
-	})
-
-	viewManager.newText({
-		parent 			= hud.board, 
-		text	 			= "US$ " .. userManager.user.totalGains ,     
-		x 					= self.column2 - 50,
-		y 					= self.top + self.yGap*(statusTop+2),
-		fontSize 		= self.fontSizeRight,
-		font				= NUM_FONT,
-		fontSize 		= 40,
-		referencePoint = display.CenterRightReferencePoint
-	})
-	
-	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/money.png")
-	hud.iconMoney.x 		= self.column2 
-	hud.iconMoney.y 		= self.top + self.yGap*(statusTop+2)
-	hud.board:insert(hud.iconMoney)
 	
 	--------------------------
 	
@@ -143,22 +143,22 @@ function scene:drawScene()
 		parent 			= hud.board, 
 		text 				= T "Bonus tickets" .. " : ",         
 		x 					= self.column2,
-		y 					= self.top + self.yGap*(statusTop+3.5),
+		y 					= self.top + self.yGap*(statusTop+1),
 		fontSize 		= self.fontSizeLeft,
 		referencePoint = display.CenterRightReferencePoint
 	})
 
 
-	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/ticket.png")
-	hud.iconTicket.x 			= self.column2 - 30
-	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+4.5)
+	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")
+	hud.iconTicket.x 			= self.column2 - display.contentWidth*0.05
+	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+2) + display.contentHeight*0.005
 	hud.board:insert(hud.iconTicket)
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= "+ " .. userManager.user.totalBonusTickets,     
-		x 					= self.column2,
-		y 					= self.top + self.yGap*(statusTop+5.5),
+		text	 			= userManager.user.totalBonusTickets,     
+		x 					= self.column2 - display.contentWidth*0.11,
+		y 					= self.top + self.yGap*(statusTop+2),
 		fontSize 		= self.fontSizeRight,
 		font				= NUM_FONT,
 		fontSize 		= 40,
@@ -169,32 +169,163 @@ function scene:drawScene()
 
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Charity" .. " : ",         
+		text 				= T "Charity profile",            
 		x 					= self.column1,
 		y 					= self.top + self.yGap*(statusTop+3.5),
 		fontSize 		= self.fontSizeLeft,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 
+	for i=1,5 do 
+   	hud.iconCharity 			= display.newImage( hud.board, "assets/images/icons/CharitiesOFF.png")
+   	hud.iconCharity.x 		= display.contentWidth*0.05 + i * display.contentWidth*0.05  
+   	hud.iconCharity.y 		= self.top + self.yGap*(statusTop+4.5)
+   	hud.board:insert(hud.iconCharity)
+	end
 
-	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/charity.png")
-	hud.iconTicket.x 			= self.column1 + 30
-	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+4.5)
-	hud.board:insert(hud.iconTicket)
+	hud.iconCharity 			= display.newImage( hud.board, "assets/images/icons/CharitiesON.png")
+	hud.iconCharity.x 		= display.contentWidth*0.1 
+	hud.iconCharity.y 		= self.top + self.yGap*(statusTop+4.5)
+	hud.board:insert(hud.iconCharity)
 	
 	local charity = {"Starter"}
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= T(charity[1]),     
-		x 					= self.column1,
-		y 					= self.top + self.yGap*(statusTop+5.7),
+		text	 			= T(charity[1]),              
+		x 					= self.column1 + display.contentWidth*0.07,
+		y 					= self.top + self.yGap*(statusTop+5.5),
 		fontSize 		= self.fontSizeRight,
-		font				= NUM_FONT,
 		fontSize 		= 30,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 	
+	
+	--------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Donation" .. " : ",         
+		x 					= self.column2,
+		y 					= self.top + self.yGap*(statusTop+3.5),
+		fontSize 		= self.fontSizeLeft,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= utils.displayPrice(userManager.user.totalGift, COUNTRY) ,        
+		x 					= self.column2,
+		y 					= self.top + self.yGap*(statusTop+4.5),
+		font				= NUM_FONT,
+		fontSize 		= 40,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+	
+	---------------------------------------------------------------
+	-- Gains
+	---------------------------------------------------------------
+	
+	hud.lineGains 			= display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
+	hud.lineGains.x 			= display.contentWidth*0.5
+	hud.lineGains.y 			= self.top + self.yGap*gainsTop
+	hud.board:insert(hud.lineGains)
+
+	hud.titleGains 			= display.newImage( hud.board, I "Gain.png")  
+	hud.titleGains:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.titleGains.x 		= display.contentWidth*0.05
+	hud.titleGains.y			= self.top + self.yGap*gainsTop
+	hud.board:insert(hud.titleGains)
+	
+	--------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Total gains" .. " : ",         
+		x 					= self.column1,
+		y 					= self.top + self.yGap*(gainsTop+1),
+		fontSize 		= self.fontSizeLeft,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= utils.displayPrice(userManager.user.totalGains, COUNTRY) ,   
+		x 					= self.column1 + display.contentWidth*0.26, 
+		y 					= self.top + self.yGap*(gainsTop+2),
+		fontSize 		= 40,
+		font				= NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/money.png")
+	hud.iconMoney.x 		= self.column1 + display.contentWidth*0.31
+	hud.iconMoney.y 		= self.top + self.yGap*(gainsTop+2) - display.contentHeight*0.004
+	hud.board:insert(hud.iconMoney)
+	
+	--------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Gains payed" .. " : ",         
+		x 					= self.column2,
+		y 					= self.top + self.yGap*(gainsTop+1),
+		fontSize 		= self.fontSizeLeft,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= utils.displayPrice(userManager.user.receivedGains, COUNTRY) ,     
+		x 					= self.column2 -  display.contentWidth*0.07,
+		y 					= self.top + self.yGap*(gainsTop+2),
+		fontSize 		= self.fontSizeRight,
+		font				= NUM_FONT,
+		fontSize 		= 40,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/PictogainPayed.png")
+	hud.iconMoney.x 		= self.column2 
+	hud.iconMoney.y 		= self.top + self.yGap*(gainsTop+2)
+	hud.board:insert(hud.iconMoney)
+	
+	--------------------------
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= T "Gains balance" .. " : ",         
+		x 					= display.contentWidth*0.5,
+		y 					= self.top + self.yGap*(gainsTop+4),
+		fontSize 		= self.fontSizeLeft,
+	})
+
+	local totalGainsText = viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= utils.displayPrice(userManager.user.balance, COUNTRY) .. " (" .. utils.displayPrice(userManager.user.pendingGains, COUNTRY) .. ")",   
+		x 					= display.contentWidth*0.35 + display.contentWidth*0.26, 
+		y 					= self.top + self.yGap*(gainsTop+5),
+		fontSize 		= 35,
+		font				= NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/PictoBalance.png")
+	hud.iconMoney.x 		= display.contentWidth*0.35 + display.contentWidth*0.31
+	hud.iconMoney.y 		= self.top + self.yGap*(gainsTop+5) - display.contentHeight*0.004
+	hud.board:insert(hud.iconMoney)
+
+	--------------------------
+	
+   hud.cashout 		= display.newImage( hud.board, I "cashout.button.png")  
+   hud.cashout.x 		= display.contentWidth*0.5
+   hud.cashout.y		= self.top + self.yGap*(gainsTop+7.5)
+   hud.board:insert(hud.cashout)
+
+	utils.onTouch(hud.cashout, function() 
+		print ("cashout todo")
+	end)
 	
 	---------------------------------------------------------------
 	-- SOCIALS
@@ -215,26 +346,19 @@ function scene:drawScene()
 	-- FACEBOOK
 	---------------------------------------------------------------
 	
-	local facebookLinkedState 		= "off"
-	local facebookConnectedState 	= "off"
-	local facebookFanState 			= "off"
-
-	local facebookLinkedTitle 		= T "Account not linked"
-	local facebookConnectedTitle 	= T "Not connected"
-	local facebookFanTitle 			= T "Not fan yet"
-
-   hud.facebookConnect 		= display.newImage( hud.board, I "facebook.connect.button.png")  
-   hud.facebookConnect.x 	= display.contentWidth*0.5
-   hud.facebookConnect.y	= self.top + self.yGap*(socialTop+2.5)
-   hud.board:insert(hud.facebookConnect)
-	
 	if(userManager.user.facebookId) then
-		facebookConnectedTitle 	= T "Connected"
-		facebookLinkedTitle 		= T "Account linked"
-		facebookConnectedState 	= "on"
-		facebookLinkedState 		= "on"
+      hud.facebookConnect 		= display.newImage( hud.board, I "facebook.connected.png")  
+		hud.facebookConnect:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.facebookConnect.x 	= display.contentWidth*0.05
+      hud.facebookConnect.y	= self.top + self.yGap*(socialTop+2.5)
+      hud.board:insert(hud.facebookConnect)
 	
    else
+      hud.facebookConnect 		= display.newImage( hud.board, I "facebook.connect.button.png")  
+		hud.facebookConnect:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.facebookConnect.x 	= display.contentWidth*0.05
+      hud.facebookConnect.y	= self.top + self.yGap*(socialTop+2.5)
+      hud.board:insert(hud.facebookConnect)
    
 		utils.onTouch(hud.facebookConnect, function() 
 			facebook.connect(function()
@@ -242,69 +366,98 @@ function scene:drawScene()
 				self:refreshScene()
 			end) 
 		end)
-		
+
 	end
-	
+
 	if(userManager.user.facebookFan) then
 		facebookFanTitle = T "Thank you for being a fan !"
 		facebookFanState = "on"
 
+		hud.facebookLikeDone 		= display.newImage( hud.board, I "facebook.like.done.png") 
+		hud.facebookLikeDone:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.facebookLikeDone.x 	= display.contentWidth*0.05
+		hud.facebookLikeDone.y	= self.top + self.yGap*(socialTop+5.2)
+		hud.board:insert(hud.facebookLikeDone)
 	else
 		if(userManager.user.facebookId) then
-         hud.facebookLike 		= display.newImage( hud.board, I "like.button.png")  
-         hud.facebookLike.x 	= display.contentWidth*0.3
-         hud.facebookLike.y	= self.top + self.yGap*(socialTop+5.2)
-         hud.board:insert(hud.facebookLike)
+			hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")  
+			hud.facebookLike:setReferencePoint(display.CenterLeftReferencePoint)
+			hud.facebookLike.x 	= display.contentWidth*0.05
+			hud.facebookLike.y	= self.top + self.yGap*(socialTop+5.2)
+			hud.board:insert(hud.facebookLike)
 
-   		utils.onTouch(hud.facebookLike, function()
-   			-- todo : listener pour trouver qd revenir ?
-   			local url = "https://www.facebook.com/pages/Adillions/379432705492888"
+			utils.onTouch(hud.facebookLike, function()
+				-- todo : listener pour trouver qd revenir ?
+				local url = "https://www.facebook.com/pages/Adillions/379432705492888"
 				native.showWebPopup(0, 0, display.contentWidth, display.contentHeight, url) 
-   		end)
+			end)
+		else
+			hud.facebookLikeDisabled 		= display.newImage( hud.board, I "facebook.like.disabled.png")
+			hud.facebookLikeDisabled:setReferencePoint(display.CenterLeftReferencePoint)
+			hud.facebookLikeDisabled.x 	= display.contentWidth*0.05
+			hud.facebookLikeDisabled.y	= self.top + self.yGap*(socialTop+5.2)
+			hud.board:insert(hud.facebookLikeDisabled)
+
 		end
 	end
 	
-	self:drawConnection(facebookLinkedTitle, 		facebookLinkedState, 			socialTop+4.3)
-	self:drawConnection(facebookConnectedTitle, 	facebookConnectedState, 		socialTop+5)
-	self:drawConnection(facebookFanTitle, 			facebookFanState, 				socialTop+5.7)
+	----------
+	-- tickets icons
+	
+	local textBonus1 = viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= FACEBOOK_CONNECTION_TICKETS,     
+		x 					= display.contentWidth*0.89,
+		y 					= self.top + self.yGap*(socialTop+2.5),
+		font				= NUM_FONT,
+		fontSize 		= 33,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+   hud.facebookBonus1 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
+   hud.facebookBonus1.x 	= display.contentWidth*0.93
+   hud.facebookBonus1.y		= self.top + self.yGap*(socialTop+2.5)
+   hud.board:insert(hud.facebookBonus1)
 
-	------------------------------
-	-- more to display :
+	local textBonus2 = viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= FACEBOOK_FAN_TICKETS,     
+		x 					= display.contentWidth*0.48,
+		y 					= self.top + self.yGap*(socialTop+5.2),
+		font				= NUM_FONT,
+		fontSize 		= 33,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+   hud.facebookBonus2 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
+   hud.facebookBonus2.x 	= display.contentWidth*0.52
+   hud.facebookBonus2.y		= self.top + self.yGap*(socialTop+5.2)
+   hud.board:insert(hud.facebookBonus2)
 
---      	self:drawTextEntry("_Like us now and get " .. FACEBOOK_FAN_TICKETS .. " more tickets each lottery !", "", facebookTop+0.5 , 27 )
-
---	if(userManager.user.facebookId) then
---   	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)
---   		local picture = event.target	
---   		hud.board:insert(picture)
---   		picture.x = display.contentWidth*0.9
---   		picture.y = self.top + self.yGap*(facebookTop-0.7)
---   	end, 
---   	"profilePicture", system.TemporaryDirectory)
---	end
-
+	utils.setGreen(textBonus1)
+	utils.setGreen(textBonus2)
+	
 	---------------------------------------------------------------
 	-- TWITTER
 	---------------------------------------------------------------
 	
-	local twitterLinkedState 		= "off"
-	local twitterConnectedState 	= "off"
-	local twitterFanState 			= "off"
-
-	local twitterLinkedTitle 		= T "Account not linked"
-	local twitterConnectedTitle 	= T "Not connected"
-	local twitterFanTitle 			= T "Not fan yet"
-
-   hud.twitterConnect 				= display.newImage( hud.board, I "twitter.connect.button.png")  
-   hud.twitterConnect.x 			= display.contentWidth*0.5
-   hud.twitterConnect.y				= self.top + self.yGap*(socialTop+8)
-   hud.board:insert(hud.twitterConnect)
 		
 	if(twitter.connected) then
+      hud.twitterConnect 				= display.newImage( hud.board, I "twitter.connected.png")  
+		hud.twitterConnect:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.twitterConnect.x 	= display.contentWidth*0.05
+      hud.twitterConnect.y				= self.top + self.yGap*(socialTop+8)
+      hud.board:insert(hud.twitterConnect)
+
 		twitterConnectedTitle = T "Connected"
 		twitterConnectedState = "on"
 		
    else
+      hud.twitterConnect 				= display.newImage( hud.board, I "twitter.connect.button.png")  
+		hud.twitterConnect:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.twitterConnect.x 	= display.contentWidth*0.05
+      hud.twitterConnect.y				= self.top + self.yGap*(socialTop+8)
+      hud.board:insert(hud.twitterConnect)
       
 		utils.onTouch(hud.twitterConnect, function() 
 			twitter.connect(function()
@@ -315,18 +468,20 @@ function scene:drawScene()
 			
 	end
 	
-	if(userManager.user.twitterId) then
-		twitterLinkedTitle = T "Account linked"
-		twitterLinkedState = "on"
-	end
-
 	if(userManager.user.twitterFan) then
 		twitterFanTitle = T "Thank you for being a fan !"
 		twitterFanState = "on"
+
+		hud.twitterFollowing 		= display.newImage( hud.board, I "twitter.following.png")  
+		hud.twitterFollowing:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.twitterFollowing.x 	= display.contentWidth*0.05
+		hud.twitterFollowing.y	= self.top + self.yGap*(socialTop+10.7)
+      hud.board:insert(hud.twitterFollowing)
 	else
 		if(twitter.connected) then
-         hud.twitterFollow 		= display.newImage( hud.board, I "follow.button.png")  
-         hud.twitterFollow.x 	= display.contentWidth*0.35
+         hud.twitterFollow 		= display.newImage( hud.board, I "twitter.follow.png") 
+         hud.twitterFollow:setReferencePoint(display.CenterLeftReferencePoint)
+         hud.twitterFollow.x 	= display.contentWidth*0.05
          hud.twitterFollow.y	= self.top + self.yGap*(socialTop+10.7)
          hud.board:insert(hud.twitterFollow)
          
@@ -340,13 +495,51 @@ function scene:drawScene()
    				self:refreshScene()
    			end) 
    		end)
+   	else
+         hud.twitterFollowDisabled 		= display.newImage( hud.board, I "twitter.follow.disabled.png")
+         hud.twitterFollowDisabled:setReferencePoint(display.CenterLeftReferencePoint)
+         hud.twitterFollowDisabled.x 	= display.contentWidth*0.05
+         hud.twitterFollowDisabled.y	= self.top + self.yGap*(socialTop+10.7)
+         hud.board:insert(hud.twitterFollowDisabled)
 		end
 	end
-	
 
-	self:drawConnection(twitterLinkedTitle, 		twitterLinkedState, 			socialTop+9.8)
-	self:drawConnection(twitterConnectedTitle, 	twitterConnectedState, 		socialTop+10.5)
-	self:drawConnection(twitterFanTitle, 			twitterFanState, 				socialTop+11.2)
+
+	----------
+	-- tickets icons
+	
+	local textBonus1 = viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= FACEBOOK_CONNECTION_TICKETS,     
+		x 					= display.contentWidth*0.89,
+		y 					= self.top + self.yGap*(socialTop+8),
+		font				= NUM_FONT,
+		fontSize 		= 33,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+   hud.facebookBonus1 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
+   hud.facebookBonus1.x 	= display.contentWidth*0.93
+   hud.facebookBonus1.y		= self.top + self.yGap*(socialTop+8)
+   hud.board:insert(hud.facebookBonus1)
+
+	local textBonus2 = viewManager.newText({
+		parent 			= hud.board, 
+		text	 			= FACEBOOK_FAN_TICKETS,     
+		x 					= display.contentWidth*0.48,
+		y 					= self.top + self.yGap*(socialTop+10.7),
+		font				= NUM_FONT,
+		fontSize 		= 33,
+		referencePoint = display.CenterRightReferencePoint
+	})
+	
+   hud.facebookBonus2 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
+   hud.facebookBonus2.x 	= display.contentWidth*0.52
+   hud.facebookBonus2.y		= self.top + self.yGap*(socialTop+10.7)
+   hud.board:insert(hud.facebookBonus2)
+
+	utils.setGreen(textBonus1)
+	utils.setGreen(textBonus2)
 	
 
 	---------------------------------------------------------------------------------
@@ -365,26 +558,25 @@ function scene:drawScene()
 	hud.board:insert(hud.titleSponsor)
 	
 	-----------------------------------------------------------------
-	
-	viewManager.drawBorder(hud.board, 
-		display.contentWidth*0.76, self.top + self.yGap*(sponsorTop+2.4), 
-		display.contentWidth*0.4, 120,
-		250,250,250
-	)
+
+	hud.frameSponsor 				= display.newImage( hud.board, "assets/images/hud/Code.png")  
+	hud.frameSponsor.x 			= display.contentWidth*0.5
+	hud.frameSponsor.y			= self.top + self.yGap*(sponsorTop+2.2)
+	hud.board:insert(hud.frameSponsor)
 	
 	viewManager.newText({
 		parent 			= hud.board, 
 		text	 			= userManager.user.sponsorCode,     
-		x 					= display.contentWidth*0.76,
-		y 					= self.top + self.yGap*(sponsorTop+2.4),
+		x 					= display.contentWidth*0.5,
+		y 					= self.top + self.yGap*(sponsorTop+2.2),
 		fontSize 		= 45,
 		font				= NUM_FONT,
 	})
 	
 	
 	hud.sponsorButton 		= display.newImage(hud.board, I "sponsor.button.png")
-	hud.sponsorButton.x 		= display.contentWidth*0.3
-	hud.sponsorButton.y 		=  self.top + self.yGap*(sponsorTop+2.4)
+	hud.sponsorButton.x 		= display.contentWidth*0.5
+	hud.sponsorButton.y 		=  self.top + self.yGap*(sponsorTop+5.5)
 	hud.board:insert(hud.sponsorButton)
 		
 	utils.onTouch(hud.sponsorButton, function()
@@ -392,11 +584,20 @@ function scene:drawScene()
 	end)
 	
 	-----------------------------------------------
+
+	hud.logoutLine 			= display.newImage( hud.board, "assets/images/hud/Filet.png")  
+	hud.logoutLine .x 		= display.contentWidth*0.5
+	hud.logoutLine .y			= self.top + self.yGap*(logoutTop)
+	hud.board:insert(hud.logoutLine )
+
+	hud.logoutCadenas 			= display.newImage( hud.board, "assets/images/hud/Cadenas.png")  
+	hud.logoutCadenas .x 		= display.contentWidth*0.5
+	hud.logoutCadenas .y			= self.top + self.yGap*(logoutTop)
+	hud.board:insert(hud.logoutCadenas )
 	
-	hud.board.logout = display.newImage( hud.board, "assets/images/hud/logout.png")  
-	hud.board.logout:scale(0.43,0.43)
+	hud.board.logout = display.newImage( hud.board, I "Logout.png")  
 	hud.board.logout.x = display.contentWidth*0.5
-	hud.board.logout.y = self.yGap * (logoutTop)
+	hud.board.logout.y =  self.top + self.yGap * (logoutTop+2)
 	hud.board:insert( hud.board.logout )	
 
 	utils.onTouch(hud.board.logout, function()
@@ -406,14 +607,6 @@ function scene:drawScene()
 	------------------
 
 	hud:insert(hud.board)
-
-	------------------
-	--
-
-	--   local likeButtonUrl = "http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FAdillions%2F379432705492888&layout=button_count&action=like&send=false&appId=170148346520274"
-	--	hud.likePageWebview = native.newWebView( 0, display.contentHeight - MENU_HEIGHT - display.contentHeight*0.05, display.contentWidth, display.contentHeight*0.05 )
-	--	hud.likePageWebview:request( likeButtonUrl )
-	--	hud.likePageWebview:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
 
 	------------------
 

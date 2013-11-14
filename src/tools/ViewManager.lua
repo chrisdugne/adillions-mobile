@@ -92,7 +92,7 @@ function refreshHeaderPoints()
 
 	utils.onTouch(hud.points, function()
 	
-		viewManager.showPopup(title, text, function() end)
+		viewManager.showPopup(function() end)
    	analytics.event("Gaming", "popupPoints") 
 
 		viewManager.newText({
@@ -113,7 +113,7 @@ function refreshHeaderPoints()
 
 		viewManager.newText({
 			parent 			= hud.popup, 
-			text 				= T "Tickets to play" .. " : ",         
+			text 				= T "Remaining tickets" .. " : ",         
 			x 					= display.contentWidth * 0.5,
 			y 					= display.contentHeight*0.35,
 		})
@@ -260,7 +260,7 @@ function showPopup(action)
 	)  
 	hud.backGrey.x 	= display.viewableContentWidth*0.5 
 	hud.backGrey.y 	= display.viewableContentHeight*0.5
-	hud.backGrey.alpha=0.85
+	hud.backGrey.alpha= 0.85
 	
 	hud.popupRect = display.newImage( hud.popup, "assets/images/hud/Popup_BG.png", display.contentWidth*0.8, display.contentHeight*0.7)
   	hud.popupRect.x = display.contentWidth*0.5 
@@ -277,21 +277,23 @@ function animatePrice(nextMillis)
 	if(not nextMillis) then nextMillis = 3 end
 	
 	timer.performWithDelay(nextMillis, function()
-   	local lotteryPrice = lotteryManager:priceInt(lotteryManager.nextLottery)
-   	local ratio = (20 * lotteryPrice)/(lotteryPrice - hud.priceCurrentDisplay)
-   	local toAdd = math.floor(lotteryPrice/ratio)
+   	local lotteryPriceDollars = lotteryManager:priceDollars(lotteryManager.nextLottery)
+   	local priceToReach = utils.countryPrice(lotteryPriceDollars, COUNTRY, lotteryManager.nextLottery.rateUSDtoEUR)
+   	
+   	local ratio = (20 * priceToReach)/(priceToReach - hud.priceCurrentDisplay)
+   	local toAdd = math.floor(priceToReach/ratio)
    	if(toAdd == 0) then toAdd = 1 end
    	
-		hud.priceCurrentDisplay = hud.priceCurrentDisplay + toAdd 
+		hud.priceCurrentDisplay = math.round(hud.priceCurrentDisplay + toAdd)
 		
-		if(hud.priceCurrentDisplay >= lotteryPrice) then
-			hud.priceCurrentDisplay = lotteryPrice 		
+		if(hud.priceCurrentDisplay >= priceToReach) then
+			hud.priceCurrentDisplay = math.round(priceToReach)	
 		else
-			nextMillis = 1000/(lotteryPrice - hud.priceCurrentDisplay)
+			nextMillis = 1000/(priceToReach - hud.priceCurrentDisplay)
    		animatePrice(nextMillis)
    	end
 		
-		hud.priceDisplay.text = hud.priceCurrentDisplay
+		hud.priceDisplay.text = utils.displayPrice(hud.priceCurrentDisplay, COUNTRY)
 	end)
 end
 
@@ -636,16 +638,21 @@ end
 
 --- 
 -- theme sur un ticket ou un result
-function drawTheme(parent, lottery, num,x,y, alpha, requireCheck)
+function drawTheme(parent, lottery, num,x,y, alpha, requireCheck, bigBall)
 
 	if(not alpha) then alpha = 1 end
 
-	drawThemeIcon(num, parent, lottery, x, y, SMALL_THEME_SCALE, alpha, function()
+	local scale = SMALL_THEME_SCALE
+	if(bigBall) then 
+		scale = 0.78
+	end
+
+	drawThemeIcon(num, parent, lottery, x, y, scale, alpha, function()
 		local themeMask = display.newImage(parent, "assets/images/balls/ball.mask.png")
 		themeMask.x = x
 		themeMask.y = y
 		themeMask.alpha = alpha
-		themeMask:scale(SMALL_THEME_SCALE, SMALL_THEME_SCALE)
+		themeMask:scale(scale, scale)
 		parent:insert(themeMask)
 		
 		if(requireCheck) then
@@ -660,9 +667,16 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function drawBall(parent, num,x,y)
-
-	local ball = display.newImage(hud, "assets/images/balls/ball.small.green.png")
+function drawBall(parent, num,x,y, bigBall)
+	
+	local size = "small"
+	local fontSize = 37
+	if(bigBall) then 
+		size = "big"
+		fontSize = 45 
+	end
+	
+	local ball = display.newImage(hud, "assets/images/balls/ball.".. size..".green.png")
 	ball.x = x
 	ball.y = y
 	
@@ -673,7 +687,7 @@ function drawBall(parent, num,x,y)
 		x = x,
 		y = y,
 		font = NUM_FONT,   
-		fontSize = 37,
+		fontSize = fontSize,
 	} )
 
 	ball.text:setTextColor(255)
@@ -744,15 +758,15 @@ function drawSelection(parent, numbers)
 	
 	local nbSelected  = 0
 	local xGap 			= display.contentWidth*0.14
-	local y 				= display.contentHeight*0.22
+	local y 				= display.contentHeight*0.27
 
 	-------------------------------------
 
 	for j = 1,#numbers-1 do
-		drawBall(parent, numbers[j], xGap*j, y)
+		drawBall(parent, numbers[j], xGap*j, y, true)
 	end
 	
-	drawTheme(parent, lotteryManager.nextLottery, numbers[#numbers], xGap*#numbers, y)
+	drawTheme(parent, lotteryManager.nextLottery, numbers[#numbers], xGap*#numbers, y, 1, false, true)
 	
 end
 

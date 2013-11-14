@@ -149,7 +149,7 @@ end
 --}
 function getMe(failure)
 	if(GLOBALS.savedData.facebookAccessToken) then
-		local url = "https://graph.facebook.com/me?fields=name,first_name,last_name,picture,locale,birthday,email&access_token=" .. GLOBALS.savedData.facebookAccessToken
+		local url = "https://graph.facebook.com/me?fields=name,first_name,last_name,picture.type(large),locale,birthday,email&access_token=" .. GLOBALS.savedData.facebookAccessToken
 		network.request(url , "GET", function(result)
 
 			response = json.decode(result.response)

@@ -151,6 +151,15 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function openContact()
+	analytics.pageview("Contact")
+	
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Contact" )
+end
+
+-----------------------------------------------------------------------------------------
+
 function openSelectAdditionalNumber()
 	analytics.pageview("SelectAdditionalNumber")
 	

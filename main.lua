@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.16.11"
+APP_VERSION 		= "1.16.12"
 
 -----------------------------------------------------------------------------------------
 
@@ -75,6 +75,14 @@ FACEBOOK_CONNECTION_TICKETS	= 2
 TWITTER_CONNECTION_TICKETS		= 2
 
 -----------------------------------------------------------------------------------------
+--- lottery tickets status
+
+BLOCKED 	= 1;
+PENDING 	= 2;
+PAYED 	= 3;
+GIFT 		= 4;
+
+-----------------------------------------------------------------------------------------
 
 translations = require("assets.Translations")
 
@@ -92,8 +100,11 @@ else
 	LANG =  userDefinedLanguage or system.getPreference("ui", "language")
 end
 
+COUNTRY = system.getPreference( "locale", "country" ) or "US"
+	
 if(DEV) then
 	LANG = "fr"
+	COUNTRY = "FR"
 end
 
 -----------------------------------------------------------------------------------------

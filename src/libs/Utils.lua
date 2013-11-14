@@ -49,6 +49,12 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function setGreen(text)
+	text:setTextColor(27,92,100)
+end
+
+-----------------------------------------------------------------------------------------
+
 function getMinSec(seconds)
 	local min = math.floor(seconds/60)
 	local sec = seconds - min * 60
@@ -451,6 +457,87 @@ function formatPositionNum(num)
 	end
 	
 	return num .. suffix
+end
+
+--------------------------------------------------------
+--
+
+function isEuroCountry (country) 
+
+  local isEuro = country == "AT"
+      or  country == "BE"
+      or  country == "CY"
+      or  country == "EE"
+      or  country == "FI"
+      or  country == "FR"
+      or  country == "DE"
+      or  country == "GR"
+      or  country == "IE"
+      or  country == "IT"
+      or  country == "LU"
+      or  country == "MT"
+      or  country == "NL"
+      or  country == "PT"
+      or  country == "SK"
+      or  country == "SI"
+      or  country == "ES"
+      or  country == "BG"
+      or  country == "HR"
+      or  country == "CZ"
+      or  country == "DK"
+      or  country == "HU"
+      or  country == "LV"
+      or  country == "LT"
+      or  country == "PL"
+      or  country == "RO"
+      or  country == "SE"
+      or  country == "GB"
+      or  country == "IS"
+      or  country == "LI"
+      or  country == "NO"
+      or  country == "CH"
+      or  country == "MC"
+      or  country == "AL"
+      or  country == "MK"
+      or  country == "ME"
+      or  country == "RS"
+      or  country == "BA"
+
+	return isEuro;
+end
+
+
+function displayPrice(price, country)
+
+	if(not price) then
+		price = 0
+	end
+
+	if(isEuroCountry(country)) then
+		return price .. " €";
+
+	else
+		return "US$ " .. price;
+	end
+
+end
+
+function countryPrice(euros, country, rateUSDtoEUR)
+
+	if(not euros) then
+		euros = 0
+	end
+
+	if(isEuroCountry(country)) then
+		return euros;
+	else
+		return math.round(euros*rateUSDtoEUR*10)/10;
+	end
+
+end
+
+function convertAndDisplayPrice(price, country, rateUSDtoEUR)
+	return displayPrice(countryPrice(price, country, rateUSDtoEUR))
 end
 
 --------------------------------------------------------

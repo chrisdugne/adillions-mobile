@@ -429,7 +429,8 @@ end
 
 function UserManager:updatePlayer(next)
 
-	native.setActivityIndicator( true )	
+	native.setActivityIndicator( true )
+	self.user.lang = LANG
 
 	utils.postWithJSON({
 		user = self.user,

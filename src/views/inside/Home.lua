@@ -117,20 +117,20 @@ function scene:drawNextLottery( event )
 	
 	-------------------------------
 
-	viewManager.newText({
-		parent = hud, 
-		text = 'US$',     
-		x = priceX - 200,
-		y = top + display.contentHeight*0.08,
-		fontSize = 73,
-		font = NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
-	})
+--	viewManager.newText({
+--		parent = hud, 
+--		text = 'US$',     
+--		x = priceX - 200,
+--		y = top + display.contentHeight*0.08,
+--		fontSize = 73,
+--		font = NUM_FONT,
+--		referencePoint = display.CenterRightReferencePoint
+--	})
 	
 	hud.priceDisplay = viewManager.newText({
 		parent = hud, 
-		text = '0',     
-		x = priceX - 35,
+		text = '',     
+		x = priceX - 150,
 		y = top + display.contentHeight*0.08,
 		fontSize = 73,
 		font = NUM_FONT,

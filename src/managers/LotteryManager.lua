@@ -19,7 +19,6 @@ end
 
 function LotteryManager:refreshNextLottery(draw)
 
-	print("--- refreshNextLottery true")
 	native.setActivityIndicator( true )	
 
 	utils.postWithJSON(
@@ -32,7 +31,8 @@ function LotteryManager:refreshNextLottery(draw)
 
 		userManager:checkUserCurrentLottery()
 
-		print("--- refreshNextLottery false")
+		print("--- refreshNextLottery ")
+		utils.tprint(self.nextLottery)
 		native.setActivityIndicator( false )
 
 		draw()
@@ -51,12 +51,12 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function LotteryManager:priceInt(lottery)
+function LotteryManager:priceDollars(lottery)
 	return math.min(lottery.maxPrice, math.max(lottery.minPrice, lottery.nbTickets/1000 * lottery.cpm)) 
 end
 
 function LotteryManager:price(lottery)
-	return "US$ " .. self:priceInt() 
+	return utils.convertAndDisplayPrice(self:priceDollars(lottery), COUNTRY, lottery.rateUSDtoEUR)
 end
 
 function LotteryManager:charityPerTicket(lottery)
@@ -64,7 +64,7 @@ function LotteryManager:charityPerTicket(lottery)
 end
 
 function LotteryManager:finalPrice(lottery)
-	return "US$ " .. lottery.finalPrice
+	return utils.convertAndDisplayPrice(lottery.finalPrice, COUNTRY, lottery.rateUSDtoEUR )
 end
 
 function LotteryManager:date(lottery)
@@ -153,12 +153,27 @@ end
 
 function LotteryManager:sumPrices()
 
-	userManager.user.totalGains = 0
+	userManager.user.totalGains 		= 0
+	userManager.user.balance 			= 0
+	userManager.user.totalGift 		= 0
+	userManager.user.receivedGains	= 0
+	userManager.user.pendingGains		= 0
 
 	if(userManager.user.lotteryTickets) then
 		for i = 1,#userManager.user.lotteryTickets do
 			local ticket = userManager.user.lotteryTickets[i]
-			userManager.user.totalGains = userManager.user.totalGains + (ticket.price or 0)
+			local value  = utils.countryPrice(ticket.price or 0, COUNTRY, ticket.lottery.rateUSDtoEUR)
+			userManager.user.totalGains = userManager.user.totalGains + value
+			
+			if(ticket.status == BLOCKED) then
+   			userManager.user.balance = userManager.user.balance + value
+   		elseif(ticket.status == GIFT) then
+   			userManager.user.totalGift = userManager.user.totalGift + value
+   		elseif(ticket.status == PENDING) then
+   			userManager.user.pendingGains = userManager.user.pendingGains + value
+   		else
+   			userManager.user.receivedGains = userManager.user.receivedGains + value
+   		end
 		end
 	end
 

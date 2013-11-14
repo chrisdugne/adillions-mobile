@@ -57,6 +57,7 @@ function scene:drawBoard()
 		local lottery 				= lotteryManager.finishedLotteries[i]
 		local numbers 				= json.decode(lottery.result)
 		lottery.theme 				= json.decode(lottery.theme)
+		lottery.prizes 			= json.decode(lottery.prizes)
 
 		local y = marginTop + yGap*(i-1) + 185
 	
@@ -154,7 +155,7 @@ function scene:drawBoard()
 
 		viewManager.newText({
 			parent			= hud.board, 
-			text 				= "US$ " .. lottery.charity , 
+			text 				= utils.convertAndDisplayPrice(lottery.charity, COUNTRY, lottery.rateUSDtoEUR), 
 			x 					= display.contentWidth*0.7,
 			y 					= marginTop + yGap*(i-1)+315, 
 			fontSize 		= 45,
@@ -162,12 +163,102 @@ function scene:drawBoard()
 			referencePoint = display.CenterLeftReferencePoint
 		})
 	
+		------------------------------------------------
+
+		local more = viewManager.newText({
+			parent 			= hud.board, 
+			text 				= T "See more", 
+			x 					= display.contentWidth*0.5,
+			y 					= marginTop + yGap*(i-1)+400, 
+			fontSize 		= 32
+		})
+		
+		utils.onTouch(more, function() self:openMoreResults(lottery) end)
    	
    end
    
 	------------------
 
 	hud:insert(hud.board)
+	
+end
+
+------------------------------------------
+
+function scene:openMoreResults( lottery )
+
+	local top	 	= display.contentHeight * 0.3
+	local yGap		= display.contentHeight*0.065
+
+	viewManager.showPopup(function() end)
+	analytics.event("Gaming", "popupMoreResults") 
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "Drawing" .. " " .. lotteryManager:date(lottery), 
+		x = display.contentWidth*0.1,
+		y = top*0.5,
+		fontSize = 38,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "Winners" .. ":", 
+		x = display.contentWidth*0.5,
+		y = top*0.75,
+		fontSize = 38,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "Gain" .. " / " .. T "Winners" .. ":", 
+		x = display.contentWidth*0.9,
+		y = top*0.75,
+		fontSize = 38,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	for i = 1, #lottery.prizes do
+
+   	hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/Rang".. i .. ".png")
+   	hud.iconRang.x 		= display.contentWidth * 0.2
+   	hud.iconRang.y 		= top + yGap * (i-1)
+   	hud.iconRang:scale 	(0.6,0.6)	
+   
+   	viewManager.newText({
+   		parent 			= hud.popup, 
+   		text	 			= lottery.prizes[i].winners,     
+   		x 					= display.contentWidth*0.45,
+   		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
+   		fontSize 		= 35,
+			referencePoint = display.CenterRightReferencePoint
+   	})
+   
+   	viewManager.newText({
+   		parent 			= hud.popup, 
+   		text	 			= utils.convertAndDisplayPrice(lottery.prizes[i].share * lottery.prizes[i].winners, COUNTRY, lottery.rateUSDtoEUR),     
+   		x 					= display.contentWidth*0.8,
+   		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
+   		fontSize 		= 35,
+			referencePoint = display.CenterRightReferencePoint
+   	})
+
+   	hud.iconPieces 			= display.newImage( hud.popup, "assets/images/icons/money.png")
+   	hud.iconPieces.x 			= display.contentWidth * 0.86
+   	hud.iconPieces.y 			= top + yGap * (i-1) - display.contentHeight*0.01
+   	
+	end
+
+	--------------------------
+
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.85
+
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+
 end
 
 ------------------------------------------

@@ -16,6 +16,10 @@ local translations =
         ["fr"] = "Fermer",
     },
 
+    ["See more"] = {
+        ["fr"] = "Voir plus",
+    },
+
     ["NEXT"] = {
         ["fr"] = "SUIVANT",
     },
@@ -88,12 +92,24 @@ local translations =
         ["fr"] = "Merci",
     },
 
-    ["You have reached the maximum number of tickets for this draw."] = {
-        ["fr"] = "Vous avez atteint le nombre maximum de tickets pour ce tirage.",
+    ["You have reached the maximum"] = {
+        ["fr"] = "Vous avez atteint le nombre",
+    },
+    
+    ["number of tickets for this draw."] = {
+        ["fr"] = "maximum de tickets pour ce tirage.",
+    },
+    
+    ["You can gain Bonus Tickets by liking our"] = {
+        ["fr"] = "Vous pouvez gagner des Tickets Bonus",
     },
 
-    ["You can gain Bonus Tickets by liking our Facebook page or following us on Twitter."] = {
-        ["fr"] = "Vous pouvez gagner des Tickets Bonus en likant notre page Facebook ou en nous suivant sur Twitter.",
+    ["Facebook page, following us on"] = {
+        ["fr"] = "en likant notre page Facebook ou",
+    },
+
+    ["Twitter, etc."] = {
+        ["fr"] = "en nous suivant sur Twitter.",
     },
 
     ["Successfully posted on your wall !"] = {
@@ -104,7 +120,7 @@ local translations =
         ["fr"] = "Tweeté !",
     },
 
-    ["Tickets to play"] = {
+    ["Remaining tickets"] = {
         ["fr"] = "Tickets restants",
     },
 
@@ -152,12 +168,24 @@ local translations =
         ["fr"] = "Points",
     },
 
-    ["Charity"] = {
-        ["fr"] = "Charité",
+    ["Charity profile"] = {
+        ["fr"] = "Dons",
     },
 
     ["Total gains"] = {
         ["fr"] = "Total des gains",
+    },
+
+    ["Gains payed"] = {
+        ["fr"] = "Reçu",
+    },
+
+    ["Gains balance"] = {
+        ["fr"] = "Solde",
+    },
+
+    ["Donation"] = {
+        ["fr"] = "Don",
     },
 
     ["Gain"] = {
