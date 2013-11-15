@@ -327,13 +327,17 @@ function UserManager:checkIdlePoints()
 			hud.popup.iconTicket.x 			= display.contentWidth*0.3
 			hud.popup.iconTicket.y 			= display.contentHeight*0.685
 
-			local plural = ""
+			local tickets = ""
 			local nbTickets = math.floor(points/POINTS_TO_EARN_A_TICKET)
-			if(nbTickets > 1) then plural = "s" end
+			if(nbTickets > 1) then 
+				tickets = T "Instant Tickets" 
+			else
+				tickets = T "Instant Ticket" 
+			end
 
 			viewManager.newText({
 				parent 			= hud.popup, 
-				text	 			= nbTickets .. " " .. T "Instant Ticket" .. plural,     
+				text	 			= nbTickets .. " " .. tickets,     
 				x 					= display.contentWidth*0.4,
 				y 					= display.contentHeight*0.685,
 				fontSize 		= 40,
