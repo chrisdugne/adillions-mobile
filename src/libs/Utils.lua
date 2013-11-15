@@ -43,7 +43,7 @@ function onTouch(object, action)
 		if(event.phase == "began") then
 			action() 
 		end
-		return true 
+		return true
 	end)
 end
 
@@ -54,6 +54,15 @@ function setGreen(text)
 end
 
 -----------------------------------------------------------------------------------------
+
+function getDaysHoursMinSec(sec)
+	local days = math.floor(sec/(24*60*60))
+	local hours = math.floor((sec - days * 24*60*60)/(60*60))
+	local min = math.floor((sec - days * 24*60*60 - hours*60*60)/60)
+	local sec = math.floor((sec - days * 24*60*60 - hours*60*60 - min *60))
+	
+	return days, hours, min, sec
+end
 
 function getMinSec(seconds)
 	local min = math.floor(seconds/60)
@@ -537,7 +546,8 @@ function countryPrice(euros, country, rateUSDtoEUR)
 end
 
 function convertAndDisplayPrice(price, country, rateUSDtoEUR)
-	return displayPrice(countryPrice(price, country, rateUSDtoEUR))
+	print(price, country, rateUSDtoEUR)
+	return displayPrice(countryPrice(price, country, rateUSDtoEUR), country)
 end
 
 --------------------------------------------------------

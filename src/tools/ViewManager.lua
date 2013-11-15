@@ -225,6 +225,7 @@ end
 
 function closePopup(now, action)
 
+	
 	if(hud.popup) then
    	display.remove(hud.popup.close)
    	transition.cancel(hud.popup)
@@ -262,12 +263,34 @@ function showPopup(action)
 	hud.backGrey.y 	= display.viewableContentHeight*0.5
 	hud.backGrey.alpha= 0.85
 	
-	hud.popupRect = display.newImage( hud.popup, "assets/images/hud/Popup_BG.png", display.contentWidth*0.8, display.contentHeight*0.7)
+	hud.popupRect = display.newImageRect( hud.popup, "assets/images/hud/Popup_BG.png", display.contentWidth*0.9, display.contentHeight*0.9)
   	hud.popupRect.x = display.contentWidth*0.5 
   	hud.popupRect.y = display.contentHeight*0.5
 	
 	hud.popup:toFront()
 	transition.to(hud.popup, {time=250, alpha=1})
+	
+	utils.onTouch(hud.backGrey, function()end)
+	utils.onTouch(hud.popupRect, function()end)
+end
+
+------------------------------------------------------------------
+
+function refreshHomeTimer()
+	
+	if(hud.timer) then timer.cancel(hud.timer) end
+
+	local days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextLottery.date/1000 - os.time())))
+	
+	if(days < 10) then days = "0"..days end 
+	if(hours < 10) then hours = "0"..hours end 
+	if(min < 10) then min = "0"..min end 
+	if(sec < 10) then sec = "0"..sec end 
+	
+	hud.timerDisplay.text = days .. " : " .. hours .. " : " .. min .. " : " .. sec
+	hud.timer = timer.performWithDelay(1000, function ()
+		refreshHomeTimer()
+	end)
 end
 
 ------------------------------------------------------------------

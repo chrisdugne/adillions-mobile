@@ -14,6 +14,7 @@ view = nil
 
 function resetScreen()
 
+	if(hud.timer) then timer.cancel(hud.timer) end
 	display.remove(hud.likePageWebview)
 
 	utils.emptyGroup(hud)

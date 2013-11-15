@@ -54,17 +54,6 @@ function scene:refreshScene()
 
 	------------------
 
-	viewManager.newText({
-		parent = hud, 
-		text = T ("Welcome") .. " " .. userManager.user.firstName .. " !", 
-		x = display.contentWidth*0.05,
-		y = display.contentHeight*0.25,
-		fontSize = 43,
-		referencePoint = display.CenterLeftReferencePoint
-	})
-	
-	------------------
-
 	lotteryManager:refreshNextLottery(function() self:drawNextLottery() end)
 
 	------------------
@@ -92,46 +81,96 @@ end
 
 function scene:drawNextLottery( event )
 
-	local y = HEADER_HEIGHT * 3.7
-	local top = HEADER_HEIGHT * 3
+	local y 						= HEADER_HEIGHT * 3.7
+	local top 					= HEADER_HEIGHT * 3
+	local timerLegendSize 	= 17
+	local timerLegendY 		= top + display.contentHeight * 0.05
+	local timerY 				= top + display.contentHeight * 0.01
 
-	----------------------------------------------------
-	
+	-------------------------------
+
 	viewManager.newText({
 		parent = hud, 
-		text = T("Next drawing") .. " " .. lotteryManager:date(lotteryManager.nextLottery), 
-		x = display.contentWidth*0.05,
-		y = top,
-		fontSize = 23,
+		text = T "Next drawing" .. " : ", 
+		x = display.contentWidth*0.2,
+		y = top - display.contentHeight * 0.05,
+		fontSize = 20,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 
-	-------------------------------
-	local priceX
+	hud.separator 			= display.newImage(hud, "assets/images/icons/separateur.horizontal.png")
+	hud.separator.x 		= display.contentWidth*0.5
+	hud.separator.y 		= top - display.contentHeight * 0.03
+            	
+	hud.pictoTimer			= display.newImage( hud, "assets/images/icons/cagnotte.png")  
+	hud.pictoTimer.x 		= display.contentWidth*0.2
+	hud.pictoTimer.y 		= timerY 
 	
+	hud.timerDisplay = viewManager.newText({
+		parent = hud, 
+		text = '',     
+		x = display.contentWidth*0.5,
+		y = timerY ,
+		fontSize = 53,
+		font = NUM_FONT
+	})
+	
+	viewManager.refreshHomeTimer()
+
+	-------------------------------
+	
+	viewManager.newText({
+		parent = hud, 
+		text = "DAYS", 
+		x = display.contentWidth*0.5 - 2*display.contentWidth*0.116,
+		y = timerLegendY,
+		fontSize = timerLegendSize,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud, 
+		text = "HRS", 
+		x = display.contentWidth*0.412,
+		y = timerLegendY,
+		fontSize = timerLegendSize,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud, 
+		text = "MIN", 
+		x = display.contentWidth*0.536,
+		y = timerLegendY,
+		fontSize = timerLegendSize,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud, 
+		text = "SEC", 
+		x = display.contentWidth*0.675,
+		y = timerLegendY,
+		fontSize = timerLegendSize,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+	
+	----------------------------------------------------
+	
+	local priceX
 	if(lotteryManager.nextLottery.nbPlayers > lotteryManager.nextLottery.toolPlayers) then
-		priceX = display.contentWidth*0.5
+		priceX = display.contentWidth*0.42
 	else
 		priceX = display.contentWidth*0.58
 	end
 	
 	-------------------------------
-
---	viewManager.newText({
---		parent = hud, 
---		text = 'US$',     
---		x = priceX - 200,
---		y = top + display.contentHeight*0.08,
---		fontSize = 73,
---		font = NUM_FONT,
---		referencePoint = display.CenterRightReferencePoint
---	})
 	
 	hud.priceDisplay = viewManager.newText({
 		parent = hud, 
 		text = '',     
-		x = priceX - 150,
-		y = top + display.contentHeight*0.08,
+		x = priceX - display.contentWidth*0.12,
+		y = top + display.contentHeight*0.12,
 		fontSize = 73,
 		font = NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
@@ -144,7 +183,7 @@ function scene:drawNextLottery( event )
 	
 	hud.pictoCagnotte = display.newImage( hud, "assets/images/icons/cagnotte.png")  
 	hud.pictoCagnotte.x = priceX + display.contentWidth*0.09
-	hud.pictoCagnotte.y = top + display.contentHeight*0.08
+	hud.pictoCagnotte.y = top + display.contentHeight*0.12
 	
 	-------------------------------
 	
@@ -152,27 +191,27 @@ function scene:drawNextLottery( event )
 	
    	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
    	hud.separateur.x = display.contentWidth*0.7
-   	hud.separateur.y = top + display.contentHeight*0.08
+   	hud.separateur.y = top + display.contentHeight*0.12
    	
    	-------------------------------
    
    	hud.pictoPlayers = display.newImage( hud, "assets/images/icons/players.png")  
-   	hud.pictoPlayers.x = display.contentWidth*0.8
-   	hud.pictoPlayers.y = top + display.contentHeight*0.05
+   	hud.pictoPlayers.x = display.contentWidth*0.85
+   	hud.pictoPlayers.y = top + display.contentHeight*0.09
    	
    	viewManager.newText({
    		parent = hud, 
    		text = T "Players" .. " :", 
-   		x = display.contentWidth*0.8,
-   		y = top + display.contentHeight*0.08,
+   		x = display.contentWidth*0.85,
+   		y = top + display.contentHeight*0.12,
    		fontSize = 24,
    	})
    	
    	viewManager.newText({
    		parent = hud, 
    		text = lotteryManager.nextLottery.nbPlayers , 
-   		x = display.contentWidth*0.8,
-   		y = top + display.contentHeight*0.11,
+   		x = display.contentWidth*0.85,
+   		y = top + display.contentHeight*0.15,
    		fontSize = 43,
    		font = NUM_FONT
    	})
@@ -183,7 +222,7 @@ function scene:drawNextLottery( event )
 
 	hud.playButton = display.newImage( hud, I "filloutticket.button.png")  
 	hud.playButton.x = display.contentWidth*0.5
-	hud.playButton.y = top + display.contentHeight*0.21
+	hud.playButton.y = top + display.contentHeight*0.24
 	
 	utils.onTouch(hud.playButton, function()
 		self:play()

@@ -165,11 +165,11 @@ local translations =
     },
 
     ["Total points"] = {
-        ["fr"] = "Points",
+        ["fr"] = "Total des points",
     },
 
     ["Charity profile"] = {
-        ["fr"] = "Dons",
+        ["fr"] = "Profil donateur",
     },
 
     ["Total gains"] = {

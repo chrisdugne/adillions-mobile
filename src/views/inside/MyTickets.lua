@@ -209,7 +209,7 @@ function scene:drawPreviousLotteries(top)
    		
    			viewManager.newText({
    				parent = hud.board, 
-   				text =  utils.convertAndDisplayPrice(ticket.price or 0, COUNTRY, ticket.lottery.rateUSDtoEUR), 
+   				text =  utils.convertAndDisplayPrice((ticket.price or 0), COUNTRY, ticket.lottery.rateUSDtoEUR), 
          		x = display.contentWidth*0.87,
          		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
          		fontSize = 32,

@@ -107,6 +107,10 @@ function UserManager:updatedPlayer(player, next)
 	self.user.totalBonusTickets 	= 0
 
 	print("------------------------ updatedPlayer ")
+	if(next) then
+   	print("next ready")
+	end
+	
 	utils.tprint(self.user)
 
 	GLOBALS.savedData.user.uid 				= player.uid
@@ -135,6 +139,11 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:checkFanStatus(next)
+
+   print("checkFanStatus")
+	if(next) then
+   	print("next ready")
+	end
 
 	local facebookFan 	= self.user.isFacebookFan
 	local twitterFan 		= self.user.isTwitterFan
@@ -184,11 +193,16 @@ function UserManager:checkFanStatus(next)
 			end
 
 			---------------------------------------------------------
+			
+			print("statusChanged ? " )
+			print(statusChanged)
 
 			if(statusChanged) then
 				self:updateFanStatus(next)
 			else
+   			print("continue")
 				if(next) then
+      			print("next")
 					next()
 				end
 			end
@@ -197,6 +211,36 @@ function UserManager:checkFanStatus(next)
 		end)
 	end)
 
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:giveToCharity(next)
+	viewManager.closePopup()
+	
+	print("giveToCharity")
+	if(next)then  print("next ready") end
+	utils.postWithJSON({}, 
+		SERVER_URL .. "giveToCharity", 
+		function(result)
+			userManager:updatePlayer(next)
+		end
+	)
+	
+end
+
+function UserManager:cashout(next)
+	viewManager.closePopup()
+	
+	utils.postWithJSON({
+			country = COUNTRY
+		}, 
+		SERVER_URL .. "cashout", 
+		function(result)
+			userManager:updatePlayer(next)
+		end
+	)
+	
 end
 
 -----------------------------------------------------------------------------------------
@@ -247,16 +291,16 @@ function UserManager:checkIdlePoints()
    	hud.popup.earnText = viewManager.newText({
    		parent 			= hud.popup,
    		text 				= T "You have earned" .. " :", 
-   		fontSize			= 54,  
+   		fontSize			= 65,  
    		x 					= display.contentWidth * 0.5,
-   		y 					= display.contentHeight*0.3,
+   		y 					= display.contentHeight*0.37,
    	})
 
 		hud.popup.pointsText = viewManager.newText({
 			parent 			= hud.popup, 
 			text	 			= points .. " pts",     
 			x 					= display.contentWidth*0.5,
-			y 					= display.contentHeight*0.4,
+			y 					= display.contentHeight*0.5,
 			fontSize 		= 90,
 		})
 
@@ -266,14 +310,14 @@ function UserManager:checkIdlePoints()
 				parent 			= hud.popup, 
 				text	 			= "=",     
 				x 					= display.contentWidth*0.5,
-				y 					= display.contentHeight*0.5,
+				y 					= display.contentHeight*0.6,
 				fontSize 		= 90,
 			})
 			
 			if(points == POINTS_TO_EARN_A_TICKET) then
       		hud.popup.iconPoints 			= display.newImage( hud.popup, "assets/images/icons/Points.png")
       		hud.popup.iconPoints.x 			= display.contentWidth*0.37
-      		hud.popup.iconPoints.y 			= display.contentHeight*0.41
+      		hud.popup.iconPoints.y 			= display.contentHeight*0.51
          	
          	hud.popup.pointsText:setReferencePoint(display.CenterLeftReferencePoint);
       		hud.popup.pointsText.x			= display.contentWidth*0.48
@@ -281,7 +325,7 @@ function UserManager:checkIdlePoints()
 
 			hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/instant.ticket.png")
 			hud.popup.iconTicket.x 			= display.contentWidth*0.3
-			hud.popup.iconTicket.y 			= display.contentHeight*0.605
+			hud.popup.iconTicket.y 			= display.contentHeight*0.685
 
 			local plural = ""
 			local nbTickets = math.floor(points/POINTS_TO_EARN_A_TICKET)
@@ -291,7 +335,7 @@ function UserManager:checkIdlePoints()
 				parent 			= hud.popup, 
 				text	 			= nbTickets .. " " .. T "Instant Ticket" .. plural,     
 				x 					= display.contentWidth*0.4,
-				y 					= display.contentHeight*0.605,
+				y 					= display.contentHeight*0.685,
 				fontSize 		= 40,
 				font 				= NUM_FONT,
 				referencePoint = display.CenterLeftReferencePoint 
@@ -318,7 +362,7 @@ function UserManager:checkIdlePoints()
 
 		hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
 		hud.popup.close.x 			= display.contentWidth*0.5
-		hud.popup.close.y 			= display.contentHeight*0.75
+		hud.popup.close.y 			= display.contentHeight*0.85
 
 		utils.onTouch(hud.popup.close, onClose)
 
@@ -390,7 +434,7 @@ function UserManager:convertCurrentPoints()
 	
 	local plural = ""
 	if(nbTickets > 1) then plural = 's' end
-	viewManager.message("+ " .. nbTickets .. "Ticket" .. plural)
+	viewManager.message("+ " .. nbTickets .. T "Instant Ticket" .. plural)
 --
 --	local bonus = viewManager.newText({
 --		parent 			= hud.popup, 
@@ -429,6 +473,11 @@ end
 
 function UserManager:updatePlayer(next)
 
+	print("------------- updatePlayer ")
+	if(next) then
+   	print("next ready")
+	end
+	
 	native.setActivityIndicator( true )
 	self.user.lang = LANG
 

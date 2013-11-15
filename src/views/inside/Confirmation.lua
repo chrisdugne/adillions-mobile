@@ -96,8 +96,6 @@ function scene:refreshScene()
    		self:play()
    	end)
    else
-   	shareManager:noMoreTickets()
-
    	utils.onTouch(hud.playButton, function()
 	   	shareManager:noMoreTickets()
    	end)

@@ -301,10 +301,15 @@ function scene:drawScene()
 		fontSize 		= self.fontSizeLeft,
 	})
 
+	local balance = utils.displayPrice(userManager.user.balance, COUNTRY)
+	if(userManager.user.pendingGains > 0) then
+		balance = balance  .. " (" .. utils.displayPrice(userManager.user.pendingGains, COUNTRY) .. ")"
+	end
+
 	local totalGainsText = viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= utils.displayPrice(userManager.user.balance, COUNTRY) .. " (" .. utils.displayPrice(userManager.user.pendingGains, COUNTRY) .. ")",   
-		x 					= display.contentWidth*0.35 + display.contentWidth*0.26, 
+		text	 			= balance,   
+		x 					= display.contentWidth*0.5, 
 		y 					= self.top + self.yGap*(gainsTop+5),
 		fontSize 		= 35,
 		font				= NUM_FONT,
@@ -312,7 +317,7 @@ function scene:drawScene()
 	})
 	
 	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/PictoBalance.png")
-	hud.iconMoney.x 		= display.contentWidth*0.35 + display.contentWidth*0.31
+	hud.iconMoney.x 		= display.contentWidth*0.58
 	hud.iconMoney.y 		= self.top + self.yGap*(gainsTop+5) - display.contentHeight*0.004
 	hud.board:insert(hud.iconMoney)
 
@@ -324,7 +329,7 @@ function scene:drawScene()
    hud.board:insert(hud.cashout)
 
 	utils.onTouch(hud.cashout, function() 
-		print ("cashout todo")
+		self:openCashout()
 	end)
 	
 	---------------------------------------------------------------
@@ -659,6 +664,146 @@ function scene:drawConnection(title, state, position)
 
 end
 
+-----------------------------------------------------------------------------------------
+
+function scene:openCashout()
+
+	-----------------------------------
+
+	viewManager.showPopup()
+	analytics.event("Gaming", "opencashout") 
+	
+	----------------------------------------------------------------------------------------------------
+	
+	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoShare.png")  
+	hud.popup.shareIcon.x 			= display.contentWidth*0.5
+	hud.popup.shareIcon.y			= display.contentHeight*0.17
+
+	----------------------------------------------------------------------------------------------------
+	
+	local min = 10
+	if(not utils.isEuroCountry(COUNTRY)) then
+		min = 15
+	end
+	
+	if(userManager.user.balance > min) then
+		hud.cashoutEnabled 				= display.newImage( hud.popup, I "twitter.connected.png")  
+		hud.cashoutEnabled.x 			= display.contentWidth*0.5
+      hud.cashoutEnabled.y				= display.contentHeight*0.6
+   	utils.onTouch(hud.cashoutEnabled, function() self.openConfirmCashout() end)
+   else
+		hud.cashoutDisabled 				= display.newImage( hud.popup, I "twitter.connect.button.png")  
+		hud.cashoutDisabled.x 			= display.contentWidth*0.5
+      hud.cashoutDisabled.y			= display.contentHeight*0.6
+	end
+	
+	if(userManager.user.balance > 0) then
+   	hud.giveToCharity 				= display.newImage( hud.popup, I "twitter.connected.png")  
+   	hud.giveToCharity.x 				= display.contentWidth*0.5
+      hud.giveToCharity.y				= display.contentHeight*0.73
+   	utils.onTouch(hud.giveToCharity, function() self.openGiveToCharity() end)
+   else
+		hud.giftDisabled 					= display.newImage( hud.popup, I "twitter.connect.button.png")  
+		hud.giftDisabled.x 				= display.contentWidth*0.5
+      hud.giftDisabled.y				= display.contentHeight*0.73
+	end
+
+	
+	----------------------------------------------------------------------------------------------------
+	
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.86
+	
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+	
+
+end
+
+-----------------------------------------------------------------------------------------
+
+function scene:openGiveToCharity()
+
+	-----------------------------------
+
+	viewManager.showPopup()
+	analytics.event("Gaming", "openGiveToCharity") 
+	
+	----------------------------------------------------------------------------------------------------
+	
+	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoShare.png")  
+	hud.popup.shareIcon.x 			= display.contentWidth*0.5
+	hud.popup.shareIcon.y			= display.contentHeight*0.17
+
+	----------------------------------------------------------------------------------------------------
+	
+	hud.giveToCharity 				= display.newImage( hud.popup, I "twitter.connected.png")  
+	hud.giveToCharity.x 				= display.contentWidth*0.5
+   hud.giveToCharity.y				= display.contentHeight*0.6
+
+	local refresh = function() scene:refreshScene() end
+	
+	utils.onTouch(hud.giveToCharity, function() 
+		analytics.event("Gaming", "giveToCharity") 
+		userManager:giveToCharity(function()
+			router.resetScreen()
+			refresh()
+		end) 
+	end)
+	
+	----------------------------------------------------------------------------------------------------
+	
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.86
+	
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+
+end
+
+-----------------------------------------------------------------------------------------
+
+function scene:openConfirmCashout()
+
+	-----------------------------------
+
+	viewManager.showPopup()
+	analytics.event("Gaming", "openConfirmCashout") 
+	
+	----------------------------------------------------------------------------------------------------
+	
+	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoShare.png")  
+	hud.popup.shareIcon.x 			= display.contentWidth*0.5
+	hud.popup.shareIcon.y			= display.contentHeight*0.17
+
+	----------------------------------------------------------------------------------------------------
+	
+	hud.confirm 						= display.newImage( hud.popup, I "twitter.connected.png")  
+	hud.confirm.x 						= display.contentWidth*0.5
+   hud.confirm.y						= display.contentHeight*0.6
+
+	local refresh = function() scene:refreshScene() end
+	
+	utils.onTouch(hud.confirm, function() 
+		analytics.event("Gaming", "cashout")
+		native.setActivityIndicator( true ) 
+		userManager:cashout(function()
+   		native.setActivityIndicator( false ) 
+			router.resetScreen()
+			refresh()
+		end) 
+	end)
+	
+	----------------------------------------------------------------------------------------------------
+	
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.86
+	
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+	
+
+end
 ------------------------------------------
 
 -- Called immediately after scene has moved onscreen:
