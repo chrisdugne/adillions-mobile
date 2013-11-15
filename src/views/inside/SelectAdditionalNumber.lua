@@ -37,7 +37,7 @@ function scene:refreshScene()
 	
 	viewManager.newText( {
 		parent = hud,
-		text = T "Select your lucky ball !",     
+		text = T "Select your Lucky Ball !",     
 		x = display.contentWidth*0.1,
 		y = top + 90,
 		font = FONT,   

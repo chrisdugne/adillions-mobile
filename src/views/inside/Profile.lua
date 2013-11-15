@@ -99,7 +99,7 @@ function scene:drawScene()
 	self:drawTextEntry(T "First name" 	.. " : ", userManager.user.firstName, detailsTop+2)
 	self:drawTextEntry(T "Last name" 	.. " : ", userManager.user.lastName, detailsTop+3)
 	self:drawTextEntry(T "Email" 			.. " : ", userManager.user.email, detailsTop+4)
-	self:drawTextEntry(T "Birthday" 		.. " : ", utils.readableDate(utils.userManager.user.birthDate), detailsTop+5)
+	self:drawTextEntry(T "Date of birth" 		.. " : ", utils.readableDate(utils.userManager.user.birthDate), detailsTop+5)
 
 	---------------------------------------------------------------
 	-- Status
@@ -141,7 +141,7 @@ function scene:drawScene()
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Bonus tickets" .. " : ",         
+		text 				= T "Bonus Tickets" .. " : ",         
 		x 					= self.column2,
 		y 					= self.top + self.yGap*(statusTop+1),
 		fontSize 		= self.fontSizeLeft,
