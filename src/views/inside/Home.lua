@@ -182,7 +182,7 @@ function scene:drawNextLottery( event )
 	-------------------------------
 	
 	hud.pictoCagnotte = display.newImage( hud, "assets/images/icons/cagnotte.png")  
-	hud.pictoCagnotte.x = priceX + display.contentWidth*0.09
+	hud.pictoCagnotte.x = priceX + display.contentWidth*0.16
 	hud.pictoCagnotte.y = top + display.contentHeight*0.12
 	
 	-------------------------------

@@ -71,7 +71,11 @@ function UserManager:getPlayerByFacebookId()
 		
 		native.setActivityIndicator( false )	
 
-		if(result.isError or result.status == 401 or result.status == '401') then
+		if(result.isError) then
+			print("--> PB with server")
+			router.openOutside()
+			
+		elseif(result.status == 401 or result.status == '401') then
 			print("--> signinFB")
 			router.openSigninFB()
 		else
