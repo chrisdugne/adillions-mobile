@@ -95,18 +95,49 @@ function refreshHeaderPoints()
 		viewManager.showPopup(function() end)
    	analytics.event("Gaming", "popupPoints") 
 
+		--------------------------
+
 		viewManager.newText({
 			parent 			= hud.popup, 
 			text	 			= userManager.user.currentPoints .. " pts",     
 			x 					= display.contentWidth*0.54,
-			y 					= display.contentHeight*0.25,
+			y 					= display.contentHeight*0.2,
 			fontSize 		= 60,
 		})
 
 		hud.iconPoints 			= display.newImage( hud.popup, "assets/images/points/points.".. userManager.user.currentPoints .. ".png")
 		hud.iconPoints.x 			= display.contentWidth * 0.4
-		hud.iconPoints.y 			= display.contentHeight*0.255
+		hud.iconPoints.y 			= display.contentHeight*0.205
 
+		--------------------------
+
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text 				= T "Instant Tickets" .. " : ",         
+			x 					= display.contentWidth * 0.5,
+			y 					= display.contentHeight*0.35,
+		})
+
+		hud.iconExtraTicket 			= display.newImage( hud.popup, "assets/images/icons/instant.ticket.png")
+		hud.iconExtraTicket.x 		= display.contentWidth * 0.5 - 40
+		hud.iconExtraTicket.y 		= display.contentHeight*0.42
+
+		viewManager.newText({
+			parent 			= hud.popup, 
+			text	 			= userManager.user.extraTickets,     
+			x 					= display.contentWidth * 0.5 + 55,
+			y 					= display.contentHeight*0.42,
+			font				= NUM_FONT,
+			fontSize 		= 40,
+			referencePoint = display.CenterRightReferencePoint
+		})
+		
+		--------------------------
+		
+   	hud.popup.separator 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+   	hud.popup.separator.x 		= display.contentWidth*0.5
+   	hud.popup.separator.y 		= display.contentHeight*0.52
+		
 		--------------------------
 
 		local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
@@ -115,41 +146,18 @@ function refreshHeaderPoints()
 			parent 			= hud.popup, 
 			text 				= T "Remaining tickets" .. " : ",         
 			x 					= display.contentWidth * 0.5,
-			y 					= display.contentHeight*0.35,
+			y 					= display.contentHeight*0.6,
 		})
 
 		hud.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
 		hud.iconTicket.x 			= display.contentWidth * 0.5 - 40
-		hud.iconTicket.y 			= display.contentHeight*0.4
+		hud.iconTicket.y 			= display.contentHeight*0.67
 
 		viewManager.newText({
 			parent 			= hud.popup, 
 			text	 			= nbTickets,     
 			x 					= display.contentWidth * 0.5 + 55,
-			y 					= display.contentHeight*0.4,
-			font				= NUM_FONT,
-			fontSize 		= 40,
-			referencePoint = display.CenterRightReferencePoint
-		})
-
-		--------------------------
-
-		viewManager.newText({
-			parent 			= hud.popup, 
-			text 				= T "Instant Tickets" .. " : ",         
-			x 					= display.contentWidth * 0.5,
-			y 					= display.contentHeight*0.5,
-		})
-
-		hud.iconExtraTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
-		hud.iconExtraTicket.x 		= display.contentWidth * 0.5 - 40
-		hud.iconExtraTicket.y 		= display.contentHeight*0.55
-
-		viewManager.newText({
-			parent 			= hud.popup, 
-			text	 			= userManager.user.extraTickets,     
-			x 					= display.contentWidth * 0.5 + 55,
-			y 					= display.contentHeight*0.55,
+			y 					= display.contentHeight*0.67,
 			font				= NUM_FONT,
 			fontSize 		= 40,
 			referencePoint = display.CenterRightReferencePoint
@@ -159,7 +167,7 @@ function refreshHeaderPoints()
 
 		hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
 		hud.popup.close.x 			= display.contentWidth*0.5
-		hud.popup.close.y 			= display.contentHeight*0.7
+		hud.popup.close.y 			= display.contentHeight*0.84
 
 		utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 
@@ -263,7 +271,7 @@ function showPopup(action)
 	hud.backGrey.y 	= display.viewableContentHeight*0.5
 	hud.backGrey.alpha= 0.85
 	
-	hud.popupRect = display.newImageRect( hud.popup, "assets/images/hud/Popup_BG.png", display.contentWidth*0.9, display.contentHeight*0.9)
+	hud.popupRect = display.newImageRect( hud.popup, "assets/images/hud/Popup_BG.png", display.contentWidth*0.95, display.contentHeight*0.95)
   	hud.popupRect.x = display.contentWidth*0.5 
   	hud.popupRect.y = display.contentHeight*0.5
 	

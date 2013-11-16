@@ -29,7 +29,7 @@ function scene:refreshScene()
 		text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery), 
 		x = display.contentWidth*0.5,
 		y = display.contentHeight*0.13,
-		fontSize = 33,
+		fontSize = 38,
 		font = NUM_FONT,
 	})
 

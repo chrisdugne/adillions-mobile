@@ -1,437 +1,477 @@
 local translations =
 {
-    ["Log In"] = {
-        ["fr"] = "S'identifier",
-    },
-  	
-    ["Log Out"] = {
-        ["fr"] = "Déconnexion",
-    },
+	["Log In"] = {
+		["fr"] = "S'identifier",
+	},
 
-    ["Sign Up"] = {
-        ["fr"] = "S'inscrire",
-    },
+	["Log Out"] = {
+		["fr"] = "Déconnexion",
+	},
 
-    ["Close"] = {
-        ["fr"] = "Fermer",
-    },
+	["Sign Up"] = {
+		["fr"] = "S'inscrire",
+	},
+
+	["Close"] = {
+		["fr"] = "Fermer",
+	},
 
 	["Welcome"] = {
-        ["fr"] = "Bienvenue",
-    },
+		["fr"] = "Bienvenue",
+	},
 
-    ["Welcome back"] = {
-        ["fr"] = "Bienvenue",
-    },
+	["Welcome back"] = {
+		["fr"] = "Bienvenue",
+	},
 
-    ["Thank you"] = {
-        ["fr"] = "Merci",
-    },
-	
-	["Gain"] = {
-        ["fr"] = "Gain",
-    },
-	 
-    ["Next draw in 48h !"] = {
-        ["fr"] = "Prochain tirage dans 48h !",
-    },
+	["Thank you"] = {
+		["fr"] = "Merci",
+	},
 
-    ["This week's results are published !"] = {
-        ["fr"] = "Les résultats de la semaine sont annoncés !",
-    },
- 
-    ["You've earned an Instant Ticket"] = {
-        ["fr"] = "Vous avez gagné un Ticket Instantané",
-    },
+	["Winnings"] = {
+		["fr"] = "Gain",
+	},
 
-	
+	["Next drawing in 48h !"] = {
+		["fr"] = "Prochain tirage dans 48h !",
+	},
+
+	["This week's results are published !"] = {
+		["fr"] = "Les résultats de la semaine sont annoncés !",
+	},
+
+	["You've earned an Instant Ticket"] = {
+		["fr"] = "Vous avez gagné un Ticket Instantané",
+	},
+
+
 	---- SHOOTER ? ou bannière pour certain ? ------------------
-    ["Account not linked"] = {
-        ["fr"] = "Compte non lié",
-    },
-    
-    ["Account linked"] = {
-        ["fr"] = "Compte relié",
-    },
-    
-    ["Not connected"] = {
-        ["fr"] = "Non connecté",
-    },
-    
-    ["Connected"] = {
-        ["fr"] = "Connecté",
-    },
-    
-    ["Not fan yet"] = {
-        ["fr"] = "Pas encore fan",
-    },
-    
-    ["Thank you for being a fan !"] = {
-        ["fr"] = "Merci d'être fan !",
-    },  
+	["Account not linked"] = {
+		["fr"] = "Compte non lié",
+	},
+
+	["Account linked"] = {
+		["fr"] = "Compte relié",
+	},
+
+	["Not connected"] = {
+		["fr"] = "Non connecté",
+	},
+
+	["Connected"] = {
+		["fr"] = "Connecté",
+	},
+
+	["Not fan yet"] = {
+		["fr"] = "Pas encore fan",
+	},
+
+	["Thank you for being a fan !"] = {
+		["fr"] = "Merci d'être fan !",
+	},  
 	---- SHOOTER ? ou bannière pour certain ? ------------------
 
-	
-	
+
+
 	---TUTORIAL P1-----------------------------------------------------------
-	
-    ["NEXT"] = {
-        ["fr"] = "SUIVANT",
-    },
 
-    ["Each week"] = {
-        ["fr"] = "Chaque semaine",
-    },
-    
+	["NEXT"] = {
+		["fr"] = "SUIVANT",
+	},
+
+	["Each week"] = {
+		["fr"] = "Chaque semaine",
+	},
+
 	["theme"] = {
-        ["fr"] = "thème",
-    },
-	
-    ["draw live on"] = {
-        ["fr"] = "tirage sur",
-    },
+		["fr"] = "thème",
+	},
 
-    ["chance to win"] = {
-        ["fr"] = "chance de gagner",
-    },
-	
+	["draw on"] = {
+		["fr"] = "tirage sur",
+	},
+
+	["chance to win"] = {
+		["fr"] = "chance de gagner",
+	},
+
 	---TUTORIAL P2-----------------------------------------------------------
-	
+
 	["Watch an ad"] = {
-        ["fr"] = "Visualisez une pub",
-    },
+		["fr"] = "Visualisez une pub",
+	},
 
-    ["Get a lottery ticket"] = {
-        ["fr"] = "Remplissez votre ticket de loterie",
-    },
+	["Get a lottery ticket"] = {
+		["fr"] = "Remplissez votre ticket de loterie",
+	},
 
-    ["Win the Jackpot"] = {
-        ["fr"] = "Gagnez le Jackpot",
-    },
+	["Win the Jackpot"] = {
+		["fr"] = "Gagnez le Jackpot",
+	},
 
-    ["Several prize categories and lottery"] = {
-        ["fr"] = "Plusieurs rangs de gain et tickets",
-    },
+	["Several prize categories and lottery"] = {
+		["fr"] = "Plusieurs rangs de gain et tickets",
+	},
 
-    ["tickets are available for each draw"] = {
-        ["fr"] = "disponibles par tirage",
-    },
+	["tickets are available for each draw"] = {
+		["fr"] = "disponibles par tirage",
+	},
 
 	["PREVIOUS"] = {
-        ["fr"] = "PRECEDENT",
-    },
+		["fr"] = "PRECEDENT",
+	},
 
 	---TUTORIAL P3-----------------------------------------------------------
-	
-    ["Invite your friends to make"] = {
-        ["fr"] = "Invitez vos amis pour faire",
-    },
 
-    ["the jackpot bigger"] = {
-        ["fr"] = "grossir la cagnotte",
-    },
+	["Invite your friends to make"] = {
+		["fr"] = "Invitez vos amis pour faire",
+	},
+
+	["the jackpot bigger"] = {
+		["fr"] = "grossir la cagnotte",
+	},
 
 	---POPUP INVITE----------------------------------------------------------- 
-	
-    ["Earn points and increase the jackpot"] = {
-        ["fr"] = "Gagnez des points et faites augmenter la cagnotte",
-    },
+
+	["Earn points and increase the jackpot"] = {
+		["fr"] = "Gagnez des points et faites augmenter la cagnotte",
+	},
 
 	---POPUP SHARE----------------------------------------------------------- 
-	
-    ["Earn points and get Instant Tickets"] = {
-        ["fr"] = "Gagnez des points et obtenez des Tickets Instantanés",
-    },
+
+	["Earn points and get Instant Tickets"] = {
+		["fr"] = "Gagnez des points et obtenez des Tickets Instantanés",
+	},
 
 	["Successfully posted on your wall !"] = {
-        ["fr"] = "Posté sur votre mur !",
-    },
+		["fr"] = "Posté sur votre mur !",
+	},
 
-    ["Successfully tweeted"] = {
-        ["fr"] = "Tweeté !",
-    },
-	
+	["Successfully tweeted"] = {
+		["fr"] = "Tweeté !",
+	},
+
 	---POPUP MAX TICKET----------------------------------------------------------- 
 
-    ["You have reached the maximum"] = {
-        ["fr"] = "Vous avez atteint le nombre",
-    },
-    
-    ["number of tickets for this draw."] = {
-        ["fr"] = "maximum de tickets pour ce tirage.",
-    },
-    
-    ["You can gain Bonus Tickets by liking our"] = {
-        ["fr"] = "Vous pouvez gagner des Tickets Bonus",
-    },
+	["You have reached the maximum"] = {
+		["fr"] = "Vous avez atteint le nombre",
+	},
 
-    ["Facebook page, following us on"] = {
-        ["fr"] = "en likant notre page Facebook, en",
-    },
+	["number of tickets for this draw."] = {
+		["fr"] = "maximum de tickets pour ce tirage.",
+	},
 
-    ["Twitter, etc."] = {
-        ["fr"] = "nous suivant sur Twitter, etc.",
-    },
+	["You can gain Bonus Tickets by liking our"] = {
+		["fr"] = "Vous pouvez gagner des Tickets Bonus",
+	},
+
+	["Facebook page, following us on"] = {
+		["fr"] = "en likant notre page Facebook, en",
+	},
+
+	["Twitter, etc."] = {
+		["fr"] = "nous suivant sur Twitter, etc.",
+	},
 
 	---POPUP POINTS HEADER-----------------------------------------------------------
 
 	["Instant Tickets"] = {
-        ["fr"] = "Tickets Instantanés",
-    },
+		["fr"] = "Tickets Instantanés",
+	},
 
-    ["Remaining tickets"] = {
-        ["fr"] = "Tickets restants",
-    },
+	["Remaining tickets"] = {
+		["fr"] = "Tickets restants",
+	},
 
 	---POPUP REWARD-----------------------------------------------------------
- 
+
 	["You have earned"] = {
-        ["fr"] = "Vous avez gagné",
-    },
+		["fr"] = "Vous avez gagné",
+	},
 
-    ["Instant Ticket"] = {
-        ["fr"] = "Ticket Instantané",
-    },
+	["Instant Ticket"] = {
+		["fr"] = "Ticket Instantané",
+	},
 
-	---HOME-----------------------------------------------------------
+	---POPUP PRIZE-----------------------------------------------------------
+
+	["Match"] = {
+		["fr"] = "Combinaison",
+	},
+
+	["n° + LB"] = {
+		["fr"] = "n° + LB",
+	},
+
+	["Prize"] = {
+		["fr"] = "Répartition",
+	},
+
+	["breakdown"] = {
+		["fr"] = "cagnotte",
+	},
+
+	---POPUP Contact -----------------------------------------------------------
+
+	["General information"] = {
+		["fr"] = "Information",
+	},
+
+	["For technical issues"] = {
+		["fr"] = "Support technique",
+	},
+
+	["For payments"] = {
+		["fr"] = "Paiements",
+	},
+
+	["For advertisers"] = {
+		["fr"] = "Annonceurs",
+	},
 	
-    ["Players"] = {
-        ["fr"] = "Joueurs",
-    },
+	---HOME-----------------------------------------------------------
+
+	["Players"] = {
+		["fr"] = "Joueurs",
+	},
 
 	---PROFILE DETAILS-----------------------------------------------------------
-	
-    ["User name"] = {
-        ["fr"] = "Nom d'utilisateur",
-    },
 
-    ["First name"] = {
-        ["fr"] = "Prénom",
-    },
+	["User name"] = {
+		["fr"] = "Nom d'utilisateur",
+	},
 
-    ["Last name"] = {
-        ["fr"] = "Nom",
-    },
+	["First name"] = {
+		["fr"] = "Prénom",
+	},
 
-    ["Email"] = {
-        ["fr"] = "Email",
-    },
+	["Last name"] = {
+		["fr"] = "Nom",
+	},
 
-    ["Date of birth"] = {
-        ["fr"] = "Date de naissance",
-    },
+	["Email"] = {
+		["fr"] = "Email",
+	},
+
+	["Date of birth"] = {
+		["fr"] = "Date de naissance",
+	},
 
 	---PROFILE STATUS-----------------------------------------------------------
-	
-    ["Total points"] = {
-        ["fr"] = "Total des points",
-    },
+
+	["Total points"] = {
+		["fr"] = "Total des points",
+	},
 
 	["Bonus Tickets"] = {
-        ["fr"] = "Tickets Bonus",
-    },
-	
-    ["Charity profile"] = {
-        ["fr"] = "Profil donateur",
-    },
+		["fr"] = "Tickets Bonus",
+	},
+
+	["Charity profile"] = {
+		["fr"] = "Profil donateur",
+	},
 
 	["Starter"] = {
-        ["fr"] = "Débutant",
-    },
-	
-    ["Donation"] = {
-        ["fr"] = "Dons",
-    },
-	
-	---PROFILE GAINS-----------------------------------------------------------
-	
-    ["Total gains"] = {
-        ["fr"] = "Total des gains",
-    },
+		["fr"] = "Débutant",
+	},
 
-    ["Gains payed"] = {
-        ["fr"] = "Gains perçus",
-    },
+	["Donation"] = {
+		["fr"] = "Dons",
+	},
 
-    ["Gains balance"] = {
-        ["fr"] = "Solde",
-    },
+	---PROFILE WINNINGS-----------------------------------------------------------
+
+	["Total winnings"] = {
+		["fr"] = "Total des gains",
+	},
+
+	["Payed"] = {
+		["fr"] = "Gains perçus",
+	},
+
+	["Balance"] = {
+		["fr"] = "Solde",
+	},
 
 	---RESULTS-----------------------------------------------------------
-    
-    ["Drawing"] = {
-        ["fr"] = "Tirage du",
-    },
-	
-    ["Winners"] = {
-        ["fr"] = "Gagnants",
-    },
-    
-    ["Charity"] = {
-        ["fr"] = "Dons",
-    },
-    
-    ["See more"] = {
-        ["fr"] = "Détails",
-    },
+
+	["Drawing"] = {
+		["fr"] = "Tirage du",
+	},
+
+	["Winner"] = {
+		["fr"] = "Gagnant",
+	},
+
+	["Winners"] = {
+		["fr"] = "Gagnants",
+	},
+
+	["Charity"] = {
+		["fr"] = "Dons",
+	},
+
+	["See more"] = {
+		["fr"] = "Détails",
+	},
 
 	---POOL NUMBERS-----------------------------------------------------------
-    
-    ["Random"] = {
-        ["fr"] = "Aléatoire",
-    },
-    
-    ["Clear all"] = {
-        ["fr"] = "Effacer tout",
-    },
-	
-    ["Favorites"] = {
-        ["fr"] = "Favoris",
-    },
-	
+
+	["Random"] = {
+		["fr"] = "Aléatoire",
+	},
+
+	["Clear all"] = {
+		["fr"] = "Effacer tout",
+	},
+
+	["Favorites"] = {
+		["fr"] = "Favoris",
+	},
+
 	---LUCKY BALL-----------------------------------------------------------
-		
-    ["Select your Lucky Ball !"] = {
-        ["fr"] = "Choisissez votre Boule Chance !",
-    },
-    
+
+	["Select your Lucky Ball !"] = {
+		["fr"] = "Choisissez votre Boule Chance !",
+	},
+
 	---CONFIRMATION-----------------------------------------------------------
 
-    ["Your selection !"] = {
-        ["fr"] = "Votre ticket !",
-    },
+	["Your selection !"] = {
+		["fr"] = "Votre ticket !",
+	},
 
-    ["Next drawing"] = {
-        ["fr"] = "Prochain tirage",
-    },
-	
+	["Next drawing"] = {
+		["fr"] = "Prochain tirage",
+	},
+
 	---INFO OPTIONS-----------------------------------------------------------
-    
-    ["Notification 48h before the next draw"] = {
-        ["fr"] = "Notification 48h avant le tirage",
-    },
 
-    ["Notification for the results"] = {
-        ["fr"] = "Notification des résultats",
-    },
+	["Notification 48h before the next draw"] = {
+		["fr"] = "Notification 48h avant le tirage",
+	},
+
+	["Notification for the results"] = {
+		["fr"] = "Notification des résultats",
+	},
 
 	---WEEK DAYS-----------------------------------------------------------
 
-    ["Monday"] = {
-        ["fr"] = "Lundi",
-    },
+	["Monday"] = {
+		["fr"] = "Lundi",
+	},
 
-    ["Tuesday"] = {
-        ["fr"] = "Mardi",
-    },
+	["Tuesday"] = {
+		["fr"] = "Mardi",
+	},
 
-    ["Wednesday"] = {
-        ["fr"] = "Mercredi",
-    },
+	["Wednesday"] = {
+		["fr"] = "Mercredi",
+	},
 
-    ["Thursday"] = {
-        ["fr"] = "Jeudi",
-    },
+	["Thursday"] = {
+		["fr"] = "Jeudi",
+	},
 
-    ["Friday"] = {
-        ["fr"] = "Vendredi",
-    },
+	["Friday"] = {
+		["fr"] = "Vendredi",
+	},
 
-    ["Saturday"] = {
-        ["fr"] = "Samedi",
-    },
+	["Saturday"] = {
+		["fr"] = "Samedi",
+	},
 
-    ["Sunday"] = {
-        ["fr"] = "Dimanche",
-    },
+	["Sunday"] = {
+		["fr"] = "Dimanche",
+	},
 
 	---MONTHS-----------------------------------------------------------
-	
-    ["January"] = {
-        ["fr"] = "Janvier",
-    },
 
-    ["February"] = {
-        ["fr"] = "Février",
-    },
+	["January"] = {
+		["fr"] = "Janvier",
+	},
 
-    ["March"] = {
-        ["fr"] = "Mars",
-    },
+	["February"] = {
+		["fr"] = "Février",
+	},
 
-    ["April"] = {
-        ["fr"] = "Avril",
-    },
+	["March"] = {
+		["fr"] = "Mars",
+	},
 
-    ["May"] = {
-        ["fr"] = "Mai",
-    },
+	["April"] = {
+		["fr"] = "Avril",
+	},
 
-    ["June"] = {
-        ["fr"] = "Juin",
-    },
+	["May"] = {
+		["fr"] = "Mai",
+	},
 
-    ["July"] = {
-        ["fr"] = "Juillet",
-    },
+	["June"] = {
+		["fr"] = "Juin",
+	},
 
-    ["August"] = {
-        ["fr"] = "Août",
-    },
+	["July"] = {
+		["fr"] = "Juillet",
+	},
 
-    ["September"] = {
-        ["fr"] = "Septembre",
-    },
+	["August"] = {
+		["fr"] = "Août",
+	},
 
-    ["November"] = {
-        ["fr"] = "Novembre",
-    },
+	["September"] = {
+		["fr"] = "Septembre",
+	},
 
-    ["October"] = {
-        ["fr"] = "Octobre",
-    },
+	["November"] = {
+		["fr"] = "Novembre",
+	},
 
-    ["December"] = {
-        ["fr"] = "Décembre",
-    },
-    
-    ---TEXT INVITE-----------------------------------------------------------
+	["October"] = {
+		["fr"] = "Octobre",
+	},
 
-    ["Join me on Adillions !"] = {
-        ["fr"] = "Inscris-toi sur Adillions !",
-    },
+	["December"] = {
+		["fr"] = "Décembre",
+	},
 
-    ["Join me on Adillions and get a chance to win the jackpot !"] = {
-        ["fr"] = "Inscris-toi sur Adillions et obtiens une chance de gagner le jackpot !",
-    },
+	---TEXT INVITE-----------------------------------------------------------
 
-    ["Dowload the free app on the App Store or Google Play / Play on Facebook and on www.adillions.com"] = {
-        ["fr"] = "Télécharge l'application gratuite sur l'Apple Store ou Google Play / Joue sur Facebook et sur www.adillions.com",
-    },
+	["Join me on Adillions !"] = {
+		["fr"] = "Inscris-toi sur Adillions !",
+	},
 
-    ["Free, fun and easy - Sign up now using my sponsorship code : "] = {
-        ["fr"] = "Gratuit, sympa et simple - Inscris-toi maintenant en utilisant mon code parrain : ",
-    },
+	["Join me on Adillions and get a chance to win the jackpot !"] = {
+		["fr"] = "Inscris-toi sur Adillions et obtiens une chance de gagner le jackpot !",
+	},
 
-    ["More players = a bigger jackpot !"] = {
-        ["fr"] = "Plus de joueurs = Une cagnotte plus grande",
-    },
+	["Dowload the free app on the App Store or Google Play / Play on Facebook and on www.adillions.com"] = {
+		["fr"] = "Télécharge l'application gratuite sur l'Apple Store ou Google Play / Joue sur Facebook et sur www.adillions.com",
+	},
 
-   ---TEXT SHARE-----------------------------------------------------------
+	["Free, fun and easy - Sign up now using my sponsorship code : "] = {
+		["fr"] = "Gratuit, sympa et simple - Inscris-toi maintenant en utilisant mon code parrain : ",
+	},
 
-    ["I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot !"] = {
-        ["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Vous aussi, obtenez une chance de gagner le jackpot !",
-    },
+	["More players = a bigger jackpot !"] = {
+		["fr"] = "Plus de joueurs = Une cagnotte plus grande",
+	},
 
-    ["Dowload the free app on the App Store or Google Play or play on Facebook and on www.adillions.com"] = {
-        ["fr"] = "Téléchargez l'application gratuite sur l'Apple Store ou Google Play ou jouez sur Facebook et sur www.adillions.com",
-    },
+	---TEXT SHARE-----------------------------------------------------------
 
-    ["Adillions in a few words: A global, responsible and viral lottery funded by advertising"] = {
-        ["fr"] = "Adillions en quelques mots : une loterie globale, responsable et sociale financée par la publicité",
-    },
+	["I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot !"] = {
+		["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Vous aussi, obtenez une chance de gagner le jackpot !",
+	},
 
-    
+	["Dowload the free app on the App Store or Google Play or play on Facebook and on www.adillions.com"] = {
+		["fr"] = "Téléchargez l'application gratuite sur l'Apple Store ou Google Play ou jouez sur Facebook et sur www.adillions.com",
+	},
+
+	["Adillions in a few words: A global, responsible and viral lottery funded by advertising"] = {
+		["fr"] = "Adillions en quelques mots : une loterie globale, responsable et sociale financée par la publicité",
+	},
+
+
 }
 
 return translations

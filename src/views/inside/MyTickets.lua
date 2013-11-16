@@ -115,9 +115,10 @@ function scene:drawNextLottery()
    			viewManager.newText({
    				parent = hud.board, 
    				text = T "Drawing" .. " " .. lotteryManager:date(ticket.lottery), 
-         		x = display.contentWidth*0.4,
+         		x = display.contentWidth*0.08,
          		y = top + yGap*(nbNewTickets+nbLotteries-2), 
-         		fontSize = 35
+         		fontSize = 44,
+         		referencePoint = display.CenterLeftReferencePoint
    			})
          
    		end
@@ -179,9 +180,10 @@ function scene:drawPreviousLotteries(top)
       			viewManager.newText({
       				parent = hud.board, 
       				text = T "Drawing" .. " " .. lotteryManager:date(ticket.lottery), 
-            		x = display.contentWidth*0.4,
+            		x = display.contentWidth*0.08,
             		y = top + yGap*(nbPreviousTickets+nbLotteries-2), 
-            		fontSize = 35
+            		fontSize = 44,
+            		referencePoint = display.CenterLeftReferencePoint
       			})
             
             else
@@ -200,10 +202,10 @@ function scene:drawPreviousLotteries(top)
       	
    			viewManager.newText({
    				parent = hud.board, 
-   				text = T "Gain" .. " :", 
+   				text = T "Winnings" .. " :", 
          		x = display.contentWidth*0.1,
          		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
-         		fontSize = 29,
+         		fontSize = 34,
 					referencePoint = display.CenterLeftReferencePoint
    			})
    		
@@ -212,7 +214,7 @@ function scene:drawPreviousLotteries(top)
    				text =  utils.convertAndDisplayPrice((ticket.price or 0), COUNTRY, ticket.lottery.rateUSDtoEUR), 
          		x = display.contentWidth*0.87,
          		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
-         		fontSize = 32,
+         		fontSize = 37,
          		font = NUM_FONT,
 					referencePoint = display.CenterRightReferencePoint
    			})

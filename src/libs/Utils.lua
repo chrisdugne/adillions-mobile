@@ -320,7 +320,7 @@ function readableDate(date)
 	return timestampToReadableDate(parseDateTime(date)*1000, false)
 end
 
-function timestampToReadableDate(date, withDay)
+function timestampToReadableDate(date, withDay, withYear)
 	
 	local day		   = T (os.date("%A", date/1000))
 	local numDay 		= utils.formatPositionNum(os.date("%d", date/1000))
@@ -328,16 +328,22 @@ function timestampToReadableDate(date, withDay)
 	local year 			= os.date("%Y", date/1000)
 	
 	if (LANG == "fr") then
+		local y = ""
+		if(withYear) then y = " " .. year end
+		
    	if(withDay) then 
-			return day .. " " .. numDay .. " " .. month .. " " .. year
+			return day .. " " .. numDay .. " " .. month .. y
 		else
-			return numDay .. " " .. month .. " " .. year
+			return numDay .. " " .. month .. y
       end
 	else
+		local y = ""
+		if(withYear) then y = ", " .. year end
+
    	if(withDay) then 
-			return day .. ", " .. month .. " " .. numDay .. ", " .. year
+			return day .. ", " .. month .. " " .. numDay .. y
 		else
-   		return month .. " " .. numDay .. ", " .. year
+   		return month .. " " .. numDay .. y
       end
    end
    

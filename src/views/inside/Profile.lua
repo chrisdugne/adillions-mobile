@@ -33,7 +33,7 @@ function scene:drawScene()
 	------------------
 
 	local statusTop 			= 3
-	local gainsTop 			= 10.5
+	local winningsTop 			= 10.5
 	local detailsTop 			= 20
 	local socialTop 			= 27
 	local sponsorTop 			= 40
@@ -224,36 +224,36 @@ function scene:drawScene()
 	
 	
 	---------------------------------------------------------------
-	-- Gains
+	-- winnings
 	---------------------------------------------------------------
 	
-	hud.lineGains 			= display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
-	hud.lineGains.x 			= display.contentWidth*0.5
-	hud.lineGains.y 			= self.top + self.yGap*gainsTop
-	hud.board:insert(hud.lineGains)
+	hud.lineWinnings 			= display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
+	hud.lineWinnings.x 			= display.contentWidth*0.5
+	hud.lineWinnings.y 			= self.top + self.yGap*winningsTop
+	hud.board:insert(hud.lineWinnings)
 
-	hud.titleGains 			= display.newImage( hud.board, I "Gain.png")  
-	hud.titleGains:setReferencePoint(display.CenterLeftReferencePoint);
-	hud.titleGains.x 		= display.contentWidth*0.05
-	hud.titleGains.y			= self.top + self.yGap*gainsTop
-	hud.board:insert(hud.titleGains)
+	hud.titleWinnings 			= display.newImage( hud.board, I "Gain.png")  
+	hud.titleWinnings:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.titleWinnings.x 		= display.contentWidth*0.05
+	hud.titleWinnings.y			= self.top + self.yGap*winningsTop
+	hud.board:insert(hud.titleWinnings)
 	
 	--------------------------
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Total gains" .. " : ",         
+		text 				= T "Total winnings" .. " : ",         
 		x 					= self.column1,
-		y 					= self.top + self.yGap*(gainsTop+1),
+		y 					= self.top + self.yGap*(winningsTop+1),
 		fontSize 		= self.fontSizeLeft,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 
 	viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= utils.displayPrice(userManager.user.totalGains, COUNTRY) ,   
+		text	 			= utils.displayPrice(userManager.user.totalWinnings, COUNTRY) ,   
 		x 					= self.column1 + display.contentWidth*0.26, 
-		y 					= self.top + self.yGap*(gainsTop+2),
+		y 					= self.top + self.yGap*(winningsTop+2),
 		fontSize 		= 40,
 		font				= NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
@@ -261,25 +261,25 @@ function scene:drawScene()
 	
 	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/money.png")
 	hud.iconMoney.x 		= self.column1 + display.contentWidth*0.31
-	hud.iconMoney.y 		= self.top + self.yGap*(gainsTop+2) - display.contentHeight*0.004
+	hud.iconMoney.y 		= self.top + self.yGap*(winningsTop+2) - display.contentHeight*0.004
 	hud.board:insert(hud.iconMoney)
 	
 	--------------------------
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Gains payed" .. " : ",         
+		text 				= T "Payed" .. " : ",         
 		x 					= self.column2,
-		y 					= self.top + self.yGap*(gainsTop+1),
+		y 					= self.top + self.yGap*(winningsTop+1),
 		fontSize 		= self.fontSizeLeft,
 		referencePoint = display.CenterRightReferencePoint
 	})
 
 	viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= utils.displayPrice(userManager.user.receivedGains, COUNTRY) ,     
+		text	 			= utils.displayPrice(userManager.user.receivedWinnings, COUNTRY) ,     
 		x 					= self.column2 -  display.contentWidth*0.07,
-		y 					= self.top + self.yGap*(gainsTop+2),
+		y 					= self.top + self.yGap*(winningsTop+2),
 		fontSize 		= self.fontSizeRight,
 		font				= NUM_FONT,
 		fontSize 		= 40,
@@ -288,29 +288,29 @@ function scene:drawScene()
 	
 	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/PictogainPayed.png")
 	hud.iconMoney.x 		= self.column2 
-	hud.iconMoney.y 		= self.top + self.yGap*(gainsTop+2)
+	hud.iconMoney.y 		= self.top + self.yGap*(winningsTop+2)
 	hud.board:insert(hud.iconMoney)
 	
 	--------------------------
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Gains balance" .. " : ",         
+		text 				= T "Balance" .. " : ",         
 		x 					= display.contentWidth*0.5,
-		y 					= self.top + self.yGap*(gainsTop+4),
+		y 					= self.top + self.yGap*(winningsTop+4),
 		fontSize 		= self.fontSizeLeft,
 	})
 
 	local balance = utils.displayPrice(userManager.user.balance, COUNTRY)
-	if(userManager.user.pendingGains > 0) then
-		balance = balance  .. " (" .. utils.displayPrice(userManager.user.pendingGains, COUNTRY) .. ")"
+	if(userManager.user.pendingWinnings > 0) then
+		balance = balance  .. " (" .. utils.displayPrice(userManager.user.pendingWinnings, COUNTRY) .. ")"
 	end
 
-	local totalGainsText = viewManager.newText({
+	local totalWinningsText = viewManager.newText({
 		parent 			= hud.board, 
 		text	 			= balance,   
 		x 					= display.contentWidth*0.5, 
-		y 					= self.top + self.yGap*(gainsTop+5),
+		y 					= self.top + self.yGap*(winningsTop+5),
 		fontSize 		= 35,
 		font				= NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
@@ -318,14 +318,14 @@ function scene:drawScene()
 	
 	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/PictoBalance.png")
 	hud.iconMoney.x 		= display.contentWidth*0.58
-	hud.iconMoney.y 		= self.top + self.yGap*(gainsTop+5) - display.contentHeight*0.004
+	hud.iconMoney.y 		= self.top + self.yGap*(winningsTop+5) - display.contentHeight*0.004
 	hud.board:insert(hud.iconMoney)
 
 	--------------------------
 	
    hud.cashout 		= display.newImage( hud.board, I "cashout.button.png")  
    hud.cashout.x 		= display.contentWidth*0.5
-   hud.cashout.y		= self.top + self.yGap*(gainsTop+7.5)
+   hud.cashout.y		= self.top + self.yGap*(winningsTop+7.5)
    hud.board:insert(hud.cashout)
 
 	utils.onTouch(hud.cashout, function() 
@@ -427,7 +427,7 @@ function scene:drawScene()
 	local textBonus2 = viewManager.newText({
 		parent 			= hud.board, 
 		text	 			= FACEBOOK_FAN_TICKETS,     
-		x 					= display.contentWidth*0.48,
+		x 					= display.contentWidth*0.89,
 		y 					= self.top + self.yGap*(socialTop+5.2),
 		font				= NUM_FONT,
 		fontSize 		= 33,
@@ -435,7 +435,7 @@ function scene:drawScene()
 	})
 	
    hud.facebookBonus2 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
-   hud.facebookBonus2.x 	= display.contentWidth*0.52
+   hud.facebookBonus2.x 	= display.contentWidth*0.93
    hud.facebookBonus2.y		= self.top + self.yGap*(socialTop+5.2)
    hud.board:insert(hud.facebookBonus2)
 
@@ -531,7 +531,7 @@ function scene:drawScene()
 	local textBonus2 = viewManager.newText({
 		parent 			= hud.board, 
 		text	 			= FACEBOOK_FAN_TICKETS,     
-		x 					= display.contentWidth*0.48,
+		x 					= display.contentWidth*0.89,
 		y 					= self.top + self.yGap*(socialTop+10.7),
 		font				= NUM_FONT,
 		fontSize 		= 33,
@@ -539,7 +539,7 @@ function scene:drawScene()
 	})
 	
    hud.facebookBonus2 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
-   hud.facebookBonus2.x 	= display.contentWidth*0.52
+   hud.facebookBonus2.x 	= display.contentWidth*0.93
    hud.facebookBonus2.y		= self.top + self.yGap*(socialTop+10.7)
    hud.board:insert(hud.facebookBonus2)
 

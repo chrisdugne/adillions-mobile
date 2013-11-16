@@ -62,7 +62,7 @@ function scene:refreshScene()
 
 	utils.onTouch(hud.prize, function()
 		analytics.event("Links", "prizes") 
-		system.openURL( SERVER_URL .. "#/about/prizes" )
+		self:openPrizes()
 	end)
 
 	hud.rewards 			= display.newImage( hud, I "info.Rewards.png")  
@@ -81,7 +81,7 @@ function scene:refreshScene()
 	hud.contact.y			= self.top + self.yGap * 2
 
 	utils.onTouch(hud.contact, function()
-		router.openContact()
+		self:openContact()
 	end)
 
 	hud.faq 					= display.newImage( hud, I "info.Faq.png")  
@@ -184,6 +184,232 @@ function scene:refreshScene()
 	self.view:insert(hud)
 	
 	viewManager.darkerBack()
+end
+
+------------------------------------------
+
+function scene:openPrizes()
+
+	local top	 	= display.contentHeight * 0.3
+	local yGap		= display.contentHeight*0.082
+
+	viewManager.showPopup(function() end)
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "Match", 
+		x = display.contentWidth*0.45,
+		y = display.contentHeight * 0.15,
+		fontSize = 30,
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "n° + LB", 
+		x = display.contentWidth*0.45,
+		y = display.contentHeight * 0.18,
+		fontSize = 30,
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "Prize", 
+		x = display.contentWidth*0.8,
+		y = display.contentHeight * 0.15,
+		fontSize = 30,
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "breakdown", 
+		x = display.contentWidth*0.8,
+		y = display.contentHeight * 0.18,
+		fontSize = 30,
+	})
+
+	local matches = {
+		"5 + 1",
+		"5 + 0",
+		"4 + 1",
+		"4 + 0",
+		"3 + 1",
+		"3 + 0",
+	}
+
+	local percents = {
+		"40%",
+		"20%",
+		"15%",
+		"10%",
+		"5%",
+		"10%",
+	}
+
+	for i = 1, 6 do
+
+   	hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/Rang".. i .. ".png")
+   	hud.iconRang.x 		= display.contentWidth * 0.2
+   	hud.iconRang.y 		= top + yGap * (i-1)
+   	hud.iconRang:scale 	(0.6,0.6)	
+   
+   	viewManager.newText({
+   		parent 			= hud.popup, 
+   		text	 			= matches[i],     
+   		x 					= display.contentWidth*0.45,
+   		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
+   		fontSize 		= 35,
+   	})
+   
+   	viewManager.newText({
+   		parent 			= hud.popup, 
+   		text	 			= percents[i],     
+   		x 					= display.contentWidth*0.75,
+   		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
+   		fontSize 		= 35,
+   	})
+
+   	hud.iconPieces 			= display.newImage( hud.popup, "assets/images/icons/money.png")
+   	hud.iconPieces.x 			= display.contentWidth * 0.86
+   	hud.iconPieces.y 			= top + yGap * (i-1) - display.contentHeight*0.01
+   	
+	end
+
+	--------------------------
+
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.85
+
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+
+end
+
+------------------------------------------------------------------------------
+
+function scene:openContact()
+
+	local top	 	= display.contentHeight * 0.3
+	local yGap		= display.contentHeight*0.082
+
+	viewManager.showPopup(function() end)
+
+--	viewManager.newText({
+--		parent = hud.popup, 
+--		text = "By email", 
+--		x = display.contentWidth*0.5,
+--		y = display.contentHeight * 0.1,
+--		fontSize = 70,
+--	})
+
+	--------------------------
+	
+	hud.popup.separator 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.popup.separator.x 		= display.contentWidth*0.5
+	hud.popup.separator.y 		= display.contentHeight*0.2
+		
+	--------------------------
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "General information" .. " :", 
+		x = display.contentWidth*0.1,
+		y = display.contentHeight * 0.28,
+		fontSize = 26,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = "contact@adillions.com", 
+		x = display.contentWidth*0.9,
+		y = display.contentHeight * 0.28,
+		fontSize = 26,
+		font		= NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "For technical issues" .. " :", 
+		x = display.contentWidth*0.1,
+		y = display.contentHeight * 0.33,
+		fontSize = 26,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = "support@adillions.com", 
+		x = display.contentWidth*0.9,
+		y = display.contentHeight * 0.33,
+		fontSize = 26,
+		font		= NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "For payments" .. " :", 
+		x = display.contentWidth*0.1,
+		y = display.contentHeight * 0.38,
+		fontSize = 26,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = "winners@adillions.com", 
+		x = display.contentWidth*0.9,
+		y = display.contentHeight * 0.38,
+		fontSize = 26,
+		font		= NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "For advertisers" .. " :", 
+		x = display.contentWidth*0.1,
+		y = display.contentHeight * 0.43,
+		fontSize = 26,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = "advertisers@adillions.com", 
+		x = display.contentWidth*0.9,
+		y = display.contentHeight * 0.43,
+		fontSize = 26,
+		font		= NUM_FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
+	--------------------------
+	
+	hud.popup.separator2 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.popup.separator2.x 		= display.contentWidth*0.5
+	hud.popup.separator2.y 		= display.contentHeight*0.52
+
+	--------------------------
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = "www.adillions.com", 
+		x = display.contentWidth*0.5,
+		y = display.contentHeight * 0.6,
+		fontSize = 56,
+		font		= NUM_FONT,
+	})
+
+	--------------------------
+	
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.85
+
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+
 end
 
 ------------------------------------------

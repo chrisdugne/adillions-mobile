@@ -116,7 +116,7 @@ function scene:createTuto1()
 	
 	hud.tuto1.theme = viewManager.newText({
 		parent 			= hud.tuto1,
-		text 				= T "draw live on", 
+		text 				= T "draw on", 
 		fontSize			= 44,  
 		x 					= display.contentWidth * 0.4,
 		y 					= display.contentHeight*0.67,

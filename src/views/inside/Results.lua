@@ -167,10 +167,11 @@ function scene:drawBoard()
 
 		local more = viewManager.newText({
 			parent 			= hud.board, 
-			text 				= T "See more", 
+			text 				= "+ " .. T "See more", 
 			x 					= display.contentWidth*0.5,
 			y 					= marginTop + yGap*(i-1)+400, 
-			fontSize 		= 32
+			fontSize 		= 37,
+			font 				= NUM_FONT
 		})
 		
 		utils.onTouch(more, function() self:openMoreResults(lottery) end)
@@ -188,7 +189,7 @@ end
 function scene:openMoreResults( lottery )
 
 	local top	 	= display.contentHeight * 0.3
-	local yGap		= display.contentHeight*0.065
+	local yGap		= display.contentHeight*0.082
 
 	viewManager.showPopup(function() end)
 	analytics.event("Gaming", "popupMoreResults") 
@@ -196,10 +197,9 @@ function scene:openMoreResults( lottery )
 	viewManager.newText({
 		parent = hud.popup, 
 		text = T "Drawing" .. " " .. lotteryManager:date(lottery), 
-		x = display.contentWidth*0.1,
-		y = top*0.5,
-		fontSize = 38,
-		referencePoint = display.CenterLeftReferencePoint
+		x = display.contentWidth*0.5,
+		y = display.contentHeight * 0.11,
+		fontSize = 43,
 	})
 
 	viewManager.newText({
@@ -207,16 +207,16 @@ function scene:openMoreResults( lottery )
 		text = T "Winners" .. ":", 
 		x = display.contentWidth*0.5,
 		y = top*0.75,
-		fontSize = 38,
+		fontSize = 30,
 		referencePoint = display.CenterRightReferencePoint
 	})
 
 	viewManager.newText({
 		parent = hud.popup, 
-		text = T "Gain" .. " / " .. T "Winners" .. ":", 
+		text = T "Winnings" .. " / " .. T "Winner" .. ":", 
 		x = display.contentWidth*0.9,
 		y = top*0.75,
-		fontSize = 38,
+		fontSize = 30,
 		referencePoint = display.CenterRightReferencePoint
 	})
 

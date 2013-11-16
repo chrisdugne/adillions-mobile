@@ -88,7 +88,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
 		local notificationTimeSeconds = os.date( "!*t",  _48hBefore)
 
 		local options = {
-			alert = T "Next draw in 48h !",
+			alert = T "Next drawing in 48h !",
 			badge = 1,
 		}
 
@@ -119,7 +119,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
    		local notificationTimeSeconds = os.date( "!*t",  _48hBefore)
    
    		local options = {
-   			alert = T "Next draw in 48h !",
+   			alert = T "Next drawing in 48h !",
    			badge = 1,
    		}
    
@@ -153,26 +153,26 @@ end
 
 function LotteryManager:sumPrices()
 
-	userManager.user.totalGains 		= 0
+	userManager.user.totalWinnings 		= 0
 	userManager.user.balance 			= 0
 	userManager.user.totalGift 		= 0
-	userManager.user.receivedGains	= 0
-	userManager.user.pendingGains		= 0
+	userManager.user.receivedWinnings	= 0
+	userManager.user.pendingWinnings		= 0
 
 	if(userManager.user.lotteryTickets) then
 		for i = 1,#userManager.user.lotteryTickets do
 			local ticket = userManager.user.lotteryTickets[i]
 			local value  = utils.countryPrice(ticket.price or 0, COUNTRY, ticket.lottery.rateUSDtoEUR)
-			userManager.user.totalGains = userManager.user.totalGains + value
+			userManager.user.totalWinnings = userManager.user.totalWinnings + value
 			
 			if(ticket.status == BLOCKED) then
    			userManager.user.balance = userManager.user.balance + value
    		elseif(ticket.status == GIFT) then
    			userManager.user.totalGift = userManager.user.totalGift + value
    		elseif(ticket.status == PENDING) then
-   			userManager.user.pendingGains = userManager.user.pendingGains + value
+   			userManager.user.pendingWinnings = userManager.user.pendingWinnings + value
    		else
-   			userManager.user.receivedGains = userManager.user.receivedGains + value
+   			userManager.user.receivedWinnings = userManager.user.receivedWinnings + value
    		end
 		end
 	end
