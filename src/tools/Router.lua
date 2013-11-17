@@ -161,6 +161,15 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function openRewards()
+	analytics.pageview("Rewards")
+	
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Rewards" )
+end
+
+-----------------------------------------------------------------------------------------
+
 function openSelectAdditionalNumber()
 	analytics.pageview("SelectAdditionalNumber")
 	

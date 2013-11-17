@@ -71,7 +71,7 @@ function scene:refreshScene()
 
 	utils.onTouch(hud.rewards, function()
 		analytics.event("Links", "rewards") 
-		system.openURL( SERVER_URL .. "#/about/rewards" )
+		router:openRewards()
 	end)
 	
 	------------------
@@ -411,6 +411,7 @@ function scene:openContact()
 	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 
 end
+
 
 ------------------------------------------
 

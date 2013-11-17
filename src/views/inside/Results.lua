@@ -69,7 +69,7 @@ function scene:drawBoard()
 
 		viewManager.newText({
 			parent = hud.board, 
-			text = T "Drawing" .. " " .. lotteryManager:date(lottery), 
+			text = T "Drawing" .. " " .. lotteryManager:date(lottery, true, true), 
 			x = display.contentWidth*0.1,
 			y = marginTop + yGap*(i-1), 
 			fontSize = 38,
@@ -196,7 +196,7 @@ function scene:openMoreResults( lottery )
 
 	viewManager.newText({
 		parent = hud.popup, 
-		text = T "Drawing" .. " " .. lotteryManager:date(lottery), 
+		text = T "Drawing" .. " " .. lotteryManager:date(lottery, true, true), 
 		x = display.contentWidth*0.5,
 		y = display.contentHeight * 0.11,
 		fontSize = 43,

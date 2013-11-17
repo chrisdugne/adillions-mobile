@@ -67,8 +67,8 @@ function LotteryManager:finalPrice(lottery)
 	return utils.convertAndDisplayPrice(lottery.finalPrice, COUNTRY, lottery.rateUSDtoEUR )
 end
 
-function LotteryManager:date(lottery)
-	return utils.timestampToReadableDate(lottery.date, true)
+function LotteryManager:date(lottery, viewDay, viewYear)
+	return utils.timestampToReadableDate(lottery.date, viewDay, viewYear)
 end
 
 -----------------------------------------------------------------------------------------

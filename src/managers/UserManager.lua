@@ -564,38 +564,38 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:logout()
-	router.openOutside()
 	coronaFacebook.logout()
 	twitter.logout()
 	gameManager.initGameData()	
+	router.openOutside()
 end
-
-function UserManager:logoutViewListener( event )
-
-	if event.url then
-
-		print("userManager.logout")
-		print(event.url)
-
-		if event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()    	
-			print("logoutViewListener backToMobile : outside")	
-			router.openOutside()
-			
-			
-			print("--- logout false")	
-			native.setActivityIndicator( false )
-		end
-	end
-
-end
-
-
-function UserManager:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:logoutViewListener(event) end )
-	self.webView:removeSelf()
-	self.webView = nil
-end
+--
+--function UserManager:logoutViewListener( event )
+--
+--	if event.url then
+--
+--		print("userManager.logout")
+--		print(event.url)
+--
+--		if event.url == SERVER_URL .. "backToMobile" then
+--			self:closeWebView()    	
+--			print("logoutViewListener backToMobile : outside")	
+--			router.openOutside()
+--			
+--			
+--			print("--- logout false")	
+--			native.setActivityIndicator( false )
+--		end
+--	end
+--
+--end
+--
+--
+--function UserManager:closeWebView()
+--	self.webView:removeEventListener( "urlRequest", function(event) self:logoutViewListener(event) end )
+--	self.webView:removeSelf()
+--	self.webView = nil
+--end
 
 -----------------------------------------------------------------------------------------
 

@@ -33,7 +33,7 @@ function scene:drawScene()
 	------------------
 
 	local statusTop 			= 3
-	local winningsTop 			= 10.5
+	local winningsTop 		= 10.5
 	local detailsTop 			= 20
 	local socialTop 			= 27
 	local sponsorTop 			= 40
@@ -85,13 +85,13 @@ function scene:drawScene()
 	
 	hud.lineDetails 			= display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
 	hud.lineDetails.x 		= display.contentWidth*0.5
-	hud.lineDetails.y 		= self.top + self.yGap*detailsTop
+	hud.lineDetails.y 		= self.top + self.yGap*(detailsTop+0.7)
 	hud.board:insert(hud.lineDetails)
 
 	hud.titleDetails 			= display.newImage( hud.board, I "details.png")  
 	hud.titleDetails:setReferencePoint(display.CenterLeftReferencePoint);
 	hud.titleDetails.x 		= display.contentWidth*0.05
-	hud.titleDetails.y		= self.top + self.yGap*detailsTop
+	hud.titleDetails.y		= self.top + self.yGap*(detailsTop+0.7)
 	hud.board:insert(hud.titleDetails)
 
 	------------------
@@ -169,7 +169,7 @@ function scene:drawScene()
 
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Charity profile",            
+		text 				= T "Charity profile" .. " : ",            
 		x 					= self.column1,
 		y 					= self.top + self.yGap*(statusTop+3.5),
 		fontSize 		= self.fontSizeLeft,
@@ -606,6 +606,7 @@ function scene:drawScene()
 	hud.board:insert( hud.board.logout )	
 
 	utils.onTouch(hud.board.logout, function()
+		display.remove(hud.board.logout)
 		userManager:logout()
 	end)	
 	

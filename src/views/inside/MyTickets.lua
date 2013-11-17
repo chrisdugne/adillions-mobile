@@ -114,10 +114,10 @@ function scene:drawNextLottery()
    	
    			viewManager.newText({
    				parent = hud.board, 
-   				text = T "Drawing" .. " " .. lotteryManager:date(ticket.lottery), 
+   				text = T "Next drawing" .. " : " .. lotteryManager:date(ticket.lottery, true), 
          		x = display.contentWidth*0.08,
          		y = top + yGap*(nbNewTickets+nbLotteries-2), 
-         		fontSize = 44,
+         		fontSize = 43,
          		referencePoint = display.CenterLeftReferencePoint
    			})
          
@@ -179,10 +179,10 @@ function scene:drawPreviousLotteries(top)
       	
       			viewManager.newText({
       				parent = hud.board, 
-      				text = T "Drawing" .. " " .. lotteryManager:date(ticket.lottery), 
+      				text = T "Drawing" .. " : " .. lotteryManager:date(ticket.lottery, true, true), 
             		x = display.contentWidth*0.08,
             		y = top + yGap*(nbPreviousTickets+nbLotteries-2), 
-            		fontSize = 44,
+            		fontSize = 42,
             		referencePoint = display.CenterLeftReferencePoint
       			})
             

@@ -15,21 +15,21 @@ module(..., package.seeall)
 
 -----------------------------------------------------------------------------------------
 
-local afterFacebookConnection
-
-function connect(next)
-	print("--- true")
+function login()
+	print("--- facebook login")
 	native.setActivityIndicator( true )
-	coronaFacebook.login( FACEBOOK_APP_ID, connectListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
-	afterFacebookConnection = next
+	coronaFacebook.login( FACEBOOK_APP_ID, loginListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
 end
 
 ------------------------------------
 
-function login()
-	print("--- true")
+local afterFacebookConnection
+
+function connect(next)
+	print("--- facebook connect")
 	native.setActivityIndicator( true )
-	coronaFacebook.login( FACEBOOK_APP_ID, loginListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
+	coronaFacebook.login( FACEBOOK_APP_ID, connectListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
+	afterFacebookConnection = next
 end
 
 ------------------------------------
@@ -104,7 +104,7 @@ function connectListener( event )
 				mergeMe(afterFacebookConnection)
 			end
 
-		elseif ( "loginFailed" == event.phase ) then
+		elseif ( "loginFailed" == event.phase or "loginCancelled"  == event.phase ) then
 			print("--- false")	
 			native.setActivityIndicator( false )
 
