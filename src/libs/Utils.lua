@@ -552,7 +552,6 @@ function countryPrice(euros, country, rateUSDtoEUR)
 end
 
 function convertAndDisplayPrice(price, country, rateUSDtoEUR)
-	print(price, country, rateUSDtoEUR)
 	return displayPrice(countryPrice(price, country, rateUSDtoEUR), country)
 end
 

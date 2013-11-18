@@ -21,19 +21,17 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	native.setActivityIndicator( true )
-	viewManager.setupView(3)
-	self.view:insert(hud)
-
+	
+	print("--------- RESULTS")
 	lotteryManager:getFinishedLotteries(function()
-   	native.setActivityIndicator( false )
+   	print("--------- Received lotteries")
    	self:drawBoard()
-
-   	viewManager.setupView(3)
-   	viewManager.darkerBack()
-   	self.view:insert(hud)
+		hud.board:toBack()
 	end)
 
+	viewManager.setupView(3)
+	viewManager.darkerBack()
+	self.view:insert(hud)
 end
 -----------------------------------------------------------------------------------------
 

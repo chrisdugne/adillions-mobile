@@ -19,21 +19,16 @@ end
 
 function LotteryManager:refreshNextLottery(draw)
 
-	native.setActivityIndicator( true )	
-
 	utils.postWithJSON(
 	{}, 
-	SERVER_URL .. "nextLottery" .. "?nocache=" .. system.getTimer(), 
+	SERVER_URL .. "nextLottery", 
 	function(result)
 
 		self.nextLottery = json.decode(result.response)
 		self.nextLottery.theme = json.decode(self.nextLottery.theme)
 
 		userManager:checkUserCurrentLottery()
-
-		print("--- refreshNextLottery ")
 		utils.tprint(self.nextLottery)
-		native.setActivityIndicator( false )
 
 		draw()
 	end)

@@ -111,11 +111,6 @@ function UserManager:updatedPlayer(player, next)
 	self.user.totalBonusTickets 	= 0
 
 	print("------------------------ updatedPlayer ")
-	if(next) then
-   	print("next ready")
-	end
-	
-	utils.tprint(self.user)
 
 	GLOBALS.savedData.user.uid 				= player.uid
 	GLOBALS.savedData.user.email 				= player.email
@@ -145,9 +140,6 @@ end
 function UserManager:checkFanStatus(next)
 
    print("checkFanStatus")
-	if(next) then
-   	print("next ready")
-	end
 
 	local facebookFan 	= self.user.isFacebookFan
 	local twitterFan 		= self.user.isTwitterFan
@@ -206,7 +198,6 @@ function UserManager:checkFanStatus(next)
 			else
    			print("continue")
 				if(next) then
-      			print("next")
 					next()
 				end
 			end

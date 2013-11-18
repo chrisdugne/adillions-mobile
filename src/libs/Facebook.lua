@@ -259,8 +259,6 @@ function checkThemeLiked()
 		print(url)
 
 		network.request(url , "GET", function(result)
-			print("--- false")
-			native.setActivityIndicator( false )
 			local response = json.decode(result.response)
 			local liked = false
    		print("=========> response")
