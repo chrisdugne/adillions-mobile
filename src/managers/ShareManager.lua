@@ -32,14 +32,21 @@ function ShareManager:share()
 	hud.popup.shareText.x 			= display.contentWidth*0.5
 	hud.popup.shareText.y			= display.contentHeight*0.32
 	
+   local multiLineText = display.newMultiLineText  
+     {
+           text = T "Earn points and get Instant Tickets",
+           width = display.contentWidth*0.85,  
+           left = display.contentWidth*0.5,
+           font = FONT, 
+           fontSize = 38,
+           align = "center"
+     }
 	
-	hud.popup.earnText = viewManager.newText({
-		parent 			= hud.popup,
-		text 				= T "Earn points and get Instant Tickets", 
-		fontSize			= 38,  
-		x 					= display.contentWidth * 0.5,
-		y 					= display.contentHeight*0.44,
-	})
+	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.x = display.contentWidth*0.5
+	multiLineText.y = display.contentHeight*0.42
+	hud.popup:insert(multiLineText)         
+	
 
 	-----------------------------------
 	-- Facebook
@@ -47,9 +54,9 @@ function ShareManager:share()
 
 
 	if(userManager.user.facebookId) then
-		hud.popup.facebookShare 		= display.newImage( hud.popup, I "popup.BtShareFacebook.png")  
+		hud.popup.facebookShare 		= display.newImage( hud.popup, I "popup.facebook.share.png")  
    	hud.popup.facebookShare.x 		= display.contentWidth*0.5
-   	hud.popup.facebookShare.y		= display.contentHeight*0.6
+   	hud.popup.facebookShare.y		= display.contentHeight*0.63
    
 		utils.onTouch(hud.popup.facebookShare, function() 
 			self:shareOnWall()
@@ -57,9 +64,9 @@ function ShareManager:share()
 		end)
 		
 	else
-		hud.popup.facebookConnect 		= display.newImage( hud.popup, I "facebook.connect.button.png")  
+		hud.popup.facebookConnect 		= display.newImage( hud.popup, I "popup.facebook.connect.png")  
    	hud.popup.facebookConnect.x 	= display.contentWidth*0.5
-   	hud.popup.facebookConnect.y	= display.contentHeight*0.6
+   	hud.popup.facebookConnect.y	= display.contentHeight*0.63
    
 		utils.onTouch(hud.popup.facebookConnect, function() 
 			facebook.connect(function()
@@ -75,7 +82,7 @@ function ShareManager:share()
 	-----------------------------------
 
 	if(twitter.connected) then
-		hud.popup.twitterShare 			= display.newImage( hud.popup, I "popup.BtShareTwitter.png")  
+		hud.popup.twitterShare 			= display.newImage( hud.popup, I "popup.twitter.share.png")  
    	hud.popup.twitterShare.x 		= display.contentWidth*0.5
    	hud.popup.twitterShare.y		= display.contentHeight*0.77	
    	
@@ -85,7 +92,7 @@ function ShareManager:share()
 		end)
 		
 	else
-		hud.popup.twitterConnect 		= display.newImage( hud.popup, I "twitter.connect.button.png")  
+		hud.popup.twitterConnect 		= display.newImage( hud.popup, I "popup.twitter.connect.png")  
    	hud.popup.twitterConnect.x 	= display.contentWidth*0.5
 		hud.popup.twitterConnect.y		= display.contentHeight*0.77
 
@@ -156,7 +163,7 @@ function ShareManager:invite()
 	----------------------------------------------------------------------------------------------------
 
 	if(userManager.user.facebookId) then
-		hud.popup.facebookShare 		= display.newImage( hud.popup, I "popup.BtInviteFacebook.png")  
+		hud.popup.facebookShare 		= display.newImage( hud.popup, I "popup.facebook.invite.png")  
    	hud.popup.facebookShare.x 		= display.contentWidth*0.5
    	hud.popup.facebookShare.y		= display.contentHeight*0.8
    
@@ -166,7 +173,7 @@ function ShareManager:invite()
 		end)
 		
 	else
-		hud.popup.facebookConnect 		= display.newImage( hud.popup, I "popup.BtConnectFacebook.png")  
+		hud.popup.facebookConnect 		= display.newImage( hud.popup, I "popup.facebook.connect.png")  
    	hud.popup.facebookConnect.x 	= display.contentWidth*0.5
    	hud.popup.facebookConnect.y	= display.contentHeight*0.8
    

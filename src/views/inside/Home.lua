@@ -49,7 +49,8 @@ function scene:refreshScene()
 	------------------
 
 	utils.onTouch(hud.subheaderImage, function()
-		shareManager:invite()
+--		shareManager:invite()
+		shareManager:share()
 	end)
 
 	------------------
@@ -92,7 +93,7 @@ function scene:drawNextLottery( event )
 	viewManager.newText({
 		parent = hud, 
 		text = T "Next drawing" .. " : ", 
-		x = display.contentWidth*0.2,
+		x = display.contentWidth*0.17,
 		y = top - display.contentHeight * 0.05,
 		fontSize = 20,
 		referencePoint = display.CenterLeftReferencePoint
@@ -102,7 +103,7 @@ function scene:drawNextLottery( event )
 	hud.separator.x 		= display.contentWidth*0.5
 	hud.separator.y 		= top - display.contentHeight * 0.03
             	
-	hud.pictoTimer			= display.newImage( hud, "assets/images/icons/cagnotte.png")  
+	hud.pictoTimer			= display.newImage( hud, "assets/images/icons/TimerPicto.png")  
 	hud.pictoTimer.x 		= display.contentWidth*0.2
 	hud.pictoTimer.y 		= timerY 
 	
@@ -110,7 +111,7 @@ function scene:drawNextLottery( event )
 		parent = hud, 
 		text = '',     
 		x = display.contentWidth*0.5,
-		y = timerY ,
+		y = timerY - 5 ,
 		fontSize = 53,
 		font = NUM_FONT
 	})
@@ -121,7 +122,7 @@ function scene:drawNextLottery( event )
 	
 	viewManager.newText({
 		parent = hud, 
-		text = "DAYS", 
+		text = T "DAYS", 
 		x = display.contentWidth*0.5 - 2*display.contentWidth*0.116,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
@@ -130,7 +131,7 @@ function scene:drawNextLottery( event )
 
 	viewManager.newText({
 		parent = hud, 
-		text = "HRS", 
+		text = T "HRS", 
 		x = display.contentWidth*0.412,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
@@ -139,7 +140,7 @@ function scene:drawNextLottery( event )
 
 	viewManager.newText({
 		parent = hud, 
-		text = "MIN", 
+		text = T "MIN", 
 		x = display.contentWidth*0.536,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
@@ -148,7 +149,7 @@ function scene:drawNextLottery( event )
 
 	viewManager.newText({
 		parent = hud, 
-		text = "SEC", 
+		text = T "SEC", 
 		x = display.contentWidth*0.675,
 		y = timerLegendY,
 		fontSize = timerLegendSize,

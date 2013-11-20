@@ -207,10 +207,10 @@ function message(message)
 	hud.messager.popupRect 		= drawBorder( hud.messager, 
 		0, HEADER_HEIGHT, 
 		display.contentWidth+100, HEADER_HEIGHT*0.6,
-		50,50,50
+		240,240,240
 	)  
 	hud.messager.popupRect.x = display.contentWidth*0.5
-	hud.messager.popupRect.alpha = 0.85
+	hud.messager.popupRect.alpha = 0.95
 	
 	hud.messager.text = viewManager.newText({
 		parent 			= hud.messager, 
@@ -220,7 +220,7 @@ function message(message)
 		fontSize 		= 35
 	})
 
-	hud.messager.text:setTextColor(255)
+	hud.messager.text:setTextColor(5)
 	
 	transition.to(hud.messager, { time=500, y=-HEADER_HEIGHT/2 - 5, onComplete=function()
 		timer.performWithDelay(2000, function()

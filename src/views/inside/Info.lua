@@ -71,7 +71,7 @@ function scene:refreshScene()
 
 	utils.onTouch(hud.rewards, function()
 		analytics.event("Links", "rewards") 
-		router:openRewards()
+		self:openRewards1()
 	end)
 	
 	------------------
@@ -407,6 +407,333 @@ function scene:openContact()
 	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
 	hud.popup.close.x 			= display.contentWidth*0.5
 	hud.popup.close.y 			= display.contentHeight*0.85
+
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+
+end
+
+------------------------------------------
+
+function scene:openRewards1()
+
+	local top	 	= display.contentHeight * 0.3
+	local yGap		= display.contentHeight*0.082
+
+	viewManager.showPopup(function() end)
+
+	--------------------------
+	
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/Picto_BonusTicket.png")
+	hud.picto.x 		= display.contentWidth*0.2
+	hud.picto.y 		= display.contentHeight*0.15
+
+	hud.title 			= display.newImage(hud.popup, I "bonus.ticket.png")
+	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.title.x 		= display.contentWidth*0.3
+	hud.title.y 		= display.contentHeight*0.15
+
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.2
+	
+	--------------------------
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "Increase your number of available tickets \n for the next draws by gaining Bonus Tickets", 
+		width = display.contentWidth*0.85,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 36,
+		align = "left"
+	}
+
+	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
+	multiLineText.x = display.contentWidth*0.1
+	multiLineText.y = display.contentHeight*0.25
+	hud.popup:insert(multiLineText)         
+	
+	--------------------------
+
+	hud.fb1 			= display.newImage(hud.popup, "assets/images/hud/BonusTicket_ConnectFacebook.png")
+	hud.fb1:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.fb1.x 		= display.contentWidth*0.11
+	hud.fb1.y 		= display.contentHeight*0.4
+
+	hud.fb1Bonus 		= display.newImage(hud.popup, "assets/images/icons/Plus2Tickets.png")
+	hud.fb1Bonus.x 	= display.contentWidth*0.8
+	hud.fb1Bonus.y 	= display.contentHeight*0.4
+
+	hud.tw1 			= display.newImage(hud.popup, "assets/images/hud/BonusTicket_ConnectTwitter.png")
+	hud.tw1:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.tw1.x 		= display.contentWidth*0.11
+	hud.tw1.y 		= display.contentHeight*0.51
+	
+	hud.tw1Bonus 		= display.newImage(hud.popup, "assets/images/icons/Plus2Tickets.png")
+	hud.tw1Bonus.x 	= display.contentWidth*0.8
+	hud.tw1Bonus.y 	= display.contentHeight*0.51
+
+	hud.fb2 			= display.newImage(hud.popup, "assets/images/hud/BonusTicket_Like.png")
+	hud.fb2:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.fb2.x 		= display.contentWidth*0.11
+	hud.fb2.y 		= display.contentHeight*0.62
+	
+	hud.fb2Bonus 		= display.newImage(hud.popup, "assets/images/icons/Plus2Tickets.png")
+	hud.fb2Bonus.x 	= display.contentWidth*0.8
+	hud.fb2Bonus.y 	= display.contentHeight*0.62
+	
+	hud.tw2 			= display.newImage(hud.popup, "assets/images/hud/BonusTicket_Follow.png")
+	hud.tw2:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.tw2.x 		= display.contentWidth*0.11
+	hud.tw2.y 		= display.contentHeight*0.73
+	
+	hud.tw2Bonus 		= display.newImage(hud.popup, "assets/images/icons/Plus2Tickets.png")
+	hud.tw2Bonus.x 	= display.contentWidth*0.8
+	hud.tw2Bonus.y 	= display.contentHeight*0.73
+	
+	--------------------------
+
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.83
+	
+	hud.next = viewManager.newText({
+		parent 			= hud.popup,
+		text 				= T "NEXT" .. "  >", 
+		fontSize			= 49,  
+		x 					= display.contentWidth * 0.5,
+		y 					= display.contentHeight*0.895,
+	})
+	
+	utils.setGreen(hud.next)
+
+	utils.onTouch(hud.next, function() self:openRewards2() end)
+	
+	---------------------------------------------------------------
+	
+	hud.close 				= display.newImage( hud.popup, "assets/images/hud/CroixClose.png")
+	hud.close.x 			= display.contentWidth*0.88
+	hud.close.y 			= display.contentHeight*0.085
+	
+	utils.onTouch(hud.close, function() viewManager.closePopup() end)
+
+end
+
+------------------------------------------
+
+function scene:openRewards2()
+
+	local top	 	= display.contentHeight * 0.3
+	local yGap		= display.contentHeight*0.082
+
+	viewManager.showPopup(function() end)
+
+	--------------------------
+	
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/Picto_InstantTicket.png")
+	hud.picto.x 		= display.contentWidth*0.14
+	hud.picto.y 		= display.contentHeight*0.15
+
+	hud.title 			= display.newImage(hud.popup, I "instant.ticket.png")
+	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.title.x 		= display.contentWidth*0.22
+	hud.title.y 		= display.contentHeight*0.15
+
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.2
+	
+	--------------------------
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "Get Instant Tickets (ad-free tickets) by earning points", 
+		width = display.contentWidth*0.8,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 30,
+		align = "left"
+	}
+
+	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
+	multiLineText.x = display.contentWidth*0.1
+	multiLineText.y = display.contentHeight*0.25
+	hud.popup:insert(multiLineText)         
+	
+	-------------------
+
+	hud.ticket 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto1.png")
+	hud.ticket.x 		= display.contentWidth*0.2
+	hud.ticket.y 		= display.contentHeight*0.35
+	
+	hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
+	hud.sep.x 			= display.contentWidth*0.34
+	hud.sep.y 			= display.contentHeight*0.35
+
+	hud.ticketValue 	= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Rond1.png")
+	hud.ticketValue.x = display.contentWidth*0.5
+	hud.ticketValue.y = display.contentHeight*0.35
+	
+	hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.09, display.contentHeight*0.0015)
+	hud.sep.x 			= display.contentWidth*0.62
+	hud.sep.y 			= display.contentHeight*0.35
+	
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "+ 1pt / ticket", 
+		width = display.contentWidth*0.8,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 25,
+		align = "right"
+	}
+
+	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
+	multiLineText.x = display.contentWidth*0.9
+	multiLineText.y = display.contentHeight*0.35
+	hud.popup:insert(multiLineText)         
+	
+	-------------------
+
+	hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto2.png")
+	hud.picto.x 		= display.contentWidth*0.2
+	hud.picto.y 		= display.contentHeight*0.45
+	
+	hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
+	hud.sep.x 			= display.contentWidth*0.34
+	hud.sep.y 			= display.contentHeight*0.45
+
+	hud.ticketValue 	= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Rond1.png")
+	hud.ticketValue.x = display.contentWidth*0.5
+	hud.ticketValue.y = display.contentHeight*0.45
+	
+	hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.04, display.contentHeight*0.0015)
+	hud.sep.x 			= display.contentWidth*0.6
+	hud.sep.y 			= display.contentHeight*0.45
+	
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "+ 1pt for the sponsor and the sponsored user", 
+		width = display.contentWidth*0.25,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 25,
+		align = "right"
+	}
+
+	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
+	multiLineText.x = display.contentWidth*0.9
+	multiLineText.y = display.contentHeight*0.45
+	hud.popup:insert(multiLineText)         
+	
+	
+	-------------------
+
+	hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto3.png")
+	hud.picto.x 		= display.contentWidth*0.2
+	hud.picto.y 		= display.contentHeight*0.55
+	
+	hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
+	hud.sep.x 			= display.contentWidth*0.34
+	hud.sep.y 			= display.contentHeight*0.55
+
+	hud.ticketValue 	= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Rond2.png")
+	hud.ticketValue.x = display.contentWidth*0.5
+	hud.ticketValue.y = display.contentHeight*0.55
+	
+	hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.07, display.contentHeight*0.0015)
+	hud.sep.x 			= display.contentWidth*0.61
+	hud.sep.y 			= display.contentHeight*0.55
+	
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "+1 pt / post (max 4 pts per draw)", 
+		width = display.contentWidth*0.25,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 25,
+		align = "right"
+	}
+
+	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
+	multiLineText.x = display.contentWidth*0.9
+	multiLineText.y = display.contentHeight*0.55
+	hud.popup:insert(multiLineText)         
+	
+	-------------------
+
+	hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto4.png")
+	hud.picto.x 		= display.contentWidth*0.2
+	hud.picto.y 		= display.contentHeight*0.65
+	
+	hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
+	hud.sep.x 			= display.contentWidth*0.34
+	hud.sep.y 			= display.contentHeight*0.65
+
+	hud.ticketValue 	= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Rond2.png")
+	hud.ticketValue.x = display.contentWidth*0.5
+	hud.ticketValue.y = display.contentHeight*0.65
+	
+	hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.17, display.contentHeight*0.0015)
+	hud.sep.x 			= display.contentWidth*0.66
+	hud.sep.y 			= display.contentHeight*0.65
+	
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "+2 pts", 
+		width = display.contentWidth*0.25,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 25,
+		align = "right"
+	}
+
+	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
+	multiLineText.x = display.contentWidth*0.9
+	multiLineText.y = display.contentHeight*0.65
+	hud.popup:insert(multiLineText)         
+	
+	--------------------------
+	
+	hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_RondALL.png")
+	hud.picto.x 		= display.contentWidth*0.3
+	hud.picto.y 		= display.contentHeight*0.75
+	
+	hud.equals = viewManager.newText({
+		parent 			= hud.popup,
+		text 				= "= 1", 
+		fontSize			= 70,  
+		x 					= display.contentWidth * 0.5,
+		y 					= display.contentHeight*0.75,
+	})
+
+	utils.setGreen(hud.equals)
+	
+	hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto5.png")
+	hud.picto.x 		= display.contentWidth*0.7
+	hud.picto.y 		= display.contentHeight*0.75
+	
+	--------------------------
+
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.83
+	
+	hud.next = viewManager.newText({
+		parent 			= hud.popup,
+		text 				= "<  " .. T "PREVIOUS", 
+		fontSize			= 49,  
+		x 					= display.contentWidth * 0.3,
+		y 					= display.contentHeight*0.895,
+	})
+	
+	utils.setGreen(hud.next)
+
+	utils.onTouch(hud.next, function() self:openRewards1() end)
+	
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.75
+	hud.popup.close.y 			= display.contentHeight*0.895
 
 	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 

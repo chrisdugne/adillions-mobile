@@ -9,7 +9,7 @@ APP_VERSION 		= "1.17.8"
 
 -----------------------------------------------------------------------------------------
 
---DEV					= 1
+DEV					= 1
 PROD					= 1
 
 -----------------------------------------------------------------------------------------
@@ -41,10 +41,6 @@ else
    FACEBOOK_APP_NAMESPACE 	= "adillions-dev"
 	SERVER_URL 					= "http://192.168.0.9:9000/"
    SERVER_OG_URL 				= "http://192.168.0.9:9000/"
-end
-
-if(DEV) then
-	print(SERVER_URL)
 end
 
 -----------------------------------------------------------------------------------------
@@ -101,10 +97,18 @@ else
 end
 
 COUNTRY = system.getPreference( "locale", "country" ) or "US"
+
+-----------------------------------------------------------------------------------------
 	
 if(DEV) then
+	print("================== DEV ==============")
+
 	LANG = "fr"
 	COUNTRY = "FR"
+
+	print("lang : " .. LANG)
+	print("country : " .. COUNTRY)
+	print(SERVER_URL)
 end
 
 -----------------------------------------------------------------------------------------
@@ -116,6 +120,7 @@ coronaFacebook		= require "facebook"
 sponsorpay 			= require "plugin.sponsorpay"
 ads 					= require "ads"
 
+
 ---- Additional libs
 xml 					= require "src.libs.Xml"
 utils 				= require "src.libs.Utils"
@@ -124,6 +129,8 @@ vungle 				= require "src.libs.Vungle"
 sponsorpayTools 	= require "src.libs.SponsorpayTools" 
 twitter 				= require "src.libs.Twitter" 
 analytics 			= require "src.libs.google.Analytics"
+
+require "src.libs.multiLines"
 
 -----------------------------------------------------------------------------------------
 

@@ -24,10 +24,6 @@ local translations =
 		["fr"] = "Bienvenue",
 	},
 
-	["Thank you"] = {
-		["fr"] = "Merci",
-	},
-
 	["Winnings"] = {
 		["fr"] = "Gain",
 	},
@@ -140,7 +136,7 @@ local translations =
 	---POPUP SHARE----------------------------------------------------------- 
 
 	["Earn points and get Instant Tickets"] = {
-		["fr"] = "Gagnez des points et obtenez des Tickets Instantanés",
+		["fr"] = "Gagnez des points \n et obtenez des Tickets Instantanés",
 	},
 
 	["Successfully posted on your wall !"] = {
@@ -193,6 +189,32 @@ local translations =
 		["fr"] = "Ticket Instantané",
 	},
 
+	["Increase your number of available tickets \n for the next draws by gaining Bonus Tickets"] = {
+		["fr"] = "Augmentez votre nombre de tickets \n par tirage en gagnant des Tickets Bonus",
+	},
+
+	["Get Instant Tickets (ad-free tickets) by earning points"] = {
+		["fr"] = "Obtenez des Tickets Instantanés (tickets sans pub) en gagnant des points",
+	},
+
+	---------
+
+	["+ 1pt / ticket"] = {
+		["fr"] = "+ 1pt / ticket",
+	},
+
+	["+ 1pt for the sponsor and the sponsored user"] = {
+		["fr"] = "+ 1pt pour le parrain et le filleul",
+	},
+
+	["+1 pt / post (max 4 pts per draw)"] = {
+		["fr"] = "+1 pt / post (max 4 pts par tirage)",
+	},
+
+	["+2 pts"] = {
+		["fr"] = "+2 pts",
+	},
+
 	---POPUP PRIZE-----------------------------------------------------------
 
 	["Match"] = {
@@ -233,6 +255,44 @@ local translations =
 
 	["Players"] = {
 		["fr"] = "Joueurs",
+	},
+
+	["DAYS"] = {
+		["fr"] = "JRS",
+	},
+
+	["HRS"] = {
+		["fr"] = "HRS",
+	},
+
+	["MIN"] = {
+		["fr"] = "MIN",
+	},
+
+	["SEC"] = {
+		["fr"] = "SEC",
+	},
+
+	---PROFILE CASHOUT-----------------------------------------------------------
+
+	["You can cash out or you can \n donate to charities \n \n You can cash out when your winnings \n have reached a minimum total \n balance of "] = {
+		["fr"] = "Vous pouvez retirer vos gains \n ou faire un don \n \n Pour effectuer un retrait, il vous \n faut un solde minimum de gains de ",
+	},
+
+	["You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment"] = {
+		["fr"] = "Vous recevrez vos gains d’ici 4 à 8 semaines  \n \n Nous vous contacterons par mail dans les prochains jours \n pour procéder au paiement",
+	},
+
+	["Your winnings will be donated to Adillions Solidarity \n and Sustainable Development Fund \n \n \n Soon users will be able to \n directly choose their own charity …"] = {
+		["fr"] = "Vos gains seront versés \n au Fonds de Solidarité et de Développement \n Durable d’Adillions. \n \n \n Bientôt, \n vous pourrez directement choisir l’œuvre que vous souhaitez \n financer …",
+	},
+
+	["Thank you"] = {
+		["fr"] = "Merci",
+	},
+
+	["Congratulations !"] = {
+		["fr"] = "Félicitations !",
 	},
 
 	---PROFILE DETAILS-----------------------------------------------------------
