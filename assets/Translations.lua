@@ -153,8 +153,8 @@ local translations =
 		["fr"] = "Vous avez atteint le nombre",
 	},
 
-	["number of tickets for this draw."] = {
-		["fr"] = "maximum de tickets pour ce tirage.",
+	["number of tickets for this draw"] = {
+		["fr"] = "maximum de tickets pour ce tirage",
 	},
 
 	["You can gain Bonus Tickets by liking our"] = {
@@ -173,6 +173,10 @@ local translations =
 
 	["Instant Tickets"] = {
 		["fr"] = "Tickets Instantanés",
+	},
+
+	["Remaining ticket"] = {
+		["fr"] = "Ticket restant",
 	},
 
 	["Remaining tickets"] = {
@@ -222,7 +226,7 @@ local translations =
 	},
 
 	["n° + LB"] = {
-		["fr"] = "n° + LB",
+		["fr"] = "n° + BC",
 	},
 
 	["Prize"] = {

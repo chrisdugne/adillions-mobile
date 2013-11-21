@@ -47,7 +47,7 @@ function initHeader()
 	hud.headerRect.x = display.viewableContentWidth*0.5 
 	hud.headerRect.y = HEADER_HEIGHT*0.5
 
-	hud.logo = display.newImage( hud, "assets/images/logo.png")  
+	hud.logo = display.newImage( hud, "assets/images/logo.beta.png")  
 	hud.logo.x = display.contentWidth*0.5
 	hud.logo.y = HEADER_HEIGHT*0.5
 	
@@ -97,9 +97,14 @@ function refreshHeaderPoints()
 
 		--------------------------
 
+		local plural = ""
+		if(userManager.user.currentPoints and (userManager.user.currentPoints > 1)) then
+			plural = "s"
+		end
+
 		viewManager.newText({
 			parent 			= hud.popup, 
-			text	 			= userManager.user.currentPoints .. " pts",     
+			text	 			= userManager.user.currentPoints .. " pt" .. plural,     
 			x 					= display.contentWidth*0.54,
 			y 					= display.contentHeight*0.2,
 			fontSize 		= 60,
@@ -111,9 +116,14 @@ function refreshHeaderPoints()
 
 		--------------------------
 
+		local instantTickets = T "Instant Ticket"
+		if(userManager.user.extraTickets > 1) then
+			instantTickets = T "Instant Tickets"
+		end
+
 		viewManager.newText({
 			parent 			= hud.popup, 
-			text 				= T "Instant Tickets" .. " : ",         
+			text 				= instantTickets .. " : ",         
 			x 					= display.contentWidth * 0.5,
 			y 					= display.contentHeight*0.35,
 		})
@@ -142,9 +152,14 @@ function refreshHeaderPoints()
 
 		local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
 
+		local remainingTickets = T "Remaining ticket"
+		if(nbTickets > 1) then
+			remainingTickets = T "Remaining tickets"
+		end
+
 		viewManager.newText({
 			parent 			= hud.popup, 
-			text 				= T "Remaining tickets" .. " : ",         
+			text 				= remainingTickets .. " : ",         
 			x 					= display.contentWidth * 0.5,
 			y 					= display.contentHeight*0.6,
 		})

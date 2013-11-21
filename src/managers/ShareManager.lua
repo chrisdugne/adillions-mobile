@@ -230,7 +230,7 @@ function ShareManager:noMoreTickets()
 
 	viewManager.newText({
 		parent 			= hud.popup, 
-		text	 			= T "number of tickets for this draw.",     
+		text	 			= T "number of tickets for this draw",     
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.44,
 		fontSize			= 37,

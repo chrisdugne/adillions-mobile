@@ -26,8 +26,8 @@ function UserManager:fetchPlayer()
 	{}, 
 	SERVER_URL .. "player", 
 	function(result)
-		print("result", result)
-		print("--- fetchPlayer false")
+		print("--- player : ")
+		utils.tprint(result)
 		native.setActivityIndicator( false )
 
 		if(result.isError) then
@@ -492,9 +492,44 @@ function UserManager:updatePlayer(next)
 		if(player) then
 			userManager:updatedPlayer(player, next)
 		else
-			if(next) then
-				next()
-			end
+			print("multiFB")
+		
+      	viewManager.showPopup()
+      	analytics.event("Social", "multiFB") 
+      	
+      	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoShare.png")  
+      	hud.popup.shareIcon.x 			= display.contentWidth*0.5
+      	hud.popup.shareIcon.y			= display.contentHeight*0.22
+      
+      	hud.popup.shareText 				= display.newImage( hud.popup, I "popup.Txt3.png")  
+      	hud.popup.shareText.x 			= display.contentWidth*0.5
+      	hud.popup.shareText.y			= display.contentHeight*0.32
+      	
+         local multiLineText = display.newMultiLineText  
+           {
+                 text = T "Earn points and get Instant Tickets",
+                 width = display.contentWidth*0.85,  
+                 left = display.contentWidth*0.5,
+                 font = FONT, 
+                 fontSize = 38,
+                 align = "center"
+           }
+      	
+      	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+      	multiLineText.x = display.contentWidth*0.5
+      	multiLineText.y = display.contentHeight*0.42
+      	hud.popup:insert(multiLineText)      
+      	
+      	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+      	hud.popup.close.x 			= display.contentWidth*0.5
+      	hud.popup.close.y 			= display.contentHeight*0.83
+      	
+      	utils.onTouch(hud.popup.close, function() 
+      		viewManager.closePopup()
+      		if(next) then
+      			next()
+      		end 
+      	end)
 		end
 
 	end)

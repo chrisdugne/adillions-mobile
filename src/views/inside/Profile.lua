@@ -380,34 +380,34 @@ function scene:drawScene()
 
 	end
 
---	if(userManager.user.facebookFan) then
---		hud.facebookLikeDone 		= display.newImage( hud.board, I "facebook.like.done.png") 
---		hud.facebookLikeDone:setReferencePoint(display.CenterLeftReferencePoint)
---		hud.facebookLikeDone.x 	= display.contentWidth*0.05
---		hud.facebookLikeDone.y	= self.top + self.yGap*(socialTop+5.2)
---		hud.board:insert(hud.facebookLikeDone)
---	else
---		if(userManager.user.facebookId) then
---			hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")  
---			hud.facebookLike:setReferencePoint(display.CenterLeftReferencePoint)
---			hud.facebookLike.x 	= display.contentWidth*0.05
---			hud.facebookLike.y	= self.top + self.yGap*(socialTop+5.2)
---			hud.board:insert(hud.facebookLike)
---
---			utils.onTouch(hud.facebookLike, function()
---				-- todo : listener pour trouver qd revenir ?
---				local url = "https://www.facebook.com/pages/Adillions/379432705492888"
---				native.showWebPopup(0, 0, display.contentWidth, display.contentHeight, url) 
---			end)
---		else
---			hud.facebookLikeDisabled 		= display.newImage( hud.board, I "facebook.like.disabled.png")
---			hud.facebookLikeDisabled:setReferencePoint(display.CenterLeftReferencePoint)
---			hud.facebookLikeDisabled.x 	= display.contentWidth*0.05
---			hud.facebookLikeDisabled.y	= self.top + self.yGap*(socialTop+5.2)
---			hud.board:insert(hud.facebookLikeDisabled)
---
---		end
---	end
+	if(userManager.user.facebookFan) then
+		hud.facebookLikeDone 		= display.newImage( hud.board, I "facebook.like.done.png") 
+		hud.facebookLikeDone:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.facebookLikeDone.x 	= display.contentWidth*0.05
+		hud.facebookLikeDone.y	= self.top + self.yGap*(socialTop+5.2)
+		hud.board:insert(hud.facebookLikeDone)
+	else
+	
+		if(userManager.user.facebookId) then
+			hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")  
+			hud.facebookLike:setReferencePoint(display.CenterLeftReferencePoint)
+			hud.facebookLike.x 	= display.contentWidth*0.05
+			hud.facebookLike.y	= self.top + self.yGap*(socialTop+5.2)
+			hud.board:insert(hud.facebookLike)
+
+			utils.onTouch(hud.facebookLike, function()
+				self:openFacebookPage()
+			end)
+
+		else
+			hud.facebookLikeDisabled 		= display.newImage( hud.board, I "facebook.like.disabled.png")
+			hud.facebookLikeDisabled:setReferencePoint(display.CenterLeftReferencePoint)
+			hud.facebookLikeDisabled.x 	= display.contentWidth*0.05
+			hud.facebookLikeDisabled.y	= self.top + self.yGap*(socialTop+5.2)
+			hud.board:insert(hud.facebookLikeDisabled)
+		end
+		
+	end
 	
 	----------
 	-- tickets icons
@@ -625,6 +625,12 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function scene:openFacebookPage()
+	native.showWebPopup(0, 0, display.contentWidth, display.contentHeight, FACEBOOK_PAGE) 
+end
+
+-----------------------------------------------------------------------------------------
+
 function scene:drawTextEntry(title, value, position, fontSizeLeft, fontSizeRight)
 
 	viewManager.newText({
@@ -688,15 +694,7 @@ function scene:openCashout()
 	hud.popup.TxtInformation.y		= display.contentHeight*0.23
 
 	----------------------------------------------------------------------------------------------------
---
---	viewManager.newText({
---		parent 			= hud.board, 
---		text 				= T "",         
---		x 					= self.column1,
---		y 					= self.top + self.yGap*position,
---		fontSize 		= fontSizeLeft or self.fontSizeLeft,
---		referencePoint = display.CenterLeftReferencePoint
---	})
+	
    local value = ""
    if(utils.isEuroCountry(COUNTRY)) then
    	value = "10€"
@@ -726,7 +724,7 @@ function scene:openCashout()
 		min = 15
 	end
 	
-	if(userManager.user.balance < min) then
+	if(userManager.user.balance >= min) then
 		hud.cashoutEnabled 				= display.newImage( hud.popup, I "cashout.on.png")  
 		hud.cashoutEnabled.x 			= display.contentWidth*0.5
       hud.cashoutEnabled.y				= display.contentHeight*0.6

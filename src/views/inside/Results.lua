@@ -99,9 +99,14 @@ function scene:drawBoard()
 			referencePoint = display.CenterLeftReferencePoint
 		})
 
+		local winners = T "Winner"
+		if(lottery.nbWinners > 1) then
+			winners = T "Winners"
+		end
+
 		viewManager.newText({
 			parent = hud.board, 
-			text = T "Winners", 
+			text = winners, 
 			x = display.contentWidth*0.28,
 			y = marginTop + yGap*(i-1)+270, 
 			fontSize = 27,
