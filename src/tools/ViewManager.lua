@@ -232,7 +232,6 @@ end
 -----------------------------------------------------------------------------------------
 
 function closePopup(now, action)
-
 	
 	if(hud.popup) then
    	display.remove(hud.popup.close)
@@ -252,6 +251,7 @@ function closePopup(now, action)
    			action()
    		end
       end
+      
    end
    
 end
@@ -260,7 +260,6 @@ function showPopup(action)
 
 	closePopup(true)
 	hud.popup = display.newGroup()
-	hud.popup.alpha = 0
 
 	hud.backGrey 		= drawBorder( hud.popup, 
 		0, 0, 
@@ -276,7 +275,6 @@ function showPopup(action)
   	hud.popupRect.y = display.contentHeight*0.5
 	
 	hud.popup:toFront()
-	transition.to(hud.popup, {time=250, alpha=1})
 	
 	utils.onTouch(hud.backGrey, function()end)
 	utils.onTouch(hud.popupRect, function()end)

@@ -89,11 +89,11 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function openConfirmation()
+function openConfirmation(backFromInvite)
 	analytics.pageview("Confirmation")
 	
 	resetScreen()
-	storyboard.gotoScene( "src.views.inside.Confirmation" )
+	storyboard.gotoScene( "src.views.inside.Confirmation", {params = {backFromInvite=backFromInvite}} )
 end
 
 -----------------------------------------------------------------------------------------
@@ -179,9 +179,9 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function openInviteFriends()
+function openInviteFriends(next)
 	analytics.pageview("InviteFriends")
 	
 	resetScreen()
-	storyboard.gotoScene( "src.views.inside.InviteFriends" )
+	storyboard.gotoScene( "src.views.inside.InviteFriends" , {params = {next=next}})
 end

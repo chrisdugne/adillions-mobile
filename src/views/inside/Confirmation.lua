@@ -56,12 +56,6 @@ function scene:refreshScene()
 
 	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
 
-	-- juste au moment ou le player gagne son 8e point
-	-- avant le record -> refresh du nbTickets ici a la mano
-	if(userManager.user.currentPoints == POINTS_TO_EARN_A_TICKET) then
-		nbTickets = nbTickets + 1
-	end
-
 	hud.pictoTicket = display.newImage( hud, "assets/images/icons/ticket.png")  
 	hud.pictoTicket.x = display.contentWidth*0.62
 	hud.pictoTicket.y = display.contentHeight*0.38
@@ -122,7 +116,8 @@ function scene:refreshScene()
 	hud.shareButton.y = display.contentHeight*0.78
 	
 	utils.onTouch(hud.inviteButton, function()
-		shareManager:invite()
+		local next = function() router.openConfirmation(true) end
+		shareManager:invite(next)
 	end)
 
 	utils.onTouch(hud.shareButton, function()
@@ -137,7 +132,7 @@ function scene:refreshScene()
 
 	------------------
 	
-	if(not lotteryManager.wasExtraTicket) then
+	if(not lotteryManager.wasExtraTicket and not self.backFromInvite) then
 		viewManager.showPoints(NB_POINTS_PER_TICKET)
 	end
 	
@@ -159,6 +154,7 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
+	self.backFromInvite = event.params.backFromInvite
 	self:refreshScene()
 end
 

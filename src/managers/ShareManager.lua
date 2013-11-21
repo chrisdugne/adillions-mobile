@@ -108,8 +108,8 @@ function ShareManager:share()
 	----------------------------------------------------------------------------------------------------
 	
 	hud.popup.close 				= display.newImage( hud.popup, "assets/images/hud/CroixClose.png")
-	hud.popup.close.x 			= display.contentWidth*0.84
-	hud.popup.close.y 			= display.contentHeight*0.12
+	hud.popup.close.x 			= display.contentWidth*0.89
+	hud.popup.close.y 			= display.contentHeight*0.085
 	
 	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 	
@@ -118,7 +118,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function ShareManager:invite()
+function ShareManager:invite(next)
 
 	----------------------------------------------------------------------------------------------------
 
@@ -168,7 +168,7 @@ function ShareManager:invite()
    	hud.popup.facebookShare.y		= display.contentHeight*0.8
    
 		utils.onTouch(hud.popup.facebookShare, function() 
-   		router.openInviteFriends()
+   		router.openInviteFriends(next)
 			analytics.event("Social", "openFacebookFriendList") 
 		end)
 		
@@ -179,7 +179,7 @@ function ShareManager:invite()
    
 		utils.onTouch(hud.popup.facebookConnect, function() 
 			facebook.connect(function()
-      		router.openInviteFriends()
+      		router.openInviteFriends(next)
 				analytics.event("Social", "openFacebookFriendListAfterConnection") 
 			end) 
 		end)
@@ -189,8 +189,8 @@ function ShareManager:invite()
 	----------------------------------------------------------------------------------------------------
 	
 	hud.popup.close 				= display.newImage( hud.popup, "assets/images/hud/CroixClose.png")
-	hud.popup.close.x 			= display.contentWidth*0.88
-	hud.popup.close.y 			= display.contentHeight*0.12
+	hud.popup.close.x 			= display.contentWidth*0.89
+	hud.popup.close.y 			= display.contentHeight*0.085
 	
 	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 	

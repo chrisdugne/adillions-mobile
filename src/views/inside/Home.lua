@@ -49,8 +49,8 @@ function scene:refreshScene()
 	------------------
 
 	utils.onTouch(hud.subheaderImage, function()
---		shareManager:invite()
-		shareManager:share()
+		local next = function() router.openHome() end
+		shareManager:invite(next)
 	end)
 
 	------------------
@@ -95,13 +95,13 @@ function scene:drawNextLottery( event )
 		text = T "Next drawing" .. " : ", 
 		x = display.contentWidth*0.17,
 		y = top - display.contentHeight * 0.05,
-		fontSize = 20,
+		fontSize = 45,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 
 	hud.separator 			= display.newImage(hud, "assets/images/icons/separateur.horizontal.png")
 	hud.separator.x 		= display.contentWidth*0.5
-	hud.separator.y 		= top - display.contentHeight * 0.03
+	hud.separator.y 		= top - display.contentHeight * 0.02
             	
 	hud.pictoTimer			= display.newImage( hud, "assets/images/icons/TimerPicto.png")  
 	hud.pictoTimer.x 		= display.contentWidth*0.2

@@ -33,7 +33,7 @@ local translations =
 	},
 
 	["This week's results are published !"] = {
-		["fr"] = "Les résultats de la semaine sont annoncés !",
+		["fr"] = "Les résultats du dernier tirage sont disponibles",
 	},
 
 	["You've earned an Instant Ticket"] = {
@@ -331,14 +331,44 @@ local translations =
 		["fr"] = "Profil donateur",
 	},
 
-	["Starter"] = {
-		["fr"] = "Débutant",
-	},
-
 	["Donation"] = {
 		["fr"] = "Dons",
 	},
 
+	----------
+	
+	["Boy Scout"] = {
+		["fr"] = "Scout",
+	},
+
+	["Contributor"] = {
+		["fr"] = "Contributeur",
+	},
+
+	["Good Samaritan"] = {
+		["fr"] = "Bon Samaritain",
+	},
+
+	["Donor"] = {
+		["fr"] = "Donateur",
+	},
+
+	["Benefactor"] = {
+		["fr"] = "Bienfaiteur",
+	},
+
+	["Major Donor"] = {
+		["fr"] = "Grand Donateur",
+	},
+
+	["Patron"] = {
+		["fr"] = "Mécène",
+	},
+
+	["Philanthropist"] = {
+		["fr"] = "Philanthrope",
+	},
+	
 	---PROFILE WINNINGS-----------------------------------------------------------
 
 	["Total winnings"] = {
@@ -368,11 +398,19 @@ local translations =
 	},
 
 	["Charity"] = {
-		["fr"] = "Dons",
+		["fr"] = "Associations",
 	},
 
 	["See more"] = {
 		["fr"] = "Détails",
+	},
+
+	["Total winning tickets"] = {
+		["fr"] = "Nbre de tickets gagnants",
+	},
+
+	["Prize / Winning ticket"] = {
+		["fr"] = "Gain / Ticket gagnant",
 	},
 
 	---POOL NUMBERS-----------------------------------------------------------

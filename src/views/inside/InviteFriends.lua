@@ -39,8 +39,8 @@ function scene:inviteListener( event )
     	
     	if string.startsWith(event.url, SERVER_URL .. "backToMobile?request=")
     	or string.startsWith(event.url, "https://m.facebook.com/home.php") then
-			self:closeWebView()    		
-      	router.openHome()
+			self:closeWebView()    	
+      	self.next()
 
 --    		if(not userManager.user.hasInvitedOnFacebook) then
 --    			timer.performWithDelay(800, function()
@@ -56,7 +56,7 @@ function scene:inviteListener( event )
     	elseif string.startsWith(event.url, SERVER_URL .. "backToMobile") then
 
 			self:closeWebView()    		
-      	router.openHome()
+      	self.next()
 
 			local params = utils.getUrlParams(event.url);
 			
@@ -80,6 +80,8 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
+	local params = event.params
+	self.next = params.next
 	self:refreshScene()
 end
 

@@ -49,9 +49,9 @@ function scene:drawScene()
 	self.column1 = display.contentWidth*0.07
 	self.column2 = display.contentWidth*0.9 
 	
-	---------------------------------------------------------------
-	-- Top picture
-	---------------------------------------------------------------
+--	---------------------------------------------------------------
+--	-- Top picture
+--	---------------------------------------------------------------
 	
 	viewManager.drawBorder( hud.board, 
 		display.contentWidth*0.6, self.top + display.contentHeight*0.02, 
@@ -85,9 +85,9 @@ function scene:drawScene()
    	
 	end
 	
-	---------------------------------------------------------------
-	-- Personal Details
-	---------------------------------------------------------------
+--	---------------------------------------------------------------
+--	-- Personal Details
+--	---------------------------------------------------------------
 	
 	hud.lineDetails 			= display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
 	hud.lineDetails.x 		= display.contentWidth*0.5
@@ -194,7 +194,7 @@ function scene:drawScene()
 	hud.iconCharity.y 		= self.top + self.yGap*(statusTop+4.5)
 	hud.board:insert(hud.iconCharity)
 	
-	local charity = {"Starter"}
+	local charity = {"Boy Scout", "Contributor", "Good Samaritan", "Donor", "Benefactor", "Major Donor", "Patron", "Philanthropist"}
 	
 	viewManager.newText({
 		parent 			= hud.board, 
@@ -380,37 +380,34 @@ function scene:drawScene()
 
 	end
 
-	if(userManager.user.facebookFan) then
-		facebookFanTitle = T "Thank you for being a fan !"
-		facebookFanState = "on"
-
-		hud.facebookLikeDone 		= display.newImage( hud.board, I "facebook.like.done.png") 
-		hud.facebookLikeDone:setReferencePoint(display.CenterLeftReferencePoint)
-		hud.facebookLikeDone.x 	= display.contentWidth*0.05
-		hud.facebookLikeDone.y	= self.top + self.yGap*(socialTop+5.2)
-		hud.board:insert(hud.facebookLikeDone)
-	else
-		if(userManager.user.facebookId) then
-			hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")  
-			hud.facebookLike:setReferencePoint(display.CenterLeftReferencePoint)
-			hud.facebookLike.x 	= display.contentWidth*0.05
-			hud.facebookLike.y	= self.top + self.yGap*(socialTop+5.2)
-			hud.board:insert(hud.facebookLike)
-
-			utils.onTouch(hud.facebookLike, function()
-				-- todo : listener pour trouver qd revenir ?
-				local url = "https://www.facebook.com/pages/Adillions/379432705492888"
-				native.showWebPopup(0, 0, display.contentWidth, display.contentHeight, url) 
-			end)
-		else
-			hud.facebookLikeDisabled 		= display.newImage( hud.board, I "facebook.like.disabled.png")
-			hud.facebookLikeDisabled:setReferencePoint(display.CenterLeftReferencePoint)
-			hud.facebookLikeDisabled.x 	= display.contentWidth*0.05
-			hud.facebookLikeDisabled.y	= self.top + self.yGap*(socialTop+5.2)
-			hud.board:insert(hud.facebookLikeDisabled)
-
-		end
-	end
+--	if(userManager.user.facebookFan) then
+--		hud.facebookLikeDone 		= display.newImage( hud.board, I "facebook.like.done.png") 
+--		hud.facebookLikeDone:setReferencePoint(display.CenterLeftReferencePoint)
+--		hud.facebookLikeDone.x 	= display.contentWidth*0.05
+--		hud.facebookLikeDone.y	= self.top + self.yGap*(socialTop+5.2)
+--		hud.board:insert(hud.facebookLikeDone)
+--	else
+--		if(userManager.user.facebookId) then
+--			hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")  
+--			hud.facebookLike:setReferencePoint(display.CenterLeftReferencePoint)
+--			hud.facebookLike.x 	= display.contentWidth*0.05
+--			hud.facebookLike.y	= self.top + self.yGap*(socialTop+5.2)
+--			hud.board:insert(hud.facebookLike)
+--
+--			utils.onTouch(hud.facebookLike, function()
+--				-- todo : listener pour trouver qd revenir ?
+--				local url = "https://www.facebook.com/pages/Adillions/379432705492888"
+--				native.showWebPopup(0, 0, display.contentWidth, display.contentHeight, url) 
+--			end)
+--		else
+--			hud.facebookLikeDisabled 		= display.newImage( hud.board, I "facebook.like.disabled.png")
+--			hud.facebookLikeDisabled:setReferencePoint(display.CenterLeftReferencePoint)
+--			hud.facebookLikeDisabled.x 	= display.contentWidth*0.05
+--			hud.facebookLikeDisabled.y	= self.top + self.yGap*(socialTop+5.2)
+--			hud.board:insert(hud.facebookLikeDisabled)
+--
+--		end
+--	end
 	
 	----------
 	-- tickets icons
@@ -730,7 +727,6 @@ function scene:openCashout()
 	end
 	
 	if(userManager.user.balance < min) then
---	if(userManager.user.balance >= min) then
 		hud.cashoutEnabled 				= display.newImage( hud.popup, I "cashout.on.png")  
 		hud.cashoutEnabled.x 			= display.contentWidth*0.5
       hud.cashoutEnabled.y				= display.contentHeight*0.6
@@ -741,8 +737,7 @@ function scene:openCashout()
       hud.cashoutDisabled.y			= display.contentHeight*0.6
 	end
 	
---	if(userManager.user.balance > 0) then
-	if(userManager.user.balance == 0) then
+	if(userManager.user.balance > 0) then
    	hud.giveToCharity 				= display.newImage( hud.popup, I "donate.on.png")  
    	hud.giveToCharity.x 				= display.contentWidth*0.5
       hud.giveToCharity.y				= display.contentHeight*0.73

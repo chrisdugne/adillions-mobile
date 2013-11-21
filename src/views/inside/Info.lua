@@ -43,7 +43,7 @@ function scene:refreshScene()
 	hud.options.y			= self.top
 
 	utils.onTouch(hud.options, function()
-		router.openOptions()
+		self:openOptions()
 	end)
 
 	hud.tutorial 			= display.newImage( hud, I "info.Tutorial.png")  
@@ -200,7 +200,8 @@ function scene:openPrizes()
 		text = T "Match", 
 		x = display.contentWidth*0.45,
 		y = display.contentHeight * 0.15,
-		fontSize = 30,
+		fontSize = 32,
+		font = NUM_FONT
 	})
 
 	viewManager.newText({
@@ -208,7 +209,8 @@ function scene:openPrizes()
 		text = T "n° + LB", 
 		x = display.contentWidth*0.45,
 		y = display.contentHeight * 0.18,
-		fontSize = 30,
+		fontSize = 32,
+		font = NUM_FONT
 	})
 
 	viewManager.newText({
@@ -216,7 +218,8 @@ function scene:openPrizes()
 		text = T "Prize", 
 		x = display.contentWidth*0.8,
 		y = display.contentHeight * 0.15,
-		fontSize = 30,
+		fontSize = 32,
+		font = NUM_FONT
 	})
 
 	viewManager.newText({
@@ -224,9 +227,14 @@ function scene:openPrizes()
 		text = T "breakdown", 
 		x = display.contentWidth*0.8,
 		y = display.contentHeight * 0.18,
-		fontSize = 30,
+		fontSize = 32,
+		font = NUM_FONT
 	})
 
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.23
+	
 	local matches = {
 		"5 + 1",
 		"5 + 0",
@@ -286,6 +294,104 @@ end
 
 ------------------------------------------------------------------------------
 
+function scene:openOptions()
+
+	local top	 	= display.contentHeight * 0.1
+	local yGap		= display.contentHeight*0.15
+
+	viewManager.showPopup(function() end)
+
+	--------------------------
+	
+	local optionsTop 		= 1
+
+	local fontSizeLeft 	= 27
+	local fontSizeRight 	= 29
+
+	hud.title 		= display.newImage(hud.popup, "assets/images/icons/Options.png")
+	hud.title.x 	= display.contentWidth*0.5
+	hud.title.y 	= top
+	
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.17
+
+	---------------------------------------------------------------------------------
+	-- Options
+	---------------------------------------------------------------
+
+	local function beforeDrawSwitchListener( event )
+		GLOBALS.options.notificationBeforeDraw = event.target.isOn
+		utils.saveTable(GLOBALS.options, "options.json")
+		
+   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
+	end
+	
+	local function afterDrawSwitchListener( event )
+		GLOBALS.options.notificationAfterDraw = event.target.isOn
+		utils.saveTable(GLOBALS.options, "options.json")
+	
+   	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)	
+	end
+
+	---------------------------------------------------------------
+	
+	viewManager.newText({
+		parent 			= hud.popup, 
+		text 				= T "Notification 48h before the next draw",         
+		x 					= display.contentWidth*0.11,
+		y 					= top + yGap*(optionsTop),
+		fontSize 		= fontSizeLeft,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+	local beforeDrawSwitch = widget.newSwitch
+	{
+		left 							= display.contentWidth*0.75,
+		top 							= top + yGap*(optionsTop-0.05),
+		initialSwitchState	 	= GLOBALS.options.notificationBeforeDraw,
+		onPress 						= beforeDrawSwitchListener,
+		onRelease 					= beforeDrawSwitchListener,
+	}
+	
+	beforeDrawSwitch:scale(2,2)	
+
+	viewManager.newText({
+		parent 			= hud.popup, 
+		text 				= T "Notification for the results",         
+		x 					= display.contentWidth*0.11,
+		y 					= top + yGap*(optionsTop+0.5),
+		fontSize 		= fontSizeLeft,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+
+
+	local afterDrawSwitch = widget.newSwitch
+	{
+		left 							= display.contentWidth*0.75,
+		top 							= top + yGap*(optionsTop+0.45),
+		initialSwitchState	 	= GLOBALS.options.notificationAfterDraw,
+		onPress 						= afterDrawSwitchListener,
+		onRelease 					= afterDrawSwitchListener,
+	}
+
+	afterDrawSwitch:scale(2,2)	
+
+	hud.popup:insert( beforeDrawSwitch )	
+	hud.popup:insert( afterDrawSwitch )	
+	
+	--------------------------
+
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.85
+
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+
+end
+
+------------------------------------------------------------------------------
+
 function scene:openContact()
 
 	local top	 	= display.contentHeight * 0.3
@@ -293,19 +399,15 @@ function scene:openContact()
 
 	viewManager.showPopup(function() end)
 
---	viewManager.newText({
---		parent = hud.popup, 
---		text = "By email", 
---		x = display.contentWidth*0.5,
---		y = display.contentHeight * 0.1,
---		fontSize = 70,
---	})
+	hud.popup.byEmail 		= display.newImage(hud.popup, I "byEmail.png")
+	hud.popup.byEmail.x 		= display.contentWidth*0.5
+	hud.popup.byEmail.y 		= display.contentHeight*0.21
 
 	--------------------------
 	
 	hud.popup.separator 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
 	hud.popup.separator.x 		= display.contentWidth*0.5
-	hud.popup.separator.y 		= display.contentHeight*0.2
+	hud.popup.separator.y 		= display.contentHeight*0.25
 		
 	--------------------------
 
@@ -386,10 +488,15 @@ function scene:openContact()
 	})
 
 	--------------------------
+
+	hud.popup.web 					= display.newImage(hud.popup, I "web.png")
+	hud.popup.web.x 				= display.contentWidth*0.5
+	hud.popup.web.y 				= display.contentHeight*0.58
+	
 	
 	hud.popup.separator2 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
 	hud.popup.separator2.x 		= display.contentWidth*0.5
-	hud.popup.separator2.y 		= display.contentHeight*0.52
+	hud.popup.separator2.y 		= display.contentHeight*0.62
 
 	--------------------------
 
@@ -397,7 +504,7 @@ function scene:openContact()
 		parent = hud.popup, 
 		text = "www.adillions.com", 
 		x = display.contentWidth*0.5,
-		y = display.contentHeight * 0.6,
+		y = display.contentHeight * 0.65,
 		fontSize = 56,
 		font		= NUM_FONT,
 	})
@@ -424,12 +531,12 @@ function scene:openRewards1()
 	--------------------------
 	
 	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/Picto_BonusTicket.png")
-	hud.picto.x 		= display.contentWidth*0.2
+	hud.picto.x 		= display.contentWidth*0.14
 	hud.picto.y 		= display.contentHeight*0.15
 
 	hud.title 			= display.newImage(hud.popup, I "bonus.ticket.png")
 	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
-	hud.title.x 		= display.contentWidth*0.3
+	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.15
 
 	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
@@ -512,7 +619,7 @@ function scene:openRewards1()
 	---------------------------------------------------------------
 	
 	hud.close 				= display.newImage( hud.popup, "assets/images/hud/CroixClose.png")
-	hud.close.x 			= display.contentWidth*0.88
+	hud.close.x 			= display.contentWidth*0.89
 	hud.close.y 			= display.contentHeight*0.085
 	
 	utils.onTouch(hud.close, function() viewManager.closePopup() end)

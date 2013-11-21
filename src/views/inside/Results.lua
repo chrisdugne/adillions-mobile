@@ -200,30 +200,47 @@ function scene:openMoreResults( lottery )
 		fontSize = 43,
 	})
 
-	viewManager.newText({
-		parent = hud.popup, 
-		text = T "Winners" .. ":", 
-		x = display.contentWidth*0.5,
-		y = top*0.75,
-		fontSize = 30,
-		referencePoint = display.CenterRightReferencePoint
-	})
 
-	viewManager.newText({
-		parent = hud.popup, 
-		text = T "Winnings" .. " / " .. T "Winner" .. ":", 
-		x = display.contentWidth*0.9,
-		y = top*0.75,
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.25
+	
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "Total winning tickets" .. ":", 
+		width = display.contentWidth*0.2,  
+		font = FONT, 
 		fontSize = 30,
-		referencePoint = display.CenterRightReferencePoint
-	})
+		align = "center"
+	}
+
+	multiLineText:setReferencePoint(display.CenterReferencePoint)
+	multiLineText.x = display.contentWidth*0.45
+	multiLineText.y = top*0.65,
+	hud.popup:insert(multiLineText)   
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "Prize / Winning ticket",
+		width = display.contentWidth*0.25,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 30,
+		align = "center"
+	}
+
+	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
+	multiLineText.x = display.contentWidth*0.87
+	multiLineText.y = top*0.65,
+	hud.popup:insert(multiLineText)         
 
 	for i = 1, #lottery.prizes do
 
-   	hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/Rang".. i .. ".png")
-   	hud.iconRang.x 		= display.contentWidth * 0.2
-   	hud.iconRang.y 		= top + yGap * (i-1)
-   	hud.iconRang:scale 	(0.6,0.6)	
+		hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/Rang".. i .. ".png")
+		hud.iconRang.x 		= display.contentWidth * 0.2
+		hud.iconRang.y 		= top + yGap * (i-1)
+		hud.iconRang:scale 	(0.6,0.6)	
    
    	viewManager.newText({
    		parent 			= hud.popup, 
