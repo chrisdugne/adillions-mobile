@@ -546,7 +546,7 @@ function countryPrice(euros, country, rateUSDtoEUR)
 	if(isEuroCountry(country)) then
 		return euros;
 	else
-		return math.round(euros*rateUSDtoEUR*10)/10;
+		return math.round(euros*rateUSDtoEUR);
 	end
 
 end

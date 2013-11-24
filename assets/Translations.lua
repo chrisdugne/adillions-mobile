@@ -8,6 +8,14 @@ local translations =
 		["fr"] = "Déconnexion",
 	},
 
+	["Facebook login failed"] = {
+		["fr"] = "Connection à Facebook échouée",
+	},
+
+	["This Facebook account is already connected to another Adillions user. Please login with your own Facebook account in order to connect Adillions to your Facebook profile"] = {
+		["fr"] = "Ce compte Adillions existe déjà.",
+	},
+
 	["Sign Up"] = {
 		["fr"] = "S'inscrire",
 	},
@@ -279,8 +287,8 @@ local translations =
 
 	---PROFILE CASHOUT-----------------------------------------------------------
 
-	["You can cash out or you can \n donate to charities \n \n You can cash out when your winnings \n have reached a minimum total \n balance of "] = {
-		["fr"] = "Vous pouvez retirer vos gains \n ou faire un don \n \n Pour effectuer un retrait, il vous \n faut un solde minimum de gains de ",
+	["You can cash out when your winnings \n have reached a minimum total \n balance of "] = {
+		["fr"] = "Pour effectuer un retrait, il vous \n faut un solde minimum de gains de ",
 	},
 
 	["You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment"] = {

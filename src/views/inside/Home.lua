@@ -85,7 +85,7 @@ function scene:drawNextLottery( event )
 	local y 						= HEADER_HEIGHT * 3.7
 	local top 					= HEADER_HEIGHT * 3
 	local timerLegendSize 	= 17
-	local timerLegendY 		= top + display.contentHeight * 0.05
+	local timerLegendY 		= top + display.contentHeight * 0.04
 	local timerY 				= top + display.contentHeight * 0.01
 
 	-------------------------------
@@ -120,40 +120,43 @@ function scene:drawNextLottery( event )
 
 	-------------------------------
 	
+	local daysX = display.contentWidth*0.305
+	if(LANG == "en") then daysX = display.contentWidth*0.3 end
+	
 	viewManager.newText({
 		parent = hud, 
 		text = T "DAYS", 
-		x = display.contentWidth*0.5 - 2*display.contentWidth*0.116,
+		x = daysX,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
-		referencePoint = display.CenterLeftReferencePoint
+		referencePoint = display.CenterReferencePoint
 	})
 
 	viewManager.newText({
 		parent = hud, 
 		text = T "HRS", 
-		x = display.contentWidth*0.412,
+		x = display.contentWidth*0.437,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
-		referencePoint = display.CenterLeftReferencePoint
+		referencePoint = display.CenterReferencePoint
 	})
 
 	viewManager.newText({
 		parent = hud, 
 		text = T "MIN", 
-		x = display.contentWidth*0.536,
+		x = display.contentWidth*0.567,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
-		referencePoint = display.CenterLeftReferencePoint
+		referencePoint = display.CenterReferencePoint
 	})
 
 	viewManager.newText({
 		parent = hud, 
 		text = T "SEC", 
-		x = display.contentWidth*0.675,
+		x = display.contentWidth*0.698,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
-		referencePoint = display.CenterLeftReferencePoint
+		referencePoint = display.CenterReferencePoint
 	})
 	
 	----------------------------------------------------

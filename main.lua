@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.18.2"
+APP_VERSION 		= "1.19.5"
 
 -----------------------------------------------------------------------------------------
 
@@ -68,8 +68,8 @@ NB_POINTS_PER_THEME_LIKED		= 2
 
 FACEBOOK_FAN_TICKETS				= 2
 TWITTER_FAN_TICKETS				= 2
-FACEBOOK_CONNECTION_TICKETS	= 2
-TWITTER_CONNECTION_TICKETS		= 2
+FACEBOOK_CONNECTION_TICKETS	= 1
+TWITTER_CONNECTION_TICKETS		= 1
 
 -----------------------------------------------------------------------------------------
 --- lottery tickets status

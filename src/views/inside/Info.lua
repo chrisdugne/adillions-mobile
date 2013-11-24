@@ -195,11 +195,20 @@ function scene:openPrizes()
 
 	viewManager.showPopup(function() end)
 
+	hud.title 			= display.newImage(hud.popup, I "Prize.png")
+	hud.title:setReferencePoint(display.CenterLeftReferencePoint)
+	hud.title.x 		= display.contentWidth*0.23
+	hud.title.y 		= display.contentHeight*0.09
+
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoPrize.png")
+	hud.picto.x 		= display.contentWidth*0.15
+	hud.picto.y 		= display.contentHeight*0.09
+
 	viewManager.newText({
 		parent = hud.popup, 
 		text = T "Match", 
 		x = display.contentWidth*0.45,
-		y = display.contentHeight * 0.15,
+		y = display.contentHeight * 0.17,
 		fontSize = 32,
 		font = NUM_FONT
 	})
@@ -208,7 +217,7 @@ function scene:openPrizes()
 		parent = hud.popup, 
 		text = T "n° + LB", 
 		x = display.contentWidth*0.45,
-		y = display.contentHeight * 0.18,
+		y = display.contentHeight * 0.2,
 		fontSize = 32,
 		font = NUM_FONT
 	})
@@ -217,7 +226,7 @@ function scene:openPrizes()
 		parent = hud.popup, 
 		text = T "Prize", 
 		x = display.contentWidth*0.8,
-		y = display.contentHeight * 0.15,
+		y = display.contentHeight * 0.17,
 		fontSize = 32,
 		font = NUM_FONT
 	})
@@ -226,7 +235,7 @@ function scene:openPrizes()
 		parent = hud.popup, 
 		text = T "breakdown", 
 		x = display.contentWidth*0.8,
-		y = display.contentHeight * 0.18,
+		y = display.contentHeight * 0.2,
 		fontSize = 32,
 		font = NUM_FONT
 	})
@@ -308,10 +317,15 @@ function scene:openOptions()
 	local fontSizeLeft 	= 27
 	local fontSizeRight 	= 29
 
-	hud.title 		= display.newImage(hud.popup, "assets/images/icons/Options.png")
-	hud.title.x 	= display.contentWidth*0.5
-	hud.title.y 	= top
-	
+	hud.title 			= display.newImage(hud.popup, I "Options.png")
+	hud.title:setReferencePoint(display.CenterLeftReferencePoint)
+	hud.title.x 		= display.contentWidth*0.23
+	hud.title.y 		= display.contentHeight*0.09
+
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoOptions.png")
+	hud.picto.x 		= display.contentWidth*0.15
+	hud.picto.y 		= display.contentHeight*0.09
+
 	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
 	hud.sep.x 		= display.contentWidth*0.5
 	hud.sep.y 		= display.contentHeight*0.17
@@ -398,6 +412,19 @@ function scene:openContact()
 	local yGap		= display.contentHeight*0.082
 
 	viewManager.showPopup(function() end)
+
+	--------------------------
+
+	hud.title 			= display.newImage(hud.popup, I "Contact.png")
+	hud.title:setReferencePoint(display.CenterLeftReferencePoint)
+	hud.title.x 		= display.contentWidth*0.23
+	hud.title.y 		= display.contentHeight*0.09
+
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoContact.png")
+	hud.picto.x 		= display.contentWidth*0.15
+	hud.picto.y 		= display.contentHeight*0.09
+
+	--------------------------
 
 	hud.popup.byEmail 		= display.newImage(hud.popup, I "byEmail.png")
 	hud.popup.byEmail.x 		= display.contentWidth*0.5
@@ -567,7 +594,7 @@ function scene:openRewards1()
 	hud.fb1.x 		= display.contentWidth*0.11
 	hud.fb1.y 		= display.contentHeight*0.4
 
-	hud.fb1Bonus 		= display.newImage(hud.popup, "assets/images/icons/Plus2Tickets.png")
+	hud.fb1Bonus 		= display.newImage(hud.popup, "assets/images/icons/Plus1Ticket.png")
 	hud.fb1Bonus.x 	= display.contentWidth*0.8
 	hud.fb1Bonus.y 	= display.contentHeight*0.4
 
@@ -576,7 +603,7 @@ function scene:openRewards1()
 	hud.tw1.x 		= display.contentWidth*0.11
 	hud.tw1.y 		= display.contentHeight*0.51
 	
-	hud.tw1Bonus 		= display.newImage(hud.popup, "assets/images/icons/Plus2Tickets.png")
+	hud.tw1Bonus 		= display.newImage(hud.popup, "assets/images/icons/Plus1Ticket.png")
 	hud.tw1Bonus.x 	= display.contentWidth*0.8
 	hud.tw1Bonus.y 	= display.contentHeight*0.51
 

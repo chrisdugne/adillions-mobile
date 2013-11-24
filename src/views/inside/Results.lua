@@ -214,7 +214,7 @@ function scene:openMoreResults( lottery )
 	local multiLineText = display.newMultiLineText  
 	{
 		text = T "Total winning tickets" .. ":", 
-		width = display.contentWidth*0.2,  
+		width = display.contentWidth*0.3,  
 		font = FONT, 
 		fontSize = 30,
 		align = "center"

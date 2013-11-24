@@ -54,8 +54,8 @@ function scene:drawScene()
 --	---------------------------------------------------------------
 	
 	viewManager.drawBorder( hud.board, 
-		display.contentWidth*0.6, self.top + display.contentHeight*0.02, 
-		display.contentWidth*0.6, 200,
+		display.contentWidth*0.5, self.top + display.contentHeight*0.02, 
+		display.contentWidth*0.9, 200,
 		250,250,250
 	)  
 	
@@ -69,7 +69,7 @@ function scene:drawScene()
 	})
 
 
-	if(userManager.user.facebookId) then
+	if(userManager.user.facebookId and facebook.data) then
    	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)
    		local picture = event.target	
    		hud.board:insert(picture)
@@ -176,21 +176,21 @@ function scene:drawScene()
 	viewManager.newText({
 		parent 			= hud.board, 
 		text 				= T "Charity profile" .. " : ",            
-		x 					= self.column1,
+		x 					= display.contentWidth*0.5,
 		y 					= self.top + self.yGap*(statusTop+3.5),
 		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
+		referencePoint = display.CenterReferencePoint
 	})
 
 	for i=1,5 do 
    	hud.iconCharity 			= display.newImage( hud.board, "assets/images/icons/CharitiesOFF.png")
-   	hud.iconCharity.x 		= display.contentWidth*0.05 + i * display.contentWidth*0.05  
+   	hud.iconCharity.x 		= display.contentWidth*0.35 + i * display.contentWidth*0.05  
    	hud.iconCharity.y 		= self.top + self.yGap*(statusTop+4.5)
    	hud.board:insert(hud.iconCharity)
 	end
 
 	hud.iconCharity 			= display.newImage( hud.board, "assets/images/icons/CharitiesON.png")
-	hud.iconCharity.x 		= display.contentWidth*0.1 
+	hud.iconCharity.x 		= display.contentWidth*0.4
 	hud.iconCharity.y 		= self.top + self.yGap*(statusTop+4.5)
 	hud.board:insert(hud.iconCharity)
 	
@@ -199,34 +199,34 @@ function scene:drawScene()
 	viewManager.newText({
 		parent 			= hud.board, 
 		text	 			= T(charity[1]),              
-		x 					= self.column1 + display.contentWidth*0.07,
+		x 					= display.contentWidth*0.5,
 		y 					= self.top + self.yGap*(statusTop+5.5),
 		fontSize 		= self.fontSizeRight,
 		fontSize 		= 30,
-		referencePoint = display.CenterLeftReferencePoint
+		referencePoint = display.CenterReferencePoint
 	})
 	
 	
-	--------------------------
-	
-	viewManager.newText({
-		parent 			= hud.board, 
-		text 				= T "Donation" .. " : ",         
-		x 					= self.column2,
-		y 					= self.top + self.yGap*(statusTop+3.5),
-		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterRightReferencePoint
-	})
-
-	viewManager.newText({
-		parent 			= hud.board, 
-		text	 			= utils.displayPrice(userManager.user.totalGift, COUNTRY) ,        
-		x 					= self.column2,
-		y 					= self.top + self.yGap*(statusTop+4.5),
-		font				= NUM_FONT,
-		fontSize 		= 40,
-		referencePoint = display.CenterRightReferencePoint
-	})
+--	--------------------------
+--	
+--	viewManager.newText({
+--		parent 			= hud.board, 
+--		text 				= T "Donation" .. " : ",         
+--		x 					= self.column2,
+--		y 					= self.top + self.yGap*(statusTop+3.5),
+--		fontSize 		= self.fontSizeLeft,
+--		referencePoint = display.CenterRightReferencePoint
+--	})
+--
+--	viewManager.newText({
+--		parent 			= hud.board, 
+--		text	 			= utils.displayPrice(userManager.user.totalGift, COUNTRY) ,        
+--		x 					= self.column2,
+--		y 					= self.top + self.yGap*(statusTop+4.5),
+--		font				= NUM_FONT,
+--		fontSize 		= 40,
+--		referencePoint = display.CenterRightReferencePoint
+--	})
 	
 	
 	---------------------------------------------------------------
@@ -294,7 +294,7 @@ function scene:drawScene()
 	
 	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/PictogainPayed.png")
 	hud.iconMoney.x 		= self.column2 
-	hud.iconMoney.y 		= self.top + self.yGap*(winningsTop+2)
+	hud.iconMoney.y 		= self.top + self.yGap*(winningsTop+2) - display.contentHeight*0.004
 	hud.board:insert(hud.iconMoney)
 	
 	--------------------------
@@ -704,7 +704,7 @@ function scene:openCashout()
    
    local multiLineText = display.newMultiLineText  
      {
-           text = T "You can cash out or you can \n donate to charities \n \n You can cash out when your winnings \n have reached a minimum total \n balance of " .. value,
+           text = T "You can cash out when your winnings \n have reached a minimum total \n balance of " .. value,
            width = display.contentWidth*0.8,  
            left = display.contentWidth*0.5,
            font = FONT, 
@@ -735,16 +735,16 @@ function scene:openCashout()
       hud.cashoutDisabled.y			= display.contentHeight*0.6
 	end
 	
-	if(userManager.user.balance > 0) then
-   	hud.giveToCharity 				= display.newImage( hud.popup, I "donate.on.png")  
-   	hud.giveToCharity.x 				= display.contentWidth*0.5
-      hud.giveToCharity.y				= display.contentHeight*0.73
-   	utils.onTouch(hud.giveToCharity, function() self.openGiveToCharity() end)
-   else
-		hud.giftDisabled 					= display.newImage( hud.popup, I "donate.off.png")  
-		hud.giftDisabled.x 				= display.contentWidth*0.5
-      hud.giftDisabled.y				= display.contentHeight*0.73
-	end
+--	if(userManager.user.balance > 0) then
+--   	hud.giveToCharity 				= display.newImage( hud.popup, I "donate.on.png")  
+--   	hud.giveToCharity.x 				= display.contentWidth*0.5
+--      hud.giveToCharity.y				= display.contentHeight*0.73
+--   	utils.onTouch(hud.giveToCharity, function() self.openGiveToCharity() end)
+--   else
+--		hud.giftDisabled 					= display.newImage( hud.popup, I "donate.off.png")  
+--		hud.giftDisabled.x 				= display.contentWidth*0.5
+--      hud.giftDisabled.y				= display.contentHeight*0.73
+--	end
 
 	
 	----------------------------------------------------------------------------------------------------
@@ -754,7 +754,6 @@ function scene:openCashout()
 	hud.popup.close.y 			= display.contentHeight*0.86
 	
 	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
-	
 
 end
 

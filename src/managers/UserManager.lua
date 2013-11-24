@@ -72,11 +72,12 @@ function UserManager:getPlayerByFacebookId()
 		native.setActivityIndicator( false )	
 
 		if(result.isError) then
-			print("--> PB with server")
-			router.openOutside()
+			print("--> error = signinFB")
+			router.openSigninFB()
+--			router.openOutside()
 			
 		elseif(result.status == 401 or result.status == '401') then
-			print("--> signinFB")
+			print("--> 401 = signinFB")
 			router.openSigninFB()
 		else
 			print("--> test player")
@@ -493,21 +494,28 @@ function UserManager:updatePlayer(next)
 			userManager:updatedPlayer(player, next)
 		else
 			print("multiFB")
+      	analytics.event("Social", "multiFB") 
+		
+			-- cancel FB connection		
+			userManager.user.facebookId 				= nil
+			GLOBALS.savedData.user.facebookId 		= nil
+			GLOBALS.savedData.user.facebookName	 	= nil
+			GLOBALS.savedData.facebookAccessToken 	= nil
+			utils.saveTable(GLOBALS.savedData, "savedData.json")
 		
       	viewManager.showPopup()
-      	analytics.event("Social", "multiFB") 
       	
-      	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoShare.png")  
+      	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoInfo.png")  
       	hud.popup.shareIcon.x 			= display.contentWidth*0.5
       	hud.popup.shareIcon.y			= display.contentHeight*0.22
       
-      	hud.popup.shareText 				= display.newImage( hud.popup, I "popup.Txt3.png")  
+      	hud.popup.shareText 				= display.newImage( hud.popup, I "important.png")  
       	hud.popup.shareText.x 			= display.contentWidth*0.5
       	hud.popup.shareText.y			= display.contentHeight*0.32
       	
          local multiLineText = display.newMultiLineText  
            {
-                 text = T "Earn points and get Instant Tickets",
+                 text = T "This Facebook account is already connected to another Adillions user. Please login with your own Facebook account in order to connect Adillions to your Facebook profile",
                  width = display.contentWidth*0.85,  
                  left = display.contentWidth*0.5,
                  font = FONT, 
