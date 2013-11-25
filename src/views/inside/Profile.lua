@@ -703,21 +703,21 @@ function scene:openCashout()
    	value = "10€"
    else
    	value = "US$15"
-   end
-   
-   local multiLineText = display.newMultiLineText  
-     {
-           text = T "You can cash out when your winnings \n have reached a minimum total \n balance of " .. value,
-           width = display.contentWidth*0.8,  
-           left = display.contentWidth*0.5,
-           font = FONT, 
-           fontSize = 40,
-           align = "center"
-     }
-	
+	end
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "You can cash out when your winnings \n have reached a minimum total \n balance of " .. value,
+		width = display.contentWidth*0.8,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 40,
+		align = "center"
+	}
+
 	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
 	multiLineText.x = display.contentWidth*0.5
-	multiLineText.y = display.contentHeight*0.3
+	multiLineText.y = display.contentHeight*0.4
 	hud.popup:insert(multiLineText)         
 
 	----------------------------------------------------------------------------------------------------
@@ -730,12 +730,12 @@ function scene:openCashout()
 	if(userManager.user.balance >= min) then
 		hud.cashoutEnabled 				= display.newImage( hud.popup, I "cashout.on.png")  
 		hud.cashoutEnabled.x 			= display.contentWidth*0.5
-      hud.cashoutEnabled.y				= display.contentHeight*0.6
+      hud.cashoutEnabled.y				= display.contentHeight*0.72
    	utils.onTouch(hud.cashoutEnabled, function() self.openConfirmCashout() end)
    else
 		hud.cashoutDisabled 				= display.newImage( hud.popup, I "cashout.off.png")  
 		hud.cashoutDisabled.x 			= display.contentWidth*0.5
-      hud.cashoutDisabled.y			= display.contentHeight*0.6
+      hud.cashoutDisabled.y			= display.contentHeight*0.72
 	end
 	
 --	if(userManager.user.balance > 0) then

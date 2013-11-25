@@ -8,7 +8,7 @@ local sW = screenW*.5
 local sH = screenH*.5 
  
  
-local SPACE_BETWEEN_LINES = 8
+local SPACE_BETWEEN_LINES = display.contentHeight*0.027
  
 local function addText(params)
         local group = params.group 

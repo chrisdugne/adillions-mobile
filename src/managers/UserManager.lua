@@ -189,6 +189,10 @@ function UserManager:showConfirmMerge(next)
 	hud.popup.shareIcon.x 			= display.contentWidth*0.5
 	hud.popup.shareIcon.y			= display.contentHeight*0.22
 
+	hud.popup.shareIcon 				= display.newImage( hud.popup, I "watchout.png")  
+	hud.popup.shareIcon.x 			= display.contentWidth*0.5
+	hud.popup.shareIcon.y			= display.contentHeight*0.31
+
 	-----------------
 
 	local message = ""
@@ -217,7 +221,7 @@ function UserManager:showConfirmMerge(next)
 
 	hud.popup.confirm 				= display.newImage( hud.popup, I "confirm.png")
 	hud.popup.confirm.x 				= display.contentWidth*0.5
-	hud.popup.confirm.y 				= display.contentHeight*0.63
+	hud.popup.confirm.y 				= display.contentHeight*0.71
 
 	utils.onTouch(hud.popup.confirm, function() 
 		viewManager.closePopup()
