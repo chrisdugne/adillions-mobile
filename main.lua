@@ -104,7 +104,7 @@ COUNTRY = system.getPreference( "locale", "country" ) or "US"
 if(DEV) then
 	print("================== DEV ==============")
 
-	LANG = "en"
+	LANG = "fr"
 	COUNTRY = "FR"
 
 	print("lang : " .. LANG)

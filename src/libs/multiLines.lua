@@ -8,7 +8,7 @@ local sW = screenW*.5
 local sH = screenH*.5 
  
  
-local SPACE_BETWEEN_LINES = display.contentHeight*0.027
+local DEFAULT_SPACE_BETWEEN_LINES = display.contentHeight*0.027
  
 local function addText(params)
         local group = params.group 
@@ -343,6 +343,7 @@ function display.newMultiLineText(params)
         local fontSize = params.fontSize or 14
         local color = params.color or {0,0,0}
         local align = params.align
+        SPACE_BETWEEN_LINES = params.spaceY or DEFAULT_SPACE_BETWEEN_LINES
         
         
         local group = display.newGroup()

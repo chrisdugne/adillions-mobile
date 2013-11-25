@@ -591,7 +591,8 @@ function scene:openRewards1()
 		left = display.contentWidth*0.5,
 		font = FONT, 
 		fontSize = 36,
-		align = "left"
+		align = "left",
+		spaceY = display.contentWidth*0.009
 	}
 
 	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
@@ -698,7 +699,8 @@ function scene:openRewards2()
 		left = display.contentWidth*0.5,
 		font = FONT, 
 		fontSize = 30,
-		align = "left"
+		align = "left",
+		spaceY = display.contentWidth*0.009
 	}
 
 	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
@@ -764,14 +766,14 @@ function scene:openRewards2()
 		left = display.contentWidth*0.5,
 		font = FONT, 
 		fontSize = 25,
-		align = "right"
+		align = "right",
+		spaceY = display.contentWidth*0.009
 	}
 
 	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
 	multiLineText.x = display.contentWidth*0.9
 	multiLineText.y = display.contentHeight*0.45
 	hud.popup:insert(multiLineText)         
-	
 	
 	-------------------
 
@@ -793,12 +795,13 @@ function scene:openRewards2()
 	
 	local multiLineText = display.newMultiLineText  
 	{
-		text = T "+1 pt / post (max 4 pts per draw)", 
+		text = T "+2 pts / post (max 4 pts per draw)", 
 		width = display.contentWidth*0.25,  
 		left = display.contentWidth*0.5,
 		font = FONT, 
 		fontSize = 25,
-		align = "right"
+		align = "right",
+		spaceY = display.contentWidth*0.009
 	}
 
 	multiLineText:setReferencePoint(display.CenterRightReferencePoint)

@@ -219,8 +219,8 @@ local translations =
 		["fr"] = "+ 1pt pour le parrain et le filleul",
 	},
 
-	["+1 pt / post (max 4 pts per draw)"] = {
-		["fr"] = "+1 pt / post (max 4 pts par tirage)",
+	["+2 pts / post (max 4 pts per draw)"] = {
+		["fr"] = "+2 pts / post (max 4 pts par tirage)",
 	},
 
 	["+2 pts"] = {
