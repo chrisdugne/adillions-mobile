@@ -53,7 +53,7 @@ function ShareManager:share()
 	-----------------------------------
 
 
-	if(userManager.user.facebookId) then
+	if(GLOBALS.savedData.facebookAccessToken) then
 		hud.popup.facebookShare 		= display.newImage( hud.popup, I "popup.facebook.share.png")  
    	hud.popup.facebookShare.x 		= display.contentWidth*0.5
    	hud.popup.facebookShare.y		= display.contentHeight*0.63
@@ -162,7 +162,7 @@ function ShareManager:invite(next)
 
 	----------------------------------------------------------------------------------------------------
 
-	if(userManager.user.facebookId) then
+	if(GLOBALS.savedData.facebookAccessToken) then
 		hud.popup.facebookShare 		= display.newImage( hud.popup, I "popup.facebook.invite.png")  
    	hud.popup.facebookShare.x 		= display.contentWidth*0.5
    	hud.popup.facebookShare.y		= display.contentHeight*0.8

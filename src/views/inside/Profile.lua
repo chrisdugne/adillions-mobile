@@ -69,7 +69,7 @@ function scene:drawScene()
 	})
 
 
-	if(userManager.user.facebookId and facebook.data) then
+	if(GLOBALS.savedData.facebookAccessToken and facebook.data) then
    	display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)
    		local picture = event.target	
    		hud.board:insert(picture)
@@ -317,7 +317,7 @@ function scene:drawScene()
 		text	 			= balance,   
 		x 					= display.contentWidth*0.5, 
 		y 					= self.top + self.yGap*(winningsTop+5),
-		fontSize 		= 35,
+		fontSize 		= 40,
 		font				= NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
 	})
@@ -357,7 +357,7 @@ function scene:drawScene()
 	-- FACEBOOK
 	---------------------------------------------------------------
 	
-	if(userManager.user.facebookId) then
+	if(GLOBALS.savedData.facebookAccessToken) then
       hud.facebookConnect 		= display.newImage( hud.board, I "facebook.connected.png")  
 		hud.facebookConnect:setReferencePoint(display.CenterLeftReferencePoint)
 		hud.facebookConnect.x 	= display.contentWidth*0.05
@@ -365,7 +365,7 @@ function scene:drawScene()
       hud.board:insert(hud.facebookConnect)
 	
    else
-      hud.facebookConnect 		= display.newImage( hud.board, I "facebook.connect.button.png")  
+      hud.facebookConnect 		= display.newImage( hud.board, I "popup.facebook.connect.png")  
 		hud.facebookConnect:setReferencePoint(display.CenterLeftReferencePoint)
 		hud.facebookConnect.x 	= display.contentWidth*0.05
       hud.facebookConnect.y	= self.top + self.yGap*(socialTop+2.5)
@@ -373,6 +373,9 @@ function scene:drawScene()
    
 		utils.onTouch(hud.facebookConnect, function() 
 			facebook.connect(function()
+				if(userManager.user.facebookId) then
+					print("must connect to " .. userManager.user.userName .. " Facebook account")
+				end
 				router.resetScreen()
 				self:refreshScene()
 			end) 
@@ -388,7 +391,7 @@ function scene:drawScene()
 		hud.board:insert(hud.facebookLikeDone)
 	else
 	
-		if(userManager.user.facebookId) then
+		if(GLOBALS.savedData.facebookAccessToken) then
 			hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")  
 			hud.facebookLike:setReferencePoint(display.CenterLeftReferencePoint)
 			hud.facebookLike.x 	= display.contentWidth*0.05
@@ -461,7 +464,7 @@ function scene:drawScene()
 		twitterConnectedState = "on"
 		
    else
-      hud.twitterConnect 				= display.newImage( hud.board, I "twitter.connect.button.png")  
+      hud.twitterConnect 				= display.newImage( hud.board, I "popup.twitter.connect.png")  
 		hud.twitterConnect:setReferencePoint(display.CenterLeftReferencePoint)
 		hud.twitterConnect.x 	= display.contentWidth*0.05
       hud.twitterConnect.y				= self.top + self.yGap*(socialTop+8)

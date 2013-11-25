@@ -12,8 +12,8 @@ local translations =
 		["fr"] = "Connection à Facebook échouée",
 	},
 
-	["This Facebook account is already connected to another Adillions user. Please login with your own Facebook account in order to connect Adillions to your Facebook profile"] = {
-		["fr"] = "Ce compte Adillions existe déjà.",
+	["If this is not your Facebook account, you must log out this Facebook session on your device and log in with your own Facebook profile in order to connect your accounts"] = {
+		["fr"] = "Si ce n’est pas votre compte Facebook, vous devez fermer la session Facebook en cours sur votre appareil et vous identifier avec votre propre profil Facebook pour connecter vos comptes",
 	},
 
 	["Sign Up"] = {
@@ -262,6 +262,19 @@ local translations =
 	["For advertisers"] = {
 		["fr"] = "Annonceurs",
 	},
+
+	["By email"] = {
+		["fr"] = "Par mail",
+	},
+
+	["On the web"] = {
+		["fr"] = "Sur internet",
+	},
+	
+
+	["By email"] = {
+		["fr"] = "Par email",
+	},
 	
 	---HOME-----------------------------------------------------------
 
@@ -417,12 +430,20 @@ local translations =
 		["fr"] = "Détails",
 	},
 
-	["Total winning tickets"] = {
-		["fr"] = "Nbre de tickets gagnants",
+	["Total"] = {
+		["fr"] = "Nbre de",
 	},
 
-	["Prize / Winning ticket"] = {
-		["fr"] = "Gain / Ticket gagnant",
+	["winning tickets"] = {
+		["fr"] = "tickets gagnants",
+	},
+
+	["Prize / "] = {
+		["fr"] = "Gain / ",
+	},
+
+	["Winning ticket"] = {
+		["fr"] = "Ticket gagnant",
 	},
 
 	---POOL NUMBERS-----------------------------------------------------------

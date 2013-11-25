@@ -190,25 +190,33 @@ end
 
 function scene:openPrizes()
 
-	local top	 	= display.contentHeight * 0.3
+	local top	 	= display.contentHeight * 0.35
 	local yGap		= display.contentHeight*0.082
 
 	viewManager.showPopup(function() end)
 
-	hud.title 			= display.newImage(hud.popup, I "Prize.png")
-	hud.title:setReferencePoint(display.CenterLeftReferencePoint)
-	hud.title.x 		= display.contentWidth*0.23
-	hud.title.y 		= display.contentHeight*0.09
-
+	--------------------------
+	
 	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoPrize.png")
-	hud.picto.x 		= display.contentWidth*0.15
-	hud.picto.y 		= display.contentHeight*0.09
+	hud.picto.x 		= display.contentWidth*0.14
+	hud.picto.y 		= display.contentHeight*0.15
 
+	hud.title 			= display.newImage(hud.popup, I "Prize.png")
+	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.title.x 		= display.contentWidth*0.22
+	hud.title.y 		= display.contentHeight*0.15
+
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.2
+
+	--------------------------
+	
 	viewManager.newText({
 		parent = hud.popup, 
 		text = T "Match", 
 		x = display.contentWidth*0.45,
-		y = display.contentHeight * 0.17,
+		y = display.contentHeight * 0.24,
 		fontSize = 32,
 		font = NUM_FONT
 	})
@@ -217,7 +225,7 @@ function scene:openPrizes()
 		parent = hud.popup, 
 		text = T "n° + LB", 
 		x = display.contentWidth*0.45,
-		y = display.contentHeight * 0.2,
+		y = display.contentHeight * 0.27,
 		fontSize = 32,
 		font = NUM_FONT
 	})
@@ -226,7 +234,7 @@ function scene:openPrizes()
 		parent = hud.popup, 
 		text = T "Prize", 
 		x = display.contentWidth*0.8,
-		y = display.contentHeight * 0.17,
+		y = display.contentHeight * 0.24,
 		fontSize = 32,
 		font = NUM_FONT
 	})
@@ -235,14 +243,11 @@ function scene:openPrizes()
 		parent = hud.popup, 
 		text = T "breakdown", 
 		x = display.contentWidth*0.8,
-		y = display.contentHeight * 0.2,
+		y = display.contentHeight * 0.27,
 		fontSize = 32,
 		font = NUM_FONT
 	})
 
-	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
-	hud.sep.x 		= display.contentWidth*0.5
-	hud.sep.y 		= display.contentHeight*0.23
 	
 	local matches = {
 		"5 + 1",
@@ -295,7 +300,7 @@ function scene:openPrizes()
 
 	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
 	hud.popup.close.x 			= display.contentWidth*0.5
-	hud.popup.close.y 			= display.contentHeight*0.85
+	hud.popup.close.y 			= display.contentHeight*0.88
 
 	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 
@@ -305,7 +310,7 @@ end
 
 function scene:openOptions()
 
-	local top	 	= display.contentHeight * 0.1
+	local top	 	= display.contentHeight * 0.15
 	local yGap		= display.contentHeight*0.15
 
 	viewManager.showPopup(function() end)
@@ -317,18 +322,20 @@ function scene:openOptions()
 	local fontSizeLeft 	= 27
 	local fontSizeRight 	= 29
 
-	hud.title 			= display.newImage(hud.popup, I "Options.png")
-	hud.title:setReferencePoint(display.CenterLeftReferencePoint)
-	hud.title.x 		= display.contentWidth*0.23
-	hud.title.y 		= display.contentHeight*0.09
-
+	--------------------------
+	
 	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoOptions.png")
-	hud.picto.x 		= display.contentWidth*0.15
-	hud.picto.y 		= display.contentHeight*0.09
+	hud.picto.x 		= display.contentWidth*0.14
+	hud.picto.y 		= display.contentHeight*0.15
+
+	hud.title 			= display.newImage(hud.popup, I "Options.png")
+	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.title.x 		= display.contentWidth*0.22
+	hud.title.y 		= display.contentHeight*0.15
 
 	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
 	hud.sep.x 		= display.contentWidth*0.5
-	hud.sep.y 		= display.contentHeight*0.17
+	hud.sep.y 		= display.contentHeight*0.2
 
 	---------------------------------------------------------------------------------
 	-- Options
@@ -414,35 +421,39 @@ function scene:openContact()
 	viewManager.showPopup(function() end)
 
 	--------------------------
+	
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoContact.png")
+	hud.picto.x 		= display.contentWidth*0.14
+	hud.picto.y 		= display.contentHeight*0.15
 
 	hud.title 			= display.newImage(hud.popup, I "Contact.png")
-	hud.title:setReferencePoint(display.CenterLeftReferencePoint)
-	hud.title.x 		= display.contentWidth*0.23
-	hud.title.y 		= display.contentHeight*0.09
+	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.title.x 		= display.contentWidth*0.22
+	hud.title.y 		= display.contentHeight*0.15
 
-	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoContact.png")
-	hud.picto.x 		= display.contentWidth*0.15
-	hud.picto.y 		= display.contentHeight*0.09
-
-	--------------------------
-
-	hud.popup.byEmail 		= display.newImage(hud.popup, I "byEmail.png")
-	hud.popup.byEmail.x 		= display.contentWidth*0.5
-	hud.popup.byEmail.y 		= display.contentHeight*0.21
-
-	--------------------------
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.2
 	
-	hud.popup.separator 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
-	hud.popup.separator.x 		= display.contentWidth*0.5
-	hud.popup.separator.y 		= display.contentHeight*0.25
-		
+	--------------------------
+
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "By email", 
+		x = display.contentWidth*0.1,
+		y = display.contentHeight * 0.27,
+		fontSize = 40,
+		font = NUM_FONT,
+		referencePoint = display.CenterLeftReferencePoint
+	})
+	
 	--------------------------
 
 	viewManager.newText({
 		parent = hud.popup, 
 		text = T "General information" .. " :", 
 		x = display.contentWidth*0.1,
-		y = display.contentHeight * 0.28,
+		y = display.contentHeight * 0.31,
 		fontSize = 26,
 		referencePoint = display.CenterLeftReferencePoint
 	})
@@ -451,7 +462,7 @@ function scene:openContact()
 		parent = hud.popup, 
 		text = "contact@adillions.com", 
 		x = display.contentWidth*0.9,
-		y = display.contentHeight * 0.28,
+		y = display.contentHeight * 0.31,
 		fontSize = 26,
 		font		= NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
@@ -461,7 +472,7 @@ function scene:openContact()
 		parent = hud.popup, 
 		text = T "For technical issues" .. " :", 
 		x = display.contentWidth*0.1,
-		y = display.contentHeight * 0.33,
+		y = display.contentHeight * 0.36,
 		fontSize = 26,
 		referencePoint = display.CenterLeftReferencePoint
 	})
@@ -470,7 +481,7 @@ function scene:openContact()
 		parent = hud.popup, 
 		text = "support@adillions.com", 
 		x = display.contentWidth*0.9,
-		y = display.contentHeight * 0.33,
+		y = display.contentHeight * 0.36,
 		fontSize = 26,
 		font		= NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
@@ -480,7 +491,7 @@ function scene:openContact()
 		parent = hud.popup, 
 		text = T "For payments" .. " :", 
 		x = display.contentWidth*0.1,
-		y = display.contentHeight * 0.38,
+		y = display.contentHeight * 0.41,
 		fontSize = 26,
 		referencePoint = display.CenterLeftReferencePoint
 	})
@@ -489,7 +500,7 @@ function scene:openContact()
 		parent = hud.popup, 
 		text = "winners@adillions.com", 
 		x = display.contentWidth*0.9,
-		y = display.contentHeight * 0.38,
+		y = display.contentHeight * 0.41,
 		fontSize = 26,
 		font		= NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
@@ -499,7 +510,7 @@ function scene:openContact()
 		parent = hud.popup, 
 		text = T "For advertisers" .. " :", 
 		x = display.contentWidth*0.1,
-		y = display.contentHeight * 0.43,
+		y = display.contentHeight * 0.46,
 		fontSize = 26,
 		referencePoint = display.CenterLeftReferencePoint
 	})
@@ -508,7 +519,7 @@ function scene:openContact()
 		parent = hud.popup, 
 		text = "advertisers@adillions.com", 
 		x = display.contentWidth*0.9,
-		y = display.contentHeight * 0.43,
+		y = display.contentHeight * 0.46,
 		fontSize = 26,
 		font		= NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
@@ -516,14 +527,15 @@ function scene:openContact()
 
 	--------------------------
 
-	hud.popup.web 					= display.newImage(hud.popup, I "web.png")
-	hud.popup.web.x 				= display.contentWidth*0.5
-	hud.popup.web.y 				= display.contentHeight*0.58
-	
-	
-	hud.popup.separator2 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
-	hud.popup.separator2.x 		= display.contentWidth*0.5
-	hud.popup.separator2.y 		= display.contentHeight*0.62
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "On the web", 
+		x = display.contentWidth*0.1,
+		y = display.contentHeight * 0.6,
+		fontSize = 40,
+		font = NUM_FONT,
+		referencePoint = display.CenterLeftReferencePoint
+	})
 
 	--------------------------
 

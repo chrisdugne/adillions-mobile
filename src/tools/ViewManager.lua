@@ -128,7 +128,7 @@ function refreshHeaderPoints()
 			y 					= display.contentHeight*0.35,
 		})
 
-		hud.iconExtraTicket 			= display.newImage( hud.popup, "assets/images/icons/instant.ticket.png")
+		hud.iconExtraTicket 			= display.newImage( hud.popup, "assets/images/icons/Picto_InstantTicket.png")
 		hud.iconExtraTicket.x 		= display.contentWidth * 0.5 - 40
 		hud.iconExtraTicket.y 		= display.contentHeight*0.42
 
@@ -164,8 +164,8 @@ function refreshHeaderPoints()
 			y 					= display.contentHeight*0.6,
 		})
 
-		hud.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/ticket.png")
-		hud.iconTicket.x 			= display.contentWidth * 0.5 - 40
+		hud.iconTicket 			= display.newImage( hud.popup, "assets/images/hud/InstantTicket_Picto1.png")
+		hud.iconTicket.x 			= display.contentWidth * 0.44
 		hud.iconTicket.y 			= display.contentHeight*0.67
 
 		viewManager.newText({

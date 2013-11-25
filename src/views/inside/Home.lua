@@ -61,6 +61,7 @@ function scene:refreshScene()
 
 	viewManager.setupView(1)
 	self.view:insert(hud)
+	
 end
 
 ------------------------------------------

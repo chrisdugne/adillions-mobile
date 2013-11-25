@@ -164,6 +164,8 @@ function getMe(failure)
 				userManager:getPlayerByFacebookId()
 			elseif(failure) then
 				print("--> old FB token")
+				GLOBALS.savedData.facebookAccessToken = nil
+				utils.saveTable(GLOBALS.savedData, "savedData.json")
 				failure()
 			end
 		end)
@@ -188,60 +190,8 @@ function mergeMe(next)
 				print("--> connected to FB")
 				utils.tprint(response)
 				facebook.data = response
-
-				-----------------
 				
-				viewManager.showPopup()
-
-				hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoInfo.png")  
-				hud.popup.shareIcon.x 			= display.contentWidth*0.5
-				hud.popup.shareIcon.y			= display.contentHeight*0.22
-
-				-----------------
-
-				local message = ""
-				if(LANG == "fr") then
-					message = "Vous allez connecter le compte Facebook " .. facebook.data.name .. " avec le compte Adillions de " .. userManager.user.firstName
-				else
-					message = "You are about to connect " .. facebook.data.name .. " Facebook profile with " .. userManager.user.first_name .. "'s Adillions account"
-				end
-
-				local multiLineText = display.newMultiLineText  
-				{
-					text = message,
-					width = display.contentWidth*0.85,  
-					left = display.contentWidth*0.5,
-					font = FONT, 
-					fontSize = 38,
-					align = "center"
-				}
-
-				multiLineText:setReferencePoint(display.TopCenterReferencePoint)
-				multiLineText.x = display.contentWidth*0.5
-				multiLineText.y = display.contentHeight*0.42
-				hud.popup:insert(multiLineText)      
-
-				-----------------
-
-				hud.popup.confirm 				= display.newImage( hud.popup, I "confirm.png")
-				hud.popup.confirm.x 				= display.contentWidth*0.5
-				hud.popup.confirm.y 				= display.contentHeight*0.58
-
-				utils.onTouch(hud.popup.confirm, function() 
-					viewManager.closePopup()
-   				userManager:mergePlayerWithFacebook(next)
-				end)
-
-				hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-				hud.popup.close.x 			= display.contentWidth*0.5
-				hud.popup.close.y 			= display.contentHeight*0.83
-
-				utils.onTouch(hud.popup.close, function()
-					GLOBALS.savedData.facebookAccessToken 	= nil
-					utils.saveTable(GLOBALS.savedData, "savedData.json")
-					viewManager.closePopup()
-				end)
-
+				userManager:checkExistingUser(next)
 
 			elseif(failure) then
 				print("--> old FB token")

@@ -52,7 +52,7 @@ end
 function UserManager:getPlayerByFacebookId()
 
 	native.setActivityIndicator( true )
-	utils.tprint("getPlayerByFacebookId")
+	print("getPlayerByFacebookId")
 
 	utils.postWithJSON({
 		facebookData = facebook.data,
@@ -86,6 +86,37 @@ function UserManager:getPlayerByFacebookId()
 			GLOBALS.savedData.authToken 	= response.authToken     
 
 			userManager:receivedPlayer(player, router.openHome)
+		end
+	end
+	)
+
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:checkExistPlayerByFacebookId(proceedWithMerge)
+
+	native.setActivityIndicator( true )
+	print("checkExistPlayerByFacebookId")
+
+	utils.postWithJSON({
+		facebookData = facebook.data,
+	}, 
+	SERVER_URL .. "existFBPlayer", 
+	function(result)
+		print("received PlayerByFacebookId")
+		local existPlayer = json.decode(result.response)
+		
+		native.setActivityIndicator( false )	
+
+		if(not existPlayer) then
+			print("--> not existPlayer")
+			proceedWithMerge()
+			
+		else
+			print("--> got player")
+			twitter.logout()
+			gameManager:tryAutoOpenFacebookAccount()
 		end
 	end
 	)
@@ -133,6 +164,74 @@ function UserManager:updatedPlayer(player, next)
 	lotteryManager:sumPrices()
 
 	self:checkFanStatus(next)
+
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:checkExistingUser(next)
+	self:checkExistPlayerByFacebookId(function()
+		self:showConfirmMerge(next) 
+	end)
+end
+
+-----------------------------------------------------------------------------------------
+-- popup affichee uniquement si facebookId libre pour adillions
+-- (sinon on a logout puis login le user FB existant)
+-- si confirm : on pose link facebookId, 
+function UserManager:showConfirmMerge(next)
+
+	-----------------
+
+	viewManager.showPopup()
+
+	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoInfo.png")  
+	hud.popup.shareIcon.x 			= display.contentWidth*0.5
+	hud.popup.shareIcon.y			= display.contentHeight*0.22
+
+	-----------------
+
+	local message = ""
+	if(LANG == "fr") then
+		message = "Vous allez connecter le compte Facebook " .. facebook.data.name .. " avec le compte Adillions de " .. userManager.user.firstName
+	else
+		message = "You are about to connect " .. facebook.data.name .. " Facebook profile with " .. userManager.user.firstName .. "'s Adillions account"
+	end
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = message,
+		width = display.contentWidth*0.85,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 38,
+		align = "center"
+	}
+
+	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.x = display.contentWidth*0.5
+	multiLineText.y = display.contentHeight*0.42
+	hud.popup:insert(multiLineText)      
+
+	-----------------
+
+	hud.popup.confirm 				= display.newImage( hud.popup, I "confirm.png")
+	hud.popup.confirm.x 				= display.contentWidth*0.5
+	hud.popup.confirm.y 				= display.contentHeight*0.63
+
+	utils.onTouch(hud.popup.confirm, function() 
+		viewManager.closePopup()
+		userManager:mergePlayerWithFacebook(next)
+	end)
+
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.83
+
+	utils.onTouch(hud.popup.close, function()
+		viewManager.closePopup()
+	end)
+
 
 end
 
@@ -502,46 +601,73 @@ function UserManager:updatePlayer(next)
 			GLOBALS.savedData.user.facebookName	 	= nil
 			GLOBALS.savedData.facebookAccessToken 	= nil
 			utils.saveTable(GLOBALS.savedData, "savedData.json")
-		
-      	viewManager.showPopup()
-      	
-      	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoInfo.png")  
-      	hud.popup.shareIcon.x 			= display.contentWidth*0.5
-      	hud.popup.shareIcon.y			= display.contentHeight*0.22
-      
-      	hud.popup.shareText 				= display.newImage( hud.popup, I "important.png")  
-      	hud.popup.shareText.x 			= display.contentWidth*0.5
-      	hud.popup.shareText.y			= display.contentHeight*0.32
-      	
-         local multiLineText = display.newMultiLineText  
-           {
-                 text = T "This Facebook account is already connected to another Adillions user. Please login with your own Facebook account in order to connect Adillions to your Facebook profile",
-                 width = display.contentWidth*0.85,  
-                 left = display.contentWidth*0.5,
-                 font = FONT, 
-                 fontSize = 38,
-                 align = "center"
-           }
-      	
-      	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
-      	multiLineText.x = display.contentWidth*0.5
-      	multiLineText.y = display.contentHeight*0.42
-      	hud.popup:insert(multiLineText)      
-      	
-      	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-      	hud.popup.close.x 			= display.contentWidth*0.5
-      	hud.popup.close.y 			= display.contentHeight*0.83
-      	
-      	utils.onTouch(hud.popup.close, function() 
-      		viewManager.closePopup()
-      		if(next) then
-      			next()
-      		end 
-      	end)
+			
+			self:showMultiAccountPopup(next)
 		end
 
 	end)
 
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:showMultiAccountPopup(next)
+
+	viewManager.showPopup()
+
+	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoInfo.png")  
+	hud.popup.shareIcon.x 			= display.contentWidth*0.5
+	hud.popup.shareIcon.y			= display.contentHeight*0.22
+
+	hud.popup.shareText 				= display.newImage( hud.popup, I "important.png")  
+	hud.popup.shareText.x 			= display.contentWidth*0.5
+	hud.popup.shareText.y			= display.contentHeight*0.32
+	
+	local text1 = facebook.data.name .. "’s Facebook account is already an Adillions user"
+	if(LANG == "fr") then text1 = "Le compte Facebook " .. facebook.data.name .. " est \n déjà un utilisateur d’Adillions" end
+	
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = text1,
+		width = display.contentWidth*0.65,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 30,
+		align = "center"
+	}
+
+	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.x = display.contentWidth*0.5
+	multiLineText.y = display.contentHeight*0.42
+	hud.popup:insert(multiLineText)      
+
+
+	local multiLineText2 = display.newMultiLineText  
+	{
+		text = T "If this is not your Facebook account, you must log out this Facebook session on your device and log in with your own Facebook profile in order to connect your accounts",
+		width = display.contentWidth*0.65,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 28,
+		align = "center"
+	}
+
+	multiLineText2:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText2.x = display.contentWidth*0.5
+	multiLineText2.y = display.contentHeight*0.58
+	hud.popup:insert(multiLineText2)      
+
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.83
+
+	utils.onTouch(hud.popup.close, function() 
+		viewManager.closePopup()
+		if(next) then
+			next()
+		end 
+	end)
 end
 
 -----------------------------------------------------------------------------------------

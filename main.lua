@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.19.5"
+APP_VERSION 		= "1.19.21"
 
 -----------------------------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ COUNTRY = system.getPreference( "locale", "country" ) or "US"
 if(DEV) then
 	print("================== DEV ==============")
 
-	LANG = "fr"
+	LANG = "en"
 	COUNTRY = "FR"
 
 	print("lang : " .. LANG)

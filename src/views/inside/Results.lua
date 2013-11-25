@@ -202,43 +202,55 @@ function scene:openMoreResults( lottery )
 		text = T "Drawing" .. " " .. lotteryManager:date(lottery, true, true), 
 		x = display.contentWidth*0.5,
 		y = display.contentHeight * 0.11,
-		fontSize = 43,
+		fontSize = 40,
 	})
 
+	
+	hud.sep2 		= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep2.x 		= display.contentWidth*0.5
+	hud.sep2.y 		= display.contentHeight*0.16
 
 	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
 	hud.sep.x 		= display.contentWidth*0.5
 	hud.sep.y 		= display.contentHeight*0.25
 	
+	
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "Total", 
+		x = display.contentWidth*0.45,
+		y = display.contentHeight * 0.19,
+		fontSize = 32,
+		font = NUM_FONT
+	})
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "Total winning tickets" .. ":", 
-		width = display.contentWidth*0.3,  
-		font = FONT, 
-		fontSize = 30,
-		align = "center"
-	}
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "winning tickets", 
+		x = display.contentWidth*0.45,
+		y = display.contentHeight * 0.22,
+		fontSize = 32,
+		font = NUM_FONT
+	})
 
-	multiLineText:setReferencePoint(display.CenterReferencePoint)
-	multiLineText.x = display.contentWidth*0.45
-	multiLineText.y = top*0.65,
-	hud.popup:insert(multiLineText)   
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "Prize / ", 
+		x = display.contentWidth*0.8,
+		y = display.contentHeight * 0.19,
+		fontSize = 32,
+		font = NUM_FONT
+	})
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "Prize / Winning ticket",
-		width = display.contentWidth*0.25,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 30,
-		align = "center"
-	}
-
-	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
-	multiLineText.x = display.contentWidth*0.87
-	multiLineText.y = top*0.65,
-	hud.popup:insert(multiLineText)         
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "Winning ticket", 
+		x = display.contentWidth*0.8,
+		y = display.contentHeight * 0.22,
+		fontSize = 32,
+		font = NUM_FONT
+	})
+	
 
 	for i = 1, #lottery.prizes do
 
