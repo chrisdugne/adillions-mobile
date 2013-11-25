@@ -246,12 +246,14 @@ function UserManager:checkFanStatus(next)
 
 	userManager.user.totalBonusTickets = 0
 	
-	if(userManager.user.facebookId) then
+	if(GLOBALS.savedData.facebookAccessToken) then
 		userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_CONNECTION_TICKETS
+   	print("FACEBOOK_CONNECTION totalBonusTickets +" .. FACEBOOK_CONNECTION_TICKETS)
 	end
 
-	if(userManager.user.twitterId) then
+	if(GLOBALS.savedData.twitterAccessToken) then
 		userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + TWITTER_CONNECTION_TICKETS
+   	print("TWITTER_CONNECTION totalBonusTickets +" .. TWITTER_CONNECTION_TICKETS)
 	end
 
 	facebook.isFacebookFan(function()
@@ -266,12 +268,14 @@ function UserManager:checkFanStatus(next)
 
 			---------------------------------------------------------
 
-			if(self.user.twitterFan) then
+			if(self.user.facebookFan) then
 				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_FAN_TICKETS
+         	print("FACEBOOK_FAN totalBonusTickets +" .. FACEBOOK_FAN_TICKETS)
 			end
 
-			if(self.user.facebookFan) then
+			if(self.user.twitterFan) then
 				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + TWITTER_FAN_TICKETS
+         	print("TWITTER_FAN totalBonusTickets +" .. TWITTER_FAN_TICKETS)
 			end
 
 			---------------------------------------------------------
