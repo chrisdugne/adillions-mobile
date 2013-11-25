@@ -163,7 +163,7 @@ function scene:drawNextLottery( event )
 	----------------------------------------------------
 	
 	local priceX
-	if(lotteryManager.nextLottery.nbPlayers > lotteryManager.nextLottery.toolPlayers) then
+	if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.toolPlayers) then
 		priceX = display.contentWidth*0.42
 	else
 		priceX = display.contentWidth*0.58
@@ -192,7 +192,7 @@ function scene:drawNextLottery( event )
 	
 	-------------------------------
 	
-	if(lotteryManager.nextLottery.nbPlayers > lotteryManager.nextLottery.toolPlayers) then	
+	if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.toolPlayers) then	
 	
    	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
    	hud.separateur.x = display.contentWidth*0.7
@@ -214,7 +214,7 @@ function scene:drawNextLottery( event )
    	
    	viewManager.newText({
    		parent = hud, 
-   		text = lotteryManager.nextLottery.nbPlayers , 
+   		text = lotteryManager.nextDrawing.nbPlayers , 
    		x = display.contentWidth*0.85,
    		y = top + display.contentHeight*0.15,
    		fontSize = 43,
@@ -236,7 +236,7 @@ function scene:drawNextLottery( event )
 	-------------------------------
 	-- theme
 	
-	viewManager.drawRemoteImage(lotteryManager.nextLottery.theme.image, hud, display.contentWidth*0.5, display.contentHeight * 0.75)
+	viewManager.drawRemoteImage(lotteryManager.nextDrawing.theme.image, hud, display.contentWidth*0.5, display.contentHeight * 0.75)
 	
 	hud.themeTitle = display.newImage( hud, I "theme.png")
 	hud.themeTitle.x = display.contentWidth*0.5

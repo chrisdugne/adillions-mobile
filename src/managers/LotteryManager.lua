@@ -23,12 +23,15 @@ function LotteryManager:refreshNextLottery(draw)
 	{}, 
 	SERVER_URL .. "nextLottery", 
 	function(result)
+	
+		local response = json.decode(result.response)
 
-		self.nextLottery = json.decode(result.response)
+		self.nextLottery = response.nextLottery
+		self.nextDrawing = response.nextDrawing
 		self.nextLottery.theme = json.decode(self.nextLottery.theme)
+		self.nextDrawing.theme = json.decode(self.nextDrawing.theme)
 
 		userManager:checkUserCurrentLottery()
-		utils.tprint(self.nextLottery)
 
 		draw()
 	end)

@@ -301,7 +301,7 @@ function refreshHomeTimer()
 	
 	if(hud.timer) then timer.cancel(hud.timer) end
 
-	local days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextLottery.date/1000 - os.time())))
+	local days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextDrawing.date/1000 - os.time())))
 	
 	if(days < 10) then days = "0"..days end 
 	if(hours < 10) then hours = "0"..hours end 
@@ -321,8 +321,8 @@ function animatePrice(nextMillis)
 	if(not nextMillis) then nextMillis = 3 end
 	
 	timer.performWithDelay(nextMillis, function()
-   	local lotteryPriceDollars = lotteryManager:priceDollars(lotteryManager.nextLottery)
-   	local priceToReach = utils.countryPrice(lotteryPriceDollars, COUNTRY, lotteryManager.nextLottery.rateUSDtoEUR)
+   	local lotteryPriceDollars = lotteryManager:priceDollars(lotteryManager.nextDrawing)
+   	local priceToReach = utils.countryPrice(lotteryPriceDollars, COUNTRY, lotteryManager.nextDrawing.rateUSDtoEUR)
    	
    	local ratio = (20 * priceToReach)/(priceToReach - hud.priceCurrentDisplay)
    	local toAdd = math.floor(priceToReach/ratio)
