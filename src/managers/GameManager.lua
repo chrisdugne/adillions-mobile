@@ -50,6 +50,7 @@ function GameManager:start()
 		if(GLOBALS.savedData.user.facebookId) then
 			self:tryAutoOpenFacebookAccount()
 		else
+      	
 			self:tryAutoOpenAdillionsAccount()
 		end
 
@@ -74,6 +75,11 @@ function GameManager:tryAutoOpenFacebookAccount()
 end
 
 function GameManager:tryAutoOpenAdillionsAccount()
+	
+	GLOBALS.savedData.facebookAccessToken 	= nil
+	GLOBALS.savedData.twitterAccessToken 	= nil
+	utils.saveTable(GLOBALS.savedData, "savedData.json")
+	
 	if(GLOBALS.savedData.user.uid) then
    	native.setActivityIndicator( true )
 		userManager:fetchPlayer()

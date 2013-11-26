@@ -417,11 +417,11 @@ end
 
 function ShareManager:shareOnWall()
 	
-	local text = T "I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot !" 
-	text = text .. "\n\n" 
-	text = text .. T "Dowload the free app on the App Store or Google Play or play on Facebook and on www.adillions.com" 
-	text = text .. "\n\n" 
-	text = text .. T "Adillions in a few words: A global, responsible and viral lottery funded by advertising"
+	local text = T "I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot ! \n www.adillions.com" 
+--	text = text .. "\n\n" 
+--	text = text .. T "Dowload the free app on the App Store or Google Play or play on Facebook and on www.adillions.com" 
+--	text = text .. "\n\n" 
+--	text = text .. T "Adillions in a few words: A global, responsible and viral lottery funded by advertising"
 	
 	facebook.postOnWall(text, function()
 	

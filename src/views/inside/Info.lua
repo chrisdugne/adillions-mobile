@@ -694,11 +694,11 @@ function scene:openRewards2()
 
 	local multiLineText = display.newMultiLineText  
 	{
-		text = T "Get Instant Tickets (ad-free tickets) by earning points", 
+		text = T "Get Instant Tickets (ad-free tickets) by earning points" .. "\n", 
 		width = display.contentWidth*0.8,  
 		left = display.contentWidth*0.5,
 		font = FONT, 
-		fontSize = 30,
+		fontSize = 36,
 		align = "left",
 		spaceY = display.contentWidth*0.009
 	}

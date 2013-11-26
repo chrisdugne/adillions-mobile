@@ -245,7 +245,7 @@ function scene:drawNextLottery( event )
 	------------------
 	
 	facebook.checkThemeLiked()
-
+--router.openFillLotteryTicket()
 	------------------
 end
 

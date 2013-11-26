@@ -590,6 +590,10 @@ local translations =
 
 	---TEXT SHARE-----------------------------------------------------------
 
+	["I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot ! \n www.adillions.com"] = {
+		["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Vous aussi, obtenez une chance de gagner le jackpot ! \n www.adillions.com",
+	},
+
 	["I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot !"] = {
 		["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Vous aussi, obtenez une chance de gagner le jackpot !",
 	},

@@ -105,7 +105,7 @@ function scene:drawScene()
 	self:drawTextEntry(T "First name" 	.. " : ", userManager.user.firstName, detailsTop+2)
 	self:drawTextEntry(T "Last name" 	.. " : ", userManager.user.lastName, detailsTop+3)
 	self:drawTextEntry(T "Email" 			.. " : ", userManager.user.email, detailsTop+4)
-	self:drawTextEntry(T "Date of birth" 		.. " : ", utils.readableDate(utils.userManager.user.birthDate), detailsTop+5)
+	self:drawTextEntry(T "Date of birth" 		.. " : ", utils.readableDate(userManager.user.birthDate, false, true), detailsTop+5)
 
 	---------------------------------------------------------------
 	-- Status

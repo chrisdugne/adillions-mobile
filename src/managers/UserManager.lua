@@ -105,7 +105,9 @@ function UserManager:checkExistPlayerByFacebookId(proceedWithMerge)
 	SERVER_URL .. "existFBPlayer", 
 	function(result)
 		print("received PlayerByFacebookId")
-		local existPlayer = json.decode(result.response)
+		utils.tprint(result)
+		local response = json.decode(result.response)
+		local existPlayer = response.existPlayer
 		
 		native.setActivityIndicator( false )	
 

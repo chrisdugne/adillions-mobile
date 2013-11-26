@@ -316,8 +316,8 @@ end
 
 ---
 -- Y-M-D to readableDate
-function readableDate(date)
-	return timestampToReadableDate(parseDateTime(date)*1000, false)
+function readableDate(date, withDay, withYear)
+	return timestampToReadableDate(parseDateTime(date)*1000, withDay, withYear)
 end
 
 function timestampToReadableDate(date, withDay, withYear)

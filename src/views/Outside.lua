@@ -22,6 +22,13 @@ end
 
 function scene:refreshScene()
 
+	GLOBALS.savedData.facebookAccessToken 	= nil
+	GLOBALS.savedData.twitterAccessToken 	= nil
+	utils.saveTable(GLOBALS.savedData, "savedData.json")
+	
+	----------
+	--
+	--
 	hud.bg = display.newImageRect( hud, "assets/images/hud/SignUp_Bg.jpg", display.contentWidth, display.contentHeight)  
 	hud.bg.x = display.viewableContentWidth*0.5 
 	hud.bg.y = display.viewableContentHeight*0.5
