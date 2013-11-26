@@ -580,8 +580,8 @@ local translations =
 		["fr"] = "Télécharge l'application gratuite sur l'Apple Store ou Google Play / Joue sur Facebook et sur www.adillions.com",
 	},
 
-	["Free, fun and easy - Sign up now using my sponsorship code : "] = {
-		["fr"] = "Gratuit, sympa et simple - Inscris-toi maintenant en utilisant mon code parrain : ",
+	["Free, fun and easy ! Get a chance to win the jackpot !"] = {
+		["fr"] = "Gratuit, sympa et simple ! Tente ta chance pour gagner le jackpot !",
 	},
 
 	["More players = a bigger jackpot !"] = {

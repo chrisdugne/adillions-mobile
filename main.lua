@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.19.22"
+APP_VERSION 		= "1.0"
 
 -----------------------------------------------------------------------------------------
 
@@ -31,10 +31,8 @@ if(PROD) then
    FACEBOOK_APP_ID 			= "170148346520274"
    FACEBOOK_API_SECRET 		= "887e8f7abb9b1cb9238a097e06585ae2"
    FACEBOOK_APP_NAMESPACE 	= "adillions"
-   SERVER_URL 					= "http://www.watchtocash.com/"
-   SERVER_OG_URL 				= "http://www.watchtocash.com/"
---   SERVER_URL 					= "http://www.adillions.com/"
---   SERVER_OG_URL 				= "http://www.adillions.com/"
+   SERVER_URL 					= "http://www.adillions.com/"
+   SERVER_OG_URL 				= "http://www.adillions.com/"
 else
 	print("dev")
 	FACEBOOK_APP_ID 			= "534196239997712"

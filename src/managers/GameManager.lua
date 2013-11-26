@@ -22,6 +22,9 @@ function GameManager:initGameData()
 		user 					= {}
 	}
 
+	GLOBALS.savedData.facebookAccessToken 	= nil
+	GLOBALS.savedData.twitterAccessToken 	= nil
+	
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 end
 

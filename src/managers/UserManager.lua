@@ -173,7 +173,11 @@ end
 
 function UserManager:checkExistingUser(next)
 	self:checkExistPlayerByFacebookId(function()
-		self:showConfirmMerge(next) 
+		if(userManager.user.facebookId == facebook.data.id) then
+			self:showConfirmMerge(next)
+		else
+			self:showWrongAccount(next)
+		end 
 	end)
 end
 
@@ -229,6 +233,79 @@ function UserManager:showConfirmMerge(next)
 		viewManager.closePopup()
 		userManager:mergePlayerWithFacebook(next)
 	end)
+
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.83
+
+	utils.onTouch(hud.popup.close, function()
+		viewManager.closePopup()
+	end)
+
+
+end
+
+
+-----------------------------------------------------------------------------------------
+-- popup affichee uniquement si facebookId pas libre et nouveau compte FB
+function UserManager:showWrongAccount()
+
+	-----------------
+
+	viewManager.showPopup()
+
+	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoInfo.png")  
+	hud.popup.shareIcon.x 			= display.contentWidth*0.5
+	hud.popup.shareIcon.y			= display.contentHeight*0.22
+
+	hud.popup.shareIcon 				= display.newImage( hud.popup, I "Sorry.png")  
+	hud.popup.shareIcon.x 			= display.contentWidth*0.5
+	hud.popup.shareIcon.y			= display.contentHeight*0.31
+
+	-----------------
+
+	local message = ""
+	local message2 = ""
+
+	if(LANG == "fr") then
+		message = "Le compte Adillions de " .. userManager.user.firstName .. " est déjà lié au profil Facebook de " .. userManager.user.userName
+		message2 = "Il n’est pas possible de connecter plusieurs comptes Facebook au même compte Adillions, veuillez vous connecter avec " .. userManager.user.userName
+	else
+		message = "The Adillions account " .. userManager.user.firstName .. " is already linked to " .. userManager.user.userName .. " Facebook profile"
+		message2 = "It is not possible to connect multiple Facebook profiles to a single Adillions account, please log in with " .. userManager.user.userName .. " profile"
+	end
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = message,
+		width = display.contentWidth*0.85,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 38,
+		align = "center"
+	}
+
+	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.x = display.contentWidth*0.5
+	multiLineText.y = display.contentHeight*0.42
+	hud.popup:insert(multiLineText)      
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = message2,
+		width = display.contentWidth*0.85,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 38,
+		align = "center"
+	}
+
+	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.x = display.contentWidth*0.5
+	multiLineText.y = display.contentHeight*0.56
+	hud.popup:insert(multiLineText)      
+
+	-----------------
 
 	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
 	hud.popup.close.x 			= display.contentWidth*0.5
