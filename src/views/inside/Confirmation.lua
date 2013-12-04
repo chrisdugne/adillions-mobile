@@ -70,7 +70,7 @@ function scene:refreshScene()
 		text = remainingTickets .. " :", 
 		x = display.contentWidth*0.5,
 		y = display.contentHeight*0.43,
-		fontSize = 24,
+		fontSize = 34,
 		referencePoint = display.CenterRightReferencePoint
 	})
 	
