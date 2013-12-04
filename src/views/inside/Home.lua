@@ -96,7 +96,7 @@ function scene:drawNextLottery( event )
 		text = T "Next drawing" .. " : ", 
 		x = display.contentWidth*0.17,
 		y = top - display.contentHeight * 0.05,
-		fontSize = 45,
+		fontSize = 35,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 
