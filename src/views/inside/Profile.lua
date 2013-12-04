@@ -841,29 +841,30 @@ function scene:openConfirmCashout()
 	hud.popup.congratz 				= display.newImage( hud.popup, I "TxtCongratulations.png")  
 	hud.popup.congratz.x 			= display.contentWidth*0.5
 	hud.popup.congratz.y				= display.contentHeight*0.23
-   
+
 	----------------------------------------------------------------------------------------------------
 
-   local multiLineText = display.newMultiLineText  
-     {
-           text = T "You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment",
-           width = display.contentWidth*0.7,  
-           left = display.contentWidth*0.5,
-           font = FONT, 
-           fontSize = 40,
-           align = "center"
-     }
-	
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment",
+		width = display.contentWidth*0.7,  
+		left = display.contentWidth*0.5,
+		font = FONT, 
+		fontSize = 40,
+		spaceY = display.contentWidth*0.022,
+		align = "center"
+	}
+
 	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
 	multiLineText.x = display.contentWidth*0.5
 	multiLineText.y = display.contentHeight*0.37
 	hud.popup:insert(multiLineText)         
 
 	----------------------------------------------------------------------------------------------------
-	
+
 	hud.confirm 						= display.newImage( hud.popup, I "confirm.png")  
 	hud.confirm.x 						= display.contentWidth*0.5
-   hud.confirm.y						= display.contentHeight*0.7
+	hud.confirm.y						= display.contentHeight*0.7
 
 	local refresh = function() scene:refreshScene() end
 	
