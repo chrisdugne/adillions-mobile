@@ -325,8 +325,8 @@ function refreshPopupTimer(lastTime)
 	local hoursSpent, minSpent, secSpent, msSpent = utils.getHoursMinSecMillis(now - lastTime)
 	
 	local h = 1 - tonumber(hoursSpent)
-	local m = 60 - tonumber(minSpent)
-	local s = 60 - tonumber(secSpent)
+	local m = 59 - tonumber(minSpent)
+	local s = 59 - tonumber(secSpent)
 	
 	if(h < 10) then h = "0"..h end 
 	if(m < 10) then m = "0"..m end 
