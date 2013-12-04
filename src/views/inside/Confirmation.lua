@@ -47,18 +47,18 @@ function scene:refreshScene()
 	viewManager.drawSelection(hud, lotteryManager.currentSelection)
 
 	-------------------------------
-
-	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.horizontal.png")  
-	hud.separateur.x = display.contentWidth*0.5
-	hud.separateur.y = display.contentHeight*0.34
-	
+--
+--	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.horizontal.png")  
+--	hud.separateur.x = display.contentWidth*0.5
+--	hud.separateur.y = display.contentHeight*0.34
+--	
 	-------------------------------
 
 	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
 
 	hud.pictoTicket = display.newImage( hud, "assets/images/icons/ticket.png")  
 	hud.pictoTicket.x = display.contentWidth*0.62
-	hud.pictoTicket.y = display.contentHeight*0.38
+	hud.pictoTicket.y = display.contentHeight*0.43
 	
 	local remainingTickets = T "Remaining ticket"
 	if(nbTickets > 1) then
@@ -69,7 +69,7 @@ function scene:refreshScene()
 		parent = hud, 
 		text = remainingTickets .. " :", 
 		x = display.contentWidth*0.5,
-		y = display.contentHeight*0.38,
+		y = display.contentHeight*0.43,
 		fontSize = 24,
 		referencePoint = display.CenterRightReferencePoint
 	})
@@ -78,47 +78,47 @@ function scene:refreshScene()
 		parent = hud, 
 		text = nbTickets, 
 		x = display.contentWidth*0.57,
-		y = display.contentHeight*0.38,
+		y = display.contentHeight*0.43,
 		fontSize = 43,
 		font = NUM_FONT,
 		referencePoint = display.CenterRightReferencePoint
 	})
 
 	-------------------------------
-
-	hud.playButton = display.newImage( hud, I "filloutnewticket.button.png")  
-	hud.playButton.x = display.contentWidth*0.5
-	hud.playButton.y = display.contentHeight*0.48
-	
-	if(nbTickets > 0) then
-   	utils.onTouch(hud.playButton, function()
-   		self:play()
-   	end)
-   else
-   	utils.onTouch(hud.playButton, function()
-	   	shareManager:noMoreTickets()
-   	end)
-   end
+--
+--	hud.playButton = display.newImage( hud, I "filloutnewticket.button.png")  
+--	hud.playButton.x = display.contentWidth*0.5
+--	hud.playButton.y = display.contentHeight*0.48
+--	
+--	if(nbTickets > 0) then
+--   	utils.onTouch(hud.playButton, function()
+--   		self:play()
+--   	end)
+--   else
+--   	utils.onTouch(hud.playButton, function()
+--	   	shareManager:noMoreTickets()
+--   	end)
+--   end
 	
 	-------------------------------
 
 	hud.separateur2 = display.newImage( hud, "assets/images/icons/separateur.horizontal.png")  
 	hud.separateur2.x = display.contentWidth*0.5
-	hud.separateur2.y = display.contentHeight*0.56
+	hud.separateur2.y = display.contentHeight*0.5
 	
 	hud.more = display.newImage( hud, I "more.png")  
 	hud.more.x = display.contentWidth*0.5
-	hud.more.y = display.contentHeight*0.63
+	hud.more.y = display.contentHeight*0.59
 
 	-------------------------------
 
 	hud.inviteButton = display.newImage( hud, I "invite.button.png")  
 	hud.inviteButton.x = display.contentWidth*0.3
-	hud.inviteButton.y = display.contentHeight*0.78
+	hud.inviteButton.y = display.contentHeight*0.75
 
 	hud.shareButton = display.newImage( hud, I "share.button.png")  
 	hud.shareButton.x = display.contentWidth*0.7
-	hud.shareButton.y = display.contentHeight*0.78
+	hud.shareButton.y = display.contentHeight*0.75
 	
 	utils.onTouch(hud.inviteButton, function()
 		local next = function() router.openConfirmation(true) end

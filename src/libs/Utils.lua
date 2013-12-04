@@ -93,6 +93,33 @@ function getMinSecMillis(millis)
 	return min, sec, ms
 end
 
+function getHoursMinSecMillis(millis)
+	local hours = math.floor(millis/(60*60*1000))
+	local min = math.floor((millis - hours * 60 * 60 * 1000) / (60 * 1000))
+	local sec = math.floor((millis - hours * 60 * 60 * 1000 - min * 60 * 1000)/1000)
+	local ms = math.floor(millis - hours * 60 * 60 * 1000 - min * 60 * 1000 - sec * 1000)
+
+	if(hours < 10) then
+		hours = "0" .. hours
+	end
+
+	if(min < 10) then
+		min = "0" .. min
+	end
+
+	if(sec < 10) then
+		sec = "0" .. sec
+	end
+
+	if(ms < 10) then
+		ms = "00" .. ms
+	elseif(ms < 100) then
+		ms = "0" .. ms
+	end
+
+	return hours, min, sec, ms
+end
+
 function getUrlParams(url)
 
 	local index = string.find(url,"?")

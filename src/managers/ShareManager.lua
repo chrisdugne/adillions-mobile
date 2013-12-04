@@ -238,7 +238,7 @@ function ShareManager:noMoreTickets()
 
 	viewManager.newText({
 		parent 			= hud.popup, 
-		text	 			= T "You can gain Bonus Tickets by liking our",     
+		text	 			= T "Get Bonus Tickets by liking our",     
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.5,
 		fontSize			= 37,

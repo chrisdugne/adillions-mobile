@@ -270,7 +270,7 @@ function scene:openMoreResults( lottery )
    
    	viewManager.newText({
    		parent 			= hud.popup, 
-   		text	 			= utils.convertAndDisplayPrice(lottery.prizes[i].share * lottery.prizes[i].winners, COUNTRY, lottery.rateUSDtoEUR),     
+   		text	 			= utils.convertAndDisplayPrice(lottery.prizes[i].share, COUNTRY, lottery.rateUSDtoEUR),     
    		x 					= display.contentWidth*0.8,
    		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
    		fontSize 		= 35,

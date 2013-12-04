@@ -31,17 +31,17 @@ function scene:refreshScene()
 	
 	local top =  HEADER_HEIGHT
 	local xGap =  display.contentWidth *0.25
-	local yGap =  display.contentHeight *0.19
+	local yGap =  display.contentHeight *0.2
 	
 	--------------------------------------------------------------
 	
 	viewManager.newText( {
 		parent = hud,
 		text = T "Select your Lucky Ball !",     
-		x = display.contentWidth*0.1,
-		y = top + 90,
+		x = display.contentWidth*0.05,
+		y = top + 70,
 		font = FONT,   
-		fontSize = 55,
+		fontSize = 45,
 		referencePoint = display.CenterLeftReferencePoint
 	} )
 	

@@ -165,8 +165,8 @@ local translations =
 		["fr"] = "maximum de tickets pour ce tirage",
 	},
 
-	["You can gain Bonus Tickets by liking our"] = {
-		["fr"] = "Vous pouvez gagner des Tickets Bonus",
+	["Get Bonus Tickets by liking our"] = {
+		["fr"] = "Gagnez des Tickets Bonus",
 	},
 
 	["Facebook page, following us on"] = {
@@ -175,6 +175,17 @@ local translations =
 
 	["Twitter, etc."] = {
 		["fr"] = "nous suivant sur Twitter, etc.",
+	},
+
+
+	---POPUP WAIT ----------------------------------------------------------- 
+
+	["You can fill out a new ticket in :"] = {
+		["fr"] = "Un ticket sera disponible dans :",
+	},
+
+	["Get Instant Tickets by inviting your friends, sharing your activity, liking our theme, etc."] = {
+		["fr"] = "Gagnez des Tickets Instantanés \nen invitant vos amis, en partageant \nvotre activité, en likant le thème, etc.",
 	},
 
 	---POPUP POINTS HEADER-----------------------------------------------------------

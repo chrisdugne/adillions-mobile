@@ -225,7 +225,12 @@ function scene:drawNextLottery( event )
 
 	-------------------------------
 
-	hud.playButton = display.newImage( hud, I "filloutticket.button.png")  
+	if(userManager.user.extraTickets > 0) then
+   	hud.playButton = display.newImage( hud, I "fillout.instant.ticket.png")
+   else  
+   	hud.playButton = display.newImage( hud, I "filloutticket.button.png")
+   end
+	
 	hud.playButton.x = display.contentWidth*0.5
 	hud.playButton.y = top + display.contentHeight*0.24
 	
@@ -251,9 +256,11 @@ end
 
 ------------------------------------------
 
-function scene:play( )
-	if(lotteryManager:isGameAvailable()) then
-		videoManager:play(router.openFillLotteryTicket, true)
+function scene:play()
+	if(userManager:hasTicketsToPlay()) then
+		if(userManager:checkTicketTiming()) then
+   		videoManager:play(router.openFillLotteryTicket, true)
+   	end
    else
    	shareManager:noMoreTickets()
 	end

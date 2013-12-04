@@ -143,12 +143,6 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function LotteryManager:isGameAvailable()
-	return userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets  > 0
-end
-
------------------------------------------------------------------------------------------
-
 function LotteryManager:sumPrices()
 
 	userManager.user.totalWinnings 		= 0
@@ -340,7 +334,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
 	if(nbSelected == self.nextLottery.maxPicks+1) then
 		hud.validate = display.newImage( hud.selection, I "ValidateON.png")  
 		hud.validate.x = display.contentWidth*0.5
-		hud.validate.y = display.contentHeight*0.85
+		hud.validate.y = display.contentHeight*0.82
 
 		hud.selector.alpha = 0.3
 
@@ -355,7 +349,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
 
 		hud.validate = display.newImage( hud.selection, I "ValidateOFF.png")  
 		hud.validate.x = display.contentWidth*0.5
-		hud.validate.y = display.contentHeight*0.85
+		hud.validate.y = display.contentHeight*0.82
 	end
 
 end

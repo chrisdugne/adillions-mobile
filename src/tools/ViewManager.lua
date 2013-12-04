@@ -316,6 +316,30 @@ end
 
 ------------------------------------------------------------------
 
+function refreshPopupTimer(lastTime)
+	
+	if(hud.popup.timer) then timer.cancel(hud.popup.timer) end
+	if(not hud.popup.timerDisplay) then return end
+
+	local now = os.time() * 1000
+	local hoursSpent, minSpent, secSpent, msSpent = utils.getHoursMinSecMillis(now - lastTime)
+	
+	local h = 1 - tonumber(hoursSpent)
+	local m = 60 - tonumber(minSpent)
+	local s = 60 - tonumber(secSpent)
+	
+	if(h < 10) then h = "0"..h end 
+	if(m < 10) then m = "0"..m end 
+	if(s < 10) then s = "0"..s end 
+	
+	hud.popup.timerDisplay.text = h .. " : " .. m .. " : " .. s
+	hud.popup.timer = timer.performWithDelay(1000, function ()
+		refreshPopupTimer(lastTime)
+	end)
+end
+
+------------------------------------------------------------------
+
 function animatePrice(nextMillis)
 	
 	if(not nextMillis) then nextMillis = 3 end
@@ -802,7 +826,7 @@ function drawSelection(parent, numbers)
 	
 	local nbSelected  = 0
 	local xGap 			= display.contentWidth*0.14
-	local y 				= display.contentHeight*0.27
+	local y 				= display.contentHeight*0.31
 
 	-------------------------------------
 
