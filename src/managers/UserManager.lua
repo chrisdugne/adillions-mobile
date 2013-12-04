@@ -822,7 +822,6 @@ function UserManager:checkTicketTiming()
 	local now = os.time() * 1000
 
 	for i = 1,#self.user.lotteryTickets do
-
 		local ticket = self.user.lotteryTickets[i]
 		if((self.user.currentLotteryUID == ticket.lottery.uid) and ticket.creationDate > lastTime) then
 			lastTime = ticket.creationDate
@@ -831,7 +830,7 @@ function UserManager:checkTicketTiming()
 
 	local h,m,s,ms = utils.getHoursMinSecMillis(now - lastTime)
 
-	if(tonumber(h) >= 2) then
+	if(tonumber(h) >= 2 or self.user.extraTickets > 0) then
 		return true
 	else
 		----------------------------------------------------------------------------------------------------
@@ -906,7 +905,7 @@ function UserManager:checkTicketTiming()
 		})
 
 		----------------------------------------------------
-		local fontSize = 39
+		local fontSize = 38
 		if(LANG == "en") then fontSize = 32 end
 		
 		local multiLineText = display.newMultiLineText  

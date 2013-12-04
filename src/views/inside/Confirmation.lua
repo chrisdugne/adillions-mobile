@@ -28,7 +28,7 @@ function scene:refreshScene()
 		parent = hud, 
 		text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery), 
 		x = display.contentWidth*0.5,
-		y = display.contentHeight*0.13,
+		y = display.contentHeight*0.16,
 		fontSize = 38,
 		font = NUM_FONT,
 	})
@@ -37,7 +37,7 @@ function scene:refreshScene()
 		parent = hud, 
 		text = T ("Your selection !"), 
 		x = display.contentWidth*0.5,
-		y = display.contentHeight*0.175,
+		y = display.contentHeight*0.205,
 		fontSize = 43,
 	})
 	

@@ -41,7 +41,7 @@ function scene:refreshScene()
 		x = display.contentWidth*0.05,
 		y = top + 70,
 		font = FONT,   
-		fontSize = 45,
+		fontSize = 49,
 		referencePoint = display.CenterLeftReferencePoint
 	} )
 	

@@ -95,8 +95,8 @@ function scene:drawNextLottery( event )
 		parent = hud, 
 		text = T "Next drawing" .. " : ", 
 		x = display.contentWidth*0.17,
-		y = top - display.contentHeight * 0.05,
-		fontSize = 35,
+		y = top - display.contentHeight * 0.044,
+		fontSize = 40,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 
