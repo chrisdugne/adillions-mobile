@@ -336,7 +336,7 @@ function refreshPopupTimer(lastTime)
    	print("lotteryManager.nextLottery.ticketTimer : " .. lotteryManager.nextLottery.ticketTimer)
    --	local h = 1 - tonumber(hoursSpent)
    	local m = lotteryManager.nextLottery.ticketTimer - 1 - tonumber(minSpent)
-   	local s = 60 - tonumber(secSpent)
+   	local s = 59 - tonumber(secSpent)
    	
    	print(m,s)
    	
