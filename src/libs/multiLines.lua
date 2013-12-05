@@ -373,7 +373,7 @@ function display.newMultiLineText(params)
                 processTextWithoutNewLine
                         {
                         finalText = text,
-                        fontName = fontName,
+                        fontName = font,
                         finalSize = fontSize,
                         color = color,
                         lineLength = width,

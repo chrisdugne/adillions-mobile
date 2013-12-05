@@ -818,19 +818,23 @@ end
 
 function UserManager:checkTicketTiming()
 
+	print("checkTicketTiming")
 	local lastTime = 0
 	local now = os.time() * 1000
 
 	for i = 1,#self.user.lotteryTickets do
 		local ticket = self.user.lotteryTickets[i]
-		if((self.user.currentLotteryUID == ticket.lottery.uid) and ticket.creationDate > lastTime) then
+		print("---")
+		utils.tprint(ticket)
+		if((self.user.currentLotteryUID == ticket.lottery.uid) and (ticket.creationDate > lastTime) and (ticket.type == 1)) then
 			lastTime = ticket.creationDate
 		end
 	end
 
-	local h,m,s,ms = utils.getHoursMinSecMillis(now - lastTime)
+	local spentMillis = now - lastTime
+	local h,m,s,ms = utils.getHoursMinSecMillis(spentMillis)
 
-	if(tonumber(h) >= 2 or self.user.extraTickets > 0) then
+	if(tonumber(spentMillis) >= (lotteryManager.nextLottery.ticketTimer * 60 * 1000) or self.user.extraTickets > 0) then
 		return true
 	else
 		----------------------------------------------------------------------------------------------------
@@ -849,16 +853,26 @@ function UserManager:checkTicketTiming()
 
 		----------------------------------------------------------------------------------------------------
 
-		viewManager.newText({
-			parent 			= hud.popup, 
-			text	 			= T "You can fill out a new ticket in :",     
-			x 					= display.contentWidth * 0.5,
-			y 					= display.contentHeight*0.37,
-			fontSize			= 37,
-		})
+		local fontSize = 32
+		
+		local multiLineText = display.newMultiLineText  
+		{
+			text = T "You can fill out a new ticket in :", 
+			width = display.contentWidth*0.75,  
+			left = display.contentWidth*0.5,
+			font = FONT, 
+			fontSize = fontSize,
+			align = "center",
+			spaceY = display.contentWidth*0.022
+		}
 
+		multiLineText.x = display.contentWidth*0.5
+		multiLineText.y = display.contentHeight*0.37
+		hud.popup:insert(multiLineText)         
+		
 		hud.popup.pictoTimer			= display.newImage( hud.popup, "assets/images/icons/Tuto_2_picto2.png")  
-		hud.popup.pictoTimer.x 		= display.contentWidth*0.3
+--		hud.popup.pictoTimer.x 		= display.contentWidth*0.3
+		hud.popup.pictoTimer.x 		= display.contentWidth*0.37
 		hud.popup.pictoTimer.y 		= display.contentHeight*0.46
 
 		hud.popup.timerDisplay = viewManager.newText({
@@ -877,19 +891,20 @@ function UserManager:checkTicketTiming()
 		local timerLegendY 		= display.contentHeight*0.48
 		local timerLegendSize 	= 22
 		
-		viewManager.newText({
-			parent = hud.popup, 
-			text = T "HRS", 
-			x = display.contentWidth*0.437,
-			y = timerLegendY,
-			fontSize = timerLegendSize,
-			referencePoint = display.CenterReferencePoint
-		})
+--		viewManager.newText({
+--			parent = hud.popup, 
+--			text = T "HRS", 
+--			x = display.contentWidth*0.437,
+--			y = timerLegendY,
+--			fontSize = timerLegendSize,
+--			referencePoint = display.CenterReferencePoint
+--		})
 
 		viewManager.newText({
 			parent = hud.popup, 
 			text = T "MIN", 
-			x = display.contentWidth*0.567,
+			x = display.contentWidth*0.498,
+--			x = display.contentWidth*0.567,
 			y = timerLegendY,
 			fontSize = timerLegendSize,
 			referencePoint = display.CenterReferencePoint
@@ -898,19 +913,18 @@ function UserManager:checkTicketTiming()
 		viewManager.newText({
 			parent = hud.popup, 
 			text = T "SEC", 
-			x = display.contentWidth*0.698,
+			x = display.contentWidth*0.638,
+--			x = display.contentWidth*0.698,
 			y = timerLegendY,
 			fontSize = timerLegendSize,
 			referencePoint = display.CenterReferencePoint
 		})
 
 		----------------------------------------------------
-		local fontSize = 38
-		if(LANG == "en") then fontSize = 32 end
 		
 		local multiLineText = display.newMultiLineText  
 		{
-			text = T "Get Instant Tickets by inviting your friends, sharing your activity, liking our theme, etc.", 
+			text = T "Get Instant Tickets by inviting your \nfriends, sharing your activity, liking \nour theme, etc.", 
 			width = display.contentWidth*0.75,  
 			left = display.contentWidth*0.5,
 			font = FONT, 

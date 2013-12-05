@@ -184,7 +184,7 @@ local translations =
 		["fr"] = "Un ticket sera disponible dans :",
 	},
 
-	["Get Instant Tickets by inviting your friends, sharing your activity, liking our theme, etc."] = {
+	["Get Instant Tickets by inviting your \nfriends, sharing your activity, liking \nour theme, etc."] = {
 		["fr"] = "Gagnez des Tickets Instantanés \nen invitant vos amis, en partageant \nvotre activité, en likant le thème, etc.",
 	},
 
