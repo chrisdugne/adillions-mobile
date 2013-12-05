@@ -107,7 +107,7 @@ function connectListener( event )
 		elseif ( "loginFailed" == event.phase or "loginCancelled"  == event.phase ) then
 			print("--- false")	
 			native.setActivityIndicator( false )
-			viewManager.message(T "Facebook login failed")
+			viewManager.message(T "Connection failed")
 
 		end
 	elseif ( "request" == event.type ) then

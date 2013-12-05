@@ -303,6 +303,10 @@ function refreshHomeTimer()
 
 	local days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextDrawing.date/1000 - os.time())))
 	
+	if(days <= 0 and hours <= 0 and min <= 0 and sec <= 0) then
+   	days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextLottery.date/1000 - os.time())))
+	end
+	
 	if(days < 10) then days = "0"..days end 
 	if(hours < 10) then hours = "0"..hours end 
 	if(min < 10) then min = "0"..min end 
@@ -323,20 +327,26 @@ function refreshPopupTimer(lastTime)
 
 	local now = os.time() * 1000
 	local hoursSpent, minSpent, secSpent, msSpent = utils.getHoursMinSecMillis(now - lastTime)
+	print (minSpent, secSpent)
 	
---	local h = 1 - tonumber(hoursSpent)
-	local m = 59 - tonumber(minSpent)
-	local s = 59 - tonumber(secSpent)
+	if(tonumber(minSpent) >= lotteryManager.nextLottery.ticketTimer) then 
+		viewManager.closePopup()
+	else
+   --	local h = 1 - tonumber(hoursSpent)
+   	local m = 59 - tonumber(minSpent)
+   	local s = 59 - tonumber(secSpent)
+   	
+   --	if(h < 10) then h = "0"..h end 
+   	if(m < 10) then m = "0"..m end 
+   	if(s < 10) then s = "0"..s end 
+   	
+   --	hud.popup.timerDisplay.text = h .. " : " .. m .. " : " .. s
+   	hud.popup.timerDisplay.text = m .. " : " .. s
+   	hud.popup.timer = timer.performWithDelay(1000, function ()
+   		refreshPopupTimer(lastTime)
+   	end)
+	end 
 	
---	if(h < 10) then h = "0"..h end 
-	if(m < 10) then m = "0"..m end 
-	if(s < 10) then s = "0"..s end 
-	
---	hud.popup.timerDisplay.text = h .. " : " .. m .. " : " .. s
-	hud.popup.timerDisplay.text = m .. " : " .. s
-	hud.popup.timer = timer.performWithDelay(1000, function ()
-		refreshPopupTimer(lastTime)
-	end)
 end
 
 ------------------------------------------------------------------

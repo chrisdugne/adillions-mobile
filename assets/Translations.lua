@@ -8,8 +8,8 @@ local translations =
 		["fr"] = "Déconnexion",
 	},
 
-	["Facebook login failed"] = {
-		["fr"] = "Connection à Facebook échouée",
+	["Connection failed"] = {
+		["fr"] = "Echec de la connexion",
 	},
 
 	["If this is not your Facebook account, you must log out this Facebook session on your device and log in with your own Facebook profile in order to connect your accounts"] = {
@@ -588,11 +588,11 @@ local translations =
 	},
 
 	["Dowload the free app on the App Store or Google Play / Play on Facebook and on www.adillions.com"] = {
-		["fr"] = "Télécharge l'application gratuite sur l'Apple Store ou Google Play / Joue sur Facebook et sur www.adillions.com",
+		["fr"] = "Télécharge l'application gratuite sur l'App Store ou Google Play / Joue sur Facebook et sur www.adillions.com",
 	},
 
-	["Free, fun and easy ! Get a chance to win the jackpot !"] = {
-		["fr"] = "Gratuit, sympa et simple ! Tente ta chance pour gagner le jackpot !",
+	["Free and fun - Sign up now using my sponsorship code : "] = {
+		["fr"] = "Gratuit et sympa - Inscris-toi maintenant en utilisant mon code parrain : ",
 	},
 
 	["More players = a bigger jackpot !"] = {
@@ -610,7 +610,7 @@ local translations =
 	},
 
 	["Dowload the free app on the App Store or Google Play or play on Facebook and on www.adillions.com"] = {
-		["fr"] = "Téléchargez l'application gratuite sur l'Apple Store ou Google Play ou jouez sur Facebook et sur www.adillions.com",
+		["fr"] = "Téléchargez l'application gratuite sur l'App Store ou Google Play ou jouez sur Facebook et sur www.adillions.com",
 	},
 
 	["Adillions in a few words: A global, responsible and viral lottery funded by advertising"] = {

@@ -843,7 +843,7 @@ function UserManager:checkTicketTiming()
 
 		----------------------------------------------------------------------------------------------------
 
-		hud.popup.icon 			= display.newImage( hud.popup, "assets/images/icons/PictoInfo.png")
+		hud.popup.icon 			= display.newImage( hud.popup, "assets/images/icons/PictoSablier.png")
 		hud.popup.icon.x 			= display.contentWidth*0.5
 		hud.popup.icon.y 			= display.contentHeight*0.2
 
@@ -853,7 +853,7 @@ function UserManager:checkTicketTiming()
 
 		----------------------------------------------------------------------------------------------------
 
-		local fontSize = 32
+		local fontSize = 42
 		
 		local multiLineText = display.newMultiLineText  
 		{

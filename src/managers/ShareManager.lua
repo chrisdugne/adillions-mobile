@@ -369,7 +369,7 @@ function ShareManager:sms()
 
 	local body = T "Join me on Adillions and get a chance to win the jackpot !" 
 	body = body .. "\n\n" 
-	body = body .. T "Free, fun and easy - Sign up now using my sponsorship code : " 
+	body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
 	body = body .. userManager.user.sponsorCode
 	body = body .. "\n\n" 
 	body = body .. T "More players = a bigger jackpot !"
@@ -393,7 +393,7 @@ function ShareManager:email()
 	local body = "<html><body>" 
 	body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
 	body = body .. "<br/><br/>" 
-	body = body .. T "Free, fun and easy - Sign up now using my sponsorship code : " 
+	body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
 	body = body .. userManager.user.sponsorCode
 	body = body .. "<br/><br/>" 
 	body = body .. T "More players = a bigger jackpot !"
