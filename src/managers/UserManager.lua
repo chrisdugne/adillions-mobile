@@ -561,11 +561,14 @@ end
 function UserManager:storeLotteryTicket(numbers)
 
 	local extraTicket = userManager.user.extraTickets > 0
+	local now = os.time() * 1000 -- diff de 1min entre ce time et celui de heroku + play ? donc on utilise celui ci
+	
 	native.setActivityIndicator( true )
 
 	utils.postWithJSON({
 		numbers = numbers,
-		extraTicket = extraTicket
+		extraTicket = extraTicket,
+		creationTime = now
 	}, 
 	SERVER_URL .. "storeLotteryTicket", 
 	function(result)
@@ -853,7 +856,7 @@ function UserManager:checkTicketTiming()
 
 		----------------------------------------------------------------------------------------------------
 
-		local fontSize = 42
+		local fontSize = 40
 		
 		local multiLineText = display.newMultiLineText  
 		{

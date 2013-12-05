@@ -94,11 +94,12 @@ function getMinSecMillis(millis)
 end
 
 function getHoursMinSecMillis(millis)
-	local hours = math.floor(millis/(60*60*1000))
-	local min = math.floor((millis - hours * 60 * 60 * 1000) / (60 * 1000))
-	local sec = math.floor((millis - hours * 60 * 60 * 1000 - min * 60 * 1000)/1000)
-	local ms = math.floor(millis - hours * 60 * 60 * 1000 - min * 60 * 1000 - sec * 1000)
-
+	
+	local hours 	= math.floor(millis/(60*60*1000))
+	local min 		= math.floor((millis - hours * 60 * 60 * 1000) / (60 * 1000))
+	local sec 		= math.floor((millis - hours * 60 * 60 * 1000 - min * 60 * 1000)/1000)
+	local ms 		= math.floor(millis - hours * 60 * 60 * 1000 - min * 60 * 1000 - sec * 1000)
+	
 	if(hours < 10) then
 		hours = "0" .. hours
 	end
