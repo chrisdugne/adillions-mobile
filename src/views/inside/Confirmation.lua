@@ -57,7 +57,7 @@ function scene:refreshScene()
 	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
 
 	hud.pictoTicket = display.newImage( hud, "assets/images/icons/ticket.png")  
-	hud.pictoTicket.x = display.contentWidth*0.62
+	hud.pictoTicket.x = display.contentWidth*0.69
 	hud.pictoTicket.y = display.contentHeight*0.43
 	
 	local remainingTickets = T "Remaining ticket"
@@ -68,7 +68,7 @@ function scene:refreshScene()
 	viewManager.newText({
 		parent = hud, 
 		text = remainingTickets .. " :", 
-		x = display.contentWidth*0.5,
+		x = display.contentWidth*0.57,
 		y = display.contentHeight*0.43,
 		fontSize = 34,
 		referencePoint = display.CenterRightReferencePoint
@@ -77,7 +77,7 @@ function scene:refreshScene()
 	viewManager.newText({
 		parent = hud, 
 		text = nbTickets, 
-		x = display.contentWidth*0.57,
+		x = display.contentWidth*0.64,
 		y = display.contentHeight*0.43,
 		fontSize = 43,
 		font = NUM_FONT,
