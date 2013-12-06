@@ -18,11 +18,12 @@ settings = {
 
 			FacebookAppID = "170148346520274",
 
-			CFBundleIconFile = "Icon.png",
+			CFBundleIconFile = "Icon",
 			CFBundleIconFiles = {
-				"Icon.png" , 
-				"Icon@2x.png" , 
-				"Icon-72.png" , 
+				"Icon57" , 
+				"Icon60" , 
+				"Icon72" , 
+				"Icon76" , 
 			},
 
 			UIAppFonts = 
@@ -37,7 +38,6 @@ settings = {
 					CFBundleURLSchemes =
 					{
 						"fb170148346520274",	-- replace XXXXXXXXX with your facebook appId
-						
 					}
 				}
 			}
