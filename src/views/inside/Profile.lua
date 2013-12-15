@@ -472,7 +472,6 @@ function scene:drawScene()
 	---------------------------------------------------------------
 	-- TWITTER
 	---------------------------------------------------------------
-	
 		
 --	if(twitter.connected) then
 	if(userManager.user.twitterId) then
