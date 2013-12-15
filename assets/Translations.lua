@@ -582,6 +582,10 @@ local translations =
 	["Join me on Adillions !"] = {
 		["fr"] = "Inscris-toi sur Adillions !",
 	},
+	
+	["Free and fun ! Get a chance to win the jackpot !"] = {
+		["fr"] = "Gratuit et sympa ! Tente ta chance pour gagner le jackpot !",
+	},
 
 	["Join me on Adillions and get a chance to win the jackpot !"] = {
 		["fr"] = "Inscris-toi sur Adillions et obtiens une chance de gagner le jackpot !",

@@ -357,12 +357,22 @@ function scene:drawScene()
 	-- FACEBOOK
 	---------------------------------------------------------------
 	
-	if(GLOBALS.savedData.facebookAccessToken) then
-      hud.facebookConnect 		= display.newImage( hud.board, I "facebook.connected.png")  
+--	if(GLOBALS.savedData.facebookAccessToken) then
+	if(userManager.user.facebookId) then
+      hud.facebookConnect 		= display.newImage( hud.board, "assets/images/icons/facebook.connected.png")  
 		hud.facebookConnect:setReferencePoint(display.CenterLeftReferencePoint)
 		hud.facebookConnect.x 	= display.contentWidth*0.05
-      hud.facebookConnect.y	= self.top + self.yGap*(socialTop+2.5)
-      hud.board:insert(hud.facebookConnect)
+		hud.facebookConnect.y	= self.top + self.yGap*(socialTop+2.5)
+		hud.board:insert(hud.facebookConnect)
+
+		hud.facebookName = viewManager.newText({
+			parent 			= hud.board, 
+			text	 			= userManager.user.userName,   
+			x 					= display.contentWidth*0.25, 
+			y 					= self.top + self.yGap*(socialTop+2.5),
+			fontSize 		= 37,
+			referencePoint = display.CenterLeftReferencePoint
+		})
 	
    else
       hud.facebookConnect 		= display.newImage( hud.board, I "popup.facebook.connect.png")  
@@ -384,30 +394,41 @@ function scene:drawScene()
 	end
 
 	if(userManager.user.facebookFan) then
+		-- fan
 		hud.facebookLikeDone 		= display.newImage( hud.board, I "facebook.like.done.png") 
 		hud.facebookLikeDone:setReferencePoint(display.CenterLeftReferencePoint)
 		hud.facebookLikeDone.x 	= display.contentWidth*0.05
 		hud.facebookLikeDone.y	= self.top + self.yGap*(socialTop+5.2)
 		hud.board:insert(hud.facebookLikeDone)
 	else
+		hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")  
+		hud.facebookLike:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.facebookLike.x 	= display.contentWidth*0.05
+		hud.facebookLike.y	= self.top + self.yGap*(socialTop+5.2)
+		hud.board:insert(hud.facebookLike)
 	
 		if(GLOBALS.savedData.facebookAccessToken) then
-			hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")  
-			hud.facebookLike:setReferencePoint(display.CenterLeftReferencePoint)
-			hud.facebookLike.x 	= display.contentWidth*0.05
-			hud.facebookLike.y	= self.top + self.yGap*(socialTop+5.2)
-			hud.board:insert(hud.facebookLike)
-
+   		-- pas fan et connecte
 			utils.onTouch(hud.facebookLike, function()
 				self:openFacebookPage()
 			end)
 
 		else
-			hud.facebookLikeDisabled 		= display.newImage( hud.board, I "facebook.like.disabled.png")
-			hud.facebookLikeDisabled:setReferencePoint(display.CenterLeftReferencePoint)
-			hud.facebookLikeDisabled.x 	= display.contentWidth*0.05
-			hud.facebookLikeDisabled.y	= self.top + self.yGap*(socialTop+5.2)
-			hud.board:insert(hud.facebookLikeDisabled)
+			-- pas fan et pas connecte
+			utils.onTouch(hud.facebookLike, function()
+				facebook.connect(function()
+					if(userManager.user.facebookId) then
+						print("must connect to " .. userManager.user.userName .. " Facebook account")
+					end
+					router.resetScreen()
+					self:refreshScene()
+				end) 
+			end)
+--			hud.facebookLikeDisabled 		= display.newImage( hud.board, I "facebook.like.disabled.png")
+--			hud.facebookLikeDisabled:setReferencePoint(display.CenterLeftReferencePoint)
+--			hud.facebookLikeDisabled.x 	= display.contentWidth*0.05
+--			hud.facebookLikeDisabled.y	= self.top + self.yGap*(socialTop+5.2)
+--			hud.board:insert(hud.facebookLikeDisabled)
 		end
 		
 	end
@@ -453,16 +474,23 @@ function scene:drawScene()
 	---------------------------------------------------------------
 	
 		
-	if(twitter.connected) then
-      hud.twitterConnect 				= display.newImage( hud.board, I "twitter.connected.png")  
+--	if(twitter.connected) then
+	if(userManager.user.twitterId) then
+      hud.twitterConnect 				= display.newImage( hud.board, "assets/images/icons/twitter.connected.png")  
 		hud.twitterConnect:setReferencePoint(display.CenterLeftReferencePoint)
 		hud.twitterConnect.x 	= display.contentWidth*0.05
       hud.twitterConnect.y				= self.top + self.yGap*(socialTop+8)
       hud.board:insert(hud.twitterConnect)
 
-		twitterConnectedTitle = T "Connected"
-		twitterConnectedState = "on"
-		
+		hud.twitterName = viewManager.newText({
+			parent 			= hud.board, 
+			text	 			= userManager.user.twitterName,   
+			x 					= display.contentWidth*0.25, 
+			y 					= self.top + self.yGap*(socialTop+8),
+			fontSize 		= 37,
+			referencePoint = display.CenterLeftReferencePoint
+		})
+			
    else
       hud.twitterConnect 				= display.newImage( hud.board, I "popup.twitter.connect.png")  
 		hud.twitterConnect:setReferencePoint(display.CenterLeftReferencePoint)
@@ -480,24 +508,22 @@ function scene:drawScene()
 	end
 	
 	if(userManager.user.twitterFan) then
-		twitterFanTitle = T "Thank you for being a fan !"
-		twitterFanState = "on"
-
+		-- fan
 		hud.twitterFollowing 		= display.newImage( hud.board, I "twitter.following.png")  
 		hud.twitterFollowing:setReferencePoint(display.CenterLeftReferencePoint)
 		hud.twitterFollowing.x 	= display.contentWidth*0.05
 		hud.twitterFollowing.y	= self.top + self.yGap*(socialTop+10.7)
       hud.board:insert(hud.twitterFollowing)
 	else
+      hud.twitterFollow 		= display.newImage( hud.board, I "twitter.follow.png") 
+      hud.twitterFollow:setReferencePoint(display.CenterLeftReferencePoint)
+      hud.twitterFollow.x 	= display.contentWidth*0.05
+      hud.twitterFollow.y	= self.top + self.yGap*(socialTop+10.7)
+      hud.board:insert(hud.twitterFollow)
+      
 		if(twitter.connected) then
-         hud.twitterFollow 		= display.newImage( hud.board, I "twitter.follow.png") 
-         hud.twitterFollow:setReferencePoint(display.CenterLeftReferencePoint)
-         hud.twitterFollow.x 	= display.contentWidth*0.05
-         hud.twitterFollow.y	= self.top + self.yGap*(socialTop+10.7)
-         hud.board:insert(hud.twitterFollow)
-         
+   		-- pas fan et connecté
    		utils.onTouch(hud.twitterFollow, function()
-   		
 				native.setActivityIndicator( true )	 
    			twitter.follow(function()
 					native.setActivityIndicator( false )		
@@ -505,13 +531,25 @@ function scene:drawScene()
    				router.resetScreen()
    				self:refreshScene()
    			end) 
-   		end)
-   	else
-         hud.twitterFollowDisabled 		= display.newImage( hud.board, I "twitter.follow.disabled.png")
-         hud.twitterFollowDisabled:setReferencePoint(display.CenterLeftReferencePoint)
-         hud.twitterFollowDisabled.x 	= display.contentWidth*0.05
-         hud.twitterFollowDisabled.y	= self.top + self.yGap*(socialTop+10.7)
-         hud.board:insert(hud.twitterFollowDisabled)
+			end)
+		else
+			-- pas fan et pas connecté
+			utils.onTouch(hud.twitterFollow, function()
+				twitter.connect(function()
+					native.setActivityIndicator( true )	 
+					twitter.follow(function()
+						native.setActivityIndicator( false )		
+						userManager.user.twitterFan = true
+						router.resetScreen()
+						self:refreshScene()
+					end) 
+				end) 
+			end)
+			--         hud.twitterFollowDisabled 		= display.newImage( hud.board, I "twitter.follow.disabled.png")
+			--         hud.twitterFollowDisabled:setReferencePoint(display.CenterLeftReferencePoint)
+--         hud.twitterFollowDisabled.x 	= display.contentWidth*0.05
+--         hud.twitterFollowDisabled.y	= self.top + self.yGap*(socialTop+10.7)
+--         hud.board:insert(hud.twitterFollowDisabled)
 		end
 	end
 
