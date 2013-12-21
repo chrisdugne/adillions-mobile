@@ -47,7 +47,7 @@ function initHeader()
 	hud.headerRect.x = display.viewableContentWidth*0.5 
 	hud.headerRect.y = HEADER_HEIGHT*0.5
 
-	hud.logo = display.newImage( hud, "assets/images/logo.beta.png")  
+	hud.logo = display.newImage( hud, "assets/images/logo.png")  
 	hud.logo.x = display.contentWidth*0.5
 	hud.logo.y = HEADER_HEIGHT*0.5
 	

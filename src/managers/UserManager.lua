@@ -327,14 +327,18 @@ function UserManager:checkFanStatus(next)
 	local facebookFan 	= self.user.isFacebookFan
 	local twitterFan 		= self.user.isTwitterFan
 
+	print(facebookFan, twitterFan)
+	
 	userManager.user.totalBonusTickets = 0
 
-	if(GLOBALS.savedData.facebookAccessToken) then
+--	if(GLOBALS.savedData.facebookAccessToken) then
+	if(userManager.user.facebookId) then
 		userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_CONNECTION_TICKETS
 		print("FACEBOOK_CONNECTION totalBonusTickets +" .. FACEBOOK_CONNECTION_TICKETS)
 	end
 
-	if(GLOBALS.savedData.twitterAccessToken) then
+--	if(twitter.connected) then
+	if(userManager.user.twitterId) then
 		userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + TWITTER_CONNECTION_TICKETS
 		print("TWITTER_CONNECTION totalBonusTickets +" .. TWITTER_CONNECTION_TICKETS)
 	end
@@ -345,20 +349,8 @@ function UserManager:checkFanStatus(next)
 			---------------------------------------------------------
 
 			if(response) then
-				utils.tprint(response)
+				utils.tprint(response.relationship.source.following)
 				self.user.twitterFan = response.relationship.source.following
-			end
-
-			---------------------------------------------------------
-
-			if(self.user.facebookFan) then
-				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_FAN_TICKETS
-				print("FACEBOOK_FAN totalBonusTickets +" .. FACEBOOK_FAN_TICKETS)
-			end
-
-			if(self.user.twitterFan) then
-				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + TWITTER_FAN_TICKETS
-				print("TWITTER_FAN totalBonusTickets +" .. TWITTER_FAN_TICKETS)
 			end
 
 			---------------------------------------------------------
@@ -373,6 +365,18 @@ function UserManager:checkFanStatus(next)
 			if(self.user.twitterFan ~= twitterFan) then
 				statusChanged = true
 				self.user.isTwitterFan = self.user.twitterFan
+			end
+			
+			---------------------------------------------------------
+
+			if(self.user.isFacebookFan) then
+				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_FAN_TICKETS
+				print("FACEBOOK_FAN totalBonusTickets +" .. FACEBOOK_FAN_TICKETS)
+			end
+
+			if(self.user.isTwitterFan) then
+				userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + TWITTER_FAN_TICKETS
+				print("TWITTER_FAN totalBonusTickets +" .. TWITTER_FAN_TICKETS)
 			end
 
 			---------------------------------------------------------
