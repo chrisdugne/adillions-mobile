@@ -101,8 +101,7 @@ function scene:refreshScene()
 
 	utils.onTouch(hud.terms, function()
 		analytics.event("Links", "terms") 
-		native.setActivityIndicator( true )
-		timer.performWithDelay(100, function() self:openTerms() end)
+		self:openTerms()
 	end)
 
 	hud.privacy 			= display.newImage( hud, I "info.Privacy.png")  
@@ -334,38 +333,61 @@ function scene:openTerms()
 
 	--------------------------
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "Adillions - a simplified joint-stock company (S.A.S.) under French law, registered at the Paris RCS (French Trade Registery) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.", 
-		width = display.contentWidth*0.85,  
-		left = display.contentWidth*0.4,
-		font = FONT, 
-		fontSize = 36,
-		align = "left",
-		spaceY = display.contentWidth*0.009
-	}
+	hud.text 		= display.newImageRect(hud.popup, I "terms.text.png", display.contentWidth*0.9, display.contentHeight*0.43)
+	hud.text.x 		= display.contentWidth*0.5
+	hud.text.y 		= display.contentHeight*0.37
 
-	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
-	multiLineText.x = display.contentWidth*0.1
-	multiLineText.y = display.contentHeight*0.25
-	hud.popup:insert(multiLineText)         
+	--------------------------
 
-	local multiLineText2 = display.newMultiLineText  
-	{
-		text = T "Apple Inc., Google Inc., Microsoft Corporation, Facebook Inc., Amazon.com Inc. and Twitter Inc. are not organizers, co-organizers or partners of Adillions. These companies are not involved in any way in the organization of the Adillions lottery and do not sponsor it.", 
-		width = display.contentWidth*0.85,  
-		left = display.contentWidth*0.4,
-		font = FONT, 
-		fontSize = 36,
-		align = "left",
-		spaceY = display.contentWidth*0.009
-	}
-
-	multiLineText2:setReferencePoint(display.CenterLeftReferencePoint)
-	multiLineText2.x = display.contentWidth*0.1
-	multiLineText2.y = display.contentHeight*0.45
-	hud.popup:insert(multiLineText2)         
-	
+--	local multiLineText = display.newMultiLineText  
+--	{
+--		text = T "Adillions - a simplified joint-stock company\n (S.A.S.) under French law, registered at the\nParis RCS (French Trade Registery) \nunder No. 797 736 261, \norganizes free games without any purchase\n obligation, for an indefinite period.", 
+--		width = display.contentWidth*0.85,  
+--		left = display.contentWidth*0.4,
+--		font = FONT, 
+--		fontSize = 36,
+--		align = "left",
+--		spaceY = display.contentWidth*0.009
+--	}
+--
+--	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
+--	multiLineText.x = display.contentWidth*0.1
+--	multiLineText.y = display.contentHeight*0.25
+--	hud.popup:insert(multiLineText)         
+--
+--
+--	local multiLineText2 = display.newMultiLineText  
+--	{
+--		text = T "Apple Inc., Google Inc., \nMicrosoft Corporation, Facebook Inc., \nAmazon.com Inc. and Twitter Inc. \nare not organizers, co-organizers \nor partners of Adillions.", 
+--		width = display.contentWidth*0.85,  
+--		left = display.contentWidth*0.4,
+--		font = FONT, 
+--		fontSize = 36,
+--		align = "left",
+--		spaceY = display.contentWidth*0.009
+--	}
+--
+--	multiLineText2:setReferencePoint(display.CenterLeftReferencePoint)
+--	multiLineText2.x = display.contentWidth*0.1
+--	multiLineText2.y = display.contentHeight*0.395
+--	hud.popup:insert(multiLineText2)         
+--
+--	local multiLineText3 = display.newMultiLineText  
+--	{
+--		text = T "These companies are not involved in any way\nin the organization of the Adillions lottery and\ndo not sponsor it.", 
+--		width = display.contentWidth*0.85,  
+--		left = display.contentWidth*0.4,
+--		font = FONT, 
+--		fontSize = 36,
+--		align = "left",
+--		spaceY = display.contentWidth*0.009
+--	}
+--
+--	multiLineText3:setReferencePoint(display.CenterLeftReferencePoint)
+--	multiLineText3.x = display.contentWidth*0.1
+--	multiLineText3.y = display.contentHeight*0.53
+--	hud.popup:insert(multiLineText3)         
+--	
 	--------------------------
 
 	hud.popup.keyrules 			= display.newImage( hud.popup, I "key.rules.png")
@@ -393,8 +415,6 @@ function scene:openTerms()
 	hud.popup.close.y 			= display.contentHeight*0.9
 
 	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
-
-	native.setActivityIndicator( false )
 end
 
 ------------------------------------------------------------------------------
