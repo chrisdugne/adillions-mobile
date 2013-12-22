@@ -621,6 +621,15 @@ local translations =
 		["fr"] = "Adillions en quelques mots : une loterie globale, responsable et sociale financée par la publicité",
 	},
 
+	---TERMS -----------------------------------------------------------
+
+	["Adillions - a simplified joint-stock company (S.A.S.) under French law, registered at the Paris RCS (French Trade Registery) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period."] = {
+		["fr"] = "Adillions - Société par actions simplifiée, \n immatriculée au RCS de Paris B 797 736 261, \norganise des jeux gratuits sans obligation \nd'achat pour une durée indéterminée.",
+	},
+
+	["Apple Inc., Google Inc., Microsoft Corporation, Facebook Inc., Amazon.com Inc. and Twitter Inc. are not organizers, co-organizers or partners of Adillions. These companies are not involved in any way in the organization of the Adillions lottery and do not sponsor it."] = {
+		["fr"] = "Apple Inc., Google Inc., Microsoft Corporation, Facebook Inc., Amazon.com Inc. \nand Twitter Inc. ne sont pas des organisateurs, \nco-organisateurs ou partenaires d'Adillions. \nCes sociétés ne sont pas impliquées dans l'organisation de la loterie Adillions et ne sont pas sponsors de celle-ci.",
+	},
 
 }
 

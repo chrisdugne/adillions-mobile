@@ -101,7 +101,8 @@ function scene:refreshScene()
 
 	utils.onTouch(hud.terms, function()
 		analytics.event("Links", "terms") 
-		system.openURL( SERVER_URL .. "#/about/terms" )
+		native.setActivityIndicator( true )
+		timer.performWithDelay(100, function() self:openTerms() end)
 	end)
 
 	hud.privacy 			= display.newImage( hud, I "info.Privacy.png")  
@@ -304,6 +305,96 @@ function scene:openPrizes()
 
 	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 
+end
+
+
+------------------------------------------
+
+function scene:openTerms()
+	
+	local top	 	= display.contentHeight * 0.35
+	local yGap		= display.contentHeight*0.082
+
+	viewManager.showPopup(function() end)
+
+	--------------------------
+	
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoTerms.png")
+	hud.picto.x 		= display.contentWidth*0.14
+	hud.picto.y 		= display.contentHeight*0.1
+
+	hud.title 			= display.newImage(hud.popup, I "terms.png")
+	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.title.x 		= display.contentWidth*0.22
+	hud.title.y 		= display.contentHeight*0.1
+
+	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep.x 		= display.contentWidth*0.5
+	hud.sep.y 		= display.contentHeight*0.15
+
+	--------------------------
+
+	local multiLineText = display.newMultiLineText  
+	{
+		text = T "Adillions - a simplified joint-stock company (S.A.S.) under French law, registered at the Paris RCS (French Trade Registery) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.", 
+		width = display.contentWidth*0.85,  
+		left = display.contentWidth*0.4,
+		font = FONT, 
+		fontSize = 36,
+		align = "left",
+		spaceY = display.contentWidth*0.009
+	}
+
+	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
+	multiLineText.x = display.contentWidth*0.1
+	multiLineText.y = display.contentHeight*0.25
+	hud.popup:insert(multiLineText)         
+
+	local multiLineText2 = display.newMultiLineText  
+	{
+		text = T "Apple Inc., Google Inc., Microsoft Corporation, Facebook Inc., Amazon.com Inc. and Twitter Inc. are not organizers, co-organizers or partners of Adillions. These companies are not involved in any way in the organization of the Adillions lottery and do not sponsor it.", 
+		width = display.contentWidth*0.85,  
+		left = display.contentWidth*0.4,
+		font = FONT, 
+		fontSize = 36,
+		align = "left",
+		spaceY = display.contentWidth*0.009
+	}
+
+	multiLineText2:setReferencePoint(display.CenterLeftReferencePoint)
+	multiLineText2.x = display.contentWidth*0.1
+	multiLineText2.y = display.contentHeight*0.45
+	hud.popup:insert(multiLineText2)         
+	
+	--------------------------
+
+	hud.popup.keyrules 			= display.newImage( hud.popup, I "key.rules.png")
+	hud.popup.keyrules.x 		= display.contentWidth*0.5
+	hud.popup.keyrules.y 		= display.contentHeight*0.65
+
+	utils.onTouch(hud.popup.keyrules, function() 
+		system.openURL( SERVER_URL .. "#/about/keyrules" )
+	end)
+
+	--------------------------
+
+	hud.popup.read 		= display.newImage( hud.popup, I "read.terms.png")
+	hud.popup.read.x 		= display.contentWidth*0.5
+	hud.popup.read.y 		= display.contentHeight*0.78
+
+	utils.onTouch(hud.popup.read, function() 
+		system.openURL( SERVER_URL .. "#/about/terms" )
+	end)
+	
+	--------------------------
+
+	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+	hud.popup.close.x 			= display.contentWidth*0.5
+	hud.popup.close.y 			= display.contentHeight*0.9
+
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+
+	native.setActivityIndicator( false )
 end
 
 ------------------------------------------------------------------------------
