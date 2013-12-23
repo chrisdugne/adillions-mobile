@@ -577,7 +577,7 @@ local translations =
 		["fr"] = "Décembre",
 	},
 
-	---TEXT INVITE-----------------------------------------------------------
+	---FACEBOOK-----------------------------------------------------------
 
 	["Join me on Adillions !"] = {
 		["fr"] = "Inscris-toi sur Adillions !",
@@ -587,38 +587,32 @@ local translations =
 		["fr"] = "Gratuit et sympa - Tente ta chance pour gagner le jackpot !",
 	},
 
+	---TEXT INVITE-----------------------------------------------------------
+
 	["Join me on Adillions and get a chance to win the jackpot !"] = {
-		["fr"] = "Inscris-toi sur Adillions et obtiens une chance de gagner le jackpot !",
+		["fr"] = "Inscris-toi sur Adillions et tente ta chance pour gagner le jackpot !",
 	},
 
-	["Dowload the free app on the App Store or Google Play / Play on Facebook and on www.adillions.com"] = {
-		["fr"] = "Télécharge l'application gratuite sur l'App Store ou Google Play / Joue sur Facebook et sur www.adillions.com",
+	["Available on the App Store, Google Play, Facebook and on www.adillions.com"] = {
+		["fr"] = "Disponible sur l'App Store, le Google Play, sur Facebook et sur www.adillions.com",
 	},
 
 	["Free and fun - Sign up now using my sponsorship code : "] = {
 		["fr"] = "Gratuit et sympa - Inscris-toi maintenant en utilisant mon code parrain : ",
 	},
 
-	["More players = a bigger jackpot !"] = {
-		["fr"] = "Plus de joueurs = Une cagnotte plus grande",
+	["MORE PLAYERS = A BIGGER JACKPOT"] = {
+		["fr"] = "PLUS DE JOUEURS = UNE CAGNOTTE PLUS GRANDE",
 	},
 
 	---TEXT SHARE-----------------------------------------------------------
 
-	["I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot ! \n www.adillions.com"] = {
-		["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Vous aussi, obtenez une chance de gagner le jackpot ! \n www.adillions.com",
+	["I have just played a free lottery ticket on Adillions. You too, try your luck now !"] = {
+		["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Toi aussi, tente ta chance à Adillions !",
 	},
 
-	["I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot !"] = {
-		["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Vous aussi, obtenez une chance de gagner le jackpot !",
-	},
-
-	["Dowload the free app on the App Store or Google Play or play on Facebook and on www.adillions.com"] = {
-		["fr"] = "Téléchargez l'application gratuite sur l'App Store ou Google Play ou jouez sur Facebook et sur www.adillions.com",
-	},
-
-	["Adillions in a few words: A global, responsible and viral lottery funded by advertising"] = {
-		["fr"] = "Adillions en quelques mots : une loterie globale, responsable et sociale financée par la publicité",
+	["Adillions is a free-to-play lottery game with real cash prizes funded by advertising"] = {
+		["fr"] = "Adillions est une loterie gratuite avec des gains d'argent réel financés par la pub",
 	},
 
 	---TERMS -----------------------------------------------------------

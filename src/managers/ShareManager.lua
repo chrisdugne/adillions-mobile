@@ -369,14 +369,14 @@ function ShareManager:sms()
 
 	local body = T "Join me on Adillions and get a chance to win the jackpot !" 
 	body = body .. "\n\n" 
+	body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
+	body = body .. "\n\n" 
 	body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
 	body = body .. userManager.user.sponsorCode
 	body = body .. "\n\n" 
-	body = body .. T "More players = a bigger jackpot !"
+	body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
 	body = body .. "\n\n" 
-	body = body .. T "Dowload the free app on the App Store or Google Play / Play on Facebook and on www.adillions.com"
-	body = body .. "\n\n" 
-	body = body .. T "Adillions in a few words: A global, responsible and viral lottery funded by advertising" 
+	body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
 	
 	local options = {
 		body = body
@@ -393,14 +393,14 @@ function ShareManager:email()
 	local body = "<html><body>" 
 	body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
 	body = body .. "<br/><br/>" 
+	body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
+	body = body .. "<br/><br/>" 
 	body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
 	body = body .. userManager.user.sponsorCode
 	body = body .. "<br/><br/>" 
-	body = body .. T "More players = a bigger jackpot !"
+	body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
 	body = body .. "<br/><br/>" 
-	body = body .. T "Dowload the free app on the App Store or Google Play / Play on Facebook and on www.adillions.com"
-	body = body .. "<br/><br/>" 
-	body = body .. T "Adillions in a few words: A global, responsible and viral lottery funded by advertising" 
+	body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
 	body = body .. "</body></html>" 
 	 
 	local options =
@@ -417,11 +417,7 @@ end
 
 function ShareManager:shareOnWall()
 	
-	local text = T "I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot ! \n www.adillions.com" 
---	text = text .. "\n\n" 
---	text = text .. T "Dowload the free app on the App Store or Google Play or play on Facebook and on www.adillions.com" 
---	text = text .. "\n\n" 
---	text = text .. T "Adillions in a few words: A global, responsible and viral lottery funded by advertising"
+	local text = T "I have just played a free lottery ticket on Adillions. You too, try your luck now !" .. "\n www.adillions.com" 
 	
 	facebook.postOnWall(text, function()
 	
@@ -441,7 +437,7 @@ end
 
 function ShareManager:tweetShare()
 
-	local text = T "I have just played a free lottery ticket on Adillions. You too, get a chance to win the jackpot !" .. "\n www.adillions.com"
+	local text = T "I have just played a free lottery ticket on Adillions. You too, try your luck now !" .. "\n www.adillions.com"
 
 	twitter.tweetMessage(text, function()
 
