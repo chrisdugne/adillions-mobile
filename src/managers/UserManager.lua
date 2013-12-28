@@ -65,8 +65,6 @@ function UserManager:getPlayerByFacebookId()
 		print("-------------")
 		print(result.isError)
 		print(result.status)
-		print(tostring(result.status == 401))
-		print(tostring(result.status == '401'))
 		print("-------------")
 
 		native.setActivityIndicator( false )	
@@ -106,20 +104,25 @@ function UserManager:checkExistPlayerByFacebookId(proceedWithMerge)
 	function(result)
 		print("received PlayerByFacebookId")
 		utils.tprint(result)
-		local response = json.decode(result.response)
-		local existPlayer = response.existPlayer
-
-		native.setActivityIndicator( false )	
-
-		if(not existPlayer) then
-			print("--> not existPlayer")
-			proceedWithMerge()
-
+		native.setActivityIndicator( false )
+		
+		if(result.isError) then
+			timer.performWithDelay(1000, userManager:checkExistPlayerByFacebookId(proceedWithMerge))
 		else
-			print("--> got player")
-			twitter.logout()
-			gameManager:tryAutoOpenFacebookAccount()
-		end
+   		local response = json.decode(result.response)
+   		local existPlayer = response.existPlayer
+   
+   
+   		if(not existPlayer) then
+   			print("--> not existPlayer")
+   			proceedWithMerge()
+   
+   		else
+   			print("--> got player")
+   			twitter.logout()
+   			gameManager:tryAutoOpenFacebookAccount()
+   		end
+		end	
 	end
 	)
 
@@ -134,6 +137,8 @@ function UserManager:receivedPlayer(player, next)
 		viewManager.message(T "Welcome" .. " " .. player.userName .. " !")
 	end
 
+	print("------------------------ welcome ")
+	utils.tprint(player)
 	self:updatedPlayer(player, next)
 end
 
@@ -157,6 +162,8 @@ function UserManager:updatedPlayer(player, next)
 	GLOBALS.savedData.user.facebookId 		= player.facebookId
 	GLOBALS.savedData.user.twitterId 		= player.twitterId
 	GLOBALS.savedData.user.twitterName 		= player.twitterName
+	GLOBALS.savedData.user.isFacebookFan 	= player.isFacebookFan
+	GLOBALS.savedData.user.isTwitterFan 	= player.isTwitterFan
 
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 

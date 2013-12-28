@@ -208,7 +208,9 @@ end
 
 function isFacebookFan(next)
 
-	userManager.user.facebookFan = false
+	-- default : celui de la db, meme si non connecte
+	-- triche possible : cancel fan et ne plus se connecter avec facebook.
+	userManager.user.facebookFan = userManager.user.isFacebookFan
 
 	print("------------------------ isFacebookFan ")
 	if(GLOBALS.savedData.facebookAccessToken) then
