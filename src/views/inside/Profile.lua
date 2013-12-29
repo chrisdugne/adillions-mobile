@@ -628,7 +628,8 @@ function scene:drawScene()
 	hud.board:insert(hud.sponsorButton)
 		
 	utils.onTouch(hud.sponsorButton, function()
-		shareManager:invite()
+		local next = function() router.openProfile() end
+		shareManager:invite(next)
 	end)
 	
 	-----------------------------------------------
