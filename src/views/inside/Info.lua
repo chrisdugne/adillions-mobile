@@ -318,11 +318,11 @@ function scene:openTerms()
 
 	--------------------------
 	
-	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoTerms.png")
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoInfo.png")
 	hud.picto.x 		= display.contentWidth*0.14
 	hud.picto.y 		= display.contentHeight*0.1
 
-	hud.title 			= display.newImage(hud.popup, I "terms.png")
+	hud.title 			= display.newImage(hud.popup, I "important.png")
 	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
 	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.1
@@ -333,61 +333,27 @@ function scene:openTerms()
 
 	--------------------------
 
-	hud.text 		= display.newImageRect(hud.popup, I "terms.text.png", display.contentWidth*0.9, display.contentHeight*0.43)
-	hud.text.x 		= display.contentWidth*0.5
-	hud.text.y 		= display.contentHeight*0.37
+	hud.text = display.newText(
+		hud.popup, 
+		T "Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.", 
+		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
+		
+	hud.text.x = display.contentWidth*0.5
+	hud.text.y = display.contentHeight*0.3
+	hud.text:setTextColor(0)
 
-	--------------------------
+	local company = "Apple Inc. "
+	if(ANDROID) then company = "Google Inc " end
 
---	local multiLineText = display.newMultiLineText  
---	{
---		text = T "Adillions - a simplified joint-stock company\n (S.A.S.) under French law, registered at the\nParis RCS (French Trade Registery) \nunder No. 797 736 261, \norganizes free games without any purchase\n obligation, for an indefinite period.", 
---		width = display.contentWidth*0.85,  
---		left = display.contentWidth*0.4,
---		font = FONT, 
---		fontSize = 36,
---		align = "left",
---		spaceY = display.contentWidth*0.009
---	}
---
---	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
---	multiLineText.x = display.contentWidth*0.1
---	multiLineText.y = display.contentHeight*0.25
---	hud.popup:insert(multiLineText)         
---
---
---	local multiLineText2 = display.newMultiLineText  
---	{
---		text = T "Apple Inc., Google Inc., \nMicrosoft Corporation, Facebook Inc., \nAmazon.com Inc. and Twitter Inc. \nare not organizers, co-organizers \nor partners of Adillions.", 
---		width = display.contentWidth*0.85,  
---		left = display.contentWidth*0.4,
---		font = FONT, 
---		fontSize = 36,
---		align = "left",
---		spaceY = display.contentWidth*0.009
---	}
---
---	multiLineText2:setReferencePoint(display.CenterLeftReferencePoint)
---	multiLineText2.x = display.contentWidth*0.1
---	multiLineText2.y = display.contentHeight*0.395
---	hud.popup:insert(multiLineText2)         
---
---	local multiLineText3 = display.newMultiLineText  
---	{
---		text = T "These companies are not involved in any way\nin the organization of the Adillions lottery and\ndo not sponsor it.", 
---		width = display.contentWidth*0.85,  
---		left = display.contentWidth*0.4,
---		font = FONT, 
---		fontSize = 36,
---		align = "left",
---		spaceY = display.contentWidth*0.009
---	}
---
---	multiLineText3:setReferencePoint(display.CenterLeftReferencePoint)
---	multiLineText3.x = display.contentWidth*0.1
---	multiLineText3.y = display.contentHeight*0.53
---	hud.popup:insert(multiLineText3)         
---	
+	hud.text2 = display.newText(
+		hud.popup, 
+		company .. T "is not organizer, co-organizer or partner of Adillions. This company is not involved in any way in the organization of the Adillions lottery and does not sponsor it.", 
+		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
+		
+	hud.text2.x = display.contentWidth*0.5
+	hud.text2.y = display.contentHeight*0.52
+	hud.text2:setTextColor(0)
+	
 	--------------------------
 
 	hud.popup.keyrules 			= display.newImage( hud.popup, I "key.rules.png")
