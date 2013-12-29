@@ -318,11 +318,11 @@ function scene:openTerms()
 
 	--------------------------
 	
-	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoInfo.png")
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoTerms.png")
 	hud.picto.x 		= display.contentWidth*0.14
 	hud.picto.y 		= display.contentHeight*0.1
 
-	hud.title 			= display.newImage(hud.popup, I "important.png")
+	hud.title 			= display.newImage(hud.popup, I "terms.png")
 	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
 	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.1
@@ -333,13 +333,22 @@ function scene:openTerms()
 
 	--------------------------
 
+	hud.textImportant = display.newText(
+		hud.popup, 
+		"Important", 
+		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, NUM_FONT, 35 )
+		
+	hud.textImportant.x = display.contentWidth*0.5
+	hud.textImportant.y = display.contentHeight*0.29
+	hud.textImportant:setTextColor(0)
+
 	hud.text = display.newText(
 		hud.popup, 
 		T "Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.", 
 		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
 		
 	hud.text.x = display.contentWidth*0.5
-	hud.text.y = display.contentHeight*0.3
+	hud.text.y = display.contentHeight*0.33
 	hud.text:setTextColor(0)
 
 	local company = "Apple Inc. "
@@ -351,7 +360,7 @@ function scene:openTerms()
 		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
 		
 	hud.text2.x = display.contentWidth*0.5
-	hud.text2.y = display.contentHeight*0.52
+	hud.text2.y = display.contentHeight*0.53
 	hud.text2:setTextColor(0)
 	
 	--------------------------
