@@ -22,17 +22,25 @@ end
 
 function scene:refreshScene()
 
+	self.backWithResults = false
+	
 	native.setActivityIndicator( true )
 	viewManager.setupView(3)
 	viewManager.darkerBack()
 	self.view:insert(hud)
 
-	print("--------- RESULTS")
 	lotteryManager:getFinishedLotteries(function()
-   	print("--------- Received lotteries")
+   	self.backWithResults = true
    	self:drawBoard()
 		hud.board:toBack()
 		native.setActivityIndicator( false )
+	end)
+	
+	-- hack android user idle
+	timer.performWithDelay(5000, function()
+		if(not self.backWithResults) then
+			self:refreshScene()   		
+		end
 	end)
 end
 -----------------------------------------------------------------------------------------
