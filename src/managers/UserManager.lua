@@ -112,7 +112,6 @@ function UserManager:checkExistPlayerByFacebookId(proceedWithMerge)
    		local response = json.decode(result.response)
    		local existPlayer = response.existPlayer
    
-   
    		if(not existPlayer) then
    			print("--> not existPlayer")
    			proceedWithMerge()
@@ -180,7 +179,8 @@ end
 
 function UserManager:checkExistingUser(next)
 	self:checkExistPlayerByFacebookId(function()
-		if(userManager.user.facebookId == facebook.data.id) then
+		print("proceed with merge", userManager.user.facebookId, facebook.data.id)
+		if(userManager.user.facebookId == facebook.data.id) then 
 			self:showConfirmMerge(next)
 		else
 			self:showWrongAccount(next)

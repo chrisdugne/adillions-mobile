@@ -621,8 +621,12 @@ local translations =
 		["fr"] = "Adillions - Société par actions simplifiée, immatriculée au RCS de Paris B 797 736 261, organise des jeux gratuits sans obligation d'achat pour une durée indéterminée.",
 	},
 
-	["is not organizer, co-organizer or partner of Adillions. This company is not involved in any way in the organization of the Adillions lottery and does not sponsor it."] = {
-		["fr"] = "n'est pas organisateur, co-organisateur ou partenaire d'Adillions. Cette société n'est pas impliquée dans l'organisation de la loterie Adillions et n'est pas sponsor de celle-ci.",
+	["is not an organizer, a co-organizer or a partner of Adillions. "] = {
+		["fr"] = "n'est pas organisateur, co-organisateur ou partenaire d'Adillions. ",
+	},
+
+	["is not involved in any way in the organization of the Adillions lottery and does not sponsor it."] = {
+		["fr"] = "n'est pas impliquée dans l'organisation de la loterie Adillions et n'est pas sponsor de celle-ci.",
 	},
 
 }

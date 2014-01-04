@@ -356,7 +356,7 @@ function scene:openTerms()
 
 	hud.text2 = display.newText(
 		hud.popup, 
-		company .. T "is not organizer, co-organizer or partner of Adillions. This company is not involved in any way in the organization of the Adillions lottery and does not sponsor it.", 
+		company .. (T "is not an organizer, a co-organizer or a partner of Adillions. ") .. company .. (T "is not involved in any way in the organization of the Adillions lottery and does not sponsor it."), 
 		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
 		
 	hud.text2.x = display.contentWidth*0.5
@@ -380,7 +380,7 @@ function scene:openTerms()
 	hud.popup.read.y 		= display.contentHeight*0.78
 
 	utils.onTouch(hud.popup.read, function() 
-		system.openURL( SERVER_URL .. "#/about/terms" )
+		router.openTerms()
 	end)
 	
 	--------------------------

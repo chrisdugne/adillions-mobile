@@ -41,6 +41,11 @@ end
 function onTouch(object, action)
 	object:addEventListener	("touch", function(event)
 		if(event.phase == "began") then
+			object.alpha = 0.5
+      	display.getCurrentStage():setFocus( object )
+		elseif event.phase == "ended" or event.phase == "cancelled" then
+			object.alpha = 1
+      	display.getCurrentStage():setFocus( nil )
 			action() 
 		end
 		return true

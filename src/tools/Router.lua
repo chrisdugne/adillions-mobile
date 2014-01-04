@@ -161,6 +161,15 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function openTerms()
+	analytics.pageview("Terms")
+	
+	resetScreen()
+	storyboard.gotoScene( "src.views.inside.Terms" )
+end
+
+-----------------------------------------------------------------------------------------
+
 function openRewards()
 	analytics.pageview("Rewards")
 	
