@@ -54,6 +54,17 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function onTap(object, action)
+	object:addEventListener	("touch", function(event)
+		if(event.phase == "began") then
+			action() 
+		end
+		return true
+	end)
+end
+
+-----------------------------------------------------------------------------------------
+
 function setGreen(text)
 	text:setTextColor(27,92,100)
 end

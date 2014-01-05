@@ -291,8 +291,8 @@ function showPopup(action)
 	
 	hud.popup:toFront()
 	
-	utils.onTouch(hud.backGrey, function()end)
---	utils.onTouch(hud.popupRect, function()end)
+	utils.onTap(hud.backGrey, function()end)
+	utils.onTap(hud.popupRect, function()end)
 end
 
 ------------------------------------------------------------------
