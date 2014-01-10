@@ -17,7 +17,15 @@ end
 -----------------------------------------------------------------------------------------
 
 function Vungle:init()
-	ads.init( "vungle", "com.adillions.v1" , function(event) self:adListener(event) end )
+	local appId = ""
+	
+	if (ANDROID) then
+		appId = "adillions.android"
+	else
+		appId = "com.adillions.v1"
+	end
+	
+	ads.init( "vungle", appId , function(event) self:adListener(event) end )
 end
 
 -----------------------------------------------------------------------------------------
