@@ -61,30 +61,38 @@ function UserManager:getPlayerByFacebookId()
 	SERVER_URL .. "playerFromFB", 
 	function(result)
 		print("received PlayerByFacebookId")
+
+		print("-------------")
 		utils.tprint(result)
 		print("-------------")
 		print(result.isError)
 		print(result.status)
 		print("-------------")
-
-		native.setActivityIndicator( false )	
-
-		if(result.isError) then
-			print("--> error = signinFB")
-			router.openSigninFB()
-			--			router.openOutside()
-
-		elseif(result.status == 401 or result.status == '401') then
-			print("--> 401 = signinFB")
-			router.openSigninFB()
+		
+		if(result.status < 0) then
+   		print("--> try again getPlayerByFacebookId")
+			self:getPlayerByFacebookId()
 		else
-			print("--> test player")
-			response 							= json.decode(result.response)
-			local player 						= response.player
-			GLOBALS.savedData.authToken 	= response.authToken     
-
-			userManager:receivedPlayer(player, router.openHome)
+   		native.setActivityIndicator( false )	
+   
+   		if(result.isError) then
+   			print("--> error = signinFB")
+   			router.openSigninFB()
+   			--			router.openOutside()
+   
+   		elseif(result.status == 401 or result.status == '401') then
+   			print("--> 401 = signinFB")
+   			router.openSigninFB()
+   		else
+   			print("--> test player")
+   			response 							= json.decode(result.response)
+   			local player 						= response.player
+   			GLOBALS.savedData.authToken 	= response.authToken     
+   
+   			userManager:receivedPlayer(player, router.openHome)
+   		end
 		end
+
 	end
 	)
 
