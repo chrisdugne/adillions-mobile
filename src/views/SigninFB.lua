@@ -23,6 +23,8 @@ end
 function scene:refreshScene()
 	
 	print("signinFB")
+	print(facebook.data.name)
+	print(utils.urlEncode(facebook.data.name))
 	
 	-- not facebook.data.birthday permission
 	if(not facebook.data.birthday) then

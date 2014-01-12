@@ -3,11 +3,13 @@
 UserManager = {}	
 
 -----------------------------------------------------------------------------------------
-
+ 
+ -- attemptFBPlayer pour compter les getPlayerByFacebookId pour android reco apres retour app
 function UserManager:new()  
 
 	local object = {
-		user 	= {}
+		user 					= {},
+		attemptFBPlayer 	= 0
 	}
 
 	setmetatable(object, { __index = UserManager })
@@ -53,6 +55,7 @@ function UserManager:getPlayerByFacebookId()
 
 	native.setActivityIndicator( true )
 	print("getPlayerByFacebookId")
+	self.attemptFBPlayer = self.attemptFBPlayer + 1 
 
 	utils.postWithJSON({
 		facebookData = facebook.data,
@@ -69,11 +72,12 @@ function UserManager:getPlayerByFacebookId()
 		print(result.status)
 		print("-------------")
 		
-		if(result.status < 0) then
+		if(result.status < 0 and self.attemptFBPlayer < 3) then
    		print("--> try again getPlayerByFacebookId")
 			self:getPlayerByFacebookId()
 		else
    		native.setActivityIndicator( false )	
+			self.attemptFBPlayer = 0
    
    		if(result.isError) then
    			print("--> error = signinFB")
