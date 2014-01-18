@@ -165,8 +165,8 @@ local translations =
 		["fr"] = "maximum de tickets pour ce tirage",
 	},
 
-	["Get Bonus Tickets by liking our"] = {
-		["fr"] = "Gagnez des Tickets Bonus",
+	["Get more Tickets by liking our"] = {
+		["fr"] = "Gagnez plus de Tickets en",
 	},
 
 	["Facebook page, following us on"] = {
@@ -212,8 +212,8 @@ local translations =
 		["fr"] = "Ticket Instantané",
 	},
 
-	["Increase your number of available tickets \n for the next draws by gaining Bonus Tickets"] = {
-		["fr"] = "Augmentez votre nombre de tickets \n par tirage en gagnant des Tickets Bonus",
+	["Increase your number of available tickets \n for the next draws by gaining more Tickets"] = {
+		["fr"] = "Augmentez votre nombre de tickets \n par tirage en gagnant plus de Tickets",
 	},
 
 	["Get Instant Tickets (ad-free tickets) by earning points"] = {

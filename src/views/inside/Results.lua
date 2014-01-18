@@ -66,6 +66,9 @@ function scene:drawBoard()
 		local numbers 				= json.decode(lottery.result)
 		lottery.theme 				= json.decode(lottery.theme)
 		lottery.prizes 			= json.decode(lottery.prizes)
+		
+		print("--------------------")
+		utils.tprint(lottery)
 
 		local y = marginTop + yGap*(i-1) + 185
 	

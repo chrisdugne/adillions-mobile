@@ -22,7 +22,7 @@ end
 
 function scene:refreshScene()
 	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "msignin" )
+	self.webView:request( SERVER_URL .. "msignin?lang=" .. LANG  )
 	self.webView:addEventListener( "urlRequest", function(event) self:signinViewListener(event) end )
 	
 	viewManager.initHeader()

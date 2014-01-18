@@ -672,7 +672,7 @@ function scene:openRewards1()
 
 	local multiLineText = display.newMultiLineText  
 	{
-		text = T "Increase your number of available tickets \n for the next draws by gaining Bonus Tickets", 
+		text = T "Increase your number of available tickets \n for the next draws by gaining more Tickets", 
 		width = display.contentWidth*0.85,  
 		left = display.contentWidth*0.5,
 		font = FONT, 

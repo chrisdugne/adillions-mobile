@@ -147,7 +147,7 @@ function scene:drawScene()
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Bonus Tickets" .. " : ",         
+		text 				= "# Tickets" .. " : ",         
 		x 					= self.column2,
 		y 					= self.top + self.yGap*(statusTop+1),
 		fontSize 		= self.fontSizeLeft,
@@ -155,14 +155,14 @@ function scene:drawScene()
 	})
 
 
-	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")
+	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/ticket.png")
 	hud.iconTicket.x 			= self.column2 - display.contentWidth*0.05
 	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+2) + display.contentHeight*0.005
 	hud.board:insert(hud.iconTicket)
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= userManager.user.totalBonusTickets,     
+		text	 			= userManager.user.availableTickets .. " + " .. userManager.user.totalBonusTickets,     
 		x 					= self.column2 - display.contentWidth*0.11,
 		y 					= self.top + self.yGap*(statusTop+2),
 		fontSize 		= self.fontSizeRight,
