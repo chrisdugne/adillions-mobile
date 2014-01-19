@@ -659,7 +659,7 @@ function scene:openRewards1()
 	hud.picto.x 		= display.contentWidth*0.14
 	hud.picto.y 		= display.contentHeight*0.15
 
-	hud.title 			= display.newImage(hud.popup, I "bonus.ticket.png")
+	hud.title 			= display.newImage(hud.popup, I "moretickets.png")
 	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
 	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.15
@@ -669,22 +669,33 @@ function scene:openRewards1()
 	hud.sep.y 		= display.contentHeight*0.2
 	
 	--------------------------
-
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "Increase your number of available tickets \n for the next draws by gaining more Tickets", 
-		width = display.contentWidth*0.85,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 36,
-		align = "left",
-		spaceY = display.contentWidth*0.009
-	}
-
-	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
-	multiLineText.x = display.contentWidth*0.1
-	multiLineText.y = display.contentHeight*0.25
-	hud.popup:insert(multiLineText)         
+	
+	hud.text = display.newText(
+		hud.popup, 
+		T "Increase your number of available Tickets for the next draws", 
+		0, 0, display.contentWidth*0.85, display.contentHeight*0.25, FONT, 36 )
+		
+	hud.text.x = display.contentWidth*0.5
+	hud.text.y = display.contentHeight*0.33
+	hud.text:setTextColor(0)
+	
+	--------------------------
+--
+--	local multiLineText = display.newMultiLineText  
+--	{
+--		text = T " Increase your number of available Tickets for the next draws", 
+--		width = display.contentWidth*0.85,  
+--		left = display.contentWidth*0.5,
+--		font = FONT, 
+--		fontSize = 36,
+--		align = "left",
+--		spaceY = display.contentWidth*0.009
+--	}
+--
+--	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
+--	multiLineText.x = display.contentWidth*0.1
+--	multiLineText.y = display.contentHeight*0.25
+--	hud.popup:insert(multiLineText)         
 	
 	--------------------------
 
@@ -780,7 +791,7 @@ function scene:openRewards2()
 
 	local multiLineText = display.newMultiLineText  
 	{
-		text = T "Get Instant Tickets (ad-free tickets) by earning points" .. "\n", 
+		text = T "Get Instant Tickets (ad-free Tickets) by earning points" .. "\n", 
 		width = display.contentWidth*0.8,  
 		left = display.contentWidth*0.5,
 		font = FONT, 
@@ -814,7 +825,7 @@ function scene:openRewards2()
 	
 	local multiLineText = display.newMultiLineText  
 	{
-		text = T "+ 1pt / ticket", 
+		text = T "+ 1pt / Ticket", 
 		width = display.contentWidth*0.8,  
 		left = display.contentWidth*0.5,
 		font = FONT, 

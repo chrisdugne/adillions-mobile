@@ -60,9 +60,9 @@ function scene:refreshScene()
 	hud.pictoTicket.x = display.contentWidth*0.69
 	hud.pictoTicket.y = display.contentHeight*0.43
 	
-	local remainingTickets = T "Remaining ticket"
+	local remainingTickets = T "Remaining Ticket"
 	if(nbTickets > 1) then
-		remainingTickets = T "Remaining tickets"
+		remainingTickets = T "Remaining Tickets"
 	end
 	
 	viewManager.newText({

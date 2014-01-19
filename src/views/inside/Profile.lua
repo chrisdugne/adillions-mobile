@@ -157,7 +157,7 @@ function scene:drawScene()
 
 	hud.iconTicket 			= display.newImage( hud.board, "assets/images/icons/ticket.png")
 	hud.iconTicket.x 			= self.column2 - display.contentWidth*0.05
-	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+2) + display.contentHeight*0.005
+	hud.iconTicket.y 			= self.top + self.yGap*(statusTop+2) - display.contentHeight*0.001
 	hud.board:insert(hud.iconTicket)
 	
 	viewManager.newText({

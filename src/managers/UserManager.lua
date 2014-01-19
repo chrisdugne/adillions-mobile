@@ -869,7 +869,7 @@ function UserManager:checkTicketTiming()
 		
 		local multiLineText = display.newMultiLineText  
 		{
-			text = T "You can fill out a new ticket in :", 
+			text = T "You can fill out a new Ticket in :", 
 			width = display.contentWidth*0.75,  
 			left = display.contentWidth*0.5,
 			font = FONT, 

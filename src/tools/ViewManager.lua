@@ -153,9 +153,9 @@ function refreshHeaderPoints()
 
 		local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
 
-		local remainingTickets = T "Remaining ticket"
+		local remainingTickets = T "Remaining Ticket"
 		if(nbTickets > 1) then
-			remainingTickets = T "Remaining tickets"
+			remainingTickets = T "Remaining Tickets"
 		end
 
 		viewManager.newText({

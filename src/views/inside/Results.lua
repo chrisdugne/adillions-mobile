@@ -239,7 +239,7 @@ function scene:openMoreResults( lottery )
 
 	viewManager.newText({
 		parent = hud.popup, 
-		text = T "winning tickets", 
+		text = T "winning Tickets", 
 		x = display.contentWidth*0.45,
 		y = display.contentHeight * 0.22,
 		fontSize = 32,
@@ -257,7 +257,7 @@ function scene:openMoreResults( lottery )
 
 	viewManager.newText({
 		parent = hud.popup, 
-		text = T "Winning ticket", 
+		text = T "Winning Ticket", 
 		x = display.contentWidth*0.77,
 		y = display.contentHeight * 0.22,
 		fontSize = 32,

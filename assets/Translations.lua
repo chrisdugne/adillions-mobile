@@ -114,10 +114,10 @@ local translations =
 	},
 
 	["Several prize categories and lottery"] = {
-		["fr"] = "Plusieurs rangs de gain et tickets",
+		["fr"] = "Plusieurs rangs de gain et Tickets",
 	},
 
-	["tickets are available for each draw"] = {
+	["Tickets are available for each draw"] = {
 		["fr"] = "disponibles par tirage",
 	},
 
@@ -161,8 +161,8 @@ local translations =
 		["fr"] = "Vous avez atteint le nombre",
 	},
 
-	["number of tickets for this draw"] = {
-		["fr"] = "maximum de tickets pour ce tirage",
+	["number of Tickets for this draw"] = {
+		["fr"] = "maximum de Tickets pour ce tirage",
 	},
 
 	["Get more Tickets by liking our"] = {
@@ -180,8 +180,8 @@ local translations =
 
 	---POPUP WAIT ----------------------------------------------------------- 
 
-	["You can fill out a new ticket in :"] = {
-		["fr"] = "Un ticket sera disponible dans :",
+	["You can fill out a new Ticket in :"] = {
+		["fr"] = "Un Ticket sera disponible dans :",
 	},
 
 	["Get Instant Tickets by inviting your \nfriends, sharing your activity, liking \nour theme, etc."] = {
@@ -194,11 +194,11 @@ local translations =
 		["fr"] = "Tickets Instantanés",
 	},
 
-	["Remaining ticket"] = {
+	["Remaining Ticket"] = {
 		["fr"] = "Ticket restant",
 	},
 
-	["Remaining tickets"] = {
+	["Remaining Tickets"] = {
 		["fr"] = "Tickets restants",
 	},
 
@@ -212,18 +212,18 @@ local translations =
 		["fr"] = "Ticket Instantané",
 	},
 
-	["Increase your number of available tickets \n for the next draws by gaining more Tickets"] = {
-		["fr"] = "Augmentez votre nombre de tickets \n par tirage en gagnant plus de Tickets",
+	["Increase your number of available Tickets for the next draws"] = {
+		["fr"] = "Augmentez votre nombre de Tickets disponibles pour les prochains tirages",
 	},
 
-	["Get Instant Tickets (ad-free tickets) by earning points"] = {
+	["Get Instant Tickets (ad-free Tickets) by earning points"] = {
 		["fr"] = "Obtenez des Tickets Instantanés (tickets sans pub) en gagnant des points",
 	},
 
 	---------
 
-	["+ 1pt / ticket"] = {
-		["fr"] = "+ 1pt / ticket",
+	["+ 1pt / Ticket"] = {
+		["fr"] = "+ 1pt / Ticket",
 	},
 
 	["+ 1pt for the sponsor and the sponsored user"] = {
@@ -445,15 +445,15 @@ local translations =
 		["fr"] = "Nbre de",
 	},
 
-	["winning tickets"] = {
-		["fr"] = "tickets gagnants",
+	["winning Tickets"] = {
+		["fr"] = "Tickets gagnants",
 	},
 
 	["Prize / "] = {
 		["fr"] = "Gain / ",
 	},
 
-	["Winning ticket"] = {
+	["Winning Ticket"] = {
 		["fr"] = "Ticket gagnant",
 	},
 
@@ -480,7 +480,7 @@ local translations =
 	---CONFIRMATION-----------------------------------------------------------
 
 	["Your selection !"] = {
-		["fr"] = "Votre ticket !",
+		["fr"] = "Votre Ticket !",
 	},
 
 	["Next drawing"] = {

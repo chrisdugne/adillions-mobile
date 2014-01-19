@@ -235,7 +235,7 @@ function scene:createTuto2()
 
 	hud.tuto2.finalText2 = viewManager.newText({
 		parent 			= hud.tuto2,
-		text 				= T "tickets are available for each draw", 
+		text 				= T "Tickets are available for each draw", 
 		fontSize			= 39,  
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.82,
