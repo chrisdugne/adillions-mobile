@@ -162,7 +162,7 @@ function scene:drawScene()
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text	 			= userManager.user.availableTickets .. " + " .. userManager.user.totalBonusTickets,     
+		text	 			= START_AVAILABLE_TICKETS .. " + " .. userManager.user.totalBonusTickets,     
 		x 					= self.column2 - display.contentWidth*0.11,
 		y 					= self.top + self.yGap*(statusTop+2),
 		fontSize 		= self.fontSizeRight,
