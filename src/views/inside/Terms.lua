@@ -23,8 +23,7 @@ end
 function scene:refreshScene()
 	local terms = ""
 	if(COUNTRY == "FR") then
---		terms = "mtermsFR"
-		terms = "mtermsEN"
+		terms = "mtermsFR"
 	else
 		terms = "mtermsEN"
 	end
