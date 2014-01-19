@@ -673,10 +673,10 @@ function scene:openRewards1()
 	hud.text = display.newText(
 		hud.popup, 
 		T "Increase your number of available Tickets for the next draws", 
-		0, 0, display.contentWidth*0.85, display.contentHeight*0.25, FONT, 36 )
+		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 36 )
 		
 	hud.text.x = display.contentWidth*0.5
-	hud.text.y = display.contentHeight*0.33
+	hud.text.y = display.contentHeight*0.34
 	hud.text:setTextColor(0)
 	
 	--------------------------
@@ -789,21 +789,14 @@ function scene:openRewards2()
 	
 	--------------------------
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "Get Instant Tickets (ad-free Tickets) by earning points" .. "\n", 
-		width = display.contentWidth*0.8,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 36,
-		align = "left",
-		spaceY = display.contentWidth*0.009
-	}
-
-	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
-	multiLineText.x = display.contentWidth*0.1
-	multiLineText.y = display.contentHeight*0.25
-	hud.popup:insert(multiLineText)         
+	hud.text = display.newText(
+		hud.popup, 
+		T "Get Instant Tickets (ad-free Tickets) by earning points",
+		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 36 )
+		
+	hud.text.x = display.contentWidth*0.5
+	hud.text.y = display.contentHeight*0.34
+	hud.text:setTextColor(0)
 	
 	-------------------
 
