@@ -8,6 +8,7 @@ local widget = require( "widget" )
 
 local ICON_SIZE = 95
 local SMALL_THEME_SCALE = 0.59
+local MEDIUM_THEME_SCALE = 0.79
 
 -----------------------------------------------------------------------------------------
 
@@ -476,18 +477,22 @@ end
 
 ------------------------------------------------------------------
 
-function drawRemoteImage( url, parent, x, y, scale, alpha, next )
+function drawRemoteImage( url, parent, x, y, scale, alpha, next, prefix )
 
 	if(not scale) then scale = 1 end
 	if(not alpha) then alpha = 1 end
+	if(not prefix) then prefix = "" end
 	
-	local fileName = utils.imageName(url)
+	local fileName = prefix .. utils.imageName(url)
 	local image = display.newImage( parent, fileName, system.TemporaryDirectory)
+	
+	print(fileName)
 	
 	if not image then
 		local imageReceived = function(event) return insertImage(event.target, parent, x, y, scale, alpha, next) end
 		display.loadRemoteImage( url, "GET", imageReceived, fileName, system.TemporaryDirectory )
 	else
+   	print("image from cache")
 		insertImage(image, parent, x, y, scale, alpha, next)
 	end
 	
@@ -815,11 +820,11 @@ end
 function drawSelectedAdditional(ball,x,y, action)
 	
 	if(ball) then
-		drawThemeIcon(ball.num, hud.selection, lotteryManager.nextLottery, x, y, SMALL_THEME_SCALE, 1, function()
+		drawThemeIcon(ball.num, hud.selection, lotteryManager.nextLottery, x, y, MEDIUM_THEME_SCALE, 1, function()
       	local themeMask = display.newImage(hud.selection, "assets/images/balls/ball.mask.png")
       	themeMask.x = x
       	themeMask.y = y
-      	themeMask:scale(SMALL_THEME_SCALE, SMALL_THEME_SCALE)
+      	themeMask:scale(MEDIUM_THEME_SCALE, MEDIUM_THEME_SCALE)
       	
    		if(action) then
       		utils.onTouch(themeMask, action)

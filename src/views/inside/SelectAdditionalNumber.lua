@@ -71,10 +71,9 @@ function scene:refreshScene()
 	
 	------------------
 
---	hud.selector = display.newImage( hud, "assets/images/hud/selector.white.png")  
-	hud.selector = display.newImage( hud, "assets/images/hud/selector.green.2.png")  
-	hud.selector.x = display.contentWidth*0.5
-	hud.selector.y = top + display.contentHeight*0.605
+	hud.selector 		= display.newImageRect(hud, "assets/images/hud/selector.green.2.png", display.contentWidth*0.9, display.viewableContentHeight*0.114)
+	hud.selector.x 	= display.contentWidth*0.5
+	hud.selector.y 	= top + display.contentHeight*0.605
 	
 	------------------
 	

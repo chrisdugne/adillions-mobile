@@ -28,8 +28,6 @@ function UserManager:fetchPlayer()
 	{}, 
 	SERVER_URL .. "player", 
 	function(result)
-		print("--- player : ")
-		utils.tprint(result)
 		native.setActivityIndicator( false )
 
 		if(result.isError) then
@@ -64,13 +62,6 @@ function UserManager:getPlayerByFacebookId()
 	SERVER_URL .. "playerFromFB", 
 	function(result)
 		print("received PlayerByFacebookId")
-
-		print("-------------")
-		utils.tprint(result)
-		print("-------------")
-		print(result.isError)
-		print(result.status)
-		print("-------------")
 		
 		if(result.status < 0 and self.attemptFBPlayer < 3) then
    		print("--> try again getPlayerByFacebookId")
@@ -114,8 +105,6 @@ function UserManager:checkExistPlayerByFacebookId(proceedWithMerge)
 	}, 
 	SERVER_URL .. "existFBPlayer", 
 	function(result)
-		print("received PlayerByFacebookId")
-		utils.tprint(result)
 		native.setActivityIndicator( false )
 		
 		if(result.isError) then
@@ -148,8 +137,6 @@ function UserManager:receivedPlayer(player, next)
 		viewManager.message(T "Welcome" .. " " .. player.userName .. " !")
 	end
 
-	print("------------------------ welcome ")
-	utils.tprint(player)
 	self:updatedPlayer(player, next)
 end
 
@@ -368,7 +355,6 @@ function UserManager:checkFanStatus(next)
 			---------------------------------------------------------
 
 			if(response) then
-				utils.tprint(response.relationship.source.following)
 				self.user.twitterFan = response.relationship.source.following
 			end
 

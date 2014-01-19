@@ -241,12 +241,15 @@ function scene:drawNextLottery( event )
 	-------------------------------
 	-- theme
 	
-	viewManager.drawRemoteImage(lotteryManager.nextDrawing.theme.image, hud, display.contentWidth*0.5, display.contentHeight * 0.75)
+	local url = ""
+	if(lotteryManager.nextDrawing.theme.mobile) then
+		url = lotteryManager.nextDrawing.theme.mobile[LANG]
+	else
+		url = lotteryManager.nextDrawing.theme.image -- to remove from 1.1 on production
+	end
 	
-	hud.themeTitle = display.newImage( hud, I "theme.png")
-	hud.themeTitle.x = display.contentWidth*0.5
-	hud.themeTitle.y = display.contentHeight*0.85
-
+	viewManager.drawRemoteImage(url, hud, display.contentWidth*0.5, display.contentHeight * 0.75, 1, 1, nil, lotteryManager.nextDrawing.theme.uid)
+	
 	------------------
 	
 	facebook.checkThemeLiked()

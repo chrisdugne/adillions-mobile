@@ -302,8 +302,8 @@ function LotteryManager:refreshThemeSelectionDisplay()
 	-- display
 
 	local nbSelected  = 0
-	local marginLeft 	=  hud.selector.x - 360
-	local xGap 			=  100
+	local marginLeft 	=  display.contentWidth*0.015
+	local xGap 			=  display.contentWidth*0.14
 	local top 			= 	hud.selector.y
 
 	-------------------------------------
@@ -314,7 +314,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
 		local num = self.currentSelection[i]
 		local x = marginLeft + i*xGap
 
-		viewManager.drawBall(hud, num, marginLeft + xGap*i, display.contentHeight*0.7)
+		viewManager.drawBall(hud, num, marginLeft + xGap*i, display.contentHeight*0.7, true)
 		if(self.currentSelection[i]) then nbSelected = nbSelected + 1 end
 
 	end
