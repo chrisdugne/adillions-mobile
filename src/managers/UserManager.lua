@@ -179,11 +179,7 @@ end
 function UserManager:checkExistingUser(next)
 	self:checkExistPlayerByFacebookId(function()
 		print("proceed with merge", userManager.user.facebookId, facebook.data.id)
-		if(userManager.user.facebookId == facebook.data.id) then 
 			self:showConfirmMerge(next)
-		else
-			self:showWrongAccount(next)
-		end 
 	end)
 end
 
