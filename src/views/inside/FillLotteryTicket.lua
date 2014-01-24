@@ -154,6 +154,8 @@ end
 
 function scene:getNum()
 
+	math.randomseed(system.getTimer() * os.time())
+	
 	local num 				= math.random(1,49)
 	local alreadyChosen 	= false
 
