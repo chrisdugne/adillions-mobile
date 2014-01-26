@@ -197,9 +197,10 @@ function scene:openPrizes()
 
 	--------------------------
 	
-	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/cagnotte.png")
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PrizeTitle.png")
 	hud.picto.x 		= display.contentWidth*0.14
 	hud.picto.y 		= display.contentHeight*0.15
+	hud.picto:scale(0.7,0.7)
 
 	hud.title 			= display.newImage(hud.popup, I "Prize.png")
 	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
@@ -269,7 +270,7 @@ function scene:openPrizes()
 
 	for i = 1, 6 do
 
-   	hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/Rang".. i .. ".png")
+   	hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/R".. i .. ".png")
    	hud.iconRang.x 		= display.contentWidth * 0.2
    	hud.iconRang.y 		= top + yGap * (i-1)
    	hud.iconRang:scale 	(0.6,0.6)	
