@@ -197,7 +197,7 @@ function scene:openPrizes()
 
 	--------------------------
 	
-	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoPrize.png")
+	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/cagnotte.png")
 	hud.picto.x 		= display.contentWidth*0.14
 	hud.picto.y 		= display.contentHeight*0.15
 
@@ -278,7 +278,7 @@ function scene:openPrizes()
    		parent 			= hud.popup, 
    		text	 			= matches[i],     
    		x 					= display.contentWidth*0.45,
-   		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
+   		y 					= top + yGap * (i-1) ,
    		fontSize 		= 35,
    	})
    
@@ -286,13 +286,13 @@ function scene:openPrizes()
    		parent 			= hud.popup, 
    		text	 			= percents[i],     
    		x 					= display.contentWidth*0.75,
-   		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
+   		y 					= top + yGap * (i-1) ,
    		fontSize 		= 35,
    	})
 
-   	hud.iconPieces 			= display.newImage( hud.popup, "assets/images/icons/money.png")
+   	hud.iconPieces 			= display.newImage( hud.popup, "assets/images/icons/PictoPrize.png")
    	hud.iconPieces.x 			= display.contentWidth * 0.86
-   	hud.iconPieces.y 			= top + yGap * (i-1) - display.contentHeight*0.01
+   	hud.iconPieces.y 			= top + yGap * (i-1) - display.contentHeight*0.0005
    	
 	end
 

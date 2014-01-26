@@ -1,5 +1,9 @@
 local translations =
 {
+	["Last updated : January 25th, 2014"] = {
+		["fr"] = "Dernière mise à jour : 25 janvier 2014",
+	},
+	
 	["Log In"] = {
 		["fr"] = "S'identifier",
 	},

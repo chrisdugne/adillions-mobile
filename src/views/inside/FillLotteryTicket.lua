@@ -153,9 +153,12 @@ end
 ------------------------------------------
 
 function scene:getNum()
-
-	math.randomseed(system.getTimer() * os.time())
 	
+   local s = system.getTimer()/100
+   local os = os.time()
+   local seed = os / s 
+	math.randomseed(seed)
+
 	local num 				= math.random(1,49)
 	local alreadyChosen 	= false
 

@@ -224,19 +224,26 @@ function scene:drawNextLottery( event )
    end
 
 	-------------------------------
-
-	if(userManager.user.extraTickets > 0) then
-   	hud.playButton = display.newImage( hud, I "fillout.instant.ticket.png")
+	
+	if(lotteryManager.nextDrawing.uid == lotteryManager.nextLottery.uid) then
+   	if(userManager.user.extraTickets > 0) then
+      	hud.playButton = display.newImage( hud, I "fillout.instant.ticket.png")
+      else  
+      	hud.playButton = display.newImage( hud, I "filloutticket.button.png")
+      end
+	
+		utils.onTouch(hud.playButton, function()
+			self:play()
+		end)
+		
    else  
-   	hud.playButton = display.newImage( hud, I "filloutticket.button.png")
+   	hud.playButton = display.newImage( hud, I "waiting.png")
+   	hud.playButton.alpha = 0.5
    end
 	
 	hud.playButton.x = display.contentWidth*0.5
 	hud.playButton.y = top + display.contentHeight*0.24
 	
-	utils.onTouch(hud.playButton, function()
-		self:play()
-	end)
 	
 	-------------------------------
 	-- theme

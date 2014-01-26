@@ -8,8 +8,9 @@ UserManager = {}
 function UserManager:new()  
 
 	local object = {
-		user 					= {},
-		attemptFBPlayer 	= 0
+		user 						= {},
+		attemptFBPlayer 		= 0,
+		attemptFetchPlayer 	= 0
 	}
 
 	setmetatable(object, { __index = UserManager })
@@ -20,20 +21,22 @@ end
 
 function UserManager:fetchPlayer()
 
-	print("--- fetchPlayer true")
 	native.setActivityIndicator( true )
-
 	print("fetchPlayer")
+	self.attemptFetchPlayer = self.attemptFetchPlayer + 1 
+	
 	utils.postWithJSON(
 	{}, 
 	SERVER_URL .. "player", 
 	function(result)
-		native.setActivityIndicator( false )
 
-		if(result.isError) then
-			print("fetchPlayer error : outside")
-			router.openOutside()
+		if(result.isError and self.attemptFetchPlayer < 3) then
+   		print("--> try again fetchPlayer")
+			self:fetchPlayer()
 		else
+   		native.setActivityIndicator( false )
+			self.attemptFetchPlayer = 0
+   		
 			local player = json.decode(result.response)
 			if(not player) then 
 				print("fetchPlayer no player : outside")
