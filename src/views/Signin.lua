@@ -22,7 +22,7 @@ end
 
 function scene:refreshScene()
 	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "msignin?lang=" .. LANG  )
+	self.webView:request( SERVER_URL .. "msignin2?lang=" .. LANG  )
 	self.webView:addEventListener( "urlRequest", function(event) self:signinViewListener(event) end )
 	
 	viewManager.initHeader()
@@ -39,10 +39,17 @@ function scene:signinViewListener( event )
 		print("---   signin listener")
 		print(event.url)
 
-    	if event.url == SERVER_URL .. "signedIn" then
+		-- idem login
+    	if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
 			self:closeWebView()    		
-      	router.openLogin()
+			local params = utils.getUrlParams(event.url);
+			
+			GLOBALS.savedData.authToken 	= params.authToken         
+			GLOBALS.savedData.user.email 	= params.email   
+      	utils.saveTable(GLOBALS.savedData, "savedData.json")
 
+			userManager:fetchPlayer()
+			
     	elseif event.url == SERVER_URL .. "backToMobile" then
 			self:closeWebView()    		
 			print("signin : backToMobile : outside")		
