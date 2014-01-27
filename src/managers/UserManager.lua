@@ -30,9 +30,14 @@ function UserManager:fetchPlayer()
 	SERVER_URL .. "player", 
 	function(result)
 
-		if(result.isError and self.attemptFetchPlayer < 3) then
-   		print("--> try again fetchPlayer")
-			self:fetchPlayer()
+		if(result.isError) then
+			if(self.attemptFetchPlayer < 5) then
+      		print("--> try again fetchPlayer")
+   			self:fetchPlayer()
+   		else
+				print("fetchPlayer error : outside")
+				router.openOutside()
+			end
 		else
    		native.setActivityIndicator( false )
 			self.attemptFetchPlayer = 0

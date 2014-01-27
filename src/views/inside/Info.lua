@@ -191,10 +191,22 @@ end
 function scene:openPrizes()
 
 	local top	 	= display.contentHeight * 0.35
-	local yGap		= display.contentHeight*0.082
+	local yGap		= display.contentHeight * 0.082
 
 	viewManager.showPopup(function() end)
 
+	--------------------------
+
+	hud.date = display.newText(
+		hud.popup, 
+		T "Last updated : January 05th, 2014",
+		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 26 )
+		
+	hud.date:setReferencePoint(display.CenterRightReferencePoint);
+	hud.date.x = display.contentWidth*0.8
+	hud.date.y = display.contentHeight*0.2
+	hud.date:setTextColor(0)
+	
 	--------------------------
 	
 	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PrizeTitle.png")
