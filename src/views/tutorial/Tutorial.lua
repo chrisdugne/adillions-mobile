@@ -57,6 +57,7 @@ function scene:refreshScene()
 	hud.close 				= display.newImage( hud, "assets/images/hud/CroixClose.png")
 	hud.close.x 			= display.contentWidth*0.92
 	hud.close.y 			= display.contentHeight*0.04
+	hud.close.alpha		= 0.45
 	
 	utils.onTouch(hud.close, function() self:exit() end)
 	
@@ -89,55 +90,85 @@ function scene:createTuto1()
 	hud.tuto1.longtext.x 		= display.contentWidth*0.5
 	hud.tuto1.longtext.y 		= display.contentHeight*0.33
 
-	hud.tuto1.eachweek = viewManager.newText({
-		parent 			= hud.tuto1,
-		text 				= T "Each week" .. " :", 
-		fontSize			= 48,  
-		x 					= display.contentWidth * 0.5,
-		y 					= display.contentHeight*0.46,
-	})
+	hud.tuto1.longtext 			= display.newImage( hud.tuto1, I "funded.png")
+	hud.tuto1.longtext.x 		= display.contentWidth*0.6
+	hud.tuto1.longtext.y 		= display.contentHeight*0.43
 	
-	hud.tuto1.ball1 				= display.newImage( hud.tuto1, "assets/images/hud/TutoBall1.png")
-	hud.tuto1.ball1.x 			= display.contentWidth*0.3
-	hud.tuto1.ball1.y 			= display.contentHeight*0.58
+	--------------------
 	
-	hud.tuto1.theme = viewManager.newText({
+	hud.tuto1.ball1 				= display.newImage( hud.tuto1, "assets/images/icons/watch.png")
+	hud.tuto1.ball1.x 			= display.contentWidth*0.15
+	hud.tuto1.ball1.y 			= display.contentHeight*0.52
+	
+	hud.tuto1.watch = viewManager.newText({
 		parent 			= hud.tuto1,
-		text 				= T "theme", 
+		text 				= T "Watch", 
 		fontSize			= 44,  
-		x 					= display.contentWidth * 0.4,
-		y 					= display.contentHeight*0.56,
-		referencePoint = display.CenterLeftReferencePoint
+		font				= NUM_FONT,  
+		x 					= display.contentWidth * 0.3,
+		y 					= display.contentHeight*0.52,
+		referencePoint = display.BottomLeftReferencePoint
 	})
 	
-	hud.tuto1.ball2 				= display.newImage( hud.tuto1, "assets/images/hud/TutoBall1.png")
-	hud.tuto1.ball2.x 			= display.contentWidth*0.3
-	hud.tuto1.ball2.y 			= display.contentHeight*0.69
 	
-	hud.tuto1.theme = viewManager.newText({
+	hud.tuto1.anad = viewManager.newText({
 		parent 			= hud.tuto1,
-		text 				= T "draw on", 
+		text 				= T "an ad", 
 		fontSize			= 44,  
-		x 					= display.contentWidth * 0.4,
-		y 					= display.contentHeight*0.67,
-		referencePoint = display.CenterLeftReferencePoint
+		x 					= hud.tuto1.watch.x + hud.tuto1.watch.width + display.contentWidth*0.02,
+		y 					= display.contentHeight*0.52,
+		referencePoint = display.BottomLeftReferencePoint
 	})
 	
-	hud.tuto1.youtube 			= display.newImage( hud.tuto1, "assets/images/hud/Youtube.png")
-	hud.tuto1.youtube.x 			= display.contentWidth*0.4 + hud.tuto1.theme.contentWidth + 90
-	hud.tuto1.youtube.y 			= display.contentHeight*0.675
+	--------------------
 	
-	hud.tuto1.ball3 				= display.newImage( hud.tuto1, "assets/images/hud/TutoBall1.png")
-	hud.tuto1.ball3.x 			= display.contentWidth*0.3
+	hud.tuto1.ball2 				= display.newImage( hud.tuto1, "assets/images/icons/ticket.tuto.png")
+	hud.tuto1.ball2.x 			= display.contentWidth*0.15
+	hud.tuto1.ball2.y 			= display.contentHeight*0.66
+	
+	hud.tuto1.fillout = viewManager.newText({
+		parent 			= hud.tuto1,
+		text 				= T "Fill out", 
+		fontSize			= 44,  
+		font				= NUM_FONT,  
+		x 					= display.contentWidth * 0.3,
+		y 					= display.contentHeight*0.66,
+		referencePoint = display.BottomLeftReferencePoint
+	})
+	
+	
+	hud.tuto1.anad = viewManager.newText({
+		parent 			= hud.tuto1,
+		text 				= T "your lottery ticket", 
+		fontSize			= 44,  
+		x 					= hud.tuto1.fillout.x + hud.tuto1.fillout.width + display.contentWidth*0.02,
+		y 					= display.contentHeight*0.66,
+		referencePoint = display.BottomLeftReferencePoint
+	})
+	
+	--------------------
+	
+	hud.tuto1.ball3 				= display.newImage( hud.tuto1, "assets/images/icons/win.png")
+	hud.tuto1.ball3.x 			= display.contentWidth*0.15
 	hud.tuto1.ball3.y 			= display.contentHeight*0.8
 	
-	hud.tuto1.theme = viewManager.newText({
+	hud.tuto1.win = viewManager.newText({
 		parent 			= hud.tuto1,
-		text 				= T "chance to win", 
+		text 				= T "Win", 
 		fontSize			= 44,  
-		x 					= display.contentWidth * 0.4,
-		y 					= display.contentHeight*0.78,
-		referencePoint = display.CenterLeftReferencePoint
+		font				= NUM_FONT,  
+		x 					= display.contentWidth * 0.3,
+		y 					= display.contentHeight*0.8,
+		referencePoint = display.BottomLeftReferencePoint
+	})
+	
+	hud.tuto1.anad = viewManager.newText({
+		parent 			= hud.tuto1,
+		text 				= T "a prize", 
+		fontSize			= 44,  
+		x 					= hud.tuto1.win.x + hud.tuto1.win.width + display.contentWidth*0.02,
+		y 					= display.contentHeight*0.8,
+		referencePoint = display.BottomLeftReferencePoint
 	})
 	
 	-------------------
@@ -146,15 +177,16 @@ function scene:createTuto1()
 		parent 			= hud.tuto1,
 		text 				= T "NEXT", 
 		fontSize			= 49,  
+		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.5,
-		y 					= display.contentHeight*0.93,
+		y 					= display.contentHeight*0.94,
 	})
 	
 	hud.tuto1.next:setTextColor(255)
 	
 	hud.tuto1.arrowright 		= display.newImage( hud.tuto1, "assets/images/hud/Tuto_ArrowRight.png")
 	hud.tuto1.arrowright.x 		= display.contentWidth*0.5 + hud.tuto1.next.contentWidth/2 + 50
-	hud.tuto1.arrowright.y 		= display.contentHeight*0.93
+	hud.tuto1.arrowright.y 		= display.contentHeight*0.94
 	
 
 	utils.onTouch(hud.tuto1.next, 			function() 	self:goTuto(2) end)
@@ -248,14 +280,15 @@ function scene:createTuto2()
 	
 	hud.tuto2.arrowright 		= display.newImage( hud.tuto2, "assets/images/hud/Tuto_ArrowRight.png")
 	hud.tuto2.arrowright.x 		= display.contentWidth*0.9
-	hud.tuto2.arrowright.y 		= display.contentHeight*0.93
+	hud.tuto2.arrowright.y 		= display.contentHeight*0.94
 	
 	hud.tuto2.next = viewManager.newText({
 		parent 			= hud.tuto2,
 		text 				= T "NEXT",       
 		fontSize			= 49,  
+		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.86,
-		y 					= display.contentHeight*0.93,
+		y 					= display.contentHeight*0.94,
 		referencePoint = display.CenterRightReferencePoint
 	})
 
@@ -263,14 +296,15 @@ function scene:createTuto2()
 	
 	hud.tuto2.arrowleft 		= display.newImage( hud.tuto2, "assets/images/hud/Tuto_ArrowLeft.png")
 	hud.tuto2.arrowleft.x 	= display.contentWidth*0.1
-	hud.tuto2.arrowleft.y 	= display.contentHeight*0.93
+	hud.tuto2.arrowleft.y 	= display.contentHeight*0.94
 	
 	hud.tuto2.previous = viewManager.newText({
 		parent 			= hud.tuto2,
 		text 				= T "PREVIOUS",       
 		fontSize			= 49,  
+		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.14,
-		y 					= display.contentHeight*0.93,
+		y 					= display.contentHeight*0.94,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 	
@@ -325,18 +359,19 @@ function scene:createTuto3()
 	
 	hud.tuto3.play 			= display.newImage( hud.tuto3, I "Tuto_bt_Play.png")
 	hud.tuto3.play.x 			= display.contentWidth*0.75
-	hud.tuto3.play.y 			= display.contentHeight*0.93
+	hud.tuto3.play.y 			= display.contentHeight*0.94
 
 	hud.tuto3.arrowleft 		= display.newImage( hud.tuto3, "assets/images/hud/Tuto_ArrowLeft.png")
 	hud.tuto3.arrowleft.x 	= display.contentWidth*0.1
-	hud.tuto3.arrowleft.y 	= display.contentHeight*0.93
+	hud.tuto3.arrowleft.y 	= display.contentHeight*0.94
 	
 	hud.tuto3.previous = viewManager.newText({
 		parent 			= hud.tuto3,
 		text 				= T "PREVIOUS",       
 		fontSize			= 49,  
+		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.14,
-		y 					= display.contentHeight*0.93,
+		y 					= display.contentHeight*0.94,
 		referencePoint = display.CenterLeftReferencePoint
 	})
 	

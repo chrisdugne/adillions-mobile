@@ -197,16 +197,16 @@ function scene:openPrizes()
 
 	--------------------------
 
-	hud.date = display.newText(
-		hud.popup, 
-		T "Last updated : January 05th, 2014",
-		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 26 )
-		
-	hud.date:setReferencePoint(display.CenterRightReferencePoint);
-	hud.date.x = display.contentWidth*0.8
-	hud.date.y = display.contentHeight*0.2
-	hud.date:setTextColor(0)
-	
+	viewManager.newText({
+		parent = hud.popup, 
+		text = T "Last updated : January 05th, 2014",
+		x = display.contentWidth*0.9,
+		y = display.contentHeight * 0.08,
+		fontSize = 26,
+		font		= FONT,
+		referencePoint = display.CenterRightReferencePoint
+	})
+
 	--------------------------
 	
 	hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PrizeTitle.png")

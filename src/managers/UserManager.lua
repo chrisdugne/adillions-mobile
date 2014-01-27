@@ -32,10 +32,12 @@ function UserManager:fetchPlayer()
 
 		if(result.isError) then
 			if(self.attemptFetchPlayer < 5) then
+      		utils.tprint(result)
       		print("--> try again fetchPlayer")
-   			self:fetchPlayer()
+   			timer.performWithDelay(1000, function() userManager:fetchPlayer() end)
    		else
 				print("fetchPlayer error : outside")
+      		native.setActivityIndicator( false )
 				router.openOutside()
 			end
 		else
@@ -73,7 +75,7 @@ function UserManager:getPlayerByFacebookId()
 		
 		if(result.status < 0 and self.attemptFBPlayer < 3) then
    		print("--> try again getPlayerByFacebookId")
-			self:getPlayerByFacebookId()
+			timer.performWithDelay(1000, function() userManager:getPlayerByFacebookId() end)
 		else
    		native.setActivityIndicator( false )	
 			self.attemptFBPlayer = 0
@@ -116,7 +118,7 @@ function UserManager:checkExistPlayerByFacebookId(proceedWithMerge)
 		native.setActivityIndicator( false )
 		
 		if(result.isError) then
-			timer.performWithDelay(1000, userManager:checkExistPlayerByFacebookId(proceedWithMerge))
+			timer.performWithDelay(1000, function() userManager:checkExistPlayerByFacebookId(proceedWithMerge) end)
 		else
    		local response = json.decode(result.response)
    		local existPlayer = response.existPlayer

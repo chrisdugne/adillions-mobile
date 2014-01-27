@@ -9,7 +9,7 @@ APP_VERSION 		= "1.0"
 
 -----------------------------------------------------------------------------------------
 
---DEV					= 1
+DEV					= 1
 PROD					= 1
 
 -----------------------------------------------------------------------------------------
@@ -284,7 +284,24 @@ end
 --add the key callback
 Runtime:addEventListener( "key", onKeyEvent )
 
+---------------------------------------------------------------------------------
 
+local function myUnhandledErrorListener( event )
+
+    local iHandledTheError = true
+
+    if iHandledTheError then
+        print( "Handling the unhandled error", event.errorMessage )
+    else
+        print( "Not handling the unhandled error", event.errorMessage )
+    end
+    
+    return iHandledTheError
+end
+
+Runtime:addEventListener("unhandledError", myUnhandledErrorListener)
+
+---------------------------------------------------------------------------------
 
 --
 --

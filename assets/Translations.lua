@@ -103,6 +103,32 @@ local translations =
 		["fr"] = "chance de gagner",
 	},
 
+	--------------------------
+
+	["Watch"] = {
+		["fr"] = "Visualisez",
+	},
+
+	["an ad"] = {
+		["fr"] = "une pub",
+	},
+
+	["Fill out"] = {
+		["fr"] = "Remplissez",
+	},
+
+	["your lottery ticket"] = {
+		["fr"] = "votre ticket de loterie",
+	},
+
+	["Win"] = {
+		["fr"] = "Gagnez",
+	},
+
+	["a prize"] = {
+		["fr"] = "le Jackpot",
+	},
+
 	---TUTORIAL P2-----------------------------------------------------------
 
 	["Watch an ad"] = {
