@@ -234,7 +234,7 @@ function scene:openPrizes()
 	viewManager.newText({
 		parent = hud.popup, 
 		text = T "Prize", 
-		x = display.contentWidth*0.8,
+		x = display.contentWidth * 0.8,
 		y = display.contentHeight * 0.24,
 		fontSize = 32,
 		font = NUM_FONT
@@ -243,7 +243,7 @@ function scene:openPrizes()
 	viewManager.newText({
 		parent = hud.popup, 
 		text = T "breakdown", 
-		x = display.contentWidth*0.8,
+		x = display.contentWidth * 0.8,
 		y = display.contentHeight * 0.27,
 		fontSize = 32,
 		font = NUM_FONT
@@ -273,7 +273,6 @@ function scene:openPrizes()
    	hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/R".. i .. ".png")
    	hud.iconRang.x 		= display.contentWidth * 0.2
    	hud.iconRang.y 		= top + yGap * (i-1)
-   	hud.iconRang:scale 	(0.6,0.6)	
    
    	viewManager.newText({
    		parent 			= hud.popup, 
