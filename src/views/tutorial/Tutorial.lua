@@ -90,9 +90,11 @@ function scene:createTuto1()
 	hud.tuto1.longtext.x 		= display.contentWidth*0.5
 	hud.tuto1.longtext.y 		= display.contentHeight*0.33
 
+	--------------------
+
 	hud.tuto1.longtext 			= display.newImage( hud.tuto1, I "funded.png")
 	hud.tuto1.longtext.x 		= display.contentWidth*0.6
-	hud.tuto1.longtext.y 		= display.contentHeight*0.43
+	hud.tuto1.longtext.y 		= display.contentHeight*0.415
 	
 	--------------------
 	
@@ -106,7 +108,7 @@ function scene:createTuto1()
 		fontSize			= 44,  
 		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.3,
-		y 					= display.contentHeight*0.52,
+		y 					= display.contentHeight* (0.52 + 0.015),
 		referencePoint = display.BottomLeftReferencePoint
 	})
 	
@@ -116,7 +118,7 @@ function scene:createTuto1()
 		text 				= T "an ad", 
 		fontSize			= 44,  
 		x 					= hud.tuto1.watch.x + hud.tuto1.watch.width + display.contentWidth*0.02,
-		y 					= display.contentHeight*0.52,
+		y 					= display.contentHeight* (0.52 + 0.015),
 		referencePoint = display.BottomLeftReferencePoint
 	})
 	
@@ -132,17 +134,17 @@ function scene:createTuto1()
 		fontSize			= 44,  
 		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.3,
-		y 					= display.contentHeight*0.66,
+		y 					= display.contentHeight* (0.66 + 0.015),
 		referencePoint = display.BottomLeftReferencePoint
 	})
 	
 	
 	hud.tuto1.anad = viewManager.newText({
 		parent 			= hud.tuto1,
-		text 				= T "your lottery ticket", 
+		text 				= T "a ticket", 
 		fontSize			= 44,  
 		x 					= hud.tuto1.fillout.x + hud.tuto1.fillout.width + display.contentWidth*0.02,
-		y 					= display.contentHeight*0.66,
+		y 					= display.contentHeight*(0.66 + 0.015),
 		referencePoint = display.BottomLeftReferencePoint
 	})
 	
@@ -158,7 +160,7 @@ function scene:createTuto1()
 		fontSize			= 44,  
 		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.3,
-		y 					= display.contentHeight*0.8,
+		y 					= display.contentHeight*(0.8 + 0.015),
 		referencePoint = display.BottomLeftReferencePoint
 	})
 	
@@ -167,7 +169,7 @@ function scene:createTuto1()
 		text 				= T "a prize", 
 		fontSize			= 44,  
 		x 					= hud.tuto1.win.x + hud.tuto1.win.width + display.contentWidth*0.02,
-		y 					= display.contentHeight*0.8,
+		y 					= display.contentHeight*(0.8 + 0.015),
 		referencePoint = display.BottomLeftReferencePoint
 	})
 	
@@ -175,11 +177,11 @@ function scene:createTuto1()
 	-- controls
 	hud.tuto1.next = viewManager.newText({
 		parent 			= hud.tuto1,
-		text 				= T "NEXT", 
-		fontSize			= 49,  
-		font				= NUM_FONT,  
+		text 				= T "NEXT",  
+		referencePoint = display.BottomCenterReferencePoint,
+		y 					= display.contentHeight*0.96,
+		fontSize			= 52,  
 		x 					= display.contentWidth * 0.5,
-		y 					= display.contentHeight*0.94,
 	})
 	
 	hud.tuto1.next:setTextColor(255)
@@ -285,11 +287,10 @@ function scene:createTuto2()
 	hud.tuto2.next = viewManager.newText({
 		parent 			= hud.tuto2,
 		text 				= T "NEXT",       
-		fontSize			= 49,  
-		font				= NUM_FONT,  
+		referencePoint = display.BottomRightReferencePoint,
+		fontSize			= 52,  
 		x 					= display.contentWidth * 0.86,
-		y 					= display.contentHeight*0.94,
-		referencePoint = display.CenterRightReferencePoint
+		y 					= display.contentHeight*0.96,
 	})
 
 	hud.tuto2.next:setTextColor(255)
@@ -301,11 +302,10 @@ function scene:createTuto2()
 	hud.tuto2.previous = viewManager.newText({
 		parent 			= hud.tuto2,
 		text 				= T "PREVIOUS",       
-		fontSize			= 49,  
-		font				= NUM_FONT,  
+		referencePoint = display.BottomLeftReferencePoint,
+		fontSize			= 52,  
 		x 					= display.contentWidth * 0.14,
-		y 					= display.contentHeight*0.94,
-		referencePoint = display.CenterLeftReferencePoint
+		y 					= display.contentHeight*0.96,
 	})
 	
 	hud.tuto2.previous:setTextColor(255)
@@ -367,12 +367,11 @@ function scene:createTuto3()
 	
 	hud.tuto3.previous = viewManager.newText({
 		parent 			= hud.tuto3,
-		text 				= T "PREVIOUS",       
-		fontSize			= 49,  
-		font				= NUM_FONT,  
+		text 				= T "PREVIOUS",         
+		referencePoint = display.BottomLeftReferencePoint,
+		fontSize			= 52,  
 		x 					= display.contentWidth * 0.14,
-		y 					= display.contentHeight*0.94,
-		referencePoint = display.CenterLeftReferencePoint
+		y 					= display.contentHeight*0.96,
 	})
 	
 	hud.tuto3.previous:setTextColor(255)

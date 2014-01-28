@@ -117,8 +117,8 @@ local translations =
 		["fr"] = "Remplissez",
 	},
 
-	["your lottery ticket"] = {
-		["fr"] = "votre ticket de loterie",
+	["a ticket"] = {
+		["fr"] = "un ticket",
 	},
 
 	["Win"] = {
