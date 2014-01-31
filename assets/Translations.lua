@@ -129,6 +129,26 @@ local translations =
 		["fr"] = "le Jackpot",
 	},
 
+	["Each new player contributes"] = {
+		["fr"] = "Plus il y a de joueurs,",
+	},
+
+	["to increase the jackpot"] = {
+		["fr"] = "plus la cagnotte augmente",
+	},
+
+	["... give to charities !"] = {
+		["fr"] = "... donnez à des associations !",
+	},
+
+	["... likely you are to win the jackpot !"] = {
+		["fr"] = "... avez de chances de gagner le jackpot !",
+	},
+	
+	["Charities"] = {
+		["fr"] = "Associations",
+	},
+
 	---TUTORIAL P2-----------------------------------------------------------
 
 	["Watch an ad"] = {
@@ -395,6 +415,10 @@ local translations =
 
 	["Charity profile"] = {
 		["fr"] = "Profil donateur",
+	},
+
+	["Charity Profile"] = {
+		["fr"] = "Profil Donateur",
 	},
 
 	["Donation"] = {

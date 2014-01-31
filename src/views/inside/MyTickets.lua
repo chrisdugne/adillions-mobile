@@ -63,7 +63,7 @@ function scene:refreshScene()
    
 	------------------
 	
-	viewManager.setupView(2)
+	viewManager.setupView(1)
 	viewManager.darkerBack()
 	self.view:insert(hud)
 	

@@ -12,10 +12,10 @@ local MEDIUM_THEME_SCALE = 0.79
 
 -----------------------------------------------------------------------------------------
 
-function setupView(selectedTab)
+function setupView(selectedTab, menuType)
 	initBack()
 	initHeader()
-	buildMenu(selectedTab)
+	buildMenu(selectedTab, menuType)
 end
 	
 -----------------------------------------------------------------------------------------
@@ -507,17 +507,44 @@ function insertImage(image, parent, x, y, scale, alpha, next)
 	image.alpha 	= alpha
 
 	parent:insert(image)
-	
+
 	if(next) then
-		next()
+		next(image)
 	end
 end
 
 ------------------------------------------------------------------
 
-function buildMenu(tabSelected)
+--- menuType
+-- 	none | 	1 : classic, white 
+-- 				2 : confirmation,green
+-- 				3 : grey, white
+-- 				
+function buildMenu(tabSelected, menuType)
 
 	local buttonWidth = display.contentWidth/5 - 1
+	local centerOn 	= ""
+	local centerOff 	= ""
+	local playImage 	= ""
+	
+	if(not menuType) then
+		menuType = 3
+	end
+	
+	if(menuType == 1) then
+		playImage = I "ON3_1.png"
+	end
+	
+	if(menuType == 2) then
+		playImage = I "ON3_2.png"
+	end
+	
+	if(menuType == 3) then
+		playImage = I "OFF3.png"
+	end
+	
+	local centerOn 	= I "ON3_" .. menuType ..  ".png" 
+	local centerOff 	= I "OFF3_" .. menuType ..  ".png" 
 	
 	-- Create the tabBar's buttons
 	local tabButtons = 
@@ -529,7 +556,7 @@ function buildMenu(tabSelected)
 			overFile 			= I "ON1.png",
 			onPress = function( event )
 				if(tabSelected ~= 1) then 
-					router.openHome() 
+					router.openMyTickets() 
 				end 
 			end,
 			selected = tabSelected == 1
@@ -541,7 +568,7 @@ function buildMenu(tabSelected)
 			overFile 			= I "ON2.png",
 			onPress = function( event )
 				if(tabSelected ~= 2) then 
-					router.openMyTickets() 
+					router.openProfile() 
 				end 
 			end,
 			selected =  tabSelected == 2
@@ -549,14 +576,8 @@ function buildMenu(tabSelected)
 		{
 			width 				= buttonWidth, 
 			height 				= ICON_SIZE,
-			defaultFile 		= I "OFF3.png",
-			overFile 			= I "ON3.png",
-			onPress = function( event )
-				if(tabSelected ~= 3) then 
-					router.openResults() 
-				end 
-			end,
-			selected =  tabSelected == 3
+			defaultFile 		= "assets/images/menus/empty.png",
+			overFile 			= "assets/images/menus/empty.png",
 		},
 		{
 			width 				= buttonWidth, 
@@ -565,7 +586,7 @@ function buildMenu(tabSelected)
 			overFile 			= I "ON4.png",
 			onPress = function( event )
 				if(tabSelected ~= 4) then 
-					router.openProfile() 
+					router.openResults() 
 				end 
 			end,
 			selected =  tabSelected == 4
@@ -584,40 +605,45 @@ function buildMenu(tabSelected)
 		},
 	}
 
---	local leftEdge 	= "assets/images/menus/tabBar_tabSelectedLeftEdge.png"
---	local rightEdge 	= "assets/images/menus/tabBar_tabSelectedRightEdge.png"
---	local middle 		= "assets/images/menus/tabBar_tabSelectedMiddle.png"
---	
---	if(tabSelected == 0) then
---		leftEdge 	= "assets/images/menus/tabBar_noSelection.png"
---		rightEdge 	= "assets/images/menus/tabBar_noSelection.png"
---		middle 		= "assets/images/menus/tabBar_noSelection.png"
---	end
-		
-		leftEdge 	= "assets/images/menus/empty.png"
-		rightEdge 	= "assets/images/menus/empty.png"
-		middle 		= "assets/images/menus/empty.png"
+	local leftEdge 	= "assets/images/menus/empty.png"
+	local	rightEdge 	= "assets/images/menus/empty.png"
+	local middle 		= "assets/images/menus/empty.png"
 
 	-- Create a tabBar
 	local tabBar = widget.newTabBar({
-		left = 0,
-		top = display.contentHeight - MENU_HEIGHT,
-		width = display.contentWidth,
-		height = MENU_HEIGHT,
-		backgroundFile = "assets/images/menus/menu.bg.png",
-		tabSelectedLeftFile = leftEdge,
-		tabSelectedRightFile = rightEdge,
-		tabSelectedMiddleFile = middle,
-		tabSelectedFrameWidth = 20,
-		tabSelectedFrameHeight = MENU_HEIGHT,
-		buttons = tabButtons,
+		left 									= 0,
+		top 									= display.contentHeight - MENU_HEIGHT,
+		width 								= display.contentWidth,
+		height 								= MENU_HEIGHT,
+		backgroundFile 					= "assets/images/menus/menu.bg.png",
+		tabSelectedLeftFile 				= leftEdge,
+		tabSelectedRightFile 			= rightEdge,
+		tabSelectedMiddleFile 			= middle,
+		tabSelectedFrameWidth 			= 20,
+		tabSelectedFrameHeight 			= MENU_HEIGHT,
+		buttons 								= tabButtons,
 	})
 
 	if(tabSelected == 0) then
    	tabBar:setSelected( 0, false )
    end
-    
+	
 	hud:insert( tabBar )
+
+	-------------------
+	
+	hud.playButton = display.newImage( hud, playImage )
+	hud.playButton.x = display.contentWidth*0.5
+	hud.playButton.y = display.contentHeight - hud.playButton.contentHeight/2
+	
+	
+	utils.onTap(hud.playButton, function()
+		if(tabSelected ~= 3) then 
+			router.openHome() 
+		end 
+	end)
+	
+	hud.playButton:toFront()
 	
 end
 

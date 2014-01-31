@@ -660,7 +660,7 @@ function scene:drawScene()
 
 	------------------
 
-	viewManager.setupView(4)
+	viewManager.setupView(2)
 	self.view:insert(hud)
 end
 

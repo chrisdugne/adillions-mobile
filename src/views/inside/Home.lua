@@ -59,7 +59,7 @@ function scene:refreshScene()
 
 	------------------
 
-	viewManager.setupView(1)
+	viewManager.setupView(0, 1)
 	self.view:insert(hud)
 	
 end
@@ -255,7 +255,7 @@ function scene:drawNextLottery( event )
 		url = lotteryManager.nextDrawing.theme.image -- to remove from 1.1 on production
 	end
 	
-	viewManager.drawRemoteImage(url, hud, display.contentWidth*0.5, display.contentHeight * 0.75, 1, 1, nil, lotteryManager.nextDrawing.theme.uid)
+	viewManager.drawRemoteImage(url, hud, display.contentWidth*0.5, display.contentHeight * 0.75, 1, 1, function(image) image:toBack() end, lotteryManager.nextDrawing.theme.uid)
 	
 	------------------
 	

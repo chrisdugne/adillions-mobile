@@ -25,7 +25,7 @@ function scene:refreshScene()
 	self.backWithResults = false
 	
 	native.setActivityIndicator( true )
-	viewManager.setupView(3)
+	viewManager.setupView(4)
 	viewManager.darkerBack()
 	self.view:insert(hud)
 
