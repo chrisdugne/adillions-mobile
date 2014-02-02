@@ -52,7 +52,7 @@ function initHeader()
 	hud.logo.x = display.contentWidth*0.5
 	hud.logo.y = HEADER_HEIGHT*0.5
 	
-	refreshHeaderPoints()
+--	refreshHeaderPoints()
 	
 end
 
@@ -556,7 +556,7 @@ function buildMenu(tabSelected, menuType)
 			overFile 			= I "ON1.png",
 			onPress = function( event )
 				if(tabSelected ~= 1) then 
-					router.openMyTickets() 
+					router.openProfile() 
 				end 
 			end,
 			selected = tabSelected == 1
@@ -568,7 +568,7 @@ function buildMenu(tabSelected, menuType)
 			overFile 			= I "ON2.png",
 			onPress = function( event )
 				if(tabSelected ~= 2) then 
-					router.openProfile() 
+					router.openMyTickets() 
 				end 
 			end,
 			selected =  tabSelected == 2
@@ -624,7 +624,7 @@ function buildMenu(tabSelected, menuType)
 		buttons 								= tabButtons,
 	})
 
-	if(tabSelected == 0) then
+	if(tabSelected == 0 or tabSelected == 6) then
    	tabBar:setSelected( 0, false )
    end
 	
@@ -638,7 +638,7 @@ function buildMenu(tabSelected, menuType)
 	
 	
 	utils.onTap(hud.playButton, function()
-		if(tabSelected ~= 3) then 
+		if(tabSelected ~= 0) then 
 			router.openHome() 
 		end 
 	end)
@@ -715,8 +715,16 @@ function drawThemeToPick(num,x,y)
 	local ball = {}
 	ball.selected 	= false
 	ball.num 		= num
+	
+	local content = ""
+	
+	if(lotteryManager.nextLottery.theme.balls) then
+		content = lotteryManager.nextLottery.theme.balls[LANG]
+	else
+		content = lotteryManager.nextLottery.theme.icons
+	end
 
-	drawThemeIcon(num, hud, lotteryManager.nextLottery, x, y, 1, 1, function()
+	drawThemeIcon(num, hud, content, x, y, 1, 1, function()
 		local themeMask = display.newImage(hud, "assets/images/balls/ball.mask.png")
 		themeMask.x = x
 		themeMask.y = y
@@ -730,19 +738,31 @@ function drawThemeToPick(num,x,y)
 		end)
 	end)
 
-	viewManager.newText({
+	hud.text = viewManager.newText({
 		parent 			= hud, 
-		text	 			= lotteryManager.nextLottery.theme.icons[num].name,     
+		text	 			= content[num].name,     
 		x 					= x,
-		y 					= y + 120,
+		y 					= y + display.contentHeight*0.08,
 		fontSize 		= 40
 	})
+	
+	if(content[num].name2) then
+   	viewManager.newText({
+   		parent 			= hud, 
+   		text	 			= content[num].name2,     
+   		x 					= x,
+   		y 					= y + display.contentHeight*0.12,
+   		fontSize 		= 40
+		})
+	else
+		hud.text.y = hud.text.y + display.contentHeight*0.02
+   end
 
 
 end
 
-function drawThemeIcon(num, parent, lottery, x, y, scale, alpha, next)
-	drawRemoteImage(lottery.theme.icons[num].image, parent, x, y, scale, alpha, next)
+function drawThemeIcon(num, parent, content, x, y, scale, alpha, next)
+	drawRemoteImage(content[num].image, parent, x, y, scale, alpha, next)
 end
 
 -----------------------------------------------------------------------------------------

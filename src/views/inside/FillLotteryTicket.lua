@@ -30,9 +30,9 @@ function scene:refreshScene()
 	------------------
 	
 	local marginLeft = display.contentWidth * 0.02
-	local top =  HEADER_HEIGHT * 2
+	local top =  HEADER_HEIGHT * 2.4
 	local xGap =  display.contentWidth *0.12
-	local yGap =  display.contentHeight *0.07
+	local yGap =  display.contentHeight *0.075
 	
 	--------------------------------------------------------------
 	-- Actions
@@ -79,10 +79,10 @@ function scene:refreshScene()
 
 	local random = viewManager.newText({
 		parent = hud, 
-		text = T "Random",     
+		text = T "RANDOM",     
 		x = display.contentWidth*0.3,
-		y = top - display.contentHeight*0.07,
-		fontSize = 33,
+		y = top - display.contentHeight*0.085,
+		fontSize = 35,
 	})
 	
 	utils.onTouch(random, function()
@@ -93,14 +93,14 @@ function scene:refreshScene()
 
 	hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
 	hud.separateur.x = display.contentWidth*0.5
-	hud.separateur.y = top - display.contentHeight*0.065
+	hud.separateur.y = top - display.contentHeight*0.08
 
 	local restart = viewManager.newText({
 		parent = hud, 
-		text = T "Clear all",     
+		text = T "CLEAR ALL",     
 		x = display.contentWidth*0.7,
-		y = top - display.contentHeight*0.07,
-		fontSize = 33,
+		y = top - display.contentHeight*0.085,
+		fontSize = 35,
 	})
 	
 	utils.onTouch(restart, function()
@@ -138,7 +138,7 @@ function scene:refreshScene()
 
 	hud.selector = display.newImage( hud, "assets/images/hud/selector.green.png")  
 	hud.selector.x = display.contentWidth*0.5
-	hud.selector.y = top + display.contentHeight*0.55
+	hud.selector.y = top + display.contentHeight*0.56
 
 	------------------
 
@@ -146,7 +146,22 @@ function scene:refreshScene()
 
 	------------------
 
-	viewManager.setupView(0)
+	hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
+	hud.headerRect.x = display.viewableContentWidth*0.5 
+	hud.headerRect.y = HEADER_HEIGHT*0.5
+
+	hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
+	hud.logo.x = display.contentWidth*0.5
+	hud.logo.y = HEADER_HEIGHT*0.5
+
+	hud.close 				= display.newImage( hud, "assets/images/hud/game/exit.game.png")
+	hud.close.x 			= display.contentWidth*0.89
+	hud.close.y 			= HEADER_HEIGHT/2
+	
+	utils.onTouch(hud.close, function() router.openHome() end)
+
+	------------------
+
 	self.view:insert(hud)
 end
 

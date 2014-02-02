@@ -133,7 +133,7 @@ function scene:refreshScene()
 	-- Setup
 	------------------
 
-	viewManager.setupView(0, 2)
+	viewManager.setupView(6, 2)
 
 	------------------
 	

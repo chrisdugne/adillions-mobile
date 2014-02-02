@@ -4,6 +4,10 @@ local translations =
 		["fr"] = "Dernière mise à jour : 05 janvier 2014",
 	},
 	
+	["Vungle has no ad, please try later"] = {
+		["fr"] = "Vungle n'a pas de video, veuillez réessayer plus tard",
+	},
+	
 	["Log In"] = {
 		["fr"] = "S'identifier",
 	},
@@ -106,7 +110,7 @@ local translations =
 	--------------------------
 
 	["Watch"] = {
-		["fr"] = "Visualisez",
+		["fr"] = "Vous visualisez",
 	},
 
 	["an ad"] = {
@@ -114,7 +118,7 @@ local translations =
 	},
 
 	["Fill out"] = {
-		["fr"] = "Remplissez",
+		["fr"] = "Vous remplissez",
 	},
 
 	["a ticket"] = {
@@ -122,11 +126,11 @@ local translations =
 	},
 
 	["Win"] = {
-		["fr"] = "Gagnez",
+		["fr"] = "Vous gagnez",
 	},
 
-	["a prize"] = {
-		["fr"] = "le Jackpot",
+	["the jackpot ?"] = {
+		["fr"] = "le Jackpot ?",
 	},
 
 	["Each new player contributes"] = {
@@ -137,7 +141,7 @@ local translations =
 		["fr"] = "plus la cagnotte augmente",
 	},
 
-	["... give to charities !"] = {
+	["... give to charity !"] = {
 		["fr"] = "... donnez à des associations !",
 	},
 
@@ -513,12 +517,12 @@ local translations =
 
 	---POOL NUMBERS-----------------------------------------------------------
 
-	["Random"] = {
-		["fr"] = "Aléatoire",
+	["RANDOM"] = {
+		["fr"] = "ALÉATOIRE",
 	},
 
-	["Clear all"] = {
-		["fr"] = "Effacer tout",
+	["CLEAR ALL"] = {
+		["fr"] = "EFFACER TOUT",
 	},
 
 	["Favorites"] = {

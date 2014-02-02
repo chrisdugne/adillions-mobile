@@ -2,6 +2,8 @@
 
 LotteryManager = {}	
 
+VALIDATE_Y = 0.92
+
 -----------------------------------------------------------------------------------------
 
 function LotteryManager:new()  
@@ -30,9 +32,11 @@ function LotteryManager:refreshNextLottery(draw)
 		self.nextDrawing = response.nextDrawing
 		self.nextLottery.theme = json.decode(self.nextLottery.theme)
 		self.nextDrawing.theme = json.decode(self.nextDrawing.theme)
+		self.nextLottery.rangs = json.decode(self.nextLottery.rangs)
+		self.nextDrawing.rangs = json.decode(self.nextDrawing.rangs)
 
 		userManager:checkUserCurrentLottery()
-
+		utils.tprint(self.nextDrawing.rangs)
 		draw()
 	end)
 end
@@ -272,7 +276,7 @@ function LotteryManager:refreshNumberSelectionDisplay()
 	if(#self.currentSelection == self.nextLottery.maxPicks) then
 		hud.validate = display.newImage( hud.selection, I "ValidateON.png")  
 		hud.validate.x = display.contentWidth*0.5
-		hud.validate.y = display.contentHeight*0.85
+		hud.validate.y = display.contentHeight*VALIDATE_Y
 
 		utils.onTouch(hud.validate, function()
 			videoManager:play(router.openSelectAdditionalNumber)
@@ -282,7 +286,7 @@ function LotteryManager:refreshNumberSelectionDisplay()
 	else
 		hud.validate = display.newImage( hud.selection, I "ValidateOFF.png")  
 		hud.validate.x = display.contentWidth*0.5
-		hud.validate.y = display.contentHeight*0.85
+		hud.validate.y = display.contentHeight*VALIDATE_Y
 
 		hud.selector.alpha = 1
 	end
@@ -314,7 +318,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
 		local num = self.currentSelection[i]
 		local x = marginLeft + i*xGap
 
-		viewManager.drawBall(hud, num, marginLeft + xGap*i, display.contentHeight*0.7, true)
+		viewManager.drawBall(hud, num, marginLeft + xGap*i, hud.selector.y, true)
 		if(self.currentSelection[i]) then nbSelected = nbSelected + 1 end
 
 	end
@@ -322,7 +326,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
 	-------------------------------------
 	-- additional theme
 
-	viewManager.drawSelectedAdditional(self.currentAdditionalBall, marginLeft + xGap*(self.nextLottery.maxPicks+1), display.contentHeight*0.7, function()
+	viewManager.drawSelectedAdditional(self.currentAdditionalBall, marginLeft + xGap*(self.nextLottery.maxPicks+1), hud.selector.y, function()
 		self:cancelAdditionalSelection()
 	end)
 
@@ -334,7 +338,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
 	if(nbSelected == self.nextLottery.maxPicks+1) then
 		hud.validate = display.newImage( hud.selection, I "ValidateON.png")  
 		hud.validate.x = display.contentWidth*0.5
-		hud.validate.y = display.contentHeight*0.82
+		hud.validate.y = display.contentHeight*VALIDATE_Y
 
 		hud.selector.alpha = 0.3
 
@@ -349,7 +353,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
 
 		hud.validate = display.newImage( hud.selection, I "ValidateOFF.png")  
 		hud.validate.x = display.contentWidth*0.5
-		hud.validate.y = display.contentHeight*0.82
+		hud.validate.y = display.contentHeight*VALIDATE_Y
 	end
 
 end

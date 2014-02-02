@@ -261,26 +261,10 @@ function scene:openPrizes()
 		font = NUM_FONT
 	})
 
-	
-	local matches = {
-		"5 + 1",
-		"5 + 0",
-		"4 + 1",
-		"4 + 0",
-		"3 + 1",
-		"3 + 0",
-	}
+	local matches 		= lotteryManager.nextDrawing.rangs.matches
+	local percents 	= lotteryManager.nextDrawing.rangs.percents
 
-	local percents = {
-		"40%",
-		"20%",
-		"15%",
-		"10%",
-		"5%",
-		"10%",
-	}
-
-	for i = 1, 6 do
+	for i = 1, #matches do
 
    	hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/R".. i .. ".png")
    	hud.iconRang.x 		= display.contentWidth * 0.2
@@ -296,7 +280,7 @@ function scene:openPrizes()
    
    	viewManager.newText({
    		parent 			= hud.popup, 
-   		text	 			= percents[i],     
+   		text	 			= percents[i] .. '%',     
    		x 					= display.contentWidth*0.75,
    		y 					= top + yGap * (i-1) ,
    		fontSize 		= 35,

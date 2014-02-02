@@ -173,7 +173,7 @@ function scene:createTuto1()
 	
 	hud.tuto1.anad = viewManager.newText({
 		parent 			= hud.tuto1,
-		text 				= T "a prize", 
+		text 				= T "the jackpot ?", 
 		fontSize			= 44,  
 		x 					= hud.tuto1.win.x + hud.tuto1.win.width + display.contentWidth*0.02,
 		y 					= display.contentHeight*(0.8 + 0.015),
@@ -222,7 +222,7 @@ function scene:createTuto2()
 	hud.tuto2.finalText1 = viewManager.newText({
 		parent 			= hud.tuto2,
 		text 				= T "Each new player contributes", 
-		fontSize			= 39,  
+		fontSize			= 45,  
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.78,
 	})
@@ -232,7 +232,7 @@ function scene:createTuto2()
 	hud.tuto2.finalText2 = viewManager.newText({
 		parent 			= hud.tuto2,
 		text 				= T "to increase the jackpot", 
-		fontSize			= 39,  
+		fontSize			= 45,  
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.82,
 	})
@@ -296,8 +296,8 @@ function scene:createTuto3()
 	
 	hud.tuto3.finalText1 = viewManager.newText({
 		parent 			= hud.tuto3,
-		text 				= T "... give to charities !", 
-		fontSize			= 39,  
+		text 				= T "... give to charity !", 
+		fontSize			= 45,  
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.78,
 	})
@@ -307,7 +307,7 @@ function scene:createTuto3()
 	hud.tuto3.finalText2 = viewManager.newText({
 		parent 			= hud.tuto3,
 		text 				= T "... likely you are to win the jackpot !", 
-		fontSize			= 39,  
+		fontSize			= 45,  
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.82,
 	})
@@ -321,7 +321,7 @@ function scene:createTuto3()
 		text 				= T "Charity Profile", 
 		fontSize			= 32,  
 		x 					= display.contentWidth * 0.5,
-		y 					= display.contentHeight*0.305,
+		y 					= display.contentHeight*0.315,
 	})
 
 	hud.tuto3.charityprofile:setTextColor(40)
@@ -338,7 +338,7 @@ function scene:createTuto3()
 
 	hud.tuto3.charity = viewManager.newText({
 		parent 			= hud.tuto3,
-		text 				= T "Charity", 
+		text 				= T "Charities", 
 		fontSize			= 32,  
 		x 					= display.contentWidth * 0.7,
 		y 					= display.contentHeight* 0.72,

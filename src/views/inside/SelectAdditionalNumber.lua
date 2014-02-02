@@ -31,7 +31,7 @@ function scene:refreshScene()
 	
 	local top =  HEADER_HEIGHT
 	local xGap =  display.contentWidth *0.25
-	local yGap =  display.contentHeight *0.2
+	local yGap =  display.contentHeight *0.23
 	
 	--------------------------------------------------------------
 	
@@ -39,7 +39,7 @@ function scene:refreshScene()
 		parent = hud,
 		text = T "Select your Lucky Ball !",     
 		x = display.contentWidth*0.05,
-		y = top + 70,
+		y = top + display.contentHeight*0.08,
 		font = FONT,   
 		fontSize = 49,
 		referencePoint = display.CenterLeftReferencePoint
@@ -48,8 +48,14 @@ function scene:refreshScene()
 	--------------------------------------------------------------
 	-- Additional nums
 
-	local totalNums 		 = #lotteryManager.nextLottery.theme.icons  
+	local totalNums 		 = 0  
 	local nbNumPerLine	 = 3
+	  
+	if(lotteryManager.nextLottery.theme.balls) then
+		totalNums = #lotteryManager.nextLottery.theme.balls.en
+	else
+		totalNums = #lotteryManager.nextLottery.theme.icons
+	end
 	  
 	------------------
 
@@ -73,15 +79,31 @@ function scene:refreshScene()
 
 	hud.selector 		= display.newImageRect(hud, "assets/images/hud/selector.green.2.png", display.contentWidth*0.9, display.viewableContentHeight*0.114)
 	hud.selector.x 	= display.contentWidth*0.5
-	hud.selector.y 	= top + display.contentHeight*0.605
+	hud.selector.y 	= top + display.contentHeight*0.69
 	
+	------------------
+
+	hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
+	hud.headerRect.x = display.viewableContentWidth*0.5 
+	hud.headerRect.y = HEADER_HEIGHT*0.5
+
+	hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
+	hud.logo.x = display.contentWidth*0.5
+	hud.logo.y = HEADER_HEIGHT*0.5
+
+	hud.close 				= display.newImage( hud, "assets/images/hud/game/exit.game.png")
+	hud.close.x 			= display.contentWidth*0.89
+	hud.close.y 			= HEADER_HEIGHT/2
+	
+	utils.onTouch(hud.close, function() router.openHome() end)
+
+
 	------------------
 	
 	lotteryManager:refreshThemeSelectionDisplay()
 	
 	------------------
 
-	viewManager.setupView(0)
 	self.view:insert(hud)
 end
 
