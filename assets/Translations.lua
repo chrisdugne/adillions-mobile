@@ -130,7 +130,7 @@ local translations =
 	},
 
 	["the jackpot ?"] = {
-		["fr"] = "le Jackpot ?",
+		["fr"] = "le jackpot ?",
 	},
 
 	["Each new player contributes"] = {

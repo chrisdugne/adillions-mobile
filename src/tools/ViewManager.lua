@@ -777,8 +777,16 @@ function drawTheme(parent, lottery, num,x,y, alpha, requireCheck, bigBall)
 	if(bigBall) then 
 		scale = 0.78
 	end
+	
+	local content = ""
+	
+	if(lottery.theme.balls) then
+		content = lottery.theme.balls[LANG]
+	else
+		content = lottery.theme.icons
+	end
 
-	drawThemeIcon(num, parent, lottery, x, y, scale, alpha, function()
+	drawThemeIcon(num, parent, content, x, y, scale, alpha, function()
 		local themeMask = display.newImage(parent, "assets/images/balls/ball.mask.png")
 		themeMask.x = x
 		themeMask.y = y
@@ -866,7 +874,16 @@ end
 function drawSelectedAdditional(ball,x,y, action)
 	
 	if(ball) then
-		drawThemeIcon(ball.num, hud.selection, lotteryManager.nextLottery, x, y, MEDIUM_THEME_SCALE, 1, function()
+	
+   	local content = ""
+   	
+   	if(lotteryManager.nextLottery.theme.balls) then
+   		content = lotteryManager.nextLottery.theme.balls[LANG]
+   	else
+   		content = lotteryManager.nextLottery.theme.icons
+   	end
+	
+		drawThemeIcon(ball.num, hud.selection, content, x, y, MEDIUM_THEME_SCALE, 1, function()
       	local themeMask = display.newImage(hud.selection, "assets/images/balls/ball.mask.png")
       	themeMask.x = x
       	themeMask.y = y
