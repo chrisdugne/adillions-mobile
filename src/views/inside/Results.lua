@@ -269,8 +269,7 @@ function scene:openMoreResults( lottery )
 
 		hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/Rang".. i .. ".png")
 		hud.iconRang.x 		= display.contentWidth * 0.2
-		hud.iconRang.y 		= top + yGap * (i-1)
-		hud.iconRang:scale 	(0.6,0.6)	
+		hud.iconRang.y 		= top + yGap * (i-1) - display.contentHeight*0.005
    
    	viewManager.newText({
    		parent 			= hud.popup, 
