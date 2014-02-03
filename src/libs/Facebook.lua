@@ -216,7 +216,6 @@ function isFacebookFan(next)
 	if(GLOBALS.savedData.facebookAccessToken) then
 
 		local url = "https://graph.facebook.com/me/likes/"..FACEBOOK_PAGE_ID.."?access_token=" .. GLOBALS.savedData.facebookAccessToken
-
 		network.request(url , "GET", function(result)
 
 			response = json.decode(result.response)
@@ -224,6 +223,8 @@ function isFacebookFan(next)
 			if(not response.error) then
 				if(response.data[1] ~= nil) then
 					userManager.user.facebookFan = true
+				else
+					userManager.user.facebookFan = false
 				end
 			end
 

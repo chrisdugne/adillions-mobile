@@ -688,7 +688,7 @@ function UserManager:updatePlayer(next)
 	self.user.lang = LANG
 
 	utils.postWithJSON({
-		user = player,
+		user = self.user,
 	}, 
 	SERVER_URL .. "updatePlayer", 
 	function(result)
@@ -782,11 +782,15 @@ end
 
 function UserManager:updateFanStatus(next)
 
-	print("--- updateFanStatus true")
+	print("--- updateFanStatus")
+	print("facebookFan : " .. tostring(self.user.facebookFan))
+	print("twitterFan : " .. tostring(self.user.twitterFan))
+	
 	native.setActivityIndicator( true )	
 
 	utils.postWithJSON({
-		user = self.user,
+		facebookFan 	= self.user.facebookFan,
+		twitterFan 		= self.user.twitterFan,
 	}, 
 	SERVER_URL .. "updateFanStatus", 
 	function(result)
