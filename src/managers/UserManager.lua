@@ -189,7 +189,7 @@ end
 function UserManager:checkExistingUser(next)
 	self:checkExistPlayerByFacebookId(function()
 		print("proceed with merge", userManager.user.facebookId, facebook.data.id)
-			self:showConfirmMerge(next)
+		self:showConfirmMerge(next)
 	end)
 end
 
@@ -678,6 +678,8 @@ end
 function UserManager:updatePlayer(next)
 
 	print("------------- updatePlayer ")
+	self.user.lotteryTickets = nil -- just remove all that long json useless for updates (BUG 2014-02-03). it'll be back at server callback. 
+	
 	if(next) then
 		print("next ready")
 	end
@@ -686,7 +688,7 @@ function UserManager:updatePlayer(next)
 	self.user.lang = LANG
 
 	utils.postWithJSON({
-		user = self.user,
+		user = player,
 	}, 
 	SERVER_URL .. "updatePlayer", 
 	function(result)
@@ -694,6 +696,7 @@ function UserManager:updatePlayer(next)
 		native.setActivityIndicator( false )
 
 		local player = json.decode(result.response)
+
 		if(player) then
 			userManager:updatedPlayer(player, next)
 		else
@@ -728,7 +731,7 @@ function UserManager:showMultiAccountPopup(next)
 	hud.popup.shareText.x 			= display.contentWidth*0.5
 	hud.popup.shareText.y			= display.contentHeight*0.32
 
-	local text1 = facebook.data.name .. "’s Facebook account is already an Adillions user"
+	local text1 = facebook.data.name .. "'s Facebook account is already an Adillions user"
 	if(LANG == "fr") then text1 = "Le compte Facebook " .. facebook.data.name .. " est \n déjà un utilisateur d’Adillions" end
 
 

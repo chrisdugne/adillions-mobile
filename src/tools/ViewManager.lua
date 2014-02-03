@@ -486,13 +486,10 @@ function drawRemoteImage( url, parent, x, y, scale, alpha, next, prefix )
 	local fileName = prefix .. utils.imageName(url)
 	local image = display.newImage( parent, fileName, system.TemporaryDirectory)
 	
-	print(fileName)
-	
 	if not image then
 		local imageReceived = function(event) return insertImage(event.target, parent, x, y, scale, alpha, next) end
 		display.loadRemoteImage( url, "GET", imageReceived, fileName, system.TemporaryDirectory )
 	else
-   	print("image from cache")
 		insertImage(image, parent, x, y, scale, alpha, next)
 	end
 	
