@@ -109,7 +109,6 @@ function scene:createTuto1()
 		parent 			= hud.tuto1,
 		text 				= T "Watch", 
 		fontSize			= 44,  
-		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.3,
 		y 					= display.contentHeight* (0.52 + 0.015),
 		referencePoint = display.BottomLeftReferencePoint
@@ -139,7 +138,6 @@ function scene:createTuto1()
 		parent 			= hud.tuto1,
 		text 				= T "Fill out", 
 		fontSize			= 44,  
-		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.3,
 		y 					= display.contentHeight* (0.66 + 0.015),
 		referencePoint = display.BottomLeftReferencePoint
@@ -163,9 +161,9 @@ function scene:createTuto1()
 	
 	hud.tuto1.win = viewManager.newText({
 		parent 			= hud.tuto1,
-		text 				= T "Win", 
+		text 				= T "Try", 
 		fontSize			= 44,  
-		font				= NUM_FONT,  
+--		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.3,
 		y 					= display.contentHeight*(0.8 + 0.015),
 		referencePoint = display.BottomLeftReferencePoint
@@ -173,7 +171,7 @@ function scene:createTuto1()
 	
 	hud.tuto1.anad = viewManager.newText({
 		parent 			= hud.tuto1,
-		text 				= T "the jackpot ?", 
+		text 				= T "your luck" .. " !", 
 		fontSize			= 44,  
 		x 					= hud.tuto1.win.x + hud.tuto1.win.width + display.contentWidth*0.02,
 		y 					= display.contentHeight*(0.8 + 0.015),

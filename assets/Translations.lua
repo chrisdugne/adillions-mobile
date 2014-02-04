@@ -125,12 +125,12 @@ local translations =
 		["fr"] = "un ticket",
 	},
 
-	["Win"] = {
-		["fr"] = "Vous gagnez",
+	["Try"] = {
+		["fr"] = "Vous tentez",
 	},
 
-	["the jackpot ?"] = {
-		["fr"] = "le jackpot ?",
+	["your luck"] = {
+		["fr"] = "votre chance",
 	},
 
 	["Each new player contributes"] = {
