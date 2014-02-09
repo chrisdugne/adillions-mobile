@@ -152,7 +152,10 @@ function UserManager:receivedPlayer(player, next)
 	end
 
 	self:updatedPlayer(player, next)
-	self:checkNotifications()
+
+	if(player.notifications) then
+		self:checkNotifications()
+   end
 	
 end
 

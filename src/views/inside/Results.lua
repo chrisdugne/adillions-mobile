@@ -207,7 +207,7 @@ function scene:openMoreResults( lottery )
 	local top	 	= display.contentHeight * 0.3
 	local yGap		= display.contentHeight*0.082
 
-	viewManager.showPopup(function() end)
+	viewManager.showPopup()
 	analytics.event("Gaming", "popupMoreResults") 
 
 	viewManager.newText({
