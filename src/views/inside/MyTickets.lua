@@ -208,29 +208,94 @@ function scene:drawPreviousLotteries(top)
          		fontSize = 34,
 					referencePoint = display.CenterLeftReferencePoint
    			})
-   		
-   			local price = utils.convertAndDisplayPrice((ticket.price or 0), COUNTRY, ticket.lottery.rateUSDtoEUR)
-   			if(ticket.lottery.uid == lotteryManager.nextDrawing.uid) then
-   				price = "?"
-   			end
-   		
-   			viewManager.newText({
-   				parent = hud.board, 
-   				text =  price, 
-         		x = display.contentWidth*0.87,
-         		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
-         		fontSize = 37,
-         		font = NUM_FONT,
-					referencePoint = display.CenterRightReferencePoint
-   			})
-   		
-   			if(ticket.lottery.uid ~= lotteryManager.nextDrawing.uid) then
-	         	local iconMoney 	= display.newImage( hud.board, "assets/images/icons/money.png")
-   	      	iconMoney.x 		= display.contentWidth*0.92
-      	   	iconMoney.y	 		= top + yGap*(nbPreviousTickets+nbLotteries-1.12)
-         		hud.board:insert(iconMoney)
-         	end
+
+         	-----------------------------------------------------------
    			
+   			if(ticket.lottery.uid == lotteryManager.nextDrawing.uid) then
+					
+					---------------------------------------------------------------------
+					-- waiting for the drawing
+      			
+      			viewManager.newText({
+      				parent = hud.board, 
+      				text =	"?", 
+            		x = display.contentWidth*0.87,
+            		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
+            		fontSize = 37,
+            		font = NUM_FONT,
+   					referencePoint = display.CenterRightReferencePoint
+      			})
+				
+				else   		
+      			if(ticket.bonus) then
+      				
+      				if type(ticket.bonus) == "string" then ticket.bonus = json.decode(ticket.bonus) end
+						
+						---------------------------------------------------------------------
+						-- Stocks (BT)
+						
+      				if(tonumber(ticket.bonus.stocks) > 0) then
+            			viewManager.newText({
+            				parent = hud.board, 
+            				text =  ticket.bonus.stocks, 
+                  		x = display.contentWidth*0.87,
+                  		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
+                  		fontSize = 37,
+                  		font = NUM_FONT,
+         					referencePoint = display.CenterRightReferencePoint
+            			})
+            		
+      	         	local iconMoney 	= display.newImage( hud.board, "assets/images/icons/notification/stocks.popup.png")
+         	      	iconMoney.x 		= display.contentWidth*0.92
+            	   	iconMoney.y	 		= top + yGap*(nbPreviousTickets+nbLotteries-1.08)
+            	   	iconMoney:scale(0.5,0.5)
+               		hud.board:insert(iconMoney)
+      				else
+						
+						---------------------------------------------------------------------
+						-- Instants (IT)
+
+            			viewManager.newText({
+            				parent = hud.board, 
+            				text =  ticket.bonus.instants, 
+                  		x = display.contentWidth*0.87,
+                  		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
+                  		fontSize = 37,
+                  		font = NUM_FONT,
+         					referencePoint = display.CenterRightReferencePoint
+            			})
+            		
+      	         	local iconMoney 	= display.newImage( hud.board, "assets/images/icons/notification/instants.popup.png")
+         	      	iconMoney.x 		= display.contentWidth*0.92
+            	   	iconMoney.y	 		= top + yGap*(nbPreviousTickets+nbLotteries-1.08)
+            	   	iconMoney:scale(0.5,0.5)
+               		hud.board:insert(iconMoney)
+      				end
+
+      			else
+						
+						---------------------------------------------------------------------
+						-- Money
+
+         			local price = utils.convertAndDisplayPrice((ticket.price or 0), COUNTRY, ticket.lottery.rateUSDtoEUR)
+         			
+         			viewManager.newText({
+         				parent = hud.board, 
+         				text =  price, 
+               		x = display.contentWidth*0.87,
+               		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
+               		fontSize = 37,
+               		font = NUM_FONT,
+      					referencePoint = display.CenterRightReferencePoint
+         			})
+         		
+   	         	local iconMoney 	= display.newImage( hud.board, "assets/images/icons/money.png")
+      	      	iconMoney.x 		= display.contentWidth*0.92
+         	   	iconMoney.y	 		= top + yGap*(nbPreviousTickets+nbLotteries-1.12)
+            		hud.board:insert(iconMoney)
+            	end
+      			
+         	end
       	end
    	end
    

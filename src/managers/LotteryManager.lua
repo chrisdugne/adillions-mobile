@@ -150,8 +150,8 @@ end
 function LotteryManager:sumPrices()
 
 	userManager.user.totalWinnings 		= 0
-	userManager.user.balance 			= 0
-	userManager.user.totalGift 		= 0
+	userManager.user.balance 				= 0
+	userManager.user.totalGift 			= 0
 	userManager.user.receivedWinnings	= 0
 	userManager.user.pendingWinnings		= 0
 

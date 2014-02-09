@@ -272,7 +272,13 @@ function closePopup(now, action)
    
 end
 
-function showPopup(action)
+------------------------------------------------------------------
+--
+function showPopup(height)
+	
+	if(not height) then
+		height = display.contentHeight*0.95
+	end
 
 	closePopup(true)
 	hud.popup = display.newGroup()
@@ -286,7 +292,7 @@ function showPopup(action)
 	hud.backGrey.y 	= display.viewableContentHeight*0.5
 	hud.backGrey.alpha= 0.85
 	
-	hud.popupRect = display.newImageRect( hud.popup, "assets/images/hud/Popup_BG.png", display.contentWidth*0.95, display.contentHeight*0.95)
+	hud.popupRect = display.newImageRect( hud.popup, "assets/images/hud/Popup_BG.png", display.contentWidth*0.95, height)
   	hud.popupRect.x = display.contentWidth*0.5 
   	hud.popupRect.y = display.contentHeight*0.5
 	

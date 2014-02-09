@@ -258,9 +258,15 @@ local translations =
 
 	---POPUP REWARD-----------------------------------------------------------
 
-	["You have earned"] = {
+	["You have won"] = {
 		["fr"] = "Vous avez gagné",
 	},
+
+	["You have won more tickets for the next drawing"] = {
+		["fr"] = "Vous avez gagné plus de tickets pour le prochain tirage",
+	},
+
+	------
 
 	["Instant Ticket"] = {
 		["fr"] = "Ticket Instantané",

@@ -147,7 +147,13 @@ function UserManager:receivedPlayer(player, next)
 		viewManager.message(T "Welcome" .. " " .. player.userName .. " !")
 	end
 
+	if(player.notifications) then
+		player.notifications = json.decode(player.notifications)
+	end
+
 	self:updatedPlayer(player, next)
+	self:checkNotifications()
+	
 end
 
 -----------------------------------------------------------------------------------------
@@ -175,7 +181,6 @@ function UserManager:updatedPlayer(player, next)
 
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
 
-	self:checkIdlePoints()
 
 	viewManager.refreshHeaderPoints(player.currentPoints)
 	lotteryManager:sumPrices()
@@ -469,106 +474,6 @@ function UserManager:checkUserCurrentLottery()
 	--------------------------------------------------------------------------------------
 
 	lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
-end
-
------------------------------------------------------------------------------------------
-
-function UserManager:checkIdlePoints()
-
-	if(userManager.user.idlePoints > 0
-	or userManager.user.currentPoints >= POINTS_TO_EARN_A_TICKET)  then
-
-		local points 	= userManager.user.idlePoints + userManager.user.currentPoints
-		viewManager.showPopup()
-
-		hud.popup.congratz 			= display.newImage( hud.popup, I "popup.Txt1.png")  
-		hud.popup.congratz.x 		= display.contentWidth*0.5
-		hud.popup.congratz.y			= display.contentHeight*0.25
-
-		hud.popup.earnText = viewManager.newText({
-			parent 			= hud.popup,
-			text 				= T "You have earned" .. " :", 
-			fontSize			= 65,  
-			x 					= display.contentWidth * 0.5,
-			y 					= display.contentHeight*0.37,
-		})
-
-		hud.popup.pointsText = viewManager.newText({
-			parent 			= hud.popup, 
-			text	 			= points .. " pts",     
-			x 					= display.contentWidth*0.5,
-			y 					= display.contentHeight*0.5,
-			fontSize 		= 90,
-		})
-
-		if(math.floor(points/POINTS_TO_EARN_A_TICKET) > 0) then
-
-			viewManager.newText({
-				parent 			= hud.popup, 
-				text	 			= "=",     
-				x 					= display.contentWidth*0.5,
-				y 					= display.contentHeight*0.6,
-				fontSize 		= 90,
-			})
-
-			if(points == POINTS_TO_EARN_A_TICKET) then
-				hud.popup.iconPoints 			= display.newImage( hud.popup, "assets/images/icons/Points.png")
-				hud.popup.iconPoints.x 			= display.contentWidth*0.37
-				hud.popup.iconPoints.y 			= display.contentHeight*0.51
-
-				hud.popup.pointsText:setReferencePoint(display.CenterLeftReferencePoint);
-				hud.popup.pointsText.x			= display.contentWidth*0.48
-			end
-
-			hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/instant.ticket.png")
-			hud.popup.iconTicket.x 			= display.contentWidth*0.3
-			hud.popup.iconTicket.y 			= display.contentHeight*0.685
-
-			local tickets = ""
-			local nbTickets = math.floor(points/POINTS_TO_EARN_A_TICKET)
-			if(nbTickets > 1) then 
-				tickets = T "Instant Tickets" 
-			else
-				tickets = T "Instant Ticket" 
-			end
-
-			viewManager.newText({
-				parent 			= hud.popup, 
-				text	 			= nbTickets .. " " .. tickets,     
-				x 					= display.contentWidth*0.4,
-				y 					= display.contentHeight*0.685,
-				fontSize 		= 40,
-				font 				= NUM_FONT,
-				referencePoint = display.CenterLeftReferencePoint 
-			})
-		end
-
-		--------------------------
-
-		local onClose = nil
-
-		if(userManager.user.idlePoints > 0) then
-			userManager:convertIdlePoints()
-			onClose = function() 
-				viewManager.closePopup() 
-			end 
-		else
-			onClose = function() 
-				viewManager.closePopup()
-				userManager:convertCurrentPoints()
-			end
-		end
-
-		--------------------------
-
-		hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-		hud.popup.close.x 			= display.contentWidth*0.5
-		hud.popup.close.y 			= display.contentHeight*0.85
-
-		utils.onTouch(hud.popup.close, onClose)
-
-
-	end
 end
 
 -----------------------------------------------------------------------------------------
@@ -1010,6 +915,165 @@ end
 --	self.webView:removeSelf()
 --	self.webView = nil
 --end
+
+
+
+-----------------------------------------------------------------------------------------
+-- NOTIFICATIONS
+-----------------------------------------------------------------------------------------
+
+function UserManager:checkNotifications()
+	self:notifyPrizes(function()
+		self:notifyStocks(function()
+      	self:notifyInstants()
+		end)
+	end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:notifyPrizes(next)
+	if(self.user.notifications.prizes == 110) then
+		next()
+	else
+		local totalPrice = ""
+		if(utils.isEuroCountry(COUNTRY)) then
+			totalPrice = self.user.notifications.prizes
+		else
+			totalPrice = self.user.notifications.prizesUSD
+		end
+		
+		viewManager.showPopup(display.contentHeight*0.55)
+
+		hud.popup.congratz 			= display.newImage( hud.popup, I "popup.Txt1.png")  
+		hud.popup.congratz.x 		= display.contentWidth*0.5
+		hud.popup.congratz.y			= display.contentHeight*0.35
+
+		hud.popup.earnText = viewManager.newText({
+			parent 			= hud.popup,
+			text 				= T "You have won" .. " :", 
+			fontSize			= 55,  
+			x 					= display.contentWidth * 0.5,
+			y 					= display.contentHeight*0.42,
+		})
+
+		hud.popup.prizeText = viewManager.newText({
+			parent 			= hud.popup,
+			text 				= utils.displayPrice(totalPrice, COUNTRY), 
+			fontSize			= 55,
+			referencePoint	= display.CenterRightReferencePoint,  
+			x 					= display.contentWidth * 0.44,
+			y 					= display.contentHeight*0.53,
+		})
+
+		hud.popup.iconPrize 			= display.newImage( hud.popup, "assets/images/icons/notification/prizes.popup.png")
+		hud.popup.iconPrize.x 		= display.contentWidth*0.57
+		hud.popup.iconPrize.y 		= display.contentHeight*0.53
+
+		--------------------------
+
+		hud.popup.share 				= display.newImage( hud.popup, I "share.notification.png")
+		hud.popup.share.x 			= display.contentWidth*0.5
+		hud.popup.share.y 			= display.contentHeight*0.7
+
+		utils.onTouch(hud.popup.share, function() shareManager:share() end)
+		
+   	---------------------------------------------------------------
+   	
+   	hud.close 				= display.newImage( hud.popup, "assets/images/hud/CroixClose.png")
+   	hud.close.x 			= display.contentWidth*0.87
+   	hud.close.y 			= display.contentHeight*0.28
+   	
+   	utils.onTouch(hud.close, next)
+		
+	end
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:notifyStocks(next)
+
+	if(self.user.notifications.stocks == 110) then
+		next()
+	else
+		viewManager.showPopup(display.contentHeight*0.55)
+
+		hud.popup.congratz 			= display.newImage( hud.popup, I "popup.Txt1.png")  
+		hud.popup.congratz.x 		= display.contentWidth*0.5
+		hud.popup.congratz.y			= display.contentHeight*0.35
+
+		hud.popup.earnText = viewManager.newText({
+			parent 			= hud.popup,
+			text 				= T "You have won" .. " :", 
+			fontSize			= 55,  
+			x 					= display.contentWidth * 0.5,
+			y 					= display.contentHeight*0.42,
+		})
+		
+		hud.popup.prizeText = viewManager.newText({
+			parent 			= hud.popup,
+			text 				= self.user.notifications.stocks, 
+			fontSize			= 75,
+			referencePoint	= display.CenterRightReferencePoint,  
+			x 					= display.contentWidth * 0.44,
+			y 					= display.contentHeight*0.52,
+		})
+		
+		hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/notification/stocks.popup.png")
+		hud.popup.iconTicket.x 		= display.contentWidth*0.57
+		hud.popup.iconTicket.y 		= display.contentHeight*0.53
+
+		--------------------------
+
+		hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+		hud.popup.close.x 			= display.contentWidth*0.5
+		hud.popup.close.y 			= display.contentHeight*0.7
+
+		utils.onTouch(hud.popup.close, next)
+   end
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:notifyInstants()
+
+	if(self.user.notifications.instants > -1) then
+		viewManager.showPopup(display.contentHeight*0.55)
+
+		hud.popup.congratz 			= display.newImage( hud.popup, I "popup.Txt1.png")  
+		hud.popup.congratz.x 		= display.contentWidth*0.5
+		hud.popup.congratz.y			= display.contentHeight*0.35
+
+		hud.popup.earnText = viewManager.newText({
+			parent 			= hud.popup,
+			text 				= T "You have won" .. " :", 
+			fontSize			= 55,  
+			x 					= display.contentWidth * 0.5,
+			y 					= display.contentHeight*0.42,
+		})
+   
+		hud.popup.prizeText = viewManager.newText({
+			parent 			= hud.popup,
+			text 				= self.user.notifications.instants, 
+			fontSize			= 75,
+			referencePoint	= display.CenterRightReferencePoint,  
+			x 					= display.contentWidth * 0.44,
+			y 					= display.contentHeight*0.52,
+		})
+		
+		hud.popup.iconTicket 			= display.newImage( hud.popup, "assets/images/icons/notification/instants.popup.png")
+		hud.popup.iconTicket.x 		= display.contentWidth*0.57
+		hud.popup.iconTicket.y 		= display.contentHeight*0.53
+   	
+   	--------------------------
+   
+   	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
+   	hud.popup.close.x 			= display.contentWidth*0.5
+   	hud.popup.close.y 			= display.contentHeight*0.7
+   
+   	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+   end
+end
 
 -----------------------------------------------------------------------------------------
 

@@ -193,7 +193,7 @@ function scene:openPrizes()
 	local top	 	= display.contentHeight * 0.35
 	local yGap		= display.contentHeight * 0.082
 
-	viewManager.showPopup(function() end)
+	viewManager.showPopup()
 
 	--------------------------
 
@@ -310,7 +310,7 @@ function scene:openTerms()
 	local top	 	= display.contentHeight * 0.35
 	local yGap		= display.contentHeight*0.082
 
-	viewManager.showPopup(function() end)
+	viewManager.showPopup()
 
 	--------------------------
 	
@@ -395,7 +395,7 @@ function scene:openOptions()
 	local top	 	= display.contentHeight * 0.15
 	local yGap		= display.contentHeight*0.15
 
-	viewManager.showPopup(function() end)
+	viewManager.showPopup()
 
 	--------------------------
 	
@@ -500,7 +500,7 @@ function scene:openContact()
 	local top	 	= display.contentHeight * 0.3
 	local yGap		= display.contentHeight*0.082
 
-	viewManager.showPopup(function() end)
+	viewManager.showPopup()
 
 	--------------------------
 	
@@ -647,7 +647,7 @@ function scene:openRewards1()
 	local top	 	= display.contentHeight * 0.3
 	local yGap		= display.contentHeight*0.082
 
-	viewManager.showPopup(function() end)
+	viewManager.showPopup()
 
 	--------------------------
 	
@@ -766,7 +766,7 @@ function scene:openRewards2()
 	local top	 	= display.contentHeight * 0.3
 	local yGap		= display.contentHeight*0.082
 
-	viewManager.showPopup(function() end)
+	viewManager.showPopup()
 
 	--------------------------
 	

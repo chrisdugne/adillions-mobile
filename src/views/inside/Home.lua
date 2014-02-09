@@ -29,7 +29,7 @@ function scene:refreshScene()
 	hud.subheaderImage.y 	= HEADER_HEIGHT * 1.5
 
 	hud.subheaderText 		= display.newImage(hud, I "Questions.png")
-	hud.subheaderText.x 		= display.contentWidth*0.5
+	hud.subheaderText.x 		= display.contentWidth*0.6
 	hud.subheaderText.y 		= HEADER_HEIGHT * 1.4
 	
 	
@@ -37,18 +37,23 @@ function scene:refreshScene()
 	local subheaderSheet 		= graphics.newImageSheet( "assets/images/subheader/anim.sheet."..LANG..".png", subheaderAnimConfig.sheet )
 
    hud.subheaderAnim 		= display.newSprite( hud, subheaderSheet, subheaderAnimConfig:newSequence() )
-   hud.subheaderAnim.x 		= display.contentWidth*0.5
+   hud.subheaderAnim.x 		= display.contentWidth*0.6
    hud.subheaderAnim.y 		= HEADER_HEIGHT * 1.8
 
-	hud.subheaderArrow 		= display.newImage(hud, "assets/images/subheader/Fleche.png")
-	hud.subheaderArrow.x 	= display.contentWidth*0.5 + hud.subheaderAnim.contentWidth/2 + 20
-	hud.subheaderArrow.y 	= HEADER_HEIGHT * 1.82
+	hud.subheaderButton 		= display.newImage(hud, "assets/images/subheader/button.subheader.png")
+	hud.subheaderButton.x 	= display.contentWidth*0.15
+	hud.subheaderButton.y 	= HEADER_HEIGHT * 1.6
 	
 	self:animateSubheader()
 
 	------------------
 
 	utils.onTouch(hud.subheaderImage, function()
+		local next = function() router.openHome() end
+		shareManager:invite(next)
+	end)
+	
+	utils.onTouch(hud.subheaderButton, function()
 		local next = function() router.openHome() end
 		shareManager:invite(next)
 	end)
