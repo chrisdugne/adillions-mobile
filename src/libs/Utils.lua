@@ -600,6 +600,20 @@ function convertAndDisplayPrice(price, country, rateUSDtoEUR)
 end
 
 --------------------------------------------------------
+
+function networkConnection()
+    local socket = require("socket")
+    local test = socket.tcp()
+    test:settimeout(2000)
+    local netConn = test:connect("www.google.com", 80)
+    if netConn == nil then
+        return false
+    end
+    test:close()
+    return true
+end
+
+--------------------------------------------------------
 --
 -- merci Vungle
 

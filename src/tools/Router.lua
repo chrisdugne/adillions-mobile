@@ -35,6 +35,13 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function openNoInternet()
+	resetScreen()
+	storyboard.gotoScene( "src.views.NoInternet" )
+end
+
+-----------------------------------------------------------------------------------------
+
 function openTutorial()
 	analytics.pageview("Tutorial")
 	

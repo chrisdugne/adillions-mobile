@@ -946,7 +946,7 @@ function UserManager:notifyPrizes(next)
 			totalPrice = self.user.notifications.prizesUSD
 		end
 		
-		viewManager.showPopup(display.contentHeight*0.55)
+		viewManager.showPopup(display.contentWidth*0.95)
 
 		hud.popup.congratz 			= display.newImage( hud.popup, I "popup.Txt1.png")  
 		hud.popup.congratz.x 		= display.contentWidth*0.5
@@ -999,7 +999,7 @@ function UserManager:notifyStocks(next)
 	if(self.user.notifications.stocks == 110) then
 		next()
 	else
-		viewManager.showPopup(display.contentHeight*0.55)
+		viewManager.showPopup(display.contentWidth*0.95)
 
 		hud.popup.congratz 			= display.newImage( hud.popup, I "popup.Txt1.png")  
 		hud.popup.congratz.x 		= display.contentWidth*0.5
@@ -1041,7 +1041,7 @@ end
 function UserManager:notifyInstants()
 
 	if(self.user.notifications.instants > -1) then
-		viewManager.showPopup(display.contentHeight*0.55)
+		viewManager.showPopup(display.contentWidth*0.95)
 
 		hud.popup.congratz 			= display.newImage( hud.popup, I "popup.Txt1.png")  
 		hud.popup.congratz.x 		= display.contentWidth*0.5

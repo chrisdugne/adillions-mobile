@@ -191,7 +191,11 @@ GLOBALS = {
 
 -----------------------------------------------------------------------------------------
 
-gameManager:start()
+if(utils.networkConnection()) then
+	gameManager:start()
+else
+	router.openNoInternet()
+end
 
 -----------------------------------------------------------------------------------------
 --- NOTIFICATIONS

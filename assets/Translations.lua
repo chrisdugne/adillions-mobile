@@ -3,6 +3,10 @@ local translations =
 	["Last updated : January 05th, 2014"] = {
 		["fr"] = "Dernière mise à jour : 05 janvier 2014",
 	},
+
+	["Check your internet connection"] = {
+		["fr"] = "Vérifier votre connexion internet",
+	},
 	
 	["Vungle has no ad, please try later"] = {
 		["fr"] = "Vungle n'a pas de video, veuillez réessayer plus tard",
