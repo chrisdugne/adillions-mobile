@@ -233,7 +233,7 @@ function scene:createTuto2()
 		y 					= display.contentHeight*0.78,
 	})
 
-	hud.tuto2.finalText1:setFillColor(40)
+	hud.tuto2.finalText1:setFillColor(40/255)
 
 	hud.tuto2.finalText2 = viewManager.newText({
 		parent 			= hud.tuto2,
@@ -243,7 +243,7 @@ function scene:createTuto2()
 		y 					= display.contentHeight*0.82,
 	})
 
-	hud.tuto2.finalText2:setFillColor(40)
+	hud.tuto2.finalText2:setFillColor(40/255)
 	
 	-------------------
 	-- controls
@@ -314,7 +314,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight*0.78,
 	})
 
-	hud.tuto3.finalText1:setFillColor(40)
+	hud.tuto3.finalText1:setFillColor(40/255)
 
 	hud.tuto3.finalText2 = viewManager.newText({
 		parent 			= hud.tuto3,
@@ -324,7 +324,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight*0.82,
 	})
 
-	hud.tuto3.finalText2:setFillColor(40)
+	hud.tuto3.finalText2:setFillColor(40/255)
 
 	-------------------
 
@@ -336,7 +336,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight*0.315,
 	})
 
-	hud.tuto3.charityprofile:setFillColor(40)
+	hud.tuto3.charityprofile:setFillColor(40/255)
 
 	hud.tuto3.winners = viewManager.newText({
 		parent 			= hud.tuto3,
@@ -346,7 +346,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight* 0.72,
 	})
 
-	hud.tuto3.winners:setFillColor(40)
+	hud.tuto3.winners:setFillColor(40/255)
 
 	hud.tuto3.charity = viewManager.newText({
 		parent 			= hud.tuto3,
@@ -356,7 +356,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight* 0.72,
 	})
 
-	hud.tuto3.charity:setFillColor(40)
+	hud.tuto3.charity:setFillColor(40/255)
 
 	-------------------
 	
@@ -411,7 +411,7 @@ function scene:createTuto3()
 	hud.tuto3.previous = viewManager.newText({
 		parent 			= hud.tuto3,
 		text 				= T "PREVIOUS",         
-		anchorX			= 1,
+		anchorX			= 0,
 		anchorY			= 1,
 		fontSize			= 52,  
 		x 					= display.contentWidth * 0.14,
