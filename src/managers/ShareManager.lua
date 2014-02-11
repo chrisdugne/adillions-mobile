@@ -42,7 +42,9 @@ function ShareManager:share()
            align = "center"
      }
 	
-	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.anchorX = 0.5
+	multiLineText.anchorY = 0
+	
 	multiLineText.x = display.contentWidth*0.5
 	multiLineText.y = display.contentHeight*0.42
 	hud.popup:insert(multiLineText)         
@@ -135,14 +137,19 @@ function ShareManager:invite(next)
 	hud.popup.inviteText.x 			= display.contentWidth*0.5
 	hud.popup.inviteText.y			= display.contentHeight*0.32
 	
-	
-	hud.popup.earnText = viewManager.newText({
-		parent 			= hud.popup,
-		text 				= T "Earn points and increase the jackpot", 
-		fontSize			= 34,  
-		x 					= display.contentWidth * 0.5,
-		y 					= display.contentHeight*0.4,
+	hud.popup.multiLineText = display.newText({
+		parent	= hud.popup,
+		text 		= T "Earn Instant Tickets and increase the jackpot",  
+		width 	= display.contentWidth*0.6,  
+		width 	= display.contentHeight*0.25,  
+		x 			= display.contentWidth*0.5,
+		y 			= display.contentHeight*0.41,
+		font 		= FONT, 
+		fontSize = 34,
+		align 	= "center",
 	})
+	
+	hud.popup.multiLineText:setFillColor(0)
 
 	----------------------------------------------------------------------------------------------------
 
@@ -277,86 +284,6 @@ function ShareManager:noMoreTickets()
 	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 	
 	----------------------------------------------------------------------------------------------------
---
---	if(not userManager.user.facebookFan) then
---		
---		hud.popup.facebookIcon 			= display.newImage( hud.popup, "assets/images/icons/facebook.png")  
---		hud.popup.facebookIcon.x 		= display.contentWidth*0.28
---		hud.popup.facebookIcon.y		= display.contentHeight*0.65
---
---		viewManager.newText({
---			parent 			= hud.popup, 
---			text	 			= "+ " .. FACEBOOK_FAN_TICKETS,     
---			x 					= display.contentWidth * 0.56,
---			y 					= display.contentHeight*0.67,
---			width				= display.contentWidth*0.6,
---			height			= 120,
---			fontSize			= 47,
---			font				= NUM_FONT,
---			referencePoint = display.CenterLeftReferencePoint
---		})
---
---		hud.popup.facebookOnIcon 		= display.newImage( hud.popup, "assets/images/hud/on.png")  
---		hud.popup.facebookOnIcon.x 	= display.contentWidth*0.78
---   	hud.popup.facebookOnIcon.y		= display.contentHeight*0.65
---
---		hud.popup.facebookOnIcon 		= display.newImage( hud.popup, "assets/images/icons/instant.ticket.png")  
---   	hud.popup.facebookOnIcon.x 	= display.contentWidth*0.48
---   	hud.popup.facebookOnIcon.y		= display.contentHeight*0.65
---	else
---	
---		hud.popup.facebookConnect 		= display.newImage( hud.popup, I "popup.BtConnectFacebook.png")  
---   	hud.popup.facebookConnect.x 	= display.contentWidth*0.5
---   	hud.popup.facebookConnect.y	= display.contentHeight*0.65
---   
---		utils.onTouch(hud.popup.facebookConnect, function() 
---			facebook.connect(function()
---      		router.openInviteFriends()
---			end) 
---		end)
---		
---	end
---
---	----------------------------------------------------------------------------------------------------
---
---	if(not userManager.user.twitterFan) then
---		hud.popup.twitterIcon 			= display.newImage( hud.popup, "assets/images/icons/twitter.png")  
---		hud.popup.twitterIcon.x 		= display.contentWidth*0.28
---		hud.popup.twitterIcon.y		= display.contentHeight*0.77
---
---		viewManager.newText({
---			parent 			= hud.popup, 
---			text	 			= "+ " .. TWITTER_FAN_TICKETS,     
---			x 					= display.contentWidth * 0.56,
---			y 					= display.contentHeight*0.79,
---			width				= display.contentWidth*0.6,
---			height			= 120,
---			fontSize			= 47,
---			font				= NUM_FONT,
---			referencePoint = display.CenterLeftReferencePoint
---		})
---
---		hud.popup.twitterOnIcon 		= display.newImage( hud.popup, "assets/images/hud/on.png")  
---		hud.popup.twitterOnIcon.x 		= display.contentWidth*0.78
---   	hud.popup.twitterOnIcon.y		= display.contentHeight*0.77
---
---		hud.popup.twitterOnIcon 		= display.newImage( hud.popup, "assets/images/icons/instant.ticket.png")  
---   	hud.popup.twitterOnIcon.x 		= display.contentWidth*0.48
---   	hud.popup.twitterOnIcon.y		= display.contentHeight*0.77
---
---	else
---	
---		hud.popup.twitterConnect 		= display.newImage( hud.popup, I "popup.Bt2ConnectTwitter.png")  
---   	hud.popup.twitterConnect.x 	= display.contentWidth*0.5
---   	hud.popup.twitterConnect.y		= display.contentHeight*0.77
---   
---		utils.onTouch(hud.popup.twitterConnect, function() 
---			twitter.connect(function()
---      		self:tweetInvite()
---			end) 
---		end)
---	end
-		
 end
 
 -----------------------------------------------------------------------------------------

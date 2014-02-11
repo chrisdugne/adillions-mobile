@@ -118,7 +118,8 @@ function scene:drawNextLottery()
          		x = display.contentWidth*0.08,
          		y = top + yGap*(nbNewTickets+nbLotteries-2), 
          		fontSize = 43,
-         		referencePoint = display.CenterLeftReferencePoint
+               anchorX 			= 0,
+               anchorY 			= 0.5,
    			})
          
    		end
@@ -183,7 +184,8 @@ function scene:drawPreviousLotteries(top)
             		x = display.contentWidth*0.08,
             		y = top + yGap*(nbPreviousTickets+nbLotteries-2), 
             		fontSize = 42,
-            		referencePoint = display.CenterLeftReferencePoint
+                  anchorX 			= 0,
+                  anchorY 			= 0.5,
       			})
             
             else
@@ -206,7 +208,8 @@ function scene:drawPreviousLotteries(top)
          		x = display.contentWidth*0.1,
          		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
          		fontSize = 34,
-					referencePoint = display.CenterLeftReferencePoint
+               anchorX 			= 0,
+               anchorY 			= 0.5,
    			})
 
          	-----------------------------------------------------------
@@ -223,7 +226,8 @@ function scene:drawPreviousLotteries(top)
             		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
             		fontSize = 37,
             		font = NUM_FONT,
-   					referencePoint = display.CenterRightReferencePoint
+                  anchorX 			= 1,
+                  anchorY 			= 0.5,
       			})
 				
 				else   		
@@ -242,7 +246,8 @@ function scene:drawPreviousLotteries(top)
                   		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
                   		fontSize = 37,
                   		font = NUM_FONT,
-         					referencePoint = display.CenterRightReferencePoint
+                        anchorX 			= 1,
+                        anchorY 			= 0.5,
             			})
             		
       	         	local iconMoney 	= display.newImage( hud.board, "assets/images/icons/notification/stocks.popup.png")
@@ -262,7 +267,8 @@ function scene:drawPreviousLotteries(top)
                   		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
                   		fontSize = 37,
                   		font = NUM_FONT,
-         					referencePoint = display.CenterRightReferencePoint
+                        anchorX 			= 1,
+                        anchorY 			= 0.5,
             			})
             		
       	         	local iconMoney 	= display.newImage( hud.board, "assets/images/icons/notification/instants.popup.png")
@@ -286,7 +292,9 @@ function scene:drawPreviousLotteries(top)
                		y = top + yGap*(nbPreviousTickets+nbLotteries-1.1), 
                		fontSize = 37,
                		font = NUM_FONT,
-      					referencePoint = display.CenterRightReferencePoint
+                     anchorX 			= 1,
+                     anchorY 			= 0.5,
+               		
          			})
          		
    	         	local iconMoney 	= display.newImage( hud.board, "assets/images/icons/money.png")

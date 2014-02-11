@@ -71,7 +71,8 @@ function scene:refreshScene()
 		x = display.contentWidth*0.57,
 		y = display.contentHeight*0.43,
 		fontSize = 34,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
 	viewManager.newText({
@@ -81,7 +82,8 @@ function scene:refreshScene()
 		y = display.contentHeight*0.43,
 		fontSize = 43,
 		font = NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 
 	-------------------------------

@@ -41,7 +41,10 @@ function displayVideo()
 	------------------------------	
 
 	hud.exitButton = display.newImage(hud, "assets/images/hud/ko.png")
-	hud.exitButton:setReferencePoint( display.TopRightReferencePoint )
+	
+	hud.exitButton.anchorX = 1
+	hud.exitButton.anchorY = 0
+	
 	hud.exitButton:rotate(-90)
 	hud.exitButton:scale(0.4,0.4)
 	hud.exitButton.x = 20

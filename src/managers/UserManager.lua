@@ -238,7 +238,8 @@ function UserManager:showConfirmMerge(next)
 		align = "center"
 	}
 
-	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.anchorX = 0.5
+	multiLineText.anchorY = 0
 	multiLineText.x = display.contentWidth*0.5
 	multiLineText.y = display.contentHeight*0.42
 	hud.popup:insert(multiLineText)      
@@ -305,7 +306,8 @@ function UserManager:showWrongAccount()
 		align = "center"
 	}
 
-	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.anchorX = 0.5
+	multiLineText.anchorY = 0
 	multiLineText.x = display.contentWidth*0.5
 	multiLineText.y = display.contentHeight*0.42
 	hud.popup:insert(multiLineText)      
@@ -320,7 +322,8 @@ function UserManager:showWrongAccount()
 		align = "center"
 	}
 
-	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.anchorX = 0.5
+	multiLineText.anchorY = 0
 	multiLineText.x = display.contentWidth*0.5
 	multiLineText.y = display.contentHeight*0.56
 	hud.popup:insert(multiLineText)      
@@ -653,7 +656,8 @@ function UserManager:showMultiAccountPopup(next)
 		align = "center"
 	}
 
-	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.anchorX = 0.5
+	multiLineText.anchorY = 0
 	multiLineText.x = display.contentWidth*0.5
 	multiLineText.y = display.contentHeight*0.42
 	hud.popup:insert(multiLineText)      
@@ -669,7 +673,8 @@ function UserManager:showMultiAccountPopup(next)
 		align = "center"
 	}
 
-	multiLineText2:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText2.anchorX = 0.5
+	multiLineText2.anchorY = 0
 	multiLineText2.x = display.contentWidth*0.5
 	multiLineText2.y = display.contentHeight*0.58
 	hud.popup:insert(multiLineText2)      
@@ -824,33 +829,20 @@ function UserManager:checkTicketTiming()
 		local timerLegendY 		= display.contentHeight*0.48
 		local timerLegendSize 	= 22
 		
---		viewManager.newText({
---			parent = hud.popup, 
---			text = T "HRS", 
---			x = display.contentWidth*0.437,
---			y = timerLegendY,
---			fontSize = timerLegendSize,
---			referencePoint = display.CenterReferencePoint
---		})
-
 		viewManager.newText({
 			parent = hud.popup, 
 			text = T "MIN", 
 			x = display.contentWidth*0.498,
---			x = display.contentWidth*0.567,
 			y = timerLegendY,
 			fontSize = timerLegendSize,
-			referencePoint = display.CenterReferencePoint
 		})
 
 		viewManager.newText({
 			parent = hud.popup, 
 			text = T "SEC", 
 			x = display.contentWidth*0.638,
---			x = display.contentWidth*0.698,
 			y = timerLegendY,
 			fontSize = timerLegendSize,
-			referencePoint = display.CenterReferencePoint
 		})
 
 		----------------------------------------------------
@@ -936,7 +928,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:notifyPrizes(next)
-	if(self.user.notifications.prizes == 110) then
+	if(self.user.notifications.prizes == 0) then
 		next()
 	else
 		local totalPrice = ""
@@ -964,7 +956,8 @@ function UserManager:notifyPrizes(next)
 			parent 			= hud.popup,
 			text 				= utils.displayPrice(totalPrice, COUNTRY), 
 			fontSize			= 55,
-			referencePoint	= display.CenterRightReferencePoint,  
+         anchorX 			= 0.5,
+         anchorY 			= 1,
 			x 					= display.contentWidth * 0.44,
 			y 					= display.contentHeight*0.53,
 		})
@@ -996,7 +989,7 @@ end
 
 function UserManager:notifyStocks(next)
 
-	if(self.user.notifications.stocks == 110) then
+	if(self.user.notifications.stocks == 0) then
 		next()
 	else
 		viewManager.showPopup(display.contentWidth*0.95)
@@ -1017,7 +1010,8 @@ function UserManager:notifyStocks(next)
 			parent 			= hud.popup,
 			text 				= self.user.notifications.stocks, 
 			fontSize			= 75,
-			referencePoint	= display.CenterRightReferencePoint,  
+         anchorX 			= 0.5,
+         anchorY 			= 1,
 			x 					= display.contentWidth * 0.44,
 			y 					= display.contentHeight*0.52,
 		})
@@ -1040,7 +1034,7 @@ end
 
 function UserManager:notifyInstants()
 
-	if(self.user.notifications.instants > -1) then
+	if(self.user.notifications.instants > 0) then
 		viewManager.showPopup(display.contentWidth*0.95)
 
 		hud.popup.congratz 			= display.newImage( hud.popup, I "popup.Txt1.png")  
@@ -1059,7 +1053,8 @@ function UserManager:notifyInstants()
 			parent 			= hud.popup,
 			text 				= self.user.notifications.instants, 
 			fontSize			= 75,
-			referencePoint	= display.CenterRightReferencePoint,  
+         anchorX 			= 0.5,
+         anchorY 			= 1,
 			x 					= display.contentWidth * 0.44,
 			y 					= display.contentHeight*0.52,
 		})

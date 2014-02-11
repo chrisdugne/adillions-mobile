@@ -84,7 +84,8 @@ function scene:drawBoard()
 			x = display.contentWidth*0.1,
 			y = marginTop + yGap*(i-1), 
 			fontSize = 38,
-			referencePoint = display.CenterLeftReferencePoint
+         anchorX 			= 0,
+         anchorY 			= 0.5,
 		})
 
 		------------------------------------------------
@@ -109,7 +110,8 @@ function scene:drawBoard()
 			y = marginTop + yGap*(i-1)+270, 
 			fontSize = 45,
 			font = NUM_FONT,
-			referencePoint = display.CenterLeftReferencePoint
+         anchorX 			= 0,
+         anchorY 			= 0.5,
 		})
 
 		local winners = T "Winner"
@@ -123,7 +125,8 @@ function scene:drawBoard()
 			x = display.contentWidth*0.28,
 			y = marginTop + yGap*(i-1)+270, 
 			fontSize = 27,
-			referencePoint = display.CenterLeftReferencePoint
+         anchorX 			= 0,
+         anchorY 			= 0.5,
 		})
 		
 		------------------------------------------------
@@ -142,7 +145,8 @@ function scene:drawBoard()
 			y = marginTop + yGap*(i-1)+340, 
 			fontSize = 45,
 			font = NUM_FONT,
-			referencePoint = display.CenterLeftReferencePoint
+         anchorX 			= 0,
+         anchorY 			= 0.5,
 		})
 
 		------------------------------------------------
@@ -165,7 +169,8 @@ function scene:drawBoard()
 			x 					= display.contentWidth*0.7,
 			y 					= marginTop + yGap*(i-1)+270, 
 			fontSize 		= 27,
-			referencePoint = display.CenterLeftReferencePoint
+         anchorX 			= 0,
+         anchorY 			= 0.5,
 		})
 		
 
@@ -176,7 +181,8 @@ function scene:drawBoard()
 			y 					= marginTop + yGap*(i-1)+315, 
 			fontSize 		= 45,
 			font 				= NUM_FONT,
-			referencePoint = display.CenterLeftReferencePoint
+         anchorX 			= 0,
+         anchorY 			= 0.5,
 		})
 	
 		------------------------------------------------
@@ -277,7 +283,8 @@ function scene:openMoreResults( lottery )
    		x 					= display.contentWidth*0.45,
    		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
    		fontSize 		= 35,
-			referencePoint = display.CenterRightReferencePoint
+         anchorX 			= 1,
+         anchorY 			= 0.5,
    	})
    
    	viewManager.newText({
@@ -286,7 +293,8 @@ function scene:openMoreResults( lottery )
    		x 					= display.contentWidth*0.8,
    		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
    		fontSize 		= 35,
-			referencePoint = display.CenterRightReferencePoint
+         anchorX 			= 1,
+         anchorY 			= 0.5,
    	})
 
    	hud.iconPieces 			= display.newImage( hud.popup, "assets/images/icons/money.png")

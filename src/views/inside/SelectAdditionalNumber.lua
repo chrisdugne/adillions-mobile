@@ -42,7 +42,8 @@ function scene:refreshScene()
 		y = top + display.contentHeight*0.08,
 		font = FONT,   
 		fontSize = 49,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	} )
 	
 	--------------------------------------------------------------

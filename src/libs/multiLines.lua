@@ -229,8 +229,9 @@ function processTextWithNewLine(params)
                 end 
                 
         end
-        multiTextgroup:setReferencePoint(display.CenterReferencePoint)
         multiTextgroup.y = sH
+        multiTextgroup.anchorX = 0.5
+        multiTextgroup.anchorY = 0.5
         
         --left align
         if align == "left" then
@@ -303,7 +304,9 @@ function processTextWithoutNewLine(params)
                         color = color,
                         lineLength = lineLength,
                         }       
-                multiTextgroup:setReferencePoint(display.CenterReferencePoint)
+                        
+                multiTextgroup.anchorX = 0.5
+                multiTextgroup.anchorY = 0.5
                 multiTextgroup.y = sH
                 
                 --align
@@ -382,7 +385,9 @@ function display.newMultiLineText(params)
                         }                                                               
         end 
         
-        group:setReferencePoint(display.CenterReferencePoint)
+        group.anchorX = 0.5
+        group.anchorY = 0.5
+        
         group.x = l + group.width/2 
         group.y = t + group.height/2 
         

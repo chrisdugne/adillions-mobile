@@ -140,7 +140,8 @@ function refreshHeaderPoints()
 			y 					= display.contentHeight*0.42,
 			font				= NUM_FONT,
 			fontSize 		= 40,
-			referencePoint = display.CenterRightReferencePoint
+         anchorX 			= 1,
+         anchorY 			= 0.5,
 		})
 		
 		--------------------------
@@ -176,7 +177,8 @@ function refreshHeaderPoints()
 			y 					= display.contentHeight*0.67,
 			font				= NUM_FONT,
 			fontSize 		= 40,
-			referencePoint = display.CenterRightReferencePoint
+         anchorX 			= 1,
+         anchorY 			= 0.5,
 		})
 
 		--------------------------
@@ -406,10 +408,12 @@ function newText(options)
 
 	local text = display.newText( finalOptions )
 
-	text:setTextColor(0)
-	text:setReferencePoint(options.referencePoint or display.CenterReferencePoint);
+	text:setFillColor(0)
 	text.x = options.x
 	text.y = options.y
+
+	text.anchorX = options.anchorX or 0.5
+	text.anchorY = options.anchorY or 0.5
 
 	if(options.parent) then
 		options.parent:insert(text)

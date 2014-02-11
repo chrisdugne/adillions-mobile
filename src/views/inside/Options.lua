@@ -64,7 +64,18 @@ function scene:refreshScene()
 		x 					= self.column1,
 		y 					= self.top + self.yGap*(optionsTop-0.5),
 		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
+	})
+	
+	viewManager.newText({
+		parent 			= hud.board, 
+		text 				= "ewqrtfore the next draw",         
+		x 					= self.column2,
+		y 					= self.top + self.yGap*(optionsTop),
+		fontSize 		= self.fontSizeLeft,
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	local beforeDrawSwitch = widget.newSwitch
@@ -84,7 +95,8 @@ function scene:refreshScene()
 		x 					= self.column1,
 		y 					= self.top + self.yGap*(optionsTop+0.5),
 		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 

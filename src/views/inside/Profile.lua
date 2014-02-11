@@ -65,7 +65,8 @@ function scene:drawScene()
 		x 					= display.contentWidth*0.4,
 		y 					= self.top + display.contentHeight*0.02,
 		fontSize 		= 35,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 
@@ -95,7 +96,9 @@ function scene:drawScene()
 	hud.board:insert(hud.lineDetails)
 
 	hud.titleDetails 			= display.newImage( hud.board, I "details.png")  
-	hud.titleDetails:setReferencePoint(display.CenterLeftReferencePoint);
+
+   hud.titleDetails.anchorX 			= 0
+   hud.titleDetails.anchorY 			= 0.5
 	hud.titleDetails.x 		= display.contentWidth*0.05
 	hud.titleDetails.y		= self.top + self.yGap*(detailsTop+0.7)
 	hud.board:insert(hud.titleDetails)
@@ -116,8 +119,10 @@ function scene:drawScene()
 	hud.lineStatus.y 			= self.top + self.yGap*statusTop
 	hud.board:insert(hud.lineStatus)
 
-	hud.titleStatus 			= display.newImage( hud.board, I "status.png")  
-	hud.titleStatus:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.titleStatus 			= display.newImage( hud.board, I "status.png")
+	
+   hud.titleStatus.anchorX 			= 0
+   hud.titleStatus.anchorY 			= 0.5  
 	hud.titleStatus.x 		= display.contentWidth*0.05
 	hud.titleStatus.y			= self.top + self.yGap*statusTop
 	hud.board:insert(hud.titleStatus)
@@ -130,7 +135,8 @@ function scene:drawScene()
 		x 					= self.column1,
 		y 					= self.top + self.yGap*(statusTop+1),
 		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -140,7 +146,8 @@ function scene:drawScene()
 		y 					= self.top + self.yGap*(statusTop+2),
 		fontSize 		= 40,
 		font				= NUM_FONT,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 	
 	--------------------------
@@ -151,7 +158,8 @@ function scene:drawScene()
 		x 					= self.column2,
 		y 					= self.top + self.yGap*(statusTop+1),
 		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 
 
@@ -168,7 +176,8 @@ function scene:drawScene()
 		fontSize 		= self.fontSizeRight,
 		font				= NUM_FONT,
 		fontSize 		= 40,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 
 	--------------------------
@@ -179,7 +188,6 @@ function scene:drawScene()
 		x 					= display.contentWidth*0.5,
 		y 					= self.top + self.yGap*(statusTop+3.5),
 		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterReferencePoint
 	})
 
 	for i=1,5 do 
@@ -203,30 +211,7 @@ function scene:drawScene()
 		y 					= self.top + self.yGap*(statusTop+5.5),
 		fontSize 		= self.fontSizeRight,
 		fontSize 		= 30,
-		referencePoint = display.CenterReferencePoint
 	})
-	
-	
---	--------------------------
---	
---	viewManager.newText({
---		parent 			= hud.board, 
---		text 				= T "Donation" .. " : ",         
---		x 					= self.column2,
---		y 					= self.top + self.yGap*(statusTop+3.5),
---		fontSize 		= self.fontSizeLeft,
---		referencePoint = display.CenterRightReferencePoint
---	})
---
---	viewManager.newText({
---		parent 			= hud.board, 
---		text	 			= utils.displayPrice(userManager.user.totalGift, COUNTRY) ,        
---		x 					= self.column2,
---		y 					= self.top + self.yGap*(statusTop+4.5),
---		font				= NUM_FONT,
---		fontSize 		= 40,
---		referencePoint = display.CenterRightReferencePoint
---	})
 	
 	
 	---------------------------------------------------------------
@@ -238,8 +223,11 @@ function scene:drawScene()
 	hud.lineWinnings.y 			= self.top + self.yGap*winningsTop
 	hud.board:insert(hud.lineWinnings)
 
-	hud.titleWinnings 			= display.newImage( hud.board, I "Gain.png")  
-	hud.titleWinnings:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.titleWinnings 			= display.newImage( hud.board, I "Gain.png")
+	
+   hud.titleWinnings.anchorX 			= 0
+   hud.titleWinnings.anchorY 			= 0.5  
+     
 	hud.titleWinnings.x 		= display.contentWidth*0.05
 	hud.titleWinnings.y			= self.top + self.yGap*winningsTop
 	hud.board:insert(hud.titleWinnings)
@@ -252,7 +240,8 @@ function scene:drawScene()
 		x 					= self.column1,
 		y 					= self.top + self.yGap*(winningsTop+1),
 		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -262,7 +251,8 @@ function scene:drawScene()
 		y 					= self.top + self.yGap*(winningsTop+2),
 		fontSize 		= 40,
 		font				= NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
 	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/money.png")
@@ -278,7 +268,8 @@ function scene:drawScene()
 		x 					= self.column2,
 		y 					= self.top + self.yGap*(winningsTop+1),
 		fontSize 		= self.fontSizeLeft,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -289,7 +280,8 @@ function scene:drawScene()
 		fontSize 		= self.fontSizeRight,
 		font				= NUM_FONT,
 		fontSize 		= 40,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
 	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/PictogainPayed.png")
@@ -319,7 +311,8 @@ function scene:drawScene()
 		y 					= self.top + self.yGap*(winningsTop+5),
 		fontSize 		= 40,
 		font				= NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
 	hud.iconMoney 			= display.newImage( hud.board, "assets/images/icons/PictoBalance.png")
@@ -347,8 +340,11 @@ function scene:drawScene()
 	hud.lineSocials.y 			= self.top + self.yGap*socialTop
 	hud.board:insert(hud.lineSocials)
 
-	hud.titleSocials 				= display.newImage( hud.board, I "socials.png")  
-	hud.titleSocials:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.titleSocials 				= display.newImage( hud.board, I "socials.png")
+	
+   hud.titleSocials.anchorX 			= 0
+   hud.titleSocials.anchorY 			= 0.5  
+     
 	hud.titleSocials.x 			= display.contentWidth*0.05
 	hud.titleSocials.y			= self.top + self.yGap*socialTop
 	hud.board:insert(hud.titleSocials)
@@ -359,8 +355,11 @@ function scene:drawScene()
 	
 --	if(GLOBALS.savedData.facebookAccessToken) then
 	if(userManager.user.facebookId) then
-      hud.facebookConnect 		= display.newImage( hud.board, "assets/images/icons/facebook.connected.png")  
-		hud.facebookConnect:setReferencePoint(display.CenterLeftReferencePoint)
+      hud.facebookConnect 		= display.newImage( hud.board, "assets/images/icons/facebook.connected.png")
+      
+      hud.facebookConnect.anchorX 			= 0
+      hud.facebookConnect.anchorY 			= 0.5  
+     
 		hud.facebookConnect.x 	= display.contentWidth*0.05
 		hud.facebookConnect.y	= self.top + self.yGap*(socialTop+2.5)
 		hud.board:insert(hud.facebookConnect)
@@ -371,12 +370,16 @@ function scene:drawScene()
 			x 					= display.contentWidth*0.25, 
 			y 					= self.top + self.yGap*(socialTop+2.5),
 			fontSize 		= 37,
-			referencePoint = display.CenterLeftReferencePoint
+         anchorX 			= 0,
+         anchorY 			= 0.5,
 		})
 	
    else
-      hud.facebookConnect 		= display.newImage( hud.board, I "popup.facebook.connect.png")  
-		hud.facebookConnect:setReferencePoint(display.CenterLeftReferencePoint)
+      hud.facebookConnect 		= display.newImage( hud.board, I "popup.facebook.connect.png")
+      
+      hud.facebookConnect.anchorX 			= 0
+      hud.facebookConnect.anchorY 			= 0.5  
+        
 		hud.facebookConnect.x 	= display.contentWidth*0.05
       hud.facebookConnect.y	= self.top + self.yGap*(socialTop+2.5)
       hud.board:insert(hud.facebookConnect)
@@ -396,13 +399,19 @@ function scene:drawScene()
 	if(userManager.user.facebookFan) then
 		-- fan
 		hud.facebookLikeDone 		= display.newImage( hud.board, I "facebook.like.done.png") 
-		hud.facebookLikeDone:setReferencePoint(display.CenterLeftReferencePoint)
+
+      hud.facebookLikeDone.anchorX 			= 0
+      hud.facebookLikeDone.anchorY 			= 0.5  
+      
 		hud.facebookLikeDone.x 	= display.contentWidth*0.05
 		hud.facebookLikeDone.y	= self.top + self.yGap*(socialTop+5.2)
 		hud.board:insert(hud.facebookLikeDone)
 	else
-		hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")  
-		hud.facebookLike:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.facebookLike 		= display.newImage( hud.board, I "facebook.like.enabled.png")
+		
+      hud.facebookLike.anchorX 			= 0
+      hud.facebookLike.anchorY 			= 0.5  
+        
 		hud.facebookLike.x 	= display.contentWidth*0.05
 		hud.facebookLike.y	= self.top + self.yGap*(socialTop+5.2)
 		hud.board:insert(hud.facebookLike)
@@ -424,11 +433,6 @@ function scene:drawScene()
 					self:refreshScene()
 				end) 
 			end)
---			hud.facebookLikeDisabled 		= display.newImage( hud.board, I "facebook.like.disabled.png")
---			hud.facebookLikeDisabled:setReferencePoint(display.CenterLeftReferencePoint)
---			hud.facebookLikeDisabled.x 	= display.contentWidth*0.05
---			hud.facebookLikeDisabled.y	= self.top + self.yGap*(socialTop+5.2)
---			hud.board:insert(hud.facebookLikeDisabled)
 		end
 		
 	end
@@ -443,7 +447,8 @@ function scene:drawScene()
 		y 					= self.top + self.yGap*(socialTop+2.5),
 		font				= NUM_FONT,
 		fontSize 		= 33,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
    hud.facebookBonus1 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
@@ -458,7 +463,8 @@ function scene:drawScene()
 		y 					= self.top + self.yGap*(socialTop+5.2),
 		font				= NUM_FONT,
 		fontSize 		= 33,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
    hud.facebookBonus2 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
@@ -476,7 +482,10 @@ function scene:drawScene()
 --	if(twitter.connected) then
 	if(userManager.user.twitterId) then
       hud.twitterConnect 				= display.newImage( hud.board, "assets/images/icons/twitter.connected.png")  
-		hud.twitterConnect:setReferencePoint(display.CenterLeftReferencePoint)
+
+      hud.twitterConnect.anchorX 			= 0
+      hud.twitterConnect.anchorY 			= 0.5  
+      		
 		hud.twitterConnect.x 	= display.contentWidth*0.05
       hud.twitterConnect.y				= self.top + self.yGap*(socialTop+8)
       hud.board:insert(hud.twitterConnect)
@@ -487,12 +496,16 @@ function scene:drawScene()
 			x 					= display.contentWidth*0.25, 
 			y 					= self.top + self.yGap*(socialTop+8),
 			fontSize 		= 37,
-			referencePoint = display.CenterLeftReferencePoint
+         anchorX 			= 0,
+         anchorY 			= 0.5,
 		})
 			
    else
-      hud.twitterConnect 				= display.newImage( hud.board, I "popup.twitter.connect.png")  
-		hud.twitterConnect:setReferencePoint(display.CenterLeftReferencePoint)
+      hud.twitterConnect 				= display.newImage( hud.board, I "popup.twitter.connect.png")
+      
+      hud.twitterConnect.anchorX 			= 0
+      hud.twitterConnect.anchorY 			= 0.5  
+        
 		hud.twitterConnect.x 	= display.contentWidth*0.05
       hud.twitterConnect.y				= self.top + self.yGap*(socialTop+8)
       hud.board:insert(hud.twitterConnect)
@@ -508,14 +521,19 @@ function scene:drawScene()
 	
 	if(userManager.user.twitterFan) then
 		-- fan
-		hud.twitterFollowing 		= display.newImage( hud.board, I "twitter.following.png")  
-		hud.twitterFollowing:setReferencePoint(display.CenterLeftReferencePoint)
+		hud.twitterFollowing 		= display.newImage( hud.board, I "twitter.following.png")
+		
+      hud.twitterFollowing.anchorX 			= 0
+      hud.twitterFollowing.anchorY 			= 0.5  
+        
 		hud.twitterFollowing.x 	= display.contentWidth*0.05
 		hud.twitterFollowing.y	= self.top + self.yGap*(socialTop+10.7)
       hud.board:insert(hud.twitterFollowing)
 	else
-      hud.twitterFollow 		= display.newImage( hud.board, I "twitter.follow.png") 
-      hud.twitterFollow:setReferencePoint(display.CenterLeftReferencePoint)
+      hud.twitterFollow 		= display.newImage( hud.board, I "twitter.follow.png")
+      
+      hud.twitterFollow.anchorX 			= 0
+      hud.twitterFollow.anchorY 			= 0.5  
       hud.twitterFollow.x 	= display.contentWidth*0.05
       hud.twitterFollow.y	= self.top + self.yGap*(socialTop+10.7)
       hud.board:insert(hud.twitterFollow)
@@ -544,11 +562,6 @@ function scene:drawScene()
 					end) 
 				end) 
 			end)
-			--         hud.twitterFollowDisabled 		= display.newImage( hud.board, I "twitter.follow.disabled.png")
-			--         hud.twitterFollowDisabled:setReferencePoint(display.CenterLeftReferencePoint)
---         hud.twitterFollowDisabled.x 	= display.contentWidth*0.05
---         hud.twitterFollowDisabled.y	= self.top + self.yGap*(socialTop+10.7)
---         hud.board:insert(hud.twitterFollowDisabled)
 		end
 	end
 
@@ -563,7 +576,8 @@ function scene:drawScene()
 		y 					= self.top + self.yGap*(socialTop+8),
 		font				= NUM_FONT,
 		fontSize 		= 33,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
    hud.facebookBonus1 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
@@ -578,7 +592,8 @@ function scene:drawScene()
 		y 					= self.top + self.yGap*(socialTop+10.7),
 		font				= NUM_FONT,
 		fontSize 		= 33,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
    hud.facebookBonus2 		= display.newImage( hud.board, "assets/images/icons/PictoBonus.png")  
@@ -599,8 +614,11 @@ function scene:drawScene()
 	hud.lineSponsor.y 			= self.top + self.yGap*sponsorTop
 	hud.board:insert(hud.lineSponsor)
 
-	hud.titleSponsor 				= display.newImage( hud.board, I "sponsor.png")  
-	hud.titleSponsor:setReferencePoint(display.CenterLeftReferencePoint);
+	hud.titleSponsor 				= display.newImage( hud.board, I "sponsor.png")
+	
+   hud.titleSponsor.anchorX 			= 0
+   hud.titleSponsor.anchorY 			= 0.5  
+        
 	hud.titleSponsor.x 			= display.contentWidth*0.05
 	hud.titleSponsor.y			= self.top + self.yGap*sponsorTop
 	hud.board:insert(hud.titleSponsor)
@@ -680,7 +698,8 @@ function scene:drawTextEntry(title, value, position, fontSizeLeft, fontSizeRight
 		x 					= self.column1,
 		y 					= self.top + self.yGap*position,
 		fontSize 		= fontSizeLeft or self.fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -690,7 +709,8 @@ function scene:drawTextEntry(title, value, position, fontSizeLeft, fontSizeRight
 		y 					= self.top + self.yGap*position,
 		fontSize 		= fontSizeRight or self.fontSizeRight,
 		font				= NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
 end
@@ -705,7 +725,8 @@ function scene:drawConnection(title, state, position)
 		x 					= display.contentWidth*0.75,
 		y 					= self.top + self.yGap*position,
 		fontSize 		= 21,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
 	local light 	= display.newImage(hud.board, "assets/images/hud/".. state ..".png")
@@ -753,7 +774,8 @@ function scene:openCashout()
 		align = "center"
 	}
 
-	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.anchorX = 0.5
+	multiLineText.anchorY = 0
 	multiLineText.x = display.contentWidth*0.5
 	multiLineText.y = display.contentHeight*0.4
 	hud.popup:insert(multiLineText)         
@@ -829,7 +851,8 @@ function scene:openGiveToCharity()
            align = "center"
      }
 	
-	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.anchorX = 0.5
+	multiLineText.anchorY = 0
 	multiLineText.x = display.contentWidth*0.5
 	multiLineText.y = display.contentHeight*0.3
 	hud.popup:insert(multiLineText)         
@@ -893,7 +916,8 @@ function scene:openConfirmCashout()
 		align = "center"
 	}
 
-	multiLineText:setReferencePoint(display.TopCenterReferencePoint)
+	multiLineText.anchorX = 0.5
+	multiLineText.anchorY = 0
 	multiLineText.x = display.contentWidth*0.5
 	multiLineText.y = display.contentHeight*0.37
 	hud.popup:insert(multiLineText)         

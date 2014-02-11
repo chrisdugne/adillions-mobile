@@ -102,7 +102,8 @@ function scene:drawNextLottery( event )
 		x = display.contentWidth*0.17,
 		y = top - display.contentHeight * 0.044,
 		fontSize = 40,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	hud.separator 			= display.newImage(hud, "assets/images/icons/separateur.horizontal.png")
@@ -135,7 +136,6 @@ function scene:drawNextLottery( event )
 		x = daysX,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
-		referencePoint = display.CenterReferencePoint
 	})
 
 	viewManager.newText({
@@ -144,7 +144,6 @@ function scene:drawNextLottery( event )
 		x = display.contentWidth*0.437,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
-		referencePoint = display.CenterReferencePoint
 	})
 
 	viewManager.newText({
@@ -153,7 +152,6 @@ function scene:drawNextLottery( event )
 		x = display.contentWidth*0.567,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
-		referencePoint = display.CenterReferencePoint
 	})
 
 	viewManager.newText({
@@ -162,7 +160,6 @@ function scene:drawNextLottery( event )
 		x = display.contentWidth*0.698,
 		y = timerLegendY,
 		fontSize = timerLegendSize,
-		referencePoint = display.CenterReferencePoint
 	})
 	
 	----------------------------------------------------
@@ -179,11 +176,12 @@ function scene:drawNextLottery( event )
 	hud.priceDisplay = viewManager.newText({
 		parent = hud, 
 		text = '',     
-		x = priceX - display.contentWidth*0.12,
+		x = priceX ,
 		y = top + display.contentHeight*0.12,
 		fontSize = 73,
 		font = NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 	
 	hud.priceCurrentDisplay = 0

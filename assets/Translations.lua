@@ -195,8 +195,8 @@ local translations =
 
 	---POPUP INVITE----------------------------------------------------------- 
 
-	["Earn points and increase the jackpot"] = {
-		["fr"] = "Gagnez des points et faites augmenter la cagnotte",
+	["Earn Instant Tickets and increase the jackpot"] = {
+		["fr"] = "Gagnez des Tickets Instantanés et faites augmenter la cagnotte",
 	},
 
 	---POPUP SHARE----------------------------------------------------------- 

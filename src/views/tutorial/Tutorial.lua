@@ -111,7 +111,8 @@ function scene:createTuto1()
 		fontSize			= 44,  
 		x 					= display.contentWidth * 0.3,
 		y 					= display.contentHeight* (0.52 + 0.015),
-		referencePoint = display.BottomLeftReferencePoint
+		anchorX			= 0,
+		anchorY			= 1
 	})
 	
 	
@@ -121,7 +122,8 @@ function scene:createTuto1()
 		fontSize			= 44,  
 		x 					= hud.tuto1.watch.x + hud.tuto1.watch.width + display.contentWidth*0.02,
 		y 					= display.contentHeight* (0.52 + 0.015),
-		referencePoint = display.BottomLeftReferencePoint
+		anchorX			= 0,
+		anchorY			= 1
 	})
 	
 	--------------------
@@ -140,7 +142,8 @@ function scene:createTuto1()
 		fontSize			= 44,  
 		x 					= display.contentWidth * 0.3,
 		y 					= display.contentHeight* (0.66 + 0.015),
-		referencePoint = display.BottomLeftReferencePoint
+		anchorX			= 0,
+		anchorY			= 1
 	})
 	
 	
@@ -150,7 +153,8 @@ function scene:createTuto1()
 		fontSize			= 44,  
 		x 					= hud.tuto1.fillout.x + hud.tuto1.fillout.width + display.contentWidth*0.02,
 		y 					= display.contentHeight*(0.66 + 0.015),
-		referencePoint = display.BottomLeftReferencePoint
+		anchorX			= 0,
+		anchorY			= 1
 	})
 	
 	--------------------
@@ -166,7 +170,8 @@ function scene:createTuto1()
 --		font				= NUM_FONT,  
 		x 					= display.contentWidth * 0.3,
 		y 					= display.contentHeight*(0.8 + 0.015),
-		referencePoint = display.BottomLeftReferencePoint
+		anchorX			= 0,
+		anchorY			= 1
 	})
 	
 	hud.tuto1.anad = viewManager.newText({
@@ -175,7 +180,8 @@ function scene:createTuto1()
 		fontSize			= 44,  
 		x 					= hud.tuto1.win.x + hud.tuto1.win.width + display.contentWidth*0.02,
 		y 					= display.contentHeight*(0.8 + 0.015),
-		referencePoint = display.BottomLeftReferencePoint
+		anchorX			= 0,
+		anchorY			= 1
 	})
 	
 	-------------------
@@ -183,7 +189,8 @@ function scene:createTuto1()
 	hud.tuto1.next = viewManager.newText({
 		parent 			= hud.tuto1,
 		text 				= T "NEXT",  
-		referencePoint = display.BottomCenterReferencePoint,
+		anchorX			= 0.5,
+		anchorY			= 1,
 		y 					= display.contentHeight*0.96,
 		fontSize			= 52,  
 		x 					= display.contentWidth * 0.5,
@@ -192,7 +199,8 @@ function scene:createTuto1()
 	hud.tuto1.next:setTextColor(255)
 	
 	hud.tuto1.arrowright 		= display.newImage( hud.tuto1, "assets/images/hud/Tuto_ArrowRight.png")
-	hud.tuto1.arrowright:setReferencePoint ( display.BottomCenterReferencePoint) 
+	hud.tuto1.arrowright.anchorX				= 0.5
+	hud.tuto1.arrowright.anchorY				= 1
 	hud.tuto1.arrowright.x 		= display.contentWidth*0.5 + hud.tuto1.next.contentWidth/2 + 50
 	hud.tuto1.arrowright.y 		= hud.tuto1.next.y
 	
@@ -243,7 +251,8 @@ function scene:createTuto2()
 	hud.tuto2.next = viewManager.newText({
 		parent 			= hud.tuto2,
 		text 				= T "NEXT",       
-		referencePoint = display.BottomRightReferencePoint,
+		anchorX			= 1,
+		anchorY			= 1,
 		fontSize			= 52,  
 		x 					= display.contentWidth * 0.86,
 		y 					= display.contentHeight*0.96,
@@ -252,14 +261,17 @@ function scene:createTuto2()
 	hud.tuto2.next:setTextColor(255)
 	
 	hud.tuto2.arrowright 		= display.newImage( hud.tuto2, "assets/images/hud/Tuto_ArrowRight.png")
-	hud.tuto2.arrowright:setReferencePoint ( display.BottomCenterReferencePoint) 
+	     
+	hud.tuto2.arrowright.anchorX			= 0.5
+	hud.tuto2.arrowright.anchorY			= 1
 	hud.tuto2.arrowright.x 		= display.contentWidth*0.9
 	hud.tuto2.arrowright.y 		= hud.tuto2.next.y
 	
 	hud.tuto2.previous = viewManager.newText({
 		parent 			= hud.tuto2,
-		text 				= T "PREVIOUS",       
-		referencePoint = display.BottomLeftReferencePoint,
+		text 				= T "PREVIOUS",            
+		anchorX			= 0,
+		anchorY			= 1,
 		fontSize			= 52,  
 		x 					= display.contentWidth * 0.14,
 		y 					= display.contentHeight*0.96,
@@ -268,7 +280,9 @@ function scene:createTuto2()
 	hud.tuto2.previous:setTextColor(255)
 
 	hud.tuto2.arrowleft 		= display.newImage( hud.tuto2, "assets/images/hud/Tuto_ArrowLeft.png")
-	hud.tuto2.arrowleft:setReferencePoint ( display.BottomCenterReferencePoint) 
+	
+	hud.tuto2.arrowleft.anchorX			= 0.5
+	hud.tuto2.arrowleft.anchorY			= 1
 	hud.tuto2.arrowleft.x 	= display.contentWidth*0.1
 	hud.tuto2.arrowleft.y 	= hud.tuto2.next.y
 
@@ -397,7 +411,8 @@ function scene:createTuto3()
 	hud.tuto3.previous = viewManager.newText({
 		parent 			= hud.tuto3,
 		text 				= T "PREVIOUS",         
-		referencePoint = display.BottomLeftReferencePoint,
+		anchorX			= 1,
+		anchorY			= 1,
 		fontSize			= 52,  
 		x 					= display.contentWidth * 0.14,
 		y 					= display.contentHeight*0.96,

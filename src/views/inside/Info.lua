@@ -204,7 +204,8 @@ function scene:openPrizes()
 		y = display.contentHeight * 0.08,
 		fontSize = 26,
 		font		= FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 0.5,
+      anchorY 			= 1,
 	})
 
 	--------------------------
@@ -215,7 +216,9 @@ function scene:openPrizes()
 	hud.picto:scale(0.7,0.7)
 
 	hud.title 			= display.newImage(hud.popup, I "Prize.png")
-	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+	
+   hud.title.anchorX 			= 0
+   hud.title.anchorY 			= 0.5
 	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.15
 
@@ -319,7 +322,9 @@ function scene:openTerms()
 	hud.picto.y 		= display.contentHeight*0.1
 
 	hud.title 			= display.newImage(hud.popup, I "terms.png")
-	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+	
+   hud.title.anchorX 			= 0
+   hud.title.anchorY 			= 0.5
 	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.1
 
@@ -411,7 +416,9 @@ function scene:openOptions()
 	hud.picto.y 		= display.contentHeight*0.15
 
 	hud.title 			= display.newImage(hud.popup, I "Options.png")
-	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+
+   hud.title.anchorX 			= 0
+   hud.title.anchorY 			= 0.5
 	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.15
 
@@ -445,7 +452,8 @@ function scene:openOptions()
 		x 					= display.contentWidth*0.11,
 		y 					= top + yGap*(optionsTop),
 		fontSize 		= fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	local beforeDrawSwitch = widget.newSwitch
@@ -465,7 +473,8 @@ function scene:openOptions()
 		x 					= display.contentWidth*0.11,
 		y 					= top + yGap*(optionsTop+0.5),
 		fontSize 		= fontSizeLeft,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 
@@ -509,7 +518,9 @@ function scene:openContact()
 	hud.picto.y 		= display.contentHeight*0.15
 
 	hud.title 			= display.newImage(hud.popup, I "Contact.png")
-	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+	
+   hud.title.anchorX 			= 0
+   hud.title.anchorY 			= 0.5
 	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.15
 
@@ -526,7 +537,8 @@ function scene:openContact()
 		y = display.contentHeight * 0.27,
 		fontSize = 40,
 		font = NUM_FONT,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 	
 	--------------------------
@@ -537,7 +549,8 @@ function scene:openContact()
 		x = display.contentWidth*0.1,
 		y = display.contentHeight * 0.31,
 		fontSize = 26,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -547,7 +560,8 @@ function scene:openContact()
 		y = display.contentHeight * 0.31,
 		fontSize = 26,
 		font		= NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -556,7 +570,8 @@ function scene:openContact()
 		x = display.contentWidth*0.1,
 		y = display.contentHeight * 0.36,
 		fontSize = 26,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -566,7 +581,8 @@ function scene:openContact()
 		y = display.contentHeight * 0.36,
 		fontSize = 26,
 		font		= NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -575,7 +591,8 @@ function scene:openContact()
 		x = display.contentWidth*0.1,
 		y = display.contentHeight * 0.41,
 		fontSize = 26,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -585,7 +602,8 @@ function scene:openContact()
 		y = display.contentHeight * 0.41,
 		fontSize = 26,
 		font		= NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -594,7 +612,8 @@ function scene:openContact()
 		x = display.contentWidth*0.1,
 		y = display.contentHeight * 0.46,
 		fontSize = 26,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	viewManager.newText({
@@ -604,7 +623,8 @@ function scene:openContact()
 		y = display.contentHeight * 0.46,
 		fontSize = 26,
 		font		= NUM_FONT,
-		referencePoint = display.CenterRightReferencePoint
+      anchorX 			= 1,
+      anchorY 			= 0.5,
 	})
 
 	--------------------------
@@ -616,7 +636,8 @@ function scene:openContact()
 		y = display.contentHeight * 0.6,
 		fontSize = 40,
 		font = NUM_FONT,
-		referencePoint = display.CenterLeftReferencePoint
+      anchorX 			= 0,
+      anchorY 			= 0.5,
 	})
 
 	--------------------------
@@ -656,7 +677,9 @@ function scene:openRewards1()
 	hud.picto.y 		= display.contentHeight*0.15
 
 	hud.title 			= display.newImage(hud.popup, I "moretickets.png")
-	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+
+   hud.title.anchorX 			= 0
+   hud.title.anchorY 			= 0.5
 	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.15
 
@@ -676,27 +699,11 @@ function scene:openRewards1()
 	hud.text:setTextColor(0)
 	
 	--------------------------
---
---	local multiLineText = display.newMultiLineText  
---	{
---		text = T " Increase your number of available Tickets for the next draws", 
---		width = display.contentWidth*0.85,  
---		left = display.contentWidth*0.5,
---		font = FONT, 
---		fontSize = 36,
---		align = "left",
---		spaceY = display.contentWidth*0.009
---	}
---
---	multiLineText:setReferencePoint(display.CenterLeftReferencePoint)
---	multiLineText.x = display.contentWidth*0.1
---	multiLineText.y = display.contentHeight*0.25
---	hud.popup:insert(multiLineText)         
-	
-	--------------------------
 
 	hud.fb1 			= display.newImage(hud.popup, "assets/images/hud/BonusTicket_ConnectFacebook.png")
-	hud.fb1:setReferencePoint(display.CenterLeftReferencePoint);
+
+   hud.fb1.anchorX 			= 0
+   hud.fb1.anchorY 			= 0.5
 	hud.fb1.x 		= display.contentWidth*0.11
 	hud.fb1.y 		= display.contentHeight*0.4
 
@@ -705,7 +712,9 @@ function scene:openRewards1()
 	hud.fb1Bonus.y 	= display.contentHeight*0.4
 
 	hud.tw1 			= display.newImage(hud.popup, "assets/images/hud/BonusTicket_ConnectTwitter.png")
-	hud.tw1:setReferencePoint(display.CenterLeftReferencePoint);
+
+   hud.tw1.anchorX 			= 0
+   hud.tw1.anchorY 			= 0.5
 	hud.tw1.x 		= display.contentWidth*0.11
 	hud.tw1.y 		= display.contentHeight*0.51
 	
@@ -714,7 +723,9 @@ function scene:openRewards1()
 	hud.tw1Bonus.y 	= display.contentHeight*0.51
 
 	hud.fb2 			= display.newImage(hud.popup, "assets/images/hud/BonusTicket_Like.png")
-	hud.fb2:setReferencePoint(display.CenterLeftReferencePoint);
+
+   hud.fb2.anchorX 			= 0
+   hud.fb2.anchorY 			= 0.5
 	hud.fb2.x 		= display.contentWidth*0.11
 	hud.fb2.y 		= display.contentHeight*0.62
 	
@@ -723,7 +734,9 @@ function scene:openRewards1()
 	hud.fb2Bonus.y 	= display.contentHeight*0.62
 	
 	hud.tw2 			= display.newImage(hud.popup, "assets/images/hud/BonusTicket_Follow.png")
-	hud.tw2:setReferencePoint(display.CenterLeftReferencePoint);
+
+   hud.tw2.anchorX 			= 0
+   hud.tw2.anchorY 			= 0.5
 	hud.tw2.x 		= display.contentWidth*0.11
 	hud.tw2.y 		= display.contentHeight*0.73
 	
@@ -775,7 +788,8 @@ function scene:openRewards2()
 	hud.picto.y 		= display.contentHeight*0.15
 
 	hud.title 			= display.newImage(hud.popup, I "instant.ticket.png")
-	hud.title:setReferencePoint(display.CenterLeftReferencePoint);
+   hud.title.anchorX 			= 0
+   hud.title.anchorY 			= 0.5
 	hud.title.x 		= display.contentWidth*0.22
 	hud.title.y 		= display.contentHeight*0.15
 
@@ -822,7 +836,8 @@ function scene:openRewards2()
 		align = "right"
 	}
 
-	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
+   multiLineText.anchorX 			= 1
+   multiLineText.anchorY 			= 0.5
 	multiLineText.x = display.contentWidth*0.9
 	multiLineText.y = display.contentHeight*0.35
 	hud.popup:insert(multiLineText)         
@@ -856,7 +871,9 @@ function scene:openRewards2()
 		spaceY = display.contentWidth*0.009
 	}
 
-	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
+	
+   multiLineText.anchorX 			= 1
+   multiLineText.anchorY 			= 0.5
 	multiLineText.x = display.contentWidth*0.9
 	multiLineText.y = display.contentHeight*0.45
 	hud.popup:insert(multiLineText)         
@@ -890,7 +907,9 @@ function scene:openRewards2()
 		spaceY = display.contentWidth*0.009
 	}
 
-	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
+
+   multiLineText.anchorX 			= 1
+   multiLineText.anchorY 			= 0.5
 	multiLineText.x = display.contentWidth*0.9
 	multiLineText.y = display.contentHeight*0.55
 	hud.popup:insert(multiLineText)         
@@ -923,7 +942,8 @@ function scene:openRewards2()
 		align = "right"
 	}
 
-	multiLineText:setReferencePoint(display.CenterRightReferencePoint)
+   multiLineText.anchorX 			= 1
+   multiLineText.anchorY 			= 0.5
 	multiLineText.x = display.contentWidth*0.9
 	multiLineText.y = display.contentHeight*0.65
 	hud.popup:insert(multiLineText)         
