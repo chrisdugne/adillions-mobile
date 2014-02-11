@@ -134,8 +134,6 @@ sponsorpayTools 	= require "src.libs.SponsorpayTools"
 twitter 				= require "src.libs.Twitter" 
 analytics 			= require "src.libs.google.Analytics"
 
-require "src.libs.multiLines"
-
 -----------------------------------------------------------------------------------------
 
 aspectRatio = display.pixelHeight / display.pixelWidth

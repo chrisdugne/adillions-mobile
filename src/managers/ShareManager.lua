@@ -32,23 +32,20 @@ function ShareManager:share()
 	hud.popup.shareText.x 			= display.contentWidth*0.5
 	hud.popup.shareText.y			= display.contentHeight*0.32
 	
-   local multiLineText = display.newMultiLineText  
-     {
-           text = T "Earn points and get Instant Tickets",
-           width = display.contentWidth*0.85,  
-           left = display.contentWidth*0.5,
-           font = FONT, 
-           fontSize = 38,
-           align = "center"
-     }
 	
-	multiLineText.anchorX = 0.5
-	multiLineText.anchorY = 0
+	hud.popup.multiLineText = display.newText({
+		parent	= hud.popup,
+		text 		= T "Earn Instant Tickets and increase the jackpot",  
+		width 	= display.contentWidth*0.6,  
+		height 	= display.contentHeight*0.25,  
+		x 			= display.contentWidth*0.5,
+		y 			= display.contentHeight*0.6,
+		font 		= FONT, 
+		fontSize = 34,
+		align 	= "center",
+	})
 	
-	multiLineText.x = display.contentWidth*0.5
-	multiLineText.y = display.contentHeight*0.42
-	hud.popup:insert(multiLineText)         
-	
+	hud.popup.multiLineText:setFillColor(0)
 
 	-----------------------------------
 	-- Facebook
@@ -141,9 +138,9 @@ function ShareManager:invite(next)
 		parent	= hud.popup,
 		text 		= T "Earn Instant Tickets and increase the jackpot",  
 		width 	= display.contentWidth*0.6,  
-		width 	= display.contentHeight*0.25,  
+		height 	= display.contentHeight*0.25,  
 		x 			= display.contentWidth*0.5,
-		y 			= display.contentHeight*0.41,
+		y 			= display.contentHeight*0.5,
 		font 		= FONT, 
 		fontSize = 34,
 		align 	= "center",

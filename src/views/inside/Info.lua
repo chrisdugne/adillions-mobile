@@ -341,7 +341,7 @@ function scene:openTerms()
 		
 	hud.textImportant.x = display.contentWidth*0.5
 	hud.textImportant.y = display.contentHeight*0.29
-	hud.textImportant:setTextColor(0)
+	hud.textImportant:setFillColor(0)
 
 	hud.text = display.newText(
 		hud.popup, 
@@ -350,7 +350,7 @@ function scene:openTerms()
 		
 	hud.text.x = display.contentWidth*0.5
 	hud.text.y = display.contentHeight*0.33
-	hud.text:setTextColor(0)
+	hud.text:setFillColor(0)
 
 	local company = "Apple Inc. "
 	if(ANDROID) then company = "Google Inc " end
@@ -362,7 +362,7 @@ function scene:openTerms()
 		
 	hud.text2.x = display.contentWidth*0.5
 	hud.text2.y = display.contentHeight*0.53
-	hud.text2:setTextColor(0)
+	hud.text2:setFillColor(0)
 	
 	--------------------------
 
@@ -696,7 +696,7 @@ function scene:openRewards1()
 		
 	hud.text.x = display.contentWidth*0.5
 	hud.text.y = display.contentHeight*0.34
-	hud.text:setTextColor(0)
+	hud.text:setFillColor(0)
 	
 	--------------------------
 
@@ -806,7 +806,7 @@ function scene:openRewards2()
 		
 	hud.text.x = display.contentWidth*0.5
 	hud.text.y = display.contentHeight*0.34
-	hud.text:setTextColor(0)
+	hud.text:setFillColor(0)
 	
 	-------------------
 

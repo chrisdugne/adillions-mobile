@@ -238,7 +238,7 @@ function message(message)
 		fontSize 		= 35
 	})
 
-	hud.messager.text:setTextColor(5)
+	hud.messager.text:setFillColor(5)
 	
 	transition.to(hud.messager, { time=500, y=-HEADER_HEIGHT/2 - 5, onComplete=function()
 		timer.performWithDelay(2000, function()
@@ -478,7 +478,7 @@ function drawButton(parent, text, x, y, action, width, height)
 		fontSize = 45,
 	} )
 
-	button.text:setTextColor(0,0,0)
+	button.text:setFillColor(0,0,0)
 	utils.onTouch(button, action)
 
 --	hud.buttons[#hud.buttons] = button 
@@ -674,7 +674,7 @@ function drawBallToPick(num,x,y)
 		fontSize = 37,
 	} )
 	
-	ball.text:setTextColor(0)
+	ball.text:setFillColor(0)
 	ball.num = num
 	ball.selected = false
 
@@ -707,7 +707,7 @@ function drawBallPicked(num)
 		fontSize = 33,
 	} )
 	
-	ball.text:setTextColor(255)
+	ball.text:setFillColor(255)
 	ball.num = num
 	ball.selected = true
 
@@ -839,7 +839,7 @@ function drawBall(parent, num,x,y, bigBall)
 		fontSize = fontSize,
 	} )
 
-	ball.text:setTextColor(255)
+	ball.text:setFillColor(255)
 	parent:insert(ball.text)
 	
 	ball.num = num
@@ -874,7 +874,7 @@ function drawSelectedBall(selected, x, y, action)
 		fontSize = 47,
 	} )
 	
-	ball.text:setTextColor(255)
+	ball.text:setFillColor(255)
 	
 	return ball
 end

@@ -242,8 +242,8 @@ local translations =
 		["fr"] = "Un Ticket sera disponible dans :",
 	},
 
-	["Get Instant Tickets by inviting your \nfriends, sharing your activity, liking \nour theme, etc."] = {
-		["fr"] = "Gagnez des Tickets Instantanés \nen invitant vos amis, en partageant \nvotre activité, en likant le thème, etc.",
+	["You can stop waiting thanks to Instant Tickets"] = {
+		["fr"] = "Vous pouvez jouer sans attendre grâce aux Tickets Instantanés",
 	},
 
 	---POPUP POINTS HEADER-----------------------------------------------------------

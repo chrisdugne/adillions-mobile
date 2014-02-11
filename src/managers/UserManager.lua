@@ -787,37 +787,35 @@ function UserManager:checkTicketTiming()
 
 		hud.popup.icon 			= display.newImage( hud.popup, I "Sorry.png")
 		hud.popup.icon.x 			= display.contentWidth*0.5
-		hud.popup.icon.y 			= display.contentHeight*0.3
+		hud.popup.icon.y 			= display.contentHeight*0.27
 
 		----------------------------------------------------------------------------------------------------
 
 		local fontSize = 40
 		
-		local multiLineText = display.newMultiLineText  
-		{
-			text = T "You can fill out a new Ticket in :", 
-			width = display.contentWidth*0.75,  
-			left = display.contentWidth*0.5,
-			font = FONT, 
-			fontSize = fontSize,
-			align = "center",
-			spaceY = display.contentWidth*0.022
-		}
-
-		multiLineText.x = display.contentWidth*0.5
-		multiLineText.y = display.contentHeight*0.37
-		hud.popup:insert(multiLineText)         
+   	hud.popup.multiLineText = display.newText({
+   		parent	= hud.popup,
+   		text 		= T "You can fill out a new Ticket in :",  
+   		width 	= display.contentWidth*0.75,  
+   		height 	= display.contentHeight*0.25,  
+   		x 			= display.contentWidth*0.5,
+   		y 			= display.contentHeight*0.46,
+   		font 		= FONT, 
+   		fontSize = fontSize,
+   		align 	= "center",
+   	})
+   	
+   	hud.popup.multiLineText:setFillColor(0)
 		
 		hud.popup.pictoTimer			= display.newImage( hud.popup, "assets/images/icons/Tuto_2_picto2.png")  
---		hud.popup.pictoTimer.x 		= display.contentWidth*0.3
 		hud.popup.pictoTimer.x 		= display.contentWidth*0.37
-		hud.popup.pictoTimer.y 		= display.contentHeight*0.46
+		hud.popup.pictoTimer.y 		= display.contentHeight*0.43
 
 		hud.popup.timerDisplay = viewManager.newText({
 			parent = hud.popup, 
 			text = '',     
 			x = display.contentWidth*0.57,
-			y = display.contentHeight*0.45,
+			y = display.contentHeight*0.42,
 			fontSize = 53,
 			font = NUM_FONT
 		})
@@ -826,7 +824,7 @@ function UserManager:checkTicketTiming()
 
 		-------------------------------
 		
-		local timerLegendY 		= display.contentHeight*0.48
+		local timerLegendY 		= display.contentHeight*0.45
 		local timerLegendSize 	= 22
 		
 		viewManager.newText({
@@ -847,26 +845,34 @@ function UserManager:checkTicketTiming()
 
 		----------------------------------------------------
 		
-		local multiLineText = display.newMultiLineText  
-		{
-			text = T "Get Instant Tickets by inviting your \nfriends, sharing your activity, liking \nour theme, etc.", 
-			width = display.contentWidth*0.75,  
-			left = display.contentWidth*0.5,
-			font = FONT, 
-			fontSize = fontSize,
-			align = "center",
-			spaceY = display.contentWidth*0.022
-		}
+		
+   	hud.popup.multiLineText = display.newText({
+   		parent	= hud.popup,
+   		text 		= T "You can stop waiting thanks to Instant Tickets",  
+   		width 	= display.contentWidth*0.75,  
+   		height 	= display.contentHeight*0.25,  
+   		x 			= display.contentWidth*0.5,
+   		y 			= display.contentHeight*0.65,
+   		font 		= FONT, 
+   		fontSize = fontSize,
+   		align 	= "center",
+   	})
+   	
+   	hud.popup.multiLineText:setFillColor(0)
+   	
+		--------------------------
 
-		multiLineText.x = display.contentWidth*0.5
-		multiLineText.y = display.contentHeight*0.65
-		hud.popup:insert(multiLineText)         
+		hud.popup.more 				= display.newImage( hud.popup, I "more.instant.png")
+		hud.popup.more.x 				= display.contentWidth*0.5
+		hud.popup.more.y 				= display.contentHeight*0.71
 
+		utils.onTouch(hud.popup.more, function() viewManager.closePopup() end)
+   	
 		--------------------------
 
 		hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
 		hud.popup.close.x 			= display.contentWidth*0.5
-		hud.popup.close.y 			= display.contentHeight*0.83
+		hud.popup.close.y 			= display.contentHeight*0.89
 
 		utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
 

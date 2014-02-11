@@ -196,7 +196,7 @@ function scene:createTuto1()
 		x 					= display.contentWidth * 0.5,
 	})
 	
-	hud.tuto1.next:setTextColor(255)
+	hud.tuto1.next:setFillColor(255)
 	
 	hud.tuto1.arrowright 		= display.newImage( hud.tuto1, "assets/images/hud/Tuto_ArrowRight.png")
 	hud.tuto1.arrowright.anchorX				= 0.5
@@ -233,7 +233,7 @@ function scene:createTuto2()
 		y 					= display.contentHeight*0.78,
 	})
 
-	hud.tuto2.finalText1:setTextColor(40)
+	hud.tuto2.finalText1:setFillColor(40)
 
 	hud.tuto2.finalText2 = viewManager.newText({
 		parent 			= hud.tuto2,
@@ -243,7 +243,7 @@ function scene:createTuto2()
 		y 					= display.contentHeight*0.82,
 	})
 
-	hud.tuto2.finalText2:setTextColor(40)
+	hud.tuto2.finalText2:setFillColor(40)
 	
 	-------------------
 	-- controls
@@ -258,7 +258,7 @@ function scene:createTuto2()
 		y 					= display.contentHeight*0.96,
 	})
 
-	hud.tuto2.next:setTextColor(255)
+	hud.tuto2.next:setFillColor(255)
 	
 	hud.tuto2.arrowright 		= display.newImage( hud.tuto2, "assets/images/hud/Tuto_ArrowRight.png")
 	     
@@ -277,7 +277,7 @@ function scene:createTuto2()
 		y 					= display.contentHeight*0.96,
 	})
 	
-	hud.tuto2.previous:setTextColor(255)
+	hud.tuto2.previous:setFillColor(255)
 
 	hud.tuto2.arrowleft 		= display.newImage( hud.tuto2, "assets/images/hud/Tuto_ArrowLeft.png")
 	
@@ -314,7 +314,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight*0.78,
 	})
 
-	hud.tuto3.finalText1:setTextColor(40)
+	hud.tuto3.finalText1:setFillColor(40)
 
 	hud.tuto3.finalText2 = viewManager.newText({
 		parent 			= hud.tuto3,
@@ -324,7 +324,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight*0.82,
 	})
 
-	hud.tuto3.finalText2:setTextColor(40)
+	hud.tuto3.finalText2:setFillColor(40)
 
 	-------------------
 
@@ -336,7 +336,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight*0.315,
 	})
 
-	hud.tuto3.charityprofile:setTextColor(40)
+	hud.tuto3.charityprofile:setFillColor(40)
 
 	hud.tuto3.winners = viewManager.newText({
 		parent 			= hud.tuto3,
@@ -346,7 +346,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight* 0.72,
 	})
 
-	hud.tuto3.winners:setTextColor(40)
+	hud.tuto3.winners:setFillColor(40)
 
 	hud.tuto3.charity = viewManager.newText({
 		parent 			= hud.tuto3,
@@ -356,7 +356,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight* 0.72,
 	})
 
-	hud.tuto3.charity:setTextColor(40)
+	hud.tuto3.charity:setFillColor(40)
 
 	-------------------
 	
@@ -418,7 +418,7 @@ function scene:createTuto3()
 		y 					= display.contentHeight*0.96,
 	})
 	
-	hud.tuto3.previous:setTextColor(255)
+	hud.tuto3.previous:setFillColor(255)
 
 	utils.onTouch(hud.tuto3.previous, 	function()	self:goTuto(2) end)
 	utils.onTouch(hud.tuto3.arrowleft, 	function()	self:goTuto(2) end)
