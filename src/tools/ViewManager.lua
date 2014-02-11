@@ -51,9 +51,17 @@ function initHeader()
 	hud.logo = display.newImage( hud, "assets/images/logo.png")  
 	hud.logo.x = display.contentWidth*0.5
 	hud.logo.y = HEADER_HEIGHT*0.5
+
+	hud.headerButton = display.newImage( hud, "assets/images/icons/header.button.png")  
+	hud.headerButton.x = display.contentWidth*0.95
+	hud.headerButton.y = HEADER_HEIGHT*0.5
+	hud.headerButton.anchorX = 1
+	hud.headerButton.anchorY = 0.5
 	
---	refreshHeaderPoints()
-	
+	utils.onTouch(hud.headerButton, function()
+   	analytics.event("Gaming", "showStatus") 
+		userManager:showStatus()
+   end)
 end
 
 -----------------------------------------------------------------------------------------

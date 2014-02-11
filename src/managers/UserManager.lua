@@ -163,8 +163,7 @@ end
 
 function UserManager:updatedPlayer(player, next)
 
-	self.user 							= player
-	self.user.totalBonusTickets 	= 0
+	self.user = player
 
 	print("------------------------ updatedPlayer ")
 
@@ -183,9 +182,6 @@ function UserManager:updatedPlayer(player, next)
 	GLOBALS.savedData.user.isTwitterFan 	= player.isTwitterFan
 
 	utils.saveTable(GLOBALS.savedData, "savedData.json")
-
-
-	viewManager.refreshHeaderPoints(player.currentPoints)
 	lotteryManager:sumPrices()
 
 	self:checkFanStatus(next)
@@ -349,13 +345,11 @@ function UserManager:checkFanStatus(next)
 	
 	userManager.user.totalBonusTickets = 0
 
---	if(GLOBALS.savedData.facebookAccessToken) then
 	if(userManager.user.facebookId) then
 		userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + FACEBOOK_CONNECTION_TICKETS
 		print("FACEBOOK_CONNECTION totalBonusTickets +" .. FACEBOOK_CONNECTION_TICKETS)
 	end
 
---	if(twitter.connected) then
 	if(userManager.user.twitterId) then
 		userManager.user.totalBonusTickets = userManager.user.totalBonusTickets + TWITTER_CONNECTION_TICKETS
 		print("TWITTER_CONNECTION totalBonusTickets +" .. TWITTER_CONNECTION_TICKETS)
@@ -1069,6 +1063,114 @@ function UserManager:notifyInstants()
    
    	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
    end
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:showStatus()
+	
+	viewManager.showPopup()
+
+	----------------------------
+	--
+	hud.popup.congratz 			= display.newImage( hud.popup, I "title.status.png")  
+	hud.popup.congratz.x 		= display.contentWidth*0.5
+	hud.popup.congratz.y			= display.contentHeight*0.15
+
+	hud.popup.iconTicket 		= display.newImage( hud.popup, "assets/images/icons/header.button.png")
+	hud.popup.iconTicket.x 		= display.contentWidth*0.15
+	hud.popup.iconTicket.y 		= display.contentHeight*0.15
+
+	hud.popup.sep 					= display.newImage( hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.popup.sep.x 				= display.contentWidth*0.5
+	hud.popup.sep.y 				= display.contentHeight*0.21
+	
+	----------------------------
+
+	hud.popup.earnText = viewManager.newText({
+		parent 			= hud.popup,
+		text 				= T "Remaining Tickets" .. ":", 
+		fontSize			= 55,  
+		x 					= display.contentWidth * 0.5,
+		y 					= display.contentHeight*0.26,
+	})
+
+	hud.popup.availableTickets = viewManager.newText({
+		parent 			= hud.popup,
+		text 				= self.user.availableTickets .. " / " .. (START_AVAILABLE_TICKETS + self.user.totalBonusTickets), 
+		fontSize			= 55,  
+		x 					= display.contentWidth * 0.5,
+		y 					= display.contentHeight*0.34,
+	})
+	
+	hud.popup.availableTickets.anchorX = 1
+	hud.popup.availableTickets.anchorY = 0.55
+	
+	hud.popup.iconTicket 		= display.newImage( hud.popup, "assets/images/icons/status/ticket.png")
+	hud.popup.iconTicket.x 		= display.contentWidth*0.6
+	hud.popup.iconTicket.y 		= display.contentHeight*0.34
+	
+	--------------------------
+	
+	hud.popup.more 				= display.newImage( hud.popup, I "more.tickets.png")
+	hud.popup.more.x 				= display.contentWidth*0.5
+	hud.popup.more.y 				= display.contentHeight*0.47
+
+	utils.onTouch(hud.popup.more, function() 
+		viewManager.closePopup() 
+	end)
+	
+	--------------------------
+	
+	hud.popup.sep 					= display.newImage( hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.popup.sep.x 				= display.contentWidth*0.5
+	hud.popup.sep.y 				= display.contentHeight*0.58
+	hud.popup.sep:scale(0.9,1);
+	
+	----------------------------
+
+	hud.popup.earnText = viewManager.newText({
+		parent 			= hud.popup,
+		text 				= T "Instant Tickets" .. ":", 
+		fontSize			= 55,  
+		x 					= display.contentWidth * 0.5,
+		y 					= display.contentHeight*0.63,
+	})
+
+	hud.popup.extraTickets = viewManager.newText({
+		parent 			= hud.popup,
+		text 				= self.user.extraTickets, 
+		fontSize			= 55,  
+		x 					= display.contentWidth * 0.5,
+		y 					= display.contentHeight*0.71,
+	})
+	
+	hud.popup.extraTickets.anchorX = 1
+	hud.popup.extraTickets.anchorY = 0.6
+	
+	hud.popup.iconITicket 			= display.newImage( hud.popup, "assets/images/icons/status/instant.ticket.png")
+	hud.popup.iconITicket.x 		= display.contentWidth*0.63
+	hud.popup.iconITicket.y 		= display.contentHeight*0.715
+	
+	--------------------------
+	
+	hud.popup.more 				= display.newImage( hud.popup, I "more.instant.png")
+	hud.popup.more.x 				= display.contentWidth*0.5
+	hud.popup.more.y 				= display.contentHeight*0.84
+
+	utils.onTouch(hud.popup.more, function() 
+		viewManager.closePopup() 
+	end)
+	
+	
+	--------------------------
+
+	hud.popup.close 				= display.newImage( hud.popup, "assets/images/hud/CroixClose.png")
+	hud.popup.close.x 			= display.contentWidth*0.88
+	hud.popup.close.y 			= display.contentHeight*0.09
+
+	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+   	
 end
 
 -----------------------------------------------------------------------------------------

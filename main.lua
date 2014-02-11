@@ -56,7 +56,7 @@ TICKET_HEIGHT		= 100
 
 -----------------------------------------------------------------------------------------
 
-START_AVAILABLE_TICKETS			= 10
+START_AVAILABLE_TICKETS			= 8
 POINTS_TO_EARN_A_TICKET			= 8
 NB_POINTS_PER_TICKET				= 1
 NB_POINTS_PER_TWEET				= 2
