@@ -204,7 +204,7 @@ function scene:openPrizes()
 		y = display.contentHeight * 0.08,
 		fontSize = 26,
 		font		= FONT,
-      anchorX 			= 0.5,
+      anchorX 			= 1,
       anchorY 			= 1,
 	})
 
@@ -826,21 +826,20 @@ function scene:openRewards2()
 	hud.sep.x 			= display.contentWidth*0.62
 	hud.sep.y 			= display.contentHeight*0.35
 	
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "+ 1pt / Ticket", 
-		width = display.contentWidth*0.8,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 25,
-		align = "right"
-	}
-
-   multiLineText.anchorX 			= 1
-   multiLineText.anchorY 			= 0.5
-	multiLineText.x = display.contentWidth*0.9
-	multiLineText.y = display.contentHeight*0.35
-	hud.popup:insert(multiLineText)         
+--
+--	hud.popup.multiLineText = display.newText({
+--		parent	= hud.popup,
+--		text 		= T "+ 1pt / Ticket",   
+--		width 	= display.contentWidth*0.6,  
+--		height 	= display.contentHeight*0.25,  
+--		x 			= display.contentWidth*0.9,
+--		y 			= display.contentHeight*0.3,
+--		font 		= FONT, 
+--		fontSize = 38,
+--		align 	= "right",
+--	})
+--	
+--	hud.popup.multiLineText:setFillColor(0)
 	
 	-------------------
 
@@ -859,25 +858,25 @@ function scene:openRewards2()
 	hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.04, display.contentHeight*0.0015)
 	hud.sep.x 			= display.contentWidth*0.6
 	hud.sep.y 			= display.contentHeight*0.45
-	
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "+ 1pt for the sponsor and the sponsored user", 
-		width = display.contentWidth*0.25,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 25,
-		align = "right",
-		spaceY = display.contentWidth*0.009
-	}
-
-	
-   multiLineText.anchorX 			= 1
-   multiLineText.anchorY 			= 0.5
-	multiLineText.x = display.contentWidth*0.9
-	multiLineText.y = display.contentHeight*0.45
-	hud.popup:insert(multiLineText)         
-	
+--	
+--	local multiLineText = display.newMultiLineText  
+--	{
+--		text = T "+ 1pt for the sponsor and the sponsored user", 
+--		width = display.contentWidth*0.25,  
+--		left = display.contentWidth*0.5,
+--		font = FONT, 
+--		fontSize = 25,
+--		align = "right",
+--		spaceY = display.contentWidth*0.009
+--	}
+--
+--	
+--   multiLineText.anchorX 			= 1
+--   multiLineText.anchorY 			= 0.5
+--	multiLineText.x = display.contentWidth*0.9
+--	multiLineText.y = display.contentHeight*0.45
+--	hud.popup:insert(multiLineText)         
+--	
 	-------------------
 
 	hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto3.png")
@@ -896,23 +895,23 @@ function scene:openRewards2()
 	hud.sep.x 			= display.contentWidth*0.61
 	hud.sep.y 			= display.contentHeight*0.55
 	
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "+2 pts / post (max 4 pts per draw)", 
-		width = display.contentWidth*0.25,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 25,
-		align = "right",
-		spaceY = display.contentWidth*0.009
-	}
-
-
-   multiLineText.anchorX 			= 1
-   multiLineText.anchorY 			= 0.5
-	multiLineText.x = display.contentWidth*0.9
-	multiLineText.y = display.contentHeight*0.55
-	hud.popup:insert(multiLineText)         
+--	local multiLineText = display.newMultiLineText  
+--	{
+--		text = T "+2 pts / post (max 4 pts per draw)", 
+--		width = display.contentWidth*0.25,  
+--		left = display.contentWidth*0.5,
+--		font = FONT, 
+--		fontSize = 25,
+--		align = "right",
+--		spaceY = display.contentWidth*0.009
+--	}
+--
+--
+--   multiLineText.anchorX 			= 1
+--   multiLineText.anchorY 			= 0.5
+--	multiLineText.x = display.contentWidth*0.9
+--	multiLineText.y = display.contentHeight*0.55
+--	hud.popup:insert(multiLineText)         
 	
 	-------------------
 
@@ -932,21 +931,21 @@ function scene:openRewards2()
 	hud.sep.x 			= display.contentWidth*0.66
 	hud.sep.y 			= display.contentHeight*0.65
 	
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "+2 pts", 
-		width = display.contentWidth*0.25,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 25,
-		align = "right"
-	}
-
-   multiLineText.anchorX 			= 1
-   multiLineText.anchorY 			= 0.5
-	multiLineText.x = display.contentWidth*0.9
-	multiLineText.y = display.contentHeight*0.65
-	hud.popup:insert(multiLineText)         
+--	local multiLineText = display.newMultiLineText  
+--	{
+--		text = T "+2 pts", 
+--		width = display.contentWidth*0.25,  
+--		left = display.contentWidth*0.5,
+--		font = FONT, 
+--		fontSize = 25,
+--		align = "right"
+--	}
+--
+--   multiLineText.anchorX 			= 1
+--   multiLineText.anchorY 			= 0.5
+--	multiLineText.x = display.contentWidth*0.9
+--	multiLineText.y = display.contentHeight*0.65
+--	hud.popup:insert(multiLineText)         
 	
 	--------------------------
 	

@@ -220,7 +220,7 @@ function UserManager:showConfirmMerge(next)
 	hud.popup.shareIcon.y			= display.contentHeight*0.31
 
 	-----------------
-
+	
 	local message = ""
 	if(LANG == "fr") then
 		message = "Vous allez connecter le compte Facebook " .. facebook.data.name .. " avec le compte Adillions de " .. userManager.user.firstName
@@ -228,27 +228,25 @@ function UserManager:showConfirmMerge(next)
 		message = "You are about to connect " .. facebook.data.name .. " Facebook profile with " .. userManager.user.firstName .. "'s Adillions account"
 	end
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = message,
-		width = display.contentWidth*0.85,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
+	hud.popup.multiLineText = display.newText({
+		parent	= hud.popup,
+		text 		= message,  
+		width 	= display.contentWidth*0.6,  
+		height 	= display.contentHeight*0.25,  
+		x 			= display.contentWidth*0.5,
+		y 			= display.contentHeight*0.5,
+		font 		= FONT, 
 		fontSize = 38,
-		align = "center"
-	}
-
-	multiLineText.anchorX = 0.5
-	multiLineText.anchorY = 0
-	multiLineText.x = display.contentWidth*0.5
-	multiLineText.y = display.contentHeight*0.42
-	hud.popup:insert(multiLineText)      
+		align 	= "center",
+	})
+	
+	hud.popup.multiLineText:setFillColor(0)
 
 	-----------------
 
 	hud.popup.confirm 				= display.newImage( hud.popup, I "confirm.png")
 	hud.popup.confirm.x 				= display.contentWidth*0.5
-	hud.popup.confirm.y 				= display.contentHeight*0.71
+	hud.popup.confirm.y 				= display.contentHeight*0.65
 
 	utils.onTouch(hud.popup.confirm, function() 
 		viewManager.closePopup()
@@ -296,38 +294,35 @@ function UserManager:showWrongAccount()
 		message2 = "It is not possible to connect multiple Facebook profiles to a single Adillions account, please log in with " .. userManager.user.userName .. " profile"
 	end
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = message,
-		width = display.contentWidth*0.85,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
+
+	hud.popup.multiLineText = display.newText({
+		parent	= hud.popup,
+		text 		= message,  
+		width 	= display.contentWidth*0.6,  
+		height 	= display.contentHeight*0.25,  
+		x 			= display.contentWidth*0.5,
+		y 			= display.contentHeight*0.5,
+		font 		= FONT, 
 		fontSize = 38,
-		align = "center"
-	}
+		align 	= "center",
+	})
 
-	multiLineText.anchorX = 0.5
-	multiLineText.anchorY = 0
-	multiLineText.x = display.contentWidth*0.5
-	multiLineText.y = display.contentHeight*0.42
-	hud.popup:insert(multiLineText)      
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = message2,
-		width = display.contentWidth*0.85,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
+	hud.popup.multiLineText2 = display.newText({
+		parent	= hud.popup,
+		text 		= message2,  
+		width 	= display.contentWidth*0.6,  
+		height 	= display.contentHeight*0.25,  
+		x 			= display.contentWidth*0.5,
+		y 			= display.contentHeight*0.67,
+		font 		= FONT, 
 		fontSize = 38,
-		align = "center"
-	}
-
-	multiLineText.anchorX = 0.5
-	multiLineText.anchorY = 0
-	multiLineText.x = display.contentWidth*0.5
-	multiLineText.y = display.contentHeight*0.56
-	hud.popup:insert(multiLineText)      
-
+		align 	= "center",
+	})
+	
+	hud.popup.multiLineText:setFillColor(0)
+	hud.popup.multiLineText2:setFillColor(0)
+	
 	-----------------
 
 	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
@@ -642,42 +637,39 @@ function UserManager:showMultiAccountPopup(next)
 	hud.popup.shareText.x 			= display.contentWidth*0.5
 	hud.popup.shareText.y			= display.contentHeight*0.32
 
+	-------------------------------------------------------
+
 	local text1 = facebook.data.name .. "'s Facebook account is already an Adillions user"
 	if(LANG == "fr") then text1 = "Le compte Facebook " .. facebook.data.name .. " est \n déjà un utilisateur d’Adillions" end
 
+	hud.popup.multiLineText = display.newText({
+		parent	= hud.popup,
+		text 		= text1,  
+		width 	= display.contentWidth*0.6,  
+		height 	= display.contentHeight*0.25,  
+		x 			= display.contentWidth*0.5,
+		y 			= display.contentHeight*0.5,
+		font 		= FONT, 
+		fontSize = 38,
+		align 	= "center",
+	})
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = text1,
-		width = display.contentWidth*0.65,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 30,
-		align = "center"
-	}
-
-	multiLineText.anchorX = 0.5
-	multiLineText.anchorY = 0
-	multiLineText.x = display.contentWidth*0.5
-	multiLineText.y = display.contentHeight*0.42
-	hud.popup:insert(multiLineText)      
-
-
-	local multiLineText2 = display.newMultiLineText  
-	{
-		text = T "If this is not your Facebook account, you must log out this Facebook session on your device and log in with your own Facebook profile in order to connect your accounts",
-		width = display.contentWidth*0.65,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 28,
-		align = "center"
-	}
-
-	multiLineText2.anchorX = 0.5
-	multiLineText2.anchorY = 0
-	multiLineText2.x = display.contentWidth*0.5
-	multiLineText2.y = display.contentHeight*0.58
-	hud.popup:insert(multiLineText2)      
+	hud.popup.multiLineText2 = display.newText({
+		parent	= hud.popup,
+		text 		= T "If this is not your Facebook account, you must log out this Facebook session on your device and log in with your own Facebook profile in order to connect your accounts",  
+		width 	= display.contentWidth*0.6,  
+		height 	= display.contentHeight*0.25,  
+		x 			= display.contentWidth*0.5,
+		y 			= display.contentHeight*0.63,
+		font 		= FONT, 
+		fontSize = 38,
+		align 	= "center",
+	})
+	
+	hud.popup.multiLineText:setFillColor(0)
+	hud.popup.multiLineText2:setFillColor(0)
+	
+	-------------------------------------------------------
 
 	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
 	hud.popup.close.x 			= display.contentWidth*0.5

@@ -739,7 +739,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:openCashout()
-
+	
 	-----------------------------------
 
 	viewManager.showPopup()
@@ -764,22 +764,20 @@ function scene:openCashout()
    	value = "US$15"
 	end
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "You can cash out when your winnings \n have reached a minimum total \n balance of " .. value,
-		width = display.contentWidth*0.8,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
+	hud.popup.multiLineText = display.newText({
+		parent	= hud.popup,
+		text 		= T "You can cash out when your winnings \n have reached a minimum total \n balance of " .. value,  
+		width 	= display.contentWidth*0.72,  
+		height 	= display.contentHeight*0.25,  
+		x 			= display.contentWidth*0.5,
+		y 			= display.contentHeight*0.45,
+		font 		= FONT, 
 		fontSize = 40,
-		align = "center"
-	}
-
-	multiLineText.anchorX = 0.5
-	multiLineText.anchorY = 0
-	multiLineText.x = display.contentWidth*0.5
-	multiLineText.y = display.contentHeight*0.4
-	hud.popup:insert(multiLineText)         
-
+		align 	= "center",
+	})
+	
+	hud.popup.multiLineText:setFillColor(0)
+	
 	----------------------------------------------------------------------------------------------------
 	
 	local min = 10
@@ -790,12 +788,12 @@ function scene:openCashout()
 	if(userManager.user.balance >= min) then
 		hud.cashoutEnabled 				= display.newImage( hud.popup, I "cashout.on.png")  
 		hud.cashoutEnabled.x 			= display.contentWidth*0.5
-      hud.cashoutEnabled.y				= display.contentHeight*0.72
+      hud.cashoutEnabled.y				= display.contentHeight*0.65
    	utils.onTouch(hud.cashoutEnabled, function() self.openConfirmCashout() end)
    else
 		hud.cashoutDisabled 				= display.newImage( hud.popup, I "cashout.off.png")  
 		hud.cashoutDisabled.x 			= display.contentWidth*0.5
-      hud.cashoutDisabled.y			= display.contentHeight*0.72
+      hud.cashoutDisabled.y			= display.contentHeight*0.65
 	end
 	
 --	if(userManager.user.balance > 0) then
@@ -840,22 +838,22 @@ function scene:openGiveToCharity()
 	hud.popup.thanks.y				= display.contentHeight*0.23
 
 	----------------------------------------------------------------------------------------------------
-
-   local multiLineText = display.newMultiLineText  
-     {
-           text = T "Your winnings will be donated to Adillions Solidarity \n and Sustainable Development Fund \n \n \n Soon users will be able to \n directly choose their own charity …",
-           width = display.contentWidth*0.8,  
-           left = display.contentWidth*0.5,
-           font = FONT, 
-           fontSize = 40,
-           align = "center"
-     }
-	
-	multiLineText.anchorX = 0.5
-	multiLineText.anchorY = 0
-	multiLineText.x = display.contentWidth*0.5
-	multiLineText.y = display.contentHeight*0.3
-	hud.popup:insert(multiLineText)         
+--
+--   local multiLineText = display.newMultiLineText  
+--     {
+--           text = T "Your winnings will be donated to Adillions Solidarity \n and Sustainable Development Fund \n \n \n Soon users will be able to \n directly choose their own charity …",
+--           width = display.contentWidth*0.8,  
+--           left = display.contentWidth*0.5,
+--           font = FONT, 
+--           fontSize = 40,
+--           align = "center"
+--     }
+--	
+--	multiLineText.anchorX = 0.5
+--	multiLineText.anchorY = 0
+--	multiLineText.x = display.contentWidth*0.5
+--	multiLineText.y = display.contentHeight*0.3
+--	hud.popup:insert(multiLineText)         
 
 	----------------------------------------------------------------------------------------------------
 	
@@ -895,33 +893,30 @@ function scene:openConfirmCashout()
 	
 	----------------------------------------------------------------------------------------------------
 	
-	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoGain2.png")  
+	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/notification/prizes.popup.png")  
 	hud.popup.shareIcon.x 			= display.contentWidth*0.5
 	hud.popup.shareIcon.y			= display.contentHeight*0.15
 
 	hud.popup.congratz 				= display.newImage( hud.popup, I "TxtCongratulations.png")  
 	hud.popup.congratz.x 			= display.contentWidth*0.5
-	hud.popup.congratz.y				= display.contentHeight*0.23
+	hud.popup.congratz.y				= display.contentHeight*0.25
 
 	----------------------------------------------------------------------------------------------------
 
-	local multiLineText = display.newMultiLineText  
-	{
-		text = T "You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment",
-		width = display.contentWidth*0.7,  
-		left = display.contentWidth*0.5,
-		font = FONT, 
-		fontSize = 40,
-		spaceY = display.contentWidth*0.022,
-		align = "center"
-	}
-
-	multiLineText.anchorX = 0.5
-	multiLineText.anchorY = 0
-	multiLineText.x = display.contentWidth*0.5
-	multiLineText.y = display.contentHeight*0.37
-	hud.popup:insert(multiLineText)         
-
+	hud.popup.multiLineText = display.newText({
+		parent	= hud.popup,
+		text 		= T "You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment",  
+		width 	= display.contentWidth*0.6,  
+		height 	= display.contentHeight*0.25,  
+		x 			= display.contentWidth*0.5,
+		y 			= display.contentHeight*0.45,
+		font 		= FONT, 
+		fontSize = 38,
+		align 	= "center",
+	})
+	
+	hud.popup.multiLineText:setFillColor(0)
+	
 	----------------------------------------------------------------------------------------------------
 
 	hud.confirm 						= display.newImage( hud.popup, I "confirm.png")  

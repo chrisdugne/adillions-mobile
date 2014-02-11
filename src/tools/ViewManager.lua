@@ -33,11 +33,11 @@ end
 -----------------------------------------------------------------------------------------
 
 function initBack()
-	display.setDefault( "background", 237, 235, 236 )
+	display.setDefault( "background", 237/255, 235/255, 236/255 )
 end
 	
 function darkerBack()
-	display.setDefault( "background", 227, 225, 226 )
+	display.setDefault( "background", 227/255, 225/255, 226/255 )
 end
 	
 -----------------------------------------------------------------------------------------
@@ -61,17 +61,17 @@ end
 function initBoard()
 	hud.board = widget.newScrollView
 	{
-		top = 0,
-		left = 0,
-		friction = 1.5,
-		width = display.contentWidth,
-		height = display.contentHeight - HEADER_HEIGHT - MENU_HEIGHT,
-		bottomPadding = MENU_HEIGHT,
-		hideBackground = true,
-		id = "board",
-		horizontalScrollDisabled = true,
-		verticalScrollDisabled = false,
-		hideScrollBar = true,
+		id 					= "board",
+		top 					= 0,
+		left 					= 0,
+		friction				= 1.5,
+		width	 				= display.contentWidth,
+		height 				= display.contentHeight,
+		bottomPadding 		= MENU_HEIGHT + HEADER_HEIGHT + display.contentHeight*0.1,
+		hideBackground 	= true,
+		horizontalScrollDisabled 	= true,
+		verticalScrollDisabled 		= false,
+		hideScrollBar 					= true,
 	}
 end
 
@@ -291,11 +291,11 @@ function showPopup(height)
 	hud.backGrey 		= drawBorder( hud.popup, 
 		0, 0, 
 		display.contentWidth+50, display.viewableContentHeight+50,
-		50,50,50
+		50/255,50/255,50/255
 	)  
-	hud.backGrey.x 	= display.viewableContentWidth*0.5 
-	hud.backGrey.y 	= display.viewableContentHeight*0.5
-	hud.backGrey.alpha= 0.85
+	hud.backGrey.x 		= display.viewableContentWidth*0.5 
+	hud.backGrey.y 		= display.viewableContentHeight*0.5
+	hud.backGrey.alpha	= 0.85
 	
 	hud.popupRect = display.newImageRect( hud.popup, "assets/images/hud/Popup_BG.png", width, height)
   	hud.popupRect.x = display.contentWidth*0.5 

@@ -39,7 +39,7 @@ function ShareManager:share()
 		width 	= display.contentWidth*0.6,  
 		height 	= display.contentHeight*0.25,  
 		x 			= display.contentWidth*0.5,
-		y 			= display.contentHeight*0.6,
+		y 			= display.contentHeight*0.55,
 		font 		= FONT, 
 		fontSize = 34,
 		align 	= "center",
