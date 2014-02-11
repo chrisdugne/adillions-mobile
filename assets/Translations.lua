@@ -215,26 +215,13 @@ local translations =
 
 	---POPUP MAX TICKET----------------------------------------------------------- 
 
-	["You have reached the maximum"] = {
-		["fr"] = "Vous avez atteint le nombre",
+	["You have reached the maximum number of Tickets for this draw"] = {
+		["fr"] = "Vous avez atteint le nombre maximum de Tickets pour ce tirage",
 	},
 
-	["number of Tickets for this draw"] = {
-		["fr"] = "maximum de Tickets pour ce tirage",
+	["Increase your stock of Tickets"] = {
+		["fr"] = "Augmentez votre stock de Tickets",
 	},
-
-	["Get more Tickets by liking our"] = {
-		["fr"] = "Gagnez plus de Tickets en",
-	},
-
-	["Facebook page, following us on"] = {
-		["fr"] = "en likant notre page Facebook, en",
-	},
-
-	["Twitter, etc."] = {
-		["fr"] = "nous suivant sur Twitter, etc.",
-	},
-
 
 	---POPUP WAIT ----------------------------------------------------------- 
 
@@ -242,8 +229,8 @@ local translations =
 		["fr"] = "Un Ticket sera disponible dans :",
 	},
 
-	["You can stop waiting thanks to Instant Tickets"] = {
-		["fr"] = "Vous pouvez jouer sans attendre grâce aux Tickets Instantanés",
+	["Play right now thanks to Instant Tickets"] = {
+		["fr"] = "Jouez sans attendre grâce aux Tickets Instantanés",
 	},
 
 	---POPUP POINTS HEADER-----------------------------------------------------------

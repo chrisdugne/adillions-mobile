@@ -270,6 +270,7 @@ end
 ------------------------------------------
 
 function scene:play()
+
 	if(userManager:hasTicketsToPlay()) then
 		if(userManager:checkTicketTiming()) then
    		videoManager:play(router.openFillLotteryTicket, true)

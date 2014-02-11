@@ -840,7 +840,7 @@ function UserManager:checkTicketTiming()
 		
    	hud.popup.multiLineText = display.newText({
    		parent	= hud.popup,
-   		text 		= T "You can stop waiting thanks to Instant Tickets",  
+   		text 		= T "Play right now thanks to Instant Tickets",  
    		width 	= display.contentWidth*0.75,  
    		height 	= display.contentHeight*0.25,  
    		x 			= display.contentWidth*0.5,

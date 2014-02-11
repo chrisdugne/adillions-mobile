@@ -223,53 +223,29 @@ function ShareManager:noMoreTickets()
 
 	viewManager.newText({
 		parent 			= hud.popup, 
-		text	 			= T "You have reached the maximum",     
+		text	 			= T "You have reached the maximum number of Tickets for this draw",     
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.4,
+		width				= display.contentWidth * 0.75,
 		fontSize			= 37,
 	})
 
 	viewManager.newText({
 		parent 			= hud.popup, 
-		text	 			= T "number of Tickets for this draw",     
-		x 					= display.contentWidth * 0.5,
-		y 					= display.contentHeight*0.44,
-		fontSize			= 37,
-	})
-
-	viewManager.newText({
-		parent 			= hud.popup, 
-		text	 			= T "Get more Tickets by liking our",     
+		text	 			= T "Increase your stock of Tickets",     
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.5,
 		fontSize			= 37,
 	})
 
-	viewManager.newText({
-		parent 			= hud.popup, 
-		text	 			= T "Facebook page, following us on",     
-		x 					= display.contentWidth * 0.5,
-		y 					= display.contentHeight*0.54,
-		fontSize			= 37,
-	})
-	
-	viewManager.newText({
-		parent 			= hud.popup, 
-		text	 			= T "Twitter, etc.",     
-		x 					= display.contentWidth * 0.5,
-		y 					= display.contentHeight*0.58,
-		fontSize			= 37,
-	})
-	
 	--------------------------
 	
-	hud.popup.upgrade 			= display.newImage( hud.popup, I "UpgradeProfil.png")
-	hud.popup.upgrade.x 			= display.contentWidth*0.5
-	hud.popup.upgrade.y 			= display.contentHeight*0.7
-	
-	utils.onTouch(hud.popup.upgrade, function() 
+	hud.popup.more 				= display.newImage( hud.popup, I "more.tickets.png")
+	hud.popup.more.x 				= display.contentWidth*0.5
+	hud.popup.more.y 				= display.contentHeight*0.65
+
+	utils.onTouch(hud.popup.more, function() 
 		viewManager.closePopup() 
-		router.openProfile()
 	end)
 	
 	--------------------------

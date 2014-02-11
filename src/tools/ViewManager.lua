@@ -225,7 +225,7 @@ function message(message)
 	hud.messager.popupRect 		= drawBorder( hud.messager, 
 		0, HEADER_HEIGHT, 
 		display.contentWidth+100, HEADER_HEIGHT*0.6,
-		240,240,240
+		240/255,240/255,240/255
 	)  
 	hud.messager.popupRect.x = display.contentWidth*0.5
 	hud.messager.popupRect.alpha = 0.95
@@ -238,7 +238,7 @@ function message(message)
 		fontSize 		= 35
 	})
 
-	hud.messager.text:setFillColor(5)
+	hud.messager.text:setFillColor(5/255)
 	
 	transition.to(hud.messager, { time=500, y=-HEADER_HEIGHT/2 - 5, onComplete=function()
 		timer.performWithDelay(2000, function()
@@ -397,6 +397,7 @@ function newText(options)
 	finalOptions.text 		= options.text
 	finalOptions.font 		= options.font or FONT
 	finalOptions.fontSize 	= options.fontSize or 48
+	finalOptions.align 		= options.align or "center"
 
 	if(options.width) then
 		finalOptions.width	= options.width
