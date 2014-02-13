@@ -117,13 +117,12 @@ end
 
 -----------------------------------------------------------------------------------------
 --- Corona's libraries
+coronaFacebook		= require "facebook"
 json 					= require "json"
 storyboard 			= require "storyboard"
 widget		 		= require "widget"
-coronaFacebook		= require "facebook"
 sponsorpay 			= require "plugin.sponsorpay"
 ads 					= require "ads"
-
 
 ---- Additional libs
 xml 					= require "src.libs.Xml"
