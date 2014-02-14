@@ -28,7 +28,7 @@ function scene:refreshScene()
 		terms = "mtermsEN"
 	end
 	
-	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
+	self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
 	self.webView:request( SERVER_URL .. terms  )
 	self.webView:addEventListener( "urlRequest", function(event) self:termsViewListener(event) end )
 end

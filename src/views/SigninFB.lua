@@ -21,84 +21,75 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	
-	print("signinFB")
-	print(facebook.data.name)
-	print(utils.urlEncode(facebook.data.name))
-	
-	-- not facebook.data.birthday permission
-	if(not facebook.data.birthday) then
-		facebook.data.birthday = ""
-	end
-	-- not facebook.data.email permission
-	if(not facebook.data.email) then
-		facebook.data.email = ""
-	end
 
-	local url = SERVER_URL .. "msigninFB"
-	url = url .. "?last_name=" 	.. utils.urlEncode(facebook.data.last_name)
-	url = url .. "&first_name=" 	.. utils.urlEncode(facebook.data.first_name)
-	url = url .. "&picture_url=" 	.. utils.urlEncode(facebook.data.picture.data.url)
-	url = url .. "&birth_date=" 	.. facebook.data.birthday
-	url = url .. "&email=" 			.. facebook.data.email
-	url = url .. "&facebookName=" .. utils.urlEncode(facebook.data.name)
-	url = url .. "&facebookId=" 	.. facebook.data.id
-	url = url .. "&lang=" 			.. LANG
-	
-	print(url)
+    print("signinFB")
+    print(facebook.data.name)
+    print(utils.urlEncode(facebook.data.name))
 
-	self.signinFBWebView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.signinFBWebView:request(url)
-	self.signinFBWebView:addEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
+    -- not facebook.data.birthday permission
+    if(not facebook.data.birthday) then
+        facebook.data.birthday = ""
+    end
+    -- not facebook.data.email permission
+    if(not facebook.data.email) then
+        facebook.data.email = ""
+    end
 
-	print("-------------------------")
+    local url = SERVER_URL .. "msigninFB"
+    url = url .. "?last_name="     .. utils.urlEncode(facebook.data.last_name)
+    url = url .. "&first_name="    .. utils.urlEncode(facebook.data.first_name)
+    url = url .. "&picture_url="   .. utils.urlEncode(facebook.data.picture.data.url)
+    url = url .. "&birth_date="    .. facebook.data.birthday
+    url = url .. "&email="         .. facebook.data.email
+    url = url .. "&facebookName="  .. utils.urlEncode(facebook.data.name)
+    url = url .. "&facebookId="    .. facebook.data.id
+    url = url .. "&lang="          .. LANG
+
+    self.signinFBWebView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
+    self.signinFBWebView:request(url)
+    self.signinFBWebView:addEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
+
 end
 
 ------------------------------------------
 
 function scene:signinFBViewListener( event )
 
-   print("----->")
     if event.url then
 
-		print("---   signinFBViewListener")
-		print(event.url)
-	
-   	if event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()   
-			print("signinFB : backToMobile : outside")		 		
-      	router.openOutside()
+        if event.url == SERVER_URL .. "backToMobile" then
+            self:closeWebView()   
+            router.openOutside()
 
-   	elseif event.url == SERVER_URL .. "requireLogout" then  -- changeAccount
-			self:closeWebView()
-			print("signinFB : requireLogout")		 		
-			userManager:logout()    		
+        elseif event.url == SERVER_URL .. "requireLogout" then  -- changeAccount
+            self:closeWebView()
+            print("signinFB : requireLogout")		 		
+            userManager:logout()    		
 
-    	elseif string.find(event.url, "signedIn") then
-			self:closeWebView()    		
-			local playerRealNames = utils.getUrlParams(event.url);
-			
-			GLOBALS.savedData.authToken 				= playerRealNames.authToken
-      	utils.saveTable(GLOBALS.savedData, "savedData.json")
+        elseif string.find(event.url, "signedIn") then
+            self:closeWebView()    		
+            local playerRealNames = utils.getUrlParams(event.url);
 
-			userManager:fetchPlayer()
-			
-		end
+            GLOBALS.savedData.authToken = playerRealNames.authToken
+            utils.saveTable(GLOBALS.savedData, "savedData.json")
 
+            userManager:fetchPlayer()
+
+        end
     end
 end
 
 function scene:closeWebView()
-	self.signinFBWebView:removeEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
-	self.signinFBWebView:removeSelf()
-	self.signinFBWebView = nil
+    self.signinFBWebView:removeEventListener( "urlRequest", function(event) self:signinFBViewListener(event) end )
+    self.signinFBWebView:removeSelf()
+    self.signinFBWebView = nil
 end
 
 ------------------------------------------
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
-	self:refreshScene()
+    self:refreshScene()
 end
 
 -- Called when scene is about to move offscreen:

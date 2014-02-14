@@ -733,7 +733,11 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:hasTicketsToPlay()
-    return self.user.availableTickets + self.user.totalBonusTickets - self.user.playedBonusTickets  > 0
+    return self:remainingTickets()  > 0
+end
+
+function UserManager:remainingTickets()
+    return self.user.availableTickets + self.user.totalBonusTickets - self.user.playedBonusTickets
 end
 
 -----------------------------------------------------------------------------------------
@@ -1149,7 +1153,7 @@ function UserManager:showStatus()
 
     hud.popup.availableTickets = viewManager.newText({
         parent 			= hud.popup,
-        text 			= (self.user.availableTickets + self.user.totalBonusTickets - self.user.playedBonusTickets) .. " / " .. (START_AVAILABLE_TICKETS + self.user.totalBonusTickets), 
+        text 			= (self:remainingTickets()) .. " / " .. (START_AVAILABLE_TICKETS + self.user.totalBonusTickets), 
         fontSize		= 55,  
         x 				= display.contentWidth * 0.5,
         y 				= display.contentHeight*0.34,
