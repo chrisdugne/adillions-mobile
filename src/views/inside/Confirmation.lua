@@ -54,7 +54,7 @@ function scene:refreshScene()
 --	
 	-------------------------------
 
-	local nbTickets = (userManager.user.availableTickets + userManager.user.totalBonusTickets - userManager.user.playedBonusTickets)
+	local nbTickets = userManager:remainingTickets()
 
 	hud.pictoTicket = display.newImage( hud, "assets/images/icons/ticket.png")  
 	hud.pictoTicket.x = display.contentWidth*0.69

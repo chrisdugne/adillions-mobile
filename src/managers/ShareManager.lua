@@ -19,22 +19,22 @@ function ShareManager:share()
 
 	-----------------------------------
 
-	viewManager.showPopup()
+	local popup = viewManager.showPopup()
 	analytics.event("Social", "popupShare") 
 	
 	----------------------------------------------------------------------------------------------------
 	
-	hud.popup.shareIcon 				= display.newImage( hud.popup, "assets/images/icons/PictoShare.png")  
-	hud.popup.shareIcon.x 			= display.contentWidth*0.5
-	hud.popup.shareIcon.y			= display.contentHeight*0.22
+	popup.shareIcon 				= display.newImage( popup, "assets/images/icons/PictoShare.png")  
+	popup.shareIcon.x 			= display.contentWidth*0.5
+	popup.shareIcon.y			= display.contentHeight*0.22
 
-	hud.popup.shareText 				= display.newImage( hud.popup, I "popup.Txt3.png")  
-	hud.popup.shareText.x 			= display.contentWidth*0.5
-	hud.popup.shareText.y			= display.contentHeight*0.32
+	popup.shareText 				= display.newImage( popup, I "popup.Txt3.png")  
+	popup.shareText.x 			= display.contentWidth*0.5
+	popup.shareText.y			= display.contentHeight*0.32
 	
 	
-	hud.popup.multiLineText = display.newText({
-		parent	= hud.popup,
+	popup.multiLineText = display.newText({
+		parent	= popup,
 		text 		= T "Earn Instant Tickets and increase the jackpot",  
 		width 	= display.contentWidth*0.6,  
 		height 	= display.contentHeight*0.25,  
@@ -45,7 +45,7 @@ function ShareManager:share()
 		align 	= "center",
 	})
 	
-	hud.popup.multiLineText:setFillColor(0)
+	popup.multiLineText:setFillColor(0)
 
 	-----------------------------------
 	-- Facebook
@@ -53,21 +53,21 @@ function ShareManager:share()
 
 
 	if(GLOBALS.savedData.facebookAccessToken) then
-		hud.popup.facebookShare 		= display.newImage( hud.popup, I "popup.facebook.share.png")  
-   	hud.popup.facebookShare.x 		= display.contentWidth*0.5
-   	hud.popup.facebookShare.y		= display.contentHeight*0.63
+		popup.facebookShare 		= display.newImage( popup, I "popup.facebook.share.png")  
+   	    popup.facebookShare.x 		= display.contentWidth*0.5
+   	    popup.facebookShare.y		= display.contentHeight*0.63
    
-		utils.onTouch(hud.popup.facebookShare, function() 
+		utils.onTouch(popup.facebookShare, function() 
 			self:shareOnWall()
 			analytics.event("Social", "facebookShare") 
 		end)
 		
 	else
-		hud.popup.facebookConnect 		= display.newImage( hud.popup, I "popup.facebook.connect.png")  
-   	hud.popup.facebookConnect.x 	= display.contentWidth*0.5
-   	hud.popup.facebookConnect.y	= display.contentHeight*0.63
+		popup.facebookConnect 		= display.newImage( popup, I "popup.facebook.connect.png")  
+   	    popup.facebookConnect.x 	= display.contentWidth*0.5
+   	    popup.facebookConnect.y	= display.contentHeight*0.63
    
-		utils.onTouch(hud.popup.facebookConnect, function() 
+		utils.onTouch(popup.facebookConnect, function() 
 			facebook.connect(function()
 				self:shareOnWall()
 				analytics.event("Social", "facebookShareAfterConnection") 
@@ -81,21 +81,21 @@ function ShareManager:share()
 	-----------------------------------
 
 	if(twitter.connected) then
-		hud.popup.twitterShare 			= display.newImage( hud.popup, I "popup.twitter.share.png")  
-   	hud.popup.twitterShare.x 		= display.contentWidth*0.5
-   	hud.popup.twitterShare.y		= display.contentHeight*0.77	
+		popup.twitterShare 			= display.newImage( popup, I "popup.twitter.share.png")  
+     	popup.twitterShare.x 		= display.contentWidth*0.5
+    	popup.twitterShare.y		= display.contentHeight*0.77	
    	
-		utils.onTouch(hud.popup.twitterShare, function() 
+		utils.onTouch(popup.twitterShare, function() 
    		self:tweetShare()
 			analytics.event("Social", "twitterShare") 
 		end)
 		
 	else
-		hud.popup.twitterConnect 		= display.newImage( hud.popup, I "popup.twitter.connect.png")  
-   	hud.popup.twitterConnect.x 	= display.contentWidth*0.5
-		hud.popup.twitterConnect.y		= display.contentHeight*0.77
+		popup.twitterConnect 		= display.newImage( popup, I "popup.twitter.connect.png")  
+   	    popup.twitterConnect.x 	= display.contentWidth*0.5
+		popup.twitterConnect.y		= display.contentHeight*0.77
 
-		utils.onTouch(hud.popup.twitterConnect, function() 
+		utils.onTouch(popup.twitterConnect, function() 
 			twitter.connect(function()
 				analytics.event("Social", "twitterShareAfterConnection") 
 				self:tweetShare()
@@ -106,11 +106,11 @@ function ShareManager:share()
 
 	----------------------------------------------------------------------------------------------------
 	
-	hud.popup.close 				= display.newImage( hud.popup, "assets/images/hud/CroixClose.png")
-	hud.popup.close.x 			= display.contentWidth*0.89
-	hud.popup.close.y 			= display.contentHeight*0.085
+	popup.close 				= display.newImage( popup, "assets/images/hud/CroixClose.png")
+	popup.close.x 			= display.contentWidth*0.89
+	popup.close.y 			= display.contentHeight*0.085
 	
-	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+	utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 	
 
 end
@@ -121,21 +121,21 @@ function ShareManager:invite(next)
 
 	----------------------------------------------------------------------------------------------------
 
-	viewManager.showPopup()
+	local popup = viewManager.showPopup()
 	analytics.event("Social", "popupInvite") 
 	
 	----------------------------------------------------------------------------------------------------
 	
-	hud.popup.inviteIcon 			= display.newImage( hud.popup, "assets/images/icons/PictoInvite.png")  
-	hud.popup.inviteIcon.x 			= display.contentWidth*0.5
-	hud.popup.inviteIcon.y			= display.contentHeight*0.22
+	popup.inviteIcon 			= display.newImage( popup, "assets/images/icons/PictoInvite.png")  
+	popup.inviteIcon.x 			= display.contentWidth*0.5
+	popup.inviteIcon.y			= display.contentHeight*0.22
 
-	hud.popup.inviteText 			= display.newImage( hud.popup, I "popup.Txt2.png")  
-	hud.popup.inviteText.x 			= display.contentWidth*0.5
-	hud.popup.inviteText.y			= display.contentHeight*0.32
+	popup.inviteText 			= display.newImage( popup, I "popup.Txt2.png")  
+	popup.inviteText.x 			= display.contentWidth*0.5
+	popup.inviteText.y			= display.contentHeight*0.32
 	
-	hud.popup.multiLineText = display.newText({
-		parent	= hud.popup,
+	popup.multiLineText = display.newText({
+		parent	= popup,
 		text 		= T "Earn Instant Tickets and increase the jackpot",  
 		width 	= display.contentWidth*0.6,  
 		height 	= display.contentHeight*0.25,  
@@ -146,42 +146,42 @@ function ShareManager:invite(next)
 		align 	= "center",
 	})
 	
-	hud.popup.multiLineText:setFillColor(0)
+	popup.multiLineText:setFillColor(0)
 
 	----------------------------------------------------------------------------------------------------
 
-	hud.popup.sms 		= display.newImage( hud.popup, I "popup.Btsms.png")  
-	hud.popup.sms.x 	= display.contentWidth*0.5
-	hud.popup.sms.y	= display.contentHeight*0.52
+	popup.sms 		= display.newImage( popup, I "popup.Btsms.png")  
+	popup.sms.x 	= display.contentWidth*0.5
+	popup.sms.y	= display.contentHeight*0.52
 
-	utils.onTouch(hud.popup.sms, function() self:sms() end) 
+	utils.onTouch(popup.sms, function() self:sms() end) 
 	
 	----------------------------------------------------------------------------------------------------
 
-	hud.popup.email 		= display.newImage( hud.popup, I "popup.Btemail.png")  
-	hud.popup.email.x 	= display.contentWidth*0.5
-	hud.popup.email.y		= display.contentHeight*0.66
+	popup.email 		= display.newImage( popup, I "popup.Btemail.png")  
+	popup.email.x 	= display.contentWidth*0.5
+	popup.email.y		= display.contentHeight*0.66
 
-	utils.onTouch(hud.popup.email, function() self:email() end) 
+	utils.onTouch(popup.email, function() self:email() end) 
 
 	----------------------------------------------------------------------------------------------------
 
 	if(GLOBALS.savedData.facebookAccessToken) then
-		hud.popup.facebookShare 		= display.newImage( hud.popup, I "popup.facebook.invite.png")  
-   	hud.popup.facebookShare.x 		= display.contentWidth*0.5
-   	hud.popup.facebookShare.y		= display.contentHeight*0.8
+		popup.facebookShare 		= display.newImage( popup, I "popup.facebook.invite.png")  
+   	popup.facebookShare.x 		= display.contentWidth*0.5
+   	popup.facebookShare.y		= display.contentHeight*0.8
    
-		utils.onTouch(hud.popup.facebookShare, function() 
+		utils.onTouch(popup.facebookShare, function() 
    		router.openInviteFriends(next)
 			analytics.event("Social", "openFacebookFriendList") 
 		end)
 		
 	else
-		hud.popup.facebookConnect 		= display.newImage( hud.popup, I "popup.facebook.connect.png")  
-   	hud.popup.facebookConnect.x 	= display.contentWidth*0.5
-   	hud.popup.facebookConnect.y	= display.contentHeight*0.8
+		popup.facebookConnect 		= display.newImage( popup, I "popup.facebook.connect.png")  
+   	popup.facebookConnect.x 	= display.contentWidth*0.5
+   	popup.facebookConnect.y	= display.contentHeight*0.8
    
-		utils.onTouch(hud.popup.facebookConnect, function() 
+		utils.onTouch(popup.facebookConnect, function() 
 			facebook.connect(function()
       		router.openInviteFriends(next)
 				analytics.event("Social", "openFacebookFriendListAfterConnection") 
@@ -192,11 +192,11 @@ function ShareManager:invite(next)
 
 	----------------------------------------------------------------------------------------------------
 	
-	hud.popup.close 				= display.newImage( hud.popup, "assets/images/hud/CroixClose.png")
-	hud.popup.close.x 			= display.contentWidth*0.89
-	hud.popup.close.y 			= display.contentHeight*0.085
+	popup.close 				= display.newImage( popup, "assets/images/hud/CroixClose.png")
+	popup.close.x 			= display.contentWidth*0.89
+	popup.close.y 			= display.contentHeight*0.085
 	
-	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+	utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 	
 end
 
@@ -207,22 +207,22 @@ function ShareManager:noMoreTickets()
 
 	----------------------------------------------------------------------------------------------------
 
-	viewManager.showPopup()
+	local popup = viewManager.showPopup()
 	
 	----------------------------------------------------------------------------------------------------
 	
-	hud.popup.icon 			= display.newImage( hud.popup, "assets/images/icons/PictomaxTicket.png")
-	hud.popup.icon.x 			= display.contentWidth*0.5
-	hud.popup.icon.y 			= display.contentHeight*0.2
+	popup.icon 			= display.newImage( popup, "assets/images/icons/PictomaxTicket.png")
+	popup.icon.x 			= display.contentWidth*0.5
+	popup.icon.y 			= display.contentHeight*0.2
 
-	hud.popup.icon 			= display.newImage( hud.popup, I "Sorry.png")
-	hud.popup.icon.x 			= display.contentWidth*0.5
-	hud.popup.icon.y 			= display.contentHeight*0.3
+	popup.icon 			= display.newImage( popup, I "Sorry.png")
+	popup.icon.x 			= display.contentWidth*0.5
+	popup.icon.y 			= display.contentHeight*0.3
 	
 	----------------------------------------------------------------------------------------------------
 
 	viewManager.newText({
-		parent 			= hud.popup, 
+		parent 			= popup, 
 		text	 			= T "You have reached the maximum number of Tickets for this draw",     
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.4,
@@ -231,7 +231,7 @@ function ShareManager:noMoreTickets()
 	})
 
 	viewManager.newText({
-		parent 			= hud.popup, 
+		parent 			= popup, 
 		text	 			= T "Increase your stock of Tickets",     
 		x 					= display.contentWidth * 0.5,
 		y 					= display.contentHeight*0.5,
@@ -240,21 +240,21 @@ function ShareManager:noMoreTickets()
 
 	--------------------------
 	
-	hud.popup.more 				= display.newImage( hud.popup, I "more.tickets.png")
-	hud.popup.more.x 				= display.contentWidth*0.5
-	hud.popup.more.y 				= display.contentHeight*0.65
+	popup.more 				= display.newImage( popup, I "more.tickets.png")
+	popup.more.x 				= display.contentWidth*0.5
+	popup.more.y 				= display.contentHeight*0.65
 
-	utils.onTouch(hud.popup.more, function() 
-		viewManager.closePopup() 
+	utils.onTouch(popup.more, function() 
+		viewManager.closePopup(popup) 
 	end)
 	
 	--------------------------
 	
-	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-	hud.popup.close.x 			= display.contentWidth*0.5
-	hud.popup.close.y 			= display.contentHeight*0.83
+	popup.close 				= display.newImage( popup, I "popup.Bt_close.png")
+	popup.close.x 			= display.contentWidth*0.5
+	popup.close.y 			= display.contentHeight*0.83
 	
-	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+	utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 	
 	----------------------------------------------------------------------------------------------------
 end
@@ -319,7 +319,7 @@ function ShareManager:shareOnWall()
 	facebook.postOnWall(text, function()
 	
 		print("---> postOnWall next")
-		viewManager.closePopup()
+		viewManager.closePopup(popup)
 		viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
 		if(not userManager.user.hasPostOnFacebook) then
 			viewManager.showPoints(NB_POINTS_PER_POST)
@@ -338,7 +338,7 @@ function ShareManager:tweetShare()
 
 	twitter.tweetMessage(text, function()
 
-		viewManager.closePopup()
+		viewManager.closePopup(popup)
 		viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
 		if(not userManager.user.hasTweet) then
 			viewManager.showPoints(NB_POINTS_PER_TWEET)

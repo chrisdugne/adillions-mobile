@@ -139,25 +139,25 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function closePopup(now, action)
+function closePopup(popup, now, action)
 
-    if(hud.popup) then
-        display.remove(hud.popup.close)
-        transition.cancel(hud.popup)
+    if(popup) then
+        display.remove(popup.close)
+        transition.cancel(popup)
 
         if(not now) then
-            transition.to(hud.popup, {
+            transition.to(popup, {
                 time        = 250, 
                 alpha       = 0, 
                 onComplete  = function()
-                    utils.emptyGroup(hud.popup)
+                    utils.emptyGroup(popup)
                     if(action) then
                         action()
                     end
                 end
             })
         else
-            utils.emptyGroup(hud.popup)
+            utils.emptyGroup(popup)
             if(action) then
                 action()
             end
@@ -168,7 +168,7 @@ function closePopup(now, action)
 end
 
 ------------------------------------------------------------------
---
+
 function showPopup(height)
 
     local width = display.contentWidth*0.95
@@ -178,26 +178,27 @@ function showPopup(height)
         width = height
     end
 
-    closePopup(true)
-    hud.popup = display.newGroup()
+    local popup = display.newGroup()
 
-    hud.backGrey 		= drawBorder( hud.popup, 
-    0, 0, 
-    display.contentWidth+50, display.viewableContentHeight+50,
-    50/255,50/255,50/255
+    local backGrey = drawBorder( popup, 
+        0, 0, 
+        display.contentWidth+50, display.viewableContentHeight+50,
+        50/255,50/255,50/255
     )  
-    hud.backGrey.x 		= display.viewableContentWidth*0.5 
-    hud.backGrey.y 		= display.viewableContentHeight*0.5
-    hud.backGrey.alpha	= 0.85
+    backGrey.x 		= display.viewableContentWidth*0.5 
+    backGrey.y 		= display.viewableContentHeight*0.5
+    backGrey.alpha	= 0.85
 
-    hud.popupRect = display.newImageRect( hud.popup, "assets/images/hud/Popup_BG.png", width, height)
-    hud.popupRect.x = display.contentWidth*0.5 
-    hud.popupRect.y = display.contentHeight*0.5
+    local popupRect = display.newImageRect( popup, "assets/images/hud/Popup_BG.png", width, height)
+    popupRect.x = display.contentWidth*0.5 
+    popupRect.y = display.contentHeight*0.5
 
-    hud.popup:toFront()
+    popup:toFront()
 
-    utils.onTap(hud.backGrey, function()end)
-    utils.onTap(hud.popupRect, function()end)
+    utils.onTap(backGrey, function() closePopup(popup) end)
+    utils.onTap(popupRect, function()end)
+    
+    return popup
 end
 
 ------------------------------------------------------------------
@@ -225,30 +226,29 @@ end
 
 ------------------------------------------------------------------
 
-function refreshPopupTimer(lastTime)
+function refreshPopupTimer(popup, lastTime)
 
-
-    if(hud.popup.timer) then timer.cancel(hud.popup.timer) end
-    if(not hud.popup.timerDisplay) then return end
+    if(popup.timer) then timer.cancel(popup.timer) end
+    if(not popup.timerDisplay) then return end
 
     local now = os.time() * 1000
     local hoursSpent, minSpent, secSpent, msSpent = utils.getHoursMinSecMillis(now - lastTime)
 
     if(tonumber(minSpent) >= lotteryManager.nextLottery.ticketTimer) then 
-        viewManager.closePopup()
+        viewManager.closePopup(popup)
     else
         print("lotteryManager.nextLottery.ticketTimer : " .. lotteryManager.nextLottery.ticketTimer)
         --	local h = 1 - tonumber(hoursSpent)
         local m = lotteryManager.nextLottery.ticketTimer - 1 - tonumber(minSpent)
-        local s = 59 - tonumber(secSpent)
+        local s = 59 - tonumber(secSpent) 
 
         --	if(h < 10) then h = "0"..h end 
         if(m < 10) then m = "0"..m end 
         if(s < 10) then s = "0"..s end 
 
-        --	hud.popup.timerDisplay.text = h .. " : " .. m .. " : " .. s
-        hud.popup.timerDisplay.text = m .. " : " .. s
-        hud.popup.timer = timer.performWithDelay(1000, function ()
+        --	popup.timerDisplay.text = h .. " : " .. m .. " : " .. s
+        popup.timerDisplay.text = m .. " : " .. s
+        popup.timer = timer.performWithDelay(1000, function ()
             refreshPopupTimer(lastTime)
         end)
     end 
@@ -808,9 +808,9 @@ function drawSelection(parent, numbers)
     -------------------------------------
     -- display
 
-    local nbSelected  = 0
-    local xGap 			= display.contentWidth*0.14
-    local y 				= display.contentHeight*0.31
+    local nbSelected    = 0
+    local xGap          = display.contentWidth*0.14
+    local y             = display.contentHeight*0.31
 
     -------------------------------------
 

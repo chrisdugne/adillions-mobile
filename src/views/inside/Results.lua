@@ -213,11 +213,11 @@ function scene:openMoreResults( lottery )
 	local top	 	= display.contentHeight * 0.3
 	local yGap		= display.contentHeight*0.082
 
-	viewManager.showPopup()
+	local popup = viewManager.showPopup()
 	analytics.event("Gaming", "popupMoreResults") 
 
 	viewManager.newText({
-		parent = hud.popup, 
+		parent = popup, 
 		text = T "Drawing" .. " " .. lotteryManager:date(lottery, true, true), 
 		x = display.contentWidth*0.5,
 		y = display.contentHeight * 0.11,
@@ -225,17 +225,17 @@ function scene:openMoreResults( lottery )
 	})
 
 	
-	hud.sep2 		= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep2 		= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
 	hud.sep2.x 		= display.contentWidth*0.5
 	hud.sep2.y 		= display.contentHeight*0.16
 
-	hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+	hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
 	hud.sep.x 		= display.contentWidth*0.5
 	hud.sep.y 		= display.contentHeight*0.25
 	
 	
 	viewManager.newText({
-		parent = hud.popup, 
+		parent = popup, 
 		text = T "Total", 
 		x = display.contentWidth*0.45,
 		y = display.contentHeight * 0.19,
@@ -244,7 +244,7 @@ function scene:openMoreResults( lottery )
 	})
 
 	viewManager.newText({
-		parent = hud.popup, 
+		parent = popup, 
 		text = T "winning Tickets", 
 		x = display.contentWidth*0.45,
 		y = display.contentHeight * 0.22,
@@ -253,7 +253,7 @@ function scene:openMoreResults( lottery )
 	})
 
 	viewManager.newText({
-		parent = hud.popup, 
+		parent = popup, 
 		text = T "Prize / ", 
 		x = display.contentWidth*0.77,
 		y = display.contentHeight * 0.19,
@@ -262,7 +262,7 @@ function scene:openMoreResults( lottery )
 	})
 
 	viewManager.newText({
-		parent = hud.popup, 
+		parent = popup, 
 		text = T "Winning Ticket", 
 		x = display.contentWidth*0.77,
 		y = display.contentHeight * 0.22,
@@ -273,12 +273,12 @@ function scene:openMoreResults( lottery )
 
 	for i = 1, #lottery.prizes do
 
-		hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/Rang".. i .. ".png")
+		hud.iconRang 			= display.newImage( popup, "assets/images/icons/rangs/Rang".. i .. ".png")
 		hud.iconRang.x 		= display.contentWidth * 0.2
 		hud.iconRang.y 		= top + yGap * (i-1) - display.contentHeight*0.005
    
    	viewManager.newText({
-   		parent 			= hud.popup, 
+   		parent 			= popup, 
    		text	 			= lottery.prizes[i].winners,     
    		x 					= display.contentWidth*0.45,
    		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
@@ -288,7 +288,7 @@ function scene:openMoreResults( lottery )
    	})
    
    	viewManager.newText({
-   		parent 			= hud.popup, 
+   		parent 			= popup, 
    		text	 			= utils.convertAndDisplayPrice(lottery.prizes[i].share, COUNTRY, lottery.rateUSDtoEUR),     
    		x 					= display.contentWidth*0.8,
    		y 					= top + yGap * (i-1) - display.contentHeight*0.005,
@@ -297,7 +297,7 @@ function scene:openMoreResults( lottery )
          anchorY 			= 0.5,
    	})
 
-   	hud.iconPieces 			= display.newImage( hud.popup, "assets/images/icons/money.png")
+   	hud.iconPieces 			= display.newImage( popup, "assets/images/icons/money.png")
    	hud.iconPieces.x 			= display.contentWidth * 0.86
    	hud.iconPieces.y 			= top + yGap * (i-1) - display.contentHeight*0.01
    	
@@ -305,11 +305,11 @@ function scene:openMoreResults( lottery )
 
 	--------------------------
 
-	hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-	hud.popup.close.x 			= display.contentWidth*0.5
-	hud.popup.close.y 			= display.contentHeight*0.85
+	popup.close 				= display.newImage( popup, I "popup.Bt_close.png")
+	popup.close.x 			= display.contentWidth*0.5
+	popup.close.y 			= display.contentHeight*0.85
 
-	utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+	utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
 end
 

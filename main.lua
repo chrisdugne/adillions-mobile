@@ -9,8 +9,8 @@ APP_VERSION 		= "1.3"
 
 -----------------------------------------------------------------------------------------
 
---DEV					= 1
-PROD					= 1
+--DEV				= 1
+PROD				= 1
 
 -----------------------------------------------------------------------------------------
 
@@ -27,55 +27,34 @@ ANALYTICS_PROFILE_ID 	= "78871292"
 -----------------------------------------------------------------------------------------
 
 if(PROD) then
-	print("prod")
-   FACEBOOK_APP_ID 			= "170148346520274"
-   FACEBOOK_API_SECRET 		= "887e8f7abb9b1cb9238a097e06585ae2"
-   FACEBOOK_APP_NAMESPACE 	= "adillions"
-   SERVER_URL 					= "http://www.adillions.com/"
-   SERVER_OG_URL 				= "http://www.adillions.com/"
+    print("prod")
+    FACEBOOK_APP_ID 		= "170148346520274"
+    FACEBOOK_API_SECRET 	= "887e8f7abb9b1cb9238a097e06585ae2"
+    FACEBOOK_APP_NAMESPACE 	= "adillions"
+    SERVER_URL 				= "http://www.adillions.com/"
+    SERVER_OG_URL 			= "http://www.adillions.com/"
 else
-	print("dev")
-	FACEBOOK_APP_ID 			= "534196239997712"
-	FACEBOOK_API_SECRET 		= "46383d827867d50ef5d87b66c81f1a8e"
-   FACEBOOK_APP_NAMESPACE 	= "adillions-dev"
-	SERVER_URL 					= "http://192.168.0.10:9000/"
-   SERVER_OG_URL 				= "http://192.168.0.10:9000/"
+    print("dev")
+    FACEBOOK_APP_ID 		= "534196239997712"
+    FACEBOOK_API_SECRET 	= "46383d827867d50ef5d87b66c81f1a8e"
+    FACEBOOK_APP_NAMESPACE 	= "adillions-dev"
+    SERVER_URL 				= "http://192.168.0.10:9000/"
+    SERVER_OG_URL 			= "http://192.168.0.10:9000/"
 end
 
 -----------------------------------------------------------------------------------------
 
-IOS 					= system.getInfo( "platformName" )  == "iPhone OS"
-ANDROID 				= system.getInfo( "platformName" )  == "Android"
+IOS 				= system.getInfo( "platformName" )  == "iPhone OS"
+ANDROID 			= system.getInfo( "platformName" )  == "Android"
 SIMULATOR 			= system.getInfo( "environment" )  	== "simulator"
-
------------------------------------------------------------------------------------------
-
-HEADER_HEIGHT		= display.contentHeight * 0.095
-MENU_HEIGHT			= 124
-TICKET_HEIGHT		= 100
-
------------------------------------------------------------------------------------------
-
-START_AVAILABLE_TICKETS			= 8
-POINTS_TO_EARN_A_TICKET			= 8
-NB_POINTS_PER_TICKET				= 1
-NB_POINTS_PER_TWEET				= 2
-NB_POINTS_PER_POST				= 2
-NB_POINTS_PER_LIKE				= 2
-NB_POINTS_PER_THEME_LIKED		= 2
-
-FACEBOOK_FAN_TICKETS				= 2
-TWITTER_FAN_TICKETS				= 2
-FACEBOOK_CONNECTION_TICKETS	= 1
-TWITTER_CONNECTION_TICKETS		= 1
 
 -----------------------------------------------------------------------------------------
 --- lottery tickets status
 
-BLOCKED 	= 1;
-PENDING 	= 2;
-PAYED 	= 3;
-GIFT 		= 4;
+BLOCKED 	= 1; -- set as winning ticket, notification/popup read, cashout blocked (<10)
+PENDING 	= 2; -- cashout requested
+PAYED 	    = 3; -- to set manually when paiement is done
+GIFT 		= 4; --  gift to charity
 
 BONUS_1 	= 11; -- rang 7
 BONUS_2 	= 12; -- rang 8
@@ -83,54 +62,89 @@ BONUS_3 	= 13; -- rang 9
 BONUS_4 	= 14; -- rang 10
 
 -----------------------------------------------------------------------------------------
+--- charity levels
+
+SCOUT           = 1     -- 1
+CONTRIBUTOR     = 2     -- 50
+SAMARITAN       = 3     -- 100
+DONOR           = 4     -- 200
+BENEFACTOR      = 5     -- 500
+MAJOR           = 6     -- ?
+PATRON          = 7     -- ?
+PHILANTHROPIST  = 8     -- ?
+
+CHARITY = {"Boy Scout", "Contributor", "Good Samaritan", "Donor", "Benefactor", "Major Donor", "Patron", "Philanthropist"}
+
+-----------------------------------------------------------------------------------------
+
+START_AVAILABLE_TICKETS         = 8
+POINTS_TO_EARN_A_TICKET         = 8
+NB_POINTS_PER_TICKET            = 1
+NB_POINTS_PER_TWEET             = 2
+NB_POINTS_PER_POST              = 2
+NB_POINTS_PER_LIKE              = 2
+NB_POINTS_PER_THEME_LIKED       = 2
+
+FACEBOOK_FAN_TICKETS            = 3
+TWITTER_FAN_TICKETS             = 3
+FACEBOOK_CONNECTION_TICKETS     = 1
+TWITTER_CONNECTION_TICKETS      = 1
+
+-----------------------------------------------------------------------------------------
+
+HEADER_HEIGHT       = display.contentHeight * 0.095
+MENU_HEIGHT         = 124
+TICKET_HEIGHT       = 100
+
+-----------------------------------------------------------------------------------------
 
 translations = require("assets.Translations")
 
 if ANDROID then
-   FONT 		= "GillSans"
-   NUM_FONT = "HelveticaBold"
+    FONT 		= "GillSans"
+    NUM_FONT = "HelveticaBold"
 else
-	FONT 		= "Gill Sans"
-   NUM_FONT = "Helvetica-Bold"
+    FONT 		= "Gill Sans"
+    NUM_FONT = "Helvetica-Bold"
 end
 
 if(ANDROID) then
-	LANG =  userDefinedLanguage or system.getPreference("locale", "language")
+    LANG =  userDefinedLanguage or system.getPreference("locale", "language")
 else
-	LANG =  userDefinedLanguage or system.getPreference("ui", "language")
+    LANG =  userDefinedLanguage or system.getPreference("ui", "language")
 end
 
 COUNTRY = system.getPreference( "locale", "country" ) or "US"
 
 -----------------------------------------------------------------------------------------
-	
+
 if(DEV) then
-	print("================== DEV ==============")
+    print("================== DEV ==============")
 
-	LANG = "fr"
-	COUNTRY = "FR"
+    LANG = "fr"
+    COUNTRY = "FR"
 
-	print("lang : " .. LANG)
-	print("country : " .. COUNTRY)
-	print(SERVER_URL)
+    print("lang : " .. LANG)
+    print("country : " .. COUNTRY)
+    print(SERVER_URL)
 end
 
 -----------------------------------------------------------------------------------------
 --- Corona's libraries
 coronaFacebook		= require "facebook"
-json 					= require "json"
+json 				= require "json"
 storyboard 			= require "storyboard"
 widget		 		= require "widget"
 sponsorpay 			= require "plugin.sponsorpay"
-ads 					= require "ads"
+ads 				= require "ads"
 
 ---- Additional libs
-xml 					= require "src.libs.Xml"
+xml 				= require "src.libs.Xml"
 utils 				= require "src.libs.Utils"
 facebook 			= require "src.libs.Facebook" 
 vungle 				= require "src.libs.Vungle" 
 sponsorpayTools 	= require "src.libs.SponsorpayTools" 
-twitter 				= require "src.libs.Twitter" 
+twitter 			= require "src.libs.Twitter" 
 analytics 			= require "src.libs.google.Analytics"
 
 -----------------------------------------------------------------------------------------
@@ -146,11 +160,11 @@ random 	= math.random
 -- Translations
 
 function T(enText)
-	return translations[enText][LANG] or enText
+    return translations[enText][LANG] or enText
 end
 
 function I(asset)
-	return "assets/images/bylang/"..LANG.."/"..asset
+    return "assets/images/bylang/"..LANG.."/"..asset
 end
 
 -----------------------------------------------------------------------------------------
@@ -167,11 +181,11 @@ ShareManager	= require "src.managers.ShareManager"
 -----------------------------------------------------------------------------------------
 ---- Server access Managers
 
-gameManager 		= GameManager:new()
-userManager 		= UserManager:new()
+gameManager 	= GameManager:new()
+userManager 	= UserManager:new()
 lotteryManager 	= LotteryManager:new()
-videoManager 		= VideoManager:new()
-shareManager 		= ShareManager:new()
+videoManager 	= VideoManager:new()
+shareManager 	= ShareManager:new()
 
 -----------------------------------------------------------------------------------------
 --- Display Container
@@ -182,16 +196,16 @@ hud = display.newGroup()
 ---- App globals
 
 GLOBALS = {
-	savedData 		= utils.loadUserData("savedData.json"),
-	options 			= utils.loadUserData("options.json"),
+    savedData 		= utils.loadUserData("savedData.json"),
+    options 		= utils.loadUserData("options.json"),
 }
 
 -----------------------------------------------------------------------------------------
 
 if(utils.networkConnection()) then
-	gameManager:start()
+    gameManager:start()
 else
-	router.openNoInternet()
+    router.openNoInternet()
 end
 
 -----------------------------------------------------------------------------------------
@@ -222,15 +236,15 @@ end
 -- create a function to handle all of the system events
 local onSystem = function( event )
     if event.type == "applicationSuspend" then
-    
+
     elseif event.type == "applicationStart" or event.type == "applicationResume" then
-      native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
---      
---      facebook.isFacebookFan(function() 
---      end)
-      
-   	twitter.reconnect()
-    
+        native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
+        --      
+        --      facebook.isFacebookFan(function() 
+        --      end)
+
+        twitter.reconnect()
+
     end
 end
 
@@ -246,45 +260,45 @@ display.setStatusBar( display.HiddenStatusBar )
 
 local function onKeyEvent( event )
 
-   local phase = event.phase
-   local keyName = event.keyName
-   print( event.phase, event.keyName )
+    local phase = event.phase
+    local keyName = event.keyName
+    print( event.phase, event.keyName )
 
-   if ( "back" == keyName and phase == "up" ) then
-      if ( storyboard.currentScene == "splash" ) then
-         native.requestExit()
-      else
-         if ( storyboard.isOverlay ) then
-            storyboard.hideOverlay()
-         else
-            local lastScene = storyboard.returnTo
-            print( "previous scene", lastScene )
-            if ( lastScene ) then
-               storyboard.gotoScene( lastScene, { effect="crossFade", time=500 } )
+    if ( "back" == keyName and phase == "up" ) then
+        if ( storyboard.currentScene == "splash" ) then
+            native.requestExit()
+        else
+            if ( storyboard.isOverlay ) then
+                storyboard.hideOverlay()
             else
-               native.requestExit()
+                local lastScene = storyboard.returnTo
+                print( "previous scene", lastScene )
+                if ( lastScene ) then
+                    storyboard.gotoScene( lastScene, { effect="crossFade", time=500 } )
+                else
+                    native.requestExit()
+                end
             end
-         end
-      end
-   end
+        end
+    end
 
-   if ( keyName == "volumeUp" and phase == "down" ) then
-      local masterVolume = audio.getVolume()
-      print( "volume:", masterVolume )
-      if ( masterVolume < 1.0 ) then
-         masterVolume = masterVolume + 0.1
-         audio.setVolume( masterVolume )
-      end
-   elseif ( keyName == "volumeDown" and phase == "down" ) then
-      local masterVolume = audio.getVolume()
-      print( "volume:", masterVolume )
-      if ( masterVolume > 0.0 ) then
-         masterVolume = masterVolume - 0.1
-         audio.setVolume( masterVolume )
-      end
-   end
+    if ( keyName == "volumeUp" and phase == "down" ) then
+        local masterVolume = audio.getVolume()
+        print( "volume:", masterVolume )
+        if ( masterVolume < 1.0 ) then
+            masterVolume = masterVolume + 0.1
+            audio.setVolume( masterVolume )
+        end
+    elseif ( keyName == "volumeDown" and phase == "down" ) then
+        local masterVolume = audio.getVolume()
+        print( "volume:", masterVolume )
+        if ( masterVolume > 0.0 ) then
+            masterVolume = masterVolume - 0.1
+            audio.setVolume( masterVolume )
+        end
+    end
 
-   return true  --SEE NOTE BELOW
+    return true  --SEE NOTE BELOW
 end
 
 --add the key callback
@@ -301,7 +315,7 @@ local function myUnhandledErrorListener( event )
     else
         print( "Not handling the unhandled error", event.errorMessage )
     end
-    
+
     return iHandledTheError
 end
 

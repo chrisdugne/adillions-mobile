@@ -193,12 +193,12 @@ function scene:openPrizes()
     local top	 	= display.contentHeight * 0.35
     local yGap		= display.contentHeight * 0.082
 
-    viewManager.showPopup()
+    local popup = viewManager.showPopup()
 
     --------------------------
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "Last updated : January 05th, 2014",
         x = display.contentWidth*0.9,
         y = display.contentHeight * 0.08,
@@ -210,26 +210,26 @@ function scene:openPrizes()
 
     --------------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PrizeTitle.png")
+    hud.picto 			= display.newImage(popup, "assets/images/icons/PrizeTitle.png")
     hud.picto.x 		= display.contentWidth*0.14
     hud.picto.y 		= display.contentHeight*0.15
     hud.picto:scale(0.7,0.7)
 
-    hud.title 			= display.newImage(hud.popup, I "Prize.png")
+    hud.title 			= display.newImage(popup, I "Prize.png")
 
     hud.title.anchorX 			= 0
     hud.title.anchorY 			= 0.5
     hud.title.x 		= display.contentWidth*0.22
     hud.title.y 		= display.contentHeight*0.15
 
-    hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		= display.contentWidth*0.5
     hud.sep.y 		= display.contentHeight*0.2
 
     --------------------------
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "Match", 
         x = display.contentWidth*0.45,
         y = display.contentHeight * 0.24,
@@ -238,7 +238,7 @@ function scene:openPrizes()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "n° + LB", 
         x = display.contentWidth*0.45,
         y = display.contentHeight * 0.27,
@@ -247,7 +247,7 @@ function scene:openPrizes()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "Prize", 
         x = display.contentWidth * 0.8,
         y = display.contentHeight * 0.24,
@@ -256,7 +256,7 @@ function scene:openPrizes()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "breakdown", 
         x = display.contentWidth * 0.8,
         y = display.contentHeight * 0.27,
@@ -269,12 +269,12 @@ function scene:openPrizes()
 
     for i = 1, #matches do
 
-        hud.iconRang 			= display.newImage( hud.popup, "assets/images/icons/rangs/R".. i .. ".png")
+        hud.iconRang 			= display.newImage( popup, "assets/images/icons/rangs/R".. i .. ".png")
         hud.iconRang.x 		= display.contentWidth * 0.2
         hud.iconRang.y 		= top + yGap * (i-1)
 
         viewManager.newText({
-            parent 			= hud.popup, 
+            parent 			= popup, 
             text	 			= matches[i],     
             x 					= display.contentWidth*0.45,
             y 					= top + yGap * (i-1) ,
@@ -282,14 +282,14 @@ function scene:openPrizes()
         })
 
         viewManager.newText({
-            parent 			= hud.popup, 
+            parent 			= popup, 
             text	 			= percents[i] .. '%',     
             x 					= display.contentWidth*0.75,
             y 					= top + yGap * (i-1) ,
             fontSize 		= 35,
         })
 
-        hud.iconPieces 			= display.newImage( hud.popup, "assets/images/icons/PictoPrize.png")
+        hud.iconPieces 			= display.newImage( popup, "assets/images/icons/PictoPrize.png")
         hud.iconPieces.x 			= display.contentWidth * 0.86
         hud.iconPieces.y 			= top + yGap * (i-1) - display.contentHeight*0.0005
 
@@ -297,11 +297,11 @@ function scene:openPrizes()
 
     --------------------------
 
-    hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-    hud.popup.close.x 			= display.contentWidth*0.5
-    hud.popup.close.y 			= display.contentHeight*0.88
+    popup.close 				= display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x 			= display.contentWidth*0.5
+    popup.close.y 			= display.contentHeight*0.88
 
-    utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
 end
 
@@ -313,29 +313,29 @@ function scene:openTerms()
     local top	 	= display.contentHeight * 0.35
     local yGap		= display.contentHeight*0.082
 
-    viewManager.showPopup()
+    local popup = viewManager.showPopup()
 
     --------------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoTerms.png")
+    hud.picto 			= display.newImage(popup, "assets/images/icons/PictoTerms.png")
     hud.picto.x 		= display.contentWidth*0.14
     hud.picto.y 		= display.contentHeight*0.1
 
-    hud.title 			= display.newImage(hud.popup, I "terms.png")
+    hud.title 			= display.newImage(popup, I "terms.png")
 
     hud.title.anchorX 			= 0
     hud.title.anchorY 			= 0.5
     hud.title.x 		= display.contentWidth*0.22
     hud.title.y 		= display.contentHeight*0.1
 
-    hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		= display.contentWidth*0.5
     hud.sep.y 		= display.contentHeight*0.15
 
     --------------------------
 
     hud.textImportant = display.newText(
-    hud.popup, 
+    popup, 
     "Important", 
     0, 0, display.contentWidth*0.8, display.contentHeight*0.25, NUM_FONT, 35 )
 
@@ -344,7 +344,7 @@ function scene:openTerms()
     hud.textImportant:setFillColor(0)
 
     hud.text = display.newText(
-    hud.popup, 
+    popup, 
     T "Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.", 
     0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
 
@@ -356,7 +356,7 @@ function scene:openTerms()
     if(ANDROID) then company = "Google Inc " end
 
     hud.text2 = display.newText(
-    hud.popup, 
+    popup, 
     company .. (T "is not an organizer, a co-organizer or a partner of Adillions. ") .. company .. (T "is not involved in any way in the organization of the Adillions lottery and does not sponsor it."), 
     0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
 
@@ -366,31 +366,31 @@ function scene:openTerms()
 
     --------------------------
 
-    hud.popup.keyrules 			= display.newImage( hud.popup, I "key.rules.png")
-    hud.popup.keyrules.x 		= display.contentWidth*0.5
-    hud.popup.keyrules.y 		= display.contentHeight*0.65
+    popup.keyrules 			= display.newImage( popup, I "key.rules.png")
+    popup.keyrules.x 		= display.contentWidth*0.5
+    popup.keyrules.y 		= display.contentHeight*0.65
 
-    utils.onTouch(hud.popup.keyrules, function() 
+    utils.onTouch(popup.keyrules, function() 
         system.openURL( SERVER_URL .. "#/about/keyrules" )
     end)
 
     --------------------------
 
-    hud.popup.read 		= display.newImage( hud.popup, I "read.terms.png")
-    hud.popup.read.x 		= display.contentWidth*0.5
-    hud.popup.read.y 		= display.contentHeight*0.78
+    popup.read 		= display.newImage( popup, I "read.terms.png")
+    popup.read.x 		= display.contentWidth*0.5
+    popup.read.y 		= display.contentHeight*0.78
 
-    utils.onTouch(hud.popup.read, function() 
+    utils.onTouch(popup.read, function() 
         router.openTerms()
     end)
 
     --------------------------
 
-    hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-    hud.popup.close.x 			= display.contentWidth*0.5
-    hud.popup.close.y 			= display.contentHeight*0.9
+    popup.close 				= display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x 			= display.contentWidth*0.5
+    popup.close.y 			= display.contentHeight*0.9
 
-    utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 end
 
 ------------------------------------------------------------------------------
@@ -400,7 +400,7 @@ function scene:openOptions()
     local top	 	= display.contentHeight * 0.15
     local yGap		= display.contentHeight*0.15
 
-    viewManager.showPopup()
+    local popup = viewManager.showPopup()
 
     --------------------------
 
@@ -411,18 +411,18 @@ function scene:openOptions()
 
     --------------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoOptions.png")
+    hud.picto 			= display.newImage(popup, "assets/images/icons/PictoOptions.png")
     hud.picto.x 		= display.contentWidth*0.14
     hud.picto.y 		= display.contentHeight*0.15
 
-    hud.title 			= display.newImage(hud.popup, I "Options.png")
+    hud.title 			= display.newImage(popup, I "Options.png")
 
     hud.title.anchorX 			= 0
     hud.title.anchorY 			= 0.5
     hud.title.x 		= display.contentWidth*0.22
     hud.title.y 		= display.contentHeight*0.15
 
-    hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		= display.contentWidth*0.5
     hud.sep.y 		= display.contentHeight*0.2
 
@@ -447,7 +447,7 @@ function scene:openOptions()
     ---------------------------------------------------------------
 
     viewManager.newText({
-        parent 			= hud.popup, 
+        parent 			= popup, 
         text 				= T "Notification 48h before the next draw",         
         x 					= display.contentWidth*0.11,
         y 					= top + yGap*(optionsTop),
@@ -468,7 +468,7 @@ function scene:openOptions()
     beforeDrawSwitch:scale(2,2)	
 
     viewManager.newText({
-        parent 			= hud.popup, 
+        parent 			= popup, 
         text 				= T "Notification for the results",         
         x 					= display.contentWidth*0.11,
         y 					= top + yGap*(optionsTop+0.5),
@@ -489,16 +489,16 @@ function scene:openOptions()
 
     afterDrawSwitch:scale(2,2)	
 
-    hud.popup:insert( beforeDrawSwitch )	
-    hud.popup:insert( afterDrawSwitch )	
+    popup:insert( beforeDrawSwitch )	
+    popup:insert( afterDrawSwitch )	
 
     --------------------------
 
-    hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-    hud.popup.close.x 			= display.contentWidth*0.5
-    hud.popup.close.y 			= display.contentHeight*0.85
+    popup.close 				= display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x 			= display.contentWidth*0.5
+    popup.close.y 			= display.contentHeight*0.85
 
-    utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
 end
 
@@ -509,29 +509,29 @@ function scene:openContact()
     local top	 	= display.contentHeight * 0.3
     local yGap		= display.contentHeight*0.082
 
-    viewManager.showPopup()
+    local popup = viewManager.showPopup()
 
     --------------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/icons/PictoContact.png")
+    hud.picto 			= display.newImage(popup, "assets/images/icons/PictoContact.png")
     hud.picto.x 		= display.contentWidth*0.14
     hud.picto.y 		= display.contentHeight*0.15
 
-    hud.title 			= display.newImage(hud.popup, I "Contact.png")
+    hud.title 			= display.newImage(popup, I "Contact.png")
 
     hud.title.anchorX 			= 0
     hud.title.anchorY 			= 0.5
     hud.title.x 		= display.contentWidth*0.22
     hud.title.y 		= display.contentHeight*0.15
 
-    hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		= display.contentWidth*0.5
     hud.sep.y 		= display.contentHeight*0.2
 
     --------------------------
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "By email", 
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.27,
@@ -544,7 +544,7 @@ function scene:openContact()
     --------------------------
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "General information" .. " :", 
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.31,
@@ -554,7 +554,7 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = "contact@adillions.com", 
         x = display.contentWidth*0.9,
         y = display.contentHeight * 0.31,
@@ -565,7 +565,7 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "For technical issues" .. " :", 
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.36,
@@ -575,7 +575,7 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = "support@adillions.com", 
         x = display.contentWidth*0.9,
         y = display.contentHeight * 0.36,
@@ -586,7 +586,7 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "For payments" .. " :", 
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.41,
@@ -596,7 +596,7 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = "winners@adillions.com", 
         x = display.contentWidth*0.9,
         y = display.contentHeight * 0.41,
@@ -607,7 +607,7 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "For advertisers" .. " :", 
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.46,
@@ -617,7 +617,7 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = "advertisers@adillions.com", 
         x = display.contentWidth*0.9,
         y = display.contentHeight * 0.46,
@@ -630,7 +630,7 @@ function scene:openContact()
     --------------------------
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = T "On the web", 
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.6,
@@ -643,7 +643,7 @@ function scene:openContact()
     --------------------------
 
     viewManager.newText({
-        parent = hud.popup, 
+        parent = popup, 
         text = "www.adillions.com", 
         x = display.contentWidth*0.5,
         y = display.contentHeight * 0.65,
@@ -653,11 +653,11 @@ function scene:openContact()
 
     --------------------------
 
-    hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-    hud.popup.close.x 			= display.contentWidth*0.5
-    hud.popup.close.y 			= display.contentHeight*0.85
+    popup.close 				= display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x 			= display.contentWidth*0.5
+    popup.close.y 			= display.contentHeight*0.85
 
-    utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
 end
 
@@ -668,29 +668,29 @@ function scene:openRewards1()
     local top	 	= display.contentHeight * 0.3
     local yGap		= display.contentHeight*0.082
 
-    viewManager.showPopup()
+    local popup = viewManager.showPopup()
 
     --------------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/icons/Picto_BonusTicket.png")
+    hud.picto 			= display.newImage(popup, "assets/images/icons/Picto_BonusTicket.png")
     hud.picto.x 		= display.contentWidth*0.14
     hud.picto.y 		= display.contentHeight*0.15
 
-    hud.title 			= display.newImage(hud.popup, I "moretickets.png")
+    hud.title 			= display.newImage(popup, I "moretickets.png")
 
     hud.title.anchorX 			= 0
     hud.title.anchorY 			= 0.5
     hud.title.x 		= display.contentWidth*0.22
     hud.title.y 		= display.contentHeight*0.15
 
-    hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		= display.contentWidth*0.5
     hud.sep.y 		= display.contentHeight*0.2
 
     --------------------------
 
     --	hud.text = display.newText(
-    --		hud.popup, 
+    --		popup, 
     --		T "Increase your number of available Tickets for the next draws", 
     --		0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 36 )
     --		
@@ -700,7 +700,7 @@ function scene:openRewards1()
 
     --------------------------
 
-    hud.fb1 				= display.newImage(hud.popup, "assets/images/rewards/CharityLine.png")
+    hud.fb1 				= display.newImage(popup, "assets/images/rewards/CharityLine.png")
 
     hud.fb1.anchorX 	= 0.5
     hud.fb1.anchorY 	= 0.5
@@ -709,7 +709,7 @@ function scene:openRewards1()
 
     --------------------------
 
-    hud.fb1 			= display.newImage(hud.popup, "assets/images/rewards/InstantLine.png")
+    hud.fb1 			= display.newImage(popup, "assets/images/rewards/InstantLine.png")
 
     hud.fb1.anchorX 			= 0.5
     hud.fb1.anchorY 			= 0.5
@@ -718,7 +718,7 @@ function scene:openRewards1()
 
     --------------------------
 
-    hud.fb1 			= display.newImage(hud.popup, "assets/images/rewards/MoreLine.png")
+    hud.fb1 			= display.newImage(popup, "assets/images/rewards/MoreLine.png")
 
     hud.fb1.anchorX 			= 0.5
     hud.fb1.anchorY 			= 0.5
@@ -727,12 +727,12 @@ function scene:openRewards1()
 
     --------------------------
 
-    hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		= display.contentWidth*0.5
     hud.sep.y 		= display.contentHeight*0.83
 
     hud.next = viewManager.newText({
-        parent 			= hud.popup,
+        parent 			= popup,
         text 				= T "NEXT" .. "  >", 
         fontSize			= 49,  
         x 					= display.contentWidth * 0.5,
@@ -745,11 +745,11 @@ function scene:openRewards1()
 
     ---------------------------------------------------------------
 
-    hud.close 				= display.newImage( hud.popup, "assets/images/hud/CroixClose.png")
+    hud.close 				= display.newImage( popup, "assets/images/hud/CroixClose.png")
     hud.close.x 			= display.contentWidth*0.89
     hud.close.y 			= display.contentHeight*0.085
 
-    utils.onTouch(hud.close, function() viewManager.closePopup() end)
+    utils.onTouch(hud.close, function() viewManager.closePopup(popup) end)
 
 end
 
@@ -760,28 +760,28 @@ function scene:openRewards2()
     local top	 	= display.contentHeight * 0.3
     local yGap		= display.contentHeight*0.082
 
-    viewManager.showPopup()
+    local popup = viewManager.showPopup()
 
     --------------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/icons/Picto_InstantTicket.png")
+    hud.picto 			= display.newImage(popup, "assets/images/icons/Picto_InstantTicket.png")
     hud.picto.x 		= display.contentWidth*0.14
     hud.picto.y 		= display.contentHeight*0.15
 
-    hud.title 			= display.newImage(hud.popup, I "instant.ticket.png")
+    hud.title 			= display.newImage(popup, I "instant.ticket.png")
     hud.title.anchorX 			= 0
     hud.title.anchorY 			= 0.5
     hud.title.x 		= display.contentWidth*0.22
     hud.title.y 		= display.contentHeight*0.15
 
-    hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		= display.contentWidth*0.5
     hud.sep.y 		= display.contentHeight*0.2
 
     --------------------------
 
     hud.text = display.newText(
-    hud.popup, 
+    popup, 
     T "Get Instant Tickets (ad-free Tickets) by earning points",
     0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 36 )
 
@@ -791,25 +791,25 @@ function scene:openRewards2()
 
     -------------------
 
-    hud.ticket 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto1.png")
+    hud.ticket 			= display.newImage(popup, "assets/images/hud/InstantTicket_Picto1.png")
     hud.ticket.x 		= display.contentWidth*0.2
     hud.ticket.y 		= display.contentHeight*0.35
 
-    hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
+    hud.sep 				= display.newImageRect(popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
     hud.sep.x 			= display.contentWidth*0.34
     hud.sep.y 			= display.contentHeight*0.35
 
-    hud.ticketValue 	= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Rond1.png")
+    hud.ticketValue 	= display.newImage(popup, "assets/images/hud/InstantTicket_Rond1.png")
     hud.ticketValue.x = display.contentWidth*0.5
     hud.ticketValue.y = display.contentHeight*0.35
 
-    hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.09, display.contentHeight*0.0015)
+    hud.sep 				= display.newImageRect(popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.09, display.contentHeight*0.0015)
     hud.sep.x 			= display.contentWidth*0.62
     hud.sep.y 			= display.contentHeight*0.35
 
     --
-    --	hud.popup.multiLineText = display.newText({
-    --		parent	= hud.popup,
+    --	popup.multiLineText = display.newText({
+    --		parent	= popup,
     --		text 		= T "+ 1pt / Ticket",   
     --		width 	= display.contentWidth*0.6,  
     --		height 	= display.contentHeight*0.25,  
@@ -820,23 +820,23 @@ function scene:openRewards2()
     --		align 	= "right",
     --	})
     --	
-    --	hud.popup.multiLineText:setFillColor(0)
+    --	popup.multiLineText:setFillColor(0)
 
     -------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto2.png")
+    hud.picto 			= display.newImage(popup, "assets/images/hud/InstantTicket_Picto2.png")
     hud.picto.x 		= display.contentWidth*0.2
     hud.picto.y 		= display.contentHeight*0.45
 
-    hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
+    hud.sep 				= display.newImageRect(popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
     hud.sep.x 			= display.contentWidth*0.34
     hud.sep.y 			= display.contentHeight*0.45
 
-    hud.ticketValue 	= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Rond1.png")
+    hud.ticketValue 	= display.newImage(popup, "assets/images/hud/InstantTicket_Rond1.png")
     hud.ticketValue.x = display.contentWidth*0.5
     hud.ticketValue.y = display.contentHeight*0.45
 
-    hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.04, display.contentHeight*0.0015)
+    hud.sep 				= display.newImageRect(popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.04, display.contentHeight*0.0015)
     hud.sep.x 			= display.contentWidth*0.6
     hud.sep.y 			= display.contentHeight*0.45
     --	
@@ -856,23 +856,23 @@ function scene:openRewards2()
     --   multiLineText.anchorY 			= 0.5
     --	multiLineText.x = display.contentWidth*0.9
     --	multiLineText.y = display.contentHeight*0.45
-    --	hud.popup:insert(multiLineText)         
+    --	popup:insert(multiLineText)         
     --	
     -------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto3.png")
+    hud.picto 			= display.newImage(popup, "assets/images/hud/InstantTicket_Picto3.png")
     hud.picto.x 		= display.contentWidth*0.2
     hud.picto.y 		= display.contentHeight*0.55
 
-    hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
+    hud.sep 				= display.newImageRect(popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
     hud.sep.x 			= display.contentWidth*0.34
     hud.sep.y 			= display.contentHeight*0.55
 
-    hud.ticketValue 	= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Rond2.png")
+    hud.ticketValue 	= display.newImage(popup, "assets/images/hud/InstantTicket_Rond2.png")
     hud.ticketValue.x = display.contentWidth*0.5
     hud.ticketValue.y = display.contentHeight*0.55
 
-    hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.07, display.contentHeight*0.0015)
+    hud.sep 				= display.newImageRect(popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.07, display.contentHeight*0.0015)
     hud.sep.x 			= display.contentWidth*0.61
     hud.sep.y 			= display.contentHeight*0.55
 
@@ -892,23 +892,23 @@ function scene:openRewards2()
     --   multiLineText.anchorY 			= 0.5
     --	multiLineText.x = display.contentWidth*0.9
     --	multiLineText.y = display.contentHeight*0.55
-    --	hud.popup:insert(multiLineText)         
+    --	popup:insert(multiLineText)         
 
     -------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto4.png")
+    hud.picto 			= display.newImage(popup, "assets/images/hud/InstantTicket_Picto4.png")
     hud.picto.x 		= display.contentWidth*0.2
     hud.picto.y 		= display.contentHeight*0.65
 
-    hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
+    hud.sep 				= display.newImageRect(popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.1, display.contentHeight*0.0015)
     hud.sep.x 			= display.contentWidth*0.34
     hud.sep.y 			= display.contentHeight*0.65
 
-    hud.ticketValue 	= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Rond2.png")
+    hud.ticketValue 	= display.newImage(popup, "assets/images/hud/InstantTicket_Rond2.png")
     hud.ticketValue.x = display.contentWidth*0.5
     hud.ticketValue.y = display.contentHeight*0.65
 
-    hud.sep 				= display.newImageRect(hud.popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.17, display.contentHeight*0.0015)
+    hud.sep 				= display.newImageRect(popup, "assets/images/icons/separateur.horizontal.png", display.contentWidth*0.17, display.contentHeight*0.0015)
     hud.sep.x 			= display.contentWidth*0.66
     hud.sep.y 			= display.contentHeight*0.65
 
@@ -926,16 +926,16 @@ function scene:openRewards2()
     --   multiLineText.anchorY 			= 0.5
     --	multiLineText.x = display.contentWidth*0.9
     --	multiLineText.y = display.contentHeight*0.65
-    --	hud.popup:insert(multiLineText)         
+    --	popup:insert(multiLineText)         
 
     --------------------------
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_RondALL.png")
+    hud.picto 			= display.newImage(popup, "assets/images/hud/InstantTicket_RondALL.png")
     hud.picto.x 		= display.contentWidth*0.3
     hud.picto.y 		= display.contentHeight*0.75
 
     hud.equals = viewManager.newText({
-        parent 			= hud.popup,
+        parent 			= popup,
         text 				= "= 1", 
         fontSize			= 70,  
         x 					= display.contentWidth * 0.5,
@@ -944,18 +944,18 @@ function scene:openRewards2()
 
     utils.setGreen(hud.equals)
 
-    hud.picto 			= display.newImage(hud.popup, "assets/images/hud/InstantTicket_Picto5.png")
+    hud.picto 			= display.newImage(popup, "assets/images/hud/InstantTicket_Picto5.png")
     hud.picto.x 		= display.contentWidth*0.7
     hud.picto.y 		= display.contentHeight*0.75
 
     --------------------------
 
-    hud.sep 			= display.newImage(hud.popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		= display.contentWidth*0.5
     hud.sep.y 		= display.contentHeight*0.83
 
     hud.next = viewManager.newText({
-        parent 			= hud.popup,
+        parent 			= popup,
         text 				= "<  " .. T "PREVIOUS", 
         fontSize			= 49,  
         x 					= display.contentWidth * 0.3,
@@ -966,11 +966,11 @@ function scene:openRewards2()
 
     utils.onTouch(hud.next, function() self:openRewards1() end)
 
-    hud.popup.close 				= display.newImage( hud.popup, I "popup.Bt_close.png")
-    hud.popup.close.x 			= display.contentWidth*0.75
-    hud.popup.close.y 			= display.contentHeight*0.895
+    popup.close 				= display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x 			= display.contentWidth*0.75
+    popup.close.y 			= display.contentHeight*0.895
 
-    utils.onTouch(hud.popup.close, function() viewManager.closePopup() end)
+    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
 end
 
