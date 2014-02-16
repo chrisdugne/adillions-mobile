@@ -141,12 +141,6 @@ end
 
 function closePopup(popup, now, action)
 
-    print("-----")
-    print(popup)
-    print(now)
-    print(action)
-    print("-----")
-    
     if(popup) then
         display.remove(popup.close)
         transition.cancel(popup)
@@ -171,6 +165,78 @@ function closePopup(popup, now, action)
 
     end
 
+end
+
+------------------------------------------------------------------
+
+function closePopin(now, action)
+
+    if(hud.popin) then
+        display.remove(hud.popin.close)
+        transition.cancel(hud.popin)
+
+        if(not now) then
+            transition.to(hud.popin, {
+                time        = 250, 
+                y           = display.contentHeight * 3, 
+                onComplete  = function()
+                    utils.emptyGroup(popin)
+                    if(action ~= nil) then
+                        action()
+                    end
+                end
+            })
+        else
+            utils.emptyGroup(popin)
+            if(action ~= nil) then
+                action()
+            end
+        end
+
+    end
+    
+end
+
+------------------------------------------------------------------
+
+function showPopin()
+
+    closePopin()
+    hud.popin = display.newGroup()
+    hud.popin.anchorX = 0
+    hud.popin.anchorY = 0
+
+    hud.popin.popinRect = display.newImageRect( hud.popin, "assets/images/menus/popin.bg.png", display.contentWidth, display.contentHeight*0.4)
+    hud.popin.popinRect.x = 0 
+    hud.popin.popinRect.y = 0
+    hud.popin:insert(hud.popin.popinRect)
+    
+    hud.popin.touchBack = drawBorder( hud.popin, 
+        0, 0, 
+        display.contentWidth, display.contentHeight,
+        50/255,50/255,50/255
+    )  
+    hud.popin.touchBack.x      = 0
+    hud.popin.touchBack.y      = -display.contentHeight*0.7
+    hud.popin.touchBack.alpha  = 0.01
+    hud.popin:insert(hud.popin.touchBack)
+    
+    hud.popin.x = display.contentWidth * 0.5
+    hud.popin.y = display.contentHeight * 1.5
+    hud.popin:toFront()
+    
+    transition.to(hud.popin, { time = 350, y = display.contentHeight*0.8 } )
+
+    utils.onTap(hud.popin.touchBack, function() 
+        closePopin() 
+        return false
+    end)
+
+    utils.onTap(hud.popin.popinRect, function() 
+        closePopin() 
+        return true 
+    end)
+    
 end
 
 ------------------------------------------------------------------
@@ -206,12 +272,12 @@ function showPopup(height, square)
     popup:toFront()
 
     if(square) then
-        utils.onTap(backGrey, function()end)
+        utils.onTap(backGrey, function() return true end)
     else
-        utils.onTap(backGrey, function() closePopup(popup) end)
+        utils.onTap(backGrey, function() closePopup(popup) return true end)
     end
     
-    utils.onTap(popupRect, function()end)
+    utils.onTap(popupRect, function() return true end)
     
     return popup
 end

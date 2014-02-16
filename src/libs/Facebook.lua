@@ -256,6 +256,8 @@ end
 function checkThemeLiked()
 
 	print("=========> checkThemeLiked")
+	userManager.user.themeLiked = false
+	
 	if(GLOBALS.savedData.facebookAccessToken) then
 
 		local theme = lotteryManager.nextLottery.theme
@@ -284,6 +286,7 @@ function checkThemeLiked()
 				print("theme Not liked")
 				showLikeThemeButton()
 			else
+            	userManager.user.themeLiked = true
 				print("themeAlreadyLiked")
 			end
 		end)
@@ -303,12 +306,12 @@ function likeTheme()
 
 	local locale			= facebook.data.locale
 
-	local themeURL =  SERVER_OG_URL .. 'theme'
-	.. '?title=' 			.. theme.title
-	.. '&uid=' 				.. theme.uid
-	.. '&description=' 	.. theme.description
-	.. '&imageURL='		.. theme.image 
-	.. '&locale='			.. locale
+	local themeURL =  SERVER_OG_URL        .. 'theme'
+                	.. '?title='           .. theme.title
+                	.. '&uid=' 	           .. theme.uid
+                	.. '&description='     .. theme.description
+                	.. '&imageURL='        .. theme.image 
+                	.. '&locale='          .. locale
 
 	themeURL = utils.urlEncode(themeURL)
 
@@ -323,10 +326,8 @@ function likeTheme()
 		print("--- false")
 		utils.tprint(response)
 		if(response.id) then
-			viewManager.showPoints(NB_POINTS_PER_THEME_LIKED)
-			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_THEME_LIKED
-			userManager:updatePlayer()
---			userManager:checkIdlePoints() ? pas besoin ici ?
+            userManager.user.themeLiked = true
+		    userManager:giftInstants(NB_INSTANTS_PER_THEME_LIKED)
 		elseif(response.error.code == 200) then
 			facebook.reloginDone = function() facebook.checkThemeLiked() end
 			coronaFacebook.login( FACEBOOK_APP_ID, askPermissionListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )   			

@@ -978,7 +978,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:notifyPrizes(next)
-    if(self.user.notifications.prizes == 110) then
+    if(self.user.notifications.prizes == 0) then
         next()
     else
         local totalPrice = ""
@@ -1051,7 +1051,7 @@ end
 
 function UserManager:notifyStocks(next)
 
-    if(self.user.notifications.stocks == 110) then
+    if(self.user.notifications.stocks == 0) then
         next()
     else
         ----------------------------------------
@@ -1109,9 +1109,19 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function UserManager:giftInstants(nbInstants)
+    self.user.idlePoints = self.user.idlePoints + nbInstants
+    
+    self:notifyInstants(function()
+        self:updatePlayer()
+    end)
+end
+
+-----------------------------------------------------------------------------------------
+
 function UserManager:notifyInstants(next)
 
-    if(self.user.notifications.instants + self.user.idlePoints > -1) then
+    if(self.user.notifications.instants + self.user.idlePoints > 0) then
 
         ----------------------------------------
 
@@ -1272,7 +1282,10 @@ function UserManager:showStatus()
     popup.close.x 			= display.contentWidth*0.88
     popup.close.y 			= display.contentHeight*0.09
 
-    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
+    utils.onTouch(popup.close, function() 
+        viewManager.closePopin()
+        viewManager.closePopup(popup) 
+    end)
 
 end
 

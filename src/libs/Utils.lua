@@ -57,9 +57,10 @@ end
 function onTap(object, action)
 	object:addEventListener	("touch", function(event)
 		if(event.phase == "began") then
-			action() 
+			return action()
+		else 
+    		return true
 		end
-		return true
 	end)
 end
 
