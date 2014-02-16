@@ -978,7 +978,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:notifyPrizes(next)
-    if(self.user.notifications.prizes == 0) then
+    if(self.user.notifications.prizes == 110) then
         next()
     else
         local totalPrice = ""
@@ -990,7 +990,7 @@ function UserManager:notifyPrizes(next)
 
         ----------------------------------------
 
-        viewManager.showPopup(display.contentWidth*0.95)
+        local popup = viewManager.showPopup(display.contentWidth*0.95, true)
         
         ----------------------------------------
     
@@ -1036,11 +1036,13 @@ function UserManager:notifyPrizes(next)
 
         ---------------------------------------------------------------
 
-        hud.close 				= display.newImage( popup, "assets/images/hud/CroixClose.png")
-        hud.close.x 			= display.contentWidth*0.87
-        hud.close.y 			= display.contentHeight*0.28
+        popup.close 			= display.newImage( popup, "assets/images/hud/CroixClose.png")
+        popup.close.x 			= display.contentWidth*0.87
+        popup.close.y 			= display.contentHeight*0.28
 
-        utils.onTouch(hud.close, next)
+        utils.onTouch(popup.close, function()
+            viewManager.closePopup(popup, true, next)
+        end)
 
     end
 end
@@ -1049,12 +1051,12 @@ end
 
 function UserManager:notifyStocks(next)
 
-    if(self.user.notifications.stocks == 0) then
+    if(self.user.notifications.stocks == 110) then
         next()
     else
         ----------------------------------------
 
-        viewManager.showPopup(display.contentWidth*0.95)
+        local popup = viewManager.showPopup(display.contentWidth*0.95, true)
 
         ----------------------------------------
     
@@ -1096,12 +1098,11 @@ function UserManager:notifyStocks(next)
         popup.close.x 			= display.contentWidth*0.5
         popup.close.y 			= display.contentHeight*0.7
 
-        utils.onTouch(popup.close, next)
+        utils.onTouch(popup.close, function()
+            viewManager.closePopup(popup, true, next)
+        end)
         
         ----------------------------------------
-        
-        self.user.availableTickets = self.user.availableTickets + self.user.notifications.stocks
-        self.userHasReceivedBonus = true
         
     end
 end
@@ -1110,11 +1111,11 @@ end
 
 function UserManager:notifyInstants(next)
 
-    if(self.user.notifications.instants + self.user.idlePoints > 0) then
+    if(self.user.notifications.instants + self.user.idlePoints > -1) then
 
         ----------------------------------------
 
-        viewManager.showPopup(display.contentWidth*0.95)
+        local popup = viewManager.showPopup(display.contentWidth*0.95, true)
 
         ----------------------------------------
     
@@ -1146,21 +1147,21 @@ function UserManager:notifyInstants(next)
             y 				= display.contentHeight*0.52,
         })
 
-        popup.iconTicket 		= display.newImage( popup, "assets/images/icons/notification/instants.popup.png")
-        popup.iconTicket.x 		= display.contentWidth*0.57
-        popup.iconTicket.y 		= display.contentHeight*0.53
+        popup.iconTicket 	= display.newImage( popup, "assets/images/icons/notification/instants.popup.png")
+        popup.iconTicket.x 	= display.contentWidth*0.57
+        popup.iconTicket.y 	= display.contentHeight*0.53
 
         --------------------------
 
-        popup.close 			= display.newImage( popup, I "popup.Bt_close.png")
-        popup.close.x 			= display.contentWidth*0.5
-        popup.close.y 			= display.contentHeight*0.7
+        popup.close 		= display.newImage( popup, I "popup.Bt_close.png")
+        popup.close.x 		= display.contentWidth*0.5
+        popup.close.y 		= display.contentHeight*0.7
 
         utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
         
         ----------------------------------------
 
-        self.user.extraTickets      = self.user.extraTickets + self.user.notifications.instants + self.user.idlePoints
+        self.user.extraTickets      = self.user.extraTickets + self.user.idlePoints
         self.user.idlePoints        = 0
         self.userHasReceivedBonus   = true
         
@@ -1175,7 +1176,7 @@ function UserManager:showStatus()
     local popup = viewManager.showPopup()
     
     ----------------------------
-    --
+    
     popup.congratz 			= display.newImage( popup, I "title.status.png")  
     popup.congratz.x 		= display.contentWidth*0.5
     popup.congratz.y		= display.contentHeight*0.15
@@ -1220,7 +1221,7 @@ function UserManager:showStatus()
     popup.more.y 			= display.contentHeight*0.47
 
     utils.onTouch(popup.more, function() 
-        viewManager.closePopup(popup) 
+        shareManager:moreTickets() 
     end)
 
     --------------------------
@@ -1262,7 +1263,7 @@ function UserManager:showStatus()
     popup.more.y 			= display.contentHeight*0.84
 
     utils.onTouch(popup.more, function() 
-        viewManager.closePopup(popup) 
+        shareManager:inviteForInstants() 
     end)
 
     --------------------------

@@ -6,8 +6,7 @@ ShareManager = {}
 
 function ShareManager:new()  
 
-	local object = {
-	}
+	local object = {}
 
 	setmetatable(object, { __index = ShareManager })
 	return object
@@ -15,6 +14,70 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function ShareManager:moreTickets()
+
+    -----------------------------------
+
+    local popup = viewManager.showPopup(display.contentHeight*0.5)
+    analytics.event("Social", "popupMoreTickets")
+     
+    popup.email     = display.newImage( popup, I "stock.left.1.png")  
+    popup.email.x   = display.contentWidth*0.3
+    popup.email.y   = display.contentHeight*0.4
+     
+    popup.email     = display.newImage( popup, I "stock.left.2.png")  
+    popup.email.x   = display.contentWidth*0.7
+    popup.email.y   = display.contentHeight*0.4
+     
+    popup.email     = display.newImage( popup, I "stock.left.3.png")  
+    popup.email.x   = display.contentWidth*0.5
+    popup.email.y   = display.contentHeight*0.62
+     
+    ----------------------------------------------------------------------------------------------------
+    
+end
+
+-----------------------------------------------------------------------------------------
+
+function ShareManager:inviteForInstants()
+
+    -----------------------------------
+
+    local popup = viewManager.showPopup(display.contentHeight*0.8)
+    analytics.event("Social", "popupInviteForInstants")
+     
+    popup.email     = display.newImage( popup, I "stock.test.1.png")  
+    popup.email.x   = display.contentWidth*0.5
+    popup.email.y   = display.contentHeight*0.3
+     
+    popup.email     = display.newImage( popup, I "stock.test.2.png")  
+    popup.email.x   = display.contentWidth*0.5
+    popup.email.y   = display.contentHeight*0.4
+     
+    popup.email     = display.newImage( popup, I "stock.test.3.png")  
+    popup.email.x   = display.contentWidth*0.5
+    popup.email.y   = display.contentHeight*0.5
+     
+    ----------------------------------------------------------------------------------------------------
+    
+end
+
+-----------------------------------------------------------------------------------------
+
+function ShareManager:shareForInstants()
+
+    -----------------------------------
+
+    local popup = viewManager.showPopup(display.contentHeight*0.8)
+    analytics.event("Social", "popupShareForInstants")
+     
+    ----------------------------------------------------------------------------------------------------
+    
+end
+
+-----------------------------------------------------------------------------------------
+
+--- DEPRECATED
 function ShareManager:share()
 
 	-----------------------------------
@@ -117,6 +180,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
+--- DEPRECATED
 function ShareManager:invite(next)
 
 	----------------------------------------------------------------------------------------------------
@@ -136,13 +200,13 @@ function ShareManager:invite(next)
 	
 	popup.multiLineText = display.newText({
 		parent	= popup,
-		text 		= T "Earn Instant Tickets and increase the jackpot",  
+		text 	= T "Earn Instant Tickets and increase the jackpot",  
 		width 	= display.contentWidth*0.6,  
 		height 	= display.contentHeight*0.25,  
-		x 			= display.contentWidth*0.5,
-		y 			= display.contentHeight*0.5,
-		font 		= FONT, 
-		fontSize = 34,
+		x 		= display.contentWidth*0.5,
+		y 		= display.contentHeight*0.5,
+		font 	= FONT, 
+		fontSize= 34,
 		align 	= "center",
 	})
 	
@@ -150,17 +214,17 @@ function ShareManager:invite(next)
 
 	----------------------------------------------------------------------------------------------------
 
-	popup.sms 		= display.newImage( popup, I "popup.Btsms.png")  
-	popup.sms.x 	= display.contentWidth*0.5
+	popup.sms 	= display.newImage( popup, I "popup.Btsms.png")  
+	popup.sms.x = display.contentWidth*0.5
 	popup.sms.y	= display.contentHeight*0.52
 
 	utils.onTouch(popup.sms, function() self:sms() end) 
 	
 	----------------------------------------------------------------------------------------------------
 
-	popup.email 		= display.newImage( popup, I "popup.Btemail.png")  
+	popup.email 	= display.newImage( popup, I "popup.Btemail.png")  
 	popup.email.x 	= display.contentWidth*0.5
-	popup.email.y		= display.contentHeight*0.66
+	popup.email.y	= display.contentHeight*0.66
 
 	utils.onTouch(popup.email, function() self:email() end) 
 
@@ -168,8 +232,8 @@ function ShareManager:invite(next)
 
 	if(GLOBALS.savedData.facebookAccessToken) then
 		popup.facebookShare 		= display.newImage( popup, I "popup.facebook.invite.png")  
-   	popup.facebookShare.x 		= display.contentWidth*0.5
-   	popup.facebookShare.y		= display.contentHeight*0.8
+       	popup.facebookShare.x 		= display.contentWidth*0.5
+       	popup.facebookShare.y		= display.contentHeight*0.8
    
 		utils.onTouch(popup.facebookShare, function() 
    		router.openInviteFriends(next)
@@ -178,8 +242,8 @@ function ShareManager:invite(next)
 		
 	else
 		popup.facebookConnect 		= display.newImage( popup, I "popup.facebook.connect.png")  
-   	popup.facebookConnect.x 	= display.contentWidth*0.5
-   	popup.facebookConnect.y	= display.contentHeight*0.8
+       	popup.facebookConnect.x 	= display.contentWidth*0.5
+       	popup.facebookConnect.y	= display.contentHeight*0.8
    
 		utils.onTouch(popup.facebookConnect, function() 
 			facebook.connect(function()
@@ -192,14 +256,13 @@ function ShareManager:invite(next)
 
 	----------------------------------------------------------------------------------------------------
 	
-	popup.close 				= display.newImage( popup, "assets/images/hud/CroixClose.png")
+	popup.close 			= display.newImage( popup, "assets/images/hud/CroixClose.png")
 	popup.close.x 			= display.contentWidth*0.89
 	popup.close.y 			= display.contentHeight*0.085
 	
 	utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 	
 end
-
 
 -----------------------------------------------------------------------------------------
 
@@ -212,12 +275,12 @@ function ShareManager:noMoreTickets()
 	----------------------------------------------------------------------------------------------------
 	
 	popup.icon 			= display.newImage( popup, "assets/images/icons/PictomaxTicket.png")
-	popup.icon.x 			= display.contentWidth*0.5
-	popup.icon.y 			= display.contentHeight*0.2
+	popup.icon.x 		= display.contentWidth*0.5
+	popup.icon.y 		= display.contentHeight*0.2
 
 	popup.icon 			= display.newImage( popup, I "Sorry.png")
-	popup.icon.x 			= display.contentWidth*0.5
-	popup.icon.y 			= display.contentHeight*0.3
+	popup.icon.x 		= display.contentWidth*0.5
+	popup.icon.y 		= display.contentHeight*0.3
 	
 	----------------------------------------------------------------------------------------------------
 

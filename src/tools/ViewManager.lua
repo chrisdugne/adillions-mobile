@@ -141,6 +141,12 @@ end
 
 function closePopup(popup, now, action)
 
+    print("-----")
+    print(popup)
+    print(now)
+    print(action)
+    print("-----")
+    
     if(popup) then
         display.remove(popup.close)
         transition.cancel(popup)
@@ -151,14 +157,14 @@ function closePopup(popup, now, action)
                 alpha       = 0, 
                 onComplete  = function()
                     utils.emptyGroup(popup)
-                    if(action) then
+                    if(action ~= nil) then
                         action()
                     end
                 end
             })
         else
             utils.emptyGroup(popup)
-            if(action) then
+            if(action ~= nil) then
                 action()
             end
         end
@@ -169,12 +175,16 @@ end
 
 ------------------------------------------------------------------
 
-function showPopup(height)
+--- no parameter : display.contentWidth*0.95, display.contentHeight*0.95
+--  only height  : square : height, height
+--  note : square grey BG doesnt close
+function showPopup(height, square)
 
     local width = display.contentWidth*0.95
+    
     if(not height) then
         height = display.contentHeight*0.95
-    else
+    elseif(square) then
         width = height
     end
 
@@ -195,7 +205,12 @@ function showPopup(height)
 
     popup:toFront()
 
-    utils.onTap(backGrey, function() closePopup(popup) end)
+    if(square) then
+        utils.onTap(backGrey, function()end)
+    else
+        utils.onTap(backGrey, function() closePopup(popup) end)
+    end
+    
     utils.onTap(popupRect, function()end)
     
     return popup
