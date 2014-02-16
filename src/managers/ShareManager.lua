@@ -22,6 +22,18 @@ function ShareManager:moreTickets()
     analytics.event("Social", "popinMoreTickets")
 
     -----------------------------------
+    
+    hud.popin.title         = display.newImage( hud.popin, I "stock.title.png")  
+    hud.popin.title.x       = - display.contentWidth * 0.485
+    hud.popin.title.y       = display.contentHeight* -0.125
+    hud.popin.title.anchorX = 0
+
+    hud.popin.what          = display.newImage( hud.popin, I "what.png")  
+    hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
+    hud.popin.what.y        = display.contentHeight* -0.125
+    hud.popin.what.anchorX  = 0
+
+    -----------------------------------
     -- FB BUTTON
     -----------------------------------
 
@@ -83,7 +95,21 @@ function ShareManager:inviteForInstants()
     -----------------------------------
 
     viewManager.showPopin()
-    analytics.event("Social", "popinMoreTickets")
+    analytics.event("Social", "popinInviteForInstants")
+
+    -----------------------------------
+    
+    hud.popin.title         = display.newImage( hud.popin, I "instant.title.png")  
+    hud.popin.title.x       = - display.contentWidth * 0.485
+    hud.popin.title.y       = display.contentHeight* -0.125
+    hud.popin.title.anchorX = 0
+
+    hud.popin.what          = display.newImage( hud.popin, I "what.png")  
+    hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
+    hud.popin.what.y        = display.contentHeight* -0.125
+    hud.popin.what.anchorX  = 0
+    
+    -----------------------------------
 
     hud.popin.email     = display.newImage( hud.popin, "assets/images/test/test1.popin.png")  
     hud.popin.email.x   = 0
@@ -105,7 +131,7 @@ function ShareManager:shareForInstants()
     -----------------------------------
 
     viewManager.showPopin()
-    analytics.event("Social", "popinMoreTickets")
+    analytics.event("Social", "popinShareForInstants")
 
     hud.popin.email     = display.newImage( hud.popin, "assets/images/test/test1.popin.png")  
     hud.popin.email.x   = 0

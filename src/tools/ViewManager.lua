@@ -200,16 +200,31 @@ end
 ------------------------------------------------------------------
 
 function showPopin()
-
+    
+    local height = display.contentHeight*0.3
+    
+    ----------------------------------------------------------
+    
     closePopin()
     hud.popin = display.newGroup()
     hud.popin.anchorX = 0
     hud.popin.anchorY = 0
 
-    hud.popin.popinRect = display.newImageRect( hud.popin, "assets/images/menus/popin.bg.png", display.contentWidth, display.contentHeight*0.4)
+    ----------------------------------------------------------
+    
+    hud.popin.popinRect = display.newImageRect( hud.popin, "assets/images/menus/popin.bg.png", display.contentWidth, height)
     hud.popin.popinRect.x = 0 
     hud.popin.popinRect.y = 0
     hud.popin:insert(hud.popin.popinRect)
+    
+    ----------------------------------------------------------
+    -- header
+    
+    hud.popin.closedown     = display.newImage( hud.popin, I "closedown.png")  
+    hud.popin.closedown.x   = display.contentWidth * 0.45
+    hud.popin.closedown.y   = display.contentHeight* -0.125
+
+    ----------------------------------------------------------
     
     hud.popin.touchBack = drawBorder( hud.popin, 
         0, 0, 
@@ -221,12 +236,18 @@ function showPopin()
     hud.popin.touchBack.alpha  = 0.01
     hud.popin:insert(hud.popin.touchBack)
     
+    ----------------------------------------------------------
+
     hud.popin.x = display.contentWidth * 0.5
     hud.popin.y = display.contentHeight * 1.5
     hud.popin:toFront()
     
-    transition.to(hud.popin, { time = 350, y = display.contentHeight*0.8 } )
+    ----------------------------------------------------------
+    
+    transition.to(hud.popin, { time = 350, y = display.contentHeight - height/2 } )
 
+    ----------------------------------------------------------
+    
     utils.onTap(hud.popin.touchBack, function() 
         closePopin() 
         return false
@@ -261,6 +282,7 @@ function showPopup(height, square)
         display.contentWidth+50, display.viewableContentHeight+50,
         50/255,50/255,50/255
     )  
+    
     backGrey.x 		= display.viewableContentWidth*0.5 
     backGrey.y 		= display.viewableContentHeight*0.5
     backGrey.alpha	= 0.85
