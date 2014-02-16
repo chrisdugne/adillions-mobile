@@ -24,10 +24,10 @@ function scene:refreshScene()
 
 	------------------
 
-	local optionsTop 		= 1
+	local optionsTop 	= 1
 
-	self.top 				= HEADER_HEIGHT + 70
-	self.yGap 				= 120
+	self.top 			= HEADER_HEIGHT + 70
+	self.yGap 			= 120
 	self.fontSizeLeft 	= 27
 	self.fontSizeRight 	= 29
 
@@ -60,40 +60,40 @@ function scene:refreshScene()
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Notification 48h before the next draw",         
-		x 					= self.column1,
-		y 					= self.top + self.yGap*(optionsTop-0.5),
+		text 			= T "Notification 48h before the next draw",         
+		x 				= self.column1,
+		y 				= self.top + self.yGap*(optionsTop-0.5),
 		fontSize 		= self.fontSizeLeft,
-      anchorX 			= 0,
-      anchorY 			= 0.5,
+        anchorX 		= 0,
+        anchorY 		= 0.5,
 	})
 	
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= "ewqrtfore the next draw",         
-		x 					= self.column2,
-		y 					= self.top + self.yGap*(optionsTop),
+		text 			= "ewqrtfore the next draw",         
+		x 				= self.column2,
+		y 				= self.top + self.yGap*(optionsTop),
 		fontSize 		= self.fontSizeLeft,
-      anchorX 			= 0,
-      anchorY 			= 0.5,
+        anchorX 		= 0,
+        anchorY 		= 0.5,
 	})
 
 	local beforeDrawSwitch = widget.newSwitch
 	{
-		left 							= display.contentWidth*0.8,
-		top 							= self.top + self.yGap*(optionsTop-0.55),
-		initialSwitchState	 	= GLOBALS.options.notificationBeforeDraw,
-		onPress 						= beforeDrawSwitchListener,
-		onRelease 					= beforeDrawSwitchListener,
+		left                      = display.contentWidth*0.8,
+		top                       = self.top + self.yGap*(optionsTop-0.55),
+		initialSwitchState        = GLOBALS.options.notificationBeforeDraw,
+		onPress                   = beforeDrawSwitchListener,
+		onRelease                 = beforeDrawSwitchListener,
 	}
 	
 	beforeDrawSwitch:scale(2,2)	
 
 	viewManager.newText({
 		parent 			= hud.board, 
-		text 				= T "Notification for the results",         
-		x 					= self.column1,
-		y 					= self.top + self.yGap*(optionsTop+0.5),
+		text 			= T "Notification for the results",         
+		x 				= self.column1,
+		y 				= self.top + self.yGap*(optionsTop+0.5),
 		fontSize 		= self.fontSizeLeft,
       anchorX 			= 0,
       anchorY 			= 0.5,
@@ -102,14 +102,14 @@ function scene:refreshScene()
 
 	local afterDrawSwitch = widget.newSwitch
 	{
-		left 							= display.contentWidth*0.8,
-		top 							= self.top + self.yGap*(optionsTop+0.45),
+		left 					= display.contentWidth*0.8,
+		top 					= self.top + self.yGap*(optionsTop+0.45),
 		initialSwitchState	 	= GLOBALS.options.notificationAfterDraw,
-		onPress 						= afterDrawSwitchListener,
-		onRelease 					= afterDrawSwitchListener,
+		onPress 				= afterDrawSwitchListener,
+		onRelease 				= afterDrawSwitchListener,
 	}
 
-	afterDrawSwitch:scale(2,2)	
+	afterDrawSwitch:scale(3,3)	
 
 	hud.board:insert( beforeDrawSwitch )	
 	hud.board:insert( afterDrawSwitch )	

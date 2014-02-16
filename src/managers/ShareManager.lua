@@ -25,13 +25,21 @@ function ShareManager:moreTickets()
     
     hud.popin.title         = display.newImage( hud.popin, I "stock.title.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
-    hud.popin.title.y       = display.contentHeight* -0.125
+    hud.popin.title.y       = hud.popin.headerMiddle
     hud.popin.title.anchorX = 0
 
     hud.popin.what          = display.newImage( hud.popin, I "what.png")  
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
-    hud.popin.what.y        = display.contentHeight* -0.125
+    hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
+
+    hud.popin.email         = display.newImage( hud.popin, I "stock.facebook.1.png")  
+    hud.popin.email.x       = display.contentWidth * -0.2
+    hud.popin.email.y       = hud.popin.contentMiddle
+
+    hud.popin.email         = display.newImage( hud.popin, I "stock.twitter.4.png")  
+    hud.popin.email.x       = display.contentWidth * 0.2
+    hud.popin.email.y       = hud.popin.contentMiddle
 
     -----------------------------------
     -- FB BUTTON
@@ -101,23 +109,23 @@ function ShareManager:inviteForInstants()
     
     hud.popin.title         = display.newImage( hud.popin, I "instant.title.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
-    hud.popin.title.y       = display.contentHeight* -0.125
+    hud.popin.title.y       = hud.popin.headerMiddle
     hud.popin.title.anchorX = 0
 
     hud.popin.what          = display.newImage( hud.popin, I "what.png")  
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
-    hud.popin.what.y        = display.contentHeight* -0.125
+    hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
     
     -----------------------------------
 
-    hud.popin.email     = display.newImage( hud.popin, "assets/images/test/test1.popin.png")  
-    hud.popin.email.x   = 0
-    hud.popin.email.y   = display.contentHeight* -0.085
+    hud.popin.email         = display.newImage( hud.popin, I "stock.facebook.1.png")  
+    hud.popin.email.x       = display.contentWidth * -0.2
+    hud.popin.email.y       = hud.popin.contentMiddle
 
-    hud.popin.email     = display.newImage( hud.popin, "assets/images/test/test2.popin.png")  
-    hud.popin.email.x   = 0
-    hud.popin.email.y   = display.contentHeight* 0.085
+    hud.popin.email         = display.newImage( hud.popin, I "stock.twitter.4.png")  
+    hud.popin.email.x       = display.contentWidth * 0.2
+    hud.popin.email.y       = hud.popin.contentMiddle
 
     ----------------------------------------------------------------------------------------------------
 
@@ -133,13 +141,23 @@ function ShareManager:shareForInstants()
     viewManager.showPopin()
     analytics.event("Social", "popinShareForInstants")
 
-    hud.popin.email     = display.newImage( hud.popin, "assets/images/test/test1.popin.png")  
-    hud.popin.email.x   = 0
-    hud.popin.email.y   = display.contentHeight* -0.085
+    hud.popin.title         = display.newImage( hud.popin, I "stock.title.png")  
+    hud.popin.title.x       = - display.contentWidth * 0.485
+    hud.popin.title.y       = hud.popin.headerMiddle
+    hud.popin.title.anchorX = 0
 
-    hud.popin.email     = display.newImage( hud.popin, "assets/images/test/test2.popin.png")  
-    hud.popin.email.x   = 0
-    hud.popin.email.y   = display.contentHeight* 0.085
+    hud.popin.what          = display.newImage( hud.popin, I "what.png")  
+    hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
+    hud.popin.what.y        = hud.popin.headerMiddle
+    hud.popin.what.anchorX  = 0
+
+    hud.popin.email         = display.newImage( hud.popin, I "stock.facebook.1.png")  
+    hud.popin.email.x       = display.contentWidth * -0.2
+    hud.popin.email.y       = hud.popin.contentMiddle
+
+    hud.popin.email         = display.newImage( hud.popin, I "stock.twitter.4.png")  
+    hud.popin.email.x       = display.contentWidth * 0.2
+    hud.popin.email.y       = hud.popin.contentMiddle
 
     ----------------------------------------------------------------------------------------------------
 

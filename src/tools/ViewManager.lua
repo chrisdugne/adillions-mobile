@@ -201,7 +201,7 @@ end
 
 function showPopin()
     
-    local height = display.contentHeight*0.3
+    local height = display.contentHeight*0.35
     
     ----------------------------------------------------------
     
@@ -209,6 +209,8 @@ function showPopin()
     hud.popin = display.newGroup()
     hud.popin.anchorX = 0
     hud.popin.anchorY = 0
+    hud.popin.headerMiddle = -height/2.4
+    hud.popin.contentMiddle = height/12
 
     ----------------------------------------------------------
     
@@ -222,7 +224,7 @@ function showPopin()
     
     hud.popin.closedown     = display.newImage( hud.popin, I "closedown.png")  
     hud.popin.closedown.x   = display.contentWidth * 0.45
-    hud.popin.closedown.y   = display.contentHeight* -0.125
+    hud.popin.closedown.y   = hud.popin.headerMiddle
 
     ----------------------------------------------------------
     
@@ -929,7 +931,7 @@ end
 
 function drawTicket(parent, lottery, numbers, x, y)
 
-    local xGap =  display.contentWidth *0.12
+    local xGap = display.contentWidth *0.12
 
     for j = 1,#numbers-1 do
 
