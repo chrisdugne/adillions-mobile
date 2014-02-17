@@ -676,17 +676,21 @@ function scene:openRewards1()
     hud.picto.x 		= display.contentWidth*0.14
     hud.picto.y 		= display.contentHeight*0.15
 
-    hud.title 			= display.newImage(popup, I "moretickets.png")
+    hud.title 			= display.newImage(popup, I "rewards.stock.title.png")
 
     hud.title.anchorX 	= 0
     hud.title.anchorY 	= 0.5
     hud.title.x 		= display.contentWidth*0.22
     hud.title.y 		= display.contentHeight*0.15
 
+    --------------------------
+    
     hud.sep 			= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 	 	    = display.contentWidth*0.5
     hud.sep.y 		    = display.contentHeight*0.2
 
+    --------------------------
+    -- TODO Increase your stock of Tickets 
     --------------------------
 
     for i = 1,6 do
@@ -695,6 +699,19 @@ function scene:openRewards1()
         hud.line.y 			= display.contentHeight*0.17 + display.contentHeight*0.1 *i
     end
 
+
+    --------------------------
+    -- TODO
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "*Only for the next drawing", 
+        fontSize        = 29,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.75,
+        anchorX         = 0,
+    })
+    
     --------------------------
 
     hud.sep 		= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
@@ -741,16 +758,29 @@ function scene:openRewards2()
     hud.picto.x 		= display.contentWidth*0.14
     hud.picto.y 		= display.contentHeight*0.15
 
-    hud.title 			= display.newImage(popup, I "instant.ticket.png")
+    hud.title           = display.newImage(popup, I "rewards.instant.title.png")
     hud.title.anchorX 	= 0
     hud.title.anchorY 	= 0.5
     hud.title.x 		= display.contentWidth*0.22
     hud.title.y 		= display.contentHeight*0.15
 
+    --------------------------
+    
     hud.sep 		    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		    = display.contentWidth*0.5
     hud.sep.y 		    = display.contentHeight*0.2
-
+    
+    --------------------------
+    -- TODO
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "Play right now thanks to Instant Tickets", 
+        fontSize        = 49,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.23,
+        anchorX         = 0,
+    })
+    
     --------------------------
 
     for i = 1,5 do
@@ -783,6 +813,10 @@ function scene:openRewards2()
         self:openRewards1() 
     end)
 
+    --------------------------
+    -- TODO
+--    EN : *For the sponsor and the sponsored user (2 draws min.)
+    --EN : ** Per post (max. 4 Instants per draw)
     --------------------------
 
     hud.next = viewManager.newText({
@@ -827,16 +861,20 @@ function scene:openRewards3()
     hud.picto.x 		= display.contentWidth*0.14
     hud.picto.y 		= display.contentHeight*0.15
 
-    hud.title 			= display.newImage(popup, I "instant.ticket.png")
+    hud.title           = display.newImage(popup, I "rewards.charity.title.png")
     hud.title.anchorX 	= 0
     hud.title.anchorY 	= 0.5
     hud.title.x 		= display.contentWidth*0.22
     hud.title.y 		= display.contentHeight*0.15
 
+    --------------------------
+
     hud.sep 		    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		    = display.contentWidth*0.5
     hud.sep.y 		    = display.contentHeight*0.2
 
+    --------------------------
+    -- TODO The more you play Adillions, the more you contribute to charities
     --------------------------
 
     for i = 1,5 do

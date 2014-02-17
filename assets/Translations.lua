@@ -249,44 +249,32 @@ local translations =
 
 	---POPUP REWARD-----------------------------------------------------------
 
+	["Increase your stock of Tickets"] = {
+		["fr"] = "Augmentez votre stock de Tickets",
+	},
+	
+	["Play right now thanks to Instant Tickets"] = {
+		["fr"] = "Jouez sans attendre grâce aux Tickets Instantanés",
+	},
+	
+	["The more you play Adillions, the more you contribute to charities"] = {
+		["fr"] = "Plus vous jouez à Adillions, plus vous contribuez à financer des oeuvres caritatives",
+	},
+	
+	["*Only for the next drawing"] = {
+		["fr"] = "*Seulement pour le prochain tirage",
+	},
+	
+	["*For the sponsor and the sponsored user (2 draws min.)"] = {
+		["fr"] = "*Pour le parrain et le filleul (2 tirages min.)",
+	},
+	
+	["** Per post (max. 4 Instants per draw)"] = {
+		["fr"] = "**Par post (max. 4 Instantanés par tirage)",
+	},
+	
 	["You have won"] = {
 		["fr"] = "Vous avez gagné",
-	},
-
-	["You have won more tickets for the next drawing"] = {
-		["fr"] = "Vous avez gagné plus de tickets pour le prochain tirage",
-	},
-
-	------
-
-	["Instant Ticket"] = {
-		["fr"] = "Ticket Instantané",
-	},
-
-	["Increase your number of available Tickets for the next draws"] = {
-		["fr"] = "Augmentez votre nombre de Tickets disponibles pour les prochains tirages",
-	},
-
-	["Get Instant Tickets (ad-free Tickets) by earning points"] = {
-		["fr"] = "Obtenez des Tickets Instantanés (tickets sans pub) en gagnant des points",
-	},
-
-	---------
-
-	["+ 1pt / Ticket"] = {
-		["fr"] = "+ 1pt / Ticket",
-	},
-
-	["+ 1pt for the sponsor and the sponsored user"] = {
-		["fr"] = "+ 1pt pour le parrain et le filleul",
-	},
-
-	["+2 pts / post (max 4 pts per draw)"] = {
-		["fr"] = "+2 pts / post (max 4 pts par tirage)",
-	},
-
-	["+2 pts"] = {
-		["fr"] = "+2 pts",
 	},
 
 	---POPUP PRIZE-----------------------------------------------------------
