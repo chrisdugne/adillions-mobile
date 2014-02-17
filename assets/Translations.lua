@@ -424,8 +424,8 @@ local translations =
 		["fr"] = "Contributeur",
 	},
 
-	["Good Samaritan"] = {
-		["fr"] = "Bon Samaritain",
+	["Junior donor"] = {
+		["fr"] = "Donateur junior",
 	},
 
 	["Donor"] = {

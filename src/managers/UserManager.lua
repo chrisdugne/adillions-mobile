@@ -216,7 +216,7 @@ function UserManager:setCharityBonus()
     elseif(charityLevel == DONOR) then
         self.user.perpetualBonusTickets = self.user.perpetualBonusTickets + 2
 
-    elseif(charityLevel == SAMARITAN) then
+    elseif(charityLevel == JUNIOR_DONOR) then
         self.user.perpetualBonusTickets = self.user.perpetualBonusTickets + 1
 
     end
@@ -234,7 +234,7 @@ function UserManager:charityLevel()
         return DONOR
 
     elseif(self.user.totalPlayedTickets     >= 100) then
-        return SAMARITAN
+        return JUNIOR_DONOR
 
     elseif(self.user.totalPlayedTickets     >= 50) then
         return CONTRIBUTOR

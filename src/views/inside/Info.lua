@@ -47,7 +47,7 @@ function scene:refreshScene()
     end)
 
     hud.tutorial 			= display.newImage( hud, I "info.Tutorial.png")  
-    hud.tutorial.x 		= self.column2
+    hud.tutorial.x 		    = self.column2
     hud.tutorial.y			= self.top
 
     utils.onTouch(hud.tutorial, function()
@@ -653,7 +653,7 @@ function scene:openContact()
 
     --------------------------
 
-    popup.close 				= display.newImage( popup, I "popup.Bt_close.png")
+    popup.close 			= display.newImage( popup, I "popup.Bt_close.png")
     popup.close.x 			= display.contentWidth*0.5
     popup.close.y 			= display.contentHeight*0.85
 
@@ -672,15 +672,11 @@ function scene:openRewards1()
 
     --------------------------
 
-    hud.picto 			= display.newImage(popup, "assets/images/icons/Picto_BonusTicket.png")
-    hud.picto.x 		= display.contentWidth*0.14
-    hud.picto.y 		= display.contentHeight*0.15
 
     hud.title 			= display.newImage(popup, I "rewards.stock.title.png")
-
     hud.title.anchorX 	= 0
     hud.title.anchorY 	= 0.5
-    hud.title.x 		= display.contentWidth*0.22
+    hud.title.x 		= display.contentWidth*0.1
     hud.title.y 		= display.contentHeight*0.15
 
     --------------------------
@@ -690,25 +686,32 @@ function scene:openRewards1()
     hud.sep.y 		    = display.contentHeight*0.2
 
     --------------------------
-    -- TODO Increase your stock of Tickets 
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "Increase your stock of Tickets", 
+        fontSize        = 35,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.23,
+        anchorX         = 0,
+    })
+
     --------------------------
 
     for i = 1,6 do
         hud.line 			= display.newImage(popup, I "rewards.stock".. i ..".png")
         hud.line.x 			= display.contentWidth*0.5
-        hud.line.y 			= display.contentHeight*0.17 + display.contentHeight*0.1 *i
+        hud.line.y 			= display.contentHeight*0.215 + display.contentHeight*0.09 *i
     end
 
-
     --------------------------
-    -- TODO
     
     hud.next = viewManager.newText({
         parent          = popup,
         text            = T "*Only for the next drawing", 
         fontSize        = 29,  
         x               = display.contentWidth * 0.1,
-        y               = display.contentHeight*0.75,
+        y               = display.contentHeight*0.82,
         anchorX         = 0,
     })
     
@@ -716,7 +719,7 @@ function scene:openRewards1()
 
     hud.sep 		= display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		= display.contentWidth*0.5
-    hud.sep.y 		= display.contentHeight*0.83
+    hud.sep.y 		= display.contentHeight*0.84
 
     hud.next = viewManager.newText({
         parent 			= popup,
@@ -754,14 +757,10 @@ function scene:openRewards2()
 
     --------------------------
 
-    hud.picto 			= display.newImage(popup, "assets/images/icons/Picto_InstantTicket.png")
-    hud.picto.x 		= display.contentWidth*0.14
-    hud.picto.y 		= display.contentHeight*0.15
-
     hud.title           = display.newImage(popup, I "rewards.instant.title.png")
     hud.title.anchorX 	= 0
     hud.title.anchorY 	= 0.5
-    hud.title.x 		= display.contentWidth*0.22
+    hud.title.x 		= display.contentWidth*0.1
     hud.title.y 		= display.contentHeight*0.15
 
     --------------------------
@@ -771,11 +770,11 @@ function scene:openRewards2()
     hud.sep.y 		    = display.contentHeight*0.2
     
     --------------------------
-    -- TODO
+    
     hud.next = viewManager.newText({
         parent          = popup,
         text            = T "Play right now thanks to Instant Tickets", 
-        fontSize        = 49,  
+        fontSize        = 34,  
         x               = display.contentWidth * 0.1,
         y               = display.contentHeight*0.23,
         anchorX         = 0,
@@ -786,14 +785,14 @@ function scene:openRewards2()
     for i = 1,5 do
         hud.line        = display.newImage(popup, I "rewards.instant".. i ..".png")
         hud.line.x      = display.contentWidth*0.5
-        hud.line.y      = display.contentHeight*0.15 + display.contentHeight*0.12 *i
+        hud.line.y      = display.contentHeight*0.205 + display.contentHeight*0.1 *i
     end
 
     --------------------------
 
     hud.sep 		    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		    = display.contentWidth*0.5
-    hud.sep.y 		    = display.contentHeight*0.83
+    hud.sep.y 		    = display.contentHeight*0.84
 
     --------------------------
     
@@ -801,7 +800,7 @@ function scene:openRewards2()
         parent 			= popup,
         text 			= "<  " .. T "PREVIOUS", 
         fontSize		= 49,  
-        x 				= display.contentWidth * 0.47,
+        x 				= display.contentWidth * 0.5,
         y 				= display.contentHeight*0.895,
         anchorX         = 1,
     })
@@ -814,9 +813,25 @@ function scene:openRewards2()
     end)
 
     --------------------------
-    -- TODO
---    EN : *For the sponsor and the sponsored user (2 draws min.)
-    --EN : ** Per post (max. 4 Instants per draw)
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "*For the sponsor and the sponsored user (2 draws min.)", 
+        fontSize        = 29,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.785,
+        anchorX         = 0,
+    })
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "** Per post (max. 4 Instants per draw)", 
+        fontSize        = 29,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.81,
+        anchorX         = 0,
+    })
+    
     --------------------------
 
     hud.next = viewManager.newText({
@@ -857,14 +872,10 @@ function scene:openRewards3()
 
     --------------------------
 
-    hud.picto 			= display.newImage(popup, "assets/images/icons/Picto_InstantTicket.png")
-    hud.picto.x 		= display.contentWidth*0.14
-    hud.picto.y 		= display.contentHeight*0.15
-
     hud.title           = display.newImage(popup, I "rewards.charity.title.png")
     hud.title.anchorX 	= 0
     hud.title.anchorY 	= 0.5
-    hud.title.x 		= display.contentWidth*0.22
+    hud.title.x 		= display.contentWidth*0.1
     hud.title.y 		= display.contentHeight*0.15
 
     --------------------------
@@ -874,26 +885,38 @@ function scene:openRewards3()
     hud.sep.y 		    = display.contentHeight*0.2
 
     --------------------------
-    -- TODO The more you play Adillions, the more you contribute to charities
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "The more you play Adillions, the more you contribute to charities", 
+        fontSize        = 35,  
+        x               = display.contentWidth  * 0.1,
+        y               = display.contentHeight * 0.24,
+        width           = display.contentWidth  * 0.8,
+        heigth          = display.contentHeight * 0.02,
+        anchorX         = 0,
+        align           = "left"
+    })
+    
     --------------------------
 
     for i = 1,5 do
         hud.line        = display.newImage(popup, I "rewards.charity".. i ..".png")
         hud.line.x      = display.contentWidth*0.5
-        hud.line.y      = display.contentHeight*0.15 + display.contentHeight*0.12 *i
+        hud.line.y      = display.contentHeight*0.22 + display.contentHeight*0.11 *i
     end
 
     --------------------------
 
     hud.sep 		    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x 		    = display.contentWidth*0.5
-    hud.sep.y 		    = display.contentHeight*0.83
+    hud.sep.y 		    = display.contentHeight*0.84
 
     hud.next = viewManager.newText({
         parent 			= popup,
         text 			= "<  " .. T "PREVIOUS", 
         fontSize		= 49,  
-        x               = display.contentWidth * 0.47,
+        x               = display.contentWidth * 0.5,
         y               = display.contentHeight*0.895,
         anchorX         = 1,
     })

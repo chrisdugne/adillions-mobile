@@ -603,27 +603,26 @@ end
 --------------------------------------------------------
 
 function networkConnection()
-	return true
---	 local status
---            
---    local socket = require("socket")
---    local test = socket.tcp()
---    test:settimeout(2000) 
---    
---    -- Note that the test does not work if we put http:// in front
---    local testResult = test:connect("www.google.com", 80)
---     
---    if not(testResult == nil) then
---        print("Internet access is available")
---        status = true
---    else
---        print("Internet access is not available")
---        status = false
---    end
---    
---    test:close()
---    test = nil
---    return status
+	local status
+            
+    local socket = require("socket")
+    local test = socket.tcp()
+    test:settimeout(2000) 
+    
+    -- Note that the test does not work if we put http:// in front
+    local testResult = test:connect("www.google.com", 80)
+     
+    if not(testResult == nil) then
+        print("Internet access is available")
+        status = true
+    else
+        print("Internet access is not available")
+        status = false
+    end
+    
+    test:close()
+    test = nil
+    return status
 end
 
 --------------------------------------------------------
