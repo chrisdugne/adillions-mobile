@@ -235,6 +235,10 @@ local translations =
 
 	---POPUP POINTS HEADER-----------------------------------------------------------
 
+	["Instant Ticket"] = {
+		["fr"] = "Ticket Instantané",
+	},
+
 	["Instant Tickets"] = {
 		["fr"] = "Tickets Instantanés",
 	},

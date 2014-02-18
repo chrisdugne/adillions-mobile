@@ -178,7 +178,7 @@ function closePopin(now, action)
         if(not now) then
             transition.to(hud.popin, {
                 time        = 250, 
-                y           = display.contentHeight * 3, 
+                y           = display.contentHeight*1.2, 
                 onComplete  = function()
                     utils.emptyGroup(popin)
                     if(action ~= nil) then
@@ -241,12 +241,12 @@ function showPopin()
     ----------------------------------------------------------
 
     hud.popin.x = display.contentWidth * 0.5
-    hud.popin.y = display.contentHeight * 1.5
+    hud.popin.y = display.contentHeight * 1.2
     hud.popin:toFront()
     
     ----------------------------------------------------------
     
-    transition.to(hud.popin, { time = 350, y = display.contentHeight - height/2 } )
+    transition.to(hud.popin, { time = 250, y = display.contentHeight - height/2 } )
 
     ----------------------------------------------------------
     

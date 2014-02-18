@@ -32,38 +32,44 @@ function ShareManager:moreTickets()
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
-
-    hud.popin.email         = display.newImage( hud.popin, I "stock.facebook.1.png")  
-    hud.popin.email.x       = display.contentWidth * -0.2
-    hud.popin.email.y       = hud.popin.contentMiddle
-
-    hud.popin.email         = display.newImage( hud.popin, I "stock.twitter.4.png")  
-    hud.popin.email.x       = display.contentWidth * 0.2
-    hud.popin.email.y       = hud.popin.contentMiddle
-
+    
     -----------------------------------
     -- FB BUTTON
     -----------------------------------
+    
+    local actionFacebook    = nil
+    local imageFacebook     = nil
+                 
 
     if(userManager.user.facebookId) then
         -- linked
     
         if(userManager.user.facebookFan) then
             -- fan | button v4
+            imageFacebook   = I "stock.facebook.4.png"
+            actionFacebook  = nil
             
         else
             if(GLOBALS.savedData.facebookAccessToken) then
                 -- pas fan et connecte | button v3
+                imageFacebook = I "stock.facebook.3.png"
 
             else
                 -- pas fan et pas connecte | button v2
+                imageFacebook = I "stock.facebook.2.png"
                 
             end
 
         end
     else
-        -- button v1
-
+        -- button v1 : connect + link
+        imageFacebook = I "stock.facebook.1.png"
+        actionFacebook = function() 
+            facebook.connect(function()
+                router.resetScreen()
+                self:refreshScene()
+            end) 
+        end
     end
 
     -----------------------------------
@@ -93,6 +99,14 @@ function ShareManager:moreTickets()
 
     -----------------------------------
 
+    hud.popin.buttonFacebook         = display.newImage( hud.popin, imageFacebook)  
+    hud.popin.buttonFacebook.x       = display.contentWidth * -0.2
+    hud.popin.buttonFacebook.y       = hud.popin.contentMiddle
+    utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
+
+    hud.popin.buttonTwitter         = display.newImage( hud.popin, I "stock.twitter.4.png")  
+    hud.popin.buttonTwitter.x       = display.contentWidth * 0.2
+    hud.popin.buttonTwitter.y       = hud.popin.contentMiddle
 
 end
 
