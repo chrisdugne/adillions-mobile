@@ -39,7 +39,6 @@ function ShareManager:moreTickets()
     
     local actionFacebook    = nil
     local imageFacebook     = nil
-                 
 
     if(userManager.user.facebookId) then
         -- linked
@@ -51,18 +50,27 @@ function ShareManager:moreTickets()
             
         else
             if(GLOBALS.savedData.facebookAccessToken) then
-                -- pas fan et connecte | button v3
+                -- pas fan et connecte | button v3 : open FB page
                 imageFacebook = I "stock.facebook.3.png"
+                actionFacebook = function()
+                    facebook.openFacebookPage()
+                end
 
             else
-                -- pas fan et pas connecte | button v2
+                -- pas fan et pas connecte | button v2 : connect to enable button
                 imageFacebook = I "stock.facebook.2.png"
+                actionFacebook = function() 
+                    facebook.connect(function()
+                        router.resetScreen()
+                        self:refreshScene()
+                    end) 
+                end
                 
             end
 
         end
     else
-        -- button v1 : connect + link
+        -- button v1 : connect to link
         imageFacebook = I "stock.facebook.1.png"
         actionFacebook = function() 
             facebook.connect(function()
@@ -76,25 +84,53 @@ function ShareManager:moreTickets()
     -- TWITTER BUTTON
     -----------------------------------
 
+    local actionTwitter    = nil
+    local imageTwitter     = nil
+    
     if(userManager.user.twitter) then
         -- linked
     
         if(userManager.user.twitterFan) then
             -- fan | button v4
+            imageTwitter = I "stock.twitter.4.png"
+            actionTwitter = nil
             
         else
             if(twitter.connected) then
-                -- pas fan et connecte | button v3
+            -- pas fan et connecte | button v3
+                imageTwitter = I "stock.twitter.3.png"
+                actionTwitter = function()
+                    native.setActivityIndicator( true )  
+                    twitter.follow(function()
+                        native.setActivityIndicator( false )        
+                        userManager.user.twitterFan = true
+                        router.resetScreen()
+                        self:refreshScene()
+                    end) 
+                end
 
             else
-                -- pas fan et pas connecte | button v2
+                -- pas fan et pas connecte | button v2 : connect to enable button
+                imageTwitter = I "stock.twitter.2.png"
+                actionTwitter = function() 
+                    twitter.connect(function()
+                        router.resetScreen()
+                        self:refreshScene()
+                    end) 
+                end
                 
             end
 
         end
     else
-        -- button v1
-
+        -- button v1 : connect to link
+        imageTwitter = I "stock.twitter.1.png"
+        actionTwitter = function() 
+            twitter.connect(function()
+                router.resetScreen()
+                self:refreshScene()
+            end) 
+        end
     end
 
     -----------------------------------
@@ -104,9 +140,10 @@ function ShareManager:moreTickets()
     hud.popin.buttonFacebook.y       = hud.popin.contentMiddle
     utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
 
-    hud.popin.buttonTwitter         = display.newImage( hud.popin, I "stock.twitter.4.png")  
+    hud.popin.buttonTwitter         = display.newImage( hud.popin, imageTwitter)  
     hud.popin.buttonTwitter.x       = display.contentWidth * 0.2
     hud.popin.buttonTwitter.y       = hud.popin.contentMiddle
+    utils.onTouch(hud.popin.buttonTwitter, actionTwitter)
 
 end
 
@@ -132,16 +169,33 @@ function ShareManager:inviteForInstants()
     hud.popin.what.anchorX  = 0
     
     -----------------------------------
+    -- FB BUTTON
+    -----------------------------------
+    
+    local actionFacebook    = nil
+    local imageFacebook     = nil
+    
+    -- TODO : recute old invite FB    
+    
+    -----------------------------------
 
-    hud.popin.email         = display.newImage( hud.popin, I "stock.facebook.1.png")  
-    hud.popin.email.x       = display.contentWidth * -0.2
-    hud.popin.email.y       = hud.popin.contentMiddle
+    hud.popin.buttonFacebook         = display.newImage( hud.popin, imageFacebook)  
+    hud.popin.buttonFacebook.x       = display.contentWidth * -0.2
+    hud.popin.buttonFacebook.y       = hud.popin.contentMiddle
+    utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
+
+    hud.popin.sms         = display.newImage( hud.popin, I "stock.facebook.1.png")  
+    hud.popin.sms.x       = display.contentWidth * -0.2
+    hud.popin.sms.y       = hud.popin.contentMiddle
+    utils.onTouch(hud.popin.sms, nil) -- todo function sms
 
     hud.popin.email         = display.newImage( hud.popin, I "stock.twitter.4.png")  
     hud.popin.email.x       = display.contentWidth * 0.2
     hud.popin.email.y       = hud.popin.contentMiddle
+    utils.onTouch(hud.popin.email, nil) -- todo function email
 
     ----------------------------------------------------------------------------------------------------
+
 
 
 end
