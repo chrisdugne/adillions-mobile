@@ -19,15 +19,15 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	
-	local title 		= utils.urlEncode(T "Join me on Adillions !")
-	local message 		= utils.urlEncode(T "Free and fun - Get a chance to win the jackpot !")
-	local redirect_uri = utils.urlEncode(SERVER_URL.."backToMobile")
-	local url = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorCode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
-	
-	self.webView = native.newWebView( 0, 0, display.contentWidth, display.contentHeight )
-	self.webView:request( url )
-	self.webView:addEventListener( "urlRequest", function(event) self:inviteListener(event) end )
+
+    local title 		= utils.urlEncode(T "Join me on Adillions !")
+    local message 		= utils.urlEncode(T "Free and fun - Get a chance to win the jackpot !")
+    local redirect_uri  = utils.urlEncode(SERVER_URL.."backToMobile")
+    local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorCode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
+
+    self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
+    self.webView:request( url )
+    self.webView:addEventListener( "urlRequest", function(event) self:inviteListener(event) end )
 end
 
 ------------------------------------------
@@ -35,54 +35,59 @@ end
 function scene:inviteListener( event )
 
     if event.url then
-		print (event.url)
-    	
-    	if string.startsWith(event.url, SERVER_URL .. "backToMobile?request=")
-    	or string.startsWith(event.url, "https://m.facebook.com/home.php") then
-			self:closeWebView()    	
-      	self.next()
+        print (event.url)
 
---    		if(not userManager.user.hasInvitedOnFacebook) then
---    			timer.performWithDelay(800, function()
---      			viewManager.showPoints(NB_POINTS_PER_FB_INVITATION)
---      			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_FB_INVITATION
---      			userManager.user.hasInvitedOnFacebook = true
---      			userManager:updatePlayer()
---      			userManager:checkIdlePoints()
---    			end)
---
---   			end 
-    	
-    	elseif string.startsWith(event.url, SERVER_URL .. "backToMobile") then
+        if string.startsWith(event.url, SERVER_URL .. "backToMobile?request=")
+        or string.startsWith(event.url, "https://m.facebook.com/home.php") then
+            self:closeWebView()   
+            if(self.next) then 	
+                self.next()
+            end
 
-			self:closeWebView()    		
-      	self.next()
+            --    		if(not userManager.user.hasInvitedOnFacebook) then
+            --    			timer.performWithDelay(800, function()
+            --      			viewManager.showPoints(NB_POINTS_PER_FB_INVITATION)
+            --      			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_FB_INVITATION
+            --      			userManager.user.hasInvitedOnFacebook = true
+            --      			userManager:updatePlayer()
+            --      			userManager:checkIdlePoints()
+            --    			end)
+            --
+            --   			end 
 
-			local params = utils.getUrlParams(event.url);
-			
-			if(params.request) then
-				print("-----> request " .. params.request )
-				viewManager.message("Invitations sent !")
-			end
-			
-		end
+        elseif string.startsWith(event.url, SERVER_URL .. "backToMobile") then
+
+            self:closeWebView()    		
+            if(self.next) then  
+                self.next()
+            end
+            local params = utils.getUrlParams(event.url);
+
+            if(params.request) then
+                print("-----> request " .. params.request )
+                viewManager.message("Invitations sent !")
+            end
+
+        end
 
     end
 end
 
 function scene:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
-	self.webView:removeSelf()
-	self.webView = nil
+    self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+    self.webView:removeSelf()
+    self.webView = nil
 end
 
 ------------------------------------------
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
-	local params = event.params
-	self.next = params.next
-	self:refreshScene()
+    local params = event.params
+    if(params) then
+        self.next = params.next
+    end
+    self:refreshScene()
 end
 
 -- Called when scene is about to move offscreen:

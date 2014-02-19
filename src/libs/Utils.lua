@@ -140,15 +140,15 @@ end
 
 function getUrlParams(url)
 
-	local index = string.find(url,"?")
-	local paramsString = url:sub(index+1, string.len(url) )
-
 	local params = {}
+	local index = string.find(url,"?")
 
-	fillNextParam(params, paramsString);
+	if(index) then
+    	local paramsString = url:sub(index+1, string.len(url) )
+    	fillNextParam(params, paramsString);
+    end
 
 	return params;
-
 end
 
 function fillNextParam(params, paramsString)

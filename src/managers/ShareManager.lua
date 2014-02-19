@@ -58,11 +58,12 @@ function ShareManager:moreTickets()
 
             else
                 -- pas fan et pas connecte | button v2 : connect to enable button
-                imageFacebook = I "stock.facebook.2.png"
+                imageFacebook = I "stock.facebook.3.png"
                 actionFacebook = function() 
                     facebook.connect(function()
                         router.resetScreen()
                         self:refreshScene()
+                        facebook.openFacebookPage()
                     end) 
                 end
                 
@@ -174,25 +175,54 @@ function ShareManager:inviteForInstants()
     
     local actionFacebook    = nil
     local imageFacebook     = nil
+    local backToHome        = function() router.openHome() end
     
-    -- TODO : recute old invite FB    
+    if(userManager.user.facebookId) then
+        
+        -- linked
+        if(GLOBALS.savedData.facebookAccessToken) then
+            imageFacebook = I "invite.facebook.3.png"
+            actionFacebook = function() 
+                router.openInviteFriends(backToHome)
+                analytics.event("Social", "openFacebookFriendList") 
+            end
+        else
+           actionFacebook = function() 
+                facebook.connect(function()
+                    router.openInviteFriends(backToHome)
+                    analytics.event("Social", "openFacebookFriendListAfterConnection") 
+                end) 
+            end
+        end
+
+    else
+        -- button v1 : connect to link
+        imageFacebook = I "invite.facebook.1.png"
+        actionFacebook = function() 
+            facebook.connect(function()
+                router.resetScreen()
+                self:refreshScene()
+            end) 
+        end
+        
+    end
     
     -----------------------------------
 
     hud.popin.buttonFacebook         = display.newImage( hud.popin, imageFacebook)  
-    hud.popin.buttonFacebook.x       = display.contentWidth * -0.2
+    hud.popin.buttonFacebook.x       = display.contentWidth * -0.35
     hud.popin.buttonFacebook.y       = hud.popin.contentMiddle
     utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
 
-    hud.popin.sms         = display.newImage( hud.popin, I "stock.facebook.1.png")  
-    hud.popin.sms.x       = display.contentWidth * -0.2
-    hud.popin.sms.y       = hud.popin.contentMiddle
-    utils.onTouch(hud.popin.sms, nil) -- todo function sms
+    hud.popin.sms                   = display.newImage( hud.popin, I "invite.sms.png")  
+    hud.popin.sms.x                 = 0
+    hud.popin.sms.y                 = hud.popin.contentMiddle
+    utils.onTouch(hud.popin.sms, function() self:sms() end)
 
-    hud.popin.email         = display.newImage( hud.popin, I "stock.twitter.4.png")  
-    hud.popin.email.x       = display.contentWidth * 0.2
-    hud.popin.email.y       = hud.popin.contentMiddle
-    utils.onTouch(hud.popin.email, nil) -- todo function email
+    hud.popin.email                 = display.newImage( hud.popin, I "invite.email.png")  
+    hud.popin.email.x               = display.contentWidth * 0.35
+    hud.popin.email.y               = hud.popin.contentMiddle
+    utils.onTouch(hud.popin.email, function() self:email() end)
 
     ----------------------------------------------------------------------------------------------------
 
