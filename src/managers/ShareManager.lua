@@ -731,7 +731,7 @@ end
 
 function ShareManager:shareOnWall()
 
-    local text = T "I have just played a free lottery ticket on Adillions. You too, try your luck now !" .. "\n www.adillions.com" 
+    local text = translate(lotteryManager.global.fbPost) 
 
     facebook.postOnWall(text, function()
 
@@ -750,7 +750,7 @@ end
 
 function ShareManager:tweetTheme()
 
-    local text = T "Check out the theme !" .. "\n www.adillions.com"
+    local text = translate(lotteryManager.global.tweetTheme)
 
     twitter.tweetMessage(text, function()
 
@@ -769,7 +769,7 @@ end
 
 function ShareManager:tweet()
 
-    local text = T "I have just played a free lottery ticket on Adillions. You too, try your luck now !" .. "\n www.adillions.com"
+    local text = translate(lotteryManager.global.tweet)
 
     twitter.tweetMessage(text, function()
 

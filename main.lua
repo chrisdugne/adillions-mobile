@@ -172,7 +172,7 @@ function I(asset)
     return "assets/images/bylang/"..LANG.."/"..asset
 end
 
-function J(texts)
+function translate(texts)
     return texts[LANG]
 end
 

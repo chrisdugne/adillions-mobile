@@ -299,7 +299,6 @@ function likeTheme()
 
 	local theme = lotteryManager.nextLottery.theme
 
-	print("--- true")
 	native.setActivityIndicator( true )
 	print("-----> Like theme !!!!")
 	utils.tprint(theme)
@@ -323,7 +322,6 @@ function likeTheme()
 	network.request(url , "GET", function(result)
 		local response = json.decode(result.response)
 		native.setActivityIndicator( false )
-		print("--- false")
 		utils.tprint(response)
 		if(response.id) then
             userManager.user.themeLiked = true
