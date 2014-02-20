@@ -28,12 +28,21 @@ function LotteryManager:refreshNextLottery(draw)
 	
 		local response = json.decode(result.response)
 
-		self.nextLottery = response.nextLottery
-		self.nextDrawing = response.nextDrawing
-		self.nextLottery.theme = json.decode(self.nextLottery.theme)
-		self.nextDrawing.theme = json.decode(self.nextDrawing.theme)
-		self.nextLottery.rangs = json.decode(self.nextLottery.rangs)
-		self.nextDrawing.rangs = json.decode(self.nextDrawing.rangs)
+		self.globalContent        = response.globalContent
+		self.nextLottery          = response.nextLottery
+		self.nextDrawing          = response.nextDrawing
+
+		self.globalContent.tweet          = json.decode(self.globalContent.tweet)
+		self.globalContent.tweetTheme     = json.decode(self.globalContent.tweetTheme)
+		self.globalContent.fbPost         = json.decode(self.globalContent.fbPost)
+		self.globalContent.subheader      = json.decode(self.globalContent.subheader)
+		self.globalContent.confirmation   = json.decode(self.globalContent.confirmation)
+		
+		self.nextLottery.theme    = json.decode(self.nextLottery.theme)
+		self.nextDrawing.theme    = json.decode(self.nextDrawing.theme)
+		self.nextLottery.rangs    = json.decode(self.nextLottery.rangs)
+		self.nextDrawing.rangs    = json.decode(self.nextDrawing.rangs)
+
 
 		userManager:checkUserCurrentLottery()
 		utils.tprint(self.nextDrawing.rangs)

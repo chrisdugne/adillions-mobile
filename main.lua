@@ -66,7 +66,7 @@ BONUS_4 	= 14; -- rang 10
 
 SCOUT           = 1     -- 1
 CONTRIBUTOR     = 2     -- 50
-SAMARITAN       = 3     -- 100
+JUNIOR_DONOR    = 3     -- 100
 DONOR           = 4     -- 200
 BENEFACTOR      = 5     -- 500
 MAJOR           = 6     -- ?
@@ -79,13 +79,9 @@ CHARITY = {"Boy Scout", "Contributor", "Junior donor", "Donor", "Benefactor", "M
 
 START_AVAILABLE_TICKETS         = 8
 
-POINTS_TO_EARN_A_TICKET         = 8
-NB_POINTS_PER_TICKET            = 1
-NB_POINTS_PER_LIKE              = 2
-NB_POINTS_PER_THEME_LIKED       = 2
-
-NB_INSTANTS_PER_TWEET           = 2
-NB_INSTANTS_PER_POST            = 2
+NB_INSTANTS_PER_TWEET           = 1
+NB_INSTANTS_PER_POST            = 1
+NB_INSTANTS_PER_THEME_LIKED     = 1
 
 FACEBOOK_FAN_TICKETS            = 3
 TWITTER_FAN_TICKETS             = 3
@@ -110,11 +106,18 @@ else
     NUM_FONT = "Helvetica-Bold"
 end
 
+-----------------------------------------------------------------------------------------
+
 if(ANDROID) then
     LANG =  userDefinedLanguage or system.getPreference("locale", "language")
 else
     LANG =  userDefinedLanguage or system.getPreference("ui", "language")
 end
+
+-- LANG not supported : default en
+if(LANG ~= "en" and LANG ~= "fr") then LANG = "en" end
+
+-----------------------------------------------------------------------------------------
 
 COUNTRY = system.getPreference( "locale", "country" ) or "US"
 
@@ -155,8 +158,8 @@ aspectRatio = display.pixelHeight / display.pixelWidth
 
 -----------------------------------------------------------------------------------------
 
-abs 		= math.abs
-random 	= math.random
+abs         = math.abs
+random 	    = math.random
 
 -----------------------------------------------------------------------------------------
 -- Translations
@@ -167,6 +170,10 @@ end
 
 function I(asset)
     return "assets/images/bylang/"..LANG.."/"..asset
+end
+
+function J(texts)
+    return texts[LANG]
 end
 
 -----------------------------------------------------------------------------------------

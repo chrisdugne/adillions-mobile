@@ -295,7 +295,7 @@ function ShareManager:shareForInstants()
             end
 
         else
-            -- theme not liked        
+            -- theme not liked
 
             if(GLOBALS.savedData.facebookAccessToken) then
 

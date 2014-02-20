@@ -139,10 +139,6 @@ function scene:refreshScene()
 
 	------------------
 	
-	if(not lotteryManager.wasExtraTicket and not self.backFromInvite) then
-		viewManager.showPoints(NB_POINTS_PER_TICKET)
-	end
-	
 	lotteryManager.wasExtraTicket = false
 
 	------------------
