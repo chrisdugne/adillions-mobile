@@ -32,7 +32,6 @@ function scene:refreshScene()
     hud.subheaderText.x 	= display.contentWidth*0.6
     hud.subheaderText.y 	= HEADER_HEIGHT * 1.4
 
-
     local subheaderAnimConfig 	= require("src.tools.Subheader_"..LANG)
     local subheaderSheet 		= graphics.newImageSheet( "assets/images/subheader/anim.sheet."..LANG..".png", subheaderAnimConfig.sheet )
 
@@ -49,13 +48,11 @@ function scene:refreshScene()
     ------------------
 
     utils.onTouch(hud.subheaderImage, function()
-        local next = function() router.openHome() end
-        shareManager:invite(next)
+        shareManager:inviteForInstants()
     end)
 
     utils.onTouch(hud.subheaderButton, function()
-        local next = function() router.openHome() end
-        shareManager:invite(next)
+        shareManager:inviteForInstants()
     end)
 
     ------------------

@@ -662,7 +662,7 @@ function ShareManager:noMoreTickets()
     popup.more.y 		= display.contentHeight*0.65
 
     utils.onTouch(popup.more, function() 
-        viewManager.closePopup(popup) 
+        self:shareForInstants() 
     end)
 
     --------------------------
