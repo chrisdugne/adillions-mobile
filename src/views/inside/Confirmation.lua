@@ -124,11 +124,11 @@ function scene:refreshScene()
 	
 	utils.onTouch(hud.inviteButton, function()
 		local next = function() router.openConfirmation(true) end
-		shareManager:invite(next)
+		shareManager:inviteForInstants(next)
 	end)
 
 	utils.onTouch(hud.shareButton, function()
-		shareManager:share()
+		shareManager:shareForInstants()
 	end)
 
 	-------------------------------

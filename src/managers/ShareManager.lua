@@ -210,7 +210,7 @@ function ShareManager:inviteForInstants()
     -----------------------------------
 
     hud.popin.buttonFacebook         = display.newImage( hud.popin, imageFacebook)  
-    hud.popin.buttonFacebook.x       = display.contentWidth * -0.35
+    hud.popin.buttonFacebook.x       = display.contentWidth * -0.325
     hud.popin.buttonFacebook.y       = hud.popin.contentMiddle
     utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
 
@@ -220,7 +220,7 @@ function ShareManager:inviteForInstants()
     utils.onTouch(hud.popin.sms, function() self:sms() end)
 
     hud.popin.email                 = display.newImage( hud.popin, I "invite.email.png")  
-    hud.popin.email.x               = display.contentWidth * 0.35
+    hud.popin.email.x               = display.contentWidth * 0.325
     hud.popin.email.y               = hud.popin.contentMiddle
     utils.onTouch(hud.popin.email, function() self:email() end)
 
@@ -239,7 +239,7 @@ function ShareManager:shareForInstants()
 
     -----------------------------------
 
-    hud.popin.title         = display.newImage( hud.popin, I "share.title.png")  
+    hud.popin.title         = display.newImage( hud.popin, I "stock.title.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
     hud.popin.title.y       = hud.popin.headerMiddle
     hud.popin.title.anchorX = 0
@@ -263,7 +263,7 @@ function ShareManager:shareForInstants()
 
             if(userManager.user.hasPostOnFacebook) then
                 -- theme liked + hasPost | button v5
-                imageFacebook   = I "share.facebook.5.png"
+                imageFacebook   = I "stock.facebook.5.png"
                 actionFacebook  = function()
                     self:shareOnWall()
                     analytics.event("Social", "facebookShareWithoutReward") 
@@ -274,7 +274,7 @@ function ShareManager:shareForInstants()
                 if(GLOBALS.savedData.facebookAccessToken) then
 
                     -- pas encore post et connecte | button v4 : postOnWall
-                    imageFacebook = I "share.facebook.4.png"
+                    imageFacebook = I "stock.facebook.4.png"
                     actionFacebook = function()
                         self:shareOnWall()
                         analytics.event("Social", "facebookShare") 
@@ -282,9 +282,10 @@ function ShareManager:shareForInstants()
 
                 else
                     -- pas encore post et pas connecte | button v4 : connexion + postOnWall
-                    imageFacebook = I "share.facebook.4.png"
+                    imageFacebook = I "stock.facebook.4.png"
                     actionFacebook = function() 
                         facebook.connect(function()
+                            userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
                             self:shareOnWall()
                             analytics.event("Social", "facebookShareAfterConnection") 
                         end) 
@@ -300,7 +301,7 @@ function ShareManager:shareForInstants()
             if(GLOBALS.savedData.facebookAccessToken) then
 
                 -- theme not liked et connecte | button v3 : like theme
-                imageFacebook = I "share.facebook.4.png"
+                imageFacebook = I "stock.facebook.4.png"
                 actionFacebook = function()
                     facebook.likeTheme()
                     analytics.event("Social", "facebookLikeTheme") 
@@ -308,9 +309,10 @@ function ShareManager:shareForInstants()
 
             else
                 -- theme not liked  et pas connecte | button v3 : connexion + like theme
-                imageFacebook = I "share.facebook.4.png"
+                imageFacebook = I "stock.facebook.4.png"
                 actionFacebook = function() 
                     facebook.connect(function()
+                        userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
                         facebook.likeTheme()
                         analytics.event("Social", "facebookLikeThemeAfterConnection") 
                     end) 
@@ -323,9 +325,10 @@ function ShareManager:shareForInstants()
 
     else
         -- not linked button v1 : connect to link
-        imageFacebook = I "share.facebook.1.png"
+        imageFacebook = I "stock.facebook.1.png"
         actionFacebook = function() 
             facebook.connect(function()
+                userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
                 router.resetScreen()
                 self:refreshScene()
             end) 
@@ -346,7 +349,7 @@ function ShareManager:shareForInstants()
 
             if(userManager.user.hasTweet) then
                 -- theme tweeted + tweet | button v5
-                imageTwitter = I "share.twitter.5.png"
+                imageTwitter = I "stock.twitter.5.png"
                 actionTwitter  = function()
                     self:tweet()
                     analytics.event("Social", "tweetWithoutReward") 
@@ -356,7 +359,7 @@ function ShareManager:shareForInstants()
                 if(twitter.connected) then
 
                     -- pas encore tweet et connecte | button v4 : tweet
-                    imageTwitter = I "share.twitter.4.png"
+                    imageTwitter = I "stock.twitter.4.png"
                     actionTwitter = function()
                         self:tweet()
                         analytics.event("Social", "tweet") 
@@ -364,7 +367,7 @@ function ShareManager:shareForInstants()
 
                 else
                     -- pas encore tweet et pas connecte | button v4 : connexion + tweet
-                    imageTwitter = I "share.twitter.4.png"
+                    imageTwitter = I "stock.twitter.4.png"
                     actionTwitter = function() 
                         twitter.connect(function()
                             self:tweet()
@@ -382,7 +385,7 @@ function ShareManager:shareForInstants()
             if(twitter.connected) then
 
                 -- theme not tweeted et connecte | button v3 : tweet theme
-                imageTwitter = I "share.twitter.3.png"
+                imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function()
                     self:tweetTheme()
                     analytics.event("Social", "tweetTheme") 
@@ -390,7 +393,7 @@ function ShareManager:shareForInstants()
 
             else
                 -- theme not tweeted  et pas connecte | button v3 : connexion + tweet theme
-                imageTwitter = I "share.twitter.3.png"
+                imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function() 
                     twitter.connect(function()
                         self:tweetTheme()
@@ -404,7 +407,7 @@ function ShareManager:shareForInstants()
 
     else
         -- not linked button v1 : connect to link
-        imageTwitter = I "share.twitter.1.png"
+        imageTwitter = I "stock.twitter.1.png"
         actionTwitter = function() 
             twitter.connect(function()
                 router.resetScreen()
@@ -431,190 +434,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
---- DEPRECATED
-function ShareManager:share()
-
-    -----------------------------------
-
-    local popup = viewManager.showPopup()
-    analytics.event("Social", "popupShare") 
-
-    ----------------------------------------------------------------------------------------------------
-
-    popup.shareIcon 				= display.newImage( popup, "assets/images/icons/PictoShare.png")  
-    popup.shareIcon.x 			= display.contentWidth*0.5
-    popup.shareIcon.y			= display.contentHeight*0.22
-
-    popup.shareText 				= display.newImage( popup, I "popup.Txt3.png")  
-    popup.shareText.x 			= display.contentWidth*0.5
-    popup.shareText.y			= display.contentHeight*0.32
-
-
-    popup.multiLineText = display.newText({
-        parent	= popup,
-        text 		= T "Earn Instant Tickets and increase the jackpot",  
-        width 	= display.contentWidth*0.6,  
-        height 	= display.contentHeight*0.25,  
-        x 			= display.contentWidth*0.5,
-        y 			= display.contentHeight*0.55,
-        font 		= FONT, 
-        fontSize = 34,
-        align 	= "center",
-    })
-
-    popup.multiLineText:setFillColor(0)
-
-    -----------------------------------
-    -- Facebook
-    -----------------------------------
-
-
-    if(GLOBALS.savedData.facebookAccessToken) then
-        popup.facebookShare 		= display.newImage( popup, I "popup.facebook.share.png")  
-        popup.facebookShare.x 		= display.contentWidth*0.5
-        popup.facebookShare.y		= display.contentHeight*0.63
-
-        utils.onTouch(popup.facebookShare, function() 
-            self:shareOnWall()
-            analytics.event("Social", "facebookShare") 
-        end)
-
-    else
-        popup.facebookConnect 		= display.newImage( popup, I "popup.facebook.connect.png")  
-        popup.facebookConnect.x 	= display.contentWidth*0.5
-        popup.facebookConnect.y	= display.contentHeight*0.63
-
-        utils.onTouch(popup.facebookConnect, function() 
-            facebook.connect(function()
-                self:shareOnWall()
-                analytics.event("Social", "facebookShareAfterConnection") 
-            end) 
-        end)
-
-    end
-
-    -----------------------------------
-    -- Twitter
-    -----------------------------------
-
-    if(twitter.connected) then
-        popup.twitterShare 			= display.newImage( popup, I "popup.twitter.share.png")  
-        popup.twitterShare.x 		= display.contentWidth*0.5
-        popup.twitterShare.y		= display.contentHeight*0.77	
-
-        utils.onTouch(popup.twitterShare, function() 
-            self:tweet()
-            analytics.event("Social", "twitterShare") 
-        end)
-
-    else
-        popup.twitterConnect 		= display.newImage( popup, I "popup.twitter.connect.png")  
-        popup.twitterConnect.x 	= display.contentWidth*0.5
-        popup.twitterConnect.y		= display.contentHeight*0.77
-
-        utils.onTouch(popup.twitterConnect, function() 
-            twitter.connect(function()
-                analytics.event("Social", "twitterShareAfterConnection") 
-                self:tweet()
-            end) 
-        end)
-
-    end
-
-    ----------------------------------------------------------------------------------------------------
-
-    popup.close 				= display.newImage( popup, "assets/images/hud/CroixClose.png")
-    popup.close.x 			= display.contentWidth*0.89
-    popup.close.y 			= display.contentHeight*0.085
-
-    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
-
-
-end
-
------------------------------------------------------------------------------------------
-
---- DEPRECATED
-function ShareManager:invite(next)
-
-    ----------------------------------------------------------------------------------------------------
-
-    local popup = viewManager.showPopup()
-    analytics.event("Social", "popupInvite") 
-
-    ----------------------------------------------------------------------------------------------------
-
-    popup.inviteIcon 			= display.newImage( popup, "assets/images/icons/PictoInvite.png")  
-    popup.inviteIcon.x 			= display.contentWidth*0.5
-    popup.inviteIcon.y			= display.contentHeight*0.22
-
-    popup.inviteText 			= display.newImage( popup, I "popup.Txt2.png")  
-    popup.inviteText.x 			= display.contentWidth*0.5
-    popup.inviteText.y			= display.contentHeight*0.32
-
-    popup.multiLineText = display.newText({
-        parent	= popup,
-        text 	= T "Earn Instant Tickets and increase the jackpot",  
-        width 	= display.contentWidth*0.6,  
-        height 	= display.contentHeight*0.25,  
-        x 		= display.contentWidth*0.5,
-        y 		= display.contentHeight*0.5,
-        font 	= FONT, 
-        fontSize= 34,
-        align 	= "center",
-    })
-
-    popup.multiLineText:setFillColor(0)
-
-    ----------------------------------------------------------------------------------------------------
-
-    popup.sms 	= display.newImage( popup, I "popup.Btsms.png")  
-    popup.sms.x = display.contentWidth*0.5
-    popup.sms.y	= display.contentHeight*0.52
-
-    utils.onTouch(popup.sms, function() self:sms() end) 
-
-    ----------------------------------------------------------------------------------------------------
-
-    popup.email 	= display.newImage( popup, I "popup.Btemail.png")  
-    popup.email.x 	= display.contentWidth*0.5
-    popup.email.y	= display.contentHeight*0.66
-
-    utils.onTouch(popup.email, function() self:email() end) 
-
-    ----------------------------------------------------------------------------------------------------
-
-    if(GLOBALS.savedData.facebookAccessToken) then
-        popup.facebookShare 		= display.newImage( popup, I "popup.facebook.invite.png")  
-        popup.facebookShare.x 		= display.contentWidth*0.5
-        popup.facebookShare.y		= display.contentHeight*0.8
-
-        utils.onTouch(popup.facebookShare, function() 
-            router.openInviteFriends(next)
-            analytics.event("Social", "openFacebookFriendList") 
-        end)
-
-    else
-        popup.facebookConnect 		= display.newImage( popup, I "popup.facebook.connect.png")  
-        popup.facebookConnect.x 	= display.contentWidth*0.5
-        popup.facebookConnect.y	= display.contentHeight*0.8
-
-        utils.onTouch(popup.facebookConnect, function() 
-            facebook.connect(function()
-                router.openInviteFriends(next)
-                analytics.event("Social", "openFacebookFriendListAfterConnection") 
-            end) 
-        end)
-
-    end
-
-    ----------------------------------------------------------------------------------------------------
-
-    popup.close 			= display.newImage( popup, "assets/images/hud/CroixClose.png")
-    popup.close.x 			= display.contentWidth*0.89
-    popup.close.y 			= display.contentHeight*0.085
-
-    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
+function ShareManager:sharePrize()
 
 end
 

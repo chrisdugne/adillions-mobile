@@ -649,7 +649,7 @@ function scene:drawScene()
 
     utils.onTouch(hud.sponsorButton, function()
         local next = function() router.openProfile() end
-        shareManager:invite(next)
+        shareManager:inviteForInstants(next)
     end)
 
     -----------------------------------------------

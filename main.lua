@@ -83,10 +83,11 @@ NB_INSTANTS_PER_TWEET           = 1
 NB_INSTANTS_PER_POST            = 1
 NB_INSTANTS_PER_THEME_LIKED     = 1
 
-FACEBOOK_FAN_TICKETS            = 3
-TWITTER_FAN_TICKETS             = 3
 FACEBOOK_CONNECTION_TICKETS     = 1
 TWITTER_CONNECTION_TICKETS      = 1
+
+FACEBOOK_FAN_TICKETS            = 3
+TWITTER_FAN_TICKETS             = 3
 
 -----------------------------------------------------------------------------------------
 

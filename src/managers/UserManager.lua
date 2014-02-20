@@ -57,7 +57,6 @@ function UserManager:fetchPlayer()
                 
             else 
                 userManager:receivedPlayer(player, router.openHome)
-                
             end
         end
     end
@@ -960,7 +959,7 @@ function UserManager:notifyPrizes(next)
         popup.share.x 			= display.contentWidth*0.5
         popup.share.y 			= display.contentHeight*0.7
 
-        utils.onTouch(popup.share, function() shareManager:share() end)
+        utils.onTouch(popup.share, function() shareManager:sharePrize() end)
 
         ---------------------------------------------------------------
 
@@ -1032,6 +1031,7 @@ function UserManager:notifyStocks(next)
         
         ----------------------------------------
         
+        self.user.notifications.stocks = 0
     end
 end
 
@@ -1043,6 +1043,13 @@ function UserManager:giftInstants(nbInstants)
     self:notifyInstants(function()
         self:updatePlayer()
     end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function UserManager:giftStock(nbStock)
+    self.user.notifications.stocks = nbStock
+    self:notifyStocks(function() end)
 end
 
 -----------------------------------------------------------------------------------------
