@@ -343,8 +343,8 @@ function LotteryManager:refreshThemeSelectionDisplay()
 		hud.selector.alpha = 0.3
 
 		utils.onTouch(hud.validate, function()
-			self:validateSelection()
 			display.remove(hud.validate)
+			self:validateSelection()
 		end)
 
 	else
@@ -362,7 +362,11 @@ end
 
 function LotteryManager:validateSelection()
 	self.currentSelection[self.nextLottery.maxPicks+1] = self.currentAdditionalBall.num
-	userManager:storeLotteryTicket(self.currentSelection)
+	
+	-- security (tim a reussi a enregistrer plusieurs LB...?) ---
+	if(#self.currentSelection == (self.nextLottery.maxPicks+1)) then
+	   userManager:storeLotteryTicket(self.currentSelection)
+	end
 end
 
 -----------------------------------------------------------------------------------------
