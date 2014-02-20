@@ -22,7 +22,7 @@ function ShareManager:moreTickets()
     analytics.event("Social", "popinMoreTickets")
 
     -----------------------------------
-    
+
     hud.popin.title         = display.newImage( hud.popin, I "stock.title.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
     hud.popin.title.y       = hud.popin.headerMiddle
@@ -32,22 +32,22 @@ function ShareManager:moreTickets()
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
-    
+
     -----------------------------------
     -- FB BUTTON
     -----------------------------------
-    
+
     local actionFacebook    = nil
     local imageFacebook     = nil
 
     if(userManager.user.facebookId) then
         -- linked
-    
+
         if(userManager.user.facebookFan) then
             -- fan | button v4
             imageFacebook   = I "stock.facebook.4.png"
             actionFacebook  = nil
-            
+
         else
             if(GLOBALS.savedData.facebookAccessToken) then
                 -- pas fan et connecte | button v3 : open FB page
@@ -66,7 +66,7 @@ function ShareManager:moreTickets()
                         facebook.openFacebookPage()
                     end) 
                 end
-                
+
             end
 
         end
@@ -87,18 +87,18 @@ function ShareManager:moreTickets()
 
     local actionTwitter    = nil
     local imageTwitter     = nil
-    
-    if(userManager.user.twitter) then
+
+    if(userManager.user.twitterId) then
         -- linked
-    
+
         if(userManager.user.twitterFan) then
             -- fan | button v4
             imageTwitter = I "stock.twitter.4.png"
             actionTwitter = nil
-            
+
         else
             if(twitter.connected) then
-            -- pas fan et connecte | button v3
+                -- pas fan et connecte | button v3
                 imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function()
                     native.setActivityIndicator( true )  
@@ -119,7 +119,7 @@ function ShareManager:moreTickets()
                         self:refreshScene()
                     end) 
                 end
-                
+
             end
 
         end
@@ -158,7 +158,7 @@ function ShareManager:inviteForInstants()
     analytics.event("Social", "popinInviteForInstants")
 
     -----------------------------------
-    
+
     hud.popin.title         = display.newImage( hud.popin, I "instant.title.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
     hud.popin.title.y       = hud.popin.headerMiddle
@@ -168,17 +168,17 @@ function ShareManager:inviteForInstants()
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
-    
+
     -----------------------------------
     -- FB BUTTON
     -----------------------------------
-    
+
     local actionFacebook    = nil
     local imageFacebook     = nil
     local backToHome        = function() router.openHome() end
-    
+
     if(userManager.user.facebookId) then
-        
+
         -- linked
         if(GLOBALS.savedData.facebookAccessToken) then
             imageFacebook = I "invite.facebook.3.png"
@@ -187,7 +187,7 @@ function ShareManager:inviteForInstants()
                 analytics.event("Social", "openFacebookFriendList") 
             end
         else
-           actionFacebook = function() 
+            actionFacebook = function() 
                 facebook.connect(function()
                     router.openInviteFriends(backToHome)
                     analytics.event("Social", "openFacebookFriendListAfterConnection") 
@@ -204,9 +204,9 @@ function ShareManager:inviteForInstants()
                 self:refreshScene()
             end) 
         end
-        
+
     end
-    
+
     -----------------------------------
 
     hud.popin.buttonFacebook         = display.newImage( hud.popin, imageFacebook)  
@@ -226,8 +226,6 @@ function ShareManager:inviteForInstants()
 
     ----------------------------------------------------------------------------------------------------
 
-
-
 end
 
 -----------------------------------------------------------------------------------------
@@ -239,7 +237,9 @@ function ShareManager:shareForInstants()
     viewManager.showPopin()
     analytics.event("Social", "popinShareForInstants")
 
-    hud.popin.title         = display.newImage( hud.popin, I "stock.title.png")  
+    -----------------------------------
+
+    hud.popin.title         = display.newImage( hud.popin, I "share.title.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
     hud.popin.title.y       = hud.popin.headerMiddle
     hud.popin.title.anchorX = 0
@@ -249,15 +249,183 @@ function ShareManager:shareForInstants()
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
 
-    hud.popin.email         = display.newImage( hud.popin, I "stock.facebook.1.png")  
-    hud.popin.email.x       = display.contentWidth * -0.2
-    hud.popin.email.y       = hud.popin.contentMiddle
+    ----------------------------------------------------------------------------------------------------
+    -- FB BUTTON
+    -----------------------------------
 
-    hud.popin.email         = display.newImage( hud.popin, I "stock.twitter.4.png")  
-    hud.popin.email.x       = display.contentWidth * 0.2
-    hud.popin.email.y       = hud.popin.contentMiddle
+    local actionFacebook    = nil
+    local imageFacebook     = nil
+
+    if(userManager.user.facebookId) then
+        -- linked
+
+        if(userManager.user.themeLiked) then
+
+            if(userManager.user.hasPostOnFacebook) then
+                -- theme liked + hasPost | button v5
+                imageFacebook   = I "share.facebook.5.png"
+                actionFacebook  = function()
+                    self:shareOnWall()
+                    analytics.event("Social", "facebookShareWithoutReward") 
+                end
+
+            else
+
+                if(GLOBALS.savedData.facebookAccessToken) then
+
+                    -- pas encore post et connecte | button v4 : postOnWall
+                    imageFacebook = I "share.facebook.4.png"
+                    actionFacebook = function()
+                        self:shareOnWall()
+                        analytics.event("Social", "facebookShare") 
+                    end
+
+                else
+                    -- pas encore post et pas connecte | button v4 : connexion + postOnWall
+                    imageFacebook = I "share.facebook.4.png"
+                    actionFacebook = function() 
+                        facebook.connect(function()
+                            self:shareOnWall()
+                            analytics.event("Social", "facebookShareAfterConnection") 
+                        end) 
+                    end
+
+                end
+
+            end
+
+        else
+            -- theme not liked        
+
+            if(GLOBALS.savedData.facebookAccessToken) then
+
+                -- theme not liked et connecte | button v3 : like theme
+                imageFacebook = I "share.facebook.4.png"
+                actionFacebook = function()
+                    facebook.likeTheme()
+                    analytics.event("Social", "facebookLikeTheme") 
+                end
+
+            else
+                -- theme not liked  et pas connecte | button v3 : connexion + like theme
+                imageFacebook = I "share.facebook.4.png"
+                actionFacebook = function() 
+                    facebook.connect(function()
+                        facebook.likeTheme()
+                        analytics.event("Social", "facebookLikeThemeAfterConnection") 
+                    end) 
+                end
+
+            end
+
+
+        end
+
+    else
+        -- not linked button v1 : connect to link
+        imageFacebook = I "share.facebook.1.png"
+        actionFacebook = function() 
+            facebook.connect(function()
+                router.resetScreen()
+                self:refreshScene()
+            end) 
+        end
+    end
 
     ----------------------------------------------------------------------------------------------------
+    -- TWITTER BUTTON
+    -----------------------------------
+
+    local imageTwitter     = nil
+    local actionTwitter    = nil
+
+    if(userManager.user.twitterId) then
+        -- linked
+
+        if(userManager.user.hasTweetTheme) then
+
+            if(userManager.user.hasTweet) then
+                -- theme tweeted + tweet | button v5
+                imageTwitter = I "share.twitter.5.png"
+                actionTwitter  = function()
+                    self:tweet()
+                    analytics.event("Social", "tweetWithoutReward") 
+                end
+            else
+
+                if(twitter.connected) then
+
+                    -- pas encore tweet et connecte | button v4 : tweet
+                    imageTwitter = I "share.twitter.4.png"
+                    actionTwitter = function()
+                        self:tweet()
+                        analytics.event("Social", "tweet") 
+                    end
+
+                else
+                    -- pas encore tweet et pas connecte | button v4 : connexion + tweet
+                    imageTwitter = I "share.twitter.4.png"
+                    actionTwitter = function() 
+                        twitter.connect(function()
+                            self:tweet()
+                            analytics.event("Social", "tweetAfterConnection") 
+                        end) 
+                    end
+
+                end
+
+            end
+
+        else
+            -- theme not tweeted        
+
+            if(twitter.connected) then
+
+                -- theme not tweeted et connecte | button v3 : tweet theme
+                imageTwitter = I "share.twitter.3.png"
+                actionTwitter = function()
+                    self:tweetTheme()
+                    analytics.event("Social", "tweetTheme") 
+                end
+
+            else
+                -- theme not tweeted  et pas connecte | button v3 : connexion + tweet theme
+                imageTwitter = I "share.twitter.3.png"
+                actionTwitter = function() 
+                    twitter.connect(function()
+                        self:tweetTheme()
+                        analytics.event("Social", "tweetThemeAfterConnection") 
+                    end) 
+                end
+
+            end
+
+        end
+
+    else
+        -- not linked button v1 : connect to link
+        imageTwitter = I "share.twitter.1.png"
+        actionTwitter = function() 
+            twitter.connect(function()
+                router.resetScreen()
+                self:refreshScene()
+            end) 
+        end
+    end
+
+
+    -----------------------------------
+
+    hud.popin.buttonFacebook         = display.newImage( hud.popin, imageFacebook)  
+    hud.popin.buttonFacebook.x       = display.contentWidth * -0.2
+    hud.popin.buttonFacebook.y       = hud.popin.contentMiddle
+    utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
+
+    hud.popin.buttonTwitter         = display.newImage( hud.popin, imageTwitter)  
+    hud.popin.buttonTwitter.x       = display.contentWidth * 0.2
+    hud.popin.buttonTwitter.y       = hud.popin.contentMiddle
+    utils.onTouch(hud.popin.buttonTwitter, actionTwitter)
+
 
 end
 
@@ -335,7 +503,7 @@ function ShareManager:share()
         popup.twitterShare.y		= display.contentHeight*0.77	
 
         utils.onTouch(popup.twitterShare, function() 
-            self:tweetShare()
+            self:tweet()
             analytics.event("Social", "twitterShare") 
         end)
 
@@ -347,7 +515,7 @@ function ShareManager:share()
         utils.onTouch(popup.twitterConnect, function() 
             twitter.connect(function()
                 analytics.event("Social", "twitterShareAfterConnection") 
-                self:tweetShare()
+                self:tweet()
             end) 
         end)
 
@@ -472,26 +640,26 @@ function ShareManager:noMoreTickets()
 
     viewManager.newText({
         parent 			= popup, 
-        text	 			= T "You have reached the maximum number of Tickets for this draw",     
-        x 					= display.contentWidth * 0.5,
-        y 					= display.contentHeight*0.4,
-        width				= display.contentWidth * 0.75,
-        fontSize			= 37,
+        text	 		= T "You have reached the maximum number of Tickets for this draw",     
+        x 				= display.contentWidth * 0.5,
+        y 				= display.contentHeight*0.4,
+        width			= display.contentWidth * 0.75,
+        fontSize		= 37,
     })
 
     viewManager.newText({
         parent 			= popup, 
-        text	 			= T "Increase your stock of Tickets",     
-        x 					= display.contentWidth * 0.5,
-        y 					= display.contentHeight*0.5,
-        fontSize			= 37,
+        text	 		= T "Increase your stock of Tickets",     
+        x 				= display.contentWidth * 0.5,
+        y 				= display.contentHeight*0.5,
+        fontSize		= 37,
     })
 
     --------------------------
 
-    popup.more 				= display.newImage( popup, I "more.tickets.png")
-    popup.more.x 				= display.contentWidth*0.5
-    popup.more.y 				= display.contentHeight*0.65
+    popup.more 			= display.newImage( popup, I "more.tickets.png")
+    popup.more.x 		= display.contentWidth*0.5
+    popup.more.y 		= display.contentHeight*0.65
 
     utils.onTouch(popup.more, function() 
         viewManager.closePopup(popup) 
@@ -499,9 +667,9 @@ function ShareManager:noMoreTickets()
 
     --------------------------
 
-    popup.close 				= display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x 			= display.contentWidth*0.5
-    popup.close.y 			= display.contentHeight*0.83
+    popup.close 		= display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x 		= display.contentWidth*0.5
+    popup.close.y 		= display.contentHeight*0.83
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
@@ -567,21 +735,39 @@ function ShareManager:shareOnWall()
 
     facebook.postOnWall(text, function()
 
-        print("---> postOnWall next")
         viewManager.closePopup(popup)
         viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
+        
         if(not userManager.user.hasPostOnFacebook) then
-            viewManager.showPoints(NB_POINTS_PER_POST)
-            userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_POST
             userManager.user.hasPostOnFacebook = true
-            userManager:updatePlayer()
-        end 
+            userManager.giftInstants(NB_INSTANTS_PER_POST)
+        end
+         
     end)
 end
 
 -----------------------------------------------------------------------------------------
 
-function ShareManager:tweetShare()
+function ShareManager:tweetTheme()
+
+    local text = T "Check out the theme !" .. "\n www.adillions.com"
+
+    twitter.tweetMessage(text, function()
+
+        viewManager.closePopup(popup)
+        viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
+        
+        if(not userManager.user.hasTweetTheme) then
+            userManager.user.hasTweetTheme = true
+            userManager.giftInstants(NB_INSTANTS_PER_TWEET)
+        end
+         
+    end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function ShareManager:tweet()
 
     local text = T "I have just played a free lottery ticket on Adillions. You too, try your luck now !" .. "\n www.adillions.com"
 
@@ -589,12 +775,12 @@ function ShareManager:tweetShare()
 
         viewManager.closePopup(popup)
         viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
+        
         if(not userManager.user.hasTweet) then
-            viewManager.showPoints(NB_POINTS_PER_TWEET)
-            userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_TWEET
             userManager.user.hasTweet = true
-            userManager:updatePlayer()
+            userManager.giftInstants(NB_INSTANTS_PER_TWEET)
         end 
+        
     end)
 end
 

@@ -78,12 +78,14 @@ CHARITY = {"Boy Scout", "Contributor", "Junior donor", "Donor", "Benefactor", "M
 -----------------------------------------------------------------------------------------
 
 START_AVAILABLE_TICKETS         = 8
+
 POINTS_TO_EARN_A_TICKET         = 8
 NB_POINTS_PER_TICKET            = 1
-NB_POINTS_PER_TWEET             = 2
-NB_POINTS_PER_POST              = 2
 NB_POINTS_PER_LIKE              = 2
 NB_POINTS_PER_THEME_LIKED       = 2
+
+NB_INSTANTS_PER_TWEET           = 2
+NB_INSTANTS_PER_POST            = 2
 
 FACEBOOK_FAN_TICKETS            = 3
 TWITTER_FAN_TICKETS             = 3
