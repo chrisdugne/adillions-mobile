@@ -63,8 +63,6 @@ function ShareManager:moreTickets()
                 actionFacebook = function() 
                     facebook.connect(function()
                         viewManager.closePopin() 
-                        router.resetScreen()
-                        self:refreshScene()
                         facebook.openFacebookPage()
                     end) 
                 end
@@ -78,10 +76,9 @@ function ShareManager:moreTickets()
         actionFacebook = function() 
             facebook.connect(function()
                 viewManager.closePopin() 
-                router.resetScreen()
-                self:refreshScene()
                 userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
                 analytics.event("Social", "linkedFacebookFromMore") 
+                self:moreTickets() 
             end) 
         end
     end
@@ -111,20 +108,23 @@ function ShareManager:moreTickets()
                     twitter.follow(function()
                         native.setActivityIndicator( false )        
                         userManager.user.twitterFan = true
-                        router.resetScreen()
-                        self:refreshScene()
                         userManager:giftStock(TWITTER_FAN_TICKETS)
+                        analytics.event("Social", "followTwitter") 
                     end) 
                 end
 
             else
-                -- pas fan et pas connecte | button v2 : connect to enable button
-                imageTwitter = I "stock.twitter.2.png"
+                -- pas fan et pas connecte | button v3 : connect + follow
+                imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function() 
                     twitter.connect(function()
                         viewManager.closePopin() 
-                        router.resetScreen()
-                        self:refreshScene()
+                        twitter.follow(function()
+                            native.setActivityIndicator( false )        
+                            userManager.user.twitterFan = true
+                            userManager:giftStock(TWITTER_FAN_TICKETS)
+                            analytics.event("Social", "followTwitter") 
+                        end) 
                     end) 
                 end
 
@@ -137,10 +137,9 @@ function ShareManager:moreTickets()
         actionTwitter = function() 
             twitter.connect(function()
                 viewManager.closePopin() 
-                router.resetScreen()
-                self:refreshScene()
                 userManager:giftStock(TWITTER_CONNECTION_TICKETS)
                 analytics.event("Social", "linkedTwitterFromMore") 
+                self:moreTickets() 
             end) 
         end
     end
@@ -214,10 +213,9 @@ function ShareManager:inviteForInstants()
         actionFacebook = function() 
             facebook.connect(function()
                 viewManager.closePopin() 
-                router.resetScreen()
-                self:refreshScene()
                 userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
                 analytics.event("Social", "linkedFacebookFromInvite") 
+                self:inviteForInstants() 
             end) 
         end
 
@@ -346,10 +344,9 @@ function ShareManager:shareForInstants()
         actionFacebook = function() 
             facebook.connect(function()
                 viewManager.closePopin() 
-                router.resetScreen()
-                self:refreshScene()
                 userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
                 analytics.event("Social", "linkedFacebookFromShare") 
+                self:shareForInstants() 
             end) 
         end
     end
@@ -435,10 +432,9 @@ function ShareManager:shareForInstants()
         actionTwitter = function() 
             twitter.connect(function()
                 viewManager.closePopin() 
-                router.resetScreen()
-                self:refreshScene()
                 userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
-                analytics.event("Social", "linkedTwitterFromShare") 
+                analytics.event("Social", "linkedTwitterFromShare")
+                self:shareForInstants() 
             end) 
         end
     end
@@ -509,7 +505,7 @@ function ShareManager:noMoreTickets()
     popup.more.y   = display.contentHeight*0.65
 
     utils.onTouch(popup.more, function() 
-        self:shareForInstants() 
+        self:moreTickets() 
     end)
 
     --------------------------
@@ -633,6 +629,281 @@ function ShareManager:tweet()
         end 
         
     end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function ShareManager:openRewards1()
+
+    local top   = display.contentHeight * 0.3
+    local yGap  = display.contentHeight*0.082
+
+    local popup = viewManager.showPopup()
+
+    --------------------------
+
+
+    hud.title    = display.newImage(popup, I "rewards.stock.title.png")
+    hud.title.anchorX  = 0
+    hud.title.anchorY  = 0.5
+    hud.title.x   = display.contentWidth*0.1
+    hud.title.y   = display.contentHeight*0.15
+
+    --------------------------
+    
+    hud.sep    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x        = display.contentWidth*0.5
+    hud.sep.y       = display.contentHeight*0.2
+
+    --------------------------
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "Increase your stock of Tickets", 
+        fontSize        = 35,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.23,
+        anchorX         = 0,
+    })
+
+    --------------------------
+
+    for i = 1,6 do
+        hud.line    = display.newImage(popup, I "rewards.stock".. i ..".png")
+        hud.line.x    = display.contentWidth*0.5
+        hud.line.y    = display.contentHeight*0.215 + display.contentHeight*0.09 *i
+    end
+
+    --------------------------
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "*Only for the next drawing", 
+        fontSize        = 29,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.82,
+        anchorX         = 0,
+    })
+    
+    --------------------------
+
+    hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x   = display.contentWidth*0.5
+    hud.sep.y   = display.contentHeight*0.84
+
+    hud.next = viewManager.newText({
+        parent    = popup,
+        text    = T "NEXT" .. "  >", 
+        fontSize  = 49,  
+        x     = display.contentWidth * 0.5,
+        y     = display.contentHeight*0.895,
+    })
+
+    utils.setGreen(hud.next)
+
+    utils.onTouch(hud.next, function()
+        viewManager.closePopup(popup) 
+        self:openRewards2() 
+    end)
+
+    ---------------------------------------------------------------
+
+    hud.close    = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    hud.close.x   = display.contentWidth*0.89
+    hud.close.y   = display.contentHeight*0.085
+
+    utils.onTouch(hud.close, function() viewManager.closePopup(popup) end)
+
+end
+
+------------------------------------------
+
+function ShareManager:openRewards2()
+
+    local top  = display.contentHeight * 0.3
+    local yGap = display.contentHeight*0.082
+
+    local popup = viewManager.showPopup()
+
+    --------------------------
+
+    hud.title           = display.newImage(popup, I "rewards.instant.title.png")
+    hud.title.anchorX  = 0
+    hud.title.anchorY  = 0.5
+    hud.title.x   = display.contentWidth*0.1
+    hud.title.y   = display.contentHeight*0.15
+
+    --------------------------
+    
+    hud.sep       = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x       = display.contentWidth*0.5
+    hud.sep.y       = display.contentHeight*0.2
+    
+    --------------------------
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "Play right now thanks to Instant Tickets", 
+        fontSize        = 34,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.23,
+        anchorX         = 0,
+    })
+    
+    --------------------------
+
+    for i = 1,5 do
+        hud.line        = display.newImage(popup, I "rewards.instant".. i ..".png")
+        hud.line.x      = display.contentWidth*0.5
+        hud.line.y      = display.contentHeight*0.205 + display.contentHeight*0.1 *i
+    end
+
+    --------------------------
+
+    hud.sep       = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x       = display.contentWidth*0.5
+    hud.sep.y       = display.contentHeight*0.84
+
+    --------------------------
+    
+    hud.next = viewManager.newText({
+        parent    = popup,
+        text    = "<  " .. T "PREVIOUS", 
+        fontSize  = 49,  
+        x     = display.contentWidth * 0.5,
+        y     = display.contentHeight*0.895,
+        anchorX         = 1,
+    })
+
+    utils.setGreen(hud.next)
+
+    utils.onTouch(hud.next, function() 
+        viewManager.closePopup(popup) 
+        self:openRewards1() 
+    end)
+
+    --------------------------
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "*For the sponsor and the sponsored user (2 draws min.)", 
+        fontSize        = 29,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.785,
+        anchorX         = 0,
+    })
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "** Per post (max. 4 Instants per draw)", 
+        fontSize        = 29,  
+        x               = display.contentWidth * 0.1,
+        y               = display.contentHeight*0.81,
+        anchorX         = 0,
+    })
+    
+    --------------------------
+
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "NEXT" .. "  >", 
+        fontSize        = 49,  
+        x               = display.contentWidth * 0.6,
+        y               = display.contentHeight*0.895,
+        anchorX         = 0,
+    })
+
+    utils.setGreen(hud.next)
+
+    utils.onTouch(hud.next, function()
+        viewManager.closePopup(popup) 
+        self:openRewards3() 
+    end)
+
+    ---------------------------------------------------------------
+
+    hud.close           = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    hud.close.x         = display.contentWidth*0.89
+    hud.close.y         = display.contentHeight*0.085
+
+    utils.onTouch(hud.close, function() viewManager.closePopup(popup) end)
+
+end
+
+
+------------------------------------------
+
+function ShareManager:openRewards3()
+
+    local top  = display.contentHeight * 0.3
+    local yGap = display.contentHeight*0.082
+
+    local popup = viewManager.showPopup()
+
+    --------------------------
+
+    hud.title           = display.newImage(popup, I "rewards.charity.title.png")
+    hud.title.anchorX  = 0
+    hud.title.anchorY  = 0.5
+    hud.title.x   = display.contentWidth*0.1
+    hud.title.y   = display.contentHeight*0.15
+
+    --------------------------
+
+    hud.sep       = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x       = display.contentWidth*0.5
+    hud.sep.y       = display.contentHeight*0.2
+
+    --------------------------
+    
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "The more you play Adillions, the more you contribute to charities", 
+        fontSize        = 35,  
+        x               = display.contentWidth  * 0.1,
+        y               = display.contentHeight * 0.24,
+        width           = display.contentWidth  * 0.8,
+        heigth          = display.contentHeight * 0.02,
+        anchorX         = 0,
+        align           = "left"
+    })
+    
+    --------------------------
+
+    for i = 1,5 do
+        hud.line        = display.newImage(popup, I "rewards.charity".. i ..".png")
+        hud.line.x      = display.contentWidth*0.5
+        hud.line.y      = display.contentHeight*0.22 + display.contentHeight*0.11 *i
+    end
+
+    --------------------------
+
+    hud.sep       = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x       = display.contentWidth*0.5
+    hud.sep.y       = display.contentHeight*0.84
+
+    hud.next = viewManager.newText({
+        parent    = popup,
+        text    = "<  " .. T "PREVIOUS", 
+        fontSize  = 49,  
+        x               = display.contentWidth * 0.5,
+        y               = display.contentHeight*0.895,
+        anchorX         = 1,
+    })
+
+    utils.setGreen(hud.next)
+
+    utils.onTouch(hud.next, function() 
+        viewManager.closePopup(popup) 
+        self:openRewards2() 
+    end)
+
+    popup.close   = display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x   = display.contentWidth*0.75
+    popup.close.y   = display.contentHeight*0.895
+
+    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
+
 end
 
 -----------------------------------------------------------------------------------------
