@@ -197,7 +197,10 @@ function UserManager:updatedPlayer(player, next)
     -- adding all bonusTickets
     self.user.perpetualBonusTickets = 0
     self:setCharityBonus()    
-    self:checkFanStatus(next)
+    self:checkFanStatus(function()
+        next()
+        facebook.checkThemeLiked()
+    end)
 end
 
 -----------------------------------------------------------------------------------------
@@ -809,24 +812,13 @@ function UserManager:checkTicketTiming()
 
         ----------------------------------------------------
 
-
-        popup.multiLineText = display.newText({
-            parent = popup,
-            text   = T "Play right now thanks to Instant Tickets",  
-            width  = display.contentWidth*0.75,  
-            height  = display.contentHeight*0.25,  
-            x    = display.contentWidth*0.5,
-            y    = display.contentHeight*0.65,
-            font   = FONT, 
-            fontSize = fontSize,
-            align  = "center",
-        })
-
-        popup.multiLineText:setFillColor(0)
+        popup.textor          = display.newImage( popup, I "timer.or.png")
+        popup.textor.x        = display.contentWidth*0.5
+        popup.textor.y        = display.contentHeight*0.65
 
         --------------------------
 
-        popup.more     = display.newImage( popup, I "more.instant.png")
+        popup.more     = display.newImage( popup, I "timer.play.png")
         popup.more.x     = display.contentWidth*0.5
         popup.more.y     = display.contentHeight*0.71
 

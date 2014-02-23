@@ -244,6 +244,7 @@ end
 
 function ShareManager:shareForInstants()
 
+    print("----- shareForInstants")
     -----------------------------------
 
     viewManager.showPopin()
@@ -265,15 +266,21 @@ function ShareManager:shareForInstants()
     -- FB BUTTON
     -----------------------------------
 
+    print("----- facebook")
     local actionFacebook    = nil
     local imageFacebook     = nil
 
     if(userManager.user.facebookId) then
         -- linked
 
+        print("LINKED")
+
         if(userManager.user.themeLiked) then
+            print("themeLiked")
 
             if(userManager.user.hasPostOnFacebook) then
+
+                print("hasPostOnFacebook")
                 -- theme liked + hasPost | button v5
                 imageFacebook   = I "share.facebook.5.png"
                 actionFacebook  = function()
@@ -284,6 +291,7 @@ function ShareManager:shareForInstants()
 
             else
 
+                print(" ! hasPostOnFacebook")
                 if(GLOBALS.savedData.facebookAccessToken) then
 
                     -- pas encore post et connecte | button v4 : postOnWall
@@ -311,6 +319,7 @@ function ShareManager:shareForInstants()
 
         else
             -- theme not liked
+            print(" ! theme liked")
 
             if(GLOBALS.savedData.facebookAccessToken) then
 
@@ -339,6 +348,7 @@ function ShareManager:shareForInstants()
         end
 
     else
+        print(" !  linked")
         -- not linked button v1 : connect to link
         imageFacebook = I "share.facebook.1.png"
         actionFacebook = function() 
@@ -355,15 +365,21 @@ function ShareManager:shareForInstants()
     -- TWITTER BUTTON
     -----------------------------------
 
+    print("TWITTER")
+
     local imageTwitter     = nil
     local actionTwitter    = nil
 
     if(userManager.user.twitterId) then
         -- linked
+        print("linked")
 
         if(userManager.user.hasTweetTheme) then
+            print("hasTweetTheme")
 
             if(userManager.user.hasTweet) then
+
+                print("hasTweet")
                 -- theme tweeted + tweet | button v5
                 imageTwitter = I "share.twitter.5.png"
                 actionTwitter  = function()
@@ -373,6 +389,7 @@ function ShareManager:shareForInstants()
                 end
             else
 
+                print("! hasTweet")
                 if(twitter.connected) then
 
                     -- pas encore tweet et connecte | button v4 : tweet
@@ -401,6 +418,7 @@ function ShareManager:shareForInstants()
         else
             -- theme not tweeted   
 
+                print("! hasTweetTheme")
             if(twitter.connected) then
 
                 -- theme not tweeted et connecte | button v3 : tweet theme
@@ -427,6 +445,7 @@ function ShareManager:shareForInstants()
         end
 
     else
+        print("! linked")
         -- not linked button v1 : connect to link
         imageTwitter = I "share.twitter.1.png"
         actionTwitter = function() 
@@ -580,12 +599,12 @@ function ShareManager:shareOnWall()
 
         viewManager.closePopup(popup)
         viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
-        
+
         if(not userManager.user.hasPostOnFacebook) then
             userManager.user.hasPostOnFacebook = true
             userManager:giftInstants(NB_INSTANTS_PER_POST)
         end
-         
+
     end)
 end
 
@@ -600,15 +619,15 @@ function ShareManager:tweetTheme()
 
         viewManager.closePopup(popup)
         viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
-        
+
         print("tweet ok")
         print(userManager.user.hasTweetTheme)
-        
+
         if(not userManager.user.hasTweetTheme) then
             userManager.user.hasTweetTheme = true
             userManager:giftInstants(NB_INSTANTS_PER_TWEET)
         end
-         
+
     end)
 end
 
@@ -622,12 +641,12 @@ function ShareManager:tweet()
 
         viewManager.closePopup(popup)
         viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
-        
+
         if(not userManager.user.hasTweet) then
             userManager.user.hasTweet = true
             userManager:giftInstants(NB_INSTANTS_PER_TWEET)
         end 
-        
+
     end)
 end
 
@@ -650,13 +669,13 @@ function ShareManager:openRewards1()
     hud.title.y   = display.contentHeight*0.15
 
     --------------------------
-    
+
     hud.sep    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x        = display.contentWidth*0.5
     hud.sep.y       = display.contentHeight*0.2
 
     --------------------------
-    
+
     hud.next = viewManager.newText({
         parent          = popup,
         text            = T "Increase your stock of Tickets", 
@@ -675,7 +694,7 @@ function ShareManager:openRewards1()
     end
 
     --------------------------
-    
+
     hud.next = viewManager.newText({
         parent          = popup,
         text            = T "*Only for the next drawing", 
@@ -684,7 +703,7 @@ function ShareManager:openRewards1()
         y               = display.contentHeight*0.82,
         anchorX         = 0,
     })
-    
+
     --------------------------
 
     hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
@@ -734,13 +753,13 @@ function ShareManager:openRewards2()
     hud.title.y   = display.contentHeight*0.15
 
     --------------------------
-    
+
     hud.sep       = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x       = display.contentWidth*0.5
     hud.sep.y       = display.contentHeight*0.2
-    
+
     --------------------------
-    
+
     hud.next = viewManager.newText({
         parent          = popup,
         text            = T "Play right now thanks to Instant Tickets", 
@@ -749,7 +768,7 @@ function ShareManager:openRewards2()
         y               = display.contentHeight*0.23,
         anchorX         = 0,
     })
-    
+
     --------------------------
 
     for i = 1,5 do
@@ -765,7 +784,7 @@ function ShareManager:openRewards2()
     hud.sep.y       = display.contentHeight*0.84
 
     --------------------------
-    
+
     hud.next = viewManager.newText({
         parent    = popup,
         text    = "<  " .. T "PREVIOUS", 
@@ -783,7 +802,7 @@ function ShareManager:openRewards2()
     end)
 
     --------------------------
-    
+
     hud.next = viewManager.newText({
         parent          = popup,
         text            = T "*For the sponsor and the sponsored user (2 draws min.)", 
@@ -792,7 +811,7 @@ function ShareManager:openRewards2()
         y               = display.contentHeight*0.785,
         anchorX         = 0,
     })
-    
+
     hud.next = viewManager.newText({
         parent          = popup,
         text            = T "** Per post (max. 4 Instants per draw)", 
@@ -801,7 +820,7 @@ function ShareManager:openRewards2()
         y               = display.contentHeight*0.81,
         anchorX         = 0,
     })
-    
+
     --------------------------
 
     hud.next = viewManager.newText({
@@ -855,7 +874,7 @@ function ShareManager:openRewards3()
     hud.sep.y       = display.contentHeight*0.2
 
     --------------------------
-    
+
     hud.next = viewManager.newText({
         parent          = popup,
         text            = T "The more you play Adillions, the more you contribute to charities", 
@@ -867,7 +886,7 @@ function ShareManager:openRewards3()
         anchorX         = 0,
         align           = "left"
     })
-    
+
     --------------------------
 
     for i = 1,5 do

@@ -54,19 +54,21 @@ function scene:drawScene()
     -- ---------------------------------------------------------------
 
     viewManager.drawBorder( hud.board, 
-    display.contentWidth*0.5, self.top + display.contentHeight*0.02, 
-    display.contentWidth*0.9, 200,
+    display.contentWidth*0.65, self.top + display.contentHeight*0.02, 
+    display.contentWidth*0.6, 180,
     250,250,250
     )  
 
     viewManager.newText({
-        parent    = hud.board, 
-        text    = userManager.user.userName,         
-        x     = display.contentWidth*0.4,
-        y     = self.top + display.contentHeight*0.02,
-        fontSize   = 35,
-        anchorX    = 0,
-        anchorY    = 0.5,
+        parent      = hud.board, 
+        text        = userManager.user.userName,         
+        x           = display.contentWidth*0.65,
+        y           = self.top + display.contentHeight*0.02,
+        width       = display.contentWidth * 0.5,
+        align       = "center" ,
+        fontSize    = 44,
+        anchorX     = 0.5,
+        anchorY     = 0.5,
     })
 
 

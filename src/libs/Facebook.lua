@@ -17,6 +17,7 @@ module(..., package.seeall)
 
 function login()
     print("--- facebook login")
+    coronaFacebook.logout()
     native.setActivityIndicator( true )
     coronaFacebook.login( FACEBOOK_APP_ID, loginListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
 end
@@ -27,6 +28,7 @@ local afterFacebookConnection
 
 function connect(next)
     print("--- facebook connect")
+    coronaFacebook.logout()
     native.setActivityIndicator( true )
     coronaFacebook.login( FACEBOOK_APP_ID, connectListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
     afterFacebookConnection = next
@@ -242,20 +244,35 @@ end
 
 -----------------------------------------------------------------------------------------
 
+-- 1 login - updatedPlayer - checkThemeLiked : nil
+-- 2 nextlottery : false/true
+-- 3 update - updatedPlayer - checkThemeLiked : false/true
 function checkThemeLiked()
 
-    userManager.user.themeLiked = false
+    print("checkThemeLiked", GLOBALS.savedData.facebookAccessToken)
+    local theme = lotteryManager.nextLottery.theme
+    if(not theme) then
+        userManager.user.themeLiked = nil
+        return
+    else
+        userManager.user.themeLiked = false
+    end
 
     if(GLOBALS.savedData.facebookAccessToken) then
 
-        local theme = lotteryManager.nextLottery.theme
 
         local url = "https://graph.facebook.com/me/"..FACEBOOK_APP_NAMESPACE..":enjoy?"
         ..  "access_token=" .. GLOBALS.savedData.facebookAccessToken
 
+        print("---")
+        utils.print(theme)
+        print("---")
+
         network.request(url , "GET", function(result)
             local response = json.decode(result.response)
             local liked = false
+
+            utils.print(response)
 
             if(#response.data > 0) then 
                 for i = 1,#response.data do

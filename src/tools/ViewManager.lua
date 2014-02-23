@@ -310,10 +310,9 @@ end
 
 function refreshHomeTimer()
 
-    print("-----------")
-    print(os.time())
-    print(system.getTimer())
-    
+--    print("-----------")
+--    print(os.time())
+--    print(system.getTimer())
     
     if(hud.timer) then timer.cancel(hud.timer) end
 

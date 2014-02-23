@@ -258,10 +258,6 @@ function scene:drawNextLottery( event )
     viewManager.drawRemoteImage(url, hud, display.contentWidth*0.5, display.contentHeight * 0.75, 1, 1, function(image) image:toBack() end, lotteryManager.nextDrawing.theme.uid)
 
     ------------------
-
-    facebook.checkThemeLiked()
-
-    ------------------
 end
 
 ------------------------------------------

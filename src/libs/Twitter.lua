@@ -290,22 +290,27 @@ function doTweet()
         utils.tprint(response)
 
         if(response.errors) then
-
-            twitter.logout()
-
-            if(values[1] == "isFollowing") then
-                -- pas connecte lors du check isTwitterFan
-                if(callback.next) then
-                    callback.next()
-                end
-
+            
+            if(response.errors[1].code == 187) then 
+                -- message: Status is a duplicate.
+                delegate.twitterSuccess()
             else
-                twitter.connect(function()
-                    tweet(callback, postMessage)
-                end)
-
+                twitter.logout()
+    
+                if(values[1] == "isFollowing") then
+                    -- pas connecte lors du check isTwitterFan
+                    if(callback.next) then
+                        callback.next()
+                    end
+    
+                else
+                    twitter.connect(function()
+                        tweet(callback, postMessage)
+                    end)
+    
+                end
             end
-
+    
         else
             -- Return the following: type of request, screen name, response
             delegate.twitterSuccess( values[1], screen_name, response )
