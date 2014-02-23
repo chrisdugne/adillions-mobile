@@ -66,7 +66,6 @@ function ShareManager:moreTickets()
                         router.resetScreen()
                         self:refreshScene()
                         facebook.openFacebookPage()
-                        userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
                     end) 
                 end
 
@@ -81,7 +80,8 @@ function ShareManager:moreTickets()
                 viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
-                userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
+                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
+                analytics.event("Social", "linkedFacebookFromMore") 
             end) 
         end
     end
@@ -113,7 +113,7 @@ function ShareManager:moreTickets()
                         userManager.user.twitterFan = true
                         router.resetScreen()
                         self:refreshScene()
-                        userManager.giftStock(TWITTER_FAN_TICKETS)
+                        userManager:giftStock(TWITTER_FAN_TICKETS)
                     end) 
                 end
 
@@ -125,7 +125,6 @@ function ShareManager:moreTickets()
                         viewManager.closePopin() 
                         router.resetScreen()
                         self:refreshScene()
-                        userManager.giftStock(TWITTER_CONNECTION_TICKETS)
                     end) 
                 end
 
@@ -140,7 +139,8 @@ function ShareManager:moreTickets()
                 viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
-                userManager.giftStock(TWITTER_CONNECTION_TICKETS)
+                userManager:giftStock(TWITTER_CONNECTION_TICKETS)
+                analytics.event("Social", "linkedTwitterFromMore") 
             end) 
         end
     end
@@ -203,8 +203,7 @@ function ShareManager:inviteForInstants()
                 facebook.connect(function()
                     viewManager.closePopin() 
                     router.openInviteFriends(backToHome)
-                    analytics.event("Social", "openFacebookFriendListAfterConnection") 
-                    userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
+                    analytics.event("Social", "openFacebookFriendList") 
                 end) 
             end
         end
@@ -217,7 +216,8 @@ function ShareManager:inviteForInstants()
                 viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
-                userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
+                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
+                analytics.event("Social", "linkedFacebookFromInvite") 
             end) 
         end
 
@@ -225,9 +225,9 @@ function ShareManager:inviteForInstants()
 
     -----------------------------------
 
-    hud.popin.buttonFacebook         = display.newImage( hud.popin, imageFacebook)  
-    hud.popin.buttonFacebook.x       = display.contentWidth * -0.325
-    hud.popin.buttonFacebook.y       = hud.popin.contentMiddle
+    hud.popin.buttonFacebook        = display.newImage( hud.popin, imageFacebook)  
+    hud.popin.buttonFacebook.x      = display.contentWidth * -0.325
+    hud.popin.buttonFacebook.y      = hud.popin.contentMiddle
     utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
 
     hud.popin.sms                   = display.newImage( hud.popin, I "invite.sms.png")  
@@ -239,8 +239,6 @@ function ShareManager:inviteForInstants()
     hud.popin.email.x               = display.contentWidth * 0.325
     hud.popin.email.y               = hud.popin.contentMiddle
     utils.onTouch(hud.popin.email, function() self:email() end)
-
-    ----------------------------------------------------------------------------------------------------
 
 end
 
@@ -255,7 +253,7 @@ function ShareManager:shareForInstants()
 
     -----------------------------------
 
-    hud.popin.title         = display.newImage( hud.popin, I "stock.title.png")  
+    hud.popin.title         = display.newImage( hud.popin, I "instant.title.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
     hud.popin.title.y       = hud.popin.headerMiddle
     hud.popin.title.anchorX = 0
@@ -279,7 +277,7 @@ function ShareManager:shareForInstants()
 
             if(userManager.user.hasPostOnFacebook) then
                 -- theme liked + hasPost | button v5
-                imageFacebook   = I "stock.facebook.5.png"
+                imageFacebook   = I "share.facebook.5.png"
                 actionFacebook  = function()
                     self:shareOnWall()
                     analytics.event("Social", "facebookShareWithoutReward")
@@ -291,7 +289,7 @@ function ShareManager:shareForInstants()
                 if(GLOBALS.savedData.facebookAccessToken) then
 
                     -- pas encore post et connecte | button v4 : postOnWall
-                    imageFacebook = I "stock.facebook.4.png"
+                    imageFacebook = I "share.facebook.4.png"
                     actionFacebook = function()
                         self:shareOnWall()
                         analytics.event("Social", "facebookShare") 
@@ -300,13 +298,12 @@ function ShareManager:shareForInstants()
 
                 else
                     -- pas encore post et pas connecte | button v4 : connexion + postOnWall
-                    imageFacebook = I "stock.facebook.4.png"
+                    imageFacebook = I "share.facebook.4.png"
                     actionFacebook = function() 
                         facebook.connect(function()
-                            userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
-                            self:shareOnWall()
-                            analytics.event("Social", "facebookShareAfterConnection") 
                             viewManager.closePopin() 
+                            self:shareOnWall() 
+                            analytics.event("Social", "facebookShare") 
                         end) 
                     end
 
@@ -320,7 +317,7 @@ function ShareManager:shareForInstants()
             if(GLOBALS.savedData.facebookAccessToken) then
 
                 -- theme not liked et connecte | button v3 : like theme
-                imageFacebook = I "stock.facebook.4.png"
+                imageFacebook = I "share.facebook.4.png"
                 actionFacebook = function()
                     facebook.likeTheme()
                     analytics.event("Social", "facebookLikeTheme") 
@@ -329,12 +326,11 @@ function ShareManager:shareForInstants()
 
             else
                 -- theme not liked  et pas connecte | button v3 : connexion + like theme
-                imageFacebook = I "stock.facebook.4.png"
+                imageFacebook = I "share.facebook.4.png"
                 actionFacebook = function() 
                     facebook.connect(function()
-                        userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
-                        facebook.likeTheme()
-                        analytics.event("Social", "facebookLikeThemeAfterConnection") 
+                        facebook.likeTheme() 
+                        analytics.event("Social", "facebookLikeTheme") 
                         viewManager.closePopin() 
                     end) 
                 end
@@ -346,13 +342,14 @@ function ShareManager:shareForInstants()
 
     else
         -- not linked button v1 : connect to link
-        imageFacebook = I "stock.facebook.1.png"
+        imageFacebook = I "share.facebook.1.png"
         actionFacebook = function() 
             facebook.connect(function()
                 viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
-                userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
+                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
+                analytics.event("Social", "linkedFacebookFromShare") 
             end) 
         end
     end
@@ -371,32 +368,32 @@ function ShareManager:shareForInstants()
 
             if(userManager.user.hasTweet) then
                 -- theme tweeted + tweet | button v5
-                imageTwitter = I "stock.twitter.5.png"
+                imageTwitter = I "share.twitter.5.png"
                 actionTwitter  = function()
+                    viewManager.closePopin() 
                     self:tweet()
                     analytics.event("Social", "tweetWithoutReward") 
-                    viewManager.closePopin() 
                 end
             else
 
                 if(twitter.connected) then
 
                     -- pas encore tweet et connecte | button v4 : tweet
-                    imageTwitter = I "stock.twitter.4.png"
+                    imageTwitter = I "share.twitter.4.png"
                     actionTwitter = function()
+                        viewManager.closePopin() 
                         self:tweet()
                         analytics.event("Social", "tweet") 
-                        viewManager.closePopin() 
                     end
 
                 else
                     -- pas encore tweet et pas connecte | button v4 : connexion + tweet
-                    imageTwitter = I "stock.twitter.4.png"
+                    imageTwitter = I "share.twitter.4.png"
                     actionTwitter = function() 
                         twitter.connect(function()
-                            self:tweet()
-                            analytics.event("Social", "tweetAfterConnection") 
                             viewManager.closePopin() 
+                            self:tweet() 
+                            analytics.event("Social", "tweet") 
                         end) 
                     end
 
@@ -405,26 +402,26 @@ function ShareManager:shareForInstants()
             end
 
         else
-            -- theme not tweeted        
+            -- theme not tweeted   
 
             if(twitter.connected) then
 
                 -- theme not tweeted et connecte | button v3 : tweet theme
-                imageTwitter = I "stock.twitter.3.png"
+                imageTwitter = I "share.twitter.3.png"
                 actionTwitter = function()
+                    viewManager.closePopin() 
                     self:tweetTheme()
                     analytics.event("Social", "tweetTheme") 
-                    viewManager.closePopin() 
                 end
 
             else
                 -- theme not tweeted  et pas connecte | button v3 : connexion + tweet theme
-                imageTwitter = I "stock.twitter.3.png"
+                imageTwitter = I "share.twitter.3.png"
                 actionTwitter = function() 
                     twitter.connect(function()
-                        self:tweetTheme()
-                        analytics.event("Social", "tweetThemeAfterConnection") 
                         viewManager.closePopin() 
+                        self:tweetTheme()
+                        analytics.event("Social", "tweetTheme") 
                     end) 
                 end
 
@@ -434,12 +431,14 @@ function ShareManager:shareForInstants()
 
     else
         -- not linked button v1 : connect to link
-        imageTwitter = I "stock.twitter.1.png"
+        imageTwitter = I "share.twitter.1.png"
         actionTwitter = function() 
             twitter.connect(function()
                 viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
+                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
+                analytics.event("Social", "linkedTwitterFromShare") 
             end) 
         end
     end
@@ -588,7 +587,7 @@ function ShareManager:shareOnWall()
         
         if(not userManager.user.hasPostOnFacebook) then
             userManager.user.hasPostOnFacebook = true
-            userManager.giftInstants(NB_INSTANTS_PER_POST)
+            userManager:giftInstants(NB_INSTANTS_PER_POST)
         end
          
     end)
@@ -600,14 +599,18 @@ function ShareManager:tweetTheme()
 
     local text = translate(lotteryManager.global.tweetTheme)
 
+    print(userManager.user.hasTweetTheme)
     twitter.tweetMessage(text, function()
 
         viewManager.closePopup(popup)
         viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
         
+        print("tweet ok")
+        print(userManager.user.hasTweetTheme)
+        
         if(not userManager.user.hasTweetTheme) then
             userManager.user.hasTweetTheme = true
-            userManager.giftInstants(NB_INSTANTS_PER_TWEET)
+            userManager:giftInstants(NB_INSTANTS_PER_TWEET)
         end
          
     end)
@@ -626,7 +629,7 @@ function ShareManager:tweet()
         
         if(not userManager.user.hasTweet) then
             userManager.user.hasTweet = true
-            userManager.giftInstants(NB_INSTANTS_PER_TWEET)
+            userManager:giftInstants(NB_INSTANTS_PER_TWEET)
         end 
         
     end)

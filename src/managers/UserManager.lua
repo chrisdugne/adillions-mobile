@@ -186,6 +186,12 @@ function UserManager:updatedPlayer(player, next)
     if(self.user.notifications) then
         self.user.notifications = json.decode(self.user.notifications)
         self:checkNotifications()
+    else
+        self.user.notifications = {
+            prizes      = 0,
+            instants    = 0,
+            stocks      = 0
+        }
     end
     
     -- adding all bonusTickets
@@ -555,8 +561,6 @@ function UserManager:updatePlayer(next)
 
     print("------------- updatePlayer ")
     self.user.lotteryTickets = nil -- just remove all that long json useless for updates (BUG 2014-02-03). it'll be back at server callback. 
-
-    native.setActivityIndicator( true )
     self.user.lang = LANG
 
     utils.postWithJSON({
@@ -564,8 +568,6 @@ function UserManager:updatePlayer(next)
     }, 
     SERVER_URL .. "updatePlayer", 
     function(result)
-
-        native.setActivityIndicator( false )
 
         local player = json.decode(result.response)
 
