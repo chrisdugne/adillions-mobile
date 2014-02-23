@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------------------
 
-ShareManager = {}	
+ShareManager = {} 
 
 -----------------------------------------------------------------------------------------
 
@@ -54,6 +54,7 @@ function ShareManager:moreTickets()
                 imageFacebook = I "stock.facebook.3.png"
                 actionFacebook = function()
                     facebook.openFacebookPage()
+                    viewManager.closePopin() 
                 end
 
             else
@@ -61,9 +62,11 @@ function ShareManager:moreTickets()
                 imageFacebook = I "stock.facebook.3.png"
                 actionFacebook = function() 
                     facebook.connect(function()
+                        viewManager.closePopin() 
                         router.resetScreen()
                         self:refreshScene()
                         facebook.openFacebookPage()
+                        userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
                     end) 
                 end
 
@@ -75,8 +78,10 @@ function ShareManager:moreTickets()
         imageFacebook = I "stock.facebook.1.png"
         actionFacebook = function() 
             facebook.connect(function()
+                viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
+                userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
             end) 
         end
     end
@@ -102,11 +107,13 @@ function ShareManager:moreTickets()
                 imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function()
                     native.setActivityIndicator( true )  
+                    viewManager.closePopin() 
                     twitter.follow(function()
                         native.setActivityIndicator( false )        
                         userManager.user.twitterFan = true
                         router.resetScreen()
                         self:refreshScene()
+                        userManager.giftStock(TWITTER_FAN_TICKETS)
                     end) 
                 end
 
@@ -115,8 +122,10 @@ function ShareManager:moreTickets()
                 imageTwitter = I "stock.twitter.2.png"
                 actionTwitter = function() 
                     twitter.connect(function()
+                        viewManager.closePopin() 
                         router.resetScreen()
                         self:refreshScene()
+                        userManager.giftStock(TWITTER_CONNECTION_TICKETS)
                     end) 
                 end
 
@@ -128,8 +137,10 @@ function ShareManager:moreTickets()
         imageTwitter = I "stock.twitter.1.png"
         actionTwitter = function() 
             twitter.connect(function()
+                viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
+                userManager.giftStock(TWITTER_CONNECTION_TICKETS)
             end) 
         end
     end
@@ -183,14 +194,17 @@ function ShareManager:inviteForInstants()
         if(GLOBALS.savedData.facebookAccessToken) then
             imageFacebook = I "invite.facebook.3.png"
             actionFacebook = function() 
+                viewManager.closePopin() 
                 router.openInviteFriends(backToHome)
                 analytics.event("Social", "openFacebookFriendList") 
             end
         else
             actionFacebook = function() 
                 facebook.connect(function()
+                    viewManager.closePopin() 
                     router.openInviteFriends(backToHome)
                     analytics.event("Social", "openFacebookFriendListAfterConnection") 
+                    userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
                 end) 
             end
         end
@@ -200,8 +214,10 @@ function ShareManager:inviteForInstants()
         imageFacebook = I "invite.facebook.1.png"
         actionFacebook = function() 
             facebook.connect(function()
+                viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
+                userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
             end) 
         end
 
@@ -266,7 +282,8 @@ function ShareManager:shareForInstants()
                 imageFacebook   = I "stock.facebook.5.png"
                 actionFacebook  = function()
                     self:shareOnWall()
-                    analytics.event("Social", "facebookShareWithoutReward") 
+                    analytics.event("Social", "facebookShareWithoutReward")
+                    viewManager.closePopin() 
                 end
 
             else
@@ -278,6 +295,7 @@ function ShareManager:shareForInstants()
                     actionFacebook = function()
                         self:shareOnWall()
                         analytics.event("Social", "facebookShare") 
+                        viewManager.closePopin() 
                     end
 
                 else
@@ -288,6 +306,7 @@ function ShareManager:shareForInstants()
                             userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
                             self:shareOnWall()
                             analytics.event("Social", "facebookShareAfterConnection") 
+                            viewManager.closePopin() 
                         end) 
                     end
 
@@ -305,6 +324,7 @@ function ShareManager:shareForInstants()
                 actionFacebook = function()
                     facebook.likeTheme()
                     analytics.event("Social", "facebookLikeTheme") 
+                    viewManager.closePopin() 
                 end
 
             else
@@ -315,6 +335,7 @@ function ShareManager:shareForInstants()
                         userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
                         facebook.likeTheme()
                         analytics.event("Social", "facebookLikeThemeAfterConnection") 
+                        viewManager.closePopin() 
                     end) 
                 end
 
@@ -328,9 +349,10 @@ function ShareManager:shareForInstants()
         imageFacebook = I "stock.facebook.1.png"
         actionFacebook = function() 
             facebook.connect(function()
-                userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
+                viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
+                userManager.giftStock(FACEBOOK_CONNECTION_TICKETS)
             end) 
         end
     end
@@ -353,6 +375,7 @@ function ShareManager:shareForInstants()
                 actionTwitter  = function()
                     self:tweet()
                     analytics.event("Social", "tweetWithoutReward") 
+                    viewManager.closePopin() 
                 end
             else
 
@@ -363,6 +386,7 @@ function ShareManager:shareForInstants()
                     actionTwitter = function()
                         self:tweet()
                         analytics.event("Social", "tweet") 
+                        viewManager.closePopin() 
                     end
 
                 else
@@ -372,6 +396,7 @@ function ShareManager:shareForInstants()
                         twitter.connect(function()
                             self:tweet()
                             analytics.event("Social", "tweetAfterConnection") 
+                            viewManager.closePopin() 
                         end) 
                     end
 
@@ -389,6 +414,7 @@ function ShareManager:shareForInstants()
                 actionTwitter = function()
                     self:tweetTheme()
                     analytics.event("Social", "tweetTheme") 
+                    viewManager.closePopin() 
                 end
 
             else
@@ -398,6 +424,7 @@ function ShareManager:shareForInstants()
                     twitter.connect(function()
                         self:tweetTheme()
                         analytics.event("Social", "tweetThemeAfterConnection") 
+                        viewManager.closePopin() 
                     end) 
                 end
 
@@ -410,6 +437,7 @@ function ShareManager:shareForInstants()
         imageTwitter = I "stock.twitter.1.png"
         actionTwitter = function() 
             twitter.connect(function()
+                viewManager.closePopin() 
                 router.resetScreen()
                 self:refreshScene()
             end) 
@@ -448,38 +476,38 @@ function ShareManager:noMoreTickets()
 
     ----------------------------------------------------------------------------------------------------
 
-    popup.icon 			= display.newImage( popup, "assets/images/icons/PictomaxTicket.png")
-    popup.icon.x 		= display.contentWidth*0.5
-    popup.icon.y 		= display.contentHeight*0.2
+    popup.icon    = display.newImage( popup, "assets/images/icons/PictomaxTicket.png")
+    popup.icon.x   = display.contentWidth*0.5
+    popup.icon.y   = display.contentHeight*0.2
 
-    popup.icon 			= display.newImage( popup, I "Sorry.png")
-    popup.icon.x 		= display.contentWidth*0.5
-    popup.icon.y 		= display.contentHeight*0.3
+    popup.icon    = display.newImage( popup, I "Sorry.png")
+    popup.icon.x   = display.contentWidth*0.5
+    popup.icon.y   = display.contentHeight*0.3
 
     ----------------------------------------------------------------------------------------------------
 
     viewManager.newText({
-        parent 			= popup, 
-        text	 		= T "You have reached the maximum number of Tickets for this draw",     
-        x 				= display.contentWidth * 0.5,
-        y 				= display.contentHeight*0.4,
-        width			= display.contentWidth * 0.75,
-        fontSize		= 37,
+        parent    = popup, 
+        text    = T "You have reached the maximum number of Tickets for this draw",     
+        x     = display.contentWidth * 0.5,
+        y     = display.contentHeight*0.4,
+        width   = display.contentWidth * 0.75,
+        fontSize  = 37,
     })
 
     viewManager.newText({
-        parent 			= popup, 
-        text	 		= T "Increase your stock of Tickets",     
-        x 				= display.contentWidth * 0.5,
-        y 				= display.contentHeight*0.5,
-        fontSize		= 37,
+        parent    = popup, 
+        text    = T "Increase your stock of Tickets",     
+        x     = display.contentWidth * 0.5,
+        y     = display.contentHeight*0.5,
+        fontSize  = 37,
     })
 
     --------------------------
 
-    popup.more 			= display.newImage( popup, I "more.tickets.png")
-    popup.more.x 		= display.contentWidth*0.5
-    popup.more.y 		= display.contentHeight*0.65
+    popup.more    = display.newImage( popup, I "more.tickets.png")
+    popup.more.x   = display.contentWidth*0.5
+    popup.more.y   = display.contentHeight*0.65
 
     utils.onTouch(popup.more, function() 
         self:shareForInstants() 
@@ -487,9 +515,9 @@ function ShareManager:noMoreTickets()
 
     --------------------------
 
-    popup.close 		= display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x 		= display.contentWidth*0.5
-    popup.close.y 		= display.contentHeight*0.83
+    popup.close   = display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x   = display.contentWidth*0.5
+    popup.close.y   = display.contentHeight*0.83
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 

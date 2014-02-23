@@ -22,12 +22,12 @@ end
 
 -- globalBack not to have a black screen while changing views
 function initGlobalBack()
---	local globalBack = display.newImageRect( "assets/images/bg.jpg", display.contentWidth, display.contentHeight)  
---	globalBack.x = display.viewableContentWidth*0.5 
---	globalBack.y = display.viewableContentHeight*0.5
---	globalBack:toBack()
+-- local globalBack = display.newImageRect( "assets/images/bg.jpg", display.contentWidth, display.contentHeight)  
+-- globalBack.x = display.viewableContentWidth*0.5 
+-- globalBack.y = display.viewableContentHeight*0.5
+-- globalBack:toBack()
 
---	display.setDefault( "background", 227, 225, 226 )
+-- display.setDefault( "background", 227, 225, 226 )
 end
 
 -----------------------------------------------------------------------------------------
@@ -69,32 +69,32 @@ end
 function initBoard()
     hud.board = widget.newScrollView
     {
-        id 					= "board",
-        top 					= 0,
-        left 					= 0,
-        friction				= 1.5,
-        width	 				= display.contentWidth,
-        height 				= display.contentHeight,
-        bottomPadding 		= MENU_HEIGHT + HEADER_HEIGHT + display.contentHeight*0.1,
-        hideBackground 	= true,
-        horizontalScrollDisabled 	= true,
-        verticalScrollDisabled 		= false,
-        hideScrollBar 					= true,
+        id      = "board",
+        top      = 0,
+        left      = 0,
+        friction    = 1.5,
+        width      = display.contentWidth,
+        height     = display.contentHeight,
+        bottomPadding   = MENU_HEIGHT + HEADER_HEIGHT + display.contentHeight*0.1,
+        hideBackground  = true,
+        horizontalScrollDisabled  = true,
+        verticalScrollDisabled   = false,
+        hideScrollBar      = true,
     }
 end
 
 -----------------------------------------------------------------------------------------
 
 function showPoints(nbPoints)
-    --	local text = viewManager.newText({
-    --		parent 			= hud, 
-    --		text	 			= "+ " .. nbPoints,     
-    --		x 					= display.contentWidth*0.97,
-    --		y 					= display.contentHeight*0.05,
-    --		fontSize 		= 65
-    --	})
+    -- local text = viewManager.newText({
+    --  parent    = hud, 
+    --  text     = "+ " .. nbPoints,     
+    --  x      = display.contentWidth*0.97,
+    --  y      = display.contentHeight*0.05,
+    --  fontSize   = 65
+    -- })
     --
-    --	transition.to(text, { time=1500, alpha=0, x=display.contentWidth*0.84 })
+    -- transition.to(text, { time=1500, alpha=0, x=display.contentWidth*0.84 })
 
     local plural = ""
     if(nbPoints > 1) then plural = 's' end
@@ -112,7 +112,7 @@ function message(message)
     hud.messager = display.newGroup()
     hud.messager.y = -200
 
-    hud.messager.popupRect 		= drawBorder( hud.messager, 
+    hud.messager.popupRect   = drawBorder( hud.messager, 
     0, HEADER_HEIGHT, 
     display.contentWidth+100, HEADER_HEIGHT*0.6,
     240/255,240/255,240/255
@@ -121,11 +121,11 @@ function message(message)
     hud.messager.popupRect.alpha = 0.95
 
     hud.messager.text = viewManager.newText({
-        parent 			= hud.messager, 
-        text	 			= message,     
-        x 					= display.contentWidth*0.5,
-        y 					= HEADER_HEIGHT - 12,
-        fontSize 		= 35
+        parent    = hud.messager, 
+        text     = message,     
+        x      = display.contentWidth*0.5,
+        y      = HEADER_HEIGHT - 12,
+        fontSize   = 35
     })
 
     hud.messager.text:setFillColor(5/255)
@@ -285,9 +285,9 @@ function showPopup(height, square)
         50/255,50/255,50/255
     )  
     
-    backGrey.x 		= display.viewableContentWidth*0.5 
-    backGrey.y 		= display.viewableContentHeight*0.5
-    backGrey.alpha	= 0.85
+    backGrey.x   = display.viewableContentWidth*0.5 
+    backGrey.y   = display.viewableContentHeight*0.5
+    backGrey.alpha = 0.85
 
     local popupRect = display.newImageRect( popup, "assets/images/hud/Popup_BG.png", width, height)
     popupRect.x = display.contentWidth*0.5 
@@ -310,6 +310,11 @@ end
 
 function refreshHomeTimer()
 
+    print("-----------")
+    print(os.time())
+    print(system.getTimer())
+    
+    
     if(hud.timer) then timer.cancel(hud.timer) end
 
     local days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextDrawing.date/1000 - os.time())))
@@ -343,18 +348,18 @@ function refreshPopupTimer(popup, lastTime)
         viewManager.closePopup(popup)
     else
         print("lotteryManager.nextLottery.ticketTimer : " .. lotteryManager.nextLottery.ticketTimer)
-        --	local h = 1 - tonumber(hoursSpent)
+        -- local h = 1 - tonumber(hoursSpent)
         local m = lotteryManager.nextLottery.ticketTimer - 1 - tonumber(minSpent)
         local s = 59 - tonumber(secSpent) 
 
-        --	if(h < 10) then h = "0"..h end 
+        -- if(h < 10) then h = "0"..h end 
         if(m < 10) then m = "0"..m end 
         if(s < 10) then s = "0"..s end 
 
-        --	popup.timerDisplay.text = h .. " : " .. m .. " : " .. s
+        -- popup.timerDisplay.text = h .. " : " .. m .. " : " .. s
         popup.timerDisplay.text = m .. " : " .. s
         popup.timer = timer.performWithDelay(1000, function ()
-            refreshPopupTimer(lastTime)
+            refreshPopupTimer(popup, lastTime)
         end)
     end 
 
@@ -377,7 +382,7 @@ function animatePrice(nextMillis)
         hud.priceCurrentDisplay = math.round(hud.priceCurrentDisplay + toAdd)
 
         if(hud.priceCurrentDisplay >= priceToReach) then
-            hud.priceCurrentDisplay = math.round(priceToReach)	
+            hud.priceCurrentDisplay = math.round(priceToReach) 
         else
             nextMillis = 1000/(priceToReach - hud.priceCurrentDisplay)
             animatePrice(nextMillis)
@@ -392,17 +397,17 @@ end
 function newText(options)
 
     local finalOptions = {}
-    finalOptions.text 		= options.text
-    finalOptions.font 		= options.font or FONT
-    finalOptions.fontSize 	= options.fontSize or 48
-    finalOptions.align 		= options.align or "center"
+    finalOptions.text   = options.text
+    finalOptions.font   = options.font or FONT
+    finalOptions.fontSize  = options.fontSize or 48
+    finalOptions.align   = options.align or "center"
 
     if(options.width) then
-        finalOptions.width	= options.width
+        finalOptions.width = options.width
     end
 
     if(options.height) then
-        finalOptions.height	= options.height
+        finalOptions.height = options.height
     end
 
     local text = display.newText( finalOptions )
@@ -480,7 +485,7 @@ function drawButton(parent, text, x, y, action, width, height)
     button.text:setFillColor(0,0,0)
     utils.onTouch(button, action)
 
-    --	hud.buttons[#hud.buttons] = button 
+    -- hud.buttons[#hud.buttons] = button 
     parent:insert(button)
     parent:insert(button.text)
 
@@ -505,15 +510,15 @@ function drawRemoteImage( url, parent, x, y, scale, alpha, next, prefix )
         insertImage(image, parent, x, y, scale, alpha, next)
     end
 
-end	
+end 
 
 function insertImage(image, parent, x, y, scale, alpha, next)
 
-    image.x 			= x
-    image.y	 		= y
-    image.xScale 	= scale
-    image.yScale 	= scale
-    image.alpha 	= alpha
+    image.x    = x
+    image.y    = y
+    image.xScale  = scale
+    image.yScale  = scale
+    image.alpha  = alpha
 
     parent:insert(image)
 
@@ -525,16 +530,16 @@ end
 ------------------------------------------------------------------
 
 --- menuType
--- 	none | 	1 : classic, white 
--- 				2 : confirmation,green
--- 				3 : grey, white
--- 				
+--  none |  1 : classic, white 
+--     2 : confirmation,green
+--     3 : grey, white
+--     
 function buildMenu(tabSelected, menuType)
 
     local buttonWidth = display.contentWidth/5 - 1
-    local centerOn 	= ""
-    local centerOff 	= ""
-    local playImage 	= ""
+    local centerOn  = ""
+    local centerOff  = ""
+    local playImage  = ""
 
     if(not menuType) then
         menuType = 3
@@ -552,17 +557,17 @@ function buildMenu(tabSelected, menuType)
         playImage = I "OFF3.png"
     end
 
-    local centerOn 	= I "ON3_" .. menuType ..  ".png" 
-    local centerOff 	= I "OFF3_" .. menuType ..  ".png" 
+    local centerOn  = I "ON3_" .. menuType ..  ".png" 
+    local centerOff  = I "OFF3_" .. menuType ..  ".png" 
 
     -- Create the tabBar's buttons
     local tabButtons = 
     {
         {
-            width 				= buttonWidth, 
-            height 				= ICON_SIZE,
-            defaultFile 		= I "OFF1.png",
-            overFile 			= I "ON1.png",
+            width     = buttonWidth, 
+            height     = ICON_SIZE,
+            defaultFile   = I "OFF1.png",
+            overFile    = I "ON1.png",
             onPress = function( event )
                 if(tabSelected ~= 1) then 
                     router.openProfile() 
@@ -571,10 +576,10 @@ function buildMenu(tabSelected, menuType)
             selected = tabSelected == 1
         },
         {
-            width 				= buttonWidth, 
-            height 				= ICON_SIZE,
-            defaultFile 		= I "OFF2.png",
-            overFile 			= I "ON2.png",
+            width     = buttonWidth, 
+            height     = ICON_SIZE,
+            defaultFile   = I "OFF2.png",
+            overFile    = I "ON2.png",
             onPress = function( event )
                 if(tabSelected ~= 2) then 
                     router.openMyTickets() 
@@ -583,16 +588,16 @@ function buildMenu(tabSelected, menuType)
             selected =  tabSelected == 2
         },
         {
-            width 				= buttonWidth, 
-            height 				= ICON_SIZE,
-            defaultFile 		= "assets/images/menus/empty.png",
-            overFile 			= "assets/images/menus/empty.png",
+            width     = buttonWidth, 
+            height     = ICON_SIZE,
+            defaultFile   = "assets/images/menus/empty.png",
+            overFile    = "assets/images/menus/empty.png",
         },
         {
-            width 				= buttonWidth, 
-            height 				= ICON_SIZE,
-            defaultFile 		= I "OFF4.png",
-            overFile 			= I "ON4.png",
+            width     = buttonWidth, 
+            height     = ICON_SIZE,
+            defaultFile   = I "OFF4.png",
+            overFile    = I "ON4.png",
             onPress = function( event )
                 if(tabSelected ~= 4) then 
                     router.openResults() 
@@ -601,10 +606,10 @@ function buildMenu(tabSelected, menuType)
             selected =  tabSelected == 4
         },
         {
-            width 				= buttonWidth, 
-            height 				= ICON_SIZE,
-            defaultFile 		= I "OFF5.png",
-            overFile 			= I "ON5.png",
+            width     = buttonWidth, 
+            height     = ICON_SIZE,
+            defaultFile   = I "OFF5.png",
+            overFile    = I "ON5.png",
             onPress = function( event )
                 if(tabSelected ~= 5) then 
                     router.openInfo() 
@@ -614,23 +619,23 @@ function buildMenu(tabSelected, menuType)
         },
     }
 
-    local leftEdge 	= "assets/images/menus/empty.png"
-    local	rightEdge 	= "assets/images/menus/empty.png"
-    local middle 		= "assets/images/menus/empty.png"
+    local leftEdge  = "assets/images/menus/empty.png"
+    local rightEdge  = "assets/images/menus/empty.png"
+    local middle   = "assets/images/menus/empty.png"
 
     -- Create a tabBar
     local tabBar = widget.newTabBar({
-        left 									= 0,
-        top 									= display.contentHeight - MENU_HEIGHT,
-        width 								= display.contentWidth,
-        height 								= MENU_HEIGHT,
-        backgroundFile 					= "assets/images/menus/menu.bg.png",
-        tabSelectedLeftFile 				= leftEdge,
-        tabSelectedRightFile 			= rightEdge,
-        tabSelectedMiddleFile 			= middle,
-        tabSelectedFrameWidth 			= 20,
-        tabSelectedFrameHeight 			= MENU_HEIGHT,
-        buttons 								= tabButtons,
+        left          = 0,
+        top          = display.contentHeight - MENU_HEIGHT,
+        width         = display.contentWidth,
+        height         = MENU_HEIGHT,
+        backgroundFile      = "assets/images/menus/menu.bg.png",
+        tabSelectedLeftFile     = leftEdge,
+        tabSelectedRightFile    = rightEdge,
+        tabSelectedMiddleFile    = middle,
+        tabSelectedFrameWidth    = 20,
+        tabSelectedFrameHeight    = MENU_HEIGHT,
+        buttons         = tabButtons,
     })
 
     if(tabSelected == 0 or tabSelected == 6) then
@@ -722,8 +727,8 @@ end
 function drawThemeToPick(num,x,y)
 
     local ball = {}
-    ball.selected 	= false
-    ball.num 		= num
+    ball.selected  = false
+    ball.num   = num
 
     local content = ""
 
@@ -748,20 +753,20 @@ function drawThemeToPick(num,x,y)
     end)
 
     hud.text = viewManager.newText({
-        parent 			= hud, 
-        text	 			= content[num].name,     
-        x 					= x,
-        y 					= y + display.contentHeight*0.08,
-        fontSize 		= 40
+        parent    = hud, 
+        text     = content[num].name,     
+        x      = x,
+        y      = y + display.contentHeight*0.08,
+        fontSize   = 40
     })
 
     if(content[num].name2) then
         viewManager.newText({
-            parent 			= hud, 
-            text	 			= content[num].name2,     
-            x 					= x,
-            y 					= y + display.contentHeight*0.12,
-            fontSize 		= 40
+            parent    = hud, 
+            text     = content[num].name2,     
+            x      = x,
+            y      = y + display.contentHeight*0.12,
+            fontSize   = 40
         })
     else
         hud.text.y = hud.text.y + display.contentHeight*0.02
@@ -964,7 +969,7 @@ function drawTicket(parent, lottery, numbers, x, y)
         end
     end
 
-    local alpha = 1	
+    local alpha = 1 
     local themeWon = false
 
     if(lottery.result) then

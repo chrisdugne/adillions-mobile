@@ -10,7 +10,7 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 -- 
 -- NOTE: Code outside of listener functions (below) will only be executed once,
---		 unless storyboard.removeScene() is called.
+--   unless storyboard.removeScene() is called.
 -- 
 -----------------------------------------------------------------------------------------
 
@@ -21,13 +21,13 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. "msignin2?lang=" .. LANG  )
-	self.webView:addEventListener( "urlRequest", function(event) self:signinViewListener(event) end )
-	
-	viewManager.initHeader()
-	self.view:insert(hud)
-	
+ self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
+ self.webView:request( SERVER_URL .. "msignin2?lang=" .. LANG  )
+ self.webView:addEventListener( "urlRequest", function(event) self:signinViewListener(event) end )
+ 
+ viewManager.initHeader()
+ self.view:insert(hud)
+ 
 end
 
 ------------------------------------------
@@ -36,44 +36,44 @@ function scene:signinViewListener( event )
 
     if event.url then
 
-		print("---   signin listener")
-		print(event.url)
+  print("---   signin listener")
+  print(event.url)
 
-		-- idem login
-    	if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
-			self:closeWebView()    		
-			local params = utils.getUrlParams(event.url);
-			
-			GLOBALS.savedData.authToken 	= params.authToken         
-			GLOBALS.savedData.user.email 	= params.email   
-      	utils.saveTable(GLOBALS.savedData, "savedData.json")
+  -- idem login
+     if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
+   self:closeWebView()      
+   local params = utils.getUrlParams(event.url);
+   
+   GLOBALS.savedData.authToken  = params.authToken         
+   GLOBALS.savedData.user.email  = params.email   
+       utils.saveTable(GLOBALS.savedData, "savedData.json")
 
-			userManager:fetchPlayer()
-			
-    	elseif event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()    		
-			print("signin : backToMobile : outside")		
-      	router.openOutside()
-		
-    	elseif event.url == SERVER_URL .. "connectWithFB" then
-			self:closeWebView()    
-    		facebook.login()
-		end
+   userManager:fetchPlayer()
+   
+     elseif event.url == SERVER_URL .. "backToMobile" then
+   self:closeWebView()      
+   print("signin : backToMobile : outside")  
+       router.openOutside()
+  
+     elseif event.url == SERVER_URL .. "connectWithFB" then
+   self:closeWebView()    
+      facebook.login()
+  end
 
     end
 end
 
 function scene:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:signinViewListener(event) end )
-	self.webView:removeSelf()
-	self.webView = nil
+ self.webView:removeEventListener( "urlRequest", function(event) self:signinViewListener(event) end )
+ self.webView:removeSelf()
+ self.webView = nil
 end
 
 ------------------------------------------
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
-	self:refreshScene()
+ self:refreshScene()
 end
 
 -- Called when scene is about to move offscreen:

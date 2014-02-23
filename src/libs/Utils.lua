@@ -5,7 +5,7 @@
 --
 -- Version: 1.5
 --
--- File name	: Utils.lua
+-- File name : Utils.lua
 -- 
 -- Author: Chris Dugne @ Uralys - www.uralys.com
 --
@@ -17,163 +17,163 @@ module(..., package.seeall)
 
 function initGameData()
 
-	GLOBALS.savedData = {
-		requireTutorial 	= true,
-		user 					= {}
-	}
+ GLOBALS.savedData = {
+  requireTutorial  = true,
+  user      = {}
+ }
 
-	utils.saveTable(GLOBALS.savedData, "savedData.json")
+ utils.saveTable(GLOBALS.savedData, "savedData.json")
 end
 
 
 function initOptions()
 
-	GLOBALS.options = {
-		notificationBeforeDraw 	= true,
-		notificationAfterDraw 	= true,
-	}
+ GLOBALS.options = {
+  notificationBeforeDraw  = true,
+  notificationAfterDraw  = true,
+ }
 
-	utils.saveTable(GLOBALS.options, "options.json")
+ utils.saveTable(GLOBALS.options, "options.json")
 end
 
 -----------------------------------------------------------------------------------------
 
 function onTouch(object, action)
-	object:addEventListener	("touch", function(event)
-		if(event.phase == "began") then
-			object.alpha = 0.5
-      	display.getCurrentStage():setFocus( object )
-		elseif event.phase == "ended" or event.phase == "cancelled" then
-			object.alpha = 1
-      	display.getCurrentStage():setFocus( nil )
-			action() 
-		end
-		return true
-	end)
+ object:addEventListener ("touch", function(event)
+  if(event.phase == "began") then
+   object.alpha = 0.5
+       display.getCurrentStage():setFocus( object )
+  elseif event.phase == "ended" or event.phase == "cancelled" then
+   object.alpha = 1
+       display.getCurrentStage():setFocus( nil )
+   action() 
+  end
+  return true
+ end)
 end
 
 -----------------------------------------------------------------------------------------
 
 function onTap(object, action)
-	object:addEventListener	("touch", function(event)
-		if(event.phase == "began") then
-			return action()
-		else 
-    		return true
-		end
-	end)
+ object:addEventListener ("touch", function(event)
+  if(event.phase == "began") then
+   return action()
+  else 
+      return true
+  end
+ end)
 end
 
 -----------------------------------------------------------------------------------------
 
 function setGreen(text)
-	text:setFillColor(27/255,92/255,100/255)
+ text:setFillColor(27/255,92/255,100/255)
 end
 
 -----------------------------------------------------------------------------------------
 
 function getDaysHoursMinSec(sec)
-	local days = math.floor(sec/(24*60*60))
-	local hours = math.floor((sec - days * 24*60*60)/(60*60))
-	local min = math.floor((sec - days * 24*60*60 - hours*60*60)/60)
-	local sec = math.floor((sec - days * 24*60*60 - hours*60*60 - min *60))
-	
-	return days, hours, min, sec
+ local days = math.floor(sec/(24*60*60))
+ local hours = math.floor((sec - days * 24*60*60)/(60*60))
+ local min = math.floor((sec - days * 24*60*60 - hours*60*60)/60)
+ local sec = math.floor((sec - days * 24*60*60 - hours*60*60 - min *60))
+ 
+ return days, hours, min, sec
 end
 
 function getMinSec(seconds)
-	local min = math.floor(seconds/60)
-	local sec = seconds - min * 60
+ local min = math.floor(seconds/60)
+ local sec = seconds - min * 60
 
-	if(sec < 10) then
-		sec = "0" .. sec
-	end
+ if(sec < 10) then
+  sec = "0" .. sec
+ end
 
-	return min, sec
+ return min, sec
 end
 
 function getMinSecMillis(millis)
-	local min = math.floor(millis/60000)
-	local sec = math.floor((millis - min * 60 * 1000)/1000)
-	local ms = math.floor(millis - min * 60 * 1000 - sec * 1000)
+ local min = math.floor(millis/60000)
+ local sec = math.floor((millis - min * 60 * 1000)/1000)
+ local ms = math.floor(millis - min * 60 * 1000 - sec * 1000)
 
-	if(sec < 10) then
-		sec = "0" .. sec
-	end
+ if(sec < 10) then
+  sec = "0" .. sec
+ end
 
-	if(ms < 10) then
-		ms = "00" .. ms
-	elseif(ms < 100) then
-		ms = "0" .. ms
-	end
+ if(ms < 10) then
+  ms = "00" .. ms
+ elseif(ms < 100) then
+  ms = "0" .. ms
+ end
 
-	return min, sec, ms
+ return min, sec, ms
 end
 
 function getHoursMinSecMillis(millis)
-	
-	local hours 	= math.floor(millis/(60*60*1000))
-	local min 		= math.floor((millis - hours * 60 * 60 * 1000) / (60 * 1000))
-	local sec 		= math.floor((millis - hours * 60 * 60 * 1000 - min * 60 * 1000)/1000)
-	local ms 		= math.floor(millis - hours * 60 * 60 * 1000 - min * 60 * 1000 - sec * 1000)
-	
-	if(hours < 10) then
-		hours = "0" .. hours
-	end
+ 
+ local hours  = math.floor(millis/(60*60*1000))
+ local min   = math.floor((millis - hours * 60 * 60 * 1000) / (60 * 1000))
+ local sec   = math.floor((millis - hours * 60 * 60 * 1000 - min * 60 * 1000)/1000)
+ local ms   = math.floor(millis - hours * 60 * 60 * 1000 - min * 60 * 1000 - sec * 1000)
+ 
+ if(hours < 10) then
+  hours = "0" .. hours
+ end
 
-	if(min < 10) then
-		min = "0" .. min
-	end
+ if(min < 10) then
+  min = "0" .. min
+ end
 
-	if(sec < 10) then
-		sec = "0" .. sec
-	end
+ if(sec < 10) then
+  sec = "0" .. sec
+ end
 
-	if(ms < 10) then
-		ms = "00" .. ms
-	elseif(ms < 100) then
-		ms = "0" .. ms
-	end
+ if(ms < 10) then
+  ms = "00" .. ms
+ elseif(ms < 100) then
+  ms = "0" .. ms
+ end
 
-	return hours, min, sec, ms
+ return hours, min, sec, ms
 end
 
 function getUrlParams(url)
 
-	local params = {}
-	local index = string.find(url,"?")
+ local params = {}
+ local index = string.find(url,"?")
 
-	if(index) then
-    	local paramsString = url:sub(index+1, string.len(url) )
-    	fillNextParam(params, paramsString);
+ if(index) then
+     local paramsString = url:sub(index+1, string.len(url) )
+     fillNextParam(params, paramsString);
     end
 
-	return params;
+ return params;
 end
 
 function fillNextParam(params, paramsString)
 
-	local indexEqual = string.find(paramsString,"=")
-	local indexAnd = string.find(paramsString,"&")
+ local indexEqual = string.find(paramsString,"=")
+ local indexAnd = string.find(paramsString,"&")
 
-	local indexEndValue
-	if(indexAnd == nil) then 
-		indexEndValue = string.len(paramsString) 
-	else 
-		indexEndValue = indexAnd - 1 
-	end
+ local indexEndValue
+ if(indexAnd == nil) then 
+  indexEndValue = string.len(paramsString) 
+ else 
+  indexEndValue = indexAnd - 1 
+ end
 
-	if ( indexEqual ~= nil ) then
-		local varName = paramsString:sub(0, indexEqual-1)
-		local value = paramsString:sub(indexEqual+1, indexEndValue)
-		params[varName] = urlDecode(value)
+ if ( indexEqual ~= nil ) then
+  local varName = paramsString:sub(0, indexEqual-1)
+  local value = paramsString:sub(indexEqual+1, indexEndValue)
+  params[varName] = urlDecode(value)
 
-		if (indexAnd ~= nil) then
-			paramsString = paramsString:sub(indexAnd+1, string.len(paramsString) )
-			fillNextParam(params, paramsString)
-		end
+  if (indexAnd ~= nil) then
+   paramsString = paramsString:sub(indexAnd+1, string.len(paramsString) )
+   fillNextParam(params, paramsString)
+  end
 
-	end
+ end
 
 end
 
@@ -181,91 +181,91 @@ end
 -----------------------------------------------------------------------------------------
 
 function split(value, sep)
-	local sep, fields = sep or ":", {}
-	local pattern = string.format("([^%s]+)", sep)
-	value:gsub(pattern, function(c) fields[#fields+1] = c end)
-	return fields
+ local sep, fields = sep or ":", {}
+ local pattern = string.format("([^%s]+)", sep)
+ value:gsub(pattern, function(c) fields[#fields+1] = c end)
+ return fields
 end
 
 -----------------------------------------------------------------------------------------
 
 function emptyGroup( group )
-	if(group ~= nil and group.numChildren ~= nil and group.numChildren > 0) then
-		for i=group.numChildren,1,-1 do
-			local child = group[i]
-			transition.cancel(child)
-			child:removeSelf()
-			child = nil
-		end
-	end
+ if(group ~= nil and group.numChildren ~= nil and group.numChildren > 0) then
+  for i=group.numChildren,1,-1 do
+   local child = group[i]
+   transition.cancel(child)
+   child:removeSelf()
+   child = nil
+  end
+ end
 end
 
 function destroyFromDisplay(object)
-	if(object) then
-		display.remove(object)
-		object = nil
-	end
+ if(object) then
+  display.remove(object)
+  object = nil
+ end
 end
 
 
 -----------------------------------------------------------------------------------------
 
 function string.startsWith(String,Start)
-	return string.sub(String,1,string.len(Start))==Start
+ return string.sub(String,1,string.len(Start))==Start
 end
 
 function string.endsWith(String,End)
-	return End=='' or string.sub(String,-string.len(End))==End
+ return End=='' or string.sub(String,-string.len(End))==End
 end
 
 -----------------------------------------------------------------------------------------
 
 function joinTables(t1, t2)
 
-	local result = {}
-	if(t1 == nil) then t1 = {} end
-	if(t2 == nil) then t2 = {} end
+ local result = {}
+ if(t1 == nil) then t1 = {} end
+ if(t2 == nil) then t2 = {} end
 
-	for k,v in pairs(t1) do
-		result[k] = v 
-	end 
+ for k,v in pairs(t1) do
+  result[k] = v 
+ end 
 
-	for k,v in pairs(t2) do
-		result[k] = v 
-	end 
+ for k,v in pairs(t2) do
+  result[k] = v 
+ end 
 
-	return result
+ return result
 end
 
 -----------------------------------------------------------------------------------------
 
 function removeFromTable(t, object)
-	local index = 1
-	for k,v in pairs(t) do
-		if(t[k] == object) then
-			break
-		end
+ local index = 1
+ for k,v in pairs(t) do
+  if(t[k] == object) then
+   break
+  end
 
-		index = index + 1 
-	end 
+  index = index + 1 
+ end 
 
-	table.remove(t, index)
+ table.remove(t, index)
 end
 
 -----------------------------------------------------------------------------------------
 
 function imageName( url )
-	local index = string.find(url,"/")
+ local index = string.find(url,"/")
 
-	if(index == nil) then 
-		if(not string.endsWith(url, ".png")) then
-			url = url .. ".png"
-		end
-		return url;
-	else
-		local subURL = url:sub(index+1, string.len(url))
-		return imageName(subURL)
-	end
+ if(index == nil) then 
+  if(not string.endsWith(url, ".png")) then
+   url = url .. ".png"
+  end
+  return url;
+ else
+  local subURL = url:sub(index+1, string.len(url))
+  return imageName(subURL)
+ end
 end
 
 -----------------------------------------------------------------------------------------
@@ -273,122 +273,122 @@ end
 --a tester  https://gist.github.com/874792
 
 function tprint (tbl, indent)
-	if not tbl then print("Table nil") return end
-	if type(tbl) ~= "table" then
-		print(tostring(tbl))
-	else
-		if not indent then indent = 0 end
-		for k, v in pairs(tbl) do
-			formatting = string.rep("  ", indent) .. k .. ": "
-			if type(v) == "table" then
-				print(formatting)
-				tprint(v, indent+1)
-			else
-				print(formatting .. tostring(v))
-			end
-		end
-	end
+ if not tbl then print("Table nil") return end
+ if type(tbl) ~= "table" then
+  print(tostring(tbl))
+ else
+  if not indent then indent = 0 end
+  for k, v in pairs(tbl) do
+   formatting = string.rep("  ", indent) .. k .. ": "
+   if type(v) == "table" then
+    print(formatting)
+    tprint(v, indent+1)
+   else
+    print(formatting .. tostring(v))
+   end
+  end
+ end
 end
 
 -----------------------------------------------------------------------------------------
 
 function postWithJSON(data, url, next)
-	post(url, json.encode(data), next, "json")
+ post(url, json.encode(data), next, "json")
 end
 
 --------------------------------------------------------
 
 function post(url, data, next, type)
 
-	if(next == nil) then 
-		next = function() end
-	end
+ if(next == nil) then 
+  next = function() end
+ end
 
-	local headers = {}
+ local headers = {}
 
-	if(type == nil) then
-		headers["Content-Type"] = "application/x-www-form-urlencoded"
-	elseif(type == "json") then
-		headers["Content-Type"] = "application/json"
-		headers["X-Auth-Token"] = GLOBALS.savedData.authToken
-	end
+ if(type == nil) then
+  headers["Content-Type"] = "application/x-www-form-urlencoded"
+ elseif(type == "json") then
+  headers["Content-Type"] = "application/json"
+  headers["X-Auth-Token"] = GLOBALS.savedData.authToken
+ end
 
-	local params = {}
-	params.headers = headers
-	params.body = data
+ local params = {}
+ params.headers = headers
+ params.body = data
 
-	network.request( url, "POST", next, params)
+ network.request( url, "POST", next, params)
 end
 
 
 --------------------------------------------------------
 
 function isEmail(str)
-	return str:match("[A-Za-z0-9%.%%%+%-]+@[A-Za-z0-9%.%%%+%-]+%.%w%w%w?%w?")
+ return str:match("[A-Za-z0-9%.%%%+%-]+@[A-Za-z0-9%.%%%+%-]+%.%w%w%w?%w?")
 end
 
 --------------------------------------------------------
 
 function urlDecode(str)
-	str = string.gsub (str, "+", " ")
-	str = string.gsub (str, "%%(%x%x)",
-	function(h) return string.char(tonumber(h,16)) end)
-	str = string.gsub (str, "\r\n", "\n")
-	return str
+ str = string.gsub (str, "+", " ")
+ str = string.gsub (str, "%%(%x%x)",
+ function(h) return string.char(tonumber(h,16)) end)
+ str = string.gsub (str, "\r\n", "\n")
+ return str
 end
 
 function urlEncode(str)
-	if (str) then
-		str = string.gsub (str, "\n", "\r\n")
-		str = string.gsub (str, "([^%w ])",
-		function (c) return string.format ("%%%02X", string.byte(c)) end)
-		str = string.gsub (str, " ", "%%20")
-	end
-	return str	
+ if (str) then
+  str = string.gsub (str, "\n", "\r\n")
+  str = string.gsub (str, "([^%w ])",
+  function (c) return string.format ("%%%02X", string.byte(c)) end)
+  str = string.gsub (str, " ", "%%20")
+ end
+ return str 
 end
 
 --------------------------------------------------------
 
 function parseDate(str)
-	_,_,y,m,d=string.find(str, "(%d+)-(%d+)-(%d+)")
-	return tonumber(y),tonumber(m),tonumber(d)
+ _,_,y,m,d=string.find(str, "(%d+)-(%d+)-(%d+)")
+ return tonumber(y),tonumber(m),tonumber(d)
 end
 
 function parseDateTime(str)
-	local Y,M,D = parseDate(str)
-	return os.time({year=Y, month=M, day=D})
+ local Y,M,D = parseDate(str)
+ return os.time({year=Y, month=M, day=D})
 end
 
 ---
 -- Y-M-D to readableDate
 function readableDate(date, withDay, withYear)
-	return timestampToReadableDate(parseDateTime(date)*1000, withDay, withYear)
+ return timestampToReadableDate(parseDateTime(date)*1000, withDay, withYear)
 end
 
 function timestampToReadableDate(date, withDay, withYear)
-	
-	local day		   = T (os.date("%A", date/1000))
-	local numDay 		= utils.formatPositionNum(os.date("%d", date/1000))
-	local month 		= T (os.date("%B", date/1000))
-	local year 			= os.date("%Y", date/1000)
-	
-	if (LANG == "fr") then
-		local y = ""
-		if(withYear) then y = " " .. year end
-		
-   	if(withDay) then 
-			return day .. " " .. numDay .. " " .. month .. y
-		else
-			return numDay .. " " .. month .. y
+ 
+ local day     = T (os.date("%A", date/1000))
+ local numDay   = utils.formatPositionNum(os.date("%d", date/1000))
+ local month   = T (os.date("%B", date/1000))
+ local year    = os.date("%Y", date/1000)
+ 
+ if (LANG == "fr") then
+  local y = ""
+  if(withYear) then y = " " .. year end
+  
+    if(withDay) then 
+   return day .. " " .. numDay .. " " .. month .. y
+  else
+   return numDay .. " " .. month .. y
       end
-	else
-		local y = ""
-		if(withYear) then y = ", " .. year end
+ else
+  local y = ""
+  if(withYear) then y = ", " .. year end
 
-   	if(withDay) then 
-			return day .. ", " .. month .. " " .. numDay .. y
-		else
-   		return month .. " " .. numDay .. y
+    if(withDay) then 
+   return day .. ", " .. month .. " " .. numDay .. y
+  else
+     return month .. " " .. numDay .. y
       end
    end
    
@@ -398,89 +398,89 @@ end
 
 function saveTable(t, filename, directory)
 
-	if(not directory) then
-		directory = system.DocumentsDirectory
-	end
+ if(not directory) then
+  directory = system.DocumentsDirectory
+ end
 
-	local path = system.pathForFile( filename, directory)
-	local file = io.open(path, "w")
-	if file then
-		local contents = json.encode(t)
-		file:write( contents )
-		io.close( file )
-		return true
-	else
-		return false
-	end
+ local path = system.pathForFile( filename, directory)
+ local file = io.open(path, "w")
+ if file then
+  local contents = json.encode(t)
+  file:write( contents )
+  io.close( file )
+  return true
+ else
+  return false
+ end
 end
 
 function saveFile(content, filename, directory)
 
-	if(not directory) then
-		directory = system.DocumentsDirectory
-	end
+ if(not directory) then
+  directory = system.DocumentsDirectory
+ end
 
-	local path = system.pathForFile( filename, directory)
-	local file = io.open(path, "w")
-	if file then
-		local contents = content
-		file:write( contents )
-		io.close( file )
-		return true
-	else
-		return false
-	end
+ local path = system.pathForFile( filename, directory)
+ local file = io.open(path, "w")
+ if file then
+  local contents = content
+  file:write( contents )
+  io.close( file )
+  return true
+ else
+  return false
+ end
 end
 
 function loadTable(path)
-	local contents = ""
-	local myTable = {}
-	local file = io.open( path, "r" )
-	if file then
-		-- read all contents of file into a string
-		local contents = file:read( "*a" )
-		myTable = json.decode(contents);
-		io.close( file )
-		return myTable 
-	end
-	return nil
+ local contents = ""
+ local myTable = {}
+ local file = io.open( path, "r" )
+ if file then
+  -- read all contents of file into a string
+  local contents = file:read( "*a" )
+  myTable = json.decode(contents);
+  io.close( file )
+  return myTable 
+ end
+ return nil
 end
 
 --------------------------------------------------------
 
 function getPointsBetween(from, to, nbPoints)
 
-	if(from.x > to.x) then
-		local swap = from
-		from = to
-		to = swap
-	end
+ if(from.x > to.x) then
+  local swap = from
+  from = to
+  to = swap
+ end
 
-	local x1,y1 = from.x,from.y
-	local x2,y2 = to.x,to.y
+ local x1,y1 = from.x,from.y
+ local x2,y2 = to.x,to.y
 
-	local step = math.abs(x2-x1)/nbPoints
-	local points = {}
+ local step = math.abs(x2-x1)/nbPoints
+ local points = {}
 
-	local a = (y2-y1)/(x2-x1)
+ local a = (y2-y1)/(x2-x1)
 
-	for i=0,nbPoints do
-		local x = x1 + i*step
-		local y = y1 + a*(x - x1)
-		table.insert(points, vector2D:new(x, y))
-	end
+ for i=0,nbPoints do
+  local x = x1 + i*step
+  local y = y1 + a*(x - x1)
+  table.insert(points, vector2D:new(x, y))
+ end
 
-	return points
+ return points
 end
 
 --------------------------------------------------------
 
 function loadUserData(file)
-	return loadTable(system.pathForFile( file , system.DocumentsDirectory))
+ return loadTable(system.pathForFile( file , system.DocumentsDirectory))
 end
 
 function loadFile(path)
-	return loadTable(system.pathForFile( path , system.ResourceDirectory))
+ return loadTable(system.pathForFile( path , system.ResourceDirectory))
 end
 
 --------------------------------------------------------
@@ -488,35 +488,35 @@ end
 
 -- returns the distance between points a and b
 function distanceBetween( a, b )
-	local width, height = b.x-a.x, b.y-a.y
-	return (width*width + height*height)^0.5 -- math.sqrt(width*width + height*height)
-	-- nothing wrong with math.sqrt, but I believe the ^.5 is faster
+ local width, height = b.x-a.x, b.y-a.y
+ return (width*width + height*height)^0.5 -- math.sqrt(width*width + height*height)
+ -- nothing wrong with math.sqrt, but I believe the ^.5 is faster
 end
 
 --------------------------------------------------------
 
 function formatPositionNum(num)
-	
-	local suffix = ""
-	num = tonumber(num)
-	 
-	if(LANG == "en") then
-   	if(num == 1) then
-   		suffix = "st"
-   	elseif(num == 2) then
-   		suffix = "nd"
-   	elseif(num == 3) then
-   		suffix = "rd"
-   	else
-   		suffix = "th"
-		end
-	end
-	
-	if(num < 10) then
-		num = "0" .. num
-	end
-	
-	return num .. suffix
+ 
+ local suffix = ""
+ num = tonumber(num)
+  
+ if(LANG == "en") then
+    if(num == 1) then
+     suffix = "st"
+    elseif(num == 2) then
+     suffix = "nd"
+    elseif(num == 3) then
+     suffix = "rd"
+    else
+     suffix = "th"
+  end
+ end
+ 
+ if(num < 10) then
+  num = "0" .. num
+ end
+ 
+ return num .. suffix
 end
 
 --------------------------------------------------------
@@ -563,62 +563,54 @@ function isEuroCountry (country)
       or  country == "RS"
       or  country == "BA"
 
-	return isEuro;
+ return isEuro;
 end
 
 
 function displayPrice(price, country)
 
-	if(not price) then
-		price = 0
-	end
+ if(not price) then
+  price = 0
+ end
 
-	if(isEuroCountry(country)) then
-		return price .. " €";
+ if(isEuroCountry(country)) then
+  return price .. " €";
 
-	else
-		return "US$ " .. price;
-	end
+ else
+  return "US$ " .. price;
+ end
 
 end
 
 function countryPrice(euros, country, rateUSDtoEUR)
 
-	if(not euros) then
-		euros = 0
-	end
+ if(not euros) then
+  euros = 0
+ end
 
-	if(isEuroCountry(country)) then
-		return euros;
-	else
-		return math.round(euros*rateUSDtoEUR);
-	end
+ if(isEuroCountry(country)) then
+  return euros;
+ else
+  return math.round(euros*rateUSDtoEUR);
+ end
 
 end
 
 function convertAndDisplayPrice(price, country, rateUSDtoEUR)
-	return displayPrice(countryPrice(price, country, rateUSDtoEUR), country)
+ return displayPrice(countryPrice(price, country, rateUSDtoEUR), country)
 end
 
 --------------------------------------------------------
 
 function networkConnection()
-	local status
+ local status
             
     local socket = require("socket")
     local test = socket.tcp()
     test:settimeout(2000) 
     
     -- Note that the test does not work if we put http:// in front
-    local testResult = test:connect("www.google.com", 80)
-     
-    if not(testResult == nil) then
-        print("Internet access is available")
-        status = true
-    else
-        print("Internet access is not available")
-        status = false
-    end
+    status = not(test:connect("www.google.com", 80) == nil)
     
     test:close()
     test = nil
@@ -630,38 +622,38 @@ end
 -- merci Vungle
 
 function vardump(value, depth, key)
-	local linePrefix = ""
-	local spaces = ""
+ local linePrefix = ""
+ local spaces = ""
 
-	if key ~= nil then
-		linePrefix = "["..key.."] = "
-	end
+ if key ~= nil then
+  linePrefix = "["..key.."] = "
+ end
 
-	if depth == nil then
-		depth = 0
-	else
-		depth = depth + 1
-		for i=1, depth do spaces = spaces .. "  " end
-	end
+ if depth == nil then
+  depth = 0
+ else
+  depth = depth + 1
+  for i=1, depth do spaces = spaces .. "  " end
+ end
 
-	if type(value) == 'table' then
-		mTable = getmetatable(value)
-		if mTable == nil then
-			print(spaces ..linePrefix.."(table) ")
-		else
-			print(spaces .."(metatable) ")
-			value = mTable
-		end
-		for tableKey, tableValue in pairs(value) do
-			vardump(tableValue, depth, tableKey)
-		end
-	elseif type(value)    == 'function' or
-	type(value)       == 'thread' or
-	type(value)       == 'userdata' or
-	value             == nil
-	then
-		print(spaces..tostring(value))
-	else
-		print(spaces..linePrefix.."("..type(value)..") "..tostring(value))
-	end
+ if type(value) == 'table' then
+  mTable = getmetatable(value)
+  if mTable == nil then
+   print(spaces ..linePrefix.."(table) ")
+  else
+   print(spaces .."(metatable) ")
+   value = mTable
+  end
+  for tableKey, tableValue in pairs(value) do
+   vardump(tableValue, depth, tableKey)
+  end
+ elseif type(value)    == 'function' or
+ type(value)       == 'thread' or
+ type(value)       == 'userdata' or
+ value             == nil
+ then
+  print(spaces..tostring(value))
+ else
+  print(spaces..linePrefix.."("..type(value)..") "..tostring(value))
+ end
 end

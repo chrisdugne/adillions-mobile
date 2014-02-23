@@ -10,7 +10,7 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 -- 
 -- NOTE: Code outside of listener functions (below) will only be executed once,
---		 unless storyboard.removeScene() is called.
+--   unless storyboard.removeScene() is called.
 -- 
 -----------------------------------------------------------------------------------------
 
@@ -63,11 +63,11 @@ function scene:signinFBViewListener( event )
 
         elseif event.url == SERVER_URL .. "requireLogout" then  -- changeAccount
             self:closeWebView()
-            print("signinFB : requireLogout")		 		
-            userManager:logout()    		
+            print("signinFB : requireLogout")     
+            userManager:logout()      
 
         elseif string.find(event.url, "signedIn") then
-            self:closeWebView()    		
+            self:closeWebView()      
             local playerRealNames = utils.getUrlParams(event.url);
 
             GLOBALS.savedData.authToken = playerRealNames.authToken

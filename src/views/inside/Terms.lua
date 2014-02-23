@@ -10,7 +10,7 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 -- 
 -- NOTE: Code outside of listener functions (below) will only be executed once,
---		 unless storyboard.removeScene() is called.
+--   unless storyboard.removeScene() is called.
 -- 
 -----------------------------------------------------------------------------------------
 
@@ -21,16 +21,16 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-	local terms = ""
-	if(COUNTRY == "FR") then
-		terms = "mtermsFR"
-	else
-		terms = "mtermsEN"
-	end
-	
-	self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
-	self.webView:request( SERVER_URL .. terms  )
-	self.webView:addEventListener( "urlRequest", function(event) self:termsViewListener(event) end )
+ local terms = ""
+ if(COUNTRY == "FR") then
+  terms = "mtermsFR"
+ else
+  terms = "mtermsEN"
+ end
+ 
+ self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
+ self.webView:request( SERVER_URL .. terms  )
+ self.webView:addEventListener( "urlRequest", function(event) self:termsViewListener(event) end )
 end
 
 ------------------------------------------
@@ -38,29 +38,29 @@ end
 function scene:termsViewListener( event )
 
     if event.url then
-    	
-		print("---   terms listener")
-		print(event.url)
-		
-		if event.url == SERVER_URL .. "backToMobile" then
-			self:closeWebView()    	
-      	router.openInfo()
-		end
+     
+  print("---   terms listener")
+  print(event.url)
+  
+  if event.url == SERVER_URL .. "backToMobile" then
+   self:closeWebView()     
+       router.openInfo()
+  end
 
     end
 end
 
 function scene:closeWebView()
-	self.webView:removeEventListener( "urlRequest", function(event) self:termsViewListener(event) end )
-	self.webView:removeSelf()
-	self.webView = nil
+ self.webView:removeEventListener( "urlRequest", function(event) self:termsViewListener(event) end )
+ self.webView:removeSelf()
+ self.webView = nil
 end
 
 ------------------------------------------
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
-	self:refreshScene()
+ self:refreshScene()
 end
 
 -- Called when scene is about to move offscreen:

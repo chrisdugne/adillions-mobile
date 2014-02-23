@@ -8,7 +8,7 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 -- 
 -- NOTE: Code outside of listener functions (below) will only be executed once,
---		 unless storyboard.removeScene() is called.
+--   unless storyboard.removeScene() is called.
 -- 
 -----------------------------------------------------------------------------------------
 
@@ -20,8 +20,8 @@ end
 
 function scene:refreshScene()
 
-    local title 		= utils.urlEncode(T "Join me on Adillions !")
-    local message 		= utils.urlEncode(T "Free and fun - Get a chance to win the jackpot !")
+    local title   = utils.urlEncode(T "Join me on Adillions !")
+    local message   = utils.urlEncode(T "Free and fun - Get a chance to win the jackpot !")
     local redirect_uri  = utils.urlEncode(SERVER_URL.."backToMobile")
     local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorCode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
 
@@ -40,24 +40,24 @@ function scene:inviteListener( event )
         if string.startsWith(event.url, SERVER_URL .. "backToMobile?request=")
         or string.startsWith(event.url, "https://m.facebook.com/home.php") then
             self:closeWebView()   
-            if(self.next) then 	
+            if(self.next) then  
                 self.next()
             end
 
-            --    		if(not userManager.user.hasInvitedOnFacebook) then
-            --    			timer.performWithDelay(800, function()
-            --      			viewManager.showPoints(NB_POINTS_PER_FB_INVITATION)
-            --      			userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_FB_INVITATION
-            --      			userManager.user.hasInvitedOnFacebook = true
-            --      			userManager:updatePlayer()
-            --      			userManager:checkIdlePoints()
-            --    			end)
+            --      if(not userManager.user.hasInvitedOnFacebook) then
+            --       timer.performWithDelay(800, function()
+            --         viewManager.showPoints(NB_POINTS_PER_FB_INVITATION)
+            --         userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_FB_INVITATION
+            --         userManager.user.hasInvitedOnFacebook = true
+            --         userManager:updatePlayer()
+            --         userManager:checkIdlePoints()
+            --       end)
             --
-            --   			end 
+            --      end 
 
         elseif string.startsWith(event.url, SERVER_URL .. "backToMobile") then
 
-            self:closeWebView()    		
+            self:closeWebView()      
             if(self.next) then  
                 self.next()
             end

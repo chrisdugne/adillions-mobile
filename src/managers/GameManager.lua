@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------------------
 
-GameManager = {}	
+GameManager = {} 
 
 -----------------------------------------------------------------------------------------
 
@@ -51,8 +51,8 @@ function GameManager:initGameData()
         user            = {}
     }
 
-    GLOBALS.savedData.facebookAccessToken 	= nil
-    GLOBALS.savedData.twitterAccessToken 	= nil
+    GLOBALS.savedData.facebookAccessToken  = nil
+    GLOBALS.savedData.twitterAccessToken  = nil
 
     utils.saveTable(GLOBALS.savedData, "savedData.json")
 end
@@ -61,8 +61,8 @@ end
 function GameManager:initOptions()
 
     GLOBALS.options = {
-        notificationBeforeDraw 	= true,
-        notificationAfterDraw 	= true,
+        notificationBeforeDraw  = true,
+        notificationAfterDraw  = true,
     }
 
     utils.saveTable(GLOBALS.options, "options.json")
@@ -74,15 +74,15 @@ function GameManager:tryAutoOpenFacebookAccount()
     native.setActivityIndicator( true )
     facebook.getMe(function()
         native.setActivityIndicator( false )
-        print("start : getMe : fail : try adillions account")		 
+        print("start : getMe : fail : try adillions account")   
         self:tryAutoOpenAdillionsAccount()
     end)
 end
 
 function GameManager:tryAutoOpenAdillionsAccount()
 
-    GLOBALS.savedData.facebookAccessToken 	= nil
-    GLOBALS.savedData.twitterAccessToken 	= nil
+    GLOBALS.savedData.facebookAccessToken  = nil
+    GLOBALS.savedData.twitterAccessToken  = nil
     utils.saveTable(GLOBALS.savedData, "savedData.json")
 
     if(GLOBALS.savedData.user.uid) then
@@ -90,7 +90,7 @@ function GameManager:tryAutoOpenAdillionsAccount()
         userManager:fetchPlayer()
 
     else
-        print("start : no user data : outside")		 
+        print("start : no user data : outside")   
         router.openOutside()
     end
 end

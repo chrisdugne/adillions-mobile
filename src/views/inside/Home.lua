@@ -10,7 +10,7 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 -- 
 -- NOTE: Code outside of listener functions (below) will only be executed once,
---		 unless storyboard.removeScene() is called.
+--   unless storyboard.removeScene() is called.
 -- 
 -----------------------------------------------------------------------------------------
 
@@ -24,24 +24,24 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.subheaderImage 		= display.newImageRect(hud, "assets/images/subheader/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.14)
-    hud.subheaderImage.x 	= display.contentWidth*0.5
-    hud.subheaderImage.y 	= HEADER_HEIGHT * 1.5
+    hud.subheaderImage   = display.newImageRect(hud, "assets/images/subheader/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.14)
+    hud.subheaderImage.x  = display.contentWidth*0.5
+    hud.subheaderImage.y  = HEADER_HEIGHT * 1.5
 
-    hud.subheaderText 		= display.newImage(hud, I "Questions.png")
-    hud.subheaderText.x 	= display.contentWidth*0.6
-    hud.subheaderText.y 	= HEADER_HEIGHT * 1.4
+    hud.subheaderText   = display.newImage(hud, I "Questions.png")
+    hud.subheaderText.x  = display.contentWidth*0.6
+    hud.subheaderText.y  = HEADER_HEIGHT * 1.4
 
-    local subheaderAnimConfig 	= require("src.tools.Subheader_"..LANG)
-    local subheaderSheet 		= graphics.newImageSheet( "assets/images/subheader/anim.sheet."..LANG..".png", subheaderAnimConfig.sheet )
+    local subheaderAnimConfig  = require("src.tools.Subheader_"..LANG)
+    local subheaderSheet   = graphics.newImageSheet( "assets/images/subheader/anim.sheet."..LANG..".png", subheaderAnimConfig.sheet )
 
-    hud.subheaderAnim 		= display.newSprite( hud, subheaderSheet, subheaderAnimConfig:newSequence() )
-    hud.subheaderAnim.x 	= display.contentWidth*0.6
-    hud.subheaderAnim.y 	= HEADER_HEIGHT * 1.8
+    hud.subheaderAnim   = display.newSprite( hud, subheaderSheet, subheaderAnimConfig:newSequence() )
+    hud.subheaderAnim.x  = display.contentWidth*0.6
+    hud.subheaderAnim.y  = HEADER_HEIGHT * 1.8
 
-    hud.subheaderButton 	= display.newImage(hud, "assets/images/subheader/button.subheader.png")
-    hud.subheaderButton.x 	= display.contentWidth*0.15
-    hud.subheaderButton.y 	= HEADER_HEIGHT * 1.6
+    hud.subheaderButton  = display.newImage(hud, "assets/images/subheader/button.subheader.png")
+    hud.subheaderButton.x  = display.contentWidth*0.15
+    hud.subheaderButton.y  = HEADER_HEIGHT * 1.6
 
     self:animateSubheader()
 
@@ -85,11 +85,11 @@ end
 
 function scene:drawNextLottery( event )
 
-    local y 				= HEADER_HEIGHT * 3.7
-    local top 				= HEADER_HEIGHT * 3
-    local timerLegendSize 	= 17
-    local timerLegendY 		= top + display.contentHeight * 0.04
-    local timerY 			= top + display.contentHeight * 0.01
+    local y     = HEADER_HEIGHT * 3.7
+    local top     = HEADER_HEIGHT * 3
+    local timerLegendSize  = 17
+    local timerLegendY   = top + display.contentHeight * 0.04
+    local timerY    = top + display.contentHeight * 0.01
 
     -------------------------------
 
@@ -99,17 +99,17 @@ function scene:drawNextLottery( event )
         x = display.contentWidth*0.17,
         y = top - display.contentHeight * 0.044,
         fontSize = 40,
-        anchorX 			= 0,
-        anchorY 			= 0.5,
+        anchorX    = 0,
+        anchorY    = 0.5,
     })
 
-    hud.separator 			= display.newImage(hud, "assets/images/icons/separateur.horizontal.png")
-    hud.separator.x 		= display.contentWidth*0.5
-    hud.separator.y 		= top - display.contentHeight * 0.02
+    hud.separator    = display.newImage(hud, "assets/images/icons/separateur.horizontal.png")
+    hud.separator.x   = display.contentWidth*0.5
+    hud.separator.y   = top - display.contentHeight * 0.02
 
-    hud.pictoTimer			= display.newImage( hud, "assets/images/icons/TimerPicto.png")  
-    hud.pictoTimer.x 		= display.contentWidth*0.2
-    hud.pictoTimer.y 		= timerY 
+    hud.pictoTimer   = display.newImage( hud, "assets/images/icons/TimerPicto.png")  
+    hud.pictoTimer.x   = display.contentWidth*0.2
+    hud.pictoTimer.y   = timerY 
 
     hud.timerDisplay = viewManager.newText({
         parent = hud, 
@@ -177,8 +177,8 @@ function scene:drawNextLottery( event )
         y = top + display.contentHeight*0.12,
         fontSize = 73,
         font = NUM_FONT,
-        anchorX 			= 1,
-        anchorY 			= 0.5,
+        anchorX    = 1,
+        anchorY    = 0.5,
     })
 
     hud.priceCurrentDisplay = 0
@@ -192,7 +192,7 @@ function scene:drawNextLottery( event )
 
     -------------------------------
 
-    if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.toolPlayers) then	
+    if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.toolPlayers) then 
 
         hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
         hud.separateur.x = display.contentWidth*0.7

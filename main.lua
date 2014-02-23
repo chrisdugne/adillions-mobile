@@ -4,62 +4,62 @@
 --
 -----------------------------------------------------------------------------------------
 
-APP_NAME 			= "Adillions"
-APP_VERSION 		= "1.3"
+APP_NAME    = "Adillions"
+APP_VERSION   = "1.3"
 
 -----------------------------------------------------------------------------------------
 
---DEV				= 1
-PROD				= 1
+--DEV    = 1
+PROD    = 1
 
 -----------------------------------------------------------------------------------------
 
-FACEBOOK_PAGE_ID 	= "379432705492888"
-FACEBOOK_PAGE 		= "https://www.facebook.com/adillions"
-TWITTER_ID 			= "1922939570"
+FACEBOOK_PAGE_ID  = "379432705492888"
+FACEBOOK_PAGE   = "https://www.facebook.com/adillions"
+TWITTER_ID    = "1922939570"
 
 -----------------------------------------------------------------------------------------
 
-ANALYTICS_VERSION 		= 1
-ANALYTICS_TRACKING_ID 	= "UA-45586817-2"
-ANALYTICS_PROFILE_ID 	= "78871292"
+ANALYTICS_VERSION   = 1
+ANALYTICS_TRACKING_ID  = "UA-45586817-2"
+ANALYTICS_PROFILE_ID  = "78871292"
 
 -----------------------------------------------------------------------------------------
 
 if(PROD) then
     print("prod")
-    FACEBOOK_APP_ID 		= "170148346520274"
-    FACEBOOK_API_SECRET 	= "887e8f7abb9b1cb9238a097e06585ae2"
-    FACEBOOK_APP_NAMESPACE 	= "adillions"
-    SERVER_URL 				= "http://www.adillions.com/"
-    SERVER_OG_URL 			= "http://www.adillions.com/"
+    FACEBOOK_APP_ID   = "170148346520274"
+    FACEBOOK_API_SECRET  = "887e8f7abb9b1cb9238a097e06585ae2"
+    FACEBOOK_APP_NAMESPACE  = "adillions"
+    SERVER_URL     = "http://www.adillions.com/"
+    SERVER_OG_URL    = "http://www.adillions.com/"
 else
     print("dev")
-    FACEBOOK_APP_ID 		= "534196239997712"
-    FACEBOOK_API_SECRET 	= "46383d827867d50ef5d87b66c81f1a8e"
-    FACEBOOK_APP_NAMESPACE 	= "adillions-dev"
-    SERVER_URL 				= "http://192.168.0.10:9000/"
-    SERVER_OG_URL 			= "http://192.168.0.10:9000/"
+    FACEBOOK_APP_ID   = "534196239997712"
+    FACEBOOK_API_SECRET  = "46383d827867d50ef5d87b66c81f1a8e"
+    FACEBOOK_APP_NAMESPACE  = "adillions-dev"
+    SERVER_URL     = "http://192.168.0.10:9000/"
+    SERVER_OG_URL    = "http://192.168.0.10:9000/"
 end
 
 -----------------------------------------------------------------------------------------
 
-IOS 				= system.getInfo( "platformName" )  == "iPhone OS"
-ANDROID 			= system.getInfo( "platformName" )  == "Android"
-SIMULATOR 			= system.getInfo( "environment" )  	== "simulator"
+IOS     = system.getInfo( "platformName" )  == "iPhone OS"
+ANDROID    = system.getInfo( "platformName" )  == "Android"
+SIMULATOR    = system.getInfo( "environment" )   == "simulator"
 
 -----------------------------------------------------------------------------------------
 --- lottery tickets status
 
-BLOCKED 	= 1; -- set as winning ticket, notification/popup read, cashout blocked (<10)
-PENDING 	= 2; -- cashout requested
-PAYED 	    = 3; -- to set manually when paiement is done
-GIFT 		= 4; --  gift to charity
+BLOCKED  = 1; -- set as winning ticket, notification/popup read, cashout blocked (<10)
+PENDING  = 2; -- cashout requested
+PAYED      = 3; -- to set manually when paiement is done
+GIFT   = 4; --  gift to charity
 
-BONUS_1 	= 11; -- rang 7
-BONUS_2 	= 12; -- rang 8
-BONUS_3 	= 13; -- rang 9
-BONUS_4 	= 14; -- rang 10
+BONUS_1  = 11; -- rang 7
+BONUS_2  = 12; -- rang 8
+BONUS_3  = 13; -- rang 9
+BONUS_4  = 14; -- rang 10
 
 -----------------------------------------------------------------------------------------
 --- charity levels
@@ -100,10 +100,10 @@ TICKET_HEIGHT       = 100
 translations = require("assets.Translations")
 
 if ANDROID then
-    FONT 		= "GillSans"
+    FONT   = "GillSans"
     NUM_FONT = "HelveticaBold"
 else
-    FONT 		= "Gill Sans"
+    FONT   = "Gill Sans"
     NUM_FONT = "Helvetica-Bold"
 end
 
@@ -137,21 +137,21 @@ end
 
 -----------------------------------------------------------------------------------------
 --- Corona's libraries
-coronaFacebook		= require "facebook"
-json 				= require "json"
-storyboard 			= require "storyboard"
-widget		 		= require "widget"
-sponsorpay 			= require "plugin.sponsorpay"
-ads 				= require "ads"
+coronaFacebook  = require "facebook"
+json     = require "json"
+storyboard    = require "storyboard"
+widget     = require "widget"
+sponsorpay    = require "plugin.sponsorpay"
+ads     = require "ads"
 
 ---- Additional libs
-xml 				= require "src.libs.Xml"
-utils 				= require "src.libs.Utils"
-facebook 			= require "src.libs.Facebook" 
-vungle 				= require "src.libs.Vungle" 
-sponsorpayTools 	= require "src.libs.SponsorpayTools" 
-twitter 			= require "src.libs.Twitter" 
-analytics 			= require "src.libs.google.Analytics"
+xml     = require "src.libs.Xml"
+utils     = require "src.libs.Utils"
+facebook    = require "src.libs.Facebook" 
+vungle     = require "src.libs.Vungle" 
+sponsorpayTools  = require "src.libs.SponsorpayTools" 
+twitter    = require "src.libs.Twitter" 
+analytics    = require "src.libs.google.Analytics"
 
 -----------------------------------------------------------------------------------------
 
@@ -160,7 +160,7 @@ aspectRatio = display.pixelHeight / display.pixelWidth
 -----------------------------------------------------------------------------------------
 
 abs         = math.abs
-random 	    = math.random
+random      = math.random
 
 -----------------------------------------------------------------------------------------
 -- Translations
@@ -179,23 +179,23 @@ end
 
 -----------------------------------------------------------------------------------------
 ---- App Tools
-router 			= require "src.tools.Router"
-viewManager		= require "src.tools.ViewManager"
+router    = require "src.tools.Router"
+viewManager  = require "src.tools.ViewManager"
 
-GameManager		= require "src.managers.GameManager"
-UserManager		= require "src.managers.UserManager"
-LotteryManager	= require "src.managers.LotteryManager"
-VideoManager	= require "src.managers.VideoManager"
-ShareManager	= require "src.managers.ShareManager"
+GameManager  = require "src.managers.GameManager"
+UserManager  = require "src.managers.UserManager"
+LotteryManager = require "src.managers.LotteryManager"
+VideoManager = require "src.managers.VideoManager"
+ShareManager = require "src.managers.ShareManager"
 
 -----------------------------------------------------------------------------------------
 ---- Server access Managers
 
-gameManager 	= GameManager:new()
-userManager 	= UserManager:new()
-lotteryManager 	= LotteryManager:new()
-videoManager 	= VideoManager:new()
-shareManager 	= ShareManager:new()
+gameManager  = GameManager:new()
+userManager  = UserManager:new()
+lotteryManager  = LotteryManager:new()
+videoManager  = VideoManager:new()
+shareManager  = ShareManager:new()
 
 -----------------------------------------------------------------------------------------
 --- Display Container
@@ -206,8 +206,8 @@ hud = display.newGroup()
 ---- App globals
 
 GLOBALS = {
-    savedData 		= utils.loadUserData("savedData.json"),
-    options 		= utils.loadUserData("options.json"),
+    savedData   = utils.loadUserData("savedData.json"),
+    options   = utils.loadUserData("options.json"),
 }
 
 -----------------------------------------------------------------------------------------
@@ -224,17 +224,17 @@ end
 --local function notificationListener( event )
 --
 --   print("------------------ notificationListener")
---	utils.tprint(event)
---	if ( event.type == "remote" ) then
---		native.showPopup("Notification", "remote", { "Ok" })
+-- utils.tprint(event)
+-- if ( event.type == "remote" ) then
+--  native.showPopup("Notification", "remote", { "Ok" })
 --
---	elseif ( event.type == "local" ) then
---		native.showPopup("Notification", "local", { "Ok" })
+-- elseif ( event.type == "local" ) then
+--  native.showPopup("Notification", "local", { "Ok" })
 --
---	elseif ( event.type == "remoteRegistration" ) then 
---		native.showPopup("Notification", "remoteRegistration", { "Ok" })
+-- elseif ( event.type == "remoteRegistration" ) then 
+--  native.showPopup("Notification", "remoteRegistration", { "Ok" })
 --
---	end
+-- end
 --   
 --   native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
 --end

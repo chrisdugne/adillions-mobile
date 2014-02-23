@@ -3,52 +3,52 @@
 
 settings = {
 
-	orientation = {
-		default = "portrait",
-		supported = { "portrait", "portraitUpsideDown" }
-	},
+ orientation = {
+  default = "portrait",
+  supported = { "portrait", "portraitUpsideDown" }
+ },
 
-	iphone = {
-		components = {},
-		plist = {
-			--CFBundleExecutable = "Adillions",
-			--UIStatusBarHidden = false,
-			--UIPrerenderedIcon = true, -- set to false for "shine" overlay
-			UIApplicationExitsOnSuspend = false,
+ iphone = {
+  components = {},
+  plist = {
+   --CFBundleExecutable = "Adillions",
+   --UIStatusBarHidden = false,
+   --UIPrerenderedIcon = true, -- set to false for "shine" overlay
+   UIApplicationExitsOnSuspend = false,
 
-			FacebookAppID = "170148346520274",
+   FacebookAppID = "170148346520274",
 
-			CFBundleIconFile = "Icon",
-			CFBundleIconFiles = {
-				"Icon57" , 
-				"Icon60" , 
-				"Icon72" , 
-				"Icon76" , 
-			},
+   CFBundleIconFile = "Icon",
+   CFBundleIconFiles = {
+    "Icon57" , 
+    "Icon60" , 
+    "Icon72" , 
+    "Icon76" , 
+   },
 
-			UIAppFonts = 
-			{
-				"GillSans.ttf",
-				"HelveticaBold.ttf"
-			},
+   UIAppFonts = 
+   {
+    "GillSans.ttf",
+    "HelveticaBold.ttf"
+   },
 
-			CFBundleURLTypes =
-			{
-				{
-					CFBundleURLSchemes =
-					{
-						"fb170148346520274",	-- replace XXXXXXXXX with your facebook appId
-					}
-				}
-			}
-			
-		}
-	},
+   CFBundleURLTypes =
+   {
+    {
+     CFBundleURLSchemes =
+     {
+      "fb170148346520274", -- replace XXXXXXXXX with your facebook appId
+     }
+    }
+   }
+   
+  }
+ },
 
-	-- Plugins
+ -- Plugins
 
-	plugins =
-	{
+ plugins =
+ {
         ["plugin.sponsorpay"] =
         {
             publisherId = "com.sponsorpay",
@@ -60,13 +60,13 @@ settings = {
         },
     },
     
-	-- Android permissions
+ -- Android permissions
 
-	androidPermissions = {
-	      "com.android.vending.BILLING",
-	      "android.permission.INTERNET",
-	      "android.permission.ACCESS_NETWORK_STATE",
-	      "android.permission.READ_PHONE_STATE",
-	},
-	
+ androidPermissions = {
+       "com.android.vending.BILLING",
+       "android.permission.INTERNET",
+       "android.permission.ACCESS_NETWORK_STATE",
+       "android.permission.READ_PHONE_STATE",
+ },
+ 
 }
