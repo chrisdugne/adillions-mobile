@@ -315,7 +315,7 @@ function ShareManager:shareForInstants()
             if(GLOBALS.savedData.facebookAccessToken) then
 
                 -- theme not liked et connecte | button v3 : like theme
-                imageFacebook = I "share.facebook.4.png"
+                imageFacebook = I "share.facebook.3.png"
                 actionFacebook = function()
                     facebook.likeTheme()
                     analytics.event("Social", "facebookLikeTheme") 
@@ -324,7 +324,7 @@ function ShareManager:shareForInstants()
 
             else
                 -- theme not liked  et pas connecte | button v3 : connexion + like theme
-                imageFacebook = I "share.facebook.4.png"
+                imageFacebook = I "share.facebook.3.png"
                 actionFacebook = function() 
                     facebook.connect(function()
                         facebook.likeTheme() 
