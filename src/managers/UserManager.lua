@@ -22,7 +22,9 @@ end
 
 function UserManager:fetchPlayer()
 
-    userManager.user.perpetualBonusTickets = 0
+    userManager.user.fanBonusTickets = 0
+    userManager.user.charityBonusTickets = 0
+    
     native.setActivityIndicator( true )
     print("fetchPlayer")
     self.attemptFetchPlayer = self.attemptFetchPlayer + 1 
@@ -195,7 +197,9 @@ function UserManager:updatedPlayer(player, next)
     end
     
     -- adding all bonusTickets
-    self.user.perpetualBonusTickets = 0
+    self.user.fanBonusTickets       = 0
+    self.user.charityBonusTickets   = 0
+    
     self:setCharityBonus()    
     self:checkFanStatus(function()
         next()
@@ -219,13 +223,13 @@ function UserManager:setCharityBonus()
     local charityLevel = self:charityLevel()
     
     if(charityLevel == BENEFACTOR) then
-        self.user.perpetualBonusTickets = self.user.perpetualBonusTickets + 5
+        self.user.charityBonusTickets = self.user.charityBonusTickets + 5
 
     elseif(charityLevel == DONOR) then
-        self.user.perpetualBonusTickets = self.user.perpetualBonusTickets + 2
+        self.user.charityBonusTickets = self.user.charityBonusTickets + 2
 
     elseif(charityLevel == JUNIOR_DONOR) then
-        self.user.perpetualBonusTickets = self.user.perpetualBonusTickets + 1
+        self.user.charityBonusTickets = self.user.charityBonusTickets + 1
 
     end
     
@@ -403,13 +407,13 @@ function UserManager:checkFanStatus(next)
     print(facebookFan, twitterFan)
 
     if(self.user.facebookId) then
-        self.user.perpetualBonusTickets = self.user.perpetualBonusTickets + FACEBOOK_CONNECTION_TICKETS
-        print("FACEBOOK_CONNECTION perpetualBonusTickets +" .. FACEBOOK_CONNECTION_TICKETS)
+        self.user.fanBonusTickets = self.user.fanBonusTickets + FACEBOOK_CONNECTION_TICKETS
+        print("FACEBOOK_CONNECTION fanBonusTickets +" .. FACEBOOK_CONNECTION_TICKETS)
     end
 
     if(self.user.twitterId) then
-        self.user.perpetualBonusTickets = self.user.perpetualBonusTickets + TWITTER_CONNECTION_TICKETS
-        print("TWITTER_CONNECTION perpetualBonusTickets +" .. TWITTER_CONNECTION_TICKETS)
+        self.user.fanBonusTickets = self.user.fanBonusTickets + TWITTER_CONNECTION_TICKETS
+        print("TWITTER_CONNECTION fanBonusTickets +" .. TWITTER_CONNECTION_TICKETS)
     end
 
     facebook.isFacebookFan(function()
@@ -438,13 +442,13 @@ function UserManager:checkFanStatus(next)
             ---------------------------------------------------------
 
             if(self.user.isFacebookFan) then
-                self.user.perpetualBonusTickets = self.user.perpetualBonusTickets + FACEBOOK_FAN_TICKETS
-                print("FACEBOOK_FAN perpetualBonusTickets +" .. FACEBOOK_FAN_TICKETS)
+                self.user.fanBonusTickets = self.user.fanBonusTickets + FACEBOOK_FAN_TICKETS
+                print("FACEBOOK_FAN fanBonusTickets +" .. FACEBOOK_FAN_TICKETS)
             end
 
             if(self.user.isTwitterFan) then
-                self.user.perpetualBonusTickets = self.user.perpetualBonusTickets + TWITTER_FAN_TICKETS
-                print("TWITTER_FAN perpetualBonusTickets +" .. TWITTER_FAN_TICKETS)
+                self.user.fanBonusTickets = self.user.fanBonusTickets + TWITTER_FAN_TICKETS
+                print("TWITTER_FAN fanBonusTickets +" .. TWITTER_FAN_TICKETS)
             end
 
             ---------------------------------------------------------
@@ -565,6 +569,10 @@ function UserManager:updatePlayer(next)
     print("------------- updatePlayer ")
     self.user.lotteryTickets = nil -- just remove all that long json useless for updates (BUG 2014-02-03). it'll be back at server callback. 
     self.user.lang = LANG
+    self.userBackup = {}
+    
+    -- themeLiked is only client side, and fetched at startup
+    self.userBackup.themeLiked = self.user.themeLiked 
 
     utils.postWithJSON({
         user = self.user,
@@ -575,6 +583,7 @@ function UserManager:updatePlayer(next)
         local player = json.decode(result.response)
 
         if(player) then
+            player.themeLiked = self.userBackup.themeLiked 
             userManager:updatedPlayer(player, next)
         else
             print("multiFB")
@@ -716,7 +725,7 @@ function UserManager:hasTicketsToPlay()
 end
 
 function UserManager:remainingTickets()
-    return self.user.availableTickets + self.user.temporaryBonusTickets + self.user.perpetualBonusTickets - self.user.playedBonusTickets
+    return self.user.availableTickets + self.user.temporaryBonusTickets + self.user.fanBonusTickets + self.user.charityBonusTickets - self.user.playedBonusTickets
 end
 
 -----------------------------------------------------------------------------------------
@@ -1142,7 +1151,7 @@ function UserManager:showStatus()
 
     popup.availableTickets = viewManager.newText({
         parent    = popup,
-        text    = (self:remainingTickets()) .. " / " .. (START_AVAILABLE_TICKETS + self.user.temporaryBonusTickets + self.user.perpetualBonusTickets), 
+        text    = (self:remainingTickets()) .. " / " .. (START_AVAILABLE_TICKETS + self.user.temporaryBonusTickets + self.user.fanBonusTickets + self.user.charityBonusTickets), 
         fontSize  = 55,  
         x     = display.contentWidth * 0.5,
         y     = display.contentHeight*0.34,

@@ -251,22 +251,12 @@ function checkThemeLiked()
 
     print("checkThemeLiked", GLOBALS.savedData.facebookAccessToken)
     local theme = lotteryManager.nextLottery.theme
-    if(not theme) then
-        userManager.user.themeLiked = nil
-        return
-    else
-        userManager.user.themeLiked = false
-    end
+    userManager.user.themeLiked = false
 
     if(GLOBALS.savedData.facebookAccessToken) then
 
-
         local url = "https://graph.facebook.com/me/"..FACEBOOK_APP_NAMESPACE..":enjoy?"
         ..  "access_token=" .. GLOBALS.savedData.facebookAccessToken
-
-        print("---")
-        utils.print(theme)
-        print("---")
 
         network.request(url , "GET", function(result)
             local response = json.decode(result.response)

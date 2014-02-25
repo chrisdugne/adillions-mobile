@@ -44,11 +44,7 @@ function LotteryManager:refreshNextLottery(draw)
         self.nextDrawing.rangs    = json.decode(self.nextDrawing.rangs)
 
         userManager:checkUserCurrentLottery()
-        if(userManager.user.themeLiked == nil) then
-            facebook.checkThemeLiked()
-        end
         
-        utils.tprint(self.nextDrawing.rangs)
         draw()
     end)
 end
