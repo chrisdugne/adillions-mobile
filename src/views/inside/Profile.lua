@@ -32,20 +32,20 @@ function scene:drawScene()
 
     ------------------
 
-    local statusTop        = 3
-    local stockTop         = 10.5
-    local winningsTop      = 20
+    local statusTop        = 4
+    local stockTop         = 9
+    local winningsTop      = 19
     local detailsTop       = 29
-    local logoutTop        = 36
+    local logoutTop        = 38
 
     ------------------
 
-    self.top    = HEADER_HEIGHT + display.contentHeight*0.1
-    self.yGap    = 60
-    self.fontSizeLeft  = 37
-    self.fontSizeRight  = 35
+    self.top                = HEADER_HEIGHT + display.contentHeight*0.1
+    self.yGap               = 60
+    self.fontSizeLeft       = 37
+    self.fontSizeRight      = 35
 
-    self.column1 = display.contentWidth*0.07
+    self.column1 = display.contentWidth*0.1
     self.column2 = display.contentWidth*0.9 
 
     -- ---------------------------------------------------------------
@@ -53,9 +53,9 @@ function scene:drawScene()
     -- ---------------------------------------------------------------
 
     viewManager.drawBorder( hud.board, 
-    display.contentWidth*0.65, self.top + display.contentHeight*0.02, 
-    display.contentWidth*0.6, 180,
-    250,250,250
+        display.contentWidth*0.65, self.top + display.contentHeight*0.02, 
+        display.contentWidth*0.6, 180,
+        250,250,250
     )  
 
     viewManager.newText({
@@ -91,17 +91,23 @@ function scene:drawScene()
     -- -- Personal Details
     -- ---------------------------------------------------------------
 
-    hud.lineDetails   = display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
-    hud.lineDetails.x   = display.contentWidth*0.5
-    hud.lineDetails.y   = self.top + self.yGap*(detailsTop+0.7)
+    viewManager.drawBorder( hud.board, 
+        display.contentWidth*0.5, self.top + self.yGap * ( detailsTop - 0.8 ), 
+        display.contentWidth*0.9, self.yGap* (logoutTop - detailsTop - 0.6),
+        250,250,250, 0.5, 0
+    )  
+    
+    hud.lineDetails         = display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
+    hud.lineDetails.x       = display.contentWidth*0.5
+    hud.lineDetails.y       = self.top + self.yGap*(detailsTop+0.7)
     hud.board:insert(hud.lineDetails)
 
-    hud.titleDetails   = display.newImage( hud.board, I "details.png")  
+    hud.titleDetails   = display.newImage( hud.board, I "profile.personal.png")  
 
     hud.titleDetails.anchorX    = 0
     hud.titleDetails.anchorY    = 0.5
-    hud.titleDetails.x   = display.contentWidth*0.05
-    hud.titleDetails.y  = self.top + self.yGap*(detailsTop+0.7)
+    hud.titleDetails.x      = self.column1 - display.contentWidth*0.03
+    hud.titleDetails.y      = self.top + self.yGap*(detailsTop+0.7)
     hud.board:insert(hud.titleDetails)
 
     ------------------
@@ -110,127 +116,93 @@ function scene:drawScene()
     self:drawTextEntry(T "Last name"  .. " : ", userManager.user.lastName, detailsTop+3)
     self:drawTextEntry(T "Email"    .. " : ", userManager.user.email, detailsTop+4)
     self:drawTextEntry(T "Date of birth"   .. " : ", utils.readableDate(userManager.user.birthDate, false, true), detailsTop+5)
-    self:drawTextEntry("_Sponsor code"  .. " : ", userManager.user.sponsorCode, detailsTop+6)
+    self:drawTextEntry(T "Sponsorship code"  .. " : ", userManager.user.sponsorCode, detailsTop+6)
 
     ---------------------------------------------------------------
     -- Status
     ---------------------------------------------------------------
 
-    hud.lineStatus    = display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
-    hud.lineStatus.x   = display.contentWidth*0.5
-    hud.lineStatus.y   = self.top + self.yGap*statusTop
-    hud.board:insert(hud.lineStatus)
+    viewManager.drawBorder( hud.board, 
+        display.contentWidth*0.5, self.top + self.yGap * ( statusTop - 0.8 ), 
+        display.contentWidth*0.9, self.yGap* (stockTop - statusTop - 0.6),
+        250,250,250, 0.5, 0
+    )  
 
-    hud.titleStatus    = display.newImage( hud.board, I "status.png")
+    hud.titleStatus    = display.newImage( hud.board, I "profile.status.png")
 
     hud.titleStatus.anchorX     = 0
     hud.titleStatus.anchorY     = 0.5  
-    hud.titleStatus.x           = display.contentWidth*0.05
-    hud.titleStatus.y   = self.top + self.yGap*statusTop
+    hud.titleStatus.x           = self.column1 - display.contentWidth * 0.03
+    hud.titleStatus.y           = self.top + self.yGap*statusTop
     hud.board:insert(hud.titleStatus)
+    
+    hud.what                = display.newImage( hud.board, "assets/images/hud/profile/profile.what.png")
+    hud.what.x              = self.column1 + display.contentWidth * 0.24
+    hud.what.y              = hud.titleStatus.y
+    hud.board:insert(hud.what)
 
     --------------------------
-
+    
     viewManager.newText({
-        parent    = hud.board, 
-        text            = "# Tickets" .. " : ",       
-        x     = self.column1,
-        y     = self.top + self.yGap*(statusTop+1),
-        fontSize   = self.fontSizeLeft,
-        anchorX   = 0,
-        anchorY   = 0.5,
+        parent      = hud.board, 
+        text        = "Total Tickets" .. " : ",       
+        x           = self.column1,
+        y           = self.top + self.yGap*(statusTop+1),
+        fontSize    = self.fontSizeLeft,
+        anchorX     = 0,
+        anchorY     = 0.5
     })
-
-    viewManager.newText({
-        parent    = hud.board, 
-        text    = userManager.user.totalPlayedTickets,     
-        x     = self.column1 + display.contentWidth*0.05,
-        y     = self.top + self.yGap*(statusTop+2),
-        fontSize   = 40,
-        font   = NUM_FONT,
-        anchorX   = 0,
-        anchorY   = 0.5,
+    
+    local textTotal = viewManager.newText({
+        parent      = hud.board, 
+        text        = userManager.user.totalPlayedTickets,     
+        x           = self.column1 + display.contentWidth*0.05,
+        y           = self.top + self.yGap*(statusTop+2.6),
+        fontSize    = 40,
+        font        = NUM_FONT,
+        anchorX     = 0,
+        anchorY     = 0.5
     })
+    
+    hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.ticket.png")
+    hud.ticketIcon.x        = textTotal.x + textTotal.contentWidth + display.contentWidth*0.05
+    hud.ticketIcon.y        = textTotal.y
+    hud.board:insert(hud.ticketIcon)
 
     --------------------------
-
-    viewManager.newText({
-        parent    = hud.board, 
-        text    = "# Tickets" .. " : ",         
-        x     = self.column2,
-        y     = self.top + self.yGap*(statusTop+1),
-        fontSize   = self.fontSizeLeft,
-        anchorX   = 1,
-        anchorY   = 0.5,
-    })
-
-
-    hud.iconTicket    = display.newImage( hud.board, "assets/images/icons/ticket.png")
-    hud.iconTicket.x   = self.column2 - display.contentWidth*0.05
-    hud.iconTicket.y   = self.top + self.yGap*(statusTop+2) - display.contentHeight*0.001
-    hud.board:insert(hud.iconTicket)
-
-    viewManager.newText({
-        parent    = hud.board, 
-        text    = START_AVAILABLE_TICKETS .. " + " .. (userManager.user.fanBonusTickets + userManager.user.charityBonusTickets + userManager.user.temporaryBonusTickets),     
-        x     = self.column2 - display.contentWidth*0.11,
-        y     = self.top + self.yGap*(statusTop+2),
-        fontSize   = self.fontSizeRight,
-        font   = NUM_FONT,
-        fontSize   = 40,
-        anchorX   = 1,
-        anchorY   = 0.5,
-    })
-
-    --------------------------
-
-    viewManager.newText({
-        parent    = hud.board, 
-        text    = T "Charity profile" .. " : ",            
-        x     = display.contentWidth*0.5,
-        y     = self.top + self.yGap*(statusTop+3.5),
-        fontSize   = self.fontSizeLeft,
-    })
-
-    for i=1,5 do 
-        hud.iconCharity   = display.newImage( hud.board, "assets/images/icons/CharitiesOFF.png")
-        hud.iconCharity.x   = display.contentWidth*0.35 + i * display.contentWidth*0.05  
-        hud.iconCharity.y   = self.top + self.yGap*(statusTop+4.5)
-        hud.board:insert(hud.iconCharity)
-    end
 
     local charityLevel = userManager:charityLevel()
     
-    for i=1,charityLevel do 
-        hud.iconCharity      = display.newImage( hud.board, "assets/images/icons/CharitiesON.png")
-        hud.iconCharity.x   = display.contentWidth*0.35 + i * display.contentWidth*0.05 
-        hud.iconCharity.y   = self.top + self.yGap*(statusTop+4.5)
-        hud.board:insert(hud.iconCharity)
-    end
-
     viewManager.newText({
-        parent    = hud.board, 
-        text    = T(CHARITY[charityLevel]),              
-        x     = display.contentWidth*0.5,
-        y     = self.top + self.yGap*(statusTop+5.5),
-        fontSize   = self.fontSizeRight,
-        fontSize   = 30,
+        parent      = hud.board, 
+        text        = T "Charity profile" .. " : ",    
+        x           = self.column2,
+        y           = self.top + self.yGap*(statusTop+1),
+        fontSize    = self.fontSizeLeft,
+        anchorX     = 1
     })
+    
+    hud.iconCharity         = display.newImage( hud.board, I "profile.charity.".. charityLevel ..".png")
+    hud.iconCharity.anchorX = 0.8
+    hud.iconCharity.x       = self.column2
+    hud.iconCharity.y       = self.top + self.yGap*(statusTop+2.6),
+    hud.board:insert(hud.iconCharity)
 
     ---------------------------------------------------------------
     -- Stock of tickets
     ---------------------------------------------------------------
 
-    hud.lineStatus              = display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
-    hud.lineStatus.x            = display.contentWidth*0.5
-    hud.lineStatus.y            = self.top + self.yGap*stockTop
-    hud.board:insert(hud.lineStatus)
+    viewManager.drawBorder( hud.board, 
+        display.contentWidth*0.5, self.top + self.yGap * ( stockTop - 0.8 ), 
+        display.contentWidth*0.9, self.yGap* (winningsTop - stockTop - 0.6),
+        250,250,250, 0.5, 0
+    )  
 
     hud.titleStatus    = display.newImage( hud.board, I "profile.stock.png")
 
     hud.titleStatus.anchorX     = 0
     hud.titleStatus.anchorY     = 0.5  
-    hud.titleStatus.x           = display.contentWidth*0.05
+    hud.titleStatus.x           = self.column1 - display.contentWidth * 0.03
     hud.titleStatus.y           = self.top + self.yGap*stockTop
     hud.board:insert(hud.titleStatus)
 
@@ -238,51 +210,36 @@ function scene:drawScene()
     
     viewManager.newText({
         parent      = hud.board, 
-        text        = "_available tickets" .. " : ",         
+        text        = T "Initial stock" .. " : ",         
         x           = self.column1,
-        y           = self.top + self.yGap*(stockTop+1),
+        y           = self.top + self.yGap*(stockTop+1.5),
         fontSize    = self.fontSizeLeft,
         anchorX     = 0,
         anchorY     = 0.5,
     })
     
-    viewManager.newText({
+    local value = viewManager.newText({
         parent      = hud.board, 
-        text        = START_AVAILABLE_TICKETS,         
-        x           = self.column2,
-        y           = self.top + self.yGap*(stockTop+1),
+        text        = START_AVAILABLE_TICKETS,          
+        x           = self.column2 - display.contentWidth * 0.07,
+        y           = self.top + self.yGap*(stockTop+1.5),
         fontSize    = self.fontSizeLeft,
-        anchorX     = 0,
+        anchorX     = 1,
         anchorY     = 0.5,
     })
 
-    ---------------------------------------------------------------
-    
-    viewManager.newText({
-        parent      = hud.board, 
-        text        = "_fan" .. " : ",         
-        x           = self.column1,
-        y           = self.top + self.yGap*(stockTop+2),
-        fontSize    = self.fontSizeLeft,
-        anchorX     = 0,
-        anchorY     = 0.5,
-    })
-    
-    viewManager.newText({
-        parent      = hud.board, 
-        text        = userManager.user.fanBonusTickets,         
-        x           = self.column2,
-        y           = self.top + self.yGap*(stockTop+2),
-        fontSize    = self.fontSizeLeft,
-        anchorX     = 0,
-        anchorY     = 0.5,
-    })
+    hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.ticket.png")
+    hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+1.5)
+    hud.ticketIcon.anchorX  = 0
+    hud.ticketIcon.anchorY  = 0.4
+    hud.board:insert(hud.ticketIcon)
 
     ---------------------------------------------------------------
     
-    viewManager.newText({
+    local text = viewManager.newText({
         parent      = hud.board, 
-        text        = "_charity profile" .. " : ",         
+        text        = "+ " .. T "Social networks",         
         x           = self.column1,
         y           = self.top + self.yGap*(stockTop+3),
         fontSize    = self.fontSizeLeft,
@@ -290,75 +247,141 @@ function scene:drawScene()
         anchorY     = 0.5,
     })
     
-    viewManager.newText({
+    hud.fanIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.networks.png")
+    hud.fanIcon.x        = text.x + text.contentWidth + display.contentWidth * 0.1
+    hud.fanIcon.y        = self.top + self.yGap*(stockTop+3)
+    hud.board:insert(hud.fanIcon)
+    
+    local value = viewManager.newText({
         parent      = hud.board, 
-        text        = userManager.user.charityBonusTickets,         
-        x           = self.column2,
+        text        = userManager.user.fanBonusTickets,        
+        x           = self.column2 - display.contentWidth * 0.07,
         y           = self.top + self.yGap*(stockTop+3),
         fontSize    = self.fontSizeLeft,
-        anchorX     = 0,
+        anchorX     = 1,
         anchorY     = 0.5,
     })
 
+    hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.ticket.png")
+    hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+3)
+    hud.ticketIcon.anchorX  = 0
+    hud.ticketIcon.anchorY  = 0.4
+    hud.board:insert(hud.ticketIcon)
+    
+    ---------------------------------------------------------------
+    
+    local text = viewManager.newText({
+        parent      = hud.board, 
+        text        = "+ " .. T "Charity profile",
+        x           = self.column1,
+        y           = self.top + self.yGap*(stockTop+4.5),
+        fontSize    = self.fontSizeLeft,
+        anchorX     = 0,
+        anchorY     = 0.5,
+    })
+    
+    hud.charityIcon             = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.charity.png")
+    hud.charityIcon.x           = text.x + text.contentWidth + display.contentWidth * 0.1
+    hud.charityIcon.y           = self.top + self.yGap*(stockTop+4.5)
+    hud.board:insert(hud.charityIcon)
+    
+    local value = viewManager.newText({
+        parent      = hud.board, 
+        text        = userManager.user.charityBonusTickets,       
+        x           = self.column2 - display.contentWidth * 0.07,
+        y           = self.top + self.yGap*(stockTop+4.5),
+        fontSize    = self.fontSizeLeft,
+        anchorX     = 1,
+        anchorY     = 0.5
+    })
+    
+    hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.ticket.png")
+    hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+4.5)
+    hud.ticketIcon.anchorX  = 0
+    hud.ticketIcon.anchorY  = 0.4
+    hud.board:insert(hud.ticketIcon)
+
+    ---------------------------------------------------------------
+    
+    local text = viewManager.newText({
+        parent      = hud.board, 
+        text        = "+ " .. T "Winnings Tickets",   
+        x           = self.column1,
+        y           = self.top + self.yGap*(stockTop+6),
+        fontSize    = self.fontSizeLeft,
+        anchorX     = 0,
+        anchorY     = 0.5
+    })
+    
+    hud.winningsIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.winnings.png")
+    hud.winningsIcon.x        = text.x + text.contentWidth + display.contentWidth * 0.1
+    hud.winningsIcon.y        = self.top + self.yGap*(stockTop+6)
+    hud.board:insert(hud.winningsIcon)
+    
+    local text = viewManager.newText({
+        parent      = hud.board, 
+        text        = userManager.user.temporaryBonusTickets,     
+        x           = self.column2 - display.contentWidth * 0.07,
+        y           = self.top + self.yGap*(stockTop+6),
+        fontSize    = self.fontSizeLeft,
+        anchorX     = 1,
+        anchorY     = 0.5,
+    })
+    
+    hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.ticket.png")
+    hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+6)
+    hud.ticketIcon.anchorX  = 0
+    hud.ticketIcon.anchorY  = 0.4
+    hud.board:insert(hud.ticketIcon)
+    
     ---------------------------------------------------------------
     
     viewManager.newText({
         parent      = hud.board, 
-        text        = "_winnings/temporary" .. " : ",         
+        text        = "= " .. T "Available Tickets" .. " : ",      
         x           = self.column1,
-        y           = self.top + self.yGap*(stockTop+4),
+        y           = self.top + self.yGap*(stockTop+7.5),
         fontSize    = self.fontSizeLeft,
         anchorX     = 0,
         anchorY     = 0.5,
     })
     
-    viewManager.newText({
+    local text = viewManager.newText({
         parent      = hud.board, 
-        text        = userManager.user.temporaryBonusTickets,         
-        x           = self.column2,
-        y           = self.top + self.yGap*(stockTop+4),
+        text        = (START_AVAILABLE_TICKETS + userManager.user.temporaryBonusTickets + userManager.user.fanBonusTickets + userManager.user.charityBonusTickets),
+        x           = self.column2 - display.contentWidth * 0.07,
+        y           = self.top + self.yGap*(stockTop+7.5),
         fontSize    = self.fontSizeLeft,
-        anchorX     = 0,
-        anchorY     = 0.5,
-    })
-
-    ---------------------------------------------------------------
-    
-    viewManager.newText({
-        parent      = hud.board, 
-        text        = "_total" .. " : ",         
-        x           = self.column1,
-        y           = self.top + self.yGap*(stockTop+5),
-        fontSize    = self.fontSizeLeft,
-        anchorX     = 0,
+        anchorX     = 1,
         anchorY     = 0.5,
     })
     
-    viewManager.newText({
-        parent      = hud.board, 
-        text        = (START_AVAILABLE_TICKETS + userManager.user.temporaryBonusTickets + userManager.user.fanBonusTickets + userManager.user.charityBonusTickets),         
-        x           = self.column2,
-        y           = self.top + self.yGap*(stockTop+5),
-        fontSize    = self.fontSizeLeft,
-        anchorX     = 0,
-        anchorY     = 0.5,
-    })
+    hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.ticket.png")
+    hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+7.5)
+    hud.ticketIcon.anchorX  = 0
+    hud.ticketIcon.anchorY  = 0.4
+    hud.board:insert(hud.ticketIcon)
 
     ---------------------------------------------------------------
     -- winnings
     ---------------------------------------------------------------
 
-    hud.lineWinnings    = display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
-    hud.lineWinnings.x    = display.contentWidth*0.5
-    hud.lineWinnings.y    = self.top + self.yGap*winningsTop
-    hud.board:insert(hud.lineWinnings)
-
-    hud.titleWinnings    = display.newImage( hud.board, I "Gain.png")
+    viewManager.drawBorder( hud.board, 
+        display.contentWidth*0.5, self.top + self.yGap * ( winningsTop - 0.8 ), 
+        display.contentWidth*0.9, self.yGap* (detailsTop - winningsTop - 0.6),
+        250,250,250, 0.5, 0
+    )  
+    
+    hud.titleWinnings    = display.newImage( hud.board, I "profile.winnings.png")
 
     hud.titleWinnings.anchorX    = 0
     hud.titleWinnings.anchorY    = 0.5  
 
-    hud.titleWinnings.x   = display.contentWidth*0.05
+    hud.titleWinnings.x   = self.column1 - display.contentWidth * 0.03
     hud.titleWinnings.y   = self.top + self.yGap*winningsTop
     hud.board:insert(hud.titleWinnings)
 
@@ -454,7 +477,7 @@ function scene:drawScene()
 
     hud.cashout   = display.newImage( hud.board, I "cashout.button.png")  
     hud.cashout.x   = display.contentWidth*0.5
-    hud.cashout.y  = self.top + self.yGap*(winningsTop+7.5)
+    hud.cashout.y  = self.top + self.yGap*(winningsTop+7.2)
     hud.board:insert(hud.cashout)
 
     utils.onTouch(hud.cashout, function() 

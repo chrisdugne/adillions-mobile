@@ -22,85 +22,85 @@ end
 
 function scene:refreshScene()
 
- GLOBALS.savedData.facebookAccessToken  = nil
- GLOBALS.savedData.twitterAccessToken  = nil
- utils.saveTable(GLOBALS.savedData, "savedData.json")
- 
- ----------
- --
- --
- hud.bg = display.newImageRect( hud, "assets/images/hud/SignUp_Bg.jpg", display.contentWidth, display.contentHeight)  
- hud.bg.x = display.viewableContentWidth*0.5 
- hud.bg.y = display.viewableContentHeight*0.5
+    GLOBALS.savedData.facebookAccessToken  = nil
+    GLOBALS.savedData.twitterAccessToken  = nil
+    utils.saveTable(GLOBALS.savedData, "savedData.json")
 
- hud.logo = display.newImage( hud, "assets/images/hud/Sign_Logo.png")  
- hud.logo.x = display.contentWidth*0.5 
- hud.logo.y = display.contentHeight*0.15
+    ----------
+    --
+    --
+    hud.bg = display.newImageRect( hud, "assets/images/hud/SignUp_Bg.jpg", display.contentWidth, display.contentHeight)  
+    hud.bg.x = display.viewableContentWidth*0.5 
+    hud.bg.y = display.viewableContentHeight*0.5
 
- hud.logo = display.newImage( hud, "assets/images/hud/SignUp_Earth.png")  
- hud.logo.x = display.contentWidth*0.5 
- hud.logo.y = display.contentHeight*0.38
- 
- hud.logo = display.newImage( hud, "assets/images/hud/SignUp_BigBall.png")  
- hud.logo.x = display.contentWidth*0.27 
- hud.logo.y = display.contentHeight*0.38
+    hud.logo = display.newImage( hud, "assets/images/hud/Sign_Logo.png")  
+    hud.logo.x = display.contentWidth*0.5 
+    hud.logo.y = display.contentHeight*0.15
 
- hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall.png")  
- hud.logo.x = display.contentWidth*0.17 
- hud.logo.y = display.contentHeight*0.04
+    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_Earth.png")  
+    hud.logo.x = display.contentWidth*0.5 
+    hud.logo.y = display.contentHeight*0.38
 
- hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall2.png")  
- hud.logo.x = display.contentWidth*0.96 
- hud.logo.y = display.contentHeight*0.25
+    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_BigBall.png")  
+    hud.logo.x = display.contentWidth*0.27 
+    hud.logo.y = display.contentHeight*0.38
 
- hud.logo = display.newImage( hud, "assets/images/hud/SignUp_SmallBall.png")  
- hud.logo.x = display.contentWidth*0.9 
- hud.logo.y = display.contentHeight*0.05
+    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall.png")  
+    hud.logo.x = display.contentWidth*0.17 
+    hud.logo.y = display.contentHeight*0.04
 
- 
- ---------------------------------------------------------------
- 
- hud.fb = display.newImage( hud, I "Sign_Facebook.png")  
- hud.fb.x = display.contentWidth*0.5 
- hud.fb.y = display.contentHeight*0.6
- 
- utils.onTouch(hud.fb, facebook.login)
- 
- ---------------------------------------------------------------
+    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall2.png")  
+    hud.logo.x = display.contentWidth*0.96 
+    hud.logo.y = display.contentHeight*0.25
 
- hud.line = display.newImage( hud, "assets/images/hud/Sign_Filet.png")  
- hud.line.x = display.contentWidth*0.5 
- hud.line.y = display.contentHeight*0.7
- 
- hud.textor = viewManager.newText({
-  parent    = hud,
-  text     = "or",       
-  fontSize   = 39,  
-  x      = display.contentWidth * 0.5,
-  y      = display.contentHeight*0.694
- })
- 
- hud.textor.alpha = 0.4
- 
- ---------------------------------------------------------------
+    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_SmallBall.png")  
+    hud.logo.x = display.contentWidth*0.9 
+    hud.logo.y = display.contentHeight*0.05
 
- hud.login = display.newImage( hud, I "Sign_Login.png")  
- hud.login.x = display.contentWidth*0.5 
- hud.login.y = display.contentHeight*0.79
- 
- utils.onTouch(hud.login, router.openLogin)
 
- hud.signin = display.newImage( hud, I "Sign_Signup.png")  
- hud.signin.x = display.contentWidth*0.5 
- hud.signin.y = display.contentHeight*0.91
- 
- utils.onTouch(hud.signin, router.openSignin)
+    ---------------------------------------------------------------
 
- ---------------------------------------------------------------
+    hud.fb = display.newImage( hud, I "Sign_Facebook.png")  
+    hud.fb.x = display.contentWidth*0.5 
+    hud.fb.y = display.contentHeight*0.6
 
- self.view:insert(hud)
+    utils.onTouch(hud.fb, facebook.login)
 
- ---------------------------------------------------------------
+    ---------------------------------------------------------------
+
+    hud.line = display.newImage( hud, "assets/images/hud/Sign_Filet.png")  
+    hud.line.x = display.contentWidth*0.5 
+    hud.line.y = display.contentHeight*0.7
+
+    hud.textor = viewManager.newText({
+        parent    = hud,
+        text     = "or",       
+        fontSize   = 39,  
+        x      = display.contentWidth * 0.5,
+        y      = display.contentHeight*0.694
+    })
+
+    hud.textor.alpha = 0.4
+
+    ---------------------------------------------------------------
+
+    hud.login = display.newImage( hud, I "Sign_Login.png")  
+    hud.login.x = display.contentWidth*0.5 
+    hud.login.y = display.contentHeight*0.79
+
+    utils.onTouch(hud.login, router.openLogin)
+
+    hud.signin = display.newImage( hud, I "Sign_Signup.png")  
+    hud.signin.x = display.contentWidth*0.5 
+    hud.signin.y = display.contentHeight*0.91
+
+    utils.onTouch(hud.signin, router.openSignin)
+
+    ---------------------------------------------------------------
+
+    self.view:insert(hud)
+
+    ---------------------------------------------------------------
 
 end
 
@@ -108,7 +108,7 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
- self:refreshScene()
+    self:refreshScene()
 end
 
 -- Called when scene is about to move offscreen:

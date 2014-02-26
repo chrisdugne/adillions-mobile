@@ -50,15 +50,6 @@ function scene:refreshScene()
     hud.logo.x = display.contentWidth*0.9 
     hud.logo.y = display.contentHeight*0.05
 
-    ---------------------------------------------------------------
-
-    hud.watch = viewManager.newText({
-        parent    = hud.tuto1,
-        text     = T "Check your internet connection", 
-        fontSize   = 44,  
-        x      = display.contentWidth * 0.5,
-        y      = display.contentHeight* 0.75,
-    })
 
     ---------------------------------------------------------------
 

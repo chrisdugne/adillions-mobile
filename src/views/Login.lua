@@ -22,10 +22,10 @@ end
 
 function scene:refreshScene()
 
- self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
- self.webView:request( SERVER_URL .. "mlogin?lang=" .. LANG  )
- self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
- 
+    self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
+    self.webView:request( SERVER_URL .. "mlogin?lang=" .. LANG  )
+    self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+
 end
 
 ------------------------------------------
@@ -33,44 +33,44 @@ end
 function scene:loginViewListener( event )
 
     if event.url then
-     
-  print("---   login listener")
-  print(event.url)
-  
-     if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
-   self:closeWebView()      
-   local params = utils.getUrlParams(event.url);
-   
-   GLOBALS.savedData.authToken  = params.authToken         
-   GLOBALS.savedData.user.email  = params.email   
-       utils.saveTable(GLOBALS.savedData, "savedData.json")
 
-   userManager:fetchPlayer()
+        print("---   login listener")
+        print(event.url)
 
-     elseif event.url == SERVER_URL .. "backToMobile" then
-   self:closeWebView()     
-   print("login : backToMobile : outside")  
-       router.openOutside()
+        if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
+            self:closeWebView()      
+            local params = utils.getUrlParams(event.url);
 
-     elseif event.url == SERVER_URL .. "connectWithFB" then
-   self:closeWebView()      
-       facebook.login()
-  end
+            GLOBALS.savedData.authToken  = params.authToken         
+            GLOBALS.savedData.user.email  = params.email   
+            utils.saveTable(GLOBALS.savedData, "savedData.json")
+
+            userManager:fetchPlayer()
+
+        elseif event.url == SERVER_URL .. "backToMobile" then
+            self:closeWebView()     
+            print("login : backToMobile : outside")  
+            router.openOutside()
+
+        elseif event.url == SERVER_URL .. "connectWithFB" then
+            self:closeWebView()      
+            facebook.login()
+        end
 
     end
 end
 
 function scene:closeWebView()
- self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
- self.webView:removeSelf()
- self.webView = nil
+    self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+    self.webView:removeSelf()
+    self.webView = nil
 end
 
 ------------------------------------------
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
- self:refreshScene()
+    self:refreshScene()
 end
 
 -- Called when scene is about to move offscreen:

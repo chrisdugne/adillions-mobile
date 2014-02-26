@@ -86,6 +86,7 @@ function GameManager:tryAutoOpenAdillionsAccount()
     utils.saveTable(GLOBALS.savedData, "savedData.json")
 
     if(GLOBALS.savedData.user.uid) then
+        router.openLoading()
         native.setActivityIndicator( true )
         userManager:fetchPlayer()
 

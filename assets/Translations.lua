@@ -1,680 +1,714 @@
 local translations =
 {
- ["Last updated : January 05th, 2014"] = {
-  ["fr"] = "Dernière mise à jour : 05 janvier 2014",
- },
+    ["Last updated : January 05th, 2014"] = {
+        ["fr"] = "Dernière mise à jour : 05 janvier 2014",
+    },
 
- ["Check your internet connection"] = {
-  ["fr"] = "Vérifier votre connexion internet",
- },
- 
- ["Vungle has no ad, please try later"] = {
-  ["fr"] = "Vungle n'a pas de video, veuillez réessayer plus tard",
- },
- 
- ["Log In"] = {
-  ["fr"] = "S'identifier",
- },
+    ["Check your internet connection"] = {
+        ["fr"] = "Vérifier votre connexion internet",
+    },
 
- ["Log Out"] = {
-  ["fr"] = "Déconnexion",
- },
+    ["Vungle has no ad, please try later"] = {
+        ["fr"] = "Vungle n'a pas de video, veuillez réessayer plus tard",
+    },
 
- ["Connection failed"] = {
-  ["fr"] = "Echec de la connexion",
- },
+    ["Log In"] = {
+        ["fr"] = "S'identifier",
+    },
 
- ["If this is not your Facebook account, you must log out this Facebook session on your device and log in with your own Facebook profile in order to connect your accounts"] = {
-  ["fr"] = "Si ce n’est pas votre compte Facebook, vous devez fermer la session Facebook en cours sur votre appareil et vous identifier avec votre propre profil Facebook pour connecter vos comptes",
- },
+    ["Log Out"] = {
+        ["fr"] = "Déconnexion",
+    },
 
- ["Sign Up"] = {
-  ["fr"] = "S'inscrire",
- },
+    ["Connection failed"] = {
+        ["fr"] = "Echec de la connexion",
+    },
 
- ["Close"] = {
-  ["fr"] = "Fermer",
- },
+    ["If this is not your Facebook account, you must log out this Facebook session on your device and log in with your own Facebook profile in order to connect your accounts"] = {
+        ["fr"] = "Si ce n’est pas votre compte Facebook, vous devez fermer la session Facebook en cours sur votre appareil et vous identifier avec votre propre profil Facebook pour connecter vos comptes",
+    },
 
- ["Welcome"] = {
-  ["fr"] = "Bienvenue",
- },
+    ["Sign Up"] = {
+        ["fr"] = "S'inscrire",
+    },
 
- ["Welcome back"] = {
-  ["fr"] = "Bienvenue",
- },
+    ["Close"] = {
+        ["fr"] = "Fermer",
+    },
 
- ["Winnings"] = {
-  ["fr"] = "Gain",
- },
+    ["Welcome"] = {
+        ["fr"] = "Bienvenue",
+    },
 
- ["Next drawing in 48h !"] = {
-  ["fr"] = "Prochain tirage dans 48h !",
- },
+    ["Welcome back"] = {
+        ["fr"] = "Bienvenue",
+    },
 
- ["This week's results are published !"] = {
-  ["fr"] = "Les résultats du dernier tirage sont disponibles",
- },
-
- ["You've earned an Instant Ticket"] = {
-  ["fr"] = "Vous avez gagné un Ticket Instantané",
- },
+    ["Winnings"] = {
+        ["fr"] = "Gain",
+    },
 
+    ["Next drawing in 48h !"] = {
+        ["fr"] = "Prochain tirage dans 48h !",
+    },
 
- ---- SHOOTER ? ou bannière pour certain ? ------------------
- ["Account not linked"] = {
-  ["fr"] = "Compte non lié",
- },
-
- ["Account linked"] = {
-  ["fr"] = "Compte relié",
- },
-
- ["Not connected"] = {
-  ["fr"] = "Non connecté",
- },
-
- ["Connected"] = {
-  ["fr"] = "Connecté",
- },
-
- ["Not fan yet"] = {
-  ["fr"] = "Pas encore fan",
- },
-
- ["Thank you for being a fan !"] = {
-  ["fr"] = "Merci d'être fan !",
- },  
- ---- SHOOTER ? ou bannière pour certain ? ------------------
+    ["This week's results are published !"] = {
+        ["fr"] = "Les résultats du dernier tirage sont disponibles",
+    },
 
+    ["You've earned an Instant Ticket"] = {
+        ["fr"] = "Vous avez gagné un Ticket Instantané",
+    },
 
 
- ---TUTORIAL P1-----------------------------------------------------------
+    ---- SHOOTER ? ou bannière pour certain ? ------------------
+    ["Account not linked"] = {
+        ["fr"] = "Compte non lié",
+    },
 
- ["NEXT"] = {
-  ["fr"] = "SUIVANT",
- },
+    ["Account linked"] = {
+        ["fr"] = "Compte relié",
+    },
 
- ["Each week"] = {
-  ["fr"] = "Chaque semaine",
- },
+    ["Not connected"] = {
+        ["fr"] = "Non connecté",
+    },
 
- ["theme"] = {
-  ["fr"] = "thème",
- },
+    ["Connected"] = {
+        ["fr"] = "Connecté",
+    },
 
- ["draw on"] = {
-  ["fr"] = "tirage sur",
- },
+    ["Not fan yet"] = {
+        ["fr"] = "Pas encore fan",
+    },
 
- ["chance to win"] = {
-  ["fr"] = "chance de gagner",
- },
+    ["Thank you for being a fan !"] = {
+        ["fr"] = "Merci d'être fan !",
+    },  
+    ---- SHOOTER ? ou bannière pour certain ? ------------------
 
- --------------------------
 
- ["Watch"] = {
-  ["fr"] = "Vous visualisez",
- },
 
- ["an ad"] = {
-  ["fr"] = "une pub",
- },
+    ---TUTORIAL P1-----------------------------------------------------------
 
- ["Fill out"] = {
-  ["fr"] = "Vous remplissez",
- },
+    ["NEXT"] = {
+        ["fr"] = "SUIVANT",
+    },
 
- ["a ticket"] = {
-  ["fr"] = "un ticket",
- },
+    ["Each week"] = {
+        ["fr"] = "Chaque semaine",
+    },
 
- ["Try"] = {
-  ["fr"] = "Vous tentez",
- },
+    ["theme"] = {
+        ["fr"] = "thème",
+    },
 
- ["your luck"] = {
-  ["fr"] = "votre chance",
- },
+    ["draw on"] = {
+        ["fr"] = "tirage sur",
+    },
 
- ["Each new player contributes"] = {
-  ["fr"] = "Plus il y a de joueurs,",
- },
+    ["chance to win"] = {
+        ["fr"] = "chance de gagner",
+    },
 
- ["to increase the jackpot"] = {
-  ["fr"] = "plus la cagnotte augmente",
- },
+    --------------------------
 
- ["... give to charity !"] = {
-  ["fr"] = "... donnez à des associations !",
- },
+    ["Watch"] = {
+        ["fr"] = "Vous visualisez",
+    },
 
- ["... likely you are to win the jackpot !"] = {
-  ["fr"] = "... avez de chances de gagner le jackpot !",
- },
- 
- ["Charities"] = {
-  ["fr"] = "Associations",
- },
+    ["an ad"] = {
+        ["fr"] = "une pub",
+    },
 
- ---TUTORIAL P2-----------------------------------------------------------
+    ["Fill out"] = {
+        ["fr"] = "Vous remplissez",
+    },
 
- ["Watch an ad"] = {
-  ["fr"] = "Visualisez une pub",
- },
+    ["a ticket"] = {
+        ["fr"] = "un ticket",
+    },
 
- ["Get a lottery ticket"] = {
-  ["fr"] = "Remplissez votre ticket de loterie",
- },
+    ["Try"] = {
+        ["fr"] = "Vous tentez",
+    },
 
- ["Win the Jackpot"] = {
-  ["fr"] = "Gagnez le Jackpot",
- },
-
- ["Several prize categories and lottery"] = {
-  ["fr"] = "Plusieurs rangs de gain et Tickets",
- },
-
- ["Tickets are available for each draw"] = {
-  ["fr"] = "disponibles par tirage",
- },
-
- ["PREVIOUS"] = {
-  ["fr"] = "PRECEDENT",
- },
-
- ---TUTORIAL P3-----------------------------------------------------------
-
- ["Invite your friends to make"] = {
-  ["fr"] = "Invitez vos amis pour faire",
- },
-
- ["the jackpot bigger"] = {
-  ["fr"] = "grossir la cagnotte",
- },
-
- ---POPUP INVITE----------------------------------------------------------- 
-
- ["Earn Instant Tickets and increase the jackpot"] = {
-  ["fr"] = "Gagnez des Tickets Instantanés et faites augmenter la cagnotte",
- },
-
- ---POPUP SHARE----------------------------------------------------------- 
-
- ["Earn points and get Instant Tickets"] = {
-  ["fr"] = "Gagnez des points \n et obtenez des Tickets Instantanés",
- },
-
- ["Successfully posted on your wall !"] = {
-  ["fr"] = "Posté sur votre mur !",
- },
-
- ["Successfully tweeted"] = {
-  ["fr"] = "Tweeté !",
- },
-
- ---POPUP MAX TICKET----------------------------------------------------------- 
-
- ["You have reached the maximum number of Tickets for this draw"] = {
-  ["fr"] = "Vous avez atteint le nombre maximum de Tickets pour ce tirage",
- },
-
- ["Increase your stock of Tickets"] = {
-  ["fr"] = "Augmentez votre stock de Tickets",
- },
-
- ---POPUP WAIT ----------------------------------------------------------- 
-
- ["You can fill out a new Ticket in :"] = {
-  ["fr"] = "Un Ticket sera disponible dans :",
- },
-
- ["Play right now thanks to Instant Tickets"] = {
-  ["fr"] = "Jouez sans attendre grâce aux Tickets Instantanés",
- },
-
- ---POPUP POINTS HEADER-----------------------------------------------------------
-
- ["Instant Ticket"] = {
-  ["fr"] = "Ticket Instantané",
- },
-
- ["Instant Tickets"] = {
-  ["fr"] = "Tickets Instantanés",
- },
-
- ["Remaining Ticket"] = {
-  ["fr"] = "Ticket restant",
- },
-
- ["Remaining Tickets"] = {
-  ["fr"] = "Tickets restants",
- },
-
- ---POPUP REWARD-----------------------------------------------------------
-
- ["Increase your stock of Tickets"] = {
-  ["fr"] = "Augmentez votre stock de Tickets",
- },
- 
- ["Play right now thanks to Instant Tickets"] = {
-  ["fr"] = "Jouez sans attendre grâce aux Tickets Instantanés",
- },
- 
- ["The more you play Adillions, the more you contribute to charities"] = {
-  ["fr"] = "Plus vous jouez à Adillions, plus vous contribuez à financer des oeuvres caritatives",
- },
- 
- ["*Only for the next drawing"] = {
-  ["fr"] = "*Seulement pour le prochain tirage",
- },
- 
- ["*For the sponsor and the sponsored user (2 draws min.)"] = {
-  ["fr"] = "*Pour le parrain et le filleul (2 tirages min.)",
- },
- 
- ["** Per post (max. 4 Instants per draw)"] = {
-  ["fr"] = "**Par post (max. 4 Instantanés par tirage)",
- },
- 
- ["You have won"] = {
-  ["fr"] = "Vous avez gagné",
- },
-
- ---POPUP PRIZE-----------------------------------------------------------
-
- ["Match"] = {
-  ["fr"] = "Combinaison",
- },
-
- ["n° + LB"] = {
-  ["fr"] = "n° + BC",
- },
-
- ["Prize"] = {
-  ["fr"] = "Répartition",
- },
-
- ["breakdown"] = {
-  ["fr"] = "cagnotte",
- },
-
- ---POPUP Contact -----------------------------------------------------------
-
- ["General information"] = {
-  ["fr"] = "Information",
- },
-
- ["For technical issues"] = {
-  ["fr"] = "Support technique",
- },
-
- ["For payments"] = {
-  ["fr"] = "Paiements",
- },
-
- ["For advertisers"] = {
-  ["fr"] = "Annonceurs",
- },
-
- ["By email"] = {
-  ["fr"] = "Par mail",
- },
-
- ["On the web"] = {
-  ["fr"] = "Sur internet",
- },
- 
-
- ["By email"] = {
-  ["fr"] = "Par email",
- },
- 
- ---HOME-----------------------------------------------------------
-
- ["Players"] = {
-  ["fr"] = "Joueurs",
- },
-
- ["DAYS"] = {
-  ["fr"] = "JRS",
- },
-
- ["HRS"] = {
-  ["fr"] = "HRS",
- },
-
- ["MIN"] = {
-  ["fr"] = "MIN",
- },
-
- ["SEC"] = {
-  ["fr"] = "SEC",
- },
-
- ---PROFILE CASHOUT-----------------------------------------------------------
-
- ["You can cash out when your winnings \n have reached a minimum total \n balance of "] = {
-  ["fr"] = "Pour effectuer un retrait, il vous \n faut un solde minimum de gains de ",
- },
-
- ["You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment"] = {
-  ["fr"] = "Vous recevrez vos gains d’ici 4 à 8 semaines  \n \n Nous vous contacterons par mail dans les prochains jours \n pour procéder au paiement",
- },
-
- ["Your winnings will be donated to Adillions Solidarity \n and Sustainable Development Fund \n \n \n Soon users will be able to \n directly choose their own charity …"] = {
-  ["fr"] = "Vos gains seront versés \n au Fonds de Solidarité et de Développement \n Durable d’Adillions. \n \n \n Bientôt, \n vous pourrez directement choisir l’œuvre que vous souhaitez \n financer …",
- },
-
- ["Thank you"] = {
-  ["fr"] = "Merci",
- },
-
- ["Congratulations !"] = {
-  ["fr"] = "Félicitations !",
- },
-
- ---PROFILE DETAILS-----------------------------------------------------------
-
- ["User name"] = {
-  ["fr"] = "Nom d'utilisateur",
- },
-
- ["First name"] = {
-  ["fr"] = "Prénom",
- },
-
- ["Last name"] = {
-  ["fr"] = "Nom",
- },
-
- ["Email"] = {
-  ["fr"] = "Email",
- },
-
- ["Date of birth"] = {
-  ["fr"] = "Date de naissance",
- },
-
- ---PROFILE STATUS-----------------------------------------------------------
-
- ["Total points"] = {
-  ["fr"] = "Total des points",
- },
-
- ["Bonus Tickets"] = {
-  ["fr"] = "Tickets Bonus",
- },
-
- ["Charity profile"] = {
-  ["fr"] = "Profil donateur",
- },
-
- ["Charity Profile"] = {
-  ["fr"] = "Profil Donateur",
- },
-
- ["Donation"] = {
-  ["fr"] = "Dons",
- },
-
- ----------
- 
- ["Boy Scout"] = {
-  ["fr"] = "Scout",
- },
-
- ["Contributor"] = {
-  ["fr"] = "Contributeur",
- },
+    ["your luck"] = {
+        ["fr"] = "votre chance",
+    },
 
- ["Junior donor"] = {
-  ["fr"] = "Donateur junior",
- },
+    ["Each new player contributes"] = {
+        ["fr"] = "Plus il y a de joueurs,",
+    },
 
- ["Donor"] = {
-  ["fr"] = "Donateur",
- },
+    ["to increase the jackpot"] = {
+        ["fr"] = "plus la cagnotte augmente",
+    },
 
- ["Benefactor"] = {
-  ["fr"] = "Bienfaiteur",
- },
+    ["... give to charity !"] = {
+        ["fr"] = "... donnez à des associations !",
+    },
 
- ["Major Donor"] = {
-  ["fr"] = "Grand Donateur",
- },
+    ["... likely you are to win the jackpot !"] = {
+        ["fr"] = "... avez de chances de gagner le jackpot !",
+    },
 
- ["Patron"] = {
-  ["fr"] = "Mécène",
- },
+    ["Charities"] = {
+        ["fr"] = "Associations",
+    },
 
- ["Philanthropist"] = {
-  ["fr"] = "Philanthrope",
- },
- 
- ---PROFILE WINNINGS-----------------------------------------------------------
+    ---TUTORIAL P2-----------------------------------------------------------
 
- ["Total winnings"] = {
-  ["fr"] = "Total des gains",
- },
+    ["Watch an ad"] = {
+        ["fr"] = "Visualisez une pub",
+    },
 
- ["Payed"] = {
-  ["fr"] = "Gains perçus",
- },
+    ["Get a lottery ticket"] = {
+        ["fr"] = "Remplissez votre ticket de loterie",
+    },
 
- ["Balance"] = {
-  ["fr"] = "Solde",
- },
+    ["Win the Jackpot"] = {
+        ["fr"] = "Gagnez le Jackpot",
+    },
 
- ---RESULTS-----------------------------------------------------------
+    ["Several prize categories and lottery"] = {
+        ["fr"] = "Plusieurs rangs de gain et Tickets",
+    },
 
- ["Drawing"] = {
-  ["fr"] = "Tirage du",
- },
+    ["Tickets are available for each draw"] = {
+        ["fr"] = "disponibles par tirage",
+    },
 
- ["Winner"] = {
-  ["fr"] = "Gagnant",
- },
+    ["PREVIOUS"] = {
+        ["fr"] = "PRECEDENT",
+    },
 
- ["Winners"] = {
-  ["fr"] = "Gagnants",
- },
+    ---TUTORIAL P3-----------------------------------------------------------
 
- ["Charity"] = {
-  ["fr"] = "Associations",
- },
+    ["Invite your friends to make"] = {
+        ["fr"] = "Invitez vos amis pour faire",
+    },
 
- ["See more"] = {
-  ["fr"] = "Détails",
- },
+    ["the jackpot bigger"] = {
+        ["fr"] = "grossir la cagnotte",
+    },
 
- ["Total"] = {
-  ["fr"] = "Nbre de",
- },
+    ---POPUP INVITE----------------------------------------------------------- 
 
- ["winning Tickets"] = {
-  ["fr"] = "Tickets gagnants",
- },
+    ["Earn Instant Tickets and increase the jackpot"] = {
+        ["fr"] = "Gagnez des Tickets Instantanés et faites augmenter la cagnotte",
+    },
 
- ["Prize / "] = {
-  ["fr"] = "Gain / ",
- },
+    ---POPUP SHARE----------------------------------------------------------- 
 
- ["Winning Ticket"] = {
-  ["fr"] = "Ticket gagnant",
- },
+    ["Earn points and get Instant Tickets"] = {
+        ["fr"] = "Gagnez des points \n et obtenez des Tickets Instantanés",
+    },
 
- ---POOL NUMBERS-----------------------------------------------------------
+    ["Successfully posted on your wall !"] = {
+        ["fr"] = "Posté sur votre mur !",
+    },
 
- ["RANDOM"] = {
-  ["fr"] = "ALÉATOIRE",
- },
+    ["Successfully tweeted"] = {
+        ["fr"] = "Tweeté !",
+    },
 
- ["CLEAR ALL"] = {
-  ["fr"] = "EFFACER TOUT",
- },
+    ---POPUP MAX TICKET----------------------------------------------------------- 
 
- ["Favorites"] = {
-  ["fr"] = "Favoris",
- },
+    ["You have reached the maximum number of Tickets for this draw"] = {
+        ["fr"] = "Vous avez atteint le nombre maximum de Tickets pour ce tirage",
+    },
 
- ---LUCKY BALL-----------------------------------------------------------
+    ["Increase your stock of Tickets"] = {
+        ["fr"] = "Augmentez votre stock de Tickets",
+    },
 
- ["Select your Lucky Ball !"] = {
-  ["fr"] = "Choisissez votre Boule Chance !",
- },
+    ---POPUP WAIT ----------------------------------------------------------- 
 
- ---CONFIRMATION-----------------------------------------------------------
+    ["You can fill out a new Ticket in :"] = {
+        ["fr"] = "Un Ticket sera disponible dans :",
+    },
 
- ["Your selection !"] = {
-  ["fr"] = "Votre Ticket !",
- },
+    ["Play right now thanks to Instant Tickets"] = {
+        ["fr"] = "Jouez sans attendre grâce aux Tickets Instantanés",
+    },
 
- ["Next drawing"] = {
-  ["fr"] = "Prochain tirage",
- },
+    ---POPUP POINTS HEADER-----------------------------------------------------------
 
- ---INFO OPTIONS-----------------------------------------------------------
+    ["Instant Ticket"] = {
+        ["fr"] = "Ticket Instantané",
+    },
 
- ["Notification 48h before the next draw"] = {
-  ["fr"] = "Notification 48h avant le tirage",
- },
+    ["Instant Tickets"] = {
+        ["fr"] = "Tickets Instantanés",
+    },
 
- ["Notification for the results"] = {
-  ["fr"] = "Notification des résultats",
- },
+    ["Remaining Ticket"] = {
+        ["fr"] = "Ticket restant",
+    },
 
- ---WEEK DAYS-----------------------------------------------------------
+    ["Remaining Tickets"] = {
+        ["fr"] = "Tickets restants",
+    },
 
- ["Monday"] = {
-  ["fr"] = "Lundi",
- },
+    ---POPUP REWARD-----------------------------------------------------------
 
- ["Tuesday"] = {
-  ["fr"] = "Mardi",
- },
+    ["Increase your stock of Tickets"] = {
+        ["fr"] = "Augmentez votre stock de Tickets",
+    },
 
- ["Wednesday"] = {
-  ["fr"] = "Mercredi",
- },
+    ["Play right now thanks to Instant Tickets"] = {
+        ["fr"] = "Jouez sans attendre grâce aux Tickets Instantanés",
+    },
 
- ["Thursday"] = {
-  ["fr"] = "Jeudi",
- },
+    ["The more you play Adillions, the more you contribute to charities"] = {
+        ["fr"] = "Plus vous jouez à Adillions, plus vous contribuez à financer des oeuvres caritatives",
+    },
 
- ["Friday"] = {
-  ["fr"] = "Vendredi",
- },
+    ["*Only for the next drawing"] = {
+        ["fr"] = "*Seulement pour le prochain tirage",
+    },
 
- ["Saturday"] = {
-  ["fr"] = "Samedi",
- },
+    ["*For the sponsor and the sponsored user (2 draws min.)"] = {
+        ["fr"] = "*Pour le parrain et le filleul (2 tirages min.)",
+    },
 
- ["Sunday"] = {
-  ["fr"] = "Dimanche",
- },
+    ["** Per post (max. 4 Instants per draw)"] = {
+        ["fr"] = "**Par post (max. 4 Instantanés par tirage)",
+    },
 
- ---MONTHS-----------------------------------------------------------
+    ["You have won"] = {
+        ["fr"] = "Vous avez gagné",
+    },
 
- ["January"] = {
-  ["fr"] = "Janvier",
- },
+    ---POPUP PRIZE-----------------------------------------------------------
+
+    ["Match"] = {
+        ["fr"] = "Combinaison",
+    },
+
+    ["n° + LB"] = {
+        ["fr"] = "n° + BC",
+    },
+
+    ["Prize"] = {
+        ["fr"] = "Répartition",
+    },
+
+    ["breakdown"] = {
+        ["fr"] = "cagnotte",
+    },
+
+    ---POPUP Contact -----------------------------------------------------------
 
- ["February"] = {
-  ["fr"] = "Février",
- },
+    ["General information"] = {
+        ["fr"] = "Information",
+    },
 
- ["March"] = {
-  ["fr"] = "Mars",
- },
+    ["For technical issues"] = {
+        ["fr"] = "Support technique",
+    },
 
- ["April"] = {
-  ["fr"] = "Avril",
- },
+    ["For payments"] = {
+        ["fr"] = "Paiements",
+    },
 
- ["May"] = {
-  ["fr"] = "Mai",
- },
+    ["For advertisers"] = {
+        ["fr"] = "Annonceurs",
+    },
 
- ["June"] = {
-  ["fr"] = "Juin",
- },
+    ["By email"] = {
+        ["fr"] = "Par mail",
+    },
 
- ["July"] = {
-  ["fr"] = "Juillet",
- },
+    ["On the web"] = {
+        ["fr"] = "Sur internet",
+    },
 
- ["August"] = {
-  ["fr"] = "Août",
- },
+
+    ["By email"] = {
+        ["fr"] = "Par email",
+    },
 
- ["September"] = {
-  ["fr"] = "Septembre",
- },
+    ---HOME-----------------------------------------------------------
 
- ["November"] = {
-  ["fr"] = "Novembre",
- },
+    ["Players"] = {
+        ["fr"] = "Joueurs",
+    },
 
- ["October"] = {
-  ["fr"] = "Octobre",
- },
+    ["DAYS"] = {
+        ["fr"] = "JRS",
+    },
 
- ["December"] = {
-  ["fr"] = "Décembre",
- },
+    ["HRS"] = {
+        ["fr"] = "HRS",
+    },
 
- ---FACEBOOK-----------------------------------------------------------
+    ["MIN"] = {
+        ["fr"] = "MIN",
+    },
 
- ["Join me on Adillions !"] = {
-  ["fr"] = "Inscris-toi sur Adillions !",
- },
- 
- ["Free and fun - Get a chance to win the jackpot !"] = {
-  ["fr"] = "Gratuit et sympa - Tente ta chance pour gagner le jackpot !",
- },
+    ["SEC"] = {
+        ["fr"] = "SEC",
+    },
 
- ---TEXT INVITE-----------------------------------------------------------
+    ---PROFILE -----------------------------------------------------------
+    
+    ["Available Tickets"] = {
+        ["fr"] = "Tickets pour ce tirage",
+    },
+    
+    ["Total Tickets"] = {
+        ["fr"] = "Tickets joués",
+    },
+    
+    ["Initial stock"] = {
+        ["fr"] = "Stock initial",
+    },
+    
+    ["Social networks"] = {
+        ["fr"] = "Réseaux sociaux",
+    },
+    
+    ["Winnings Tickets"] = {
+        ["fr"] = "Tickets gagnants",
+    },
+    
+    ["Available Tickets"] = {
+        ["fr"] = "Tickets disponibles",
+    },
+    
+    ["Sponsorship code"] = {
+        ["fr"] = "Code parrain",
+    },
+   
+    ---PROFILE CASHOUT-----------------------------------------------------------
 
- ["Join me on Adillions and get a chance to win the jackpot !"] = {
-  ["fr"] = "Inscris-toi sur Adillions et tente ta chance pour gagner le jackpot !",
- },
+    ["You can cash out when your winnings \n have reached a minimum total \n balance of "] = {
+        ["fr"] = "Pour effectuer un retrait, il vous \n faut un solde minimum de gains de ",
+    },
 
- ["Available on the App Store, Google Play, Facebook and on www.adillions.com"] = {
-  ["fr"] = "Disponible sur l'App Store, le Google Play, sur Facebook et sur www.adillions.com",
- },
+    ["You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment"] = {
+        ["fr"] = "Vous recevrez vos gains d’ici 4 à 8 semaines  \n \n Nous vous contacterons par mail dans les prochains jours \n pour procéder au paiement",
+    },
 
- ["Free and fun - Sign up now using my sponsorship code : "] = {
-  ["fr"] = "Gratuit et sympa - Inscris-toi maintenant en utilisant mon code parrain : ",
- },
+    ["Your winnings will be donated to Adillions Solidarity \n and Sustainable Development Fund \n \n \n Soon users will be able to \n directly choose their own charity …"] = {
+        ["fr"] = "Vos gains seront versés \n au Fonds de Solidarité et de Développement \n Durable d’Adillions. \n \n \n Bientôt, \n vous pourrez directement choisir l’œuvre que vous souhaitez \n financer …",
+    },
 
- ["MORE PLAYERS = A BIGGER JACKPOT"] = {
-  ["fr"] = "PLUS DE JOUEURS = UNE CAGNOTTE PLUS GRANDE",
- },
+    ["Thank you"] = {
+        ["fr"] = "Merci",
+    },
 
- ---TEXT SHARE-----------------------------------------------------------
+    ["Congratulations !"] = {
+        ["fr"] = "Félicitations !",
+    },
 
- ["I have just played a free lottery ticket on Adillions. You too, try your luck now !"] = {
-  ["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Toi aussi, tente ta chance à Adillions !",
- },
+    ---PROFILE DETAILS-----------------------------------------------------------
 
- ["Adillions is a free-to-play lottery game with real cash prizes funded by advertising"] = {
-  ["fr"] = "Adillions est une loterie gratuite avec des gains d'argent réel financés par la pub",
- },
+    ["User name"] = {
+        ["fr"] = "Nom d'utilisateur",
+    },
 
- ---TERMS -----------------------------------------------------------
+    ["First name"] = {
+        ["fr"] = "Prénom",
+    },
 
- ["Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period."] = {
-  ["fr"] = "Adillions - Société par actions simplifiée, immatriculée au RCS de Paris B 797 736 261, organise des jeux gratuits sans obligation d'achat pour une durée indéterminée.",
- },
+    ["Last name"] = {
+        ["fr"] = "Nom",
+    },
 
- ["is not an organizer, a co-organizer or a partner of Adillions. "] = {
-  ["fr"] = "n'est pas organisateur, co-organisateur ou partenaire d'Adillions. ",
- },
+    ["Email"] = {
+        ["fr"] = "Email",
+    },
 
- ["is not involved in any way in the organization of the Adillions lottery and does not sponsor it."] = {
-  ["fr"] = "n'est pas impliquée dans l'organisation de la loterie Adillions et n'est pas sponsor de celle-ci.",
- },
+    ["Date of birth"] = {
+        ["fr"] = "Date de naissance",
+    },
+
+    ---PROFILE STATUS-----------------------------------------------------------
+
+    ["Total points"] = {
+        ["fr"] = "Total des points",
+    },
+
+    ["Bonus Tickets"] = {
+        ["fr"] = "Tickets Bonus",
+    },
+
+    ["Charity profile"] = {
+        ["fr"] = "Profil donateur",
+    },
+
+    ["Charity Profile"] = {
+        ["fr"] = "Profil Donateur",
+    },
+
+    ["Donation"] = {
+        ["fr"] = "Dons",
+    },
+
+    ----------
+
+    ["Boy Scout"] = {
+        ["fr"] = "Scout",
+    },
+
+    ["Contributor"] = {
+        ["fr"] = "Contributeur",
+    },
+
+    ["Junior donor"] = {
+        ["fr"] = "Donateur junior",
+    },
+
+    ["Donor"] = {
+        ["fr"] = "Donateur",
+    },
+
+    ["Benefactor"] = {
+        ["fr"] = "Bienfaiteur",
+    },
+
+    ["Major Donor"] = {
+        ["fr"] = "Grand Donateur",
+    },
+
+    ["Patron"] = {
+        ["fr"] = "Mécène",
+    },
+
+    ["Philanthropist"] = {
+        ["fr"] = "Philanthrope",
+    },
+
+    ---PROFILE WINNINGS-----------------------------------------------------------
+
+    ["Winnings"] = {
+        ["fr"] = "Tickets gagnas",
+    },
+
+    ["Total winnings"] = {
+        ["fr"] = "Total des gains",
+    },
+
+    ["Payed"] = {
+        ["fr"] = "Gains perçus",
+    },
+
+    ["Balance"] = {
+        ["fr"] = "Solde",
+    },
+
+    ---RESULTS-----------------------------------------------------------
+
+    ["Drawing"] = {
+        ["fr"] = "Tirage du",
+    },
+
+    ["Winner"] = {
+        ["fr"] = "Gagnant",
+    },
+
+    ["Winners"] = {
+        ["fr"] = "Gagnants",
+    },
+
+    ["Charity"] = {
+        ["fr"] = "Associations",
+    },
+
+    ["See more"] = {
+        ["fr"] = "Détails",
+    },
+
+    ["Total"] = {
+        ["fr"] = "Nbre de",
+    },
+
+    ["winning Tickets"] = {
+        ["fr"] = "Tickets gagnants",
+    },
+
+    ["Prize / "] = {
+        ["fr"] = "Gain / ",
+    },
+
+    ["Winning Ticket"] = {
+        ["fr"] = "Ticket gagnant",
+    },
+
+    ---POOL NUMBERS-----------------------------------------------------------
+
+    ["RANDOM"] = {
+        ["fr"] = "ALÉATOIRE",
+    },
+
+    ["CLEAR ALL"] = {
+        ["fr"] = "EFFACER TOUT",
+    },
+
+    ["Favorites"] = {
+        ["fr"] = "Favoris",
+    },
+
+    ---LUCKY BALL-----------------------------------------------------------
+
+    ["Select your Lucky Ball !"] = {
+        ["fr"] = "Choisissez votre Boule Chance !",
+    },
+
+    ---CONFIRMATION-----------------------------------------------------------
+
+    ["Your selection !"] = {
+        ["fr"] = "Votre Ticket !",
+    },
+
+    ["Next drawing"] = {
+        ["fr"] = "Prochain tirage",
+    },
+
+    ---INFO OPTIONS-----------------------------------------------------------
+
+    ["Notification 48h before the next draw"] = {
+        ["fr"] = "Notification 48h avant le tirage",
+    },
+
+    ["Notification for the results"] = {
+        ["fr"] = "Notification des résultats",
+    },
+
+    ---WEEK DAYS-----------------------------------------------------------
+
+    ["Monday"] = {
+        ["fr"] = "Lundi",
+    },
+
+    ["Tuesday"] = {
+        ["fr"] = "Mardi",
+    },
+
+    ["Wednesday"] = {
+        ["fr"] = "Mercredi",
+    },
+
+    ["Thursday"] = {
+        ["fr"] = "Jeudi",
+    },
+
+    ["Friday"] = {
+        ["fr"] = "Vendredi",
+    },
+
+    ["Saturday"] = {
+        ["fr"] = "Samedi",
+    },
+
+    ["Sunday"] = {
+        ["fr"] = "Dimanche",
+    },
+
+    ---MONTHS-----------------------------------------------------------
+
+    ["January"] = {
+        ["fr"] = "Janvier",
+    },
+
+    ["February"] = {
+        ["fr"] = "Février",
+    },
+
+    ["March"] = {
+        ["fr"] = "Mars",
+    },
+
+    ["April"] = {
+        ["fr"] = "Avril",
+    },
+
+    ["May"] = {
+        ["fr"] = "Mai",
+    },
+
+    ["June"] = {
+        ["fr"] = "Juin",
+    },
+
+    ["July"] = {
+        ["fr"] = "Juillet",
+    },
+
+    ["August"] = {
+        ["fr"] = "Août",
+    },
+
+    ["September"] = {
+        ["fr"] = "Septembre",
+    },
+
+    ["November"] = {
+        ["fr"] = "Novembre",
+    },
+
+    ["October"] = {
+        ["fr"] = "Octobre",
+    },
+
+    ["December"] = {
+        ["fr"] = "Décembre",
+    },
+
+    ---FACEBOOK-----------------------------------------------------------
+
+    ["Join me on Adillions !"] = {
+        ["fr"] = "Inscris-toi sur Adillions !",
+    },
+
+    ["Free and fun - Get a chance to win the jackpot !"] = {
+        ["fr"] = "Gratuit et sympa - Tente ta chance pour gagner le jackpot !",
+    },
+
+    ---TEXT INVITE-----------------------------------------------------------
+
+    ["Join me on Adillions and get a chance to win the jackpot !"] = {
+        ["fr"] = "Inscris-toi sur Adillions et tente ta chance pour gagner le jackpot !",
+    },
+
+    ["Available on the App Store, Google Play, Facebook and on www.adillions.com"] = {
+        ["fr"] = "Disponible sur l'App Store, le Google Play, sur Facebook et sur www.adillions.com",
+    },
+
+    ["Free and fun - Sign up now using my sponsorship code : "] = {
+        ["fr"] = "Gratuit et sympa - Inscris-toi maintenant en utilisant mon code parrain : ",
+    },
+
+    ["MORE PLAYERS = A BIGGER JACKPOT"] = {
+        ["fr"] = "PLUS DE JOUEURS = UNE CAGNOTTE PLUS GRANDE",
+    },
+
+    ---TEXT SHARE-----------------------------------------------------------
+
+    ["I have just played a free lottery ticket on Adillions. You too, try your luck now !"] = {
+        ["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Toi aussi, tente ta chance à Adillions !",
+    },
+
+    ["Adillions is a free-to-play lottery game with real cash prizes funded by advertising"] = {
+        ["fr"] = "Adillions est une loterie gratuite avec des gains d'argent réel financés par la pub",
+    },
+
+    ---TERMS -----------------------------------------------------------
+
+    ["Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period."] = {
+        ["fr"] = "Adillions - Société par actions simplifiée, immatriculée au RCS de Paris B 797 736 261, organise des jeux gratuits sans obligation d'achat pour une durée indéterminée.",
+    },
+
+    ["is not an organizer, a co-organizer or a partner of Adillions. "] = {
+        ["fr"] = "n'est pas organisateur, co-organisateur ou partenaire d'Adillions. ",
+    },
+
+    ["is not involved in any way in the organization of the Adillions lottery and does not sponsor it."] = {
+        ["fr"] = "n'est pas impliquée dans l'organisation de la loterie Adillions et n'est pas sponsor de celle-ci.",
+    },
 
 }
 

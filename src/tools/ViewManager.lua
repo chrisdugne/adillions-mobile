@@ -428,7 +428,7 @@ end
 
 ------------------------------------------------------------------
 
-function drawBorder(parent, x, y, width, height, r, g, b)
+function drawBorder(parent, x, y, width, height, r, g, b, anchorX, anchorY)
 
     -----------------------------------
 
@@ -447,11 +447,17 @@ function drawBorder(parent, x, y, width, height, r, g, b)
     if(not b) then b = 238 end
 
     local gray = r - 19
+    -----------------------------------
+
+    if(not anchorX) then anchorX = 0.5 end
+    if(not anchorY) then anchorY = 0.5 end
 
     -----------------------------------
     -- rounded buttons 1 color
 
     local border = display.newRoundedRect(parent, 0, 0, width, height, 17)
+    border.anchorX = anchorX 
+    border.anchorY = anchorY
     border.x = x 
     border.y = y
     border.strokeWidth = 1
