@@ -20,14 +20,14 @@ function GameManager:start()
     analytics.init(ANALYTICS_VERSION, ANALYTICS_TRACKING_ID, ANALYTICS_PROFILE_ID, APP_NAME, APP_VERSION)
     viewManager.initGlobalBack()
     vungle:init()
-
+    router.openLoading()
+    
     if(not GLOBALS.savedData) then
         self:firstStart()
     else
         if(GLOBALS.savedData.user.facebookId) then
             self:tryAutoOpenFacebookAccount()
         else
-
             self:tryAutoOpenAdillionsAccount()
         end
 
@@ -86,7 +86,6 @@ function GameManager:tryAutoOpenAdillionsAccount()
     utils.saveTable(GLOBALS.savedData, "savedData.json")
 
     if(GLOBALS.savedData.user.uid) then
-        router.openLoading()
         native.setActivityIndicator( true )
         userManager:fetchPlayer()
 
