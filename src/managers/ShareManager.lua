@@ -39,6 +39,15 @@ function ShareManager:moreTickets(popup)
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
+    
+    utils.onTouch(hud.popin.title, function()
+        shareManager:openRewards1()
+    end)
+    
+    utils.onTouch(hud.popin.what, function()
+        shareManager:openRewards1()
+    end)
+    
 
     -----------------------------------
     -- FB BUTTON
@@ -193,6 +202,14 @@ function ShareManager:inviteForInstants(popup)
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
+    
+    utils.onTouch(hud.popin.title, function()
+        shareManager:openRewards2()
+    end)
+
+    utils.onTouch(hud.popin.what, function()
+        shareManager:openRewards2()
+    end)
 
     -----------------------------------
     -- FB BUTTON
@@ -289,6 +306,14 @@ function ShareManager:shareForInstants(popup)
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
+    
+    utils.onTouch(hud.popin.what, function()
+        shareManager:openRewards2()
+    end)
+    
+    utils.onTouch(hud.popin.title, function()
+        shareManager:openRewards2()
+    end)
 
     ----------------------------------------------------------------------------------------------------
     -- FB BUTTON

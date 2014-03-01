@@ -539,14 +539,12 @@ end
 function UserManager:storeLotteryTicket(numbers)
 
     local extraTicket = self.user.extraTickets > 0
-    local now = os.time() * 1000 -- diff de 1min entre ce time et celui de heroku + play ? donc on utilise celui ci
 
     native.setActivityIndicator( true )
 
     utils.postWithJSON({
         numbers = numbers,
-        extraTicket = extraTicket,
-        creationTime = now
+        extraTicket = extraTicket
     }, 
     SERVER_URL .. "storeLotteryTicket", 
     function(result)

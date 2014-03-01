@@ -135,7 +135,15 @@ function scene:drawScene()
     hud.what.x              = self.column1 + display.contentWidth * 0.24
     hud.what.y              = hud.titleStatus.y
     hud.board:insert(hud.what)
-
+    
+    utils.onTouch(hud.what, function()
+        shareManager:openRewards3()
+    end)
+    
+    utils.onTouch(hud.titleStatus, function()
+        shareManager:openRewards3()
+    end)
+    
     --------------------------
     
     viewManager.newText({

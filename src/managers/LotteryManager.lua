@@ -43,6 +43,11 @@ function LotteryManager:refreshNextLottery(draw)
         self.nextLottery.rangs    = json.decode(self.nextLottery.rangs)
         self.nextDrawing.rangs    = json.decode(self.nextDrawing.rangs)
 
+        SERVER_TIME               = response.serverTime - system.getTimer()
+        TIMER                     = self.global.lastUpdate or SERVER_TIME
+
+        print("serverTime : " ..  SERVER_TIME )
+        
         userManager:checkUserCurrentLottery()
         
         draw()

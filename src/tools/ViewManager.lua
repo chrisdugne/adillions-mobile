@@ -57,7 +57,7 @@ function initHeader()
     hud.headerButton.y = HEADER_HEIGHT*0.5
     hud.headerButton.anchorX = 1
     hud.headerButton.anchorY = 0.5
-
+    
     utils.onTouch(hud.headerButton, function()
         analytics.event("Gaming", "showStatus") 
         userManager:showStatus()
@@ -310,16 +310,12 @@ end
 
 function refreshHomeTimer()
 
---    print("-----------")
---    print(os.time())
---    print(system.getTimer())
-    
     if(hud.timer) then timer.cancel(hud.timer) end
 
-    local days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextDrawing.date/1000 - os.time())))
+    local days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextDrawing.date - SERVER_TIME - system.getTimer())/1000))
 
     if(days <= 0 and hours <= 0 and min <= 0 and sec <= 0) then
-        days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextLottery.date/1000 - os.time())))
+        days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextDrawing.date - SERVER_TIME - system.getTimer())/1000))
     end
 
     if(days < 10) then days = "0"..days end 
@@ -328,7 +324,9 @@ function refreshHomeTimer()
     if(sec < 10) then sec = "0"..sec end 
 
     hud.timerDisplay.text = days .. " : " .. hours .. " : " .. min .. " : " .. sec
-    hud.timer = timer.performWithDelay(1000, function ()
+              
+    local next = utils.getDaysHoursMinSec(math.round(SERVER_TIME - TIMER)/1000)
+    hud.timer = timer.performWithDelay((math.round(next/15) + 1) * 150, function ()
         refreshHomeTimer()
     end)
 end

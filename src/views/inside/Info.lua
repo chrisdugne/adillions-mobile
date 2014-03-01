@@ -71,7 +71,7 @@ function scene:refreshScene()
 
     utils.onTouch(hud.rewards, function()
         analytics.event("Links", "rewards") 
-        self:openRewards1()
+        shareManager:openRewards1()
     end)
 
     ------------------
@@ -465,7 +465,7 @@ function scene:openOptions()
         onRelease      = beforeDrawSwitchListener,
     }
 
-    beforeDrawSwitch:scale(2,2) 
+    beforeDrawSwitch:scale(2.5,2.5) 
 
     viewManager.newText({
         parent    = popup, 
@@ -487,7 +487,7 @@ function scene:openOptions()
         onRelease      = afterDrawSwitchListener,
     }
 
-    afterDrawSwitch:scale(2,2) 
+    afterDrawSwitch:scale(2.5,2.5) 
 
     popup:insert( beforeDrawSwitch ) 
     popup:insert( afterDrawSwitch ) 
