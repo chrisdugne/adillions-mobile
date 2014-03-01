@@ -24,14 +24,16 @@ end
 
 ------------------------------------
 
-local afterFacebookConnection
+local connectionSuccessful
+local beforeForceLogin
 
-function connect(next)
+function connect(success, before)
     print("--- facebook connect")
     coronaFacebook.logout()
     native.setActivityIndicator( true )
     coronaFacebook.login( FACEBOOK_APP_ID, connectListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
-    afterFacebookConnection = next
+    connectionSuccessful    = success
+    beforeForceLogin        = before
 end
 
 ------------------------------------
@@ -103,7 +105,7 @@ function connectListener( event )
                 GLOBALS.savedData.facebookAccessToken  = event.token
                 utils.saveTable(GLOBALS.savedData, "savedData.json")
 
-                mergeMe(afterFacebookConnection)
+                mergeMe()
             end
 
         elseif ( "loginFailed" == event.phase or "loginCancelled"  == event.phase ) then
@@ -179,7 +181,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function mergeMe(next)
+function mergeMe()
     if(GLOBALS.savedData.facebookAccessToken) then
         print("mergeMe ! token -->", GLOBALS.savedData.facebookAccessToken)
         local url = "https://graph.facebook.com/me?fields=name,first_name,last_name,picture,locale,birthday,email&access_token=" .. GLOBALS.savedData.facebookAccessToken
@@ -193,7 +195,7 @@ function mergeMe(next)
                 utils.tprint(response)
                 facebook.data = response
 
-                userManager:checkExistingUser(next)
+                userManager:checkExistingUser(connectionSuccessful, beforeForceLogin)
 
             elseif(failure) then
                 print("--> old FB token")
@@ -284,7 +286,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function likeTheme()
+function likeTheme(next)
 
     local theme = lotteryManager.nextLottery.theme
 
@@ -312,12 +314,18 @@ function likeTheme()
         local response = json.decode(result.response)
         native.setActivityIndicator( false )
         utils.tprint(response)
+        
         if(response.id) then
             userManager.user.themeLiked = true
             userManager:giftInstants(NB_INSTANTS_PER_THEME_LIKED)
+            if(next) then
+                next()
+            end
+        
         elseif(response.error.code == 200) then
             facebook.reloginDone = function() facebook.checkThemeLiked() end
             coronaFacebook.login( FACEBOOK_APP_ID, askPermissionListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )      
+        
         end
     end)
 end

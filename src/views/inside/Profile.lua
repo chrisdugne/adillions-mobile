@@ -96,11 +96,6 @@ function scene:drawScene()
         display.contentWidth*0.9, self.yGap* (logoutTop - detailsTop - 0.6),
         250,250,250, 0.5, 0
     )  
-    
-    hud.lineDetails         = display.newImage( hud.board, "assets/images/icons/separateur.horizontal.png")
-    hud.lineDetails.x       = display.contentWidth*0.5
-    hud.lineDetails.y       = self.top + self.yGap*(detailsTop+0.7)
-    hud.board:insert(hud.lineDetails)
 
     hud.titleDetails   = display.newImage( hud.board, I "profile.personal.png")  
 
@@ -475,7 +470,7 @@ function scene:drawScene()
 
     --------------------------
 
-    hud.cashout   = display.newImage( hud.board, I "cashout.button.png")  
+    hud.cashout   = display.newImage( hud.board, I "profile.payment.png")  
     hud.cashout.x   = display.contentWidth*0.5
     hud.cashout.y  = self.top + self.yGap*(winningsTop+7.2)
     hud.board:insert(hud.cashout)

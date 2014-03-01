@@ -114,7 +114,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:checkExistPlayerByFacebookId(proceedWithMerge)
+function UserManager:checkExistPlayerByFacebookId(proceedWithMerge, connectionSuccessful, beforeForceLogin)
 
     native.setActivityIndicator( true )
     print("checkExistPlayerByFacebookId")
@@ -122,23 +122,26 @@ function UserManager:checkExistPlayerByFacebookId(proceedWithMerge)
     utils.postWithJSON({
         facebookData = facebook.data,
     }, 
-    SERVER_URL .. "existFBPlayer", 
+    SERVER_URL .. "isMeFBPlayer", 
     function(result)
         native.setActivityIndicator( false )
 
         if(result.isError) then
-            timer.performWithDelay(1000, function() userManager:checkExistPlayerByFacebookId(proceedWithMerge) end)
+            timer.performWithDelay(1000, function() userManager:checkExistPlayerByFacebookId(proceedWithMerge, connectionSuccessful, beforeForceLogin) end)
         else
             local response = json.decode(result.response)
-            local existPlayer = response.existPlayer
+            local uid = response.uid
+            print("--> uid " .. uid)
 
-            if(not existPlayer) then
-                print("--> not existPlayer")
-                proceedWithMerge()
+            if(uid == 'free') then
+                proceedWithMerge() -- contains connectionSuccessful for next step
 
+            elseif(uid == self.user.uid) then
+                connectionSuccessful()
+            
             else
-                print("--> got player")
                 twitter.logout()
+                beforeForceLogin()
                 gameManager:tryAutoOpenFacebookAccount()
             end
         end 
@@ -209,11 +212,10 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:checkExistingUser(next)
+function UserManager:checkExistingUser(connectionSuccessful, beforeForceLogin)
     self:checkExistPlayerByFacebookId(function()
-        print("proceed with merge", self.user.facebookId, facebook.data.id)
-        self:showConfirmMerge(next)
-    end)
+        self:showConfirmMerge(connectionSuccessful)
+    end, connectionSuccessful, beforeForceLogin)
 end
 
 -----------------------------------------------------------------------------------------
@@ -823,16 +825,16 @@ function UserManager:checkTicketTiming()
 
         popup.textor          = display.newImage( popup, I "timer.or.png")
         popup.textor.x        = display.contentWidth*0.5
-        popup.textor.y        = display.contentHeight*0.65
+        popup.textor.y        = display.contentHeight*0.5
 
         --------------------------
 
         popup.more     = display.newImage( popup, I "timer.play.png")
         popup.more.x     = display.contentWidth*0.5
-        popup.more.y     = display.contentHeight*0.71
+        popup.more.y     = display.contentHeight*0.61
 
         utils.onTouch(popup.more, function() 
-            shareManager:shareForInstants()
+            shareManager:shareForInstants(popup)
         end)
 
         --------------------------
@@ -1171,7 +1173,7 @@ function UserManager:showStatus()
     popup.more.y    = display.contentHeight*0.47
 
     utils.onTouch(popup.more, function() 
-        shareManager:moreTickets() 
+        shareManager:moreTickets(popup) 
     end)
 
     --------------------------
@@ -1213,7 +1215,7 @@ function UserManager:showStatus()
     popup.more.y    = display.contentHeight*0.84
 
     utils.onTouch(popup.more, function() 
-        shareManager:inviteForInstants() 
+        shareManager:inviteForInstants(popup) 
     end)
 
     --------------------------

@@ -85,6 +85,8 @@ end
 
 function scene:drawNextLottery( event )
 
+    utils.tprint(lotteryManager.global)
+    
     local y     = HEADER_HEIGHT * 3.7
     local top     = HEADER_HEIGHT * 3
     local timerLegendSize  = 17
