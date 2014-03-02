@@ -53,7 +53,7 @@ function scene:refreshScene()
     ---------------------------------------------------------------
 
     hud.watch = viewManager.newText({
-        parent    = hud.tuto1,
+        parent    = hud,
         text     = T "Check your internet connection", 
         fontSize   = 44,  
         x      = display.contentWidth * 0.5,

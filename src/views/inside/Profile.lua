@@ -160,7 +160,7 @@ function scene:drawScene()
         parent      = hud.board, 
         text        = userManager.user.totalPlayedTickets,     
         x           = self.column1 + display.contentWidth*0.05,
-        y           = self.top + self.yGap*(statusTop+2.6),
+        y           = self.top + self.yGap*(statusTop+2.3),
         fontSize    = 40,
         font        = NUM_FONT,
         anchorX     = 0,
@@ -168,9 +168,14 @@ function scene:drawScene()
     })
     
     hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.ticket.png")
-    hud.ticketIcon.x        = textTotal.x + textTotal.contentWidth + display.contentWidth*0.05
+    hud.ticketIcon.x        = textTotal.x + textTotal.contentWidth + display.contentWidth*0.07
     hud.ticketIcon.y        = textTotal.y
     hud.board:insert(hud.ticketIcon)
+    
+    hud.arrow               = display.newImage( hud.board, "assets/images/hud/profile/profile.status.arrow.png")
+    hud.arrow.x             = display.contentWidth*0.5
+    hud.arrow.y             = textTotal.y
+    hud.board:insert(hud.arrow)
 
     --------------------------
 

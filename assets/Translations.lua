@@ -484,10 +484,6 @@ local translations =
 
     ---PROFILE WINNINGS-----------------------------------------------------------
 
-    ["Winnings"] = {
-        ["fr"] = "Tickets gagnas",
-    },
-
     ["Total winnings"] = {
         ["fr"] = "Total des gains",
     },

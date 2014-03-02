@@ -24,8 +24,8 @@ function scene:refreshScene()
 
     ------------------
 
-    self.top                = HEADER_HEIGHT + display.contentHeight*0.11
-    self.yGap               = display.contentHeight*0.15
+    self.top                = HEADER_HEIGHT + display.contentHeight*0.15
+    self.yGap               = display.contentHeight*0.17
 
     self.column1 = display.contentWidth*0.3
     self.column2 = display.contentWidth*0.7
@@ -114,21 +114,21 @@ function scene:refreshScene()
     end)
 
     ------------------
-
-    hud.write     = display.newImage( hud, I "info.Write.png")  
-    hud.write.x    = display.contentWidth * 0.5
-    hud.write.y    = self.top + self.yGap * 4
-
-    utils.onTouch(hud.write, function()
-        analytics.event("Links", "writeReview") 
-        local options =
-        {
-            iOSAppId = "739060819",
-            androidAppPackageName = "com.adillions.v1",
-            supportedAndroidStores = { "google" },
-        }
-        native.showPopup("appStore", options) 
-    end)
+--
+--    hud.write     = display.newImage( hud, I "info.Write.png")  
+--    hud.write.x    = display.contentWidth * 0.5
+--    hud.write.y    = self.top + self.yGap * 4
+--
+--    utils.onTouch(hud.write, function()
+--        analytics.event("Links", "writeReview") 
+--        local options =
+--        {
+--            iOSAppId = "739060819",
+--            androidAppPackageName = "com.adillions.v1",
+--            supportedAndroidStores = { "google" },
+--        }
+--        native.showPopup("appStore", options) 
+--    end)
 
     -- ------------------
     -- 

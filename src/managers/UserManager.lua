@@ -1047,7 +1047,7 @@ function UserManager:giftInstants(nbInstants)
     
     self:notifyInstants(function()
         self:updatePlayer()
-    end)
+    end, true)
 end
 
 -----------------------------------------------------------------------------------------
@@ -1059,7 +1059,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:notifyInstants(next)
+function UserManager:notifyInstants(next, playOnClose)
 
     if(self.user.notifications.instants + self.user.idlePoints > 0) then
 
@@ -1102,12 +1102,32 @@ function UserManager:notifyInstants(next)
         popup.iconTicket.y  = display.contentHeight*0.53
 
         --------------------------
+        
+        if(playOnClose) then
+            
+            popup.close    = display.newImage( popup, "assets/images/hud/CroixClose.png")
+            popup.close.x    = display.contentWidth*0.87
+            popup.close.y    = display.contentHeight*0.28
+    
+            utils.onTouch(popup.close, function()
+                viewManager.closePopup(popup)
+            end)
+            
+            -- TODO btn play
 
-        popup.close   = display.newImage( popup, I "popup.Bt_close.png")
-        popup.close.x   = display.contentWidth*0.5
-        popup.close.y   = display.contentHeight*0.7
-
-        utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
+            popup.play   = display.newImage( popup, I "popup.Bt_close.png")
+            popup.play.x   = display.contentWidth*0.5
+            popup.play.y   = display.contentHeight*0.7
+    
+            utils.onTouch(popup.play, function() viewManager.closePopup(popup) end)
+            
+        else
+            popup.close   = display.newImage( popup, I "play.title.png")
+            popup.close.x   = display.contentWidth*0.5
+            popup.close.y   = display.contentHeight*0.7
+    
+            utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
+        end
         
         ----------------------------------------
 
@@ -1131,7 +1151,7 @@ function UserManager:showStatus()
     popup.congratz.x   = display.contentWidth*0.5
     popup.congratz.y  = display.contentHeight*0.15
 
-    popup.iconTicket   = display.newImage( popup, "assets/images/icons/header.button.png")
+    popup.iconTicket   = display.newImage( popup, "assets/images/icons/info.big.png")
     popup.iconTicket.x   = display.contentWidth*0.15
     popup.iconTicket.y   = display.contentHeight*0.15
 

@@ -53,9 +53,9 @@ function initHeader()
     hud.logo.y = HEADER_HEIGHT*0.5
 
     hud.headerButton = display.newImage( hud, "assets/images/icons/header.button.png")  
-    hud.headerButton.x = display.contentWidth*0.95
+    hud.headerButton.x = display.contentWidth*0.9
     hud.headerButton.y = HEADER_HEIGHT*0.5
-    hud.headerButton.anchorX = 1
+    hud.headerButton.anchorX = 0.5
     hud.headerButton.anchorY = 0.5
     
     utils.onTouch(hud.headerButton, function()
