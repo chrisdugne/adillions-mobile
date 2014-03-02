@@ -554,7 +554,10 @@ function UserManager:storeLotteryTicket(numbers)
         local player = json.decode(result.response)
         if(player) then 
             lotteryManager.wasExtraTicket = extraTicket
-            userManager:receivedPlayer(player, router.openConfirmation)
+            userManager:receivedPlayer(player, function()
+                router.openHome() 
+                lotteryManager:showLastTicket() 
+            end)
         else 
             userManager:logout()
         end

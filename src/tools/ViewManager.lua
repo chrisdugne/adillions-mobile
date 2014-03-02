@@ -289,9 +289,9 @@ function showPopup(height, square)
     backGrey.y   = display.viewableContentHeight*0.5
     backGrey.alpha = 0.85
 
-    local popupRect = display.newImageRect( popup, "assets/images/hud/Popup_BG.png", width, height)
-    popupRect.x = display.contentWidth*0.5 
-    popupRect.y = display.contentHeight*0.5
+    popup.bg = display.newImageRect( popup, "assets/images/hud/Popup_BG.png", width, height)
+    popup.bg.x = display.contentWidth*0.5 
+    popup.bg.y = display.contentHeight*0.5
 
     popup:toFront()
 
@@ -301,7 +301,7 @@ function showPopup(height, square)
         utils.onTap(backGrey, function() closePopup(popup) return true end)
     end
     
-    utils.onTap(popupRect, function() return true end)
+    utils.onTap(popup.bg, function() return true end)
     
     return popup
 end
@@ -923,7 +923,7 @@ function drawSelection(parent, numbers)
 
     local nbSelected    = 0
     local xGap          = display.contentWidth*0.14
-    local y             = display.contentHeight*0.31
+    local y             = display.contentHeight*0.41
 
     -------------------------------------
 

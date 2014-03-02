@@ -47,9 +47,9 @@ function LotteryManager:refreshNextLottery(draw)
         TIMER                     = self.global.lastUpdate or SERVER_TIME
 
         print("serverTime : " ..  SERVER_TIME )
-        
+
         userManager:checkUserCurrentLottery()
-        
+
         draw()
     end)
 end
@@ -380,6 +380,99 @@ function LotteryManager:validateSelection()
     if(#self.currentSelection == (self.nextLottery.maxPicks+1)) then
         userManager:storeLotteryTicket(self.currentSelection)
     end
+end
+
+-----------------------------------------------------------------------------------------
+
+function LotteryManager:showLastTicket()
+
+    local popup = viewManager.showPopup(display.contentWidth*0.95, true)
+--    self.currentSelection = {1,2,3,4,5,6}
+
+    ---------------------------------------
+
+    viewManager.newText({
+        parent = popup, 
+        text = T ("Your selection !"), 
+        x = display.contentWidth*0.5,
+        y = display.contentHeight*0.305,
+        fontSize = 43,
+    })
+    
+    ----------------------------------------
+--    
+--    popup.header            = display.newImageRect(popup, "assets/images/subheader/subheader.bg.png", display.contentWidth*0.91, display.viewableContentHeight*0.07)
+--    popup.header.anchorY    = 0
+--    popup.header.x          = display.contentWidth*0.5
+--    popup.header.y          = popup.bg.y - popup.bg.contentHeight*0.5 + 30
+    
+    ----------------------------------------
+    
+    viewManager.newText({
+        parent = popup, 
+        text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery), 
+        x = display.contentWidth*0.5,
+        y = display.contentHeight*0.26,
+        fontSize = 38,
+        font = NUM_FONT,
+    })
+    
+    ----------------------------------------
+
+    local nbTickets = userManager:remainingTickets()
+    local lineY     = display.contentHeight*0.55
+
+    popup.pictoTicket = display.newImage( popup, "assets/images/icons/ticket.png")  
+    popup.pictoTicket.x = display.contentWidth*0.69
+    popup.pictoTicket.y = lineY
+
+    local remainingTickets = T "Remaining Ticket"
+    if(nbTickets > 1) then
+        remainingTickets = T "Remaining Tickets"
+    end
+
+    viewManager.newText({
+        parent = popup, 
+        text = remainingTickets .. " :", 
+        x = display.contentWidth*0.57,
+        y = lineY,
+        fontSize = 34,
+        anchorX    = 1,
+        anchorY    = 0.5,
+    })
+
+    viewManager.newText({
+        parent = popup, 
+        text = nbTickets, 
+        x = display.contentWidth*0.64,
+        y = lineY,
+        fontSize = 43,
+        font = NUM_FONT,
+        anchorX    = 1,
+        anchorY    = 0.5,
+    })
+    
+    ----------------------------------------
+
+    popup.imageBG        = display.newImage( popup, "assets/images/icons/notification/BG_adillions.png")
+    popup.imageBG.x      = display.contentWidth*0.5
+    popup.imageBG.y      = display.contentHeight*0.5
+
+    ----------------------------------------
+    
+    viewManager.drawSelection(popup, lotteryManager.currentSelection)
+
+    --------------------------
+
+    popup.close    = display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x    = display.contentWidth*0.5
+    popup.close.y    = display.contentHeight*0.7
+
+    utils.onTouch(popup.close, function()
+        viewManager.closePopup(popup, true, next)
+    end)
+
+
 end
 
 -----------------------------------------------------------------------------------------
