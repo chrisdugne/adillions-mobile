@@ -35,8 +35,8 @@ function LotteryManager:refreshNextLottery(draw)
         self.global.tweet          = json.decode(self.global.tweet)
         self.global.tweetTheme     = json.decode(self.global.tweetTheme)
         self.global.fbPost         = json.decode(self.global.fbPost)
-        self.global.subheader      = json.decode(self.global.subheader)
-        self.global.confirmation   = json.decode(self.global.confirmation)
+        
+        bannerManager.banners      = json.decode(self.global.banners)
 
         self.nextLottery.theme    = json.decode(self.nextLottery.theme)
         self.nextDrawing.theme    = json.decode(self.nextDrawing.theme)
@@ -386,33 +386,26 @@ end
 
 function LotteryManager:showLastTicket()
 
-    local popup = viewManager.showPopup(display.contentWidth*0.95, true)
---    self.currentSelection = {1,2,3,4,5,6}
-
+    local popup = viewManager.showPopup(display.contentWidth, true)
+    
+    ----------------------------------------
+    
+    popup.header            = display.newImageRect(popup, "assets/images/hud/confirmation/confirmation.title.bg.png", popup.bg.contentWidth*0.96, display.viewableContentHeight*0.08)
+    popup.header.anchorY    = 0
+    popup.header.x          = display.contentWidth*0.5
+    popup.header.y          = popup.bg.y - popup.bg.contentHeight*0.5
+    
+    popup.title = display.newImage( popup, I "confirmation.title.png")  
+    popup.title.x = display.contentWidth*0.5
+    popup.title.y = popup.header.y +  popup.header.contentHeight*0.5
+    
     ---------------------------------------
 
     viewManager.newText({
         parent = popup, 
-        text = T ("Your selection !"), 
-        x = display.contentWidth*0.5,
-        y = display.contentHeight*0.305,
-        fontSize = 43,
-    })
-    
-    ----------------------------------------
---    
---    popup.header            = display.newImageRect(popup, "assets/images/subheader/subheader.bg.png", display.contentWidth*0.91, display.viewableContentHeight*0.07)
---    popup.header.anchorY    = 0
---    popup.header.x          = display.contentWidth*0.5
---    popup.header.y          = popup.bg.y - popup.bg.contentHeight*0.5 + 30
-    
-    ----------------------------------------
-    
-    viewManager.newText({
-        parent = popup, 
         text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery), 
         x = display.contentWidth*0.5,
-        y = display.contentHeight*0.26,
+        y = display.contentHeight*0.306,
         fontSize = 38,
         font = NUM_FONT,
     })
@@ -454,9 +447,9 @@ function LotteryManager:showLastTicket()
     
     ----------------------------------------
 
-    popup.imageBG        = display.newImage( popup, "assets/images/icons/notification/BG_adillions.png")
+    popup.imageBG        = display.newImage( popup, "assets/images/hud/confirmation/confirmation.bg.png")
     popup.imageBG.x      = display.contentWidth*0.5
-    popup.imageBG.y      = display.contentHeight*0.5
+    popup.imageBG.y      = display.contentHeight*0.53
 
     ----------------------------------------
     

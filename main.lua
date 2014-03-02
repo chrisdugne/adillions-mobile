@@ -9,7 +9,7 @@ APP_VERSION   = "1.3"
 
 -----------------------------------------------------------------------------------------
 
---DEV    = 1
+DEV    = 1
 PROD    = 1
 
 -----------------------------------------------------------------------------------------
@@ -137,21 +137,21 @@ end
 
 -----------------------------------------------------------------------------------------
 --- Corona's libraries
-coronaFacebook  = require "facebook"
-json     = require "json"
-storyboard    = require "storyboard"
-widget     = require "widget"
-sponsorpay    = require "plugin.sponsorpay"
-ads     = require "ads"
+coronaFacebook      = require "facebook"
+json                = require "json"
+storyboard          = require "storyboard"
+widget              = require "widget"
+sponsorpay          = require "plugin.sponsorpay"
+ads                 = require "ads"
 
 ---- Additional libs
-xml     = require "src.libs.Xml"
-utils     = require "src.libs.Utils"
-facebook    = require "src.libs.Facebook" 
-vungle     = require "src.libs.Vungle" 
-sponsorpayTools  = require "src.libs.SponsorpayTools" 
-twitter    = require "src.libs.Twitter" 
-analytics    = require "src.libs.google.Analytics"
+xml                 = require "src.libs.Xml"
+utils               = require "src.libs.Utils"
+facebook            = require "src.libs.Facebook" 
+vungle              = require "src.libs.Vungle" 
+sponsorpayTools     = require "src.libs.SponsorpayTools" 
+twitter             = require "src.libs.Twitter" 
+analytics           = require "src.libs.google.Analytics"
 
 -----------------------------------------------------------------------------------------
 
@@ -179,23 +179,25 @@ end
 
 -----------------------------------------------------------------------------------------
 ---- App Tools
-router    = require "src.tools.Router"
-viewManager  = require "src.tools.ViewManager"
+router              = require "src.tools.Router"
+viewManager         = require "src.tools.ViewManager"
 
-GameManager  = require "src.managers.GameManager"
-UserManager  = require "src.managers.UserManager"
-LotteryManager = require "src.managers.LotteryManager"
-VideoManager = require "src.managers.VideoManager"
-ShareManager = require "src.managers.ShareManager"
+GameManager         = require "src.managers.GameManager"
+UserManager         = require "src.managers.UserManager"
+LotteryManager      = require "src.managers.LotteryManager"
+VideoManager        = require "src.managers.VideoManager"
+ShareManager        = require "src.managers.ShareManager"
+BannerManager       = require "src.managers.BannerManager"
 
 -----------------------------------------------------------------------------------------
 ---- Server access Managers
 
-gameManager  = GameManager:new()
-userManager  = UserManager:new()
-lotteryManager  = LotteryManager:new()
-videoManager  = VideoManager:new()
-shareManager  = ShareManager:new()
+gameManager         = GameManager:new()
+userManager         = UserManager:new()
+lotteryManager      = LotteryManager:new()
+videoManager        = VideoManager:new()
+shareManager        = ShareManager:new()
+bannerManager       = BannerManager:new()
 
 -----------------------------------------------------------------------------------------
 --- Display Container
