@@ -915,14 +915,13 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function drawSelection(parent, numbers)
+function drawSelection(parent, numbers, y)
 
     -------------------------------------
     -- display
 
     local nbSelected    = 0
     local xGap          = display.contentWidth*0.14
-    local y             = display.contentHeight*0.41
 
     -------------------------------------
 

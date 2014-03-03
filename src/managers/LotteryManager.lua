@@ -390,7 +390,7 @@ function LotteryManager:showLastTicket()
     
     ----------------------------------------
     
-    popup.header            = display.newImageRect(popup, "assets/images/hud/confirmation/confirmation.title.bg.png", popup.bg.contentWidth*0.96, display.viewableContentHeight*0.08)
+    popup.header            = display.newImageRect(popup, "assets/images/hud/confirmation/confirmation.title.bg.png", popup.bg.contentWidth*0.95835, display.viewableContentHeight*0.08)
     popup.header.anchorY    = 0
     popup.header.x          = display.contentWidth*0.5
     popup.header.y          = popup.bg.y - popup.bg.contentHeight*0.5
@@ -405,18 +405,18 @@ function LotteryManager:showLastTicket()
         parent = popup, 
         text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery), 
         x = display.contentWidth*0.5,
-        y = display.contentHeight*0.306,
-        fontSize = 38,
+        y = display.contentHeight*0.356,
+        fontSize = 48,
         font = NUM_FONT,
     })
     
     ----------------------------------------
 
     local nbTickets = userManager:remainingTickets()
-    local lineY     = display.contentHeight*0.55
+    local lineY     = display.contentHeight*0.57
 
-    popup.pictoTicket = display.newImage( popup, "assets/images/icons/ticket.png")  
-    popup.pictoTicket.x = display.contentWidth*0.69
+    popup.pictoTicket = display.newImage( popup, "assets/images/hud/confirmation/confirmation.ticket.png")  
+    popup.pictoTicket.x = display.contentWidth*0.73
     popup.pictoTicket.y = lineY
 
     local remainingTickets = T "Remaining Ticket"
@@ -427,9 +427,9 @@ function LotteryManager:showLastTicket()
     viewManager.newText({
         parent = popup, 
         text = remainingTickets .. " :", 
-        x = display.contentWidth*0.57,
+        x = display.contentWidth*0.55,
         y = lineY,
-        fontSize = 34,
+        fontSize = 44,
         anchorX    = 1,
         anchorY    = 0.5,
     })
@@ -437,12 +437,12 @@ function LotteryManager:showLastTicket()
     viewManager.newText({
         parent = popup, 
         text = nbTickets, 
-        x = display.contentWidth*0.64,
+        x = display.contentWidth*0.66,
         y = lineY,
-        fontSize = 43,
+        fontSize = 54,
         font = NUM_FONT,
         anchorX    = 1,
-        anchorY    = 0.5,
+        anchorY    = 0.45,
     })
     
     ----------------------------------------
@@ -453,7 +453,7 @@ function LotteryManager:showLastTicket()
 
     ----------------------------------------
     
-    viewManager.drawSelection(popup, lotteryManager.currentSelection)
+    viewManager.drawSelection(popup, lotteryManager.currentSelection, display.contentHeight*0.45)
 
     --------------------------
 
