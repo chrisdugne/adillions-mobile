@@ -249,16 +249,20 @@ function scene:drawNextLottery( event )
 
 
     -------------------------------
+    
+    bannerManager:start()
+    
+    -------------------------------
     -- theme
-
-    local url = ""
-    if(lotteryManager.nextDrawing.theme.mobile) then
-        url = lotteryManager.nextDrawing.theme.mobile[LANG]
-    else
-        url = lotteryManager.nextDrawing.theme.image -- to remove from 1.1 on production
-    end
-
-    viewManager.drawRemoteImage(url, hud, display.contentWidth*0.5, display.contentHeight * 0.75, 1, 1, function(image) image:toBack() end, lotteryManager.nextDrawing.theme.uid)
+--
+--    local url = ""
+--    if(lotteryManager.nextDrawing.theme.mobile) then
+--        url = lotteryManager.nextDrawing.theme.mobile[LANG]
+--    else
+--        url = lotteryManager.nextDrawing.theme.image -- to remove from 1.1 on production
+--    end
+--
+--    viewManager.drawRemoteImage(url, hud, display.contentWidth*0.5, display.contentHeight * 0.75, 1, 1, function(image) image:toBack() end, lotteryManager.nextDrawing.theme.uid)
 
     ------------------
 end
