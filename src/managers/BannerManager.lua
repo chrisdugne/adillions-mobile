@@ -26,16 +26,39 @@ end
 
 function BannerManager:next()
     
-    if(hud.banner) then
-        display.remove(hud.banner)
+    if(router.view ~= router.HOME) then
+        return
     end
     
-    hud.banner = display.newGroup()
-    hud:insert(hud.banner)
-    hud.banner.contentWidth = display.contentWidth    
-    hud.banner.contentHeight = display.contentHeight * 0.3
-    hud.banner.y = display.contentHeight * 0.6
-    hud.banner.anchorY = 0
+    self:createNewBanner()
+    
+    if(self.currentBanner) then
+        transition.to(self.currentBanner, {x = - display.contentWidth})
+    end
+    
+    transition.to(self.newBanner, {x = 0, onComplete = function() 
+        display.remove(self.currentBanner) 
+        self.currentBanner = self.newBanner 
+    end})
+    
+    timer.performWithDelay(self.timing, function()
+        self:next()
+    end)
+    
+end
+
+-----------------------------------------------------------------------------------------
+
+function BannerManager:createNewBanner()
+
+    print("draw new banner")
+    self.newBanner = display.newGroup()
+    self.newBanner.contentWidth = display.contentWidth    
+    self.newBanner.contentHeight = display.contentHeight * 0.3
+    self.newBanner.x = display.contentWidth
+    self.newBanner.y = display.contentHeight * 0.6
+    self.newBanner.anchorY = 0
+    hud:insert(self.newBanner)
     
     self.needle = self.needle + 1
     if(self.needle > #self.banners) then self.needle = 1 end
@@ -52,13 +75,7 @@ function BannerManager:next()
             self:drawImage(source, elements[i])
             
         end
-        
     end
-    
-    timer.performWithDelay(self.timing, function()
-        self:next()
-    end)
-    
 end
 
 -----------------------------------------------------------------------------------------
@@ -69,9 +86,9 @@ function BannerManager:drawText(source, element)
     
     viewManager.drawRemoteImage(
         url, 
-        hud.banner, 
-        hud.banner.contentWidth  * element.x, 
-        hud.banner.contentHeight * element.y, 
+        self.newBanner, 
+        self.newBanner.contentWidth  * element.x, 
+        self.newBanner.contentHeight * element.y, 
         1, 1, 
         function(image) image:toBack() end
     )

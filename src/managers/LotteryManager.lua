@@ -462,6 +462,7 @@ function LotteryManager:showLastTicket()
     popup.close.y    = display.contentHeight*0.7
 
     utils.onTouch(popup.close, function()
+        router.openHome() 
         viewManager.closePopup(popup, true, next)
     end)
 

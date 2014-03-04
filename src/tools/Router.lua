@@ -8,6 +8,25 @@ module(..., package.seeall)
 
 -----------------------------------------------------------------------------------------
 
+LOADING             = 0
+OUTSIDE             = 1
+NO_INTERNET         = 2
+TUTORIAL            = 3
+LOGIN               = 4
+SIGNIN              = 5
+SIGNINFB            = 6
+HOME                = 7
+MYTICKETS           = 8
+RESULTS             = 9
+PROFILE             = 10
+FILLLOTTERYTICKET   = 11
+INFO                = 12
+OPTIONS             = 13
+INVITEFRIENDS       = 14
+SELECTADDITIONALNUMBER = 15
+
+-----------------------------------------------------------------------------------------
+
 view = nil
 
 -----------------------------------------------------------------------------------------
@@ -27,6 +46,7 @@ end
 
 function openLoading()
     storyboard.gotoScene( "src.views.Loading" )
+    view = LOADING
 end
 
 -----------------------------------------------------------------------------------------
@@ -37,6 +57,7 @@ function openOutside()
     resetScreen()
     print("router : openOutside") 
     storyboard.gotoScene( "src.views.Outside" )
+    view = OUTSIDE
 end
 
 -----------------------------------------------------------------------------------------
@@ -44,6 +65,7 @@ end
 function openNoInternet()
     resetScreen()
     storyboard.gotoScene( "src.views.NoInternet" )
+    view = NO_INTERNET
 end
 
 -----------------------------------------------------------------------------------------
@@ -53,6 +75,7 @@ function openTutorial()
 
     resetScreen()
     storyboard.gotoScene( "src.views.tutorial.Tutorial" )
+    view = TUTORIAL
 end
 
 -----------------------------------------------------------------------------------------
@@ -62,6 +85,7 @@ function openLogin()
 
     resetScreen()
     storyboard.gotoScene( "src.views.Login" )
+    view = LOGIN
 end
 
 -----------------------------------------------------------------------------------------
@@ -71,6 +95,7 @@ function openSignin()
 
     resetScreen()
     storyboard.gotoScene( "src.views.Signin" )
+    view = SIGNIN
 end
 
 -----------------------------------------------------------------------------------------
@@ -80,6 +105,7 @@ function openSigninFB()
 
     resetScreen()
     storyboard.gotoScene( "src.views.SigninFB" )
+    view = SIGNINFB
 end
 
 -----------------------------------------------------------------------------------------
@@ -89,6 +115,7 @@ function openHome()
 
     resetScreen()
     storyboard.gotoScene( "src.views.inside.Home" )
+    view = HOME
 end
 
 -----------------------------------------------------------------------------------------
@@ -98,15 +125,7 @@ function openMyTickets()
 
     resetScreen()
     storyboard.gotoScene( "src.views.inside.MyTickets" )
-end
-
------------------------------------------------------------------------------------------
-
-function openConfirmation(backFromInvite)
-    analytics.pageview("Confirmation")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Confirmation", {params = {backFromInvite=backFromInvite}} )
+    view = MYTICKETS
 end
 
 -----------------------------------------------------------------------------------------
@@ -116,6 +135,7 @@ function openResults()
 
     resetScreen()
     storyboard.gotoScene( "src.views.inside.Results" )
+    view = RESULTS
 end
 
 -----------------------------------------------------------------------------------------
@@ -125,6 +145,7 @@ function openProfile()
 
     resetScreen()
     storyboard.gotoScene( "src.views.inside.Profile" )
+    view = PROFILE
 end
 
 -----------------------------------------------------------------------------------------
@@ -134,15 +155,7 @@ function openInfo()
 
     resetScreen()
     storyboard.gotoScene( "src.views.inside.Info" )
-end
-
------------------------------------------------------------------------------------------
-
-function openVideo()
-    analytics.pageview("Video")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Video" )
+    view = INFO
 end
 
 -----------------------------------------------------------------------------------------
@@ -152,6 +165,7 @@ function openFillLotteryTicket()
 
     resetScreen()
     storyboard.gotoScene( "src.views.inside.FillLotteryTicket" )
+    view = FILLLOTTERYTICKET
 end
 
 -----------------------------------------------------------------------------------------
@@ -161,33 +175,7 @@ function openOptions()
 
     resetScreen()
     storyboard.gotoScene( "src.views.inside.Options" )
-end
-
------------------------------------------------------------------------------------------
-
-function openContact()
-    analytics.pageview("Contact")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Contact" )
-end
-
------------------------------------------------------------------------------------------
-
-function openTerms()
-    analytics.pageview("Terms")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Terms" )
-end
-
------------------------------------------------------------------------------------------
-
-function openRewards()
-    analytics.pageview("Rewards")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Rewards" )
+    view = OPTIONS
 end
 
 -----------------------------------------------------------------------------------------
@@ -197,6 +185,7 @@ function openSelectAdditionalNumber()
 
     resetScreen()
     storyboard.gotoScene( "src.views.inside.SelectAdditionalNumber" )
+    view = SELECTADDITIONALNUMBER
 end
 
 -----------------------------------------------------------------------------------------
@@ -206,4 +195,5 @@ function openInviteFriends(next)
 
     resetScreen()
     storyboard.gotoScene( "src.views.inside.InviteFriends" , {params = {next=next}})
+    view = INVITEFRIENDS
 end

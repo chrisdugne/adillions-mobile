@@ -555,7 +555,6 @@ function UserManager:storeLotteryTicket(numbers)
         if(player) then 
             lotteryManager.wasExtraTicket = extraTicket
             userManager:receivedPlayer(player, function()
-                router.openHome() 
                 lotteryManager:showLastTicket() 
             end)
         else 
@@ -741,8 +740,6 @@ function UserManager:checkTicketTiming()
 
     for i = 1,#self.user.lotteryTickets do
         local ticket = self.user.lotteryTickets[i]
-        print("---")
-        utils.tprint(ticket)
         if((self.user.currentLotteryUID == ticket.lottery.uid) and (ticket.creationDate > lastTime) and (ticket.type == 1)) then
             lastTime = ticket.creationDate
         end
