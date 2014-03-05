@@ -56,7 +56,7 @@ function initHeader()
     hud.headerButton.x = display.contentWidth*0.9
     hud.headerButton.y = HEADER_HEIGHT*0.5
     hud.headerButton.anchorX = 0.5
-    hud.headerButton.anchorY = 0.5
+    hud.headerButton.anchorY = 0.44
     
     utils.onTouch(hud.headerButton, function()
         analytics.event("Gaming", "showStatus") 

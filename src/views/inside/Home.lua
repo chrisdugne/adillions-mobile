@@ -22,38 +22,52 @@ end
 
 function scene:refreshScene()
 
-    ------------------
-
-    hud.subheaderImage   = display.newImageRect(hud, "assets/images/subheader/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.14)
+    hud.subheaderImage   = display.newImageRect(hud, "assets/images/hud/home/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.075)
     hud.subheaderImage.x  = display.contentWidth*0.5
-    hud.subheaderImage.y  = HEADER_HEIGHT * 1.5
+    hud.subheaderImage.y  = HEADER_HEIGHT - 3
+    hud.subheaderImage.anchorY  = 0
 
-    hud.subheaderText   = display.newImage(hud, I "Questions.png")
-    hud.subheaderText.x  = display.contentWidth*0.6
-    hud.subheaderText.y  = HEADER_HEIGHT * 1.4
+    hud.subheaderText   = display.newImage(hud, I "home.subheader.title.png")
+    hud.subheaderText.x  = display.contentWidth*0.5
+    hud.subheaderText.y  = hud.subheaderImage.y + hud.subheaderImage.contentHeight * 0.5
 
-    local subheaderAnimConfig  = require("src.tools.Subheader_"..LANG)
-    local subheaderSheet   = graphics.newImageSheet( "assets/images/subheader/anim.sheet."..LANG..".png", subheaderAnimConfig.sheet )
-
-    hud.subheaderAnim   = display.newSprite( hud, subheaderSheet, subheaderAnimConfig:newSequence() )
-    hud.subheaderAnim.x  = display.contentWidth*0.6
-    hud.subheaderAnim.y  = HEADER_HEIGHT * 1.8
-
-    hud.subheaderButton  = display.newImage(hud, "assets/images/subheader/button.subheader.png")
-    hud.subheaderButton.x  = display.contentWidth*0.15
-    hud.subheaderButton.y  = HEADER_HEIGHT * 1.6
-
-    self:animateSubheader()
+    hud.subheaderBG   = display.newImage(hud, "assets/images/hud/home/BG_adillions.png")
+    hud.subheaderBG.x  = display.contentWidth*0.5
+    hud.subheaderBG.y  = display.contentHeight * 0.4
+    
+    ------------------
+    --- old subheader
+    -- 
+--    hud.subheaderImage   = display.newImageRect(hud, "assets/images/subheader/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.14)
+--    hud.subheaderImage.x  = display.contentWidth*0.5
+--    hud.subheaderImage.y  = HEADER_HEIGHT * 1.5
+--
+--    hud.subheaderText   = display.newImage(hud, I "Questions.png")
+--    hud.subheaderText.x  = display.contentWidth*0.6
+--    hud.subheaderText.y  = HEADER_HEIGHT * 1.4
+--
+--    local subheaderAnimConfig  = require("src.tools.Subheader_"..LANG)
+--    local subheaderSheet   = graphics.newImageSheet( "assets/images/subheader/anim.sheet."..LANG..".png", subheaderAnimConfig.sheet )
+--
+--    hud.subheaderAnim   = display.newSprite( hud, subheaderSheet, subheaderAnimConfig:newSequence() )
+--    hud.subheaderAnim.x  = display.contentWidth*0.6
+--    hud.subheaderAnim.y  = HEADER_HEIGHT * 1.8
+--
+--    hud.subheaderButton  = display.newImage(hud, "assets/images/subheader/button.subheader.png")
+--    hud.subheaderButton.x  = display.contentWidth*0.15
+--    hud.subheaderButton.y  = HEADER_HEIGHT * 1.6
+--
+--    self:animateSubheader()
 
     ------------------
-
-    utils.onTouch(hud.subheaderImage, function()
-        shareManager:inviteForInstants()
-    end)
-
-    utils.onTouch(hud.subheaderButton, function()
-        shareManager:inviteForInstants()
-    end)
+--
+--    utils.onTouch(hud.subheaderImage, function()
+--        shareManager:inviteForInstants()
+--    end)
+--
+--    utils.onTouch(hud.subheaderButton, function()
+--        shareManager:inviteForInstants()
+--    end)
 
     ------------------
 
@@ -88,27 +102,27 @@ function scene:drawNextLottery( event )
 --    lotteryManager.currentSelection = {1,2,3,4,5,6}
 --    lotteryManager:showLastTicket()
     
-    local y     = HEADER_HEIGHT * 3.7
-    local top     = HEADER_HEIGHT * 3
-    local timerLegendSize  = 17
-    local timerLegendY   = top + display.contentHeight * 0.04
-    local timerY    = top + display.contentHeight * 0.01
+    local y                 = HEADER_HEIGHT * 3.7
+    local top               = HEADER_HEIGHT * 2.5
+    local timerLegendSize   = 17
+    local timerLegendY      = top + display.contentHeight * 0.04
+    local timerY            = top
 
     -------------------------------
-
-    viewManager.newText({
-        parent = hud, 
-        text = T "Next drawing" .. " : ", 
-        x = display.contentWidth*0.17,
-        y = top - display.contentHeight * 0.044,
-        fontSize = 40,
-        anchorX    = 0,
-        anchorY    = 0.5,
-    })
-
-    hud.separator    = display.newImage(hud, "assets/images/icons/separateur.horizontal.png")
-    hud.separator.x   = display.contentWidth*0.5
-    hud.separator.y   = top - display.contentHeight * 0.02
+--
+--    viewManager.newText({
+--        parent = hud, 
+--        text = T "Next drawing" .. " : ", 
+--        x = display.contentWidth*0.17,
+--        y = top - display.contentHeight * 0.044,
+--        fontSize = 40,
+--        anchorX    = 0,
+--        anchorY    = 0.5,
+--    })
+--
+--    hud.separator    = display.newImage(hud, "assets/images/icons/separateur.horizontal.png")
+--    hud.separator.x   = display.contentWidth*0.5
+--    hud.separator.y   = top - display.contentHeight * 0.02
 
     hud.pictoTimer   = display.newImage( hud, "assets/images/icons/TimerPicto.png")  
     hud.pictoTimer.x   = display.contentWidth*0.2
@@ -166,9 +180,9 @@ function scene:drawNextLottery( event )
 
     local priceX
     if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.toolPlayers) then
-        priceX = display.contentWidth*0.42
+        priceX = display.contentWidth*0.4
     else
-        priceX = display.contentWidth*0.58
+        priceX = display.contentWidth*0.53
     end
 
     -------------------------------
@@ -177,7 +191,7 @@ function scene:drawNextLottery( event )
         parent = hud, 
         text = '',     
         x = priceX ,
-        y = top + display.contentHeight*0.12,
+        y = top + display.contentHeight*0.11,
         fontSize = 73,
         font = NUM_FONT,
         anchorX    = 1,
@@ -191,7 +205,7 @@ function scene:drawNextLottery( event )
 
     hud.pictoCagnotte = display.newImage( hud, "assets/images/icons/cagnotte.png")  
     hud.pictoCagnotte.x = priceX + display.contentWidth*0.16
-    hud.pictoCagnotte.y = top + display.contentHeight*0.12
+    hud.pictoCagnotte.y = top + display.contentHeight*0.11
 
     -------------------------------
 
@@ -253,18 +267,6 @@ function scene:drawNextLottery( event )
     bannerManager:start()
     
     -------------------------------
-    -- theme
---
---    local url = ""
---    if(lotteryManager.nextDrawing.theme.mobile) then
---        url = lotteryManager.nextDrawing.theme.mobile[LANG]
---    else
---        url = lotteryManager.nextDrawing.theme.image -- to remove from 1.1 on production
---    end
---
---    viewManager.drawRemoteImage(url, hud, display.contentWidth*0.5, display.contentHeight * 0.75, 1, 1, function(image) image:toBack() end, lotteryManager.nextDrawing.theme.uid)
-
-    ------------------
 end
 
 ------------------------------------------

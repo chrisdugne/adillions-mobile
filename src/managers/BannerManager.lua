@@ -9,7 +9,7 @@ function BannerManager:new()
     local object = {
         banners     = {},
         needle      = 0,
-        timing      = 5000
+        timing      = 3000
     }
 
     setmetatable(object, { __index = BannerManager })
@@ -32,13 +32,13 @@ function BannerManager:next()
     
     self:createNewBanner()
     
-    if(self.currentBanner) then
-        transition.to(self.currentBanner, {x = - display.contentWidth})
+    if(hud.currentBanner) then
+        transition.to(hud.currentBanner, {alpha = 0})
     end
     
-    transition.to(self.newBanner, {x = 0, onComplete = function() 
-        display.remove(self.currentBanner) 
-        self.currentBanner = self.newBanner 
+    transition.to(hud.newBanner, {alpha = 1, onComplete = function() 
+        display.remove(hud.currentBanner) 
+        hud.currentBanner = hud.newBanner
     end})
     
     timer.performWithDelay(self.timing, function()
@@ -51,20 +51,22 @@ end
 
 function BannerManager:createNewBanner()
 
-    print("draw new banner")
-    self.newBanner = display.newGroup()
-    self.newBanner.contentWidth = display.contentWidth    
-    self.newBanner.contentHeight = display.contentHeight * 0.3
-    self.newBanner.x = display.contentWidth
-    self.newBanner.y = display.contentHeight * 0.6
-    self.newBanner.anchorY = 0
-    hud:insert(self.newBanner)
+    hud.newBanner = display.newGroup()
+    hud.newBanner.contentWidth = display.contentWidth    
+    hud.newBanner.contentHeight = display.contentHeight * 0.3
+    hud.newBanner.x = 0
+    hud.newBanner.alpha = 0
+    hud.newBanner.y = display.contentHeight * 0.6
+    hud:insert(hud.newBanner)
+    
+    hud.newBanner:toBack() 
+    hud.subheaderBG:toBack() 
     
     self.needle = self.needle + 1
     if(self.needle > #self.banners) then self.needle = 1 end
     
-    local source    = self.banners[2].source
-    local elements  = self.banners[2].elements
+    local source    = self.banners[self.needle].source
+    local elements  = self.banners[self.needle].elements
     
     for i = 1,#elements do
         
@@ -86,11 +88,12 @@ function BannerManager:drawText(source, element)
     
     viewManager.drawRemoteImage(
         url, 
-        self.newBanner, 
-        self.newBanner.contentWidth  * element.x, 
-        self.newBanner.contentHeight * element.y, 
+        hud.newBanner, 
+        hud.newBanner.contentWidth  * element.x, 
+        hud.newBanner.contentHeight * element.y, 
         1, 1, 
-        function(image) image:toBack() end
+        function(image) image:toBack() end,
+        "_" .. self.needle
     )
     
 end
