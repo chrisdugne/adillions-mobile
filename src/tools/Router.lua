@@ -21,9 +21,8 @@ RESULTS             = 9
 PROFILE             = 10
 FILLLOTTERYTICKET   = 11
 INFO                = 12
-OPTIONS             = 13
-INVITEFRIENDS       = 14
-SELECTADDITIONALNUMBER = 15
+INVITEFRIENDS       = 13
+SELECTADDITIONALNUMBER = 14
 
 -----------------------------------------------------------------------------------------
 
@@ -32,14 +31,9 @@ view = nil
 -----------------------------------------------------------------------------------------
 
 function resetScreen()
-
     if(hud.timer) then timer.cancel(hud.timer) end
-    display.remove(hud.likePageWebview)
-
     utils.emptyGroup(hud)
     utils.emptyGroup(hud.selection)
-
-    hud.buttons = {}
 end
 
 -----------------------------------------------------------------------------------------
@@ -166,16 +160,6 @@ function openFillLotteryTicket()
     resetScreen()
     storyboard.gotoScene( "src.views.inside.FillLotteryTicket" )
     view = FILLLOTTERYTICKET
-end
-
------------------------------------------------------------------------------------------
-
-function openOptions()
-    analytics.pageview("Options")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Options" )
-    view = OPTIONS
 end
 
 -----------------------------------------------------------------------------------------
