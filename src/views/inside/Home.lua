@@ -36,40 +36,6 @@ function scene:refreshScene()
     hud.subheaderBG.y  = display.contentHeight * 0.4
     
     ------------------
-    --- old subheader
-    -- 
---    hud.subheaderImage   = display.newImageRect(hud, "assets/images/subheader/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.14)
---    hud.subheaderImage.x  = display.contentWidth*0.5
---    hud.subheaderImage.y  = HEADER_HEIGHT * 1.5
---
---    hud.subheaderText   = display.newImage(hud, I "Questions.png")
---    hud.subheaderText.x  = display.contentWidth*0.6
---    hud.subheaderText.y  = HEADER_HEIGHT * 1.4
---
---    local subheaderAnimConfig  = require("src.tools.Subheader_"..LANG)
---    local subheaderSheet   = graphics.newImageSheet( "assets/images/subheader/anim.sheet."..LANG..".png", subheaderAnimConfig.sheet )
---
---    hud.subheaderAnim   = display.newSprite( hud, subheaderSheet, subheaderAnimConfig:newSequence() )
---    hud.subheaderAnim.x  = display.contentWidth*0.6
---    hud.subheaderAnim.y  = HEADER_HEIGHT * 1.8
---
---    hud.subheaderButton  = display.newImage(hud, "assets/images/subheader/button.subheader.png")
---    hud.subheaderButton.x  = display.contentWidth*0.15
---    hud.subheaderButton.y  = HEADER_HEIGHT * 1.6
---
---    self:animateSubheader()
-
-    ------------------
---
---    utils.onTouch(hud.subheaderImage, function()
---        shareManager:inviteForInstants()
---    end)
---
---    utils.onTouch(hud.subheaderButton, function()
---        shareManager:inviteForInstants()
---    end)
-
-    ------------------
 
     lotteryManager:refreshNextLottery(function() self:drawNextLottery() end)
 
