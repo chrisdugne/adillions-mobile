@@ -16,193 +16,193 @@ local scene = storyboard.newScene()
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
- hud.selection = display.newGroup()
+    hud.selection = display.newGroup()
 end
 
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
- 
- ------------------
 
- hud.balls = {}
- 
- ------------------
- 
- local marginLeft = display.contentWidth * 0.02
- local top =  HEADER_HEIGHT * 2.4
- local xGap =  display.contentWidth *0.12
- local yGap =  display.contentHeight *0.075
- 
- --------------------------------------------------------------
- -- Actions
- -- 
---  3 actions random / favorites / restart
---  
--- viewManager.newText({
---  parent = hud, 
---  text = T "Random",     
---  x = display.contentWidth*0.2,
---  y = top - display.contentHeight*0.07,
---  fontSize = 33,
--- })
---
--- hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
--- hud.separateur.x = display.contentWidth*0.35
--- hud.separateur.y = top - display.contentHeight*0.065
---
--- viewManager.newText({
---  parent = hud, 
---  text = T "Favorites",     
---  x = display.contentWidth*0.5,
---  y = top - display.contentHeight*0.07,
---  fontSize = 33,
--- })
---
--- hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
--- hud.separateur.x = display.contentWidth*0.65
--- hud.separateur.y = top - display.contentHeight*0.065
---
--- viewManager.newText({
---  parent = hud, 
---  text = T "Restart",     
---  x = display.contentWidth*0.8,
---  y = top - display.contentHeight*0.07,
---  fontSize = 33,
--- })
--- 
--- 
- --------------------------------------------------------------
- -- Actions
- -- 
---  2 actions random / restart
+    ------------------
 
- local random = viewManager.newText({
-  parent = hud, 
-  text = T "RANDOM",     
-  x = display.contentWidth*0.3,
-  y = top - display.contentHeight*0.085,
-  fontSize = 35,
- })
- 
- utils.onTouch(random, function()
-  router.resetScreen()
-  self:refreshScene()
-  self:randomSelection()
- end)
+    hud.balls = {}
 
- hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
- hud.separateur.x = display.contentWidth*0.5
- hud.separateur.y = top - display.contentHeight*0.08
+    ------------------
 
- local restart = viewManager.newText({
-  parent = hud, 
-  text = T "CLEAR ALL",     
-  x = display.contentWidth*0.7,
-  y = top - display.contentHeight*0.085,
-  fontSize = 35,
- })
- 
- utils.onTouch(restart, function()
-  router.resetScreen()
-  self:refreshScene()
- end)
- 
- --------------------------------------------------------------
- -- Classic nums
+    local marginLeft = display.contentWidth * 0.02
+    local top =  HEADER_HEIGHT * 2.4
+    local xGap =  display.contentWidth *0.12
+    local yGap =  display.contentHeight *0.075
 
- local totalNums    = lotteryManager.nextLottery.maxNumbers  
- local nbNumPerLine  = 7
-   
- ------------------
+    --------------------------------------------------------------
+    -- Actions
+    -- 
+    --  3 actions random / favorites / restart
+    --  
+    -- viewManager.newText({
+    --  parent = hud, 
+    --  text = T "Random",     
+    --  x = display.contentWidth*0.2,
+    --  y = top - display.contentHeight*0.07,
+    --  fontSize = 33,
+    -- })
+    --
+    -- hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+    -- hud.separateur.x = display.contentWidth*0.35
+    -- hud.separateur.y = top - display.contentHeight*0.065
+    --
+    -- viewManager.newText({
+    --  parent = hud, 
+    --  text = T "Favorites",     
+    --  x = display.contentWidth*0.5,
+    --  y = top - display.contentHeight*0.07,
+    --  fontSize = 33,
+    -- })
+    --
+    -- hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+    -- hud.separateur.x = display.contentWidth*0.65
+    -- hud.separateur.y = top - display.contentHeight*0.065
+    --
+    -- viewManager.newText({
+    --  parent = hud, 
+    --  text = T "Restart",     
+    --  x = display.contentWidth*0.8,
+    --  y = top - display.contentHeight*0.07,
+    --  fontSize = 33,
+    -- })
+    -- 
+    -- 
+    --------------------------------------------------------------
+    -- Actions
+    -- 
+    --  2 actions random / restart
 
- local nbLines =  totalNums/nbNumPerLine
- local nbRows =  totalNums/nbLines
- local nbOnlastLine = totalNums - math.floor(nbLines)*nbRows
- 
- ------------------
- 
- for i = 1,nbRows do
-    for j = 1,nbLines do
-     local ballNum = (j-1)*nbRows+i
-   viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, top + yGap*(j-1))
-  end
- end
+    local random = viewManager.newText({
+        parent = hud, 
+        text = T "RANDOM",     
+        x = display.contentWidth*0.3,
+        y = top - display.contentHeight*0.085,
+        fontSize = 35,
+    })
 
- for i = 1,nbOnlastLine do
-  local ballNum = math.floor(nbLines)*nbRows+i
-  viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, top + yGap*math.floor(nbLines))
- end
+    utils.onTouch(random, function()
+        router.resetScreen()
+        self:refreshScene()
+        self:randomSelection()
+    end)
 
- ------------------
+    hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+    hud.separateur.x = display.contentWidth*0.5
+    hud.separateur.y = top - display.contentHeight*0.08
 
- hud.selector = display.newImage( hud, "assets/images/hud/selector.green.png")  
- hud.selector.x = display.contentWidth*0.5
- hud.selector.y = top + display.contentHeight*0.56
+    local restart = viewManager.newText({
+        parent = hud, 
+        text = T "CLEAR ALL",     
+        x = display.contentWidth*0.7,
+        y = top - display.contentHeight*0.085,
+        fontSize = 35,
+    })
 
- ------------------
+    utils.onTouch(restart, function()
+        router.resetScreen()
+        self:refreshScene()
+    end)
 
- lotteryManager:startSelection()
+    --------------------------------------------------------------
+    -- Classic nums
 
- ------------------
+    local totalNums    = lotteryManager.nextLottery.maxNumbers  
+    local nbNumPerLine  = 7
 
- hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
- hud.headerRect.x = display.viewableContentWidth*0.5 
- hud.headerRect.y = HEADER_HEIGHT*0.5
+    ------------------
 
- hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
- hud.logo.x = display.contentWidth*0.5
- hud.logo.y = HEADER_HEIGHT*0.5
+    local nbLines =  totalNums/nbNumPerLine
+    local nbRows =  totalNums/nbLines
+    local nbOnlastLine = totalNums - math.floor(nbLines)*nbRows
 
- hud.close     = display.newImage( hud, "assets/images/hud/game/exit.game.png")
- hud.close.x    = display.contentWidth*0.89
- hud.close.y    = HEADER_HEIGHT/2
- 
- utils.onTouch(hud.close, function() router.openHome() end)
+    ------------------
 
- ------------------
+    for i = 1,nbRows do
+        for j = 1,nbLines do
+            local ballNum = (j-1)*nbRows+i
+            viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, top + yGap*(j-1))
+        end
+    end
 
- self.view:insert(hud)
+    for i = 1,nbOnlastLine do
+        local ballNum = math.floor(nbLines)*nbRows+i
+        viewManager.drawBallToPick(ballNum, marginLeft + xGap*i, top + yGap*math.floor(nbLines))
+    end
+
+    ------------------
+
+    hud.selector = display.newImage( hud, "assets/images/hud/selector.green.png")  
+    hud.selector.x = display.contentWidth*0.5
+    hud.selector.y = top + display.contentHeight*0.56
+
+    ------------------
+
+    lotteryManager:startSelection()
+
+    ------------------
+
+    hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
+    hud.headerRect.x = display.viewableContentWidth*0.5 
+    hud.headerRect.y = HEADER_HEIGHT*0.5
+
+    hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
+    hud.logo.x = display.contentWidth*0.5
+    hud.logo.y = HEADER_HEIGHT*0.5
+
+    hud.close     = display.newImage( hud, "assets/images/hud/game/exit.game.png")
+    hud.close.x    = display.contentWidth*0.89
+    hud.close.y    = HEADER_HEIGHT/2
+
+    utils.onTouch(hud.close, function() router.openHome() end)
+
+    ------------------
+
+    self.view:insert(hud)
 end
 
 ------------------------------------------
 
 function scene:getNum()
- 
-   local s = system.getTimer()/100
-   local os = os.time()
-   local seed = os / s 
- math.randomseed(seed)
 
- local num     = math.random(1,49)
- local alreadyChosen  = false
+    local s = system.getTimer()/100
+    local os = os.time()
+    local seed = os / s 
+    math.randomseed(seed)
 
- for n = 1,#lotteryManager.currentSelection do
-  if(num == lotteryManager.currentSelection[n]) then
-   alreadyChosen = true
-  end
- end
+    local num     = math.random(1,49)
+    local alreadyChosen  = false
 
- if not alreadyChosen then
-  return num
- else  
-  return self:getNum()
- end
+    for n = 1,#lotteryManager.currentSelection do
+        if(num == lotteryManager.currentSelection[n]) then
+            alreadyChosen = true
+        end
+    end
+
+    if not alreadyChosen then
+        return num
+    else  
+        return self:getNum()
+    end
 end
 
 ------------------------------------------
 
 function scene:randomSelection()
- for i=1,5 do
-  lotteryManager:addToSelection (self:getNum())
- end
+    for i=1,5 do
+        lotteryManager:addToSelection (self:getNum())
+    end
 end
 
 ------------------------------------------
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
- self:refreshScene()
+    self:refreshScene()
 end
 
 -- Called when scene is about to move offscreen:

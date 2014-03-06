@@ -88,7 +88,8 @@ function scene:refreshScene()
     hud.login.x = display.contentWidth*0.5 
     hud.login.y = display.contentHeight*0.79
 
-    utils.onTouch(hud.login, router.openLogin)
+--    utils.onTouch(hud.login, router.openLogin)
+    utils.onTouch(hud.login, function() signinManager:openLogin() end)
 
     hud.signin = display.newImage( hud, I "Sign_Signup.png")  
     hud.signin.x = display.contentWidth*0.5 

@@ -18,6 +18,11 @@ function setupView(selectedTab, menuType)
     buildMenu(selectedTab, menuType)
 end
 
+function setupCustomView(selectedTab)
+    initBack()
+    buildMenu(selectedTab)
+end
+
 -----------------------------------------------------------------------------------------
 
 -- globalBack not to have a black screen while changing views
@@ -169,6 +174,54 @@ end
 
 ------------------------------------------------------------------
 
+function openWeb(url, listener)
+
+    ------------------
+    
+    local webContainer = {}
+    
+    webContainer.headerRect = display.newImageRect( "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
+    webContainer.headerRect.x = display.viewableContentWidth*0.5 
+    webContainer.headerRect.y = HEADER_HEIGHT*0.5
+
+    webContainer.logo = display.newImage(  "assets/images/hud/game/logo.game.png")  
+    webContainer.logo.x = display.contentWidth*0.5
+    webContainer.logo.y = HEADER_HEIGHT*0.5
+    
+    ------------------
+    
+    local webView = native.newWebView( display.contentCenterX, display.contentCenterY + HEADER_HEIGHT/2, display.contentWidth, display.contentHeight - HEADER_HEIGHT )
+    webView:request( url )
+    webView:addEventListener( "urlRequest", listener )
+    
+    ------------------
+
+    webContainer.close     = display.newImage( "assets/images/hud/game/exit.game.png")
+    webContainer.close.x    = display.contentWidth*0.89
+    webContainer.close.y    = HEADER_HEIGHT/2
+
+    ------------------
+    
+    local onClose = function ()
+        webView:removeEventListener( "urlRequest", listener )
+        webView:removeSelf()
+        webView = nil
+        
+        display.remove(webContainer.headerRect)
+        display.remove(webContainer.logo)
+        display.remove(webContainer.close)
+        webContainer = nil
+    end 
+
+    utils.onTouch(webContainer.close, function()
+        onClose()
+    end)
+    
+    return onClose
+end
+
+------------------------------------------------------------------
+
 function closePopin(now, action)
 
     if(hud.popin) then
@@ -178,7 +231,7 @@ function closePopin(now, action)
         if(not now) then
             transition.to(hud.popin, {
                 time        = 250, 
-                y           = display.contentHeight*1.2, 
+                y           = hud.contentHeight*1.5, 
                 onComplete  = function()
                     utils.emptyGroup(popin)
                     if(action ~= nil) then
@@ -201,7 +254,7 @@ end
 
 function showPopin()
     
-    local height = display.contentHeight*0.35
+    local height = display.contentHeight*0.5
     
     ----------------------------------------------------------
     
@@ -287,7 +340,7 @@ function showPopup(height, square)
     
     backGrey.x   = display.viewableContentWidth*0.5 
     backGrey.y   = display.viewableContentHeight*0.5
-    backGrey.alpha = 0.85
+    backGrey.alpha = 0.45
 
     popup.bg = display.newImageRect( popup, "assets/images/hud/Popup_BG.png", width, height)
     popup.bg.x = display.contentWidth*0.5 
@@ -487,7 +540,6 @@ function drawButton(parent, text, x, y, action, width, height)
     button.text:setFillColor(0,0,0)
     utils.onTouch(button, action)
 
-    -- hud.buttons[#hud.buttons] = button 
     parent:insert(button)
     parent:insert(button.text)
 

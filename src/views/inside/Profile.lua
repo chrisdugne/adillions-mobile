@@ -527,7 +527,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:openFacebookPage()
-    native.showWebPopup(0, 0, display.contentWidth, display.contentHeight, FACEBOOK_PAGE) 
+    viewManager.openWeb(FACEBOOK_PAGE)
 end
 
 -----------------------------------------------------------------------------------------
@@ -581,82 +581,86 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:openCashout()
-
-    -----------------------------------
-
-    local popup = viewManager.showPopup()
-    analytics.event("Gaming", "opencashout") 
-
-    ----------------------------------------------------------------------------------------------------
-
-    popup.shareIcon     = display.newImage( popup, "assets/images/icons/PictoInfo.png")  
-    popup.shareIcon.x    = display.contentWidth*0.5
-    popup.shareIcon.y   = display.contentHeight*0.15
-
-    popup.TxtInformation   = display.newImage( popup, I "TxtInformation.png")  
-    popup.TxtInformation.x  = display.contentWidth*0.5
-    popup.TxtInformation.y  = display.contentHeight*0.23
-
-    ----------------------------------------------------------------------------------------------------
-
-    local value = ""
-    if(utils.isEuroCountry(COUNTRY)) then
-        value = "10€"
-    else
-        value = "US$15"
-    end
-
-    popup.multiLineText = display.newText({
-        parent = popup,
-        text   = T "You can cash out when your winnings \n have reached a minimum total \n balance of " .. value,  
-        width  = display.contentWidth*0.72,  
-        height  = display.contentHeight*0.25,  
-        x    = display.contentWidth*0.5,
-        y    = display.contentHeight*0.45,
-        font   = FONT, 
-        fontSize = 40,
-        align  = "center",
-    })
-
-    popup.multiLineText:setFillColor(0)
-
-    ----------------------------------------------------------------------------------------------------
-
-    local min = 10
-    if(not utils.isEuroCountry(COUNTRY)) then
-        min = 15
-    end
-
-    if(userManager.user.balance >= min) then
-        hud.cashoutEnabled     = display.newImage( popup, I "cashout.on.png")  
-        hud.cashoutEnabled.x    = display.contentWidth*0.5
-        hud.cashoutEnabled.y    = display.contentHeight*0.65
-        utils.onTouch(hud.cashoutEnabled, function() self.openConfirmCashout() end)
-    else
-        hud.cashoutDisabled     = display.newImage( popup, I "cashout.off.png")  
-        hud.cashoutDisabled.x    = display.contentWidth*0.5
-        hud.cashoutDisabled.y   = display.contentHeight*0.65
-    end
-
-    -- if(userManager.user.balance > 0) then
-    --    hud.giveToCharity     = display.newImage( popup, I "donate.on.png")  
-    --    hud.giveToCharity.x     = display.contentWidth*0.5
-    --      hud.giveToCharity.y    = display.contentHeight*0.73
-    --    utils.onTouch(hud.giveToCharity, function() self.openGiveToCharity() end)
-    --   else
-    --  hud.giftDisabled      = display.newImage( popup, I "donate.off.png")  
-    --  hud.giftDisabled.x     = display.contentWidth*0.5
-    --      hud.giftDisabled.y    = display.contentHeight*0.73
-    -- end
-
-
-    ----------------------------------------------------------------------------------------------------
-
-    popup.close     = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x    = display.contentWidth*0.5
-    popup.close.y    = display.contentHeight*0.86
-
-    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
+    
+    viewManager.openWeb(FACEBOOK_PAGE, function(event)
+        print(event.url)
+    end)
+    
+--    -----------------------------------
+--
+--    local popup = viewManager.showPopup()
+--    analytics.event("Gaming", "opencashout") 
+--
+--    ----------------------------------------------------------------------------------------------------
+--
+--    popup.shareIcon     = display.newImage( popup, "assets/images/icons/PictoInfo.png")  
+--    popup.shareIcon.x    = display.contentWidth*0.5
+--    popup.shareIcon.y   = display.contentHeight*0.15
+--
+--    popup.TxtInformation   = display.newImage( popup, I "TxtInformation.png")  
+--    popup.TxtInformation.x  = display.contentWidth*0.5
+--    popup.TxtInformation.y  = display.contentHeight*0.23
+--
+--    ----------------------------------------------------------------------------------------------------
+--
+--    local value = ""
+--    if(utils.isEuroCountry(COUNTRY)) then
+--        value = "10€"
+--    else
+--        value = "US$15"
+--    end
+--
+--    popup.multiLineText = display.newText({
+--        parent = popup,
+--        text   = T "You can cash out when your winnings \n have reached a minimum total \n balance of " .. value,  
+--        width  = display.contentWidth*0.72,  
+--        height  = display.contentHeight*0.25,  
+--        x    = display.contentWidth*0.5,
+--        y    = display.contentHeight*0.45,
+--        font   = FONT, 
+--        fontSize = 40,
+--        align  = "center",
+--    })
+--
+--    popup.multiLineText:setFillColor(0)
+--
+--    ----------------------------------------------------------------------------------------------------
+--
+--    local min = 10
+--    if(not utils.isEuroCountry(COUNTRY)) then
+--        min = 15
+--    end
+--
+--    if(userManager.user.balance >= min) then
+--        hud.cashoutEnabled     = display.newImage( popup, I "cashout.on.png")  
+--        hud.cashoutEnabled.x    = display.contentWidth*0.5
+--        hud.cashoutEnabled.y    = display.contentHeight*0.65
+--        utils.onTouch(hud.cashoutEnabled, function() self.openConfirmCashout() end)
+--    else
+--        hud.cashoutDisabled     = display.newImage( popup, I "cashout.off.png")  
+--        hud.cashoutDisabled.x    = display.contentWidth*0.5
+--        hud.cashoutDisabled.y   = display.contentHeight*0.65
+--    end
+--
+--    -- if(userManager.user.balance > 0) then
+--    --    hud.giveToCharity     = display.newImage( popup, I "donate.on.png")  
+--    --    hud.giveToCharity.x     = display.contentWidth*0.5
+--    --      hud.giveToCharity.y    = display.contentHeight*0.73
+--    --    utils.onTouch(hud.giveToCharity, function() self.openGiveToCharity() end)
+--    --   else
+--    --  hud.giftDisabled      = display.newImage( popup, I "donate.off.png")  
+--    --  hud.giftDisabled.x     = display.contentWidth*0.5
+--    --      hud.giftDisabled.y    = display.contentHeight*0.73
+--    -- end
+--
+--
+--    ----------------------------------------------------------------------------------------------------
+--
+--    popup.close     = display.newImage( popup, I "popup.Bt_close.png")
+--    popup.close.x    = display.contentWidth*0.5
+--    popup.close.y    = display.contentHeight*0.86
+--
+--    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
 end
 

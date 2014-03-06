@@ -29,8 +29,10 @@ function UserManager:fetchPlayer()
     print("fetchPlayer")
     self.attemptFetchPlayer = self.attemptFetchPlayer + 1 
 
-    utils.postWithJSON(
-    {}, 
+    utils.postWithJSON({
+        mobileVersion   = VERSION,
+        country         = country
+    }, 
     SERVER_URL .. "player", 
     function(result)
 

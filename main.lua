@@ -4,13 +4,13 @@
 --
 -----------------------------------------------------------------------------------------
 
-APP_NAME    = "Adillions"
-APP_VERSION   = "1.3"
+APP_NAME        = "Adillions"
+APP_VERSION     = 1.3
 
 -----------------------------------------------------------------------------------------
 
-DEV    = 1
-PROD    = 1
+--DEV             = 1
+PROD            = 1
 
 -----------------------------------------------------------------------------------------
 
@@ -188,6 +188,7 @@ LotteryManager      = require "src.managers.LotteryManager"
 VideoManager        = require "src.managers.VideoManager"
 ShareManager        = require "src.managers.ShareManager"
 BannerManager       = require "src.managers.BannerManager"
+SigninManager       = require "src.managers.SigninManager"
 
 -----------------------------------------------------------------------------------------
 ---- Server access Managers
@@ -198,6 +199,7 @@ lotteryManager      = LotteryManager:new()
 videoManager        = VideoManager:new()
 shareManager        = ShareManager:new()
 bannerManager       = BannerManager:new()
+signinManager       = SigninManager:new()
 
 -----------------------------------------------------------------------------------------
 --- Display Container

@@ -32,9 +32,23 @@ function scene:refreshScene()
 
     ------------------
 
+    hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
+    hud.headerRect.x = display.viewableContentWidth*0.5 
+    hud.headerRect.y = HEADER_HEIGHT*0.5
+
+    hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
+    hud.logo.x = display.contentWidth*0.5
+    hud.logo.y = HEADER_HEIGHT*0.5
+
+    ------------------
+
     hud.bg   = display.newImageRect(hud, "assets/images/hud/Infos_Bg.png", display.contentWidth, display.viewableContentHeight*0.8)
     hud.bg.x  = display.contentWidth*0.5
     hud.bg.y  = display.contentHeight*0.5
+    
+    hud.subheaderBG   = display.newImage(hud, "assets/images/hud/home/BG_adillions.png")
+    hud.subheaderBG.x  = display.contentWidth*0.5
+    hud.subheaderBG.y  = display.contentHeight * 0.5
 
     ------------------
 
@@ -130,57 +144,9 @@ function scene:refreshScene()
 --        native.showPopup("appStore", options) 
 --    end)
 
-    -- ------------------
-    -- 
-    -- hud.facebookIcon    = display.newImage( hud.board, "assets/images/icons/facebook.png")  
-    -- hud.facebookIcon.x   = display.contentWidth*0.5
-    -- hud.facebookIcon.y  = display.contentHeight*0.2
-    -- hud.board:insert(hud.facebookIcon)
-    --
-    -- utils.onTouch(hud.facebookIcon, function()
-    --  system.openURL( "https://www.facebook.com/pages/Adillions/379432705492888" )
-    -- end)
-    --
-    -- ------------------
-    --
-    -- hud.twitterIcon    = display.newImage( hud.board, "assets/images/icons/twitter.png")  
-    -- hud.twitterIcon.x   = display.contentWidth*0.5
-    -- hud.twitterIcon.y  = display.contentHeight*0.3
-    -- hud.board:insert(hud.twitterIcon)
-    --
-    -- utils.onTouch(hud.twitterIcon, function()
-    --  system.openURL( "http://www.twitter.com/adillions" )
-    -- end)
-
-    ------------------
-    -- 
-    -- viewManager.drawButton(hud.board, "_Reglement", display.contentWidth*0.5, display.contentHeight *0.4, function() system.openURL( "http://www.adillions.com" ) end)
-    --
-    -- ------------------
-    -- 
-    -- viewManager.drawButton(hud.board, "_FAQ", display.contentWidth*0.5, display.contentHeight *0.5, function() system.openURL( "http://www.adillions.com" ) end)
-    --
-    -- viewManager.drawButton(hud.board, "_Write a review", display.contentWidth*0.5, display.contentHeight *0.5, function()
-    --  local options =
-    --  {
-    --   iOSAppId = "739060819",
-    --   androidAppPackageName = "com.adillions.v1",
-    --   supportedAndroidStores = { "google" },
-    --  }
-    --  native.showPopup("appStore", options) 
-    -- end)
-    --
-    -- ---------------------------------------------------------------------------------
-    --
-    -- viewManager.drawButton(hud.board, "_Options", display.contentWidth*0.5, display.contentHeight *0.6, function() router.openOptions() end)
-    --
-    -- ---------------------------------------------------------------------------------
-    --
-    -- viewManager.drawButton(hud.board, "tuto", display.contentWidth*0.5, display.contentHeight *0.7, function() router.openTutorial() end)
-
     ---------------------------------------------------------------------------------
 
-    viewManager.setupView(5)
+    viewManager.setupCustomView(5)
     self.view:insert(hud)
 
     viewManager.darkerBack()

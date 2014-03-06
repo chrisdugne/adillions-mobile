@@ -21,10 +21,10 @@ end
 -----------------------------------------------------------------------------------------
 
 function scene:refreshScene()
-
-    self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
-    self.webView:request( SERVER_URL .. "mlogin?lang=" .. LANG  )
-    self.webView:addEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+    
+    local url       = SERVER_URL .. "mlogin?lang=" .. LANG
+    self.listener  = function(event) self:loginViewListener(event) end
+    self.webView = viewManager.openWeb(url, self.listener)
 
 end
 
@@ -61,7 +61,7 @@ function scene:loginViewListener( event )
 end
 
 function scene:closeWebView()
-    self.webView:removeEventListener( "urlRequest", function(event) self:loginViewListener(event) end )
+    self.webView:removeEventListener( "urlRequest", self.listener )
     self.webView:removeSelf()
     self.webView = nil
 end
