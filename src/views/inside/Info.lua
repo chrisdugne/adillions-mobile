@@ -114,17 +114,7 @@ function scene:refreshScene()
 
     utils.onTouch(hud.terms, function()
         analytics.event("Links", "terms")
-
-        local terms = ""
-        if(COUNTRY == "FR") then
-            terms = "mtermsFR"
-        else
-            terms = "mtermsEN"
-        end
-
-        viewManager.openWeb( SERVER_URL .. terms, function(event)
-            print(event.url)
-        end) 
+        self:openTerms()
     end)
 
     ------------------
@@ -360,7 +350,17 @@ function scene:openTerms()
     popup.read.y   = display.contentHeight*0.78
 
     utils.onTouch(popup.read, function() 
-        router.openTerms()
+    
+        local terms = ""
+        if(COUNTRY == "FR") then
+            terms = "mtermsFR"
+        else
+            terms = "mtermsEN"
+        end
+
+        viewManager.openWeb( SERVER_URL .. terms, function(event)
+            print(event.url)
+        end) 
     end)
 
     --------------------------
