@@ -93,12 +93,11 @@ function UserManager:getPlayerByFacebookId()
 
             if(result.isError) then
                 print("--> error = signinFB")
-                router.openSigninFB()
-                --   router.openOutside()
+                signinManager:openSigninFB()
 
             elseif(result.status == 401 or result.status == '401') then
                 print("--> 401 = signinFB")
-                router.openSigninFB()
+                signinManager:openSigninFB()
             else
                 print("--> test player")
                 response        = json.decode(result.response)

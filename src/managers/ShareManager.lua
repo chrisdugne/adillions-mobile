@@ -69,7 +69,7 @@ function ShareManager:moreTickets(popup)
                 -- pas fan et connecte | button v3 : open FB page
                 imageFacebook = I "stock.facebook.3.png"
                 actionFacebook = function()
-                    facebook.openFacebookPage()
+                    self:openFacebookPage()
                     close() 
                 end
 
@@ -78,7 +78,7 @@ function ShareManager:moreTickets(popup)
                 imageFacebook = I "stock.facebook.3.png"
                 actionFacebook = function() 
                     facebook.connect(function()
-                        facebook.openFacebookPage()
+                        self:openFacebookPage()
                         close() 
                     end, close) 
                 end
@@ -898,7 +898,7 @@ function ShareManager:openRewards2()
 end
 
 
-------------------------------------------
+-----------------------------------------------------------------------------------------
 
 function ShareManager:openRewards3()
 
@@ -971,6 +971,18 @@ function ShareManager:openRewards3()
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
+end
+
+-----------------------------------------------------------------------------------------
+
+function ShareManager:openFacebookPage()
+    viewManager.openWeb(FACEBOOK_PAGE, function(event)
+        print(event.url)
+    end, function()
+        userManager:checkFanStatus(function()
+            print("FB fan --> " .. tostring(userManager.user.isFacebookFan))
+        end)
+    end)
 end
 
 -----------------------------------------------------------------------------------------

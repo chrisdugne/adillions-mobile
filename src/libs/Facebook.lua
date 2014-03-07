@@ -392,11 +392,3 @@ function askPermissionListener( event )
 end
 
 -----------------------------------------------------------------------------------------
-
-function openFacebookPage()
-    -- display.contentCenterX, display.contentCenterY
-    native.showWebPopup(0, 0, display.contentWidth, display.contentHeight, FACEBOOK_PAGE) 
-end
-
-
------------------------------------------------------------------------------------------

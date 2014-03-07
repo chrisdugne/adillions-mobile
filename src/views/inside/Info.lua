@@ -42,11 +42,7 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.bg   = display.newImageRect(hud, "assets/images/hud/Infos_Bg.png", display.contentWidth, display.viewableContentHeight*0.8)
-    hud.bg.x  = display.contentWidth*0.5
-    hud.bg.y  = display.contentHeight*0.5
-    
-    hud.subheaderBG   = display.newImage(hud, "assets/images/hud/home/BG_adillions.png")
+    hud.subheaderBG   = display.newImage(hud, "assets/images/hud/info.bg.png")
     hud.subheaderBG.x  = display.contentWidth*0.5
     hud.subheaderBG.y  = display.contentHeight * 0.5
 
@@ -103,8 +99,11 @@ function scene:refreshScene()
     hud.faq.y    = self.top + self.yGap * 2
 
     utils.onTouch(hud.faq, function()
-        analytics.event("Links", "faq") 
-        system.openURL( SERVER_URL .. "#/about/faq" )
+        analytics.event("Links", "faq")
+        
+        viewManager.openWeb(SERVER_URL .. "mfaq", function(event)
+            print(event.url)
+        end) 
     end)
 
     ------------------
@@ -114,9 +113,21 @@ function scene:refreshScene()
     hud.terms.y    = self.top + self.yGap * 3
 
     utils.onTouch(hud.terms, function()
-        analytics.event("Links", "terms") 
-        self:openTerms()
+        analytics.event("Links", "terms")
+
+        local terms = ""
+        if(COUNTRY == "FR") then
+            terms = "mtermsFR"
+        else
+            terms = "mtermsEN"
+        end
+
+        viewManager.openWeb( SERVER_URL .. terms, function(event)
+            print(event.url)
+        end) 
     end)
+
+    ------------------
 
     hud.privacy    = display.newImage( hud, I "info.Privacy.png")  
     hud.privacy.x    = self.column2
@@ -124,7 +135,9 @@ function scene:refreshScene()
 
     utils.onTouch(hud.privacy, function()
         analytics.event("Links", "privacy") 
-        system.openURL( SERVER_URL .. "#/about/privacy" )
+        viewManager.openWeb(SERVER_URL .. "#/about/privacy", function(event)
+            print(event.url)
+        end) 
     end)
 
     ------------------
@@ -148,8 +161,6 @@ function scene:refreshScene()
 
     viewManager.setupCustomView(5)
     self.view:insert(hud)
-
-    viewManager.darkerBack()
 end
 
 ------------------------------------------
@@ -337,7 +348,9 @@ function scene:openTerms()
     popup.keyrules.y   = display.contentHeight*0.65
 
     utils.onTouch(popup.keyrules, function() 
-        system.openURL( SERVER_URL .. "#/about/keyrules" )
+        viewManager.openWeb(SERVER_URL .. "#/about/keyrules", function(event)
+            print(event.url)
+        end) 
     end)
 
     --------------------------
