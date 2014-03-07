@@ -69,7 +69,7 @@ function ShareManager:moreTickets(popup)
                 -- pas fan et connecte | button v3 : open FB page
                 imageFacebook = I "stock.facebook.3.png"
                 actionFacebook = function()
-                    self:openFacebookPage()
+                    self:openFacebookPage(popup)
                     close() 
                 end
 
@@ -78,7 +78,7 @@ function ShareManager:moreTickets(popup)
                 imageFacebook = I "stock.facebook.3.png"
                 actionFacebook = function() 
                     facebook.connect(function()
-                        self:openFacebookPage()
+                        self:openFacebookPage(popup)
                         close() 
                     end, close) 
                 end
@@ -164,12 +164,18 @@ function ShareManager:moreTickets(popup)
     hud.popin.buttonFacebook         = display.newImage( hud.popin, imageFacebook)  
     hud.popin.buttonFacebook.x       = display.contentWidth * -0.2
     hud.popin.buttonFacebook.y       = hud.popin.contentMiddle
-    utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
+
+    if(actionFacebook) then
+        utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
+    end
 
     hud.popin.buttonTwitter         = display.newImage( hud.popin, imageTwitter)  
     hud.popin.buttonTwitter.x       = display.contentWidth * 0.2
     hud.popin.buttonTwitter.y       = hud.popin.contentMiddle
-    utils.onTouch(hud.popin.buttonTwitter, actionTwitter)
+    
+    if(actionTwitter) then
+        utils.onTouch(hud.popin.buttonTwitter, actionTwitter)
+    end
 
 end
 
@@ -975,12 +981,24 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function ShareManager:openFacebookPage()
+function ShareManager:openFacebookPage(popup)
     viewManager.openWeb(FACEBOOK_PAGE, function(event)
         print(event.url)
     end, function()
-        userManager:checkFanStatus(function()
-            print("FB fan --> " .. tostring(userManager.user.isFacebookFan))
+        
+        native.setActivityIndicator( true )
+        timer.performWithDelay(3000, function() 
+            userManager:checkFanStatus(function()
+                
+                if(userManager.user.isFacebookFan) then
+                    userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
+                else
+                    viewManager.message("Pas fan FB...")    
+                end
+                
+                native.setActivityIndicator( false )
+                self:moreTickets(popup)
+            end)
         end)
     end)
 end

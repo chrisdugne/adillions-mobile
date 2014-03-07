@@ -65,8 +65,8 @@ end
 
 function scene:drawNextLottery( event )
     
---    lotteryManager.currentSelection = {1,2,3,4,5,6}
---    lotteryManager:showLastTicket()
+    lotteryManager.currentSelection = {1,2,3,4,5,6}
+    lotteryManager:showLastTicket()
     
     local y                 = HEADER_HEIGHT * 3.7
     local top               = HEADER_HEIGHT * 2.5
@@ -75,20 +75,6 @@ function scene:drawNextLottery( event )
     local timerY            = top
 
     -------------------------------
---
---    viewManager.newText({
---        parent = hud, 
---        text = T "Next drawing" .. " : ", 
---        x = display.contentWidth*0.17,
---        y = top - display.contentHeight * 0.044,
---        fontSize = 40,
---        anchorX    = 0,
---        anchorY    = 0.5,
---    })
---
---    hud.separator    = display.newImage(hud, "assets/images/icons/separateur.horizontal.png")
---    hud.separator.x   = display.contentWidth*0.5
---    hud.separator.y   = top - display.contentHeight * 0.02
 
     hud.pictoTimer   = display.newImage( hud, "assets/images/icons/TimerPicto.png")  
     hud.pictoTimer.x   = display.contentWidth*0.2

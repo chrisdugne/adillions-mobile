@@ -174,7 +174,7 @@ end
 
 ------------------------------------------------------------------
 
-function openWeb(url, listener)
+function openWeb(url, listener, customOnClose)
 
     ------------------
     
@@ -211,6 +211,10 @@ function openWeb(url, listener)
         display.remove(webContainer.logo)
         display.remove(webContainer.close)
         webContainer = nil
+    
+        if(customOnClose) then
+            customOnClose()
+        end
     end 
 
     utils.onTouch(webContainer.close, function()
@@ -226,6 +230,7 @@ function closePopin(now, action)
 
     if(hud.popin) then
         display.remove(hud.popin.close)
+        display.remove(hud.popin.touchBack)
         transition.cancel(hud.popin)
 
         if(not now) then
@@ -981,7 +986,7 @@ function drawSelection(parent, numbers, y)
     -- display
 
     local nbSelected    = 0
-    local xGap          = display.contentWidth*0.14
+    local xGap          = display.contentWidth*0.1425
 
     -------------------------------------
 

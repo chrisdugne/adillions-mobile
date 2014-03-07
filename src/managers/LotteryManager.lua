@@ -405,7 +405,7 @@ function LotteryManager:showLastTicket()
         parent = popup, 
         text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery), 
         x = display.contentWidth*0.5,
-        y = display.contentHeight*0.356,
+        y = display.contentHeight*0.326,
         fontSize = 48,
         font = NUM_FONT,
     })
@@ -416,8 +416,10 @@ function LotteryManager:showLastTicket()
     local lineY     = display.contentHeight*0.57
 
     popup.pictoTicket = display.newImage( popup, "assets/images/hud/confirmation/confirmation.ticket.png")  
-    popup.pictoTicket.x = display.contentWidth*0.73
+    popup.pictoTicket.x = display.contentWidth*0.85
     popup.pictoTicket.y = lineY
+    popup.pictoTicket.anchorY = 0.45
+    popup.pictoTicket.anchorX = 1
 
     local remainingTickets = T "Remaining Ticket"
     if(nbTickets > 1) then
@@ -427,17 +429,17 @@ function LotteryManager:showLastTicket()
     viewManager.newText({
         parent = popup, 
         text = remainingTickets .. " :", 
-        x = display.contentWidth*0.55,
+        x = display.contentWidth*0.15,
         y = lineY,
         fontSize = 44,
-        anchorX    = 1,
+        anchorX    = 0,
         anchorY    = 0.5,
     })
 
     viewManager.newText({
         parent = popup, 
         text = nbTickets, 
-        x = display.contentWidth*0.66,
+        x = popup.pictoTicket.x - popup.pictoTicket.contentWidth - display.contentWidth*0.03,
         y = lineY,
         fontSize = 54,
         font = NUM_FONT,
