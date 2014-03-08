@@ -202,7 +202,7 @@ function scene:drawNextLottery( event )
         end
 
         utils.onTouch(hud.playButton, function()
-            self:play()
+            gameManager:play()
         end)
 
     else  
@@ -219,19 +219,6 @@ function scene:drawNextLottery( event )
     bannerManager:start()
     
     -------------------------------
-end
-
-------------------------------------------
-
-function scene:play()
-
-    if(userManager:hasTicketsToPlay()) then
-        if(userManager:checkTicketTiming()) then
-            videoManager:play(router.openFillLotteryTicket, true)
-        end
-    else
-        shareManager:noMoreTickets()
-    end
 end
 
 ------------------------------------------

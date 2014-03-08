@@ -722,6 +722,8 @@ function buildMenu(tabSelected, menuType)
     utils.onTap(hud.playButton, function()
         if(tabSelected ~= 0) then 
             router.openHome() 
+        elseif(router.view == router.HOME) then
+            gameManager:play()
         end 
     end)
 

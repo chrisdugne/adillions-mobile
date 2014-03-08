@@ -459,7 +459,7 @@ function scene:exit()
     if(userManager.user and userManager.user.uid) then
         router.openInfo()
     else
-        router.openOutside()
+        gameManager:open()
     end
 
 end

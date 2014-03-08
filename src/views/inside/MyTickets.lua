@@ -81,6 +81,8 @@ function scene:drawNextLottery()
     local nbNewTickets = 0
     local currentLottery = nil
     local borderHeight  = 0
+    
+    utils.tprint(userManager.user.lotteryTickets)
 
     for i = 1,#userManager.user.lotteryTickets do
 

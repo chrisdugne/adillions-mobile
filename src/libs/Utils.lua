@@ -57,10 +57,14 @@ end
 function onTap(object, action)
     object:addEventListener ("touch", function(event)
         if(event.phase == "began") then
-            return action()
-        else 
-            return true
+            display.getCurrentStage():setFocus( object )
+            action()
+        elseif event.phase == "ended" or event.phase == "cancelled" then
+            display.getCurrentStage():setFocus( nil )
         end
+
+        return true
+         
     end)
 end
 

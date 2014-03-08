@@ -28,25 +28,13 @@ function LotteryManager:refreshNextLottery(draw)
 
         local response = json.decode(result.response)
 
-        self.global               = response.global
         self.nextLottery          = response.nextLottery
         self.nextDrawing          = response.nextDrawing
-
-        self.global.tweet          = json.decode(self.global.tweet)
-        self.global.tweetTheme     = json.decode(self.global.tweetTheme)
-        self.global.fbPost         = json.decode(self.global.fbPost)
-        
-        bannerManager.banners      = json.decode(self.global.banners)
 
         self.nextLottery.theme    = json.decode(self.nextLottery.theme)
         self.nextDrawing.theme    = json.decode(self.nextDrawing.theme)
         self.nextLottery.rangs    = json.decode(self.nextLottery.rangs)
         self.nextDrawing.rangs    = json.decode(self.nextDrawing.rangs)
-
-        SERVER_TIME               = response.serverTime - system.getTimer()
-        TIMER                     = self.global.lastUpdate or SERVER_TIME
-
-        print("serverTime : " ..  SERVER_TIME )
 
         userManager:checkUserCurrentLottery()
 

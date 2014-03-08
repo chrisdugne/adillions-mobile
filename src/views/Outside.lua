@@ -22,6 +22,7 @@ end
 
 function scene:refreshScene()
 
+    print("outside")
     GLOBALS.savedData.facebookAccessToken  = nil
     GLOBALS.savedData.twitterAccessToken  = nil
     utils.saveTable(GLOBALS.savedData, "savedData.json")

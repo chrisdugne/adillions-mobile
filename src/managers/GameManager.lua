@@ -16,7 +16,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function GameManager:start()
-
+    print("start")
     analytics.init(ANALYTICS_VERSION, ANALYTICS_TRACKING_ID, ANALYTICS_PROFILE_ID, APP_NAME, APP_VERSION)
     viewManager.initGlobalBack()
     vungle:init()
@@ -25,13 +25,28 @@ function GameManager:start()
     if(not GLOBALS.savedData) then
         self:firstStart()
     else
-        if(GLOBALS.savedData.user.facebookId) then
-            self:tryAutoOpenFacebookAccount()
-        else
-            self:tryAutoOpenAdillionsAccount()
-        end
-
+        self:open()
     end
+end
+
+-----------------------------------------------------------------------------------------
+
+function GameManager:open()
+
+    print("open")
+    local onGoodVersion = function() 
+        if(GLOBALS.savedData.user.facebookId) then
+            gameManager:tryAutoOpenFacebookAccount()
+        else
+            print("tryAutoOpenFacebookAccount")
+            gameManager:tryAutoOpenAdillionsAccount()
+        end
+    end
+    
+    local onBadVersion = function() gameManager:showBadVersion() end
+    
+    userManager:getGlobals(onGoodVersion, onBadVersion)
+    
 end
 
 -----------------------------------------------------------------------------------------
@@ -92,6 +107,59 @@ function GameManager:tryAutoOpenAdillionsAccount()
     else
         print("start : no user data : outside")   
         router.openOutside()
+    end
+end
+
+-----------------------------------------------------------------------------------------
+
+function GameManager:showBadVersion()
+
+        local popup = viewManager.showPopup(display.contentWidth*0.95, true)
+
+        ----------------------------------------
+    
+        popup.bg        = display.newImage( popup, "assets/images/hud/home/BG_adillions.png")
+        popup.bg.x      = display.contentWidth*0.5
+        popup.bg.y      = display.contentHeight*0.5
+
+
+        popup.congratz    = display.newImage( popup, I "wrongversion.title.png")  
+        popup.congratz.x   = display.contentWidth*0.5
+        popup.congratz.y  = display.contentHeight*0.3
+
+        ----------------------------------------
+
+        popup.earnText = viewManager.newText({
+            parent      = popup,
+            text        = T "Please download the latest version of Adillions" .. "(v" .. VERSION_REQUIRED .. ") !", 
+            fontSize    = 55,  
+            width       = display.contentWidth * 0.8,
+            x           = display.contentWidth * 0.5,
+            y           = display.contentHeight * 0.47
+        })
+
+        popup.earnText = viewManager.newText({
+            parent      = popup,
+            text        = T "Thank you", 
+            fontSize    = 55,  
+            width       = display.contentWidth * 0.5,
+            x           = display.contentWidth * 0.5,
+            y           = display.contentHeight * 0.65
+        })
+        
+        --------------------------
+        
+end
+
+-----------------------------------------------------------------------------------------
+
+function GameManager:play()
+    if(userManager:hasTicketsToPlay()) then
+        if(userManager:checkTicketTiming()) then
+            videoManager:play(router.openFillLotteryTicket, true)
+        end
+    else
+        shareManager:noMoreTickets()
     end
 end
 

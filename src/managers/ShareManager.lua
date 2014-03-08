@@ -699,10 +699,12 @@ end
 function ShareManager:tweet(close, closeAndPlay)
 
     local text = translate(lotteryManager.global.tweet)
+    native.setActivityIndicator( true )
 
     twitter.tweetMessage(text, function()
 
         viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
+        native.setActivityIndicator( false )
 
         if(not userManager.user.hasTweet) then
             userManager.user.hasTweet = true
@@ -1004,7 +1006,7 @@ function ShareManager:openFacebookPage(popup)
                 if(userManager.user.isFacebookFan) then
                     userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
                 else
-                    viewManager.message("Pas fan FB...")    
+                    viewManager.message(T "You haven't liked our page :-(")    
                 end
                 
                 native.setActivityIndicator( false )

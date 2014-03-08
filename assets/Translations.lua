@@ -4,8 +4,20 @@ local translations =
         ["fr"] = "Dernière mise à jour : 05 janvier 2014",
     },
 
+    ["Loading..."] = {
+        ["fr"] = "Chargement...",
+    },
+
+    ["Please download the latest version of Adillions"] = {
+        ["fr"] = "Téléchargez la dernière version d'Adillions",
+    },
+
     ["* Cf. sponsorship rules"] = {
         ["fr"] = "* Cf. règles de parrainage",
+    },
+
+    ["You haven't liked our page :-("] = {
+        ["fr"] = "Vous n'avez pas liké notre page :-(",
     },
 
     ["Check your internet connection"] = {
