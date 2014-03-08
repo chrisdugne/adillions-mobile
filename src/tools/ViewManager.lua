@@ -267,8 +267,9 @@ function showPopin()
     hud.popin = display.newGroup()
     hud.popin.anchorX = 0
     hud.popin.anchorY = 0
-    hud.popin.headerMiddle = -height/2.4
+    hud.popin.headerMiddle  = -height/2.4
     hud.popin.contentMiddle = height/12
+    hud.popin.bottom        = height/2.25
 
     ----------------------------------------------------------
     

@@ -4,6 +4,10 @@ local translations =
         ["fr"] = "Dernière mise à jour : 05 janvier 2014",
     },
 
+    ["* Cf. sponsorship rules"] = {
+        ["fr"] = "* Cf. règles de parrainage",
+    },
+
     ["Check your internet connection"] = {
         ["fr"] = "Vérifier votre connexion internet",
     },

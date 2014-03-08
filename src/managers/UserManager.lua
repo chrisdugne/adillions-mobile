@@ -77,8 +77,10 @@ function UserManager:getPlayerByFacebookId()
     self.attemptFBPlayer = self.attemptFBPlayer + 1 
 
     utils.postWithJSON({
-        facebookData = facebook.data,
-        accessToken = GLOBALS.savedData.facebookAccessToken
+        mobileVersion   = VERSION,
+        country         = country,
+        facebookData    = facebook.data,
+        accessToken     = GLOBALS.savedData.facebookAccessToken
     }, 
     SERVER_URL .. "playerFromFB", 
     function(result)

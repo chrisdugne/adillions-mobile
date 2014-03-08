@@ -276,6 +276,17 @@ function ShareManager:inviteForInstants(popup)
     hud.popin.email.y               = hud.popin.contentMiddle
     utils.onTouch(hud.popin.email, function() self:email() end)
 
+    -----------------------------------
+
+    viewManager.newText({
+        parent      = hud.popin, 
+        text        = T "* Cf. sponsorship rules",     
+        x           = -display.contentWidth * 0.45,
+        y           = hud.popin.bottom,
+        anchorX     = 0,
+        fontSize    = 27
+    })
+
 end
 
 -----------------------------------------------------------------------------------------
