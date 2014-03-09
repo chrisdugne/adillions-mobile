@@ -17,7 +17,6 @@ local scene = storyboard.newScene()
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
     hud.selection = display.newGroup()
-    hud.selection:toBack()
 end
 
 -----------------------------------------------------------------------------------------

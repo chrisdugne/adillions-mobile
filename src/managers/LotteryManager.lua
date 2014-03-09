@@ -453,7 +453,7 @@ function LotteryManager:showLastTicket()
 
     utils.onTouch(popup.close, function()
         router.openHome() 
-        viewManager.closePopup(popup, true, next)
+        viewManager.closePopup(popup)
     end)
 
 
