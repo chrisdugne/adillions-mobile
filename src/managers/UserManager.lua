@@ -148,6 +148,19 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function UserManager:loadMoreTickets(lastLotteryUID, onReceivedTickets)
+    utils.postWithJSON({
+            lastLotteryUID = lastLotteryUID
+        }, 
+        SERVER_URL .. "lotteryTickets", 
+        function(result)
+            onReceivedTickets(json.decode(result.response))
+        end
+    )
+end
+
+-----------------------------------------------------------------------------------------
+
 function UserManager:checkExistPlayerByFacebookId(proceedWithMerge, connectionSuccessful, beforeForceLogin)
 
     native.setActivityIndicator( true )

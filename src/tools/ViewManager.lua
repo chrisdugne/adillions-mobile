@@ -71,20 +71,21 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function initBoard()
+function initBoard(scrollListener)
     hud.board = widget.newScrollView
     {
-        id      = "board",
-        top      = 0,
-        left      = 0,
-        friction    = 1.5,
-        width      = display.contentWidth,
-        height     = display.contentHeight,
-        bottomPadding   = MENU_HEIGHT + HEADER_HEIGHT + display.contentHeight*0.1,
-        hideBackground  = true,
-        horizontalScrollDisabled  = true,
-        verticalScrollDisabled   = false,
-        hideScrollBar      = true,
+        id                          = "board",
+        top                         = 0,
+        left                        = 0,
+        friction                    = 1.5,
+        width                       = display.contentWidth,
+        height                      = display.contentHeight,
+        bottomPadding               = MENU_HEIGHT + HEADER_HEIGHT + display.contentHeight*0.1,
+        hideBackground              = true,
+        horizontalScrollDisabled    = true,
+        verticalScrollDisabled      = false,
+        hideScrollBar               = true,
+        listener                    = scrollListener
     }
 end
 
