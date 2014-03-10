@@ -193,7 +193,10 @@ function openWeb(url, listener, customOnClose)
     
     local webView = native.newWebView( display.contentCenterX, display.contentCenterY + HEADER_HEIGHT/2, display.contentWidth, display.contentHeight - HEADER_HEIGHT )
     webView:request( url )
-    webView:addEventListener( "urlRequest", listener )
+    
+    if(listener) then
+        webView:addEventListener( "urlRequest", listener )
+    end
     
     ------------------
 
@@ -204,7 +207,11 @@ function openWeb(url, listener, customOnClose)
     ------------------
     
     local onClose = function ()
-        webView:removeEventListener( "urlRequest", listener )
+        
+        if(listener) then
+            webView:removeEventListener( "urlRequest", listener )
+        end
+        
         webView:removeSelf()
         webView = nil
         
@@ -568,6 +575,7 @@ function drawRemoteImage( url, parent, x, y, scale, alpha, next, prefix )
         local view = router.view
         local imageReceived = function(event) 
             print("received image on view " .. router.view)
+            print(url)
             if(router.view == view) then 
                 return insertImage(event.target, parent, x, y, scale, alpha, next) 
             end
