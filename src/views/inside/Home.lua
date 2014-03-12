@@ -65,9 +65,6 @@ end
 
 function scene:drawNextLottery( event )
     
---    lotteryManager.currentSelection = {1,2,3,4,5,6}
---    lotteryManager:showLastTicket()
-    
     local y                 = HEADER_HEIGHT * 3.7
     local top               = HEADER_HEIGHT * 2.5
     local timerLegendSize   = 17

@@ -289,7 +289,7 @@ local translations =
         ["fr"] = "*Pour le parrain et le filleul (2 tirages min.)",
     },
 
-    ["** Per post (max. 4 Instants per draw)"] = {
+    ["**Per post (max. 4 Instants per draw)"] = {
         ["fr"] = "**Par post (max. 4 Instantanés par tirage)",
     },
 

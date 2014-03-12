@@ -259,17 +259,20 @@ end
 -----------------------------------------------------------------------------------------
 
 function imageName( url )
-    local index = string.find(url,"/")
-
-    if(index == nil) then 
-        if(not string.endsWith(url, ".png")) then
-            url = url .. ".png"
-        end
-        return url;
-    else
-        local subURL = url:sub(index+1, string.len(url))
-        return imageName(subURL)
-    end
+    return url:gsub("/", ".")
+--    
+--    
+--    local index = string.find(url,"/")
+--
+--    if(index == nil) then 
+--        if(not string.endsWith(url, ".png")) then
+--            url = url .. ".png"
+--        end
+--        return url;
+--    else
+--        local subURL = url:sub(index+1, string.len(url))
+--        return imageName(subURL)
+--    end
 end
 
 -----------------------------------------------------------------------------------------

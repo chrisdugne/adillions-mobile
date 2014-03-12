@@ -1089,7 +1089,7 @@ function UserManager:giftInstants(nbInstants)
 
     self:notifyInstants(function()
         self:updatePlayer()
-    end, true)
+    end)
 end
 
 -----------------------------------------------------------------------------------------
@@ -1145,31 +1145,22 @@ function UserManager:notifyInstants(next, playOnClose)
 
         --------------------------
 
-        if(playOnClose) then
+        popup.close    = display.newImage( popup, "assets/images/hud/CroixClose.png")
+        popup.close.x    = display.contentWidth*0.87
+        popup.close.y    = display.contentHeight*0.28
 
-            popup.close    = display.newImage( popup, "assets/images/hud/CroixClose.png")
-            popup.close.x    = display.contentWidth*0.87
-            popup.close.y    = display.contentHeight*0.28
+        utils.onTouch(popup.close, function()
+            viewManager.closePopup(popup)
+        end)
 
-            utils.onTouch(popup.close, function()
-                viewManager.closePopup(popup)
-            end)
+        popup.play   = display.newImage( popup, I "play.png")
+        popup.play.x   = display.contentWidth*0.5
+        popup.play.y   = display.contentHeight*0.7
 
-            -- TODO btn play
-
-            popup.play   = display.newImage( popup, I "popup.Bt_close.png")
-            popup.play.x   = display.contentWidth*0.5
-            popup.play.y   = display.contentHeight*0.7
-
-            utils.onTouch(popup.play, function() viewManager.closePopup(popup) end)
-
-        else
-            popup.close   = display.newImage( popup, I "play.title.png")
-            popup.close.x   = display.contentWidth*0.5
-            popup.close.y   = display.contentHeight*0.7
-
-            utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
-        end
+        utils.onTouch(popup.play, function() 
+            viewManager.closePopup(popup) 
+            gameManager:play() 
+        end)
 
         ----------------------------------------
 

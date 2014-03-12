@@ -195,13 +195,13 @@ function scene:createTuto1()
     -------------------
     -- controls
     hud.tuto1.next = viewManager.newText({
-        parent    = hud.tuto1,
-        text     = T "NEXT",  
-        anchorX   = 0.5,
-        anchorY   = 1,
-        y      = display.contentHeight*0.96,
-        fontSize   = 52,  
-        x      = display.contentWidth * 0.5,
+        parent      = hud.tuto1,
+        text        = T "NEXT",  
+        anchorX     = 0.5,
+        anchorY     = 1,
+        y           = display.contentHeight*0.964,
+        fontSize    = 52,  
+        x           = display.contentWidth * 0.5,
     })
 
     hud.tuto1.next:setFillColor(255)
@@ -263,7 +263,7 @@ function scene:createTuto2()
         anchorY   = 1,
         fontSize   = 52,  
         x      = display.contentWidth * 0.86,
-        y      = display.contentHeight*0.96,
+        y      = display.contentHeight*0.964,
     })
 
     hud.tuto2.next:setFillColor(255)
@@ -282,7 +282,7 @@ function scene:createTuto2()
         anchorY   = 1,
         fontSize   = 52,  
         x      = display.contentWidth * 0.14,
-        y      = display.contentHeight*0.96,
+        y      = display.contentHeight*0.964,
     })
 
     hud.tuto2.previous:setFillColor(255)
@@ -412,9 +412,6 @@ function scene:createTuto3()
     hud.tuto3.play.x    = display.contentWidth*0.75
     hud.tuto3.play.y    = display.contentHeight*0.94
 
-    hud.tuto3.arrowleft   = display.newImage( hud.tuto3, "assets/images/hud/Tuto_ArrowLeft.png")
-    hud.tuto3.arrowleft.x  = display.contentWidth*0.1
-    hud.tuto3.arrowleft.y  = display.contentHeight*0.94
 
     hud.tuto3.previous = viewManager.newText({
         parent    = hud.tuto3,
@@ -423,10 +420,16 @@ function scene:createTuto3()
         anchorY   = 1,
         fontSize   = 52,  
         x      = display.contentWidth * 0.14,
-        y      = display.contentHeight*0.96,
+        y      = display.contentHeight*0.964,
     })
 
     hud.tuto3.previous:setFillColor(255)
+
+    hud.tuto3.arrowleft   = display.newImage( hud.tuto3, "assets/images/hud/Tuto_ArrowLeft.png")
+    hud.tuto3.arrowleft.anchorX  = 0.5
+    hud.tuto3.arrowleft.anchorY  = 1
+    hud.tuto3.arrowleft.x  = display.contentWidth*0.1
+    hud.tuto3.arrowleft.y  = hud.tuto3.previous.y
 
     utils.onTouch(hud.tuto3.previous,  function() self:goTuto(2) end)
     utils.onTouch(hud.tuto3.arrowleft,  function() self:goTuto(2) end)

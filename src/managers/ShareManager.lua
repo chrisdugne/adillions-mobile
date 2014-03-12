@@ -838,10 +838,10 @@ function ShareManager:openRewards2()
 
     --------------------------
 
-    for i = 1,5 do
+    for i = 1,4 do
         hud.line        = display.newImage(popup, I "rewards.instant".. i ..".png")
         hud.line.x      = display.contentWidth*0.5
-        hud.line.y      = display.contentHeight*0.205 + display.contentHeight*0.1 *i
+        hud.line.y      = display.contentHeight*0.205 + display.contentHeight*0.125 *i
     end
 
     --------------------------
@@ -881,7 +881,7 @@ function ShareManager:openRewards2()
 
     hud.next = viewManager.newText({
         parent          = popup,
-        text            = T "** Per post (max. 4 Instants per draw)", 
+        text            = T "**Per post (max. 4 Instants per draw)", 
         fontSize        = 29,  
         x               = display.contentWidth * 0.1,
         y               = display.contentHeight*0.81,

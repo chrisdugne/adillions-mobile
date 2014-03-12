@@ -562,14 +562,20 @@ end
 
 ------------------------------------------------------------------
 
-function drawRemoteImage( url, parent, x, y, scale, alpha, next, prefix )
+function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, next, prefix, fitToScreen, heightRatio )
 
     if(not scale) then scale = 1 end
     if(not alpha) then alpha = 1 end
     if(not prefix) then prefix = "" end
 
     local fileName = prefix .. utils.imageName(url)
-    local image = display.newImage( parent, fileName, system.TemporaryDirectory)
+    local image
+    
+    if(fitToScreen) then
+        image = display.newImageRect( parent, fileName, system.TemporaryDirectory,  display.contentWidth, display.contentHeight * heightRatio)
+    else
+        image = display.newImage( parent, fileName, system.TemporaryDirectory)
+    end
 
     if not image then
         local view = router.view
@@ -577,31 +583,34 @@ function drawRemoteImage( url, parent, x, y, scale, alpha, next, prefix )
             print("received image on view " .. router.view)
             print(url)
             if(router.view == view) then 
-                return insertImage(event.target, parent, x, y, scale, alpha, next) 
+                return insertImage(event.target, parent, x, y, anchorX, anchorY, scale, alpha, next) 
             end
         end
         
         print("loading image on view " .. view)
         display.loadRemoteImage( url, "GET", imageReceived, fileName, system.TemporaryDirectory )
     else
-        insertImage(image, parent, x, y, scale, alpha, next)
+        insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
     end
 
 end 
 
-function insertImage(image, parent, x, y, scale, alpha, next)
+function insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
 
-    image.x    = x
-    image.y    = y
-    image.xScale  = scale
-    image.yScale  = scale
-    image.alpha  = alpha
+    image.x             = x
+    image.y             = y
+    image.anchorX       = anchorX
+    image.anchorY       = anchorY
+    image.xScale        = scale
+    image.yScale        = scale
+    image.alpha         = alpha
 
     parent:insert(image)
 
     if(next) then
         next(image)
     end
+    
 end
 
 ------------------------------------------------------------------
@@ -851,11 +860,10 @@ function drawThemeToPick(num,x,y)
         hud.text.y = hud.text.y + display.contentHeight*0.02
     end
 
-
 end
 
 function drawThemeIcon(num, parent, content, x, y, scale, alpha, next)
-    drawRemoteImage(content[num].image, parent, x, y, scale, alpha, next)
+    drawRemoteImage(content[num].image, parent, x, y, 0.5, 0.5, scale, alpha, next)
 end
 
 -----------------------------------------------------------------------------------------

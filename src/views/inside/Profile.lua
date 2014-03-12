@@ -70,21 +70,24 @@ function scene:drawScene()
         anchorY     = 0.5,
     })
 
-
     if(GLOBALS.savedData.facebookAccessToken and facebook.data) then
-        display.loadRemoteImage( facebook.data.picture.data.url, "GET", function(event)
-            local picture = event.target 
-            hud.board:insert(picture)
-            picture.x = display.contentWidth*0.2
-            picture.y = self.top + display.contentHeight*0.02
-        end, 
-        "profilePicture", system.TemporaryDirectory)
+        viewManager.drawRemoteImage(
+            facebook.data.picture.data.url, 
+            hud.board, 
+            display.contentWidth*0.2, 
+            self.top + display.contentHeight*0.02, 
+            0.5,
+            0.5,
+            1, 
+            1, 
+            function(image) end,
+            "profilePicture_"
+        )
     else
         hud.dummyPicture   = display.newImage( hud.board, "assets/images/hud/dummy.profile.png")
         hud.dummyPicture.x   = display.contentWidth*0.2
         hud.dummyPicture.y   = self.top + display.contentHeight*0.02
         hud.board:insert(hud.dummyPicture)
-
     end
 
     -- ---------------------------------------------------------------
