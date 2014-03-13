@@ -776,7 +776,6 @@ end
 
 function UserManager:checkTicketTiming()
 
-    print("checkTicketTiming")
     local lastTime = 0
     local now = os.time() * 1000
 
@@ -807,19 +806,21 @@ function UserManager:checkTicketTiming()
         popup.icon.x    = display.contentWidth*0.5
         popup.icon.y    = display.contentHeight*0.27
 
-        ----------------------------------------------------------------------------------------------------
+        popup.bg    = display.newImage( popup, "assets/images/hud/home/timer.bg.png")
+        popup.bg.x    = display.contentWidth*0.5
+        popup.bg.y    = display.contentHeight*0.5
 
-        local fontSize = 40
+        ----------------------------------------------------------------------------------------------------
 
         popup.multiLineText = display.newText({
             parent = popup,
             text   = T "You can fill out a new Ticket in :",  
-            width  = display.contentWidth*0.75,  
+            width  = display.contentWidth*0.85,  
             height  = display.contentHeight*0.25,  
             x    = display.contentWidth*0.5,
             y    = display.contentHeight*0.46,
             font   = FONT, 
-            fontSize = fontSize,
+            fontSize = 47,
             align  = "center",
         })
 
@@ -827,13 +828,13 @@ function UserManager:checkTicketTiming()
 
         popup.pictoTimer     = display.newImage( popup, "assets/images/icons/Tuto_2_picto2.png")  
         popup.pictoTimer.x   = display.contentWidth*0.37
-        popup.pictoTimer.y   = display.contentHeight*0.43
+        popup.pictoTimer.y   = display.contentHeight*0.455
 
         popup.timerDisplay = viewManager.newText({
             parent = popup, 
             text = '',     
             x = display.contentWidth*0.57,
-            y = display.contentHeight*0.42,
+            y = display.contentHeight*0.44,
             fontSize = 53,
             font = NUM_FONT
         })
@@ -842,13 +843,13 @@ function UserManager:checkTicketTiming()
 
         -------------------------------
 
-        local timerLegendY   = display.contentHeight*0.45
+        local timerLegendY   = display.contentHeight*0.475
         local timerLegendSize  = 22
 
         viewManager.newText({
             parent = popup, 
             text = T "MIN", 
-            x = display.contentWidth*0.498,
+            x = display.contentWidth*0.5,
             y = timerLegendY,
             fontSize = timerLegendSize,
         })
@@ -865,13 +866,13 @@ function UserManager:checkTicketTiming()
 
         popup.textor          = display.newImage( popup, I "timer.or.png")
         popup.textor.x        = display.contentWidth*0.5
-        popup.textor.y        = display.contentHeight*0.5
+        popup.textor.y        = display.contentHeight*0.56
 
         --------------------------
 
         popup.more     = display.newImage( popup, I "timer.play.png")
         popup.more.x     = display.contentWidth*0.5
-        popup.more.y     = display.contentHeight*0.61
+        popup.more.y     = display.contentHeight*0.7
 
         utils.onTouch(popup.more, function() 
             shareManager:shareForInstants(popup)
@@ -1011,8 +1012,8 @@ function UserManager:notifyPrizes(next)
         ---------------------------------------------------------------
 
         popup.close    = display.newImage( popup, "assets/images/hud/CroixClose.png")
-        popup.close.x    = display.contentWidth*0.87
-        popup.close.y    = display.contentHeight*0.28
+        popup.close.x    = display.contentWidth*0.89
+        popup.close.y    = display.contentHeight*0.55 - display.contentWidth*0.95/2
 
         utils.onTouch(popup.close, function()
             viewManager.closePopup(popup, true, next)
@@ -1146,8 +1147,8 @@ function UserManager:notifyInstants(next, playOnClose)
         --------------------------
 
         popup.close    = display.newImage( popup, "assets/images/hud/CroixClose.png")
-        popup.close.x    = display.contentWidth*0.87
-        popup.close.y    = display.contentHeight*0.28
+        popup.close.x    = display.contentWidth*0.89
+        popup.close.y    = display.contentHeight*0.55 - display.contentWidth*0.95/2
 
         utils.onTouch(popup.close, function()
             viewManager.closePopup(popup)

@@ -400,8 +400,8 @@ local translations =
    
     ---PROFILE CASHOUT-----------------------------------------------------------
 
-    ["You can cash out when your winnings \n have reached a minimum total \n balance of "] = {
-        ["fr"] = "Pour effectuer un retrait, il vous \n faut un solde minimum de gains de ",
+    ["You can cash out when your winnings have reached a minimum total balance of "] = {
+        ["fr"] = "Pour effectuer un retrait, il vous faut un solde minimum de gains de ",
     },
 
     ["You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment"] = {

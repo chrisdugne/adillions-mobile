@@ -65,6 +65,9 @@ end
 
 function scene:drawNextLottery( event )
     
+--    userManager.user.notifications.instants = 2
+--    userManager:notifyInstants()
+    
     local y                 = HEADER_HEIGHT * 3.7
     local top               = HEADER_HEIGHT * 2.5
     local timerLegendSize   = 17

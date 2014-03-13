@@ -32,11 +32,11 @@ function scene:refreshScene()
 
     hud.logo = display.newImage( hud, "assets/images/hud/SignUp_Earth.png")  
     hud.logo.x = display.contentWidth*0.5 
-    hud.logo.y = display.contentHeight*0.38
+    hud.logo.y = display.contentHeight*0.5
 
     hud.logo = display.newImage( hud, "assets/images/hud/SignUp_BigBall.png")  
     hud.logo.x = display.contentWidth*0.27 
-    hud.logo.y = display.contentHeight*0.38
+    hud.logo.y = display.contentHeight*0.81
 
     hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall.png")  
     hud.logo.x = display.contentWidth*0.17 
@@ -50,14 +50,12 @@ function scene:refreshScene()
     hud.logo.x = display.contentWidth*0.9 
     hud.logo.y = display.contentHeight*0.05
 
-    ---------------------------------------------------------------
-
-    hud.watch = viewManager.newText({
-        parent    = hud,
-        text     = T "Check your internet connection", 
-        fontSize   = 44,  
-        x      = display.contentWidth * 0.5,
-        y      = display.contentHeight* 0.75,
+    hud.loading = viewManager.newText({
+        parent      = hud,
+        text        = T "Check your internet connection", 
+        fontSize    = 44,  
+        x           = display.contentWidth*0.5 ,
+        y           = display.contentHeight*0.55,
     })
 
     ---------------------------------------------------------------

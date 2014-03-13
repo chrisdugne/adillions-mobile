@@ -611,7 +611,7 @@ function scene:openCashout()
 
     popup.multiLineText = display.newText({
         parent = popup,
-        text   = T "You can cash out when your winnings \n have reached a minimum total \n balance of " .. value,  
+        text   = T "You can cash out when your winnings have reached a minimum total balance of " .. value,  
         width  = display.contentWidth*0.72,  
         height  = display.contentHeight*0.25,  
         x    = display.contentWidth*0.5,
