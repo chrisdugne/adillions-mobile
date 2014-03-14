@@ -199,16 +199,7 @@ function scene:openPrizes()
         parent = popup, 
         text = T "Match", 
         x = display.contentWidth*0.45,
-        y = display.contentHeight * 0.24,
-        fontSize = 32,
-        font = NUM_FONT
-    })
-
-    viewManager.newText({
-        parent = popup, 
-        text = T "n° + LB", 
-        x = display.contentWidth*0.45,
-        y = display.contentHeight * 0.27,
+        y = display.contentHeight * 0.255,
         fontSize = 32,
         font = NUM_FONT
     })
@@ -231,7 +222,7 @@ function scene:openPrizes()
         font = NUM_FONT
     })
 
-    local matches   = lotteryManager.nextDrawing.rangs.matches
+    local matches   = lotteryManager.nextDrawing.rangs.matches[LANG]
     local percents  = lotteryManager.nextDrawing.rangs.percents
 
     for i = 1, #matches do
@@ -241,11 +232,11 @@ function scene:openPrizes()
         hud.iconRang.y   = top + yGap * (i-1)
 
         viewManager.newText({
-            parent    = popup, 
-            text     = matches[i],     
-            x      = display.contentWidth*0.45,
-            y      = top + yGap * (i-1) ,
-            fontSize   = 35,
+            parent      = popup, 
+            text        = matches[i],     
+            x           = display.contentWidth*0.45,
+            y           = top + yGap * (i-1) ,
+            fontSize    = 35,
         })
 
         viewManager.newText({
