@@ -1249,7 +1249,7 @@ function UserManager:showStatus()
         parent    = popup,
         text    = self.user.extraTickets, 
         fontSize  = 55,  
-        x     = display.contentWidth * 0.5,
+        x     = display.contentWidth * 0.45,
         y     = display.contentHeight*0.71,
     })
 
@@ -1257,7 +1257,7 @@ function UserManager:showStatus()
     popup.extraTickets.anchorY = 0.6
 
     popup.iconITicket   = display.newImage( popup, "assets/images/icons/status/instant.ticket.png")
-    popup.iconITicket.x  = display.contentWidth*0.63
+    popup.iconITicket.x  = display.contentWidth*0.57
     popup.iconITicket.y  = display.contentHeight*0.715
 
     --------------------------

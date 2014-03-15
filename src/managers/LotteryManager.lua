@@ -404,7 +404,7 @@ function LotteryManager:showLastTicket()
     local lineY     = display.contentHeight*0.57
 
     popup.pictoTicket = display.newImage( popup, "assets/images/hud/confirmation/confirmation.ticket.png")  
-    popup.pictoTicket.x = display.contentWidth*0.85
+    popup.pictoTicket.x = display.contentWidth*0.81
     popup.pictoTicket.y = lineY
     popup.pictoTicket.anchorY = 0.45
     popup.pictoTicket.anchorX = 1
@@ -417,7 +417,7 @@ function LotteryManager:showLastTicket()
     viewManager.newText({
         parent = popup, 
         text = remainingTickets .. " :", 
-        x = display.contentWidth*0.15,
+        x = display.contentWidth*0.19,
         y = lineY,
         fontSize = 44,
         anchorX    = 0,
@@ -427,7 +427,7 @@ function LotteryManager:showLastTicket()
     viewManager.newText({
         parent = popup, 
         text = nbTickets, 
-        x = popup.pictoTicket.x - popup.pictoTicket.contentWidth - display.contentWidth*0.03,
+        x = popup.pictoTicket.x - popup.pictoTicket.contentWidth - display.contentWidth*0.01,
         y = lineY,
         fontSize = 54,
         font = NUM_FONT,

@@ -22,14 +22,14 @@ end
 
 function scene:refreshScene()
 
-    hud.subheaderImage   = display.newImageRect(hud, "assets/images/hud/home/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.075)
-    hud.subheaderImage.x  = display.contentWidth*0.5
-    hud.subheaderImage.y  = HEADER_HEIGHT - 3
-    hud.subheaderImage.anchorY  = 0
+--    hud.subheaderImage   = display.newImageRect(hud, "assets/images/hud/home/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.075)
+--    hud.subheaderImage.x  = display.contentWidth*0.5
+--    hud.subheaderImage.y  = HEADER_HEIGHT - 3
+--    hud.subheaderImage.anchorY  = 0
 
     hud.subheaderText   = display.newImage(hud, I "home.subheader.title.png")
     hud.subheaderText.x  = display.contentWidth*0.5
-    hud.subheaderText.y  = hud.subheaderImage.y + hud.subheaderImage.contentHeight * 0.5
+    hud.subheaderText.y  = display.contentHeight * 0.15
 
     hud.subheaderBG   = display.newImage(hud, "assets/images/hud/home/BG_adillions.png")
     hud.subheaderBG.x  = display.contentWidth*0.5
@@ -67,6 +67,10 @@ function scene:drawNextLottery( event )
     
 --    userManager.user.notifications.instants = 2
 --    userManager:notifyInstants()
+
+    if(router.view ~= router.HOME) then
+        return
+    end
     
     local y                 = HEADER_HEIGHT * 3.7
     local top               = HEADER_HEIGHT * 2.5
@@ -83,23 +87,26 @@ function scene:drawNextLottery( event )
     hud.timerDisplay = viewManager.newText({
         parent = hud, 
         text = '',     
-        x = display.contentWidth*0.5,
+        x = display.contentWidth*0.8,
         y = timerY - 5 ,
         fontSize = 53,
         font = NUM_FONT
     })
+    
+    hud.timerDisplay.anchorX = 1
 
     viewManager.refreshHomeTimer()
 
     -------------------------------
 
+    local paddingTextX = display.contentWidth*0.068
     local daysX = display.contentWidth*0.305
     if(LANG == "en") then daysX = display.contentWidth*0.3 end
 
     viewManager.newText({
         parent = hud, 
         text = T "DAYS", 
-        x = daysX,
+        x = daysX + paddingTextX,
         y = timerLegendY,
         fontSize = timerLegendSize,
     })
@@ -107,7 +114,7 @@ function scene:drawNextLottery( event )
     viewManager.newText({
         parent = hud, 
         text = T "HRS", 
-        x = display.contentWidth*0.437,
+        x = display.contentWidth*0.437 + paddingTextX,
         y = timerLegendY,
         fontSize = timerLegendSize,
     })
@@ -115,7 +122,7 @@ function scene:drawNextLottery( event )
     viewManager.newText({
         parent = hud, 
         text = T "MIN", 
-        x = display.contentWidth*0.567,
+        x = display.contentWidth*0.567 + paddingTextX,
         y = timerLegendY,
         fontSize = timerLegendSize,
     })
@@ -123,7 +130,7 @@ function scene:drawNextLottery( event )
     viewManager.newText({
         parent = hud, 
         text = T "SEC", 
-        x = display.contentWidth*0.698,
+        x = display.contentWidth*0.698 + paddingTextX,
         y = timerLegendY,
         fontSize = timerLegendSize,
     })
@@ -134,7 +141,7 @@ function scene:drawNextLottery( event )
     if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.toolPlayers) then
         priceX = display.contentWidth*0.4
     else
-        priceX = display.contentWidth*0.53
+        priceX = display.contentWidth*0.62
     end
 
     -------------------------------
@@ -144,7 +151,7 @@ function scene:drawNextLottery( event )
         text = '',     
         x = priceX ,
         y = top + display.contentHeight*0.11,
-        fontSize = 73,
+        fontSize = 83,
         font = NUM_FONT,
         anchorX    = 1,
         anchorY    = 0.5,
@@ -156,8 +163,9 @@ function scene:drawNextLottery( event )
     -------------------------------
 
     hud.pictoCagnotte = display.newImage( hud, "assets/images/icons/cagnotte.png")  
-    hud.pictoCagnotte.x = priceX + display.contentWidth*0.16
+    hud.pictoCagnotte.x = priceX + display.contentWidth*0.1
     hud.pictoCagnotte.y = top + display.contentHeight*0.11
+    hud.pictoCagnotte:scale(1.4,1.4)
 
     -------------------------------
 

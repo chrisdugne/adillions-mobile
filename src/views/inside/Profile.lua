@@ -34,8 +34,8 @@ function scene:drawScene()
 
     local statusTop        = 4
     local stockTop         = 9
-    local winningsTop      = 19
-    local detailsTop       = 29
+    local winningsTop      = 18.5
+    local detailsTop       = 28.5
     local logoutTop        = 38
 
     ------------------
@@ -105,7 +105,7 @@ function scene:drawScene()
     hud.titleDetails.anchorX    = 0
     hud.titleDetails.anchorY    = 0.5
     hud.titleDetails.x      = self.column1 - display.contentWidth*0.03
-    hud.titleDetails.y      = self.top + self.yGap*(detailsTop+0.7)
+    hud.titleDetails.y      = self.top + self.yGap*(detailsTop+1)
     hud.board:insert(hud.titleDetails)
 
     ------------------
@@ -176,7 +176,7 @@ function scene:drawScene()
     hud.board:insert(hud.ticketIcon)
     
     hud.arrow               = display.newImage( hud.board, "assets/images/hud/profile/profile.status.arrow.png")
-    hud.arrow.x             = display.contentWidth*0.5
+    hud.arrow.x             = display.contentWidth*0.45
     hud.arrow.y             = textTotal.y
     hud.board:insert(hud.arrow)
 
@@ -194,7 +194,8 @@ function scene:drawScene()
     })
     
     hud.iconCharity         = display.newImage( hud.board, I "profile.charity.".. charityLevel ..".png")
-    hud.iconCharity.anchorX = 0.8
+    hud.iconCharity.anchorX = 0.91
+    hud.iconCharity.x       = self.column2
     hud.iconCharity.x       = self.column2
     hud.iconCharity.y       = self.top + self.yGap*(statusTop+2.6),
     hud.board:insert(hud.iconCharity)
@@ -223,7 +224,7 @@ function scene:drawScene()
         parent      = hud.board, 
         text        = T "Initial stock" .. " : ",         
         x           = self.column1,
-        y           = self.top + self.yGap*(stockTop+1.5),
+        y           = self.top + self.yGap*(stockTop+1),
         fontSize    = self.fontSizeLeft,
         anchorX     = 0,
         anchorY     = 0.5,
@@ -233,7 +234,7 @@ function scene:drawScene()
         parent      = hud.board, 
         text        = START_AVAILABLE_TICKETS,          
         x           = self.column2 - display.contentWidth * 0.07,
-        y           = self.top + self.yGap*(stockTop+1.5),
+        y           = self.top + self.yGap*(stockTop+1),
         fontSize    = self.fontSizeLeft,
         anchorX     = 1,
         anchorY     = 0.5,
@@ -241,7 +242,7 @@ function scene:drawScene()
 
     hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.ticket.png")
     hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
-    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+1.5)
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+1)
     hud.ticketIcon.anchorX  = 0
     hud.ticketIcon.anchorY  = 0.4
     hud.board:insert(hud.ticketIcon)
@@ -252,7 +253,7 @@ function scene:drawScene()
         parent      = hud.board, 
         text        = "+ " .. T "Social networks",         
         x           = self.column1,
-        y           = self.top + self.yGap*(stockTop+3),
+        y           = self.top + self.yGap*(stockTop+2.5),
         fontSize    = self.fontSizeLeft,
         anchorX     = 0,
         anchorY     = 0.5,
@@ -260,14 +261,14 @@ function scene:drawScene()
     
     hud.fanIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.networks.png")
     hud.fanIcon.x        = text.x + text.contentWidth + display.contentWidth * 0.1
-    hud.fanIcon.y        = self.top + self.yGap*(stockTop+3)
+    hud.fanIcon.y        = self.top + self.yGap*(stockTop+2.5)
     hud.board:insert(hud.fanIcon)
     
     local value = viewManager.newText({
         parent      = hud.board, 
         text        = userManager.user.fanBonusTickets,        
         x           = self.column2 - display.contentWidth * 0.07,
-        y           = self.top + self.yGap*(stockTop+3),
+        y           = self.top + self.yGap*(stockTop+2.5),
         fontSize    = self.fontSizeLeft,
         anchorX     = 1,
         anchorY     = 0.5,
@@ -275,7 +276,7 @@ function scene:drawScene()
 
     hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.ticket.png")
     hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
-    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+3)
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+2.5)
     hud.ticketIcon.anchorX  = 0
     hud.ticketIcon.anchorY  = 0.4
     hud.board:insert(hud.ticketIcon)
@@ -286,7 +287,7 @@ function scene:drawScene()
         parent      = hud.board, 
         text        = "+ " .. T "Charity profile",
         x           = self.column1,
-        y           = self.top + self.yGap*(stockTop+4.5),
+        y           = self.top + self.yGap*(stockTop+4),
         fontSize    = self.fontSizeLeft,
         anchorX     = 0,
         anchorY     = 0.5,
@@ -294,14 +295,14 @@ function scene:drawScene()
     
     hud.charityIcon             = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.charity.png")
     hud.charityIcon.x           = text.x + text.contentWidth + display.contentWidth * 0.1
-    hud.charityIcon.y           = self.top + self.yGap*(stockTop+4.5)
+    hud.charityIcon.y           = self.top + self.yGap*(stockTop+4)
     hud.board:insert(hud.charityIcon)
     
     local value = viewManager.newText({
         parent      = hud.board, 
         text        = userManager.user.charityBonusTickets,       
         x           = self.column2 - display.contentWidth * 0.07,
-        y           = self.top + self.yGap*(stockTop+4.5),
+        y           = self.top + self.yGap*(stockTop+4),
         fontSize    = self.fontSizeLeft,
         anchorX     = 1,
         anchorY     = 0.5
@@ -309,7 +310,7 @@ function scene:drawScene()
     
     hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.ticket.png")
     hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
-    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+4.5)
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+4)
     hud.ticketIcon.anchorX  = 0
     hud.ticketIcon.anchorY  = 0.4
     hud.board:insert(hud.ticketIcon)
@@ -320,7 +321,7 @@ function scene:drawScene()
         parent      = hud.board, 
         text        = "+ " .. T "Winnings Tickets",   
         x           = self.column1,
-        y           = self.top + self.yGap*(stockTop+6),
+        y           = self.top + self.yGap*(stockTop+5.5),
         fontSize    = self.fontSizeLeft,
         anchorX     = 0,
         anchorY     = 0.5
@@ -328,14 +329,14 @@ function scene:drawScene()
     
     hud.winningsIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.winnings.png")
     hud.winningsIcon.x        = text.x + text.contentWidth + display.contentWidth * 0.1
-    hud.winningsIcon.y        = self.top + self.yGap*(stockTop+6)
+    hud.winningsIcon.y        = self.top + self.yGap*(stockTop+5.5)
     hud.board:insert(hud.winningsIcon)
     
     local text = viewManager.newText({
         parent      = hud.board, 
         text        = userManager.user.temporaryBonusTickets,     
         x           = self.column2 - display.contentWidth * 0.07,
-        y           = self.top + self.yGap*(stockTop+6),
+        y           = self.top + self.yGap*(stockTop+5.5),
         fontSize    = self.fontSizeLeft,
         anchorX     = 1,
         anchorY     = 0.5,
@@ -343,7 +344,7 @@ function scene:drawScene()
     
     hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.bonus.ticket.png")
     hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
-    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+6)
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+5.5)
     hud.ticketIcon.anchorX  = 0
     hud.ticketIcon.anchorY  = 0.4
     hud.board:insert(hud.ticketIcon)
@@ -354,7 +355,7 @@ function scene:drawScene()
         parent      = hud.board, 
         text        = "= " .. T "Available Tickets" .. " : ",      
         x           = self.column1,
-        y           = self.top + self.yGap*(stockTop+7.5),
+        y           = self.top + self.yGap*(stockTop+7),
         fontSize    = self.fontSizeLeft,
         anchorX     = 0,
         anchorY     = 0.5,
@@ -364,7 +365,7 @@ function scene:drawScene()
         parent      = hud.board, 
         text        = (START_AVAILABLE_TICKETS + userManager.user.temporaryBonusTickets + userManager.user.fanBonusTickets + userManager.user.charityBonusTickets),
         x           = self.column2 - display.contentWidth * 0.07,
-        y           = self.top + self.yGap*(stockTop+7.5),
+        y           = self.top + self.yGap*(stockTop+7),
         fontSize    = self.fontSizeLeft,
         anchorX     = 1,
         anchorY     = 0.5,
@@ -372,7 +373,7 @@ function scene:drawScene()
     
     hud.ticketIcon          = display.newImage( hud.board, "assets/images/hud/profile/profile.ticket.png")
     hud.ticketIcon.x        = self.column2 - display.contentWidth * 0.04
-    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+7.5)
+    hud.ticketIcon.y        = self.top + self.yGap*(stockTop+7)
     hud.ticketIcon.anchorX  = 0
     hud.ticketIcon.anchorY  = 0.4
     hud.board:insert(hud.ticketIcon)

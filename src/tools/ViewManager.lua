@@ -59,7 +59,8 @@ function initHeader()
     hud.logo.x = display.contentWidth*0.5
     hud.logo.y = HEADER_HEIGHT*0.5
 
-    hud.headerButton = display.newImage( hud, "assets/images/icons/header.button.png")  
+--    hud.headerButton = display.newImage( hud, "assets/images/icons/header.button.png")  
+    hud.headerButton = display.newImage( hud, "assets/images/icons/header.button.white.png")  
     hud.headerButton.x = display.contentWidth*0.9
     hud.headerButton.y = HEADER_HEIGHT*0.5
     hud.headerButton.anchorX = 0.5
