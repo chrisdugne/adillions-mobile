@@ -54,7 +54,7 @@ function scene:drawBoard()
     local marginLeft = display.contentWidth * 0.04
     local marginTop =  HEADER_HEIGHT *1.8
     local xGap =  display.contentWidth *0.12
-    local yGap =  display.contentHeight *0.45
+    local yGap =  display.contentHeight *0.65/aspectRatio
 
     ------------------
 

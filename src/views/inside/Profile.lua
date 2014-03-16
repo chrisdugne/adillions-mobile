@@ -173,7 +173,7 @@ function scene:drawScene()
     })
     
     local valueTW = "-"
-    if(userManager.user.facebookId) then
+    if(userManager.user.twitterId) then
         valueTW = userManager.user.twitterName
     end    
     
