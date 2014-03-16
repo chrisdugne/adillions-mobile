@@ -367,8 +367,8 @@ end
 
 function scene:openOptions()
 
-    local top   = display.contentHeight * 0.15
-    local yGap  = display.contentHeight*0.15
+    local top   = display.contentHeight * 0.1
+    local yGap  = display.contentHeight*0.2
 
     local popup = viewManager.showPopup()
 
@@ -376,7 +376,7 @@ function scene:openOptions()
 
     local optionsTop   = 1
 
-    local fontSizeLeft  = 27
+    local fontSizeLeft  = 38
     local fontSizeRight  = 29
 
     --------------------------
@@ -422,8 +422,9 @@ function scene:openOptions()
         x      = display.contentWidth*0.11,
         y      = top + yGap*(optionsTop),
         fontSize   = fontSizeLeft,
+        width       = display.contentWidth * 0.5,
         anchorX    = 0,
-        anchorY    = 0.5,
+        anchorY    = 0.4,
     })
 
     local beforeDrawSwitch = widget.newSwitch

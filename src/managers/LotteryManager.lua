@@ -400,7 +400,7 @@ function LotteryManager:showLastTicket()
     
     ----------------------------------------
 
-    local nbTickets = userManager:remainingTickets()
+    local nbTickets = userManager:remainingTickets() - 1 -- updating availableTickets DURING popup display
     local lineY     = display.contentHeight*0.57
 
     popup.pictoTicket = display.newImage( popup, "assets/images/hud/confirmation/confirmation.ticket.png")  

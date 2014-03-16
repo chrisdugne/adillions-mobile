@@ -120,30 +120,33 @@ function message(message)
 
     hud.messager = display.newGroup()
     hud.messager.y = -200
+    hud.messager.alpha = 0.4
 
     hud.messager.popupRect   = drawBorder( hud.messager, 
-    0, HEADER_HEIGHT, 
-    display.contentWidth+100, HEADER_HEIGHT*0.6,
-    240/255,240/255,240/255
+        0, HEADER_HEIGHT, 
+        display.contentWidth+100, HEADER_HEIGHT,
+        27/255,92/255,100/255
     )  
+    
     hud.messager.popupRect.x = display.contentWidth*0.5
-    hud.messager.popupRect.alpha = 0.95
+    hud.messager.popupRect.alpha = 0.75
 
     hud.messager.text = viewManager.newText({
-        parent    = hud.messager, 
-        text     = message,     
-        x      = display.contentWidth*0.5,
-        y      = HEADER_HEIGHT - 12,
-        fontSize   = 35
+        parent      = hud.messager, 
+        text        = message,     
+        x           = display.contentWidth*0.5,
+        y           = HEADER_HEIGHT,
+        fonr        = NUM_FONT,
+        fontSize    = 43
     })
 
-    hud.messager.text:setFillColor(5/255)
+    hud.messager.text:setFillColor(225/255)
 
-    transition.to(hud.messager, { time=500, y=-HEADER_HEIGHT/2 - 5, onComplete=function()
-            timer.performWithDelay(2000, function()
-                transition.to(hud.messager, { time=500, y=-200} )
-            end)
-        end })
+    transition.to(hud.messager, { time=1000, y=HEADER_HEIGHT/2, alpha = 1, transition=easing.outSine, onComplete=function()
+        timer.performWithDelay(2000, function()
+            transition.to(hud.messager, { time=1000, y=-200, transition=easing.inSine, alpha = 0} )
+        end)
+    end })
 end
 
 -----------------------------------------------------------------------------------------

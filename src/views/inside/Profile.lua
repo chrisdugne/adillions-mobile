@@ -105,16 +105,88 @@ function scene:drawScene()
     hud.titleDetails.anchorX    = 0
     hud.titleDetails.anchorY    = 0.5
     hud.titleDetails.x      = self.column1 - display.contentWidth*0.03
-    hud.titleDetails.y      = self.top + self.yGap*(detailsTop+1)
+    hud.titleDetails.y      = self.top + self.yGap*(detailsTop)
     hud.board:insert(hud.titleDetails)
 
     ------------------
 
-    self:drawTextEntry(T "First name"  .. " : ", userManager.user.firstName, detailsTop+2)
-    self:drawTextEntry(T "Last name"  .. " : ", userManager.user.lastName, detailsTop+3)
-    self:drawTextEntry(T "Email"    .. " : ", userManager.user.email, detailsTop+4)
-    self:drawTextEntry(T "Date of birth"   .. " : ", utils.readableDate(userManager.user.birthDate, false, true), detailsTop+5)
-    self:drawTextEntry(T "Sponsorship code"  .. " : ", userManager.user.sponsorCode, detailsTop+6)
+    self:drawTextEntry(T "First name"  .. " : ", userManager.user.firstName, detailsTop+1)
+    self:drawTextEntry(T "Last name"  .. " : ", userManager.user.lastName, detailsTop+2)
+    self:drawTextEntry(T "Email"    .. " : ", userManager.user.email, detailsTop+3)
+    self:drawTextEntry(T "Date of birth"   .. " : ", utils.readableDate(userManager.user.birthDate, false, true), detailsTop+4)
+    self:drawTextEntry(T "Sponsorship code"  .. " : ", userManager.user.sponsorCode, detailsTop+5)
+
+    ------------------
+    
+    hud.fb                = display.newImage( hud.board, "assets/images/hud/profile/facebook.details.png")
+    hud.fb.anchorX        = 0
+    hud.fb.anchorY        = 0.4
+    hud.fb.x              = self.column1
+    hud.fb.y              = self.top + self.yGap*(detailsTop+6)
+    hud.board:insert(hud.fb)
+    
+    local textFB = viewManager.newText({
+        parent      = hud.board, 
+        text        = "Facebook :",     
+        x           = hud.fb.x + hud.fb.contentWidth + display.contentWidth * 0.02,
+        y           = self.top + self.yGap*(detailsTop+6),
+        fontSize    = self.fontSizeLeft,
+        font        = FONT,
+        anchorX     = 0,
+        anchorY     = 0.5
+    })
+
+    local valueFB = "-"
+    if(userManager.user.facebookId) then
+        valueFB = userManager.user.userName
+    end    
+
+    viewManager.newText({
+        parent      = hud.board, 
+        text        = valueFB,     
+        x           = self.column2,
+        y           = self.top + self.yGap*(detailsTop+6),
+        fontSize    = self.fontSizeRight,
+        font        = FONT,
+        anchorX     = 1,
+        anchorY     = 0.5
+    })
+    
+    ------------------
+    
+    hud.tw                = display.newImage( hud.board, "assets/images/hud/profile/twitter.details.png")
+    hud.tw.anchorX        = 0
+    hud.tw.anchorY        = 0.4
+    hud.tw.x              = self.column1
+    hud.tw.y              = self.top + self.yGap*(detailsTop+7)
+    hud.board:insert(hud.tw)
+    
+    local textTW = viewManager.newText({
+        parent      = hud.board, 
+        text        = "Twitter :",     
+        x           = hud.tw.x + hud.tw.contentWidth + display.contentWidth * 0.02,
+        y           = self.top + self.yGap*(detailsTop+7),
+        fontSize    = self.fontSizeLeft,
+        font        = FONT,
+        anchorX     = 0,
+        anchorY     = 0.5
+    })
+    
+    local valueTW = "-"
+    if(userManager.user.facebookId) then
+        valueTW = userManager.user.twitterName
+    end    
+    
+    viewManager.newText({
+        parent      = hud.board, 
+        text        = valueTW,     
+        x           = self.column2,
+        y           = self.top + self.yGap*(detailsTop+7),
+        fontSize    = self.fontSizeRight,
+        font        = FONT,
+        anchorX     = 1,
+        anchorY     = 0.5
+    })
 
     ---------------------------------------------------------------
     -- Status
