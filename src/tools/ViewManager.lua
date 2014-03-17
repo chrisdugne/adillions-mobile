@@ -155,7 +155,7 @@ function message(message)
 
     hud.messager.text:setFillColor(225/255)
 
-    transition.to(hud.messager, { time=1000, y=HEADER_HEIGHT/2, alpha = 1, transition=easing.outSine, onComplete=function()
+    transition.to(hud.messager, { time=1000, y=-HEADER_HEIGHT/2, alpha = 1, transition=easing.outSine, onComplete=function()
         timer.performWithDelay(2000, function()
             transition.to(hud.messager, { time=1000, y=-200, transition=easing.inSine, alpha = 0} )
         end)

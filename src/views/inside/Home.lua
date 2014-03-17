@@ -62,6 +62,10 @@ end
 
 function scene:drawNextLottery( event )
     
+--    userManager.user.notifications.prizes = 22.3
+--    userManager.user.notifications.prizesUSD = 32.3
+--    userManager:notifyPrizes()
+
 --    userManager.user.notifications.instants = 2
 --    userManager:notifyInstants()
 

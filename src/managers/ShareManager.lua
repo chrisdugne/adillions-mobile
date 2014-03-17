@@ -347,6 +347,8 @@ function ShareManager:shareForInstants(popup)
 
         if(userManager.user.themeLiked) then
             print("themeLiked")
+            
+            local fbPost = translate(lotteryManager.global.fbPost) 
 
             if(userManager.user.hasPostOnFacebook) then
 
@@ -354,7 +356,7 @@ function ShareManager:shareForInstants(popup)
                 -- theme liked + hasPost | button v5
                 imageFacebook   = I "share.facebook.5.png"
                 actionFacebook  = function()
-                    self:shareOnWall(close, closeAndPlay)
+                    self:shareOnWall(fbPost, close, closeAndPlay)
                     analytics.event("Social", "facebookShareWithoutReward")
                 end
 
@@ -366,7 +368,7 @@ function ShareManager:shareForInstants(popup)
                     -- pas encore post et connecte | button v4 : postOnWall
                     imageFacebook = I "share.facebook.4.png"
                     actionFacebook = function()
-                        self:shareOnWall(close, closeAndPlay)
+                        self:shareOnWall(fbPost, close, closeAndPlay)
                         analytics.event("Social", "facebookShare") 
                     end
 
@@ -375,7 +377,7 @@ function ShareManager:shareForInstants(popup)
                     imageFacebook = I "share.facebook.4.png"
                     actionFacebook = function() 
                         facebook.connect(function()
-                            self:shareOnWall(close, closeAndPlay) 
+                            self:shareOnWall(fbPost, close, closeAndPlay) 
                             analytics.event("Social", "facebookShare") 
                         end, close) 
                     end
@@ -537,12 +539,6 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function ShareManager:sharePrize()
-    -- TODO popin share prize FB Twitter
-end
-
------------------------------------------------------------------------------------------
-
 function ShareManager:noMoreTickets()
 
     ----------------------------------------------------------------------------------------------------
@@ -656,9 +652,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function ShareManager:shareOnWall(close, closeAndPlay)
-
-    local text = translate(lotteryManager.global.fbPost) 
+function ShareManager:shareOnWall(text, close, closeAndPlay)
 
     facebook.postOnWall(text, function()
 
@@ -674,6 +668,88 @@ function ShareManager:shareOnWall(close, closeAndPlay)
         end
 
     end)
+end
+
+-----------------------------------------------------------------------------------------
+
+---
+--  "share" : {
+--    "twitter": {
+--        "en": "wqer",
+--        "fr": "er",
+--        "reward": {
+--            "type": "BT/IT",
+--            "num": 1
+--        }
+--    },
+--    "facebook": {
+--        "en": "wqer",
+--        "fr": "er",
+--        "reward": {
+--            "type": "BT/IT",
+--            "num": 1
+--        }
+--    }
+--}
+--
+
+function ShareManager:simpleShare(share)
+    
+    local text = translate(share.facebook)
+    
+    facebook.postOnWall(text, function()
+        viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
+    end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function ShareManager:shareWinningsOnWall(prize, popup)
+    
+    local text = translate(lotteryManager.global.fbSharePrize):gsub("___", prize)
+
+    -------
+    
+    local share = function()
+        facebook.postOnWall(text, function()
+            viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
+            next()
+        end)
+    end
+
+    -------
+
+    local close = function()
+        viewManager.closePopup(popup)
+    end
+
+    -------
+    
+    if(userManager.user.facebookId) then
+
+        -- linked
+        if(GLOBALS.savedData.facebookAccessToken) then
+            share()
+            analytics.event("Social", "shareWinnings") 
+        else
+            facebook.connect(function()
+                share()
+                analytics.event("Social", "shareWinnings") 
+            end, close) 
+        end
+
+    -------
+
+    else
+    
+        facebook.connect(function()
+            userManager.user.idlePoints = userManager.user.idlePoints + FACEBOOK_CONNECTION_TICKETS
+            share()
+            analytics.event("Social", "linkedFacebookFromShareWinnings") 
+        end, close) 
+
+    end
+    
 end
 
 -----------------------------------------------------------------------------------------

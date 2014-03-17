@@ -32,6 +32,11 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
         lotteryManager.global.tweet         = json.decode(lotteryManager.global.tweet)
         lotteryManager.global.tweetTheme    = json.decode(lotteryManager.global.tweetTheme)
         lotteryManager.global.fbPost        = json.decode(lotteryManager.global.fbPost)
+        lotteryManager.global.fbSharePrize  = json.decode(lotteryManager.global.fbSharePrize)
+        lotteryManager.global.sms           = json.decode(lotteryManager.global.sms)
+        lotteryManager.global.email         = json.decode(lotteryManager.global.email)
+        lotteryManager.global.text48h       = json.decode(lotteryManager.global.text48h)
+        lotteryManager.global.text3min      = json.decode(lotteryManager.global.text3min)
         SERVER_TIME                         = response.serverTime - system.getTimer()
         TIMER                               = lotteryManager.global.lastUpdate or SERVER_TIME
         VERSION_REQUIRED                    = response.global.versionRequired
@@ -962,6 +967,8 @@ function UserManager:notifyPrizes(next)
         else
             totalPrice = self.user.notifications.prizesUSD
         end
+        
+        totalPrice = utils.displayPrice(totalPrice, COUNTRY)
 
         ----------------------------------------
 
@@ -989,7 +996,7 @@ function UserManager:notifyPrizes(next)
 
         popup.prizeText = viewManager.newText({
             parent    = popup,
-            text    = utils.displayPrice(totalPrice, COUNTRY), 
+            text    = totalPrice, 
             fontSize  = 55,
             anchorX   = 1,
             anchorY   = 0.5,
@@ -1003,11 +1010,14 @@ function UserManager:notifyPrizes(next)
 
         --------------------------
 
-        popup.share    = display.newImage( popup, I "share.notification.png")
-        popup.share.x    = display.contentWidth*0.5
-        popup.share.y    = display.contentHeight*0.7
+        if(userManager.user.facebookId) then
+            popup.share    = display.newImage( popup, I "share.notification.png")
+            popup.share.x    = display.contentWidth*0.5
+            popup.share.y    = display.contentHeight*0.68
 
-        utils.onTouch(popup.share, function() shareManager:sharePrize() end)
+            utils.onTouch(popup.share, function() shareManager:shareWinningsOnWall(totalPrice, popup) end)
+        
+        end
 
         ---------------------------------------------------------------
 

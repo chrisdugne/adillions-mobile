@@ -30,6 +30,10 @@ function VideoManager:play(afterVideoSeen, resetCounter)
         end
         afterVideoSeen()
     elseif(self.nbVideoToSee == 0) then
+
+        if(afterVideoSeen == router.openFillLotteryTicket) then
+            viewManager.message(T "Instant Ticket" .. "!")
+        end
         afterVideoSeen()
 
     else
