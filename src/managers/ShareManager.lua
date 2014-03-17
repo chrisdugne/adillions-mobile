@@ -547,13 +547,18 @@ function ShareManager:noMoreTickets()
 
     ----------------------------------------------------------------------------------------------------
 
-    popup.icon    = display.newImage( popup, "assets/images/icons/PictomaxTicket.png")
-    popup.icon.x   = display.contentWidth*0.5
-    popup.icon.y   = display.contentHeight*0.2
+    popup.icon    = display.newImage( popup, "assets/images/hud/home/maxticket.png")
+    popup.icon.x    = display.contentWidth*0.5
+    popup.icon.y    = display.contentHeight*0.18
 
     popup.icon    = display.newImage( popup, I "Sorry.png")
-    popup.icon.x   = display.contentWidth*0.5
-    popup.icon.y   = display.contentHeight*0.3
+    popup.icon.x    = display.contentWidth*0.5
+    popup.icon.y    = display.contentHeight*0.29
+
+    popup.bg    = display.newImage( popup, "assets/images/hud/home/maxticket.bg.png")
+    popup.bg.x    = display.contentWidth*0.5
+    popup.bg.y    = display.contentHeight*0.5
+    
 
     ----------------------------------------------------------------------------------------------------
 
@@ -568,9 +573,9 @@ function ShareManager:noMoreTickets()
 
     viewManager.newText({
         parent    = popup, 
-        text    = T "Increase your stock of Tickets",     
+        text    = T "You can increase your stock of Tickets",     
         x     = display.contentWidth * 0.5,
-        y     = display.contentHeight*0.5,
+        y     = display.contentHeight*0.56,
         fontSize  = 37,
     })
 

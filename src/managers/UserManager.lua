@@ -591,7 +591,6 @@ end
 function UserManager:storeLotteryTicket(numbers)
 
     local extraTicket = self.user.extraTickets > 0
-    lotteryManager:showLastTicket() 
 
     utils.postWithJSON({
         numbers = numbers,
@@ -609,6 +608,19 @@ function UserManager:storeLotteryTicket(numbers)
         end
     end
     )
+
+    --- just to be sync waiting the post result
+    -- updating availableTickets DURING popup display
+    if(extraTicket) then
+        self.user.extraTickets = self.user.extraTickets - 1
+    end
+    
+    self.user.availableTickets = self.user.availableTickets - 1
+    
+    --- end sync
+    -------------
+        
+    lotteryManager:showLastTicket() 
 end
 
 -----------------------------------------------------------------------------------------
@@ -803,13 +815,13 @@ function UserManager:checkTicketTiming()
 
         ----------------------------------------------------------------------------------------------------
 
-        popup.icon    = display.newImage( popup, "assets/images/icons/PictoSablier.png")
+        popup.icon    = display.newImage( popup, "assets/images/icons/timer.png")
         popup.icon.x    = display.contentWidth*0.5
-        popup.icon.y    = display.contentHeight*0.2
+        popup.icon.y    = display.contentHeight*0.18
 
         popup.icon    = display.newImage( popup, I "Sorry.png")
         popup.icon.x    = display.contentWidth*0.5
-        popup.icon.y    = display.contentHeight*0.27
+        popup.icon.y    = display.contentHeight*0.29
 
         popup.bg    = display.newImage( popup, "assets/images/hud/home/timer.bg.png")
         popup.bg.x    = display.contentWidth*0.5

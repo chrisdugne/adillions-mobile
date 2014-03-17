@@ -125,7 +125,7 @@ function scene:refreshScene()
 
     utils.onTouch(hud.privacy, function()
         analytics.event("Links", "privacy") 
-        viewManager.openWeb(SERVER_URL .. "#/about/privacy", function(event)
+        viewManager.openWeb(SERVER_URL .. "mprivacy", function(event)
             print(event.url)
         end) 
     end)
@@ -329,7 +329,7 @@ function scene:openTerms()
     popup.keyrules.y   = display.contentHeight*0.65
 
     utils.onTouch(popup.keyrules, function() 
-        viewManager.openWeb(SERVER_URL .. "#/about/keyrules", function(event)
+        viewManager.openWeb(SERVER_URL .. "mkeyrules", function(event)
             print(event.url)
         end) 
     end)

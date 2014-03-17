@@ -235,7 +235,7 @@ local translations =
         ["fr"] = "Vous avez atteint le nombre maximum de Tickets pour ce tirage",
     },
 
-    ["Increase your stock of Tickets"] = {
+    ["You can increase your stock of Tickets"] = {
         ["fr"] = "Augmentez votre stock de Tickets",
     },
 
