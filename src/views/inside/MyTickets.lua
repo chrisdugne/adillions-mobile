@@ -202,7 +202,7 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
             viewManager.drawBorder(
             hud.board, 
             display.contentWidth*0.5,             -- x 
-            top + (yGap)*(self.nbPreviousTickets+self.nbLotteries-2) + borderHeight/2 - 55,  -- y
+            top + (yGap)*(self.nbPreviousTickets+self.nbLotteries-2) + borderHeight/2 - 45,  -- y
             display.contentWidth*0.95,             -- width
             borderHeight                 -- height
             )

@@ -604,16 +604,18 @@ end
 function ShareManager:sms()
     analytics.event("Social", "askSMS") 
 
-    local body = T "Join me on Adillions and get a chance to win the jackpot !" 
-    body = body .. "\n\n" 
-    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
-    body = body .. "\n\n" 
-    body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
-    body = body .. userManager.user.sponsorCode
-    body = body .. "\n\n" 
-    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
-    body = body .. "\n\n" 
-    body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
+    local body = translate(lotteryManager.global.sms) 
+    
+--    local body = T "Join me on Adillions and get a chance to win the jackpot !" 
+--    body = body .. "\n\n" 
+--    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
+--    body = body .. "\n\n" 
+--    body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
+--    body = body .. userManager.user.sponsorCode
+--    body = body .. "\n\n" 
+--    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
+--    body = body .. "\n\n" 
+--    body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
 
     local options = {
         body = body
@@ -627,18 +629,20 @@ end
 function ShareManager:email()
     analytics.event("Social", "askEmail")
 
-    local body = "<html><body>" 
-    body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
-    body = body .. "<br/><br/>" 
-    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
-    body = body .. "<br/><br/>" 
-    body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
-    body = body .. userManager.user.sponsorCode
-    body = body .. "<br/><br/>" 
-    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
-    body = body .. "<br/><br/>" 
-    body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
-    body = body .. "</body></html>" 
+    local body = translate(lotteryManager.global.email) 
+    
+--    local body = "<html><body>" 
+--    body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
+--    body = body .. "<br/><br/>" 
+--    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
+--    body = body .. "<br/><br/>" 
+--    body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
+--    body = body .. userManager.user.sponsorCode
+--    body = body .. "<br/><br/>" 
+--    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
+--    body = body .. "<br/><br/>" 
+--    body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
+--    body = body .. "</body></html>" 
 
     local options =
     {

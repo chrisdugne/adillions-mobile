@@ -51,10 +51,10 @@ function scene:drawBoard()
 
     ------------------
 
-    local marginLeft = display.contentWidth * 0.04
-    local marginTop =  HEADER_HEIGHT *1.8
+    local marginLeft = display.contentWidth * 0.077
+    local marginTop =  HEADER_HEIGHT + 115
     local xGap =  display.contentWidth *0.12
-    local yGap =  display.contentHeight *0.65/aspectRatio
+    local yGap =  display.contentHeight *0.76/aspectRatio
 
     ------------------
 
@@ -67,22 +67,25 @@ function scene:drawBoard()
         lottery.theme     = json.decode(lottery.theme)
         lottery.prizes    = json.decode(lottery.prizes)
 
-        local y = marginTop + yGap*(i-1) + 185
+        local y = marginTop + yGap*(i-1) + 195
 
         ------------------------------------------------
 
-        viewManager.drawBorder(hud.board, display.contentWidth*0.5, y, display.contentWidth*0.95, 500)
+        viewManager.drawBorder(hud.board, display.contentWidth*0.5, y, display.contentWidth*0.95, 570)
 
         ------------------------------------------------
 
         viewManager.newText({
             parent = hud.board, 
-            text = T "Drawing" .. " " .. lotteryManager:date(lottery, true, true), 
-            x = display.contentWidth*0.1,
+            text = lotteryManager:date(lottery, true, true), 
+            x = display.contentWidth*0.5,
+            anchorX     = 0.5,
+--            x = display.contentWidth*0.1,
+--            anchorX     = 0,
+            anchorY     = 0.5,
             y = marginTop + yGap*(i-1), 
-            fontSize = 38,
-            anchorX    = 0,
-            anchorY    = 0.5,
+            fontSize    = 44,
+            font        = NUM_FONT, 
         })
 
         ------------------------------------------------
@@ -91,7 +94,7 @@ function scene:drawBoard()
             viewManager.drawBall(hud.board, numbers[j], marginLeft + xGap*j, y - 50)
         end
 
-        viewManager.drawTheme(hud.board, lottery, numbers[#numbers], marginLeft + xGap*#numbers + 20, y - 50)
+        viewManager.drawTheme(hud.board, lottery, numbers[#numbers], marginLeft + xGap*#numbers, y - 50)
 
         ------------------------------------------------
 
@@ -183,17 +186,23 @@ function scene:drawBoard()
         })
 
         ------------------------------------------------
+--
+--        local more = viewManager.newText({
+--            parent    = hud.board, 
+--            text     = "+ " .. T "See more", 
+--            x      = display.contentWidth*0.5,
+--            y      = marginTop + yGap*(i-1)+420, 
+--            fontSize   = 37,
+--            font     = NUM_FONT
+--        })
 
-        local more = viewManager.newText({
-            parent    = hud.board, 
-            text     = "+ " .. T "See more", 
-            x      = display.contentWidth*0.5,
-            y      = marginTop + yGap*(i-1)+400, 
-            fontSize   = 37,
-            font     = NUM_FONT
-        })
+        hud.seemore = display.newImage( hud.board, I "seemore.png")  
+        hud.seemore.x = display.contentWidth*0.5
+        hud.seemore.y = marginTop + yGap*(i-1)+480
+        hud.seemore.anchorY = 1
+        hud.board:insert(hud.seemore)
 
-        utils.onTouch(more, function() self:openMoreResults(lottery) end)
+        utils.onTouch(hud.seemore, function() self:openMoreResults(lottery) end)
 
     end
 

@@ -14,7 +14,7 @@ local MEDIUM_THEME_SCALE = 0.79
 
 function setupView(selectedTab, menuType)
     initBack()
-    initHeader()
+    initHeader(selectedTab)
     buildMenu(selectedTab, menuType)
 end
 
@@ -47,20 +47,33 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function initHeader()
+function initHeader(selectedTab)
+    
+    if(selectedTab == 0) then
+        hud.headerRect = display.newImageRect( hud, "assets/images/header.png", display.contentWidth, HEADER_HEIGHT)
+    else  
+        hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
+    end
 
-    hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
---    hud.headerRect = display.newImageRect( hud, "assets/images/header.png", display.contentWidth, HEADER_HEIGHT)  
     hud.headerRect.x = display.viewableContentWidth*0.5 
     hud.headerRect.y = HEADER_HEIGHT*0.5
 
-    hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
---    hud.logo = display.newImage( hud, "assets/images/logo.png")  
+    if(selectedTab == 0) then
+        hud.logo = display.newImage( hud, "assets/images/logo.png")  
+    else  
+        hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
+    end
+    
     hud.logo.x = display.contentWidth*0.5
     hud.logo.y = HEADER_HEIGHT*0.5
 
---    hud.headerButton = display.newImage( hud, "assets/images/icons/header.button.png")  
-    hud.headerButton = display.newImage( hud, "assets/images/icons/header.button.white.png")  
+
+    if(selectedTab == 0) then
+        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.green.png")  
+    else  
+        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.white.png")  
+    end
+    
     hud.headerButton.x = display.contentWidth*0.9
     hud.headerButton.y = HEADER_HEIGHT*0.5
     hud.headerButton.anchorX = 0.5
@@ -273,7 +286,7 @@ end
 
 function showPopin()
     
-    local height = display.contentHeight*0.5
+    local height = display.contentHeight*0.4
     
     ----------------------------------------------------------
     

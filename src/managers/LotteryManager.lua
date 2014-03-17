@@ -82,6 +82,11 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
     local now = os.time()
 
     ---------------------------------------------------------------------------------
+    
+    local _48hText  = translate(lotteryManager.global.text48h) 
+    local _3minText = translate(lotteryManager.global.text3min) 
+    
+    ---------------------------------------------------------------------------------
     -- notif next lottery
 
     local _48hBefore = lotteryDateMillis/1000 - 48 * 60 * 60
@@ -91,7 +96,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
         local notificationTimeSeconds = os.date( "!*t",  _48hBefore)
 
         local options = {
-            alert = T "Next drawing in 48h !",
+            alert = _48hText,
             badge = 1,
         }
 
@@ -103,7 +108,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
         local notificationTimeSeconds = os.date( "!*t", _3minAfter)
 
         local options = {
-            alert = T "This week's results are published !",
+            alert = _3minText,
             badge = 1,
         }
 
@@ -122,7 +127,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
             local notificationTimeSeconds = os.date( "!*t",  _48hBefore)
 
             local options = {
-                alert = T "Next drawing in 48h !",
+                alert = _48hText,
                 badge = 1,
             }
 
@@ -134,7 +139,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
             local notificationTimeSeconds = os.date( "!*t", _3minAfter)
 
             local options = {
-                alert = T "This week's results are published !",
+                alert = _3minText,
                 badge = 1,
             }
 

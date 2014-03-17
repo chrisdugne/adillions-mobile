@@ -22,19 +22,16 @@ end
 
 function scene:refreshScene()
 
---    hud.subheaderImage   = display.newImageRect(hud, "assets/images/hud/home/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.075)
---    hud.subheaderImage.x  = display.contentWidth*0.5
---    hud.subheaderImage.y  = HEADER_HEIGHT - 3
---    hud.subheaderImage.anchorY  = 0
+    hud.subheaderImage   = display.newImageRect(hud, "assets/images/hud/home/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.075)
+    hud.subheaderImage.x  = display.contentWidth*0.5
+    hud.subheaderImage.y  = HEADER_HEIGHT - 3
+    hud.subheaderImage.anchorY  = 0
 
     hud.subheaderText   = display.newImage(hud, I "home.subheader.title.png")
     hud.subheaderText.x  = display.contentWidth*0.5
-    hud.subheaderText.y  = display.contentHeight * 0.15
-
-    hud.subheaderBG   = display.newImage(hud, "assets/images/hud/home/BG_adillions.png")
-    hud.subheaderBG.x  = display.contentWidth*0.5
-    hud.subheaderBG.y  = display.contentHeight * 0.4
-    
+--    hud.subheaderText.y  = display.contentHeight * 0.15
+    hud.subheaderText.y  = display.contentHeight * 0.135
+--
     ------------------
 
     lotteryManager:refreshNextLottery(function() self:drawNextLottery() end)
@@ -75,14 +72,17 @@ function scene:drawNextLottery( event )
     local y                 = HEADER_HEIGHT * 3.7
     local top               = HEADER_HEIGHT * 2.5
     local timerLegendSize   = 17
-    local timerLegendY      = top + display.contentHeight * 0.04
+    local timerLegendY      = top + display.contentHeight * 0.025
     local timerY            = top
 
     -------------------------------
+    -- home.prize.png
 
-    hud.pictoTimer   = display.newImage( hud, "assets/images/icons/TimerPicto.png")  
-    hud.pictoTimer.x   = display.contentWidth*0.2
-    hud.pictoTimer.y   = timerY 
+    hud.pictoTimer      = display.newImage( hud, "assets/images/hud/home/home.timer.png")  
+    hud.pictoTimer.x    = display.contentWidth*0.5
+    hud.pictoTimer.y    = timerY 
+    
+    -------------------------------
 
     hud.timerDisplay = viewManager.newText({
         parent = hud, 
@@ -138,19 +138,24 @@ function scene:drawNextLottery( event )
     ----------------------------------------------------
 
     local priceX
+    local priceY = top + display.contentHeight*0.13
     if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.toolPlayers) then
         priceX = display.contentWidth*0.4
     else
-        priceX = display.contentWidth*0.62
+        priceX = display.contentWidth*0.8
     end
 
+    hud.pictoPrize      = display.newImage( hud, "assets/images/hud/home/home.prize.png")  
+    hud.pictoPrize.x    = display.contentWidth*0.5
+    hud.pictoPrize.y    = priceY
+    
     -------------------------------
 
     hud.priceDisplay = viewManager.newText({
         parent = hud, 
         text = '',     
         x = priceX ,
-        y = top + display.contentHeight*0.11,
+        y = priceY,
         fontSize = 83,
         font = NUM_FONT,
         anchorX    = 1,
@@ -159,13 +164,6 @@ function scene:drawNextLottery( event )
 
     hud.priceCurrentDisplay = 0
     viewManager.animatePrice()
-
-    -------------------------------
-
-    hud.pictoCagnotte = display.newImage( hud, "assets/images/icons/cagnotte.png")  
-    hud.pictoCagnotte.x = priceX + display.contentWidth*0.1
-    hud.pictoCagnotte.y = top + display.contentHeight*0.11
-    hud.pictoCagnotte:scale(1.4,1.4)
 
     -------------------------------
 
@@ -202,6 +200,16 @@ function scene:drawNextLottery( event )
 
     -------------------------------
 
+--    hud.buttonBG   = viewManager.drawBorder( hud, 
+--        0, 200, 
+--        display.contentWidth+100, HEADER_HEIGHT*1.45,
+--        27/255,92/255,100/255
+--    )  
+--    
+--    hud.buttonBG.x = display.contentWidth*0.5
+--    hud.buttonBG.y = top + display.contentHeight*0.27
+--    hud.buttonBG.alpha = 0.35
+    
     if(lotteryManager.nextDrawing.uid == lotteryManager.nextLottery.uid) then
         if(userManager.user.extraTickets > 0) then
             hud.playButton = display.newImage( hud, I "fillout.instant.ticket.png")
@@ -219,8 +227,7 @@ function scene:drawNextLottery( event )
     end
 
     hud.playButton.x = display.contentWidth*0.5
-    hud.playButton.y = top + display.contentHeight*0.24
-
+    hud.playButton.y = top + display.contentHeight*0.27
 
     -------------------------------
     

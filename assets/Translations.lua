@@ -670,42 +670,14 @@ local translations =
         ["fr"] = "Décembre",
     },
 
-    ---FACEBOOK-----------------------------------------------------------
+    --- FACEBOOK TEXT INVITE -----------------------------------------------------------
 
-    ["Join me on Adillions !"] = {
-        ["fr"] = "Inscris-toi sur Adillions !",
+    ["Try your luck on Adillions !"] = {
+        ["fr"] = "Tente ta chance à Adillions !",
     },
 
-    ["Free and fun - Get a chance to win the jackpot !"] = {
-        ["fr"] = "Gratuit et sympa - Tente ta chance pour gagner le jackpot !",
-    },
-
-    ---TEXT INVITE-----------------------------------------------------------
-
-    ["Join me on Adillions and get a chance to win the jackpot !"] = {
-        ["fr"] = "Inscris-toi sur Adillions et tente ta chance pour gagner le jackpot !",
-    },
-
-    ["Available on the App Store, Google Play, Facebook and on www.adillions.com"] = {
-        ["fr"] = "Disponible sur l'App Store, le Google Play, sur Facebook et sur www.adillions.com",
-    },
-
-    ["Free and fun - Sign up now using my sponsorship code : "] = {
-        ["fr"] = "Gratuit et sympa - Inscris-toi maintenant en utilisant mon code parrain : ",
-    },
-
-    ["MORE PLAYERS = A BIGGER JACKPOT"] = {
-        ["fr"] = "PLUS DE JOUEURS = UNE CAGNOTTE PLUS GRANDE",
-    },
-
-    ---TEXT SHARE-----------------------------------------------------------
-
-    ["I have just played a free lottery ticket on Adillions. You too, try your luck now !"] = {
-        ["fr"] = "Je viens juste de remplir un ticket gratuit de loterie. Toi aussi, tente ta chance à Adillions !",
-    },
-
-    ["Adillions is a free-to-play lottery game with real cash prizes funded by advertising"] = {
-        ["fr"] = "Adillions est une loterie gratuite avec des gains d'argent réel financés par la pub",
+    ["It's a free, fun and responsible game"] = {
+        ["fr"] = "C'est un jeu gratuit, fun et responsable",
     },
 
     ---TERMS -----------------------------------------------------------

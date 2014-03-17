@@ -425,6 +425,7 @@ function scene:openOptions()
         width       = display.contentWidth * 0.5,
         anchorX    = 0,
         anchorY    = 0.4,
+        align       = "left"
     })
 
     local beforeDrawSwitch = widget.newSwitch
