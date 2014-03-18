@@ -124,7 +124,7 @@ function scene:drawBoard()
             text = winners, 
             x = display.contentWidth*0.28,
             y = marginTop + yGap*(i-1)+270, 
-            fontSize = 27,
+            fontSize = 39,
             anchorX    = 0,
             anchorY    = 0.5,
         })
@@ -168,7 +168,7 @@ function scene:drawBoard()
             text     = T "Charity", 
             x      = display.contentWidth*0.7,
             y      = marginTop + yGap*(i-1)+270, 
-            fontSize   = 27,
+            fontSize   = 39,
             anchorX    = 0,
             anchorY    = 0.5,
         })

@@ -79,7 +79,7 @@ end
 function LotteryManager:refreshNotifications(lotteryDateMillis)
 
     system.cancelNotification()
-    local now = os.time()
+    local now = SERVER_TIME + system.getTimer()
 
     ---------------------------------------------------------------------------------
     

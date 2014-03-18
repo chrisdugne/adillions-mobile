@@ -49,7 +49,9 @@ end
 
 function initHeader(selectedTab)
     
-    if(selectedTab == 0) then
+    local whiteHeader = selectedTab == -11
+    
+    if(whiteHeader) then
         hud.headerRect = display.newImageRect( hud, "assets/images/header.png", display.contentWidth, HEADER_HEIGHT)
     else  
         hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
@@ -58,7 +60,7 @@ function initHeader(selectedTab)
     hud.headerRect.x = display.viewableContentWidth*0.5 
     hud.headerRect.y = HEADER_HEIGHT*0.5
 
-    if(selectedTab == 0) then
+    if(whiteHeader) then
         hud.logo = display.newImage( hud, "assets/images/logo.png")  
     else  
         hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
@@ -68,7 +70,7 @@ function initHeader(selectedTab)
     hud.logo.y = HEADER_HEIGHT*0.5
 
 
-    if(selectedTab == 0) then
+    if(whiteHeader) then
         hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.green.png")  
     else  
         hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.white.png")  
@@ -207,6 +209,9 @@ function openWeb(url, listener, customOnClose)
     webContainer.logo = display.newImage(  "assets/images/hud/game/logo.game.png")  
     webContainer.logo.x = display.contentWidth*0.5
     webContainer.logo.y = HEADER_HEIGHT*0.5
+    
+    utils.onTouch(webContainer.headerRect, function() return true end)
+    utils.onTouch(webContainer.logo, function() return true end)
     
     ------------------
     
@@ -395,26 +400,34 @@ end
 ------------------------------------------------------------------
 
 function refreshHomeTimer()
-
+    
     if(hud.timer) then timer.cancel(hud.timer) end
-
-    local days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextDrawing.date - SERVER_TIME - system.getTimer())/1000))
-
-    if(days <= 0 and hours <= 0 and min <= 0 and sec <= 0) then
-        days,hours,min,sec = utils.getDaysHoursMinSec(math.round((lotteryManager.nextDrawing.date - SERVER_TIME - system.getTimer())/1000))
+    local now           = SERVER_TIME + system.getTimer()
+    local timeRemaining = lotteryManager.nextDrawing.date - now
+    
+    if(timeRemaining < 0) then
+        userManager:refreshPlayer()
+    
+    else
+        local days,hours,min,sec = utils.getDaysHoursMinSec(math.round(timeRemaining/1000))
+    
+        if(days <= 0 and hours <= 0 and min <= 0 and sec <= 0) then
+            days,hours,min,sec = utils.getDaysHoursMinSec(math.round(timeRemaining/1000))
+        end
+    
+        if(days < 10) then days = "0"..days end 
+        if(hours < 10) then hours = "0"..hours end 
+        if(min < 10) then min = "0"..min end 
+        if(sec < 10) then sec = "0"..sec end 
+    
+        hud.timerDisplay.text = days .. " : " .. hours .. " : " .. min .. " : " .. sec
+                  
+        local next = utils.getDaysHoursMinSec(math.round(SERVER_TIME - TIMER)/1000)
+        hud.timer = timer.performWithDelay((math.round(next/15) + 1) * 150, function ()
+            refreshHomeTimer()
+        end)
     end
 
-    if(days < 10) then days = "0"..days end 
-    if(hours < 10) then hours = "0"..hours end 
-    if(min < 10) then min = "0"..min end 
-    if(sec < 10) then sec = "0"..sec end 
-
-    hud.timerDisplay.text = days .. " : " .. hours .. " : " .. min .. " : " .. sec
-              
-    local next = utils.getDaysHoursMinSec(math.round(SERVER_TIME - TIMER)/1000)
-    hud.timer = timer.performWithDelay((math.round(next/15) + 1) * 150, function ()
-        refreshHomeTimer()
-    end)
 end
 
 ------------------------------------------------------------------
@@ -424,7 +437,7 @@ function refreshPopupTimer(popup, lastTime)
     if(popup.timer) then timer.cancel(popup.timer) end
     if(not popup.timerDisplay) then return end
 
-    local now = os.time() * 1000
+    local now = SERVER_TIME + system.getTimer()
     local hoursSpent, minSpent, secSpent, msSpent = utils.getHoursMinSecMillis(now - lastTime)
 
     if(tonumber(minSpent) >= lotteryManager.nextLottery.ticketTimer) then 

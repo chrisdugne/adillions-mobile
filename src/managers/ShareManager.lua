@@ -93,7 +93,11 @@ function ShareManager:moreTickets(popup)
             facebook.connect(function()
                 userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
                 analytics.event("Social", "linkedFacebookFromMore") 
-                self:moreTickets(popup) 
+                if(popup.refresh) then
+                    popup.refresh()
+                end
+                self:moreTickets(popup)
+                
             end, close) 
         end
     end
@@ -118,29 +122,16 @@ function ShareManager:moreTickets(popup)
                 -- pas fan et connecte | button v3
                 imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function()
-                    native.setActivityIndicator( true )  
-                    close() 
-                    twitter.follow(function()
-                        native.setActivityIndicator( false )        
-                        userManager.user.twitterFan = true
-                        userManager:giftStock(TWITTER_FAN_TICKETS)
-                        analytics.event("Social", "followTwitter") 
-                    end) 
+                    close()
+                    self:twitterFollow()
                 end
 
             else
                 -- pas fan et pas connecte | button v3 : connect + follow
                 imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function() 
-                    twitter.connect(function()
-                        close() 
-                        twitter.follow(function()
-                            native.setActivityIndicator( false )        
-                            userManager.user.twitterFan = true
-                            userManager:giftStock(TWITTER_FAN_TICKETS)
-                            analytics.event("Social", "followTwitter") 
-                        end) 
-                    end) 
+                    close()
+                    self:twitterFollow()
                 end
 
             end
@@ -253,6 +244,9 @@ function ShareManager:inviteForInstants(popup)
                 viewManager.closePopin() 
                 userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
                 analytics.event("Social", "linkedFacebookFromInvite") 
+                if(popup.refresh) then
+                    popup.refresh()
+                end
                 self:inviteForInstants(popup) 
             end, close) 
         end
@@ -309,7 +303,6 @@ function ShareManager:shareForInstants(popup)
     
     local closeAndPlay = function()
         close()
-        router.openFillLotteryTicket()
     end
      
     -----------------------------------
@@ -1049,7 +1042,7 @@ function ShareManager:openRewards3()
 
     --------------------------
 
-    hud.sep       = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep         = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
     hud.sep.x       = display.contentWidth*0.5
     hud.sep.y       = display.contentHeight*0.84
 
@@ -1079,14 +1072,29 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function ShareManager:twitterFollow()
+    native.setActivityIndicator( true )  
+    twitter.follow(function()
+        userManager:refreshBonusTickets(function()
+            native.setActivityIndicator( false )        
+            analytics.event("Social", "followTwitter")
+            userManager:giftStock(TWITTER_FAN_TICKETS, function()
+                userManager:showStatus()
+            end)
+        end)
+    end) 
+end
+
+-----------------------------------------------------------------------------------------
+
 function ShareManager:openFacebookPage(popup)
     viewManager.openWeb(FACEBOOK_PAGE, function(event)
         print(event.url)
     end, function()
         
         native.setActivityIndicator( true )
-        timer.performWithDelay(3000, function() 
-            userManager:checkFanStatus(function()
+        timer.performWithDelay(7000, function() 
+            userManager:refreshBonusTickets(function()
                 
                 if(userManager.user.isFacebookFan) then
                     userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)

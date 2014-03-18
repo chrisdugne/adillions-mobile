@@ -317,10 +317,11 @@ function likeTheme(next)
         
         if(response.id) then
             userManager.user.themeLiked = true
-            userManager:giftInstants(NB_INSTANTS_PER_THEME_LIKED)
-            if(next) then
-                next()
-            end
+            userManager:giftInstants(NB_INSTANTS_PER_THEME_LIKED, function()
+                if(next) then
+                    next()
+                end
+            end)
         
         elseif(response.error.code == 200) then
             facebook.reloginDone = function() facebook.checkThemeLiked() end

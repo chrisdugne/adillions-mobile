@@ -22,10 +22,10 @@ end
 
 function scene:refreshScene()
 
-    hud.subheaderImage   = display.newImageRect(hud, "assets/images/hud/home/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.075)
-    hud.subheaderImage.x  = display.contentWidth*0.5
-    hud.subheaderImage.y  = HEADER_HEIGHT - 3
-    hud.subheaderImage.anchorY  = 0
+--    hud.subheaderImage   = display.newImageRect(hud, "assets/images/hud/home/subheader.bg.png", display.contentWidth, display.viewableContentHeight*0.075)
+--    hud.subheaderImage.x  = display.contentWidth*0.5
+--    hud.subheaderImage.y  = HEADER_HEIGHT - 3
+--    hud.subheaderImage.anchorY  = 0
 
     hud.subheaderText   = display.newImage(hud, I "home.subheader.title.png")
     hud.subheaderText.x  = display.contentWidth*0.5

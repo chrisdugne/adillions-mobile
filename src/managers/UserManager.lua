@@ -54,6 +54,12 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function UserManager:refreshPlayer()
+    gameManager:open()
+end
+
+-----------------------------------------------------------------------------------------
+
 function UserManager:fetchPlayer()
 
     userManager.user.fanBonusTickets = 0
@@ -250,16 +256,27 @@ function UserManager:updatedPlayer(player, next)
             stocks      = 0
         }
     end
+    
+    print("###")
+    print(" hasTweetTheme : ", self.user.hasTweetTheme )
+    self:refreshBonusTickets(next)
+end
 
-    -- adding all bonusTickets
+-----------------------------------------------------------------------------------------
+
+function UserManager:refreshBonusTickets(next)
+    
     self.user.fanBonusTickets       = 0
     self.user.charityBonusTickets   = 0
 
     self:setCharityBonus()    
     self:checkFanStatus(function()
-        next()
+        if(next) then
+            next()
+        end
         facebook.checkThemeLiked()
     end)
+    
 end
 
 -----------------------------------------------------------------------------------------
@@ -634,6 +651,8 @@ function UserManager:updatePlayer(next)
 
     -- themeLiked is only client side, and fetched at startup
     self.userBackup.themeLiked = self.user.themeLiked 
+    
+    print(" hasTweetTheme : ", self.user.hasTweetTheme )
 
     utils.postWithJSON({
         user = self.user,
@@ -793,8 +812,8 @@ end
 
 function UserManager:checkTicketTiming()
 
-    local lastTime = 0
-    local now = os.time() * 1000
+    local lastTime  = 0
+    local now       = SERVER_TIME + system.getTimer()
 
     for i = 1,#self.user.lotteryTickets do
         local ticket = self.user.lotteryTickets[i]
@@ -1107,11 +1126,14 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:giftInstants(nbInstants)
+function UserManager:giftInstants(nbInstants, next)
     self.user.idlePoints = self.user.idlePoints + nbInstants
 
     self:notifyInstants(function()
         self:updatePlayer()
+        if(next) then
+            next()
+        end
     end)
 end
 
@@ -1124,7 +1146,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:notifyInstants(next, playOnClose)
+function UserManager:notifyInstants(next)
 
     if(self.user.notifications.instants + self.user.idlePoints > 0) then
 
@@ -1201,6 +1223,12 @@ function UserManager:showStatus()
 
     local popup = viewManager.showPopup()
 
+    popup.refresh = function() 
+        viewManager.closePopin()
+        viewManager.closePopup(popup)
+        userManager:showStatus() 
+    end
+    
     ----------------------------
 
     popup.congratz    = display.newImage( popup, I "title.status.png")  
