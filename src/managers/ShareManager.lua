@@ -561,7 +561,7 @@ function ShareManager:noMoreTickets()
         x     = display.contentWidth * 0.5,
         y     = display.contentHeight*0.4,
         width   = display.contentWidth * 0.75,
-        fontSize  = 37,
+        fontSize  = 45,
     })
 
     viewManager.newText({
@@ -569,7 +569,7 @@ function ShareManager:noMoreTickets()
         text    = T "You can increase your stock of Tickets",     
         x     = display.contentWidth * 0.5,
         y     = display.contentHeight*0.56,
-        fontSize  = 37,
+        fontSize  = 42,
     })
 
     --------------------------
