@@ -29,6 +29,8 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
         local response = json.decode(result.response)
         
         lotteryManager.global               = response.global
+        
+        lotteryManager.global.appStatus     = json.decode(lotteryManager.global.appStatus)
         lotteryManager.global.tweet         = json.decode(lotteryManager.global.tweet)
         lotteryManager.global.tweetTheme    = json.decode(lotteryManager.global.tweetTheme)
         lotteryManager.global.fbPost        = json.decode(lotteryManager.global.fbPost)

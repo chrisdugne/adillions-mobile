@@ -19,28 +19,62 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function LotteryManager:refreshNextLottery(draw)
+function LotteryManager:refreshNextLottery(classic, waiting)
 
     utils.postWithJSON(
     {}, 
     SERVER_URL .. "nextLottery", 
     function(result)
 
-        local response = json.decode(result.response)
-
+        local response  = json.decode(result.response)
+        local appStatus = json.decode(response.appStatus)
+        
         self.nextLottery          = response.nextLottery
         self.nextDrawing          = response.nextDrawing
-
+    
         self.nextLottery.theme    = json.decode(self.nextLottery.theme)
         self.nextDrawing.theme    = json.decode(self.nextDrawing.theme)
         self.nextLottery.rangs    = json.decode(self.nextLottery.rangs)
         self.nextDrawing.rangs    = json.decode(self.nextDrawing.rangs)
-
+        
         userManager:checkUserCurrentLottery()
-
-        draw()
+        
+        if(appStatus.state ~= 1) then
+            waiting()
+        else
+            classic()
+        end
     end)
 end
+
+-----------------------------------------------------------------------------------------
+
+function LotteryManager:checkAppStatus(waiting)
+
+    utils.postWithJSON(
+    {}, 
+    SERVER_URL .. "appStatus", 
+    function(result)
+        local response  = json.decode(result.response)
+        local appStatus = json.decode(response.appStatus)
+        
+        if(appStatus.state == 1) then
+            if(lotteryManager.global.appStatus.state ~= 1) then
+                gameManager:open()
+            end
+        else
+            local lottery = response.lottery
+            lottery.result = json.decode(lottery.result)
+            lottery.theme = json.decode(lottery.theme)
+            waiting(lottery)
+            timer.performWithDelay(1000, function() self:checkAppStatus(waiting) end)
+        end
+        
+    end)
+    
+end
+
+-----------------------------------------------------------------------------------------
 
 function LotteryManager:getFinishedLotteries(next)
     utils.postWithJSON(

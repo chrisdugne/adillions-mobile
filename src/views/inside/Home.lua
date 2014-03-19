@@ -33,8 +33,12 @@ function scene:refreshScene()
     hud.subheaderText.y  = display.contentHeight * 0.135
 --
     ------------------
-
-    lotteryManager:refreshNextLottery(function() self:drawNextLottery() end)
+    
+    lotteryManager:refreshNextLottery(function() 
+        self:drawNextLottery(false) 
+    end,function() 
+        self:drawNextLottery(true) 
+    end)
 
     ------------------
 
@@ -60,7 +64,7 @@ end
 
 ------------------------------------------
 
-function scene:drawNextLottery( event )
+function scene:drawNextLottery( waitingForDrawing )
     
 --    userManager.user.notifications.prizes = 22.3
 --    userManager.user.notifications.prizesUSD = 32.3
@@ -214,7 +218,7 @@ function scene:drawNextLottery( event )
 --    hud.buttonBG.y = top + display.contentHeight*0.27
 --    hud.buttonBG.alpha = 0.35
     
-    if(lotteryManager.nextDrawing.uid == lotteryManager.nextLottery.uid) then
+    if(not waitingForDrawing and lotteryManager.nextDrawing.uid == lotteryManager.nextLottery.uid) then
         if(userManager.user.extraTickets > 0) then
             hud.playButton = display.newImage( hud, I "fillout.instant.ticket.png")
         else  
@@ -235,7 +239,13 @@ function scene:drawNextLottery( event )
 
     -------------------------------
     
-    bannerManager:start()
+    if(waitingForDrawing) then
+        lotteryManager:checkAppStatus(function(lottery)
+            bannerManager:waitingForDrawing(lottery)
+        end)
+    else
+        bannerManager:start()
+    end
     
     -------------------------------
 end
