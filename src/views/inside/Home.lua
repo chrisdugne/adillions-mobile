@@ -102,7 +102,8 @@ function scene:drawNextLottery( waitingForDrawing )
     })
     
     hud.timerDisplay.anchorX = 1
-
+    
+    hud.testii = 0
     viewManager.refreshHomeTimer()
 
     -------------------------------

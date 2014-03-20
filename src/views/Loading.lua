@@ -30,7 +30,7 @@ function scene:refreshScene()
     hud.logo.x = display.contentWidth*0.5 
     hud.logo.y = display.contentHeight*0.15
 
-    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_Earth.png")  
+    hud.logo = display.newImage( hud, "assets/images/hud/map.loading.png.png")  
     hud.logo.x = display.contentWidth*0.5 
     hud.logo.y = display.contentHeight*0.5
 

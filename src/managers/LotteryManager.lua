@@ -51,6 +51,7 @@ end
 
 function LotteryManager:checkAppStatus(waiting)
 
+    print("checkAppStatus")
     utils.postWithJSON(
     {}, 
     SERVER_URL .. "appStatus", 
@@ -60,6 +61,7 @@ function LotteryManager:checkAppStatus(waiting)
         
         if(appStatus.state == 1) then
             if(lotteryManager.global.appStatus.state ~= 1) then
+                print("game is back in the room : reload")
                 gameManager:open()
             end
         else

@@ -39,6 +39,10 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
         lotteryManager.global.email         = json.decode(lotteryManager.global.email)
         lotteryManager.global.text48h       = json.decode(lotteryManager.global.text48h)
         lotteryManager.global.text3min      = json.decode(lotteryManager.global.text3min)
+
+        lotteryManager.global.minEuro       = json.decode(lotteryManager.global.minMoney).euro
+        lotteryManager.global.minUSD        = json.decode(lotteryManager.global.minMoney).usd
+
         SERVER_TIME                         = response.serverTime - system.getTimer()
         TIMER                               = lotteryManager.global.lastUpdate or SERVER_TIME
         VERSION_REQUIRED                    = response.global.versionRequired

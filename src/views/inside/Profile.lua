@@ -665,21 +665,21 @@ function scene:openCashout()
 
     ----------------------------------------------------------------------------------------------------
 
-    popup.shareIcon     = display.newImage( popup, "assets/images/icons/PictoInfo.png")  
-    popup.shareIcon.x    = display.contentWidth*0.5
-    popup.shareIcon.y   = display.contentHeight*0.15
+    popup.shareIcon                 = display.newImage( popup, "assets/images/icons/PictoInfo.png")  
+    popup.shareIcon.x               = display.contentWidth*0.5
+    popup.shareIcon.y               = display.contentHeight*0.15
 
-    popup.TxtInformation   = display.newImage( popup, I "TxtInformation.png")  
-    popup.TxtInformation.x  = display.contentWidth*0.5
-    popup.TxtInformation.y  = display.contentHeight*0.23
+    popup.TxtInformation            = display.newImage( popup, I "TxtInformation.png")  
+    popup.TxtInformation.x          = display.contentWidth*0.5
+    popup.TxtInformation.y          = display.contentHeight*0.23
 
     ----------------------------------------------------------------------------------------------------
 
     local value = ""
     if(utils.isEuroCountry(COUNTRY)) then
-        value = "10€"
+        value = lotteryManager.global.minEuro .. "€"
     else
-        value = "US$15"
+        value = "US$" .. lotteryManager.global.minUSD
     end
 
     popup.multiLineText = display.newText({
@@ -698,9 +698,9 @@ function scene:openCashout()
 
     ----------------------------------------------------------------------------------------------------
 
-    local min = 10
+    local min = lotteryManager.global.minEuro
     if(not utils.isEuroCountry(COUNTRY)) then
-        min = 15
+        min = lotteryManager.global.minUSD
     end
 
     if(userManager.user.balance >= min) then

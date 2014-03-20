@@ -48,9 +48,9 @@ end
 -----------------------------------------------------------------------------------------
 
 function initHeader(selectedTab)
-    
+
     local whiteHeader = selectedTab == -11
-    
+
     if(whiteHeader) then
         hud.headerRect = display.newImageRect( hud, "assets/images/header.png", display.contentWidth, HEADER_HEIGHT)
     else  
@@ -65,7 +65,7 @@ function initHeader(selectedTab)
     else  
         hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
     end
-    
+
     hud.logo.x = display.contentWidth*0.5
     hud.logo.y = HEADER_HEIGHT*0.5
 
@@ -75,12 +75,12 @@ function initHeader(selectedTab)
     else  
         hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.white.png")  
     end
-    
+
     hud.headerButton.x = display.contentWidth*0.9
     hud.headerButton.y = HEADER_HEIGHT*0.5
     hud.headerButton.anchorX = 0.5
     hud.headerButton.anchorY = 0.44
-    
+
     utils.onTouch(hud.headerButton, function()
         analytics.event("Gaming", "showStatus") 
         userManager:showStatus()
@@ -138,11 +138,11 @@ function message(message)
     hud.messager.alpha = 0.4
 
     hud.messager.popupRect   = drawBorder( hud.messager, 
-        0, HEADER_HEIGHT, 
-        display.contentWidth+100, HEADER_HEIGHT,
-        27/255,92/255,100/255
+    0, HEADER_HEIGHT, 
+    display.contentWidth+100, HEADER_HEIGHT,
+    27/255,92/255,100/255
     )  
-    
+
     hud.messager.popupRect.x = display.contentWidth*0.5
     hud.messager.popupRect.alpha = 0.75
 
@@ -158,10 +158,10 @@ function message(message)
     hud.messager.text:setFillColor(225/255)
 
     transition.to(hud.messager, { time=1000, y=-HEADER_HEIGHT/2, alpha = 1, transition=easing.outSine, onComplete=function()
-        timer.performWithDelay(2000, function()
-            transition.to(hud.messager, { time=1000, y=-200, transition=easing.inSine, alpha = 0} )
-        end)
-    end })
+            timer.performWithDelay(2000, function()
+                transition.to(hud.messager, { time=1000, y=-200, transition=easing.inSine, alpha = 0} )
+            end)
+        end })
 end
 
 -----------------------------------------------------------------------------------------
@@ -199,9 +199,9 @@ end
 function openWeb(url, listener, customOnClose)
 
     ------------------
-    
+
     local webContainer = {}
-    
+
     webContainer.headerRect = display.newImageRect( "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
     webContainer.headerRect.x = display.viewableContentWidth*0.5 
     webContainer.headerRect.y = HEADER_HEIGHT*0.5
@@ -209,19 +209,19 @@ function openWeb(url, listener, customOnClose)
     webContainer.logo = display.newImage(  "assets/images/hud/game/logo.game.png")  
     webContainer.logo.x = display.contentWidth*0.5
     webContainer.logo.y = HEADER_HEIGHT*0.5
-    
+
     utils.onTouch(webContainer.headerRect, function() return true end)
     utils.onTouch(webContainer.logo, function() return true end)
-    
+
     ------------------
-    
+
     local webView = native.newWebView( display.contentCenterX, display.contentCenterY + HEADER_HEIGHT/2, display.contentWidth, display.contentHeight - HEADER_HEIGHT )
     webView:request( url )
-    
+
     if(listener) then
         webView:addEventListener( "urlRequest", listener )
     end
-    
+
     ------------------
 
     webContainer.close     = display.newImage( "assets/images/hud/game/exit.game.png")
@@ -229,21 +229,21 @@ function openWeb(url, listener, customOnClose)
     webContainer.close.y    = HEADER_HEIGHT/2
 
     ------------------
-    
+
     local onClose = function ()
-        
+
         if(listener) then
             webView:removeEventListener( "urlRequest", listener )
         end
-        
+
         webView:removeSelf()
         webView = nil
-        
+
         display.remove(webContainer.headerRect)
         display.remove(webContainer.logo)
         display.remove(webContainer.close)
         webContainer = nil
-    
+
         if(customOnClose) then
             customOnClose()
         end
@@ -252,7 +252,7 @@ function openWeb(url, listener, customOnClose)
     utils.onTouch(webContainer.close, function()
         onClose()
     end)
-    
+
     return onClose
 end
 
@@ -284,17 +284,17 @@ function closePopin(now, action)
         end
 
     end
-    
+
 end
 
 ------------------------------------------------------------------
 
 function showPopin()
-    
+
     local height = display.contentHeight*0.4
-    
+
     ----------------------------------------------------------
-    
+
     closePopin()
     hud.popin = display.newGroup()
     hud.popin.anchorX = 0
@@ -304,43 +304,43 @@ function showPopin()
     hud.popin.bottom        = height/2.25
 
     ----------------------------------------------------------
-    
+
     hud.popin.popinRect = display.newImageRect( hud.popin, "assets/images/menus/popin.bg.png", display.contentWidth, height)
     hud.popin.popinRect.x = 0 
     hud.popin.popinRect.y = 0
     hud.popin:insert(hud.popin.popinRect)
-    
+
     ----------------------------------------------------------
     -- header
-    
+
     hud.popin.closedown     = display.newImage( hud.popin, I "closedown.png")  
     hud.popin.closedown.x   = display.contentWidth * 0.45
     hud.popin.closedown.y   = hud.popin.headerMiddle
 
     ----------------------------------------------------------
-    
+
     hud.popin.touchBack = drawBorder( hud.popin, 
-        0, 0, 
-        display.contentWidth, display.contentHeight,
-        50/255,50/255,50/255
+    0, 0, 
+    display.contentWidth, display.contentHeight,
+    50/255,50/255,50/255
     )  
     hud.popin.touchBack.x      = 0
     hud.popin.touchBack.y      = -display.contentHeight*0.7
     hud.popin.touchBack.alpha  = 0.01
     hud.popin:insert(hud.popin.touchBack)
-    
+
     ----------------------------------------------------------
 
     hud.popin.x = display.contentWidth * 0.5
     hud.popin.y = display.contentHeight * 1.2
     hud.popin:toFront()
-    
+
     ----------------------------------------------------------
-    
+
     transition.to(hud.popin, { time = 250, y = display.contentHeight - height/2 } )
 
     ----------------------------------------------------------
-    
+
     utils.onTap(hud.popin.touchBack, function() 
         closePopin() 
         return false
@@ -350,7 +350,7 @@ function showPopin()
         closePopin() 
         return true 
     end)
-    
+
 end
 
 ------------------------------------------------------------------
@@ -361,7 +361,7 @@ end
 function showPopup(height, square)
 
     local width = display.contentWidth*0.95
-    
+
     if(not height) then
         height = display.contentHeight*0.95
     elseif(square) then
@@ -371,11 +371,11 @@ function showPopup(height, square)
     local popup = display.newGroup()
 
     local backGrey = drawBorder( popup, 
-        0, 0, 
-        display.contentWidth+50, display.viewableContentHeight+50,
-        50/255,50/255,50/255
+    0, 0, 
+    display.contentWidth+50, display.viewableContentHeight+50,
+    50/255,50/255,50/255
     )  
-    
+
     backGrey.x   = display.viewableContentWidth*0.5 
     backGrey.y   = display.viewableContentHeight*0.5
     backGrey.alpha = 0.45
@@ -391,37 +391,60 @@ function showPopup(height, square)
     else
         utils.onTap(backGrey, function() closePopup(popup) return true end)
     end
-    
+
     utils.onTap(popup.bg, function() return true end)
-    
+
     return popup
 end
 
 ------------------------------------------------------------------
 
-function refreshHomeTimer()
+function prepareToWaitForResults()
     
+    bannerManager:stop()
+    lotteryManager.global.appStatus.state = 2
+    native.setActivityIndicator( true )
+    
+    timer.performWithDelay(math.random(3000, 6000), function()
+        native.setActivityIndicator( false )
+        lotteryManager:checkAppStatus(function(lottery)
+            bannerManager:waitingForDrawing(lottery)
+        end)
+    end)
+    
+end
+
+------------------------------------------------------------------
+
+function refreshHomeTimer()
+
     if(hud.timer) then timer.cancel(hud.timer) end
     local now           = SERVER_TIME + system.getTimer()
     local timeRemaining = lotteryManager.nextDrawing.date - now
-    
+
     if(timeRemaining < 0) then
-        userManager:refreshPlayer()
-    
+        self:prepareToWaitForResults()
     else
+        hud.testii = hud.testii + 1
+        print(hud.testii)
+        if(hud.testii == 5) then 
+            prepareToWaitForResults()
+            return
+        end
+        
         local days,hours,min,sec = utils.getDaysHoursMinSec(math.round(timeRemaining/1000))
-    
+
         if(days <= 0 and hours <= 0 and min <= 0 and sec <= 0) then
             days,hours,min,sec = utils.getDaysHoursMinSec(math.round(timeRemaining/1000))
         end
-    
+
         if(days < 10) then days = "0"..days end 
         if(hours < 10) then hours = "0"..hours end 
         if(min < 10) then min = "0"..min end 
         if(sec < 10) then sec = "0"..sec end 
-    
+
         hud.timerDisplay.text = days .. " : " .. hours .. " : " .. min .. " : " .. sec
-                  
+
         local next = utils.getDaysHoursMinSec(math.round(SERVER_TIME - TIMER)/1000)
         hud.timer = timer.performWithDelay((math.round(next/15) + 1) * 150, function ()
             refreshHomeTimer()
@@ -602,7 +625,7 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
 
     local fileName = prefix .. utils.imageName(url)
     local image
-    
+
     if(fitToScreen) then
         image = display.newImageRect( parent, fileName, system.TemporaryDirectory,  display.contentWidth, display.contentHeight * heightRatio)
     else
@@ -618,7 +641,7 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
                 display.remove(event.target)
             end
         end
-        
+
         display.loadRemoteImage( url, "GET", imageReceived, fileName, system.TemporaryDirectory )
     else
         insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
@@ -641,7 +664,7 @@ function insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
     if(next) then
         next(image)
     end
-    
+
 end
 
 ------------------------------------------------------------------

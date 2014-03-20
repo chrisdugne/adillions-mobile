@@ -136,22 +136,6 @@ end
 --
 -----------------------------------------------------------------------------------------
 
---- Data returned if success
----{
---   "name": "Christophe Dugne-Esquevin",
---   "first_name": "Christophe",
---   "last_name": "Dugne-Esquevin",
---   "locale": "en_US",
---   "birthday": "10/16/1983",
---   "email": "chris.dugne\u0040uralys.com",
---   "id": "756469753",
---   "picture": {
---      "data": {
---         "url": "http://profile.ak.fbcdn.net/hprofile-ak-ash1/369905_756469753_990403215_q.jpg",
---         "is_silhouette": false
---      }
---   }
---}
 function getMe(failure)
     if(GLOBALS.savedData.facebookAccessToken) then
         local url = "https://graph.facebook.com/me?fields=name,first_name,last_name,picture.type(large),locale,birthday,email&access_token=" .. GLOBALS.savedData.facebookAccessToken
