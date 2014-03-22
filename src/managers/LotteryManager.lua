@@ -66,9 +66,10 @@ function LotteryManager:checkAppStatus(waiting)
             end
         else
             local lottery = response.lottery
-            lottery.result = json.decode(lottery.result)
+            if(lottery.result) then lottery.result = json.decode(lottery.result) end
             lottery.theme = json.decode(lottery.theme)
             waiting(lottery)
+            viewManager.refreshPlayButton(true)
             timer.performWithDelay(1000, function() self:checkAppStatus(waiting) end)
         end
         
@@ -115,7 +116,7 @@ end
 function LotteryManager:refreshNotifications(lotteryDateMillis)
 
     system.cancelNotification()
-    local now = SERVER_TIME + system.getTimer()
+    local now = time.now()
 
     ---------------------------------------------------------------------------------
     

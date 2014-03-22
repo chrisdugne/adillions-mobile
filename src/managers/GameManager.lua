@@ -20,7 +20,6 @@ function GameManager:start()
     analytics.init(ANALYTICS_VERSION, ANALYTICS_TRACKING_ID, ANALYTICS_PROFILE_ID, APP_NAME, APP_VERSION)
     viewManager.initGlobalBack()
     vungle:init()
-    router.openLoading()
     
     if(not GLOBALS.savedData) then
         self:firstStart()
@@ -33,7 +32,8 @@ end
 
 function GameManager:open()
 
-    print("open")
+    router.openLoading()
+
     local onGoodVersion = function() 
         if(GLOBALS.savedData.user.facebookId) then
             gameManager:tryAutoOpenFacebookAccount()
@@ -52,6 +52,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function GameManager:firstStart()
+    router.openLoading()
     self:initGameData()
     self:initOptions()
     router.openTutorial()
@@ -59,10 +60,10 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function GameManager:initGameData()
-
+function GameManager:initGameData(tutorialSeen)
+    
     GLOBALS.savedData = {
-        requireTutorial = true,
+        requireTutorial = not tutorialSeen,
         user            = {}
     }
 

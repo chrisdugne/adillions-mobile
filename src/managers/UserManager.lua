@@ -43,8 +43,8 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
         lotteryManager.global.minEuro       = json.decode(lotteryManager.global.minMoney).euro
         lotteryManager.global.minUSD        = json.decode(lotteryManager.global.minMoney).usd
 
-        SERVER_TIME                         = response.serverTime - system.getTimer()
-        TIMER                               = lotteryManager.global.lastUpdate or SERVER_TIME
+        time.setServerTime(response.serverTime)
+        TIMER                               = lotteryManager.global.lastUpdate or response.serverTime
         VERSION_REQUIRED                    = response.global.versionRequired
         bannerManager.banners               = json.decode(lotteryManager.global.banners)
 
@@ -469,13 +469,13 @@ function UserManager:showWrongAccount()
         viewManager.closePopup(popup)
     end)
 
-
 end
 
 -----------------------------------------------------------------------------------------
 
 function UserManager:checkFanStatus(next)
 
+    print("--------------------------------")
     print("checkFanStatus")
 
     local facebookFan  = self.user.isFacebookFan
@@ -504,16 +504,20 @@ function UserManager:checkFanStatus(next)
 
             ---------------------------------------------------------
 
-            local statusChanged = false
+            local statusChanged     = false
+            local notifyFBBonus     = false
+            local notifyTWBonus     = false
 
             if(self.user.facebookFan ~= facebookFan) then
                 statusChanged = true
                 self.user.isFacebookFan = self.user.facebookFan
+                notifyFBBonus = true
             end
 
             if(self.user.twitterFan ~= twitterFan) then
                 statusChanged = true
                 self.user.isTwitterFan = self.user.twitterFan
+                notifyTWBonus = true
             end
 
             ---------------------------------------------------------
@@ -534,7 +538,7 @@ function UserManager:checkFanStatus(next)
             print(statusChanged)
 
             if(statusChanged) then
-                self:updateFanStatus(next)
+                self:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
             else
                 print("continue")
                 if(next) then
@@ -751,7 +755,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:updateFanStatus(next)
+function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
 
     print("--- updateFanStatus")
     print("facebookFan : " .. tostring(self.user.facebookFan))
@@ -767,7 +771,22 @@ function UserManager:updateFanStatus(next)
     function(result)
         print("--- updateFanStatus false")
         native.setActivityIndicator( false )
-        if(next) then
+        
+        if(notifyFBBonus) then
+            userManager:giftStock(FACEBOOK_FAN_TICKETS, function()
+                if(next) then
+                    next()
+                end
+            end)
+            
+        elseif(notifyTWBonus) then
+            userManager:giftStock(TWITTER_FAN_TICKETS, function()
+                if(next) then
+                    next()
+                end
+            end)
+        
+        elseif(next) then
             next()
         end
 
@@ -819,7 +838,7 @@ end
 function UserManager:checkTicketTiming()
 
     local lastTime  = 0
-    local now       = SERVER_TIME + system.getTimer()
+    local now       = time.now()
 
     for i = 1,#self.user.lotteryTickets do
         local ticket = self.user.lotteryTickets[i]
@@ -837,7 +856,7 @@ function UserManager:checkTicketTiming()
         ----------------------------------------------------------------------------------------------------
 
         local popup = viewManager.showPopup()
-
+        
         ----------------------------------------------------------------------------------------------------
 
         popup.icon    = display.newImage( popup, "assets/images/icons/timer.png")
@@ -1145,9 +1164,13 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function UserManager:giftStock(nbStock)
+function UserManager:giftStock(nbStock, next)
     self.user.notifications.stocks = nbStock
-    self:notifyStocks(function() end)
+    self:notifyStocks(function()
+        if(next) then
+            next()
+        end
+    end)
 end
 
 -----------------------------------------------------------------------------------------
@@ -1230,6 +1253,7 @@ function UserManager:showStatus()
     local popup = viewManager.showPopup()
 
     popup.refresh = function() 
+        viewManager.refreshPlayButton()
         viewManager.closePopin()
         viewManager.closePopup(popup)
         userManager:showStatus() 

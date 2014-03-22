@@ -142,9 +142,11 @@ function ShareManager:moreTickets(popup)
         imageTwitter = I "stock.twitter.1.png"
         actionTwitter = function() 
             twitter.connect(function()
-                close() 
                 analytics.event("Social", "linkedTwitterFromMore") 
                 userManager:giftStock(TWITTER_CONNECTION_TICKETS, function()
+                    if(popup.refresh) then
+                        popup.refresh()
+                    end
                     self:moreTickets(popup) 
                 end)
             end) 
@@ -297,6 +299,7 @@ function ShareManager:shareForInstants(popup)
     -----------------------------------
     
     local close = function()
+        viewManager.refreshPlayButton()
         viewManager.closePopin() 
         if(popup) then
             viewManager.closePopup(popup)
@@ -417,8 +420,13 @@ function ShareManager:shareForInstants(popup)
             facebook.connect(function()
                 viewManager.closePopin() 
                 analytics.event("Social", "linkedFacebookFromShare") 
-                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
-                self:shareForInstants(popup) 
+                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
+                    if(popup.refresh) then
+                        popup.refresh()
+                    end
+                    self:shareForInstants(popup) 
+                end)
+                
             end, close) 
         end
     end
@@ -509,9 +517,13 @@ function ShareManager:shareForInstants(popup)
         actionTwitter = function() 
             twitter.connect(function()
                 viewManager.closePopin() 
-                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS)
                 analytics.event("Social", "linkedTwitterFromShare")
-                self:shareForInstants(popup) 
+                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
+                    if(popup.refresh) then
+                        popup.refresh()
+                    end
+                    self:shareForInstants(popup) 
+                end)
             end) 
         end
     end
@@ -1080,9 +1092,7 @@ function ShareManager:twitterFollow()
         userManager:refreshBonusTickets(function()
             native.setActivityIndicator( false )        
             analytics.event("Social", "followTwitter")
-            userManager:giftStock(TWITTER_FAN_TICKETS, function()
-                userManager:showStatus()
-            end)
+            userManager:showStatus()
         end)
     end) 
 end
@@ -1099,19 +1109,17 @@ function ShareManager:openFacebookPage(popup)
         self.checkingFBLike = true
         
         native.setActivityIndicator( true )
-        timer.performWithDelay(7000, function() 
+        timer.performWithDelay(5000, function() 
             userManager:refreshBonusTickets(function()
                 
                 native.setActivityIndicator( false )
                 self.checkingFBLike = false
                 
                 if(userManager.user.isFacebookFan) then
-                    userManager:giftStock(FACEBOOK_FAN_TICKETS, function()
-                        if(popup.refresh) then
-                            popup.refresh()
-                        end
-                        self:moreTickets(popup)
-                    end)
+                    if(popup.refresh) then
+                        popup.refresh()
+                    end
+                    self:moreTickets(popup)
                 else
                     viewManager.message(T "You haven't liked our page :-(")    
                     self:moreTickets(popup)

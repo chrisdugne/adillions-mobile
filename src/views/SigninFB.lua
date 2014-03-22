@@ -35,7 +35,7 @@ function scene:refreshScene()
         facebook.data.email = ""
     end
 
-    local url = SERVER_URL .. "msigninFB"
+    local url = SERVER_URL .. "msigninFB2"
     url = url .. "?last_name="     .. utils.urlEncode(facebook.data.last_name)
     url = url .. "&first_name="    .. utils.urlEncode(facebook.data.first_name)
     url = url .. "&picture_url="   .. utils.urlEncode(facebook.data.picture.data.url)

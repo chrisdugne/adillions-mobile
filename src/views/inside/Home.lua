@@ -66,6 +66,10 @@ end
 
 function scene:drawNextLottery( waitingForDrawing )
     
+--    userManager:giftStock(2, function()
+--        userManager:showStatus() 
+--    end)
+    
 --    userManager.user.notifications.prizes = 22.3
 --    userManager.user.notifications.prizesUSD = 32.3
 --    userManager:notifyPrizes()
@@ -103,7 +107,6 @@ function scene:drawNextLottery( waitingForDrawing )
     
     hud.timerDisplay.anchorX = 1
     
-    hud.testii = 0
     viewManager.refreshHomeTimer()
 
     -------------------------------
@@ -208,43 +211,13 @@ function scene:drawNextLottery( waitingForDrawing )
     end
 
     -------------------------------
-
---    hud.buttonBG   = viewManager.drawBorder( hud, 
---        0, 200, 
---        display.contentWidth+100, HEADER_HEIGHT*1.45,
---        27/255,92/255,100/255
---    )  
---    
---    hud.buttonBG.x = display.contentWidth*0.5
---    hud.buttonBG.y = top + display.contentHeight*0.27
---    hud.buttonBG.alpha = 0.35
-    
-    if(not waitingForDrawing and lotteryManager.nextDrawing.uid == lotteryManager.nextLottery.uid) then
-        if(userManager.user.extraTickets > 0) then
-            hud.playButton = display.newImage( hud, I "fillout.instant.ticket.png")
-        else  
-            hud.playButton = display.newImage( hud, I "filloutticket.button.png")
-        end
-
-        utils.onTouch(hud.playButton, function()
-            gameManager:play()
-        end)
-
-    else  
-        hud.playButton = display.newImage( hud, I "waiting.png")
-        hud.playButton.alpha = 0.5
-    end
-
-    hud.playButton.x = display.contentWidth*0.5
-    hud.playButton.y = top + display.contentHeight*0.27
-
-    -------------------------------
     
     if(waitingForDrawing) then
         lotteryManager:checkAppStatus(function(lottery)
             bannerManager:waitingForDrawing(lottery)
         end)
     else
+        viewManager.refreshPlayButton()
         bannerManager:start()
     end
     

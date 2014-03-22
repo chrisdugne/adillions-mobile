@@ -147,6 +147,7 @@ ads                 = require "ads"
 ---- Additional libs
 xml                 = require "src.libs.Xml"
 utils               = require "src.libs.Utils"
+time                = require "src.libs.Time"
 facebook            = require "src.libs.Facebook" 
 vungle              = require "src.libs.Vungle" 
 sponsorpayTools     = require "src.libs.SponsorpayTools" 
@@ -251,14 +252,16 @@ end
 local onSystem = function( event )
     if event.type == "applicationSuspend" then
 
-    elseif event.type == "applicationStart" or event.type == "applicationResume" then
+    elseif event.type == "applicationStart" then
         native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
-        --      
-        --      facebook.isFacebookFan(function() 
-        --      end)
-
         twitter.reconnect()
-
+        
+    elseif event.type == "applicationResume" then
+        if(not vungle.vungleON) then
+            native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
+            gameManager:open()
+            twitter.reconnect()
+        end
     end
 end
 

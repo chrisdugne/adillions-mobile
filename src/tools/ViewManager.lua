@@ -129,25 +129,21 @@ end
 
 function message(message)
 
-    if(hud.messager) then
-        transition.to(hud.messager, { time=300, alpha=0 } )
-    end
+    local messager = display.newGroup()
+    messager.y = -200
+    messager.alpha = 0.4
 
-    hud.messager = display.newGroup()
-    hud.messager.y = -200
-    hud.messager.alpha = 0.4
-
-    hud.messager.popupRect   = drawBorder( hud.messager, 
+    messager.popupRect   = drawBorder( messager, 
     0, HEADER_HEIGHT, 
     display.contentWidth+100, HEADER_HEIGHT,
     27/255,92/255,100/255
     )  
 
-    hud.messager.popupRect.x = display.contentWidth*0.5
-    hud.messager.popupRect.alpha = 0.75
+    messager.popupRect.x = display.contentWidth*0.5
+    messager.popupRect.alpha = 0.75
 
-    hud.messager.text = viewManager.newText({
-        parent      = hud.messager, 
+    messager.text = viewManager.newText({
+        parent      = messager, 
         text        = message,     
         x           = display.contentWidth*0.5,
         y           = HEADER_HEIGHT,
@@ -155,11 +151,11 @@ function message(message)
         fontSize    = 43
     })
 
-    hud.messager.text:setFillColor(225/255)
+    messager.text:setFillColor(225/255)
 
-    transition.to(hud.messager, { time=1000, y=-HEADER_HEIGHT/2, alpha = 1, transition=easing.outSine, onComplete=function()
+    transition.to(messager, { time=1000, y=-HEADER_HEIGHT/2, alpha = 1, transition=easing.outSine, onComplete=function()
             timer.performWithDelay(2000, function()
-                transition.to(hud.messager, { time=1000, y=-200, transition=easing.inSine, alpha = 0} )
+                transition.to(messager, { time=1000, y=-200, transition=easing.inSine, alpha = 0} )
             end)
         end })
 end
@@ -416,22 +412,47 @@ end
 
 ------------------------------------------------------------------
 
+function refreshPlayButton(waitingForDrawing)
+    
+    if(router.view ~= router.HOME) then return end
+    
+    if(hud.playTicketButton) then 
+        display.remove(hud.playTicketButton)
+    end
+    
+    if(not waitingForDrawing and lotteryManager.nextDrawing.uid == lotteryManager.nextLottery.uid) then
+        if(userManager.user.extraTickets > 0) then
+            hud.playTicketButton = display.newImage( hud, I "fillout.instant.ticket.png")
+        else  
+            hud.playTicketButton = display.newImage( hud, I "filloutticket.button.png")
+        end
+
+        utils.onTouch(hud.playTicketButton, function()
+            gameManager:play()
+        end)
+
+    else  
+        hud.playTicketButton = display.newImage( hud, I "waiting.png")
+        hud.playTicketButton.alpha = 0.5
+    end
+
+    hud.playTicketButton.x = display.contentWidth*0.5
+    hud.playTicketButton.y = display.contentHeight*0.51
+    
+end
+
+------------------------------------------------------------------
+
 function refreshHomeTimer()
 
     if(hud.timer) then timer.cancel(hud.timer) end
-    local now           = SERVER_TIME + system.getTimer()
+    local now = time.now()
     local timeRemaining = lotteryManager.nextDrawing.date - now
 
     if(timeRemaining < 0) then
-        self:prepareToWaitForResults()
-    else
-        hud.testii = hud.testii + 1
-        print(hud.testii)
-        if(hud.testii == 5) then 
-            prepareToWaitForResults()
-            return
-        end
+        prepareToWaitForResults()
         
+    else
         local days,hours,min,sec = utils.getDaysHoursMinSec(math.round(timeRemaining/1000))
 
         if(days <= 0 and hours <= 0 and min <= 0 and sec <= 0) then
@@ -445,7 +466,7 @@ function refreshHomeTimer()
 
         hud.timerDisplay.text = days .. " : " .. hours .. " : " .. min .. " : " .. sec
 
-        local next = utils.getDaysHoursMinSec(math.round(SERVER_TIME - TIMER)/1000)
+        local next = utils.getDaysHoursMinSec(math.round((time.now() - time.elapsedTime()) - TIMER)/1000)
         hud.timer = timer.performWithDelay((math.round(next/15) + 1) * 150, function ()
             refreshHomeTimer()
         end)
@@ -460,7 +481,7 @@ function refreshPopupTimer(popup, lastTime)
     if(popup.timer) then timer.cancel(popup.timer) end
     if(not popup.timerDisplay) then return end
 
-    local now = SERVER_TIME + system.getTimer()
+    local now = time.now()
     local hoursSpent, minSpent, secSpent, msSpent = utils.getHoursMinSecMillis(now - lastTime)
 
     if(tonumber(minSpent) >= lotteryManager.nextLottery.ticketTimer) then 
