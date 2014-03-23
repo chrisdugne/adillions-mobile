@@ -130,8 +130,10 @@ function ShareManager:moreTickets(popup)
                 -- pas fan et pas connecte | button v3 : connect + follow
                 imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function() 
-                    close()
-                    self:twitterFollow()
+                    twitter.connect(function()
+                        close()
+                        self:twitterFollow()
+                    end) 
                 end
 
             end
@@ -143,12 +145,10 @@ function ShareManager:moreTickets(popup)
         actionTwitter = function() 
             twitter.connect(function()
                 analytics.event("Social", "linkedTwitterFromMore") 
-                userManager:giftStock(TWITTER_CONNECTION_TICKETS, function()
-                    if(popup.refresh) then
-                        popup.refresh()
-                    end
-                    self:moreTickets(popup) 
-                end)
+                if(popup.refresh) then
+                    popup.refresh()
+                end
+                self:moreTickets(popup) 
             end) 
         end
     end
@@ -518,12 +518,10 @@ function ShareManager:shareForInstants(popup)
             twitter.connect(function()
                 viewManager.closePopin() 
                 analytics.event("Social", "linkedTwitterFromShare")
-                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
-                    if(popup.refresh) then
-                        popup.refresh()
-                    end
-                    self:shareForInstants(popup) 
-                end)
+                if(popup.refresh) then
+                    popup.refresh()
+                end
+                self:shareForInstants(popup) 
             end) 
         end
     end
@@ -790,6 +788,7 @@ end
 
 function ShareManager:tweet(close, closeAndPlay)
 
+    print("sharemanager tweet")
     local text = translate(lotteryManager.global.tweet)
     native.setActivityIndicator( true )
 
@@ -1089,6 +1088,8 @@ end
 function ShareManager:twitterFollow()
     native.setActivityIndicator( true )  
     twitter.follow(function()
+    
+        print("follow ok : sharemanager asks to refreshBonusTickets")
         userManager:refreshBonusTickets(function()
             native.setActivityIndicator( false )        
             analytics.event("Social", "followTwitter")

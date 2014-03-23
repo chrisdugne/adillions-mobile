@@ -21,39 +21,49 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:getGlobals(onGoodVersion, onBadVersion)
-
+    print("getGlobals")
     utils.postWithJSON({}, 
     SERVER_URL .. "globals", 
     function(result)
     
-        local response = json.decode(result.response)
-        
-        lotteryManager.global               = response.global
-        
-        lotteryManager.global.appStatus     = json.decode(lotteryManager.global.appStatus)
-        lotteryManager.global.tweet         = json.decode(lotteryManager.global.tweet)
-        lotteryManager.global.tweetTheme    = json.decode(lotteryManager.global.tweetTheme)
-        lotteryManager.global.fbPost        = json.decode(lotteryManager.global.fbPost)
-        lotteryManager.global.fbSharePrize  = json.decode(lotteryManager.global.fbSharePrize)
-        lotteryManager.global.sms           = json.decode(lotteryManager.global.sms)
-        lotteryManager.global.email         = json.decode(lotteryManager.global.email)
-        lotteryManager.global.text48h       = json.decode(lotteryManager.global.text48h)
-        lotteryManager.global.text3min      = json.decode(lotteryManager.global.text3min)
-
-        lotteryManager.global.minEuro       = json.decode(lotteryManager.global.minMoney).euro
-        lotteryManager.global.minUSD        = json.decode(lotteryManager.global.minMoney).usd
-
-        time.setServerTime(response.serverTime)
-        TIMER                               = lotteryManager.global.lastUpdate or response.serverTime
-        VERSION_REQUIRED                    = response.global.versionRequired
-        bannerManager.banners               = json.decode(lotteryManager.global.banners)
-
-        if(APP_VERSION >= VERSION_REQUIRED) then
-            print("onGoodVersion")
-            onGoodVersion()
+        if(result.isError) then
+            -- android....
+            print("globals on error...")
+            timer.performWithDelay(2000, function() userManager:getGlobals(onGoodVersion, onBadVersion) end)
+            
+            
         else
-            print("onBadVersion")
-            onBadVersion()
+        
+            local response = json.decode(result.response)
+            
+            lotteryManager.global               = response.global
+            
+            lotteryManager.global.appStatus     = json.decode(lotteryManager.global.appStatus)
+            lotteryManager.global.tweet         = json.decode(lotteryManager.global.tweet)
+            lotteryManager.global.tweetTheme    = json.decode(lotteryManager.global.tweetTheme)
+            lotteryManager.global.fbPost        = json.decode(lotteryManager.global.fbPost)
+            lotteryManager.global.fbSharePrize  = json.decode(lotteryManager.global.fbSharePrize)
+            lotteryManager.global.sms           = json.decode(lotteryManager.global.sms)
+            lotteryManager.global.email         = json.decode(lotteryManager.global.email)
+            lotteryManager.global.text48h       = json.decode(lotteryManager.global.text48h)
+            lotteryManager.global.text3min      = json.decode(lotteryManager.global.text3min)
+    
+            lotteryManager.global.minEuro       = json.decode(lotteryManager.global.minMoney).euro
+            lotteryManager.global.minUSD        = json.decode(lotteryManager.global.minMoney).usd
+    
+            time.setServerTime(response.serverTime)
+            TIMER                               = lotteryManager.global.lastUpdate or response.serverTime
+            VERSION_REQUIRED                    = response.global.versionRequired
+            bannerManager.banners               = json.decode(lotteryManager.global.banners)
+    
+            if(APP_VERSION >= VERSION_REQUIRED) then
+                print("onGoodVersion")
+                onGoodVersion()
+            else
+                print("onBadVersion")
+                onBadVersion()
+            end
+            
         end
     end)
 end
@@ -272,6 +282,7 @@ end
 
 function UserManager:refreshBonusTickets(next)
     
+    print("-------------------------- refreshBonusTickets ")
     self.user.fanBonusTickets       = 0
     self.user.charityBonusTickets   = 0
 
@@ -539,11 +550,22 @@ function UserManager:checkFanStatus(next)
 
             if(statusChanged) then
                 self:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
+                
             else
-                print("continue")
-                if(next) then
-                    next()
+                -- just connected to twitter and not following : bonus = TWITTER_CONNECTION_TICKETS
+                if(self.requireTwitterConnectionTickets) then
+                    self.requireTwitterConnectionTickets = false
+                    userManager:giftStock(TWITTER_CONNECTION_TICKETS, function()
+                        if(next) then
+                            next()
+                        end
+                    end)          
+                else
+                    if(next) then
+                        next()
+                    end
                 end
+                            
             end
 
             ---------------------------------------------------------
@@ -786,7 +808,11 @@ function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
             end)
             
         elseif(notifyTWBonus) then
-            userManager:giftStock(TWITTER_FAN_TICKETS, function()
+            local bonus = 0
+            if(notifyFBBonus) then bonus = bonus + TWITTER_FAN_TICKETS end 
+            if(self.requireTwitterConnectionTickets) then bonus = bonus + TWITTER_CONNECTION_TICKETS end
+            self.requireTwitterConnectionTickets = false
+            userManager:giftStock(bonus, function()
                 if(next) then
                     next()
                 end

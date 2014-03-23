@@ -28,13 +28,14 @@ local oAuth = require "src.libs.oAuth"
 -----------------------------------------------------------------------------------------
 
 -- Fill in the following fields from your Twitter app account
-consumer_key   = "mkJn1v9zVyKHnU7S6yLCg"
-consumer_secret  = "wIj7zjxPTwc8Mt2uAyf8azKmSgPEDwYpvpxdtQwic"
+consumer_key        = "mkJn1v9zVyKHnU7S6yLCg"
+consumer_secret     = "wIj7zjxPTwc8Mt2uAyf8azKmSgPEDwYpvpxdtQwic"
 
 -----------------------------------------------------------------------------------------
 
-connected    = false
-twitterON    = false
+connected           = false
+twitterON           = false
+closeTwitterWebView = {}
 
 -----------------------------------------------------------------------------------------
 
@@ -66,6 +67,8 @@ function callback.twitterSuccess( requestType, name, response )
 
     if(callback.next) then
         print("-----> callback")
+        print("connected:")
+        print(connected)
         callback.next(response)
     end 
 end
@@ -108,7 +111,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function follow( next )
-
+    
+    print("twitter.follow")
     callback.next = next
 
     local params = {"follow", "friendships/create.json", "POST",
@@ -247,12 +251,10 @@ function connect(next)
         -- Displays a webpopup to access the Twitter site so user can sign in
         --
         print("showWebPopup")
-        native.showWebPopup(0, 0, 
-            display.contentWidth, display.contentHeight, 
-            "https://api.twitter.com/oauth/authenticate?oauth_token=".. twitter_request_token, 
-            {urlRequest = twitterListener}
-        )
-
+        
+        local url           = "https://api.twitter.com/oauth/authenticate?oauth_token=".. twitter_request_token
+        closeTwitterWebView = viewManager.openWeb(url, twitterListener)
+    
         twitterON = false
         native.setActivityIndicator(false)
 
@@ -365,7 +367,7 @@ function twitterListener(event)
     -- It also has the "oauth_token_secret" and "oauth_verifier" strings
     --
     if url:find("oauth_token") and url:find(webURL) then
-
+                    
         ----------------------------------------------------
         -- Callback from getAccessToken
         ----------------------------------------------------
@@ -387,9 +389,12 @@ function twitterListener(event)
             GLOBALS.savedData.twitterAccessToken   = access_response.oauth_token
             GLOBALS.savedData.twitterAccessTokenSecret = access_response.oauth_token_secret
 
+            print("twitter connected ok specific adillions")
             connected = true
+            closeTwitterWebView()
             userManager:twitterConnection(user_id, screen_name, proceed)
-
+            userManager.requireTwitterConnectionTickets = true
+            
             ----------------------------------------------
 
             delegate.twitterSuccess()

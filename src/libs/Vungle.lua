@@ -27,6 +27,7 @@ function Vungle:init()
         appId = "com.adillions.v1"
     end
 
+    vungleON = false
     ads.init( "vungle", appId , function(event) self:adListener(event) end )
 end
 
