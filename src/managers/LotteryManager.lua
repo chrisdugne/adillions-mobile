@@ -53,6 +53,11 @@ end
 function LotteryManager:checkAppStatus(waiting)
 
     print("checkAppStatus")
+    
+    if(self.appStatusTimer) then
+        timer.cancel(self.appStatusTimer)
+    end
+    
     utils.postWithJSON(
     {}, 
     SERVER_URL .. "appStatus", 
@@ -71,7 +76,7 @@ function LotteryManager:checkAppStatus(waiting)
             lottery.theme = json.decode(lottery.theme)
             waiting(lottery)
             viewManager.refreshPlayButton(true)
-            timer.performWithDelay(1000, function() self:checkAppStatus(waiting) end)
+            self.appStatusTimer = timer.performWithDelay(math.random(6000, 12000), function() self:checkAppStatus(waiting) end)
         end
         
     end)

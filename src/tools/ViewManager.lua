@@ -815,7 +815,7 @@ function buildMenu(tabSelected, menuType)
     utils.onTap(hud.playButton, function()
         if(tabSelected ~= 0) then 
             router.openHome() 
-        elseif(router.view == router.HOME) then
+        elseif(router.view == router.HOME and lotteryManager.global.appStatus.state == 1) then
             gameManager:play()
         end 
     end)
