@@ -7,8 +7,9 @@ Vungle = {}
 function Vungle:new()  
 
     local object = {
-        afterVideoSeen   = nil,
-        attemptGetVideo   = 0
+        afterVideoSeen      = nil,
+        attemptGetVideo     = 0,
+        vungleON            = false
     }
 
     setmetatable(object, { __index = Vungle })

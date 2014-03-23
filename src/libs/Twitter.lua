@@ -34,6 +34,7 @@ consumer_secret  = "wIj7zjxPTwc8Mt2uAyf8azKmSgPEDwYpvpxdtQwic"
 -----------------------------------------------------------------------------------------
 
 connected    = false
+twitterON    = false
 
 -----------------------------------------------------------------------------------------
 
@@ -221,6 +222,8 @@ end
 function connect(next)
 
     native.setActivityIndicator(true)
+    twitterON = true
+    
     proceed    = next
     delegate   = callback
 
@@ -250,6 +253,7 @@ function connect(next)
             {urlRequest = twitterListener}
         )
 
+        twitterON = false
         native.setActivityIndicator(false)
 
     end --  end of tweetAuth_ret callback

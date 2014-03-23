@@ -152,8 +152,8 @@ function UserManager:getPlayerByFacebookId()
                 print("--> test player")
                 response        = json.decode(result.response)
                 local player       = response.player
-                GLOBALS.savedData.authToken  = response.authToken     
-
+                GLOBALS.savedData.authToken  = response.authToken
+                     
                 userManager:receivedPlayer(player, router.openHome)
             end
         end
@@ -772,8 +772,14 @@ function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
         print("--- updateFanStatus false")
         native.setActivityIndicator( false )
         
-        if(notifyFBBonus) then
-            userManager:giftStock(FACEBOOK_FAN_TICKETS, function()
+        if(notifyFBBonus or self.requireFacebookConnectionTickets) then
+            
+            local bonus = 0
+            if(notifyFBBonus) then bonus = bonus + FACEBOOK_FAN_TICKETS end 
+            if(self.requireFacebookConnectionTickets) then bonus = bonus + FACEBOOK_CONNECTION_TICKETS end
+            self.requireFacebookConnectionTickets = false
+            
+            userManager:giftStock(bonus, function()
                 if(next) then
                     next()
                 end

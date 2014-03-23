@@ -15,10 +15,16 @@ module(..., package.seeall)
 
 -----------------------------------------------------------------------------------------
 
+facebookON    = false
+
+-----------------------------------------------------------------------------------------
+
 function login()
     print("--- facebook login")
     coronaFacebook.logout()
     native.setActivityIndicator( true )
+    
+    facebookON = true
     coronaFacebook.login( FACEBOOK_APP_ID, loginListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
 end
 
@@ -31,6 +37,8 @@ function connect(success, before)
     print("--- facebook connect")
     coronaFacebook.logout()
     native.setActivityIndicator( true )
+    
+    facebookON = true
     coronaFacebook.login( FACEBOOK_APP_ID, connectListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
     connectionSuccessful    = success
     beforeForceLogin        = before
@@ -45,6 +53,9 @@ function loginListener( event )
     utils.tprint(event)
 
     if ( "session" == event.type ) then
+    
+        facebookON = false
+        
         -- upon successful login, request list of friends of the signed in user
         if ( "login" == event.phase ) then
 
@@ -96,6 +107,9 @@ function connectListener( event )
 
     if ( "session" == event.type ) then
         -- upon successful login, request list of friends of the signed in user
+        
+        facebookON = false
+        
         if ( "login" == event.phase ) then
 
             if(event.token) then

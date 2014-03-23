@@ -257,7 +257,7 @@ local onSystem = function( event )
         twitter.reconnect()
         
     elseif event.type == "applicationResume" then
-        if(not vungle.vungleON) then
+        if(not vungle.vungleON and not facebook.facebookON and not twitter.twitterON) then
             native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
             gameManager:open()
             twitter.reconnect()

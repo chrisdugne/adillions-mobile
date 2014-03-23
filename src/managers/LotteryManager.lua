@@ -44,10 +44,11 @@ function LotteryManager:refreshNextLottery(classic, waiting)
         else
             classic()
         end
-    end)
+    end)    
 end
 
 -----------------------------------------------------------------------------------------
+-- todo : timer + timer.cancel + random time 6000,10000
 
 function LotteryManager:checkAppStatus(waiting)
 
