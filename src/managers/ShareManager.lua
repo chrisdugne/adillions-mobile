@@ -122,8 +122,7 @@ function ShareManager:moreTickets(popup)
                 -- pas fan et connecte | button v3
                 imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function()
-                    close()
-                    self:twitterFollow()
+                    self:twitterFollow(popup)
                 end
 
             else
@@ -131,8 +130,7 @@ function ShareManager:moreTickets(popup)
                 imageTwitter = I "stock.twitter.3.png"
                 actionTwitter = function() 
                     twitter.connect(function()
-                        close()
-                        self:twitterFollow()
+                        self:twitterFollow(popup)
                     end) 
                 end
 
@@ -719,18 +717,19 @@ function ShareManager:shareWinningsOnWall(prize, popup)
     local text = translate(lotteryManager.global.fbSharePrize):gsub("___", prize)
 
     -------
-    
-    local share = function()
-        facebook.postOnWall(text, function()
-            viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
-            next()
-        end)
-    end
-
-    -------
 
     local close = function()
         viewManager.closePopup(popup)
+    end
+
+    -------
+    
+    local share = function()
+        analytics.event("Social", "shareWinnings") 
+        facebook.postOnWall(text, function()
+            viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
+            close()
+        end)
     end
 
     -------
@@ -740,24 +739,22 @@ function ShareManager:shareWinningsOnWall(prize, popup)
         -- linked
         if(GLOBALS.savedData.facebookAccessToken) then
             share()
-            analytics.event("Social", "shareWinnings") 
         else
             facebook.connect(function()
                 share()
-                analytics.event("Social", "shareWinnings") 
             end, close) 
         end
 
     -------
 
     else
-    
         facebook.connect(function()
-            userManager.user.idlePoints = userManager.user.idlePoints + FACEBOOK_CONNECTION_TICKETS
-            share()
             analytics.event("Social", "linkedFacebookFromShareWinnings") 
+            userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
+                share()
+            end)
         end, close) 
-
+            
     end
     
 end
@@ -1085,7 +1082,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function ShareManager:twitterFollow()
+function ShareManager:twitterFollow(popup)
     native.setActivityIndicator( true )  
     twitter.follow(function()
     
@@ -1093,7 +1090,13 @@ function ShareManager:twitterFollow()
         userManager:refreshBonusTickets(function()
             native.setActivityIndicator( false )        
             analytics.event("Social", "followTwitter")
-            userManager:showStatus()
+            
+            if(popup.refresh) then
+                popup.refresh()
+            end
+            
+            viewManager.closePopin()
+            self:moreTickets(popup)
         end)
     end) 
 end
@@ -1120,11 +1123,11 @@ function ShareManager:openFacebookPage(popup)
                     if(popup.refresh) then
                         popup.refresh()
                     end
-                    self:moreTickets(popup)
                 else
                     viewManager.message(T "You haven't liked our page :-(")    
-                    self:moreTickets(popup)
                 end
+
+                self:moreTickets(popup)
                 
             end)
         end)

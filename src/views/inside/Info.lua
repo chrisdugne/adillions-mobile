@@ -42,14 +42,14 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.subheaderBG   = display.newImage(hud, "assets/images/hud/info.bg.png")
-    hud.subheaderBG.x  = display.contentWidth*0.5
-    hud.subheaderBG.y  = display.contentHeight * 0.5
+    hud.infoBG      = display.newImage(hud, "assets/images/hud/info.bg.png")
+    hud.infoBG.x    = display.contentWidth*0.5
+    hud.infoBG.y    = display.contentHeight * 0.5
 
     ------------------
 
-    hud.options    = display.newImage( hud, I "info.Options.png")  
-    hud.options.x    = self.column1
+    hud.options     = display.newImage( hud, I "info.Options.png")  
+    hud.options.x   = self.column1
     hud.options.y   = self.top
 
     utils.onTouch(hud.options, function()

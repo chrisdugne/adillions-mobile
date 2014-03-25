@@ -542,26 +542,26 @@ function scene:drawScene()
     end
 
     local totalWinningsText = viewManager.newText({
-        parent    = hud.board, 
-        text     = balance,   
-        x      = display.contentWidth*0.5, 
-        y      = self.top + self.yGap*(winningsTop+5),
-        fontSize   = 40,
-        font    = NUM_FONT,
-        anchorX    = 1,
-        anchorY    = 0.5,
+        parent      = hud.board, 
+        text        = balance,   
+        x           = display.contentWidth*0.5, 
+        y           = self.top + self.yGap*(winningsTop+5),
+        fontSize    = 40,
+        font        = NUM_FONT,
+        anchorX     = 1,
+        anchorY     = 0.5
     })
 
-    hud.iconMoney    = display.newImage( hud.board, "assets/images/icons/PictoBalance.png")
-    hud.iconMoney.x   = display.contentWidth*0.58
-    hud.iconMoney.y   = self.top + self.yGap*(winningsTop+5) - display.contentHeight*0.004
+    hud.iconMoney       = display.newImage( hud.board, "assets/images/icons/PictoBalance.png")
+    hud.iconMoney.x     = display.contentWidth*0.58
+    hud.iconMoney.y     = self.top + self.yGap*(winningsTop+5) - display.contentHeight*0.004
     hud.board:insert(hud.iconMoney)
 
     --------------------------
 
-    hud.cashout   = display.newImage( hud.board, I "profile.payment.png")  
-    hud.cashout.x   = display.contentWidth*0.5
-    hud.cashout.y  = self.top + self.yGap*(winningsTop+7.2)
+    hud.cashout         = display.newImage( hud.board, I "profile.payment.png")  
+    hud.cashout.x       = display.contentWidth*0.5
+    hud.cashout.y       = self.top + self.yGap*(winningsTop+7.2)
     hud.board:insert(hud.cashout)
 
     utils.onTouch(hud.cashout, function() 
@@ -665,6 +665,10 @@ function scene:openCashout()
 
     ----------------------------------------------------------------------------------------------------
 
+    popup.infoBG                    = display.newImage(popup, "assets/images/hud/info.bg.png")
+    popup.infoBG.x                  = display.contentWidth*0.5
+    popup.infoBG.y                  = display.contentHeight * 0.5
+
     popup.shareIcon                 = display.newImage( popup, "assets/images/icons/PictoInfo.png")  
     popup.shareIcon.x               = display.contentWidth*0.5
     popup.shareIcon.y               = display.contentHeight*0.15
@@ -683,15 +687,15 @@ function scene:openCashout()
     end
 
     popup.multiLineText = display.newText({
-        parent = popup,
-        text   = T "You can cash out when your winnings have reached a minimum total balance of " .. value,  
-        width  = display.contentWidth*0.72,  
-        height  = display.contentHeight*0.25,  
-        x    = display.contentWidth*0.5,
-        y    = display.contentHeight*0.45,
-        font   = FONT, 
-        fontSize = 40,
-        align  = "center",
+        parent      = popup,
+        text        = T "You can cash out when your winnings have reached a minimum total balance of " .. value,  
+        width       = display.contentWidth*0.72,  
+        height      = display.contentHeight*0.25,  
+        x           = display.contentWidth*0.5,
+        y           = display.contentHeight*0.45,
+        font        = FONT, 
+        fontSize    = 40,
+        align       = "center",
     })
 
     popup.multiLineText:setFillColor(0)
@@ -704,14 +708,19 @@ function scene:openCashout()
     end
 
     if(userManager.user.balance >= min) then
-        hud.cashoutEnabled     = display.newImage( popup, I "cashout.on.png")  
-        hud.cashoutEnabled.x    = display.contentWidth*0.5
-        hud.cashoutEnabled.y    = display.contentHeight*0.65
-        utils.onTouch(hud.cashoutEnabled, function() self.openConfirmCashout() end)
+        hud.cashoutEnabled          = display.newImage( popup, I "cashout.on.png")  
+        hud.cashoutEnabled.x        = display.contentWidth*0.5
+        hud.cashoutEnabled.y        = display.contentHeight*0.65
+        utils.onTouch(hud.cashoutEnabled, function()
+            viewManager.closePopup(popup)  
+            self.openConfirmCashout() 
+        end)
+        
     else
-        hud.cashoutDisabled     = display.newImage( popup, I "cashout.off.png")  
-        hud.cashoutDisabled.x    = display.contentWidth*0.5
-        hud.cashoutDisabled.y   = display.contentHeight*0.65
+        hud.cashoutDisabled         = display.newImage( popup, I "cashout.off.png")  
+        hud.cashoutDisabled.x       = display.contentWidth*0.5
+        hud.cashoutDisabled.y       = display.contentHeight*0.65
+        
     end
 
     -- if(userManager.user.balance > 0) then
@@ -728,9 +737,9 @@ function scene:openCashout()
 
     ----------------------------------------------------------------------------------------------------
 
-    popup.close     = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x    = display.contentWidth*0.5
-    popup.close.y    = display.contentHeight*0.86
+    popup.close         = display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x       = display.contentWidth*0.5
+    popup.close.y       = display.contentHeight*0.86
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
@@ -747,13 +756,13 @@ function scene:openGiveToCharity()
 
     ----------------------------------------------------------------------------------------------------
 
-    popup.shareIcon     = display.newImage( popup, "assets/images/icons/PictoCoeur.png")  
-    popup.shareIcon.x    = display.contentWidth*0.5
-    popup.shareIcon.y   = display.contentHeight*0.15
+    popup.shareIcon         = display.newImage( popup, "assets/images/icons/PictoCoeur.png")  
+    popup.shareIcon.x       = display.contentWidth*0.5
+    popup.shareIcon.y       = display.contentHeight*0.15
 
-    popup.thanks      = display.newImage( popup, I "thanks.png")  
-    popup.thanks.x     = display.contentWidth*0.5
-    popup.thanks.y    = display.contentHeight*0.23
+    popup.thanks            = display.newImage( popup, I "thanks.png")  
+    popup.thanks.x          = display.contentWidth*0.5
+    popup.thanks.y          = display.contentHeight*0.23
 
     ----------------------------------------------------------------------------------------------------
     --
@@ -802,7 +811,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function scene:openConfirmCashout()
+function scene: openConfirmCashout()
 
     -----------------------------------
 
@@ -811,35 +820,39 @@ function scene:openConfirmCashout()
 
     ----------------------------------------------------------------------------------------------------
 
-    popup.shareIcon     = display.newImage( popup, "assets/images/icons/notification/prizes.popup.png")  
-    popup.shareIcon.x    = display.contentWidth*0.5
-    popup.shareIcon.y   = display.contentHeight*0.15
+    popup.infoBG                    = display.newImage(popup, "assets/images/hud/info.bg.png")
+    popup.infoBG.x                  = display.contentWidth*0.5
+    popup.infoBG.y                  = display.contentHeight * 0.5
+    
+    popup.shareIcon                 = display.newImage( popup, "assets/images/icons/notification/prizes.popup.png")  
+    popup.shareIcon.x               = display.contentWidth*0.5
+    popup.shareIcon.y               = display.contentHeight*0.15
 
-    popup.congratz     = display.newImage( popup, I "TxtCongratulations.png")  
-    popup.congratz.x    = display.contentWidth*0.5
-    popup.congratz.y    = display.contentHeight*0.25
+    popup.congratz                  = display.newImage( popup, I "TxtCongratulations.png")  
+    popup.congratz.x                = display.contentWidth*0.5
+    popup.congratz.y                = display.contentHeight*0.25
 
     ----------------------------------------------------------------------------------------------------
 
     popup.multiLineText = display.newText({
-        parent = popup,
-        text   = T "You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment",  
-        width  = display.contentWidth*0.6,  
-        height  = display.contentHeight*0.25,  
-        x    = display.contentWidth*0.5,
-        y    = display.contentHeight*0.45,
-        font   = FONT, 
-        fontSize = 38,
-        align  = "center",
+        parent      = popup,
+        text        = T "You will receive your winnings within 4 to 8 weeks \n \n  We will contact you by email in the coming days to proceed with the payment",  
+        width       = display.contentWidth*0.6,  
+        height      = display.contentHeight*0.25,  
+        x           = display.contentWidth*0.5,
+        y           = display.contentHeight*0.45,
+        font        = FONT, 
+        fontSize    = 38,
+        align       = "center"
     })
 
     popup.multiLineText:setFillColor(0)
 
     ----------------------------------------------------------------------------------------------------
 
-    hud.confirm       = display.newImage( popup, I "confirm.png")  
-    hud.confirm.x       = display.contentWidth*0.5
-    hud.confirm.y      = display.contentHeight*0.7
+    hud.confirm     = display.newImage( popup, I "confirm.png")  
+    hud.confirm.x   = display.contentWidth*0.5
+    hud.confirm.y   = display.contentHeight*0.7
 
     local refresh = function() scene:refreshScene() end
 
@@ -847,13 +860,19 @@ function scene:openConfirmCashout()
         analytics.event("Gaming", "cashout")
         native.setActivityIndicator( true ) 
         userManager:cashout(function()
+            print("--> cashout success")
             native.setActivityIndicator( false ) 
+            viewManager.message(T "Congratulations !")
+            viewManager.closePopup(popup)
+            userManager.user.pendingWinnings = userManager.user.pendingWinnings + userManager.user.balance
+            userManager.user.balance = 0
+
+            print("--> refreshing screen")
             router.resetScreen()
             refresh()
-            viewManager.message(T "Congratulations !")
         end) 
     end)
-
+    
     ----------------------------------------------------------------------------------------------------
 
     popup.close     = display.newImage( popup, I "popup.Bt_close.png")

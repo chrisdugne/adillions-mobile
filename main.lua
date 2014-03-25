@@ -4,8 +4,8 @@
 --
 -----------------------------------------------------------------------------------------
 
-APP_NAME        = "Adillions"
-APP_VERSION     = 1.3
+APP_NAME                = "Adillions"
+APP_VERSION             = 1.3
 
 -----------------------------------------------------------------------------------------
 
@@ -14,52 +14,52 @@ PROD            = 1
 
 -----------------------------------------------------------------------------------------
 
-FACEBOOK_PAGE_ID  = "379432705492888"
-FACEBOOK_PAGE   = "https://www.facebook.com/adillions"
-TWITTER_ID    = "1922939570"
+FACEBOOK_PAGE_ID        = "379432705492888"
+FACEBOOK_PAGE           = "https://www.facebook.com/adillions"
+TWITTER_ID              = "1922939570"
 
 -----------------------------------------------------------------------------------------
 
-ANALYTICS_VERSION   = 1
-ANALYTICS_TRACKING_ID  = "UA-45586817-2"
-ANALYTICS_PROFILE_ID  = "78871292"
+ANALYTICS_VERSION       = 1
+ANALYTICS_TRACKING_ID   = "UA-45586817-2"
+ANALYTICS_PROFILE_ID    = "78871292"
 
 -----------------------------------------------------------------------------------------
 
 if(PROD) then
     print("prod")
-    FACEBOOK_APP_ID   = "170148346520274"
-    FACEBOOK_API_SECRET  = "887e8f7abb9b1cb9238a097e06585ae2"
+    FACEBOOK_APP_ID         = "170148346520274"
+    FACEBOOK_API_SECRET     = "887e8f7abb9b1cb9238a097e06585ae2"
     FACEBOOK_APP_NAMESPACE  = "adillions"
-    SERVER_URL     = "http://www.adillions.com/"
-    SERVER_OG_URL    = "http://www.adillions.com/"
+    SERVER_URL              = "http://www.adillions.com/"
+    SERVER_OG_URL           = "http://www.adillions.com/"
 else
     print("dev")
-    FACEBOOK_APP_ID   = "534196239997712"
-    FACEBOOK_API_SECRET  = "46383d827867d50ef5d87b66c81f1a8e"
+    FACEBOOK_APP_ID         = "534196239997712"
+    FACEBOOK_API_SECRET     = "46383d827867d50ef5d87b66c81f1a8e"
     FACEBOOK_APP_NAMESPACE  = "adillions-dev"
-    SERVER_URL     = "http://192.168.0.8:9000/"
-    SERVER_OG_URL    = "http://192.168.0.8:9000/"
+    SERVER_URL              = "http://localhost:9000/"
+    SERVER_OG_URL           = "http://localhost:9000/"
 end
 
 -----------------------------------------------------------------------------------------
 
-IOS     = system.getInfo( "platformName" )  == "iPhone OS"
-ANDROID    = system.getInfo( "platformName" )  == "Android"
-SIMULATOR    = system.getInfo( "environment" )   == "simulator"
+IOS                         = system.getInfo( "platformName" )  == "iPhone OS"
+ANDROID                     = system.getInfo( "platformName" )  == "Android"
+SIMULATOR                   = system.getInfo( "environment" )   == "simulator"
 
 -----------------------------------------------------------------------------------------
 --- lottery tickets status
 
-BLOCKED  = 1; -- set as winning ticket, notification/popup read, cashout blocked (<10)
-PENDING  = 2; -- cashout requested
-PAYED      = 3; -- to set manually when paiement is done
-GIFT   = 4; --  gift to charity
+BLOCKED         = 1; -- set as winning ticket, notification/popup read, cashout blocked (<10)
+PENDING         = 2; -- cashout requested
+PAYED           = 3; -- to set manually when paiement is done
+GIFT            = 4; --  gift to charity
 
-BONUS_1  = 11; -- rang 7
-BONUS_2  = 12; -- rang 8
-BONUS_3  = 13; -- rang 9
-BONUS_4  = 14; -- rang 10
+BONUS_1         = 11; -- rang 7
+BONUS_2         = 12; -- rang 8
+BONUS_3         = 13; -- rang 9
+BONUS_4         = 14; -- rang 10
 
 -----------------------------------------------------------------------------------------
 --- charity levels
@@ -258,8 +258,17 @@ local onSystem = function( event )
         
     elseif event.type == "applicationResume" then
         
-        print("----->  ON RESUME", vungle.vungleON, facebook.facebookON, twitter.twitterON)
-        if(not vungle.vungleON and not facebook.facebookON and not twitter.twitterON) then
+        print("----->  ON RESUME", vungle.vungleON, facebook.facebookON, twitter.twitterON, router.view)
+        if( not vungle.vungleON 
+        and not facebook.facebookON 
+        and not twitter.twitterON
+        and not (router.view == router.NO_INTERNET)
+        and not (router.view == router.LOADING)
+        and not (router.view == router.OUTSIDE)
+        and not (router.view == router.LOGIN)
+        and not (router.view == router.SIGNIN)
+        and not (router.view == router.SIGNINFB)
+        ) then
             print("RESET PLAYER")
             native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
             gameManager:open()

@@ -27,10 +27,12 @@ function scene:refreshScene()
 --    hud.subheaderImage.y  = HEADER_HEIGHT - 3
 --    hud.subheaderImage.anchorY  = 0
 
-    hud.subheaderText   = display.newImage(hud, I "home.subheader.title.png")
-    hud.subheaderText.x  = display.contentWidth*0.5
+    hud.subheaderText           = display.newImage(hud, I "home.subheader.title.png")
+    hud.subheaderText.anchorX   = 0
+    hud.subheaderText.x         = display.contentWidth  * 0.11
+    hud.subheaderText.y         = display.contentHeight * 0.15
+    
 --    hud.subheaderText.y  = display.contentHeight * 0.15
-    hud.subheaderText.y  = display.contentHeight * 0.135
 --
     ------------------
     
@@ -92,7 +94,7 @@ function scene:drawNextLottery( waitingForDrawing )
 
     hud.pictoTimer      = display.newImage( hud, "assets/images/hud/home/home.timer.png")  
     hud.pictoTimer.x    = display.contentWidth*0.5
-    hud.pictoTimer.y    = timerY 
+    hud.pictoTimer.y    = timerY  + display.contentWidth*0.012 
     
     -------------------------------
 

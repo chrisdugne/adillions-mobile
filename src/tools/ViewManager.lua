@@ -70,16 +70,17 @@ function initHeader(selectedTab)
     hud.logo.y = HEADER_HEIGHT*0.5
 
 
-    if(whiteHeader) then
-        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.green.png")  
-    else  
-        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.white.png")  
-    end
+--    if(whiteHeader) then
+--        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.green.jpg")  
+--    else  
+--        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.jpg")  
+--    end
 
-    hud.headerButton.x = display.contentWidth*0.9
-    hud.headerButton.y = HEADER_HEIGHT*0.5
-    hud.headerButton.anchorX = 0.5
-    hud.headerButton.anchorY = 0.44
+    hud.headerButton            = display.newImage( hud, "assets/images/icons/info.ticket.png")  
+    hud.headerButton.x          = display.contentWidth*0.9
+    hud.headerButton.y          = HEADER_HEIGHT*0.5
+    hud.headerButton.anchorX    = 0.5
+    hud.headerButton.anchorY    = 0.5
 
     utils.onTouch(hud.headerButton, function()
         analytics.event("Gaming", "showStatus") 

@@ -196,36 +196,6 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function LotteryManager:sumPrices()
-
-    userManager.user.totalWinnings   = 0
-    userManager.user.balance     = 0
-    userManager.user.totalGift    = 0
-    userManager.user.receivedWinnings = 0
-    userManager.user.pendingWinnings  = 0
-
-    if(userManager.user.lotteryTickets) then
-        for i = 1,#userManager.user.lotteryTickets do
-            local ticket = userManager.user.lotteryTickets[i]
-            local value  = utils.countryPrice(ticket.price or 0, COUNTRY, ticket.lottery.rateUSDtoEUR)
-            userManager.user.totalWinnings = userManager.user.totalWinnings + value
-
-            if(ticket.status == BLOCKED) then
-                userManager.user.balance = userManager.user.balance + value
-            elseif(ticket.status == GIFT) then
-                userManager.user.totalGift = userManager.user.totalGift + value
-            elseif(ticket.status == PENDING) then
-                userManager.user.pendingWinnings = userManager.user.pendingWinnings + value
-            else
-                userManager.user.receivedWinnings = userManager.user.receivedWinnings + value
-            end
-        end
-    end
-
-end
-
------------------------------------------------------------------------------------------
-
 function LotteryManager:addToSelection(num)
     self.currentSelection[#self.currentSelection+1] = num
     self:refreshNumberSelectionDisplay()

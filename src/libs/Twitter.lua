@@ -86,7 +86,14 @@ function isTwitterFan( next )
     -- triche possible : cancel fan et ne plus se connecter avec twitter.
     userManager.user.twitterFan = userManager.user.isTwitterFan
 
-    if(connected) then
+    if(not userManager.user.twitterId) then
+        print("------------------------ not linked ")
+    
+        if(next) then
+            next()
+        end
+        
+    elseif(connected) then
         print("------------------------ connected ")
 
         callback.next = next
@@ -373,11 +380,11 @@ function twitterListener(event)
         ----------------------------------------------------
         local function accessToken_ret( status, access_response )
 
-            access_response    = responseToTable( access_response, {"=", "&"} )
-            access_token     = access_response.oauth_token
-            access_token_secret   = access_response.oauth_token_secret
-            user_id       = access_response.user_id
-            screen_name     = access_response.screen_name
+            access_response         = responseToTable( access_response, {"=", "&"} )
+            access_token            = access_response.oauth_token
+            access_token_secret     = access_response.oauth_token_secret
+            user_id                 = access_response.user_id
+            screen_name             = access_response.screen_name
 
             if not access_token then
                 return
@@ -392,8 +399,10 @@ function twitterListener(event)
             print("twitter connected ok specific adillions")
             connected = true
             closeTwitterWebView()
-            userManager:twitterConnection(user_id, screen_name, proceed)
             userManager.requireTwitterConnectionTickets = true
+            
+            print("twitter : requireTwitterConnectionTickets : " .. tostring(userManager.requireTwitterConnectionTickets))
+            userManager:twitterConnection(user_id, screen_name, proceed)
             
             ----------------------------------------------
 
