@@ -746,15 +746,15 @@ function ShareManager:shareWinningsOnWall(prize, popup)
         end
 
     -------
-
-    else
-        facebook.connect(function()
-            analytics.event("Social", "linkedFacebookFromShareWinnings") 
-            userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
-                share()
-            end)
-        end, close) 
-            
+--
+--    else
+--        facebook.connect(function()
+--            analytics.event("Social", "linkedFacebookFromShareWinnings") 
+--            userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
+--                share()
+--            end)
+--        end, close) 
+--            
     end
     
 end

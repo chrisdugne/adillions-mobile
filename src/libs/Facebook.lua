@@ -247,28 +247,30 @@ end
 -- 1 login - updatedPlayer - checkThemeLiked : nil
 -- 2 nextlottery : false/true
 -- 3 update - updatedPlayer - checkThemeLiked : false/true
-function checkThemeLiked()
+function checkThemeLiked(next)
 
     print("checkThemeLiked", GLOBALS.savedData.facebookAccessToken)
     local theme = lotteryManager.nextLottery.theme
     userManager.user.themeLiked = false
 
-    if(GLOBALS.savedData.facebookAccessToken) then
+    if(GLOBALS.savedData.facebookAccessToken and theme) then
 
         local url = "https://graph.facebook.com/me/"..FACEBOOK_APP_NAMESPACE..":enjoy?"
         ..  "access_token=" .. GLOBALS.savedData.facebookAccessToken
 
         network.request(url , "GET", function(result)
+            print("theme result")
+            utils.tprint(result)
+        
             local response = json.decode(result.response)
             local liked = false
 
-            utils.print(response)
-
-            if(#response.data > 0) then 
+            if(response.data and #response.data > 0) then
+                
                 for i = 1,#response.data do
                     -- FB.OG BUG pas possible de rajouter uid today... check title pour linstant
                     --      if(response.data[i].data.theme.uid == theme.uid) then
-                    if(response.data[i].data.theme.title == theme.title) then
+                    if(response.data[i].data and response.data[i].data.theme and response.data[i].data.theme.title == theme.title) then
                         liked = true
                     end
                 end 
@@ -278,7 +280,20 @@ function checkThemeLiked()
                 userManager.user.themeLiked = true
                 print("themeAlreadyLiked")
             end
+            
+            print("checked FB theme like, proceed")
+            if(next) then
+                next()
+            end
+        
         end)
+        
+        
+    else
+        print("cannot check FB theme like, proceed")
+        if(next) then
+            next()
+        end
     end
 end
 

@@ -77,14 +77,12 @@ end
 
 function UserManager:fetchPlayer()
 
+    print("fetchPlayer")
+                
     userManager.user.fanBonusTickets = 0
     userManager.user.charityBonusTickets = 0
-
-    native.setActivityIndicator( true )
-    print("fetchPlayer")
+    
     self.attemptFetchPlayer = self.attemptFetchPlayer + 1 
-
-    print("fetch : mobileVersion " .. APP_VERSION)
 
     utils.postWithJSON({
         mobileVersion   = APP_VERSION,
@@ -102,13 +100,11 @@ function UserManager:fetchPlayer()
 
             else
                 print("fetchPlayer error : outside")
-                native.setActivityIndicator( false )
                 router.openOutside()
 
             end
 
         else
-            native.setActivityIndicator( false )
             self.attemptFetchPlayer = 0
 
             local player = json.decode(result.response)
@@ -117,7 +113,11 @@ function UserManager:fetchPlayer()
                 router.openOutside()
 
             else 
-                userManager:receivedPlayer(player, router.openHome)
+                print("receivedPlayer")
+                userManager:receivedPlayer(player, function() 
+                    print("fetch success, openHOme")
+                    router.openHome() 
+                end)
             end
         end
     end
@@ -311,10 +311,7 @@ function UserManager:refreshBonusTickets(next)
     self:setCharityBonus() 
     
     self:checkFanStatus(function()
-        if(next) then
-            next()
-        end
-        facebook.checkThemeLiked()
+        facebook.checkThemeLiked(next)
     end)
     
 end
@@ -514,8 +511,6 @@ end
 
 function UserManager:checkFanStatus(next)
 
-    native.setActivityIndicator( true )    
-    
     print("--------------------------------")
     print("checkFanStatus")
 
@@ -575,9 +570,6 @@ function UserManager:checkFanStatus(next)
 
             ---------------------------------------------------------
 
-            print("statusChanged ? " )
-            print(statusChanged)
-
             if(statusChanged) then
                 self:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
                 
@@ -591,6 +583,7 @@ function UserManager:checkFanStatus(next)
                         end
                     end)          
                 else
+                    print("just go next after fan status been checked")
                     if(next) then
                         next()
                     end
@@ -598,7 +591,6 @@ function UserManager:checkFanStatus(next)
                             
             end
             
-            native.setActivityIndicator( false )    
 
             ---------------------------------------------------------
         end)
@@ -641,30 +633,45 @@ end
 -- ce check est donc fait avant le concertIdlePoints
 -- donc les tickets convertis de idlepoints sont bien rajoutés aux nouveaux availableTickets
 
-function UserManager:checkUserCurrentLottery()
+function UserManager:checkUserCurrentLottery(next)
 
+    local checkDone = function()
+        if(next) then
+            next()
+        end 
+    
+        print("%%%%%%%%%%%%")
+        print("UserManager asks to refreshNotifications")
+        lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
+    end 
+        
+    ----------------------------------------
+    
     if(self.user.currentLotteryUID ~= lotteryManager.nextLottery.uid) then
 
-        ----------------------------------------
 
-        self.user.currentLotteryUID   = lotteryManager.nextLottery.uid
-        self.user.availableTickets    = START_AVAILABLE_TICKETS 
-        self.user.playedBonusTickets   = 0
+        self.user.currentLotteryUID     = lotteryManager.nextLottery.uid
+        self.user.availableTickets      = START_AVAILABLE_TICKETS 
+        self.user.playedBonusTickets    = 0
 
-        self.user.hasTweet     = false
-        self.user.hasPostOnFacebook   = false
-        self.user.hasTweetAnInvite   = false
+        self.user.hasTweet              = false
+        self.user.hasPostOnFacebook     = false
+        self.user.hasTweetAnInvite      = false
         self.user.hasInvitedOnFacebook  = false
 
-        self:updatePlayer()
+        print("%%%%%%%%%%%%")
+        print("UserManager must update player")
+        self:updatePlayer(checkDone)
 
         ----------------------------------------
+    
+    else
+        checkDone()
 
     end
 
     --------------------------------------------------------------------------------------
-
-    lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
+    
 end
 
 -----------------------------------------------------------------------------------------
@@ -810,16 +817,13 @@ end
 
 function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
 
-    native.setActivityIndicator( true ) 
-
     utils.postWithJSON({
         facebookFan  = self.user.facebookFan,
         twitterFan   = self.user.twitterFan,
     }, 
     SERVER_URL .. "updateFanStatus", 
     function(result)
-        native.setActivityIndicator( false )
-        
+    
         if(notifyFBBonus or userManager.requireFacebookConnectionTickets) then
             
             local bonus = 0
@@ -827,12 +831,10 @@ function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
             if(userManager.requireFacebookConnectionTickets) then bonus = bonus + FACEBOOK_CONNECTION_TICKETS end
             userManager.requireFacebookConnectionTickets = false
             
-            userManager:giftStock(bonus, function()
-                if(next) then
-                    next()
-                end
+            timer.performWithDelay(1500, function()
+                userManager:giftStock(bonus, function() end)
             end)
-            
+
         elseif(notifyTWBonus or self.requireTwitterConnectionTickets) then
             local bonus = 0
             
@@ -845,16 +847,16 @@ function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
                 self.requireTwitterConnectionTickets = false
             end
 
-            userManager:giftStock(bonus, function()
-                if(next) then
-                    next()
-                end
+            timer.performWithDelay(1500, function()
+                userManager:giftStock(bonus, function() end)
             end)
         
-        elseif(next) then
-            next()
         end
 
+        if(next) then
+            next()
+        end
+        
     end)
 end
 

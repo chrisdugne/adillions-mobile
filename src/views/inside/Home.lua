@@ -36,6 +36,7 @@ function scene:refreshScene()
 --
     ------------------
     
+    print("home asks to refreshNextLottery")
     lotteryManager:refreshNextLottery(function() 
         self:drawNextLottery(false) 
     end,function() 

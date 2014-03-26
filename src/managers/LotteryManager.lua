@@ -21,10 +21,13 @@ end
 
 function LotteryManager:refreshNextLottery(classic, waiting)
 
+    print("LotteryManager:refreshNextLottery")
     utils.postWithJSON(
     {}, 
     SERVER_URL .. "nextLottery", 
     function(result)
+    
+        print("%%%%%%%%%%%% -----> received lotteries")
 
         local response  = json.decode(result.response)
         local appStatus = json.decode(response.appStatus)
@@ -37,13 +40,23 @@ function LotteryManager:refreshNextLottery(classic, waiting)
         self.nextLottery.rangs    = json.decode(self.nextLottery.rangs)
         self.nextDrawing.rangs    = json.decode(self.nextDrawing.rangs)
         
-        userManager:checkUserCurrentLottery()
+        print("LotteryManager continues")
+        userManager:checkUserCurrentLottery(function()
+            
+            print("%%%%%%%%%%%%    user READY")
+            utils.tprint(appStatus)
+            
+            print("LotteryManager continues")
+            if(appStatus.state ~= 1) then
+                print("waiting")
+                waiting()
+            else
+                print("classic")
+                classic()
+            end
+            
+        end)
         
-        if(appStatus.state ~= 1) then
-            waiting()
-        else
-            classic()
-        end
     end)    
 end
 

@@ -478,7 +478,7 @@ function scene:play()
     if(userManager.user and userManager.user.uid) then
         router.openHome()
     else
-        router.openOutside()
+        gameManager:open()
     end
 end
 
