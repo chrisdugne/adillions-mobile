@@ -71,22 +71,25 @@ function scene:drawScene()
     })
 
     if(GLOBALS.savedData.facebookAccessToken and facebook.data) then
+        print(facebook.data.picture.data.url)
         viewManager.drawRemoteImage(
             facebook.data.picture.data.url, 
-            hud.board, 
+            hud.board,
             display.contentWidth*0.2, 
             self.top + display.contentHeight*0.02, 
             0.5,
             0.5,
             1, 
             1, 
-            function(image) end,
+            function(image) 
+                print("received profile photo")
+            end,
             "profilePicture_"
         )
     else
-        hud.dummyPicture   = display.newImage( hud.board, "assets/images/hud/dummy.profile.png")
-        hud.dummyPicture.x   = display.contentWidth*0.2
-        hud.dummyPicture.y   = self.top + display.contentHeight*0.02
+        hud.dummyPicture        = display.newImage( hud.board, "assets/images/hud/dummy.profile.png")
+        hud.dummyPicture.x      = display.contentWidth*0.2
+        hud.dummyPicture.y      = self.top + display.contentHeight*0.02
         hud.board:insert(hud.dummyPicture)
     end
 
@@ -842,7 +845,7 @@ function scene: openConfirmCashout()
         x           = display.contentWidth*0.5,
         y           = display.contentHeight*0.45,
         font        = FONT, 
-        fontSize    = 38,
+        fontSize    = 42,
         align       = "center"
     })
 

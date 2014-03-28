@@ -645,8 +645,11 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
     if(not alpha) then alpha = 1 end
     if(not prefix) then prefix = "" end
 
+    url = url:gsub("https", "http")
     local fileName = prefix .. utils.imageName(url)
     local image
+
+    print("---> " .. fileName)
 
     if(fitToScreen) then
         image = display.newImageRect( parent, fileName, system.TemporaryDirectory,  display.contentWidth, display.contentHeight * heightRatio)
@@ -657,9 +660,13 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
     if not image then
         local view = router.view
         local imageReceived = function(event) 
+            print("---> view : " .. view)
+            print("---> router.view : " .. router.view)
             if(router.view == view) then 
+                print("insert")
                 return insertImage(event.target, parent, x, y, anchorX, anchorY, scale, alpha, next)
             else 
+                print("bunk")
                 display.remove(event.target)
             end
         end
@@ -673,6 +680,7 @@ end
 
 function insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
 
+    print("insert...")
     image.x             = x
     image.y             = y
     image.anchorX       = anchorX
@@ -681,9 +689,12 @@ function insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
     image.yScale        = scale
     image.alpha         = alpha
 
+    print("insert........")
     parent:insert(image)
 
+    print("insert.................")
     if(next) then
+        print("insert.................next")
         next(image)
     end
 

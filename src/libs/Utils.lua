@@ -259,7 +259,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function imageName( url )
-    return url:gsub("/", ".")
+    local rep = url:gsub("/", "_")
+    return rep:sub(string.len(rep)-30, string.len(rep))
 --    
 --    
 --    local index = string.find(url,"/")
