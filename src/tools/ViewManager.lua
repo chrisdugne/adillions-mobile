@@ -56,7 +56,7 @@ function initHeader(selectedTab)
     else  
         hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
     end
-
+    
     hud.headerRect.x = display.viewableContentWidth*0.5 
     hud.headerRect.y = HEADER_HEIGHT*0.5
 
@@ -513,7 +513,7 @@ function animatePrice(nextMillis)
 
     timer.performWithDelay(nextMillis, function()
         local lotteryPriceDollars = lotteryManager:priceDollars(lotteryManager.nextDrawing)
-        local priceToReach = utils.countryPrice(lotteryPriceDollars, COUNTRY, lotteryManager.nextDrawing.rateUSDtoEUR)
+        local priceToReach = utils.countryPrice(lotteryPriceDollars, COUNTRY, lotteryManager.nextDrawing.rateUSDtoEUR, 0)
 
         local ratio = (20 * priceToReach)/(priceToReach - hud.priceCurrentDisplay)
         local toAdd = math.floor(priceToReach/ratio)

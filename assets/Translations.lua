@@ -570,6 +570,10 @@ local translations =
         ["fr"] = "Choisissez votre Boule Chance !",
     },
 
+    ["Lucky Ball"] = {
+        ["fr"] = "Boule Chance",
+    },
+
     ---CONFIRMATION-----------------------------------------------------------
 
     ["Your selection !"] = {

@@ -164,25 +164,12 @@ function scene:openPrizes()
 
     --------------------------
 
-    viewManager.newText({
-        parent = popup, 
-        text = T "Last updated : January 05th, 2014",
-        x = display.contentWidth*0.9,
-        y = display.contentHeight * 0.08,
-        fontSize = 26,
-        font  = FONT,
-        anchorX    = 1,
-        anchorY    = 1,
-    })
-
-    --------------------------
-
-    hud.picto    = display.newImage(popup, "assets/images/icons/PrizeTitle.png")
-    hud.picto.x   = display.contentWidth*0.14
-    hud.picto.y   = display.contentHeight*0.15
+    hud.picto       = display.newImage(popup, "assets/images/icons/PrizeTitle.png")
+    hud.picto.x     = display.contentWidth*0.14
+    hud.picto.y     = display.contentHeight*0.15
     hud.picto:scale(0.7,0.7)
 
-    hud.title    = display.newImage(popup, I "Prize.png")
+    hud.title       = display.newImage(popup, I "Prize.png")
 
     hud.title.anchorX    = 0
     hud.title.anchorY    = 0.5
@@ -253,14 +240,38 @@ function scene:openPrizes()
 
     end
 
-    --------------------------
+    ---------------------------------------------------------------
 
-    popup.close     = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x    = display.contentWidth*0.5
-    popup.close.y    = display.contentHeight*0.88
+    viewManager.newText({
+        parent      = popup, 
+        text        = T "Last updated : January 05th, 2014",
+        x           = display.contentWidth*0.1,
+        y           = display.contentHeight * 0.88,
+        fontSize    = 26,
+        font        = FONT,
+        anchorX     = 0,
+        anchorY     = 0.5,
+    })
+
+    viewManager.newText({
+        parent      = popup, 
+        text        = "* " .. T "Lucky Ball",
+        x           = display.contentWidth*0.1,
+        y           = display.contentHeight * 0.91,
+        fontSize    = 26,
+        font        = FONT,
+        anchorX     = 0,
+        anchorY     = 0.5,
+    })
+    
+    ---------------------------------------------------------------
+
+    popup.close         = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    popup.close.x       = display.contentWidth*0.89
+    popup.close.y       = display.contentHeight*0.085
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
-
+    
 end
 
 

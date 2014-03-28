@@ -589,16 +589,20 @@ function displayPrice(price, country)
 
 end
 
-function countryPrice(euros, country, rateUSDtoEUR)
+function countryPrice(euros, country, rateUSDtoEUR, decimals)
 
     if(not euros) then
         euros = 0
     end
 
+    if(not decimals) then
+        decimals = 1
+    end
+
     if(isEuroCountry(country)) then
         return euros;
     else
-        return math.round(euros*rateUSDtoEUR);
+        return tonumber(string.format("%.".. decimals .."f", euros*rateUSDtoEUR));
     end
 
 end
