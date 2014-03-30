@@ -678,6 +678,7 @@ end
 
 function UserManager:storeLotteryTicket(numbers)
 
+    native.setActivityIndicator( true )
     local extraTicket = self.user.extraTickets > 0
 
     utils.postWithJSON({
@@ -686,13 +687,17 @@ function UserManager:storeLotteryTicket(numbers)
     }, 
     SERVER_URL .. "storeLotteryTicket", 
     function(result)
+        native.setActivityIndicator( false )
         local player = json.decode(result.response)
         if(player) then 
+            utils.tprint(player)
             lotteryManager.wasExtraTicket = extraTicket
             userManager:receivedPlayer(player, function()
+            lotteryManager:showLastTicket() 
             end)
         else 
-            userManager:logout()
+            gameManager:open()
+            viewManager.message(T "Waiting for drawing")
         end
     end
     )
@@ -708,7 +713,6 @@ function UserManager:storeLotteryTicket(numbers)
     --- end sync
     -------------
         
-    lotteryManager:showLastTicket() 
 end
 
 -----------------------------------------------------------------------------------------

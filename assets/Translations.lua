@@ -8,6 +8,10 @@ local translations =
         ["fr"] = "Chargement...",
     },
 
+    ["Waiting for drawing"] = {
+        ["fr"] = "En attente du tirage",
+    },
+
     ["Please download the latest version of Adillions"] = {
         ["fr"] = "Téléchargez la dernière version d'Adillions",
     },
