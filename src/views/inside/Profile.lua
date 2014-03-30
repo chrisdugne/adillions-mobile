@@ -674,11 +674,11 @@ function scene:openCashout()
 
     popup.shareIcon                 = display.newImage( popup, "assets/images/icons/PictoInfo.png")  
     popup.shareIcon.x               = display.contentWidth*0.5
-    popup.shareIcon.y               = display.contentHeight*0.15
+    popup.shareIcon.y               = display.contentHeight*0.2
 
     popup.TxtInformation            = display.newImage( popup, I "TxtInformation.png")  
     popup.TxtInformation.x          = display.contentWidth*0.5
-    popup.TxtInformation.y          = display.contentHeight*0.23
+    popup.TxtInformation.y          = display.contentHeight*0.28
 
     ----------------------------------------------------------------------------------------------------
 
@@ -692,12 +692,12 @@ function scene:openCashout()
     popup.multiLineText = display.newText({
         parent      = popup,
         text        = T "You can cash out when your winnings have reached a minimum total balance of " .. value,  
-        width       = display.contentWidth*0.72,  
-        height      = display.contentHeight*0.25,  
-        x           = display.contentWidth*0.5,
-        y           = display.contentHeight*0.45,
+        width       = display.contentWidth      * 0.82,  
+        height      = display.contentHeight     * 0.25,  
+        x           = display.contentWidth      * 0.5,
+        y           = display.contentHeight     * 0.52,
         font        = FONT, 
-        fontSize    = 40,
+        fontSize    = 45,
         align       = "center",
     })
 
@@ -713,7 +713,7 @@ function scene:openCashout()
     if(userManager.user.balance >= min) then
         hud.cashoutEnabled          = display.newImage( popup, I "cashout.on.png")  
         hud.cashoutEnabled.x        = display.contentWidth*0.5
-        hud.cashoutEnabled.y        = display.contentHeight*0.65
+        hud.cashoutEnabled.y        = display.contentHeight*0.7
         utils.onTouch(hud.cashoutEnabled, function()
             viewManager.closePopup(popup)  
             self.openConfirmCashout() 
@@ -722,7 +722,7 @@ function scene:openCashout()
     else
         hud.cashoutDisabled         = display.newImage( popup, I "cashout.off.png")  
         hud.cashoutDisabled.x       = display.contentWidth*0.5
-        hud.cashoutDisabled.y       = display.contentHeight*0.65
+        hud.cashoutDisabled.y       = display.contentHeight*0.7
         
     end
 
