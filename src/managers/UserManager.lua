@@ -41,6 +41,7 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
             lotteryManager.global.tweet         = json.decode(lotteryManager.global.tweet)
             lotteryManager.global.tweetTheme    = json.decode(lotteryManager.global.tweetTheme)
             lotteryManager.global.fbPost        = json.decode(lotteryManager.global.fbPost)
+            lotteryManager.global.fbPostTheme   = json.decode(lotteryManager.global.fbPostTheme)
             lotteryManager.global.fbSharePrize  = json.decode(lotteryManager.global.fbSharePrize)
             lotteryManager.global.sms           = json.decode(lotteryManager.global.sms)
             lotteryManager.global.email         = json.decode(lotteryManager.global.email)
@@ -311,8 +312,14 @@ function UserManager:refreshBonusTickets(next)
     self:setCharityBonus() 
     
     self:checkFanStatus(function()
-        facebook.checkThemeLiked(next)
+        --- NOTE : pour remettre le OG theme il faut virer le next d'ici et decommenter checkThemeLiked
+        -- facebook.checkThemeLiked(next)
+        if(next) then
+            next()
+        end
     end)
+           
+        
     
 end
 
@@ -649,15 +656,15 @@ function UserManager:checkUserCurrentLottery(next)
     
     if(self.user.currentLotteryUID ~= lotteryManager.nextLottery.uid) then
 
+        self.user.currentLotteryUID         = lotteryManager.nextLottery.uid
+        self.user.availableTickets          = START_AVAILABLE_TICKETS 
+        self.user.playedBonusTickets        = 0
 
-        self.user.currentLotteryUID     = lotteryManager.nextLottery.uid
-        self.user.availableTickets      = START_AVAILABLE_TICKETS 
-        self.user.playedBonusTickets    = 0
-
-        self.user.hasTweet              = false
-        self.user.hasPostOnFacebook     = false
-        self.user.hasTweetAnInvite      = false
-        self.user.hasInvitedOnFacebook  = false
+        self.user.hasTweet                  = false
+        self.user.hasPostOnFacebook         = false
+        self.user.hasPostThemeOnFacebook    = false
+        self.user.hasTweetAnInvite          = false
+        self.user.hasInvitedOnFacebook      = false
 
         print("%%%%%%%%%%%%")
         print("UserManager must update player")

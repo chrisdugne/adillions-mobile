@@ -341,8 +341,10 @@ function ShareManager:shareForInstants(popup)
 
         print("LINKED")
 
-        if(userManager.user.themeLiked) then
-            print("themeLiked")
+-- NOTE : pour back to OG theme changer ce if
+--        if(userManager.user.themeLiked) then
+        if(userManager.user.hasPostThemeOnFacebook) then
+            print("hasPostThemeOnFacebook")
             
             local fbPost = translate(lotteryManager.global.fbPost) 
 
@@ -383,25 +385,31 @@ function ShareManager:shareForInstants(popup)
             end
 
         else
-            -- theme not liked
-            print(" ! theme liked")
+            -- theme not posted
+            print("! hasPostThemeOnFacebook")
+            
+            local fbPostTheme = translate(lotteryManager.global.fbPostTheme) 
 
             if(GLOBALS.savedData.facebookAccessToken) then
 
                 -- theme not liked et connecte | button v3 : like theme
                 imageFacebook = I "share.facebook.3.png"
                 actionFacebook = function()
-                    facebook.likeTheme(closeAndPlay)
-                    analytics.event("Social", "facebookLikeTheme") 
+                        self:shareThemeOnWall(fbPostTheme, close, closeAndPlay) 
+                        analytics.event("Social", "facebookShareTheme") 
+--                    facebook.likeTheme(closeAndPlay)
+--                    analytics.event("Social", "facebookLikeTheme") 
                 end
 
             else
                 -- theme not liked  et pas connecte | button v3 : connexion + like theme
                 imageFacebook = I "share.facebook.3.png"
                 actionFacebook = function() 
-                    facebook.connect(function()
-                        facebook.likeTheme(closeAndPlay) 
-                        analytics.event("Social", "facebookLikeTheme") 
+                    facebook.connect(function() 
+                        self:shareThemeOnWall(fbPostTheme, close, closeAndPlay) 
+                        analytics.event("Social", "facebookShareTheme") 
+--                        facebook.likeTheme(closeAndPlay) 
+--                        analytics.event("Social", "facebookLikeTheme") 
                     end, close) 
                 end
 
@@ -669,6 +677,26 @@ function ShareManager:shareOnWall(text, close, closeAndPlay)
 
         if(not userManager.user.hasPostOnFacebook) then
             userManager.user.hasPostOnFacebook = true
+            userManager:giftInstants(NB_INSTANTS_PER_POST)
+            closeAndPlay()
+        else
+            close()
+        end
+
+    end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function ShareManager:shareThemeOnWall(text, close, closeAndPlay)
+
+    facebook.postOnWall(text, function()
+
+        viewManager.closePopup(popup)
+        viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
+
+        if(not userManager.user.hasPostThemeOnFacebook) then
+            userManager.user.hasPostThemeOnFacebook = true
             userManager:giftInstants(NB_INSTANTS_PER_POST)
             closeAndPlay()
         else

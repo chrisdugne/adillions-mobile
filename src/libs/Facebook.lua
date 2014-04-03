@@ -353,7 +353,7 @@ function postOnWall(message, next)
 
         native.setActivityIndicator( true )
 
-        local url = "https://graph.facebook.com/"..userManager.user.facebookId .."/feed?method=post&message="..utils.urlEncode(message).."&access_token=" .. GLOBALS.savedData.facebookAccessToken
+        local url = "https://graph.facebook.com/"..userManager.user.facebookId .."/feed?method=post&message="..utils.urlEncode(message).."&link="..utils.urlEncode("http://www.adillions.com").."&access_token=" .. GLOBALS.savedData.facebookAccessToken
         print (url)
         network.request(url , "GET", function(result)
             native.setActivityIndicator( false )

@@ -101,7 +101,7 @@ function scene:refreshScene()
     utils.onTouch(hud.faq, function()
         analytics.event("Links", "faq")
         
-        viewManager.openWeb(SERVER_URL .. "mfaq", function(event)
+        viewManager.openWeb(SERVER_URL .. "mfaq?lang=" .. LANG, function(event)
             print(event.url)
         end) 
     end)
@@ -125,7 +125,7 @@ function scene:refreshScene()
 
     utils.onTouch(hud.privacy, function()
         analytics.event("Links", "privacy") 
-        viewManager.openWeb(SERVER_URL .. "mprivacy", function(event)
+        viewManager.openWeb(SERVER_URL .. "mprivacy?lang=" .. LANG, function(event)
             print(event.url)
         end) 
     end)
@@ -340,7 +340,7 @@ function scene:openTerms()
     popup.keyrules.y   = display.contentHeight*0.65
 
     utils.onTouch(popup.keyrules, function() 
-        viewManager.openWeb(SERVER_URL .. "mkeyrules", function(event)
+        viewManager.openWeb(SERVER_URL .. "mkeyrules?lang=" .. LANG, function(event)
             print(event.url)
         end) 
     end)
@@ -360,7 +360,7 @@ function scene:openTerms()
             terms = "mtermsEN"
         end
 
-        viewManager.openWeb( SERVER_URL .. terms, function(event)
+        viewManager.openWeb( SERVER_URL .. terms .. "?lang=" .. LANG, function(event)
             print(event.url)
         end) 
     end)
