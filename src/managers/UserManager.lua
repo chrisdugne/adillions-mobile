@@ -661,6 +661,7 @@ function UserManager:checkUserCurrentLottery(next)
         self.user.playedBonusTickets        = 0
 
         self.user.hasTweet                  = false
+        self.user.hasTweetTheme             = false
         self.user.hasPostOnFacebook         = false
         self.user.hasPostThemeOnFacebook    = false
         self.user.hasTweetAnInvite          = false

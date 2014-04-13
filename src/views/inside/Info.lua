@@ -100,7 +100,7 @@ function scene:refreshScene()
 
     utils.onTouch(hud.faq, function()
         analytics.event("Links", "faq")
-        
+
         viewManager.openWeb(SERVER_URL .. "mfaq?lang=" .. LANG, function(event)
             print(event.url)
         end) 
@@ -131,21 +131,21 @@ function scene:refreshScene()
     end)
 
     ------------------
---
---    hud.write     = display.newImage( hud, I "info.Write.png")  
---    hud.write.x    = display.contentWidth * 0.5
---    hud.write.y    = self.top + self.yGap * 4
---
---    utils.onTouch(hud.write, function()
---        analytics.event("Links", "writeReview") 
---        local options =
---        {
---            iOSAppId = "739060819",
---            androidAppPackageName = "com.adillions.v1",
---            supportedAndroidStores = { "google" },
---        }
---        native.showPopup("appStore", options) 
---    end)
+    --
+    --    hud.write     = display.newImage( hud, I "info.Write.png")  
+    --    hud.write.x    = display.contentWidth * 0.5
+    --    hud.write.y    = self.top + self.yGap * 4
+    --
+    --    utils.onTouch(hud.write, function()
+    --        analytics.event("Links", "writeReview") 
+    --        local options =
+    --        {
+    --            iOSAppId = "739060819",
+    --            androidAppPackageName = "com.adillions.v1",
+    --            supportedAndroidStores = { "google" },
+    --        }
+    --        native.showPopup("appStore", options) 
+    --    end)
 
     ---------------------------------------------------------------------------------
 
@@ -263,7 +263,7 @@ function scene:openPrizes()
         anchorX     = 0,
         anchorY     = 0.5,
     })
-    
+
     ---------------------------------------------------------------
 
     popup.close         = display.newImage( popup, "assets/images/hud/CroixClose.png")
@@ -271,7 +271,7 @@ function scene:openPrizes()
     popup.close.y       = display.contentHeight*0.085
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
-    
+
 end
 
 
@@ -304,18 +304,18 @@ function scene:openTerms()
     --------------------------
 
     hud.textImportant = display.newText(
-    popup, 
-    "Important", 
-    0, 0, display.contentWidth*0.8, display.contentHeight*0.25, NUM_FONT, 35 )
+        popup, 
+        "Important", 
+        0, 0, display.contentWidth*0.8, display.contentHeight*0.25, NUM_FONT, 35 )
 
     hud.textImportant.x = display.contentWidth*0.5
     hud.textImportant.y = display.contentHeight*0.29
     hud.textImportant:setFillColor(0)
 
     hud.text = display.newText(
-    popup, 
-    T "Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.", 
-    0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
+        popup, 
+        T "Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.", 
+        0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
 
     hud.text.x = display.contentWidth*0.5
     hud.text.y = display.contentHeight*0.33
@@ -325,9 +325,9 @@ function scene:openTerms()
     if(ANDROID) then company = "Google Inc " end
 
     hud.text2 = display.newText(
-    popup, 
-    company .. (T "is not an organizer, a co-organizer or a partner of Adillions. ") .. company .. (T "is not involved in any way in the organization of the Adillions lottery and does not sponsor it."), 
-    0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
+        popup, 
+        company .. (T "is not an organizer, a co-organizer or a partner of Adillions. ") .. company .. (T "is not involved in any way in the organization of the Adillions lottery and does not sponsor it."), 
+        0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
 
     hud.text2.x = display.contentWidth*0.5
     hud.text2.y = display.contentHeight*0.53
@@ -352,17 +352,17 @@ function scene:openTerms()
     popup.read.y   = display.contentHeight*0.78
 
     utils.onTouch(popup.read, function() 
-    
-        local terms = ""
-        if(COUNTRY == "FR") then
-            terms = "mtermsFR"
-        else
-            terms = "mtermsEN"
-        end
 
-        viewManager.openWeb( SERVER_URL .. terms .. "?lang=" .. LANG, function(event)
-            print(event.url)
-        end) 
+            local terms = ""
+            if(COUNTRY == "FR") then
+                terms = "mtermsFR"
+            else
+                terms = "mtermsEN"
+            end
+
+            viewManager.openWeb( SERVER_URL .. terms .. "?lang=" .. LANG, function(event)
+                print(event.url)
+            end) 
     end)
 
     --------------------------
@@ -440,12 +440,12 @@ function scene:openOptions()
     })
 
     local beforeDrawSwitch = widget.newSwitch
-    {
-        left        = display.contentWidth*0.75,
-        top        = top + yGap*(optionsTop-0.05),
-        initialSwitchState   = GLOBALS.options.notificationBeforeDraw,
-        onPress       = beforeDrawSwitchListener,
-        onRelease      = beforeDrawSwitchListener,
+        {
+            left        = display.contentWidth*0.75,
+            top        = top + yGap*(optionsTop-0.05),
+            initialSwitchState   = GLOBALS.options.notificationBeforeDraw,
+            onPress       = beforeDrawSwitchListener,
+            onRelease      = beforeDrawSwitchListener,
     }
 
     beforeDrawSwitch:scale(2.5,2.5) 
@@ -462,12 +462,12 @@ function scene:openOptions()
 
 
     local afterDrawSwitch = widget.newSwitch
-    {
-        left        = display.contentWidth*0.75,
-        top        = top + yGap*(optionsTop+0.45),
-        initialSwitchState   = GLOBALS.options.notificationAfterDraw,
-        onPress       = afterDrawSwitchListener,
-        onRelease      = afterDrawSwitchListener,
+        {
+            left        = display.contentWidth*0.75,
+            top        = top + yGap*(optionsTop+0.45),
+            initialSwitchState   = GLOBALS.options.notificationAfterDraw,
+            onPress       = afterDrawSwitchListener,
+            onRelease      = afterDrawSwitchListener,
     }
 
     afterDrawSwitch:scale(2.5,2.5) 
