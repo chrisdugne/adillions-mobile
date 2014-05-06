@@ -35,26 +35,27 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
         
             local response = json.decode(result.response)
             
-            lotteryManager.global               = response.global
+            lotteryManager.global                   = response.global
             
-            lotteryManager.global.appStatus     = json.decode(lotteryManager.global.appStatus)
-            lotteryManager.global.tweet         = json.decode(lotteryManager.global.tweet)
-            lotteryManager.global.tweetTheme    = json.decode(lotteryManager.global.tweetTheme)
-            lotteryManager.global.fbPost        = json.decode(lotteryManager.global.fbPost)
-            lotteryManager.global.fbPostTheme   = json.decode(lotteryManager.global.fbPostTheme)
-            lotteryManager.global.fbSharePrize  = json.decode(lotteryManager.global.fbSharePrize)
-            lotteryManager.global.sms           = json.decode(lotteryManager.global.sms)
-            lotteryManager.global.email         = json.decode(lotteryManager.global.email)
-            lotteryManager.global.text48h       = json.decode(lotteryManager.global.text48h)
-            lotteryManager.global.text3min      = json.decode(lotteryManager.global.text3min)
+            lotteryManager.global.appStatus         = json.decode(lotteryManager.global.appStatus)
+            lotteryManager.global.tweet             = json.decode(lotteryManager.global.tweet)
+            lotteryManager.global.tweetTheme        = json.decode(lotteryManager.global.tweetTheme)
+            lotteryManager.global.fbPost            = json.decode(lotteryManager.global.fbPost)
+            lotteryManager.global.fbPostTheme       = json.decode(lotteryManager.global.fbPostTheme)
+            lotteryManager.global.fbSharePrize      = json.decode(lotteryManager.global.fbSharePrize)
+            lotteryManager.global.sms               = json.decode(lotteryManager.global.sms)
+            lotteryManager.global.email             = json.decode(lotteryManager.global.email)
+            lotteryManager.global.text48h           = json.decode(lotteryManager.global.text48h)
+            lotteryManager.global.text3min          = json.decode(lotteryManager.global.text3min)
+            lotteryManager.global.lastUpdatedPrizes = json.decode(lotteryManager.global.lastUpdatedPrizes)
     
-            lotteryManager.global.minEuro       = json.decode(lotteryManager.global.minMoney).euro
-            lotteryManager.global.minUSD        = json.decode(lotteryManager.global.minMoney).usd
+            lotteryManager.global.minEuro           = json.decode(lotteryManager.global.minMoney).euro
+            lotteryManager.global.minUSD            = json.decode(lotteryManager.global.minMoney).usd
     
             time.setServerTime(response.serverTime)
-            TIMER                               = lotteryManager.global.lastUpdate or response.serverTime
-            VERSION_REQUIRED                    = response.global.versionRequired
-            bannerManager.banners               = json.decode(lotteryManager.global.banners)
+            TIMER                                   = lotteryManager.global.lastUpdate or response.serverTime
+            VERSION_REQUIRED                        = response.global.versionRequired
+            bannerManager.banners                   = json.decode(lotteryManager.global.banners)
     
             if(APP_VERSION >= VERSION_REQUIRED) then
                 print("onGoodVersion")
@@ -624,9 +625,7 @@ end
 function UserManager:cashout(next)
     viewManager.closePopup(popup)
 
-    utils.postWithJSON({
-        country = COUNTRY
-    }, 
+    utils.postWithJSON({}, 
     SERVER_URL .. "cashout", 
     function(result)
         userManager:updatePlayer(next)
@@ -1440,6 +1439,130 @@ function UserManager:showStatus()
     end)
 
     return popup
+end
+
+
+----------------------------------------
+
+function UserManager:openPrizes()
+
+    local top   = display.contentHeight * 0.35
+    local yGap  = display.contentHeight * 0.082
+
+    local popup = viewManager.showPopup()
+
+    --------------------------
+
+    hud.picto       = display.newImage(popup, "assets/images/icons/PrizeTitle.png")
+    hud.picto.x     = display.contentWidth*0.14
+    hud.picto.y     = display.contentHeight*0.15
+    hud.picto:scale(0.7,0.7)
+
+    hud.title       = display.newImage(popup, I "Prize.png")
+
+    hud.title.anchorX    = 0
+    hud.title.anchorY    = 0.5
+    hud.title.x   = display.contentWidth*0.22
+    hud.title.y   = display.contentHeight*0.15
+
+    hud.sep    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x   = display.contentWidth*0.5
+    hud.sep.y   = display.contentHeight*0.2
+
+    --------------------------
+
+    viewManager.newText({
+        parent = popup, 
+        text = T "Match", 
+        x = display.contentWidth*0.45,
+        y = display.contentHeight * 0.255,
+        fontSize = 32,
+        font = NUM_FONT
+    })
+
+    viewManager.newText({
+        parent = popup, 
+        text = T "Prize", 
+        x = display.contentWidth * 0.8,
+        y = display.contentHeight * 0.24,
+        fontSize = 32,
+        font = NUM_FONT
+    })
+
+    viewManager.newText({
+        parent = popup, 
+        text = T "breakdown", 
+        x = display.contentWidth * 0.8,
+        y = display.contentHeight * 0.27,
+        fontSize = 32,
+        font = NUM_FONT
+    })
+
+    local matches   = lotteryManager.nextDrawing.rangs.matches[LANG]
+    local percents  = lotteryManager.nextDrawing.rangs.percents
+
+    for i = 1, #matches do
+
+        hud.iconRang    = display.newImage( popup, "assets/images/icons/rangs/R".. i .. ".png")
+        hud.iconRang.x   = display.contentWidth * 0.2
+        hud.iconRang.y   = top + yGap * (i-1)
+
+        viewManager.newText({
+            parent      = popup, 
+            text        = matches[i],     
+            x           = display.contentWidth*0.45,
+            y           = top + yGap * (i-1) ,
+            fontSize    = 35,
+        })
+
+        viewManager.newText({
+            parent    = popup, 
+            text     = percents[i] .. '%',     
+            x      = display.contentWidth*0.75,
+            y      = top + yGap * (i-1) ,
+            fontSize   = 35,
+        })
+
+        hud.iconPieces    = display.newImage( popup, "assets/images/icons/PictoPrize.png")
+        hud.iconPieces.x    = display.contentWidth * 0.86
+        hud.iconPieces.y    = top + yGap * (i-1) - display.contentHeight*0.0005
+
+    end
+
+    ---------------------------------------------------------------
+    
+    local lastUpdatedPrizes = translate(lotteryManager.global.lastUpdatedPrizes)
+    
+    viewManager.newText({
+        parent      = popup, 
+        text        = lastUpdatedPrizes,
+        x           = display.contentWidth*0.1,
+        y           = display.contentHeight * 0.88,
+        fontSize    = 26,
+        font        = FONT,
+        anchorX     = 0,
+        anchorY     = 0.5,
+    })
+
+    viewManager.newText({
+        parent      = popup, 
+        text        = "* " .. T "Lucky Ball",
+        x           = display.contentWidth*0.1,
+        y           = display.contentHeight * 0.91,
+        fontSize    = 26,
+        font        = FONT,
+        anchorX     = 0,
+        anchorY     = 0.5,
+    })
+
+    ---------------------------------------------------------------
+
+    popup.close         = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    popup.close.x       = display.contentWidth*0.89
+    popup.close.y       = display.contentHeight*0.085
+
+    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
+
 end
 
 -----------------------------------------------------------------------------------------

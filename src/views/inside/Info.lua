@@ -72,7 +72,7 @@ function scene:refreshScene()
 
     utils.onTouch(hud.prize, function()
         analytics.event("Links", "prizes") 
-        self:openPrizes()
+        userManager:openPrizes()
     end)
 
     hud.rewards    = display.newImage( hud, I "info.Rewards.png")  
@@ -152,128 +152,6 @@ function scene:refreshScene()
     viewManager.setupCustomView(5)
     self.view:insert(hud)
 end
-
-------------------------------------------
-
-function scene:openPrizes()
-
-    local top   = display.contentHeight * 0.35
-    local yGap  = display.contentHeight * 0.082
-
-    local popup = viewManager.showPopup()
-
-    --------------------------
-
-    hud.picto       = display.newImage(popup, "assets/images/icons/PrizeTitle.png")
-    hud.picto.x     = display.contentWidth*0.14
-    hud.picto.y     = display.contentHeight*0.15
-    hud.picto:scale(0.7,0.7)
-
-    hud.title       = display.newImage(popup, I "Prize.png")
-
-    hud.title.anchorX    = 0
-    hud.title.anchorY    = 0.5
-    hud.title.x   = display.contentWidth*0.22
-    hud.title.y   = display.contentHeight*0.15
-
-    hud.sep    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
-    hud.sep.x   = display.contentWidth*0.5
-    hud.sep.y   = display.contentHeight*0.2
-
-    --------------------------
-
-    viewManager.newText({
-        parent = popup, 
-        text = T "Match", 
-        x = display.contentWidth*0.45,
-        y = display.contentHeight * 0.255,
-        fontSize = 32,
-        font = NUM_FONT
-    })
-
-    viewManager.newText({
-        parent = popup, 
-        text = T "Prize", 
-        x = display.contentWidth * 0.8,
-        y = display.contentHeight * 0.24,
-        fontSize = 32,
-        font = NUM_FONT
-    })
-
-    viewManager.newText({
-        parent = popup, 
-        text = T "breakdown", 
-        x = display.contentWidth * 0.8,
-        y = display.contentHeight * 0.27,
-        fontSize = 32,
-        font = NUM_FONT
-    })
-
-    local matches   = lotteryManager.nextDrawing.rangs.matches[LANG]
-    local percents  = lotteryManager.nextDrawing.rangs.percents
-
-    for i = 1, #matches do
-
-        hud.iconRang    = display.newImage( popup, "assets/images/icons/rangs/R".. i .. ".png")
-        hud.iconRang.x   = display.contentWidth * 0.2
-        hud.iconRang.y   = top + yGap * (i-1)
-
-        viewManager.newText({
-            parent      = popup, 
-            text        = matches[i],     
-            x           = display.contentWidth*0.45,
-            y           = top + yGap * (i-1) ,
-            fontSize    = 35,
-        })
-
-        viewManager.newText({
-            parent    = popup, 
-            text     = percents[i] .. '%',     
-            x      = display.contentWidth*0.75,
-            y      = top + yGap * (i-1) ,
-            fontSize   = 35,
-        })
-
-        hud.iconPieces    = display.newImage( popup, "assets/images/icons/PictoPrize.png")
-        hud.iconPieces.x    = display.contentWidth * 0.86
-        hud.iconPieces.y    = top + yGap * (i-1) - display.contentHeight*0.0005
-
-    end
-
-    ---------------------------------------------------------------
-
-    viewManager.newText({
-        parent      = popup, 
-        text        = T "Last updated : January 05th, 2014",
-        x           = display.contentWidth*0.1,
-        y           = display.contentHeight * 0.88,
-        fontSize    = 26,
-        font        = FONT,
-        anchorX     = 0,
-        anchorY     = 0.5,
-    })
-
-    viewManager.newText({
-        parent      = popup, 
-        text        = "* " .. T "Lucky Ball",
-        x           = display.contentWidth*0.1,
-        y           = display.contentHeight * 0.91,
-        fontSize    = 26,
-        font        = FONT,
-        anchorX     = 0,
-        anchorY     = 0.5,
-    })
-
-    ---------------------------------------------------------------
-
-    popup.close         = display.newImage( popup, "assets/images/hud/CroixClose.png")
-    popup.close.x       = display.contentWidth*0.89
-    popup.close.y       = display.contentHeight*0.085
-
-    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
-
-end
-
 
 ------------------------------------------
 

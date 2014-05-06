@@ -224,14 +224,14 @@ function ShareManager:inviteForInstants(popup)
             imageFacebook = I "invite.facebook.3.png"
             actionFacebook = function() 
                 close() 
-                router.openInviteFriends(backToHome)
+                shareManager:inviteFBFriends()
                 analytics.event("Social", "openFacebookFriendList") 
             end
         else
             actionFacebook = function() 
                 facebook.connect(function()
                     close()
-                    router.openInviteFriends(backToHome)
+                    shareManager:inviteFBFriends()
                     analytics.event("Social", "openFacebookFriendList") 
                 end, close) 
             end
@@ -641,7 +641,7 @@ end
 function ShareManager:email()
     analytics.event("Social", "askEmail")
 
-    local body = translate(lotteryManager.global.email) 
+    local body = translate(lotteryManager.global.email):gsub("___", userManager.user.sponsorCode)
     
 --    local body = "<html><body>" 
 --    body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
@@ -1160,6 +1160,58 @@ function ShareManager:openFacebookPage(popup)
             end)
         end)
     end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function ShareManager:inviteFBFriends()
+    
+    local title         = utils.urlEncode(T "Try your luck on Adillions !")
+    local message       = utils.urlEncode(T "It's a free, fun and responsible game")
+
+    local redirect_uri  = utils.urlEncode(SERVER_URL.."backToMobile")
+    local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorCode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
+
+    self.listener       = function(event) self:inviteListener(event) end
+    self.closeWebView   = viewManager.openWeb(url, self.listener)
+    
+end
+
+------------------------------------------
+
+function ShareManager:inviteListener( event )
+
+    if event.url then
+        print (event.url)
+
+        if string.startsWith(event.url, SERVER_URL .. "backToMobile?request=")
+        or string.startsWith(event.url, "https://m.facebook.com/home.php") then
+            self:closeWebView()   
+            --      if(not userManager.user.hasInvitedOnFacebook) then
+            --       timer.performWithDelay(800, function()
+            --         viewManager.showPoints(NB_POINTS_PER_FB_INVITATION)
+            --         userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_FB_INVITATION
+            --         userManager.user.hasInvitedOnFacebook = true
+            --         userManager:updatePlayer()
+            --         userManager:checkIdlePoints()
+            --       end)
+            --
+            --      end 
+
+        elseif string.startsWith(event.url, SERVER_URL .. "backToMobile") then
+
+            self:closeWebView()      
+            local params = utils.getUrlParams(event.url);
+
+            if(params.request) then
+                print("-----> request " .. params.request )
+                viewManager.message("Invitations sent !")
+            end
+
+        end
+
+    end
+    
 end
 
 -----------------------------------------------------------------------------------------

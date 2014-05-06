@@ -405,7 +405,7 @@ end
 
 function LotteryManager:showLastTicket()
 
-    local popup = viewManager.showPopup(display.contentWidth, true)
+    local popup = viewManager.showPopup()
     
     ----------------------------------------
     
@@ -414,25 +414,39 @@ function LotteryManager:showLastTicket()
     popup.header.x          = display.contentWidth*0.5
     popup.header.y          = popup.bg.y - popup.bg.contentHeight*0.5
     
-    popup.title = display.newImage( popup, I "confirmation.title.png")  
-    popup.title.x = display.contentWidth*0.5
-    popup.title.y = popup.header.y +  popup.header.contentHeight*0.5
+    popup.title             = display.newImage( popup, I "confirmation.next.drawing.png")  
+    popup.title.x           = display.contentWidth*0.5
+    popup.title.y           = popup.header.y +  popup.header.contentHeight*0.5
+
+    popup.subtitle          = display.newImage( popup, I "confirmation.selection.png")  
+    popup.subtitle.x        = display.contentWidth*0.5
+    popup.subtitle.y        = display.contentHeight*0.17
+    
+    ----------------------------------------
+
+    popup.imageBG        = display.newImage( popup, "assets/images/hud/confirmation/confirmation.bg.png")
+    popup.imageBG.x      = display.contentWidth*0.5
+    popup.imageBG.y      = display.contentHeight*0.53
+
+    ----------------------------------------
+    
+    viewManager.drawSelection(popup, lotteryManager.currentSelection, display.contentHeight*0.28)
     
     ---------------------------------------
-
-    viewManager.newText({
-        parent = popup, 
-        text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery), 
-        x = display.contentWidth*0.5,
-        y = display.contentHeight*0.326,
-        fontSize = 48,
-        font = NUM_FONT,
-    })
+--
+--    viewManager.newText({
+--        parent = popup, 
+--        text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery), 
+--        x = display.contentWidth*0.5,
+--        y = display.contentHeight*0.25,
+--        fontSize = 48,
+--        font = NUM_FONT,
+--    })
     
     ----------------------------------------
 
     local nbTickets = userManager:remainingTickets()
-    local lineY     = display.contentHeight*0.57
+    local lineY     = display.contentHeight*0.4
 
     popup.pictoTicket = display.newImage( popup, "assets/images/hud/confirmation/confirmation.ticket.png")  
     popup.pictoTicket.x = display.contentWidth*0.81
@@ -465,26 +479,63 @@ function LotteryManager:showLastTicket()
         anchorX    = 1,
         anchorY    = 0.45,
     })
-    
-    ----------------------------------------
-
-    popup.imageBG        = display.newImage( popup, "assets/images/hud/confirmation/confirmation.bg.png")
-    popup.imageBG.x      = display.contentWidth*0.5
-    popup.imageBG.y      = display.contentHeight*0.53
 
     ----------------------------------------
-    
-    viewManager.drawSelection(popup, lotteryManager.currentSelection, display.contentHeight*0.45)
 
+    popup.line        = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
+    popup.line.x      = display.contentWidth*0.5
+    popup.line.y      = display.contentHeight*0.5
+
+    popup.more          = display.newImage( popup, I "confirmation.jackpot.png")  
+    popup.more.x        = display.contentWidth*0.5
+    popup.more.y        = display.contentHeight*0.56
+
+    popup.arrow        = display.newImage( popup, "assets/images/hud/confirmation/confirmation.arrow.png")
+    popup.arrow.x      = display.contentWidth*0.5
+    popup.arrow.y      = display.contentHeight*0.61
+
+    --------------------------
+
+    popup.friends          = display.newImage( popup, I "confirmation.friends.png")  
+    popup.friends.x        = display.contentWidth*0.3
+    popup.friends.y        = display.contentHeight*0.73
+    
+    utils.onTouch(popup.friends, function()
+        shareManager:inviteFBFriends()
+    end)
+
+    popup.activity          = display.newImage( popup, I "confirmation.activity.png")  
+    popup.activity.x        = display.contentWidth*0.7
+    popup.activity.y        = display.contentHeight*0.73
+
+    utils.onTouch(popup.activity, function()
+        local service = "sms"
+        if(native.canShowPopup( "twitter" )) then
+            service = "twitter"
+        end
+            
+        local options = {
+           service  = service,
+           message  = "Check this free lottery out ! #Adillions",
+           url      = "http://adillions.com"
+        }
+        
+        native.showPopup( "social", options )
+    end)
+    
     --------------------------
 
     popup.close    = display.newImage( popup, I "popup.Bt_close.png")
     popup.close.x    = display.contentWidth*0.5
-    popup.close.y    = display.contentHeight*0.7
+    popup.close.y    = display.contentHeight*0.89
 
     utils.onTouch(popup.close, function()
         router.openHome() 
         viewManager.closePopup(popup)
+        
+        if(nbTickets == 0) then
+            shareManager:noMoreTickets()
+        end
     end)
 
 

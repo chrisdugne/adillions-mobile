@@ -394,7 +394,7 @@ function scene:drawScene()
     
     local text = viewManager.newText({
         parent      = hud.board, 
-        text        = "+ " .. T "Winnings Tickets",   
+        text        = "+ " .. T "Winning Tickets",   
         x           = self.column1,
         y           = self.top + self.yGap*(stockTop+6),
         fontSize    = self.fontSizeLeft,

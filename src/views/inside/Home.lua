@@ -80,6 +80,9 @@ function scene:drawNextLottery( waitingForDrawing )
 --    userManager.user.notifications.instants = 2
 --    userManager:notifyInstants()
 
+--    lotteryManager.currentSelection = {1,2,3,4,5,6}
+--    lotteryManager:showLastTicket()
+
     if(router.view ~= router.HOME) then
         return
     end
@@ -163,6 +166,13 @@ function scene:drawNextLottery( waitingForDrawing )
     hud.pictoPrize      = display.newImage( hud, "assets/images/hud/home/home.prize.png")  
     hud.pictoPrize.x    = display.contentWidth*0.5
     hud.pictoPrize.y    = priceY
+    
+    
+    utils.onTouch(hud.pictoPrize, function()
+        analytics.event("Links", "prizesFromHome") 
+        userManager:openPrizes()
+    end)
+    
     
     -------------------------------
 

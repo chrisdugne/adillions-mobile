@@ -1,9 +1,5 @@
 local translations =
 {
-    ["Last updated : January 05th, 2014"] = {
-        ["fr"] = "Dernière mise à jour : 05 janvier 2014",
-    },
-
     ["Loading..."] = {
         ["fr"] = "Chargement...",
     },
@@ -390,7 +386,7 @@ local translations =
         ["fr"] = "Réseaux sociaux",
     },
     
-    ["Winnings Tickets"] = {
+    ["Winning Tickets"] = {
         ["fr"] = "Tickets gagnants",
     },
     

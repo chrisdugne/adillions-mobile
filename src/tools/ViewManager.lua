@@ -194,7 +194,8 @@ end
 ------------------------------------------------------------------
 
 function openWeb(url, listener, customOnClose)
-
+    
+    print(url)
     ------------------
 
     local webContainer = {}
@@ -487,6 +488,10 @@ function refreshPopupTimer(popup, lastTime)
 
     if(tonumber(minSpent) >= lotteryManager.nextLottery.ticketTimer) then 
         viewManager.closePopup(popup)
+    
+    elseif(hoursSpent > 0) then
+        viewManager.closePopup(popup)
+    
     else
         -- local h = 1 - tonumber(hoursSpent)
         local m = lotteryManager.nextLottery.ticketTimer - 1 - tonumber(minSpent)
