@@ -489,7 +489,7 @@ function refreshPopupTimer(popup, lastTime)
     if(tonumber(minSpent) >= lotteryManager.nextLottery.ticketTimer) then 
         viewManager.closePopup(popup)
     
-    elseif(hoursSpent > 0) then
+    elseif(tonumber(hoursSpent) > 0) then
         viewManager.closePopup(popup)
     
     else

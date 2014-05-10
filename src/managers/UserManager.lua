@@ -937,13 +937,9 @@ function UserManager:checkTicketTiming()
         
         ----------------------------------------------------------------------------------------------------
 
-        popup.icon      = display.newImage( popup, "assets/images/icons/timer.png")
+        popup.icon      = display.newImage( popup, "assets/images/hud/home/timer.ticket.png")
         popup.icon.x    = display.contentWidth*0.5
         popup.icon.y    = display.contentHeight*0.18
-
-        popup.icon      = display.newImage( popup, I "Sorry.png")
-        popup.icon.x    = display.contentWidth*0.5
-        popup.icon.y    = display.contentHeight*0.29
 
         popup.bg        = display.newImage( popup, "assets/images/hud/home/timer.bg.png")
         popup.bg.x      = display.contentWidth*0.5
@@ -957,7 +953,7 @@ function UserManager:checkTicketTiming()
             width       = display.contentWidth*0.85,  
             height      = display.contentHeight*0.25,  
             x           = display.contentWidth*0.5,
-            y           = display.contentHeight*0.46,
+            y           = display.contentHeight*0.39,
             font        = FONT, 
             fontSize    = 47,
             align       = "center",
@@ -965,15 +961,15 @@ function UserManager:checkTicketTiming()
 
         popup.multiLineText:setFillColor(0)
 
-        popup.pictoTimer     = display.newImage( popup, "assets/images/icons/Tuto_2_picto2.png")  
+        popup.pictoTimer     = display.newImage( popup, "assets/images/hud/home/timer.timer.png")  
         popup.pictoTimer.x   = display.contentWidth*0.37
-        popup.pictoTimer.y   = display.contentHeight*0.455
+        popup.pictoTimer.y   = display.contentHeight*0.38
 
         popup.timerDisplay = viewManager.newText({
             parent      = popup, 
             text        = '',     
             x           = display.contentWidth*0.57,
-            y           = display.contentHeight*0.44,
+            y           = display.contentHeight*0.375,
             fontSize    = 53,
             font        = NUM_FONT
         })
@@ -982,7 +978,7 @@ function UserManager:checkTicketTiming()
 
         -------------------------------
 
-        local timerLegendY   = display.contentHeight*0.475
+        local timerLegendY   = display.contentHeight*0.405
         local timerLegendSize  = 22
 
         viewManager.newText({
@@ -1005,23 +1001,29 @@ function UserManager:checkTicketTiming()
 
         popup.textor          = display.newImage( popup, I "timer.or.png")
         popup.textor.x        = display.contentWidth*0.5
-        popup.textor.y        = display.contentHeight*0.56
+        popup.textor.y        = display.contentHeight*0.46
 
         --------------------------
 
         popup.more          = display.newImage( popup, I "timer.play.png")
-        popup.more.x        = display.contentWidth*0.3
-        popup.more.y        = display.contentHeight*0.7
+        popup.more.x        = display.contentWidth*0.5
+        popup.more.y        = display.contentHeight*0.55
 
         utils.onTouch(popup.more, function() 
             shareManager:shareForInstants(popup)
         end)
 
+        ----------------------------------------------------
+
+        popup.textor          = display.newImage( popup, I "timer.or.png")
+        popup.textor.x        = display.contentWidth*0.5
+        popup.textor.y        = display.contentHeight*0.64
+
         --------------------------
 
-        popup.increase          = display.newImage( popup, I "timer.winnings.png")
-        popup.increase.x        = display.contentWidth*0.7
-        popup.increase.y        = display.contentHeight*0.7
+        popup.increase          = display.newImage( popup, I "timer.jackpot.png")
+        popup.increase.x        = display.contentWidth*0.5
+        popup.increase.y        = display.contentHeight*0.73
 
         utils.onTouch(popup.increase, function() 
             videoManager:play(function() end, true)

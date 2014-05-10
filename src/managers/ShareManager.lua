@@ -191,7 +191,7 @@ function ShareManager:inviteForInstants(popup)
 
     -----------------------------------
 
-    hud.popin.title         = display.newImage( hud.popin, I "instant.title.png")  
+    hud.popin.title         = display.newImage( hud.popin, I "instant.invite.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
     hud.popin.title.y       = hud.popin.headerMiddle
     hud.popin.title.anchorX = 0
@@ -287,6 +287,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
+-- play now ! share ==> instants
 function ShareManager:shareForInstants(popup)
 
     -----------------------------------
@@ -310,7 +311,7 @@ function ShareManager:shareForInstants(popup)
 
     -----------------------------------
 
-    hud.popin.title         = display.newImage( hud.popin, I "instant.title.png")  
+    hud.popin.title         = display.newImage( hud.popin, I "instant.playnow.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
     hud.popin.title.y       = hud.popin.headerMiddle
     hud.popin.title.anchorX = 0
