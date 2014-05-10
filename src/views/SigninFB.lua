@@ -35,7 +35,7 @@ function scene:refreshScene()
         facebook.data.email = ""
     end
 
-    local url = SERVER_URL .. "msigninFB2"
+    local url = API_URL .. "msigninFB2"
     url = url .. "?last_name="     .. utils.urlEncode(facebook.data.last_name)
     url = url .. "&first_name="    .. utils.urlEncode(facebook.data.first_name)
     url = url .. "&picture_url="   .. utils.urlEncode(facebook.data.picture.data.url)
@@ -57,11 +57,11 @@ function scene:signinFBViewListener( event )
 
     if event.url then
 
-        if event.url == SERVER_URL .. "backToMobile" then
+        if event.url == API_URL .. "backToMobile" then
             self:closeWebView()   
             router.openOutside()
 
-        elseif event.url == SERVER_URL .. "requireLogout" then  -- changeAccount
+        elseif event.url == API_URL .. "requireLogout" then  -- changeAccount
             self:closeWebView()
             print("signinFB : requireLogout")     
             userManager:logout()      

@@ -22,14 +22,14 @@ function ShareManager:moreTickets(popup)
     analytics.event("Social", "popinMoreTickets")
 
     -----------------------------------
-    
+
     local close = function()
         viewManager.closePopin() 
         viewManager.closePopup(popup)
     end 
-    
+
     -----------------------------------
-    
+
     hud.popin.title         = display.newImage( hud.popin, I "stock.title.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
     hud.popin.title.y       = hud.popin.headerMiddle
@@ -39,15 +39,15 @@ function ShareManager:moreTickets(popup)
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
-    
+
     utils.onTouch(hud.popin.title, function()
         shareManager:openRewards1()
     end)
-    
+
     utils.onTouch(hud.popin.what, function()
         shareManager:openRewards1()
     end)
-    
+
 
     -----------------------------------
     -- FB BUTTON
@@ -164,7 +164,7 @@ function ShareManager:moreTickets(popup)
     hud.popin.buttonTwitter         = display.newImage( hud.popin, imageTwitter)  
     hud.popin.buttonTwitter.x       = display.contentWidth * 0.2
     hud.popin.buttonTwitter.y       = hud.popin.contentMiddle
-    
+
     if(actionTwitter) then
         utils.onTouch(hud.popin.buttonTwitter, actionTwitter)
     end
@@ -181,14 +181,14 @@ function ShareManager:inviteForInstants(popup)
     analytics.event("Social", "popinInviteForInstants")
 
     -----------------------------------
-    
+
     local close = function()
         viewManager.closePopin() 
         if(popup) then
             viewManager.closePopup(popup)
         end
     end 
-    
+
     -----------------------------------
 
     hud.popin.title         = display.newImage( hud.popin, I "instant.title.png")  
@@ -200,7 +200,7 @@ function ShareManager:inviteForInstants(popup)
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
-    
+
     utils.onTouch(hud.popin.title, function()
         shareManager:openRewards2()
     end)
@@ -295,7 +295,7 @@ function ShareManager:shareForInstants(popup)
     analytics.event("Social", "popinShareForInstants")
 
     -----------------------------------
-    
+
     local close = function()
         viewManager.refreshPlayButton()
         viewManager.closePopin() 
@@ -303,11 +303,11 @@ function ShareManager:shareForInstants(popup)
             viewManager.closePopup(popup)
         end
     end
-    
+
     local closeAndPlay = function()
         close()
     end
-     
+
     -----------------------------------
 
     hud.popin.title         = display.newImage( hud.popin, I "instant.title.png")  
@@ -319,11 +319,11 @@ function ShareManager:shareForInstants(popup)
     hud.popin.what.x        = hud.popin.title.x + hud.popin.title.contentWidth
     hud.popin.what.y        = hud.popin.headerMiddle
     hud.popin.what.anchorX  = 0
-    
+
     utils.onTouch(hud.popin.what, function()
         shareManager:openRewards2()
     end)
-    
+
     utils.onTouch(hud.popin.title, function()
         shareManager:openRewards2()
     end)
@@ -341,11 +341,11 @@ function ShareManager:shareForInstants(popup)
 
         print("LINKED")
 
--- NOTE : pour back to OG theme changer ce if
---        if(userManager.user.themeLiked) then
+        -- NOTE : pour back to OG theme changer ce if
+        --        if(userManager.user.themeLiked) then
         if(userManager.user.hasPostThemeOnFacebook) then
             print("hasPostThemeOnFacebook")
-            
+
             local fbPost = translate(lotteryManager.global.fbPost) 
 
             if(userManager.user.hasPostOnFacebook) then
@@ -387,7 +387,7 @@ function ShareManager:shareForInstants(popup)
         else
             -- theme not posted
             print("! hasPostThemeOnFacebook")
-            
+
             local fbPostTheme = translate(lotteryManager.global.fbPostTheme) 
 
             if(GLOBALS.savedData.facebookAccessToken) then
@@ -395,10 +395,10 @@ function ShareManager:shareForInstants(popup)
                 -- theme not liked et connecte | button v3 : like theme
                 imageFacebook = I "share.facebook.3.png"
                 actionFacebook = function()
-                        self:shareThemeOnWall(fbPostTheme, close, closeAndPlay) 
-                        analytics.event("Social", "facebookShareTheme") 
---                    facebook.likeTheme(closeAndPlay)
---                    analytics.event("Social", "facebookLikeTheme") 
+                    self:shareThemeOnWall(fbPostTheme, close, closeAndPlay) 
+                    analytics.event("Social", "facebookShareTheme") 
+                    --                    facebook.likeTheme(closeAndPlay)
+                    --                    analytics.event("Social", "facebookLikeTheme") 
                 end
 
             else
@@ -408,8 +408,8 @@ function ShareManager:shareForInstants(popup)
                     facebook.connect(function() 
                         self:shareThemeOnWall(fbPostTheme, close, closeAndPlay) 
                         analytics.event("Social", "facebookShareTheme") 
---                        facebook.likeTheme(closeAndPlay) 
---                        analytics.event("Social", "facebookLikeTheme") 
+                        --                        facebook.likeTheme(closeAndPlay) 
+                        --                        analytics.event("Social", "facebookLikeTheme") 
                     end, close) 
                 end
 
@@ -432,7 +432,7 @@ function ShareManager:shareForInstants(popup)
                     end
                     self:shareForInstants(popup) 
                 end)
-                
+
             end, close) 
         end
     end
@@ -492,7 +492,7 @@ function ShareManager:shareForInstants(popup)
         else
             -- theme not tweeted   
 
-                print("! hasTweetTheme")
+            print("! hasTweetTheme")
             if(twitter.connected) then
 
                 -- theme not tweeted et connecte | button v3 : tweet theme
@@ -569,7 +569,7 @@ function ShareManager:noMoreTickets()
     popup.bg    = display.newImage( popup, "assets/images/hud/home/maxticket.bg.png")
     popup.bg.x    = display.contentWidth*0.5
     popup.bg.y    = display.contentHeight*0.5
-    
+
 
     ----------------------------------------------------------------------------------------------------
 
@@ -617,17 +617,17 @@ function ShareManager:sms()
     analytics.event("Social", "askSMS") 
 
     local body = translate(lotteryManager.global.sms) 
-    
---    local body = T "Join me on Adillions and get a chance to win the jackpot !" 
---    body = body .. "\n\n" 
---    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
---    body = body .. "\n\n" 
---    body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
---    body = body .. userManager.user.sponsorCode
---    body = body .. "\n\n" 
---    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
---    body = body .. "\n\n" 
---    body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
+
+    --    local body = T "Join me on Adillions and get a chance to win the jackpot !" 
+    --    body = body .. "\n\n" 
+    --    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
+    --    body = body .. "\n\n" 
+    --    body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
+    --    body = body .. userManager.user.sponsorCode
+    --    body = body .. "\n\n" 
+    --    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
+    --    body = body .. "\n\n" 
+    --    body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
 
     local options = {
         body = body
@@ -642,26 +642,26 @@ function ShareManager:email()
     analytics.event("Social", "askEmail")
 
     local body = translate(lotteryManager.global.email):gsub("___", userManager.user.sponsorCode)
-    
---    local body = "<html><body>" 
---    body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
---    body = body .. "<br/><br/>" 
---    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
---    body = body .. "<br/><br/>" 
---    body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
---    body = body .. userManager.user.sponsorCode
---    body = body .. "<br/><br/>" 
---    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
---    body = body .. "<br/><br/>" 
---    body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
---    body = body .. "</body></html>" 
+
+    --    local body = "<html><body>" 
+    --    body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
+    --    body = body .. "<br/><br/>" 
+    --    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
+    --    body = body .. "<br/><br/>" 
+    --    body = body .. T "Free and fun - Sign up now using my sponsorship code : " 
+    --    body = body .. userManager.user.sponsorCode
+    --    body = body .. "<br/><br/>" 
+    --    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
+    --    body = body .. "<br/><br/>" 
+    --    body = body .. T "Adillions is a free-to-play lottery game with real cash prizes funded by advertising" 
+    --    body = body .. "</body></html>" 
 
     local options =
-    {
-        body = body,
-        isBodyHtml = true,
-        subject = "Adillions",
-    }
+        {
+            body = body,
+            isBodyHtml = true,
+            subject = "Adillions",
+        }
 
     native.showPopup("mail", options)
 end
@@ -672,16 +672,16 @@ function ShareManager:shareOnWall(text, close, closeAndPlay)
 
     facebook.postOnWall(text, function()
 
-        viewManager.closePopup(popup)
-        viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
+            viewManager.closePopup(popup)
+            viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
 
-        if(not userManager.user.hasPostOnFacebook) then
-            userManager.user.hasPostOnFacebook = true
-            userManager:giftInstants(NB_INSTANTS_PER_POST)
-            closeAndPlay()
-        else
-            close()
-        end
+            if(not userManager.user.hasPostOnFacebook) then
+                userManager.user.hasPostOnFacebook = true
+                userManager:giftInstants(NB_INSTANTS_PER_POST)
+                closeAndPlay()
+            else
+                close()
+            end
 
     end)
 end
@@ -692,16 +692,16 @@ function ShareManager:shareThemeOnWall(text, close, closeAndPlay)
 
     facebook.postOnWall(text, function()
 
-        viewManager.closePopup(popup)
-        viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
+            viewManager.closePopup(popup)
+            viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
 
-        if(not userManager.user.hasPostThemeOnFacebook) then
-            userManager.user.hasPostThemeOnFacebook = true
-            userManager:giftInstants(NB_INSTANTS_PER_POST)
-            closeAndPlay()
-        else
-            close()
-        end
+            if(not userManager.user.hasPostThemeOnFacebook) then
+                userManager.user.hasPostThemeOnFacebook = true
+                userManager:giftInstants(NB_INSTANTS_PER_POST)
+                closeAndPlay()
+            else
+                close()
+            end
 
     end)
 end
@@ -730,9 +730,9 @@ end
 --
 
 function ShareManager:simpleShare(share)
-    
+
     local text = translate(share.facebook)
-    
+
     facebook.postOnWall(text, function()
         viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
     end)
@@ -741,7 +741,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function ShareManager:shareWinningsOnWall(prize, popup)
-    
+
     local text = translate(lotteryManager.global.fbSharePrize):gsub("___", prize)
 
     -------
@@ -751,7 +751,7 @@ function ShareManager:shareWinningsOnWall(prize, popup)
     end
 
     -------
-    
+
     local share = function()
         analytics.event("Social", "shareWinnings") 
         facebook.postOnWall(text, function()
@@ -761,7 +761,7 @@ function ShareManager:shareWinningsOnWall(prize, popup)
     end
 
     -------
-    
+
     if(userManager.user.facebookId) then
 
         -- linked
@@ -773,18 +773,18 @@ function ShareManager:shareWinningsOnWall(prize, popup)
             end, close) 
         end
 
-    -------
---
---    else
---        facebook.connect(function()
---            analytics.event("Social", "linkedFacebookFromShareWinnings") 
---            userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
---                share()
---            end)
---        end, close) 
---            
+        -------
+        --
+        --    else
+        --        facebook.connect(function()
+        --            analytics.event("Social", "linkedFacebookFromShareWinnings") 
+        --            userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
+        --                share()
+        --            end)
+        --        end, close) 
+        --            
     end
-    
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -796,15 +796,15 @@ function ShareManager:tweetTheme(close, closeAndPlay)
     print(userManager.user.hasTweetTheme)
     twitter.tweetMessage(text, function()
 
-        viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
+            viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
 
-        if(not userManager.user.hasTweetTheme) then
-            userManager.user.hasTweetTheme = true
-            userManager:giftInstants(NB_INSTANTS_PER_TWEET)
-            closeAndPlay()
-        else
-            close()
-        end
+            if(not userManager.user.hasTweetTheme) then
+                userManager.user.hasTweetTheme = true
+                userManager:giftInstants(NB_INSTANTS_PER_TWEET)
+                closeAndPlay()
+            else
+                close()
+            end
 
     end)
 end
@@ -819,16 +819,16 @@ function ShareManager:tweet(close, closeAndPlay)
 
     twitter.tweetMessage(text, function()
 
-        viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
-        native.setActivityIndicator( false )
+            viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
+            native.setActivityIndicator( false )
 
-        if(not userManager.user.hasTweet) then
-            userManager.user.hasTweet = true
-            userManager:giftInstants(NB_INSTANTS_PER_TWEET)
-            closeAndPlay()
-        else
-            close()
-        end 
+            if(not userManager.user.hasTweet) then
+                userManager.user.hasTweet = true
+                userManager:giftInstants(NB_INSTANTS_PER_TWEET)
+                closeAndPlay()
+            else
+                close()
+            end 
 
     end)
 end
@@ -1113,19 +1113,19 @@ end
 function ShareManager:twitterFollow(popup)
     native.setActivityIndicator( true )  
     twitter.follow(function()
-    
-        print("follow ok : sharemanager asks to refreshBonusTickets")
-        userManager:refreshBonusTickets(function()
-            native.setActivityIndicator( false )        
-            analytics.event("Social", "followTwitter")
-            
-            if(popup.refresh) then
-                popup.refresh()
-            end
-            
-            viewManager.closePopin()
-            self:moreTickets(popup)
-        end)
+
+            print("follow ok : sharemanager asks to refreshBonusTickets")
+            userManager:refreshBonusTickets(function()
+                native.setActivityIndicator( false )        
+                analytics.event("Social", "followTwitter")
+
+                if(popup.refresh) then
+                    popup.refresh()
+                end
+
+                viewManager.closePopin()
+                self:moreTickets(popup)
+            end)
     end) 
 end
 
@@ -1135,28 +1135,28 @@ function ShareManager:openFacebookPage(popup)
     viewManager.openWeb(FACEBOOK_PAGE, function(event)
         print(event.url)
     end, function()
-        
+
         -- lock to prevent webview to ask for callback many times
         if(self.checkingFBLike) then return end
         self.checkingFBLike = true
-        
+
         native.setActivityIndicator( true )
         timer.performWithDelay(5000, function() 
             userManager:refreshBonusTickets(function()
-                
-                native.setActivityIndicator( false )
-                self.checkingFBLike = false
-                
-                if(userManager.user.isFacebookFan) then
-                    if(popup.refresh) then
-                        popup.refresh()
-                    end
-                else
-                    viewManager.message(T "You haven't liked our page :-(")    
-                end
 
-                self:moreTickets(popup)
-                
+                    native.setActivityIndicator( false )
+                    self.checkingFBLike = false
+
+                    if(userManager.user.isFacebookFan) then
+                        if(popup.refresh) then
+                            popup.refresh()
+                        end
+                    else
+                        viewManager.message(T "You haven't liked our page :-(")    
+                    end
+
+                    self:moreTickets(popup)
+
             end)
         end)
     end)
@@ -1165,16 +1165,16 @@ end
 -----------------------------------------------------------------------------------------
 
 function ShareManager:inviteFBFriends()
-    
+
     local title         = utils.urlEncode(T "Try your luck on Adillions !")
     local message       = utils.urlEncode(T "It's a free, fun and responsible game")
 
-    local redirect_uri  = utils.urlEncode(SERVER_URL.."backToMobile")
+    local redirect_uri  = utils.urlEncode(API_URL.."backToMobile")
     local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorCode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
 
     self.listener       = function(event) self:inviteListener(event) end
     self.closeWebView   = viewManager.openWeb(url, self.listener)
-    
+
 end
 
 ------------------------------------------
@@ -1184,8 +1184,8 @@ function ShareManager:inviteListener( event )
     if event.url then
         print (event.url)
 
-        if string.startsWith(event.url, SERVER_URL .. "backToMobile?request=")
-        or string.startsWith(event.url, "https://m.facebook.com/home.php") then
+        if string.startsWith(event.url, API_URL .. "backToMobile?request=")
+            or string.startsWith(event.url, "https://m.facebook.com/home.php") then
             self:closeWebView()   
             --      if(not userManager.user.hasInvitedOnFacebook) then
             --       timer.performWithDelay(800, function()
@@ -1198,7 +1198,7 @@ function ShareManager:inviteListener( event )
             --
             --      end 
 
-        elseif string.startsWith(event.url, SERVER_URL .. "backToMobile") then
+        elseif string.startsWith(event.url, API_URL .. "backToMobile") then
 
             self:closeWebView()      
             local params = utils.getUrlParams(event.url);
@@ -1211,9 +1211,54 @@ function ShareManager:inviteListener( event )
         end
 
     end
-    
+
 end
 
 -----------------------------------------------------------------------------------------
+
+function ShareManager:simpleShare()
+
+    local options   = {}
+    local canTweet  = native.canShowPopup( "social", "twitter" )
+    local canPost   = native.canShowPopup( "social", "facebook" )
+    
+    if(ANDROID or canTweet) then
+        options = {
+            service  = "twitter",
+            message  = translate(lotteryManager.global.tweetShare),
+            url      = "http://adillions.com",
+            image    = {
+                baseDir     = system.ResourceDirectory ,
+                filename    = "assets/images/bylang/"..LANG.."/tweet.share.jpg"
+            }
+        }
+
+        native.showPopup( "social", options )
+        
+    elseif(canPost) then
+        options = {
+            service  = "facebook",
+            message  = translate(lotteryManager.global.tweetShare):gsub("#", ""),
+            url      = "http://adillions.com",
+            image    = {
+                baseDir     = system.ResourceDirectory ,
+                filename    = "assets/images/bylang/"..LANG.."/tweet.share.jpg"
+            }
+        }
+
+        native.showPopup( "social", options )
+        
+    else
+        options = {
+            body = translate(lotteryManager.global.tweetShare):gsub("#", "")
+        }
+
+        native.showPopup( "sms", options )
+    end
+
+
+end
+
+------------------------------------------
 
 return ShareManager

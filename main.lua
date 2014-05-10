@@ -31,15 +31,17 @@ if(PROD) then
     FACEBOOK_APP_ID         = "170148346520274"
     FACEBOOK_API_SECRET     = "887e8f7abb9b1cb9238a097e06585ae2"
     FACEBOOK_APP_NAMESPACE  = "adillions"
-    SERVER_URL              = "http://www.adillions.com/"
+    API_URL                 = "http://api.adillions.com/"
+    WEB_URL                 = "http://www.adillions.com/"
     SERVER_OG_URL           = "http://www.adillions.com/"
 else
     print("dev")
     FACEBOOK_APP_ID         = "534196239997712"
     FACEBOOK_API_SECRET     = "46383d827867d50ef5d87b66c81f1a8e"
     FACEBOOK_APP_NAMESPACE  = "adillions-dev"
-    SERVER_URL              = "http://192.168.0.7:9000/"
-    SERVER_OG_URL           = "http://192.168.0.7:9000/"
+    API_URL                 = "http://192.168.0.13:9000/"
+    WEB_URL                 = "http://192.168.0.13:9000/"
+    SERVER_OG_URL           = "http://192.168.0.13:9000/"
 end
 
 -----------------------------------------------------------------------------------------
@@ -132,7 +134,8 @@ if(DEV) then
 
     print("lang : " .. LANG)
     print("country : " .. COUNTRY)
-    print(SERVER_URL)
+    print("api : " .. API_URL)
+    print("web : " .. WEB_URL)
 end
 
 -----------------------------------------------------------------------------------------

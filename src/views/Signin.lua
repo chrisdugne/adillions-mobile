@@ -22,7 +22,7 @@ end
 
 function scene:refreshScene()
     self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
-    self.webView:request( SERVER_URL .. "msignin2?lang=" .. LANG  )
+    self.webView:request( API_URL .. "msignin2?lang=" .. LANG  )
     self.webView:addEventListener( "urlRequest", function(event) self:signinViewListener(event) end )
 
     viewManager.initHeader()
@@ -40,7 +40,7 @@ function scene:signinViewListener( event )
         print(event.url)
 
         -- idem login
-        if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
+        if string.find(string.lower(event.url), API_URL .. "loggedin") then
             self:closeWebView()      
             local params = utils.getUrlParams(event.url);
 
@@ -50,12 +50,12 @@ function scene:signinViewListener( event )
 
             userManager:fetchPlayer()
 
-        elseif event.url == SERVER_URL .. "backToMobile" then
+        elseif event.url == API_URL .. "backToMobile" then
             self:closeWebView()      
             print("signin : backToMobile : outside")  
             router.openOutside()
 
-        elseif event.url == SERVER_URL .. "connectWithFB" then
+        elseif event.url == API_URL .. "connectWithFB" then
             self:closeWebView()    
             facebook.login()
         end

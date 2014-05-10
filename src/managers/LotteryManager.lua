@@ -24,7 +24,7 @@ function LotteryManager:refreshNextLottery(classic, waiting)
     print("LotteryManager:refreshNextLottery")
     utils.postWithJSON(
     {}, 
-    SERVER_URL .. "nextLottery", 
+    API_URL .. "nextLottery", 
     function(result)
     
         print("%%%%%%%%%%%% -----> received lotteries")
@@ -73,7 +73,7 @@ function LotteryManager:checkAppStatus(waiting)
     
     utils.postWithJSON(
     {}, 
-    SERVER_URL .. "appStatus", 
+    API_URL .. "appStatus", 
     function(result)
         local response  = json.decode(result.response)
         local appStatus = json.decode(response.appStatus)
@@ -101,7 +101,7 @@ end
 function LotteryManager:getFinishedLotteries(next)
     utils.postWithJSON(
     {}, 
-    SERVER_URL .. "finishedLotteries", 
+    API_URL .. "finishedLotteries", 
     function(result)
         self.finishedLotteries = json.decode(result.response)
         next()
@@ -509,20 +509,9 @@ function LotteryManager:showLastTicket()
     popup.activity.y        = display.contentHeight*0.73
 
     utils.onTouch(popup.activity, function()
-        local service = "sms"
-        if(native.canShowPopup( "twitter" )) then
-            service = "twitter"
-        end
-            
-        local options = {
-           service  = service,
-           message  = "Check this free lottery out ! #Adillions",
-           url      = "http://adillions.com"
-        }
-        
-        native.showPopup( "social", options )
+        shareManager:simpleShare()
     end)
-    
+
     --------------------------
 
     popup.close    = display.newImage( popup, I "popup.Bt_close.png")
@@ -532,7 +521,7 @@ function LotteryManager:showLastTicket()
     utils.onTouch(popup.close, function()
         router.openHome() 
         viewManager.closePopup(popup)
-        
+
         if(nbTickets == 0) then
             shareManager:noMoreTickets()
         end

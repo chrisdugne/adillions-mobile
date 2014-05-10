@@ -22,7 +22,7 @@ end
 
 function scene:refreshScene()
     
-    local url       = SERVER_URL .. "mlogin?lang=" .. LANG
+    local url       = API_URL .. "mlogin?lang=" .. LANG
     self.listener  = function(event) self:loginViewListener(event) end
     self.webView = viewManager.openWeb(url, self.listener)
 
@@ -37,7 +37,7 @@ function scene:loginViewListener( event )
         print("---   login listener")
         print(event.url)
 
-        if string.find(string.lower(event.url), SERVER_URL .. "loggedin") then
+        if string.find(string.lower(event.url), API_URL .. "loggedin") then
             self:closeWebView()      
             local params = utils.getUrlParams(event.url);
 
@@ -47,12 +47,12 @@ function scene:loginViewListener( event )
 
             userManager:fetchPlayer()
 
-        elseif event.url == SERVER_URL .. "backToMobile" then
+        elseif event.url == API_URL .. "backToMobile" then
             self:closeWebView()     
             print("login : backToMobile : outside")  
             router.openOutside()
 
-        elseif event.url == SERVER_URL .. "connectWithFB" then
+        elseif event.url == API_URL .. "connectWithFB" then
             self:closeWebView()      
             facebook.login()
         end

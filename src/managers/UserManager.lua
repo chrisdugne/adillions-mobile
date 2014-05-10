@@ -23,7 +23,7 @@ end
 function UserManager:getGlobals(onGoodVersion, onBadVersion)
     print("getGlobals")
     utils.postWithJSON({}, 
-    SERVER_URL .. "globals", 
+    API_URL .. "globals", 
     function(result)
     
         if(result.isError) then
@@ -36,10 +36,10 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
             local response = json.decode(result.response)
             
             lotteryManager.global                   = response.global
-            
             lotteryManager.global.appStatus         = json.decode(lotteryManager.global.appStatus)
             lotteryManager.global.tweet             = json.decode(lotteryManager.global.tweet)
             lotteryManager.global.tweetTheme        = json.decode(lotteryManager.global.tweetTheme)
+            lotteryManager.global.tweetShare        = json.decode(lotteryManager.global.tweetShare)
             lotteryManager.global.fbPost            = json.decode(lotteryManager.global.fbPost)
             lotteryManager.global.fbPostTheme       = json.decode(lotteryManager.global.fbPostTheme)
             lotteryManager.global.fbSharePrize      = json.decode(lotteryManager.global.fbSharePrize)
@@ -90,7 +90,7 @@ function UserManager:fetchPlayer()
         mobileVersion   = APP_VERSION,
         country         = COUNTRY
     }, 
-    SERVER_URL .. "player", 
+    API_URL .. "player", 
     function(result)
 
         if(result.isError) then
@@ -141,7 +141,7 @@ function UserManager:getPlayerByFacebookId()
         facebookData    = facebook.data,
         accessToken     = GLOBALS.savedData.facebookAccessToken
     }, 
-    SERVER_URL .. "playerFromFB", 
+    API_URL .. "playerFromFB", 
     function(result)
         print("received PlayerByFacebookId")
 
@@ -180,7 +180,7 @@ function UserManager:loadMoreTickets(lastLotteryUID, onReceivedTickets)
     utils.postWithJSON({
             lastLotteryUID = lastLotteryUID
         }, 
-        SERVER_URL .. "lotteryTickets", 
+        API_URL .. "lotteryTickets", 
         function(result)
             onReceivedTickets(json.decode(result.response))
         end
@@ -197,7 +197,7 @@ function UserManager:checkExistPlayerByFacebookId(proceedWithMerge, connectionSu
     utils.postWithJSON({
         facebookData = facebook.data,
     }, 
-    SERVER_URL .. "isMeFBPlayer", 
+    API_URL .. "isMeFBPlayer", 
     function(result)
         native.setActivityIndicator( false )
 
@@ -614,7 +614,7 @@ function UserManager:giveToCharity(next)
     print("giveToCharity")
     if(next)then  print("next ready") end
     utils.postWithJSON({}, 
-    SERVER_URL .. "giveToCharity", 
+    API_URL .. "giveToCharity", 
     function(result)
         userManager:updatePlayer(next)
     end
@@ -626,7 +626,7 @@ function UserManager:cashout(next)
     viewManager.closePopup(popup)
 
     utils.postWithJSON({}, 
-    SERVER_URL .. "cashout", 
+    API_URL .. "cashout", 
     function(result)
         userManager:updatePlayer(next)
     end
@@ -692,7 +692,7 @@ function UserManager:storeLotteryTicket(numbers)
         numbers = numbers,
         extraTicket = extraTicket
     }, 
-    SERVER_URL .. "storeLotteryTicket", 
+    API_URL .. "storeLotteryTicket", 
     function(result)
         native.setActivityIndicator( false )
         local player = json.decode(result.response)
@@ -737,7 +737,7 @@ function UserManager:updatePlayer(next)
     utils.postWithJSON({
         user = self.user,
     }, 
-    SERVER_URL .. "updatePlayer", 
+    API_URL .. "updatePlayer", 
     function(result)
 
         local player = json.decode(result.response)
@@ -832,7 +832,7 @@ function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
         facebookFan  = self.user.facebookFan,
         twitterFan   = self.user.twitterFan,
     }, 
-    SERVER_URL .. "updateFanStatus", 
+    API_URL .. "updateFanStatus", 
     function(result)
     
         if(notifyFBBonus or userManager.requireFacebookConnectionTickets) then
@@ -937,30 +937,30 @@ function UserManager:checkTicketTiming()
         
         ----------------------------------------------------------------------------------------------------
 
-        popup.icon    = display.newImage( popup, "assets/images/icons/timer.png")
+        popup.icon      = display.newImage( popup, "assets/images/icons/timer.png")
         popup.icon.x    = display.contentWidth*0.5
         popup.icon.y    = display.contentHeight*0.18
 
-        popup.icon    = display.newImage( popup, I "Sorry.png")
+        popup.icon      = display.newImage( popup, I "Sorry.png")
         popup.icon.x    = display.contentWidth*0.5
         popup.icon.y    = display.contentHeight*0.29
 
-        popup.bg    = display.newImage( popup, "assets/images/hud/home/timer.bg.png")
-        popup.bg.x    = display.contentWidth*0.5
-        popup.bg.y    = display.contentHeight*0.5
+        popup.bg        = display.newImage( popup, "assets/images/hud/home/timer.bg.png")
+        popup.bg.x      = display.contentWidth*0.5
+        popup.bg.y      = display.contentHeight*0.5
 
         ----------------------------------------------------------------------------------------------------
 
         popup.multiLineText = display.newText({
-            parent = popup,
-            text   = T "You can fill out a new Ticket in :",  
-            width  = display.contentWidth*0.85,  
-            height  = display.contentHeight*0.25,  
-            x    = display.contentWidth*0.5,
-            y    = display.contentHeight*0.46,
-            font   = FONT, 
-            fontSize = 47,
-            align  = "center",
+            parent      = popup,
+            text        = T "You can fill out a new Ticket in :",  
+            width       = display.contentWidth*0.85,  
+            height      = display.contentHeight*0.25,  
+            x           = display.contentWidth*0.5,
+            y           = display.contentHeight*0.46,
+            font        = FONT, 
+            fontSize    = 47,
+            align       = "center",
         })
 
         popup.multiLineText:setFillColor(0)
@@ -970,12 +970,12 @@ function UserManager:checkTicketTiming()
         popup.pictoTimer.y   = display.contentHeight*0.455
 
         popup.timerDisplay = viewManager.newText({
-            parent = popup, 
-            text = '',     
-            x = display.contentWidth*0.57,
-            y = display.contentHeight*0.44,
-            fontSize = 53,
-            font = NUM_FONT
+            parent      = popup, 
+            text        = '',     
+            x           = display.contentWidth*0.57,
+            y           = display.contentHeight*0.44,
+            fontSize    = 53,
+            font        = NUM_FONT
         })
 
         viewManager.refreshPopupTimer(popup, lastTime)
@@ -1009,12 +1009,22 @@ function UserManager:checkTicketTiming()
 
         --------------------------
 
-        popup.more     = display.newImage( popup, I "timer.play.png")
-        popup.more.x     = display.contentWidth*0.5
-        popup.more.y     = display.contentHeight*0.7
+        popup.more          = display.newImage( popup, I "timer.play.png")
+        popup.more.x        = display.contentWidth*0.3
+        popup.more.y        = display.contentHeight*0.7
 
         utils.onTouch(popup.more, function() 
             shareManager:shareForInstants(popup)
+        end)
+
+        --------------------------
+
+        popup.increase          = display.newImage( popup, I "timer.winnings.png")
+        popup.increase.x        = display.contentWidth*0.7
+        popup.increase.y        = display.contentHeight*0.7
+
+        utils.onTouch(popup.increase, function() 
+            videoManager:play(function() end, true)
         end)
 
         --------------------------
@@ -1038,35 +1048,6 @@ function UserManager:logout()
     gameManager.initGameData() 
     router.openOutside()
 end
---
---function UserManager:logoutViewListener( event )
---
--- if event.url then
---
---  print("self.logout")
---  print(event.url)
---
---  if event.url == SERVER_URL .. "backToMobile" then
---   self:closeWebView()     
---   print("logoutViewListener backToMobile : outside") 
---   router.openOutside()
---   
---   
---   print("--- logout false") 
---   native.setActivityIndicator( false )
---  end
--- end
---
---end
---
---
---function UserManager:closeWebView()
--- self.webView:removeEventListener( "urlRequest", function(event) self:logoutViewListener(event) end )
--- self.webView:removeSelf()
--- self.webView = nil
---end
-
-
 
 -----------------------------------------------------------------------------------------
 -- NOTIFICATIONS

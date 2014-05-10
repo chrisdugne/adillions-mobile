@@ -23,7 +23,7 @@ function scene:refreshScene()
     local title   = utils.urlEncode(T "Try your luck on Adillions !")
     local message   = utils.urlEncode(T "It's a free, fun and responsible game")
 
-    local redirect_uri  = utils.urlEncode(SERVER_URL.."backToMobile")
+    local redirect_uri  = utils.urlEncode(API_URL.."backToMobile")
     local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorCode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
 
     self.webView = native.newWebView( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
@@ -38,7 +38,7 @@ function scene:inviteListener( event )
     if event.url then
         print (event.url)
 
-        if string.startsWith(event.url, SERVER_URL .. "backToMobile?request=")
+        if string.startsWith(event.url, API_URL .. "backToMobile?request=")
         or string.startsWith(event.url, "https://m.facebook.com/home.php") then
             self:closeWebView()   
             if(self.next) then  
@@ -56,7 +56,7 @@ function scene:inviteListener( event )
             --
             --      end 
 
-        elseif string.startsWith(event.url, SERVER_URL .. "backToMobile") then
+        elseif string.startsWith(event.url, API_URL .. "backToMobile") then
 
             self:closeWebView()      
             if(self.next) then  
