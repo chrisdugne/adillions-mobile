@@ -405,7 +405,7 @@ end
 
 function LotteryManager:showLastTicket()
 
-    local popup = viewManager.showPopup()
+    local popup = viewManager.showPopup(display.contentHeight*0.75)
     
     ----------------------------------------
     
@@ -420,7 +420,7 @@ function LotteryManager:showLastTicket()
 
     popup.subtitle          = display.newImage( popup, I "confirmation.selection.png")  
     popup.subtitle.x        = display.contentWidth*0.5
-    popup.subtitle.y        = display.contentHeight*0.17
+    popup.subtitle.y        = display.contentHeight*0.25
     
     ----------------------------------------
 
@@ -430,7 +430,7 @@ function LotteryManager:showLastTicket()
 
     ----------------------------------------
     
-    viewManager.drawSelection(popup, lotteryManager.currentSelection, display.contentHeight*0.28)
+    viewManager.drawSelection(popup, lotteryManager.currentSelection, display.contentHeight*0.34)
     
     ---------------------------------------
 --
@@ -446,7 +446,7 @@ function LotteryManager:showLastTicket()
     ----------------------------------------
 
     local nbTickets = userManager:remainingTickets()
-    local lineY     = display.contentHeight*0.4
+    local lineY     = display.contentHeight*0.43
 
     popup.pictoTicket = display.newImage( popup, "assets/images/hud/confirmation/confirmation.ticket.png")  
     popup.pictoTicket.x = display.contentWidth*0.81
@@ -488,45 +488,36 @@ function LotteryManager:showLastTicket()
 
     popup.more          = display.newImage( popup, I "confirmation.jackpot.png")  
     popup.more.x        = display.contentWidth*0.5
-    popup.more.y        = display.contentHeight*0.56
+    popup.more.y        = display.contentHeight*0.59
 
     popup.arrow        = display.newImage( popup, "assets/images/hud/confirmation/confirmation.arrow.png")
     popup.arrow.x      = display.contentWidth*0.5
-    popup.arrow.y      = display.contentHeight*0.61
+    popup.arrow.y      = display.contentHeight*0.63
 
     --------------------------
 
-    popup.friends          = display.newImage( popup, I "confirmation.friends.png")  
-    popup.friends.x        = display.contentWidth*0.3
-    popup.friends.y        = display.contentHeight*0.73
-    
-    utils.onTouch(popup.friends, function()
-        shareManager:inviteFBFriends()
-    end)
+    popup.share          = display.newImage( popup, I "confirmation.share.png")  
+    popup.share.x        = display.contentWidth*0.5
+    popup.share.y        = display.contentHeight*0.73
 
-    popup.activity          = display.newImage( popup, I "confirmation.activity.png")  
-    popup.activity.x        = display.contentWidth*0.7
-    popup.activity.y        = display.contentHeight*0.73
-
-    utils.onTouch(popup.activity, function()
+    utils.onTouch(popup.share, function()
         shareManager:simpleShare()
     end)
 
     --------------------------
 
-    popup.close    = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x    = display.contentWidth*0.5
-    popup.close.y    = display.contentHeight*0.89
+    popup.close         = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    popup.close.x       = display.contentWidth*0.88
+    popup.close.y       = display.contentHeight*0.165
 
-    utils.onTouch(popup.close, function()
+    utils.onTouch(popup.close, function() 
         router.openHome() 
         viewManager.closePopup(popup)
 
         if(nbTickets == 0) then
             shareManager:noMoreTickets()
         end
-    end)
-
+    end) 
 
 end
 
