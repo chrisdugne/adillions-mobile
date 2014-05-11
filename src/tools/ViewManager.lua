@@ -405,6 +405,7 @@ function prepareToWaitForResults()
     
     timer.performWithDelay(math.random(3000, 6000), function()
         native.setActivityIndicator( false )
+        refreshHomeTimer()
         lotteryManager:checkAppStatus(function(lottery)
             bannerManager:waitingForDrawing(lottery)
         end)
@@ -451,7 +452,7 @@ function refreshHomeTimer()
     local now = time.now()
     local timeRemaining = lotteryManager.nextDrawing.date - now
 
-    if(timeRemaining < 0) then
+    if(timeRemaining < 2 * 60 * 60 * 1000 and lotteryManager.global.appStatus.state ~= 2) then
         prepareToWaitForResults()
         
     else

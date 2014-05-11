@@ -1025,7 +1025,8 @@ function UserManager:checkTicketTiming()
         popup.increase.x        = display.contentWidth*0.5
         popup.increase.y        = display.contentHeight*0.73
 
-        utils.onTouch(popup.increase, function() 
+        utils.onTouch(popup.increase, function()
+            analytics.event("Gaming", "increaseJackpot")  
             videoManager:play(function() end, true)
         end)
 
