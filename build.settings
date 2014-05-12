@@ -49,6 +49,11 @@ settings = {
 
         plugins =
         {
+            ["facebook"] =
+            {
+                publisherId = "com.coronalabs",
+                supportedPlatforms = { iphone=true, ["iphone-sim"]=true },
+            },
             ["plugin.sponsorpay"] =
             {
                 publisherId = "com.sponsorpay",

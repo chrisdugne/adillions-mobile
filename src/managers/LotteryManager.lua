@@ -400,14 +400,17 @@ function LotteryManager:showLastTicket()
     
     ----------------------------------------
     
+    local headerY   = popup.bg.y - popup.bg.contentHeight*0.5
+    
     popup.header            = display.newImageRect(popup, "assets/images/hud/confirmation/confirmation.title.bg.png", popup.bg.contentWidth*0.95835, display.viewableContentHeight*0.08)
     popup.header.anchorY    = 0
     popup.header.x          = display.contentWidth*0.5
-    popup.header.y          = popup.bg.y - popup.bg.contentHeight*0.5
+    popup.header.y          = headerY
     
     popup.title             = display.newImage( popup, I "confirmation.next.drawing.png")  
     popup.title.x           = display.contentWidth*0.5
-    popup.title.y           = popup.header.y +  popup.header.contentHeight*0.5
+    popup.title.y           = headerY +  popup.header.contentHeight*0.5
+--    popup.title.y           = headerY + display.contentHeight*0.06
 
     popup.subtitle          = display.newImage( popup, I "confirmation.selection.png")  
     popup.subtitle.x        = display.contentWidth*0.5
@@ -500,6 +503,7 @@ function LotteryManager:showLastTicket()
     popup.close         = display.newImage( popup, "assets/images/hud/CroixClose.png")
     popup.close.x       = display.contentWidth*0.88
     popup.close.y       = display.contentHeight*0.165
+--    popup.close.y       = display.contentHeight*0.175
 
     utils.onTouch(popup.close, function() 
         router.openHome() 
