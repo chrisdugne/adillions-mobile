@@ -396,6 +396,7 @@ end
 
 function LotteryManager:showLastTicket()
 
+    router.openWhitePage()
     local popup = viewManager.showPopup(display.contentHeight*0.75)
     
     ----------------------------------------
@@ -414,7 +415,7 @@ function LotteryManager:showLastTicket()
 
     popup.subtitle          = display.newImage( popup, I "confirmation.selection.png")  
     popup.subtitle.x        = display.contentWidth*0.5
-    popup.subtitle.y        = display.contentHeight*0.25
+    popup.subtitle.y        = display.contentHeight*0.28
     
     ----------------------------------------
 
@@ -424,7 +425,7 @@ function LotteryManager:showLastTicket()
 
     ----------------------------------------
     
-    viewManager.drawSelection(popup, lotteryManager.currentSelection, display.contentHeight*0.34)
+    viewManager.drawSelection(popup, lotteryManager.currentSelection, display.contentHeight*0.37)
     
     ---------------------------------------
 --
@@ -440,7 +441,7 @@ function LotteryManager:showLastTicket()
     ----------------------------------------
 
     local nbTickets = userManager:remainingTickets()
-    local lineY     = display.contentHeight*0.43
+    local lineY     = display.contentHeight*0.46
 
     popup.pictoTicket = display.newImage( popup, "assets/images/hud/confirmation/confirmation.ticket.png")  
     popup.pictoTicket.x = display.contentWidth*0.81
@@ -478,21 +479,21 @@ function LotteryManager:showLastTicket()
 
     popup.line        = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
     popup.line.x      = display.contentWidth*0.5
-    popup.line.y      = display.contentHeight*0.5
+    popup.line.y      = display.contentHeight*0.545
 
     popup.more          = display.newImage( popup, I "confirmation.jackpot.png")  
     popup.more.x        = display.contentWidth*0.5
-    popup.more.y        = display.contentHeight*0.59
+    popup.more.y        = display.contentHeight*0.62
 
     popup.arrow        = display.newImage( popup, "assets/images/hud/confirmation/confirmation.arrow.png")
     popup.arrow.x      = display.contentWidth*0.5
-    popup.arrow.y      = display.contentHeight*0.63
+    popup.arrow.y      = display.contentHeight*0.675
 
     --------------------------
 
     popup.share          = display.newImage( popup, I "confirmation.share.png")  
     popup.share.x        = display.contentWidth*0.5
-    popup.share.y        = display.contentHeight*0.73
+    popup.share.y        = display.contentHeight*0.765
 
     utils.onTouch(popup.share, function()
         shareManager:simpleShare()

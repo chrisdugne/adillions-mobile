@@ -181,3 +181,10 @@ function openInviteFriends(next)
     storyboard.gotoScene( "src.views.inside.InviteFriends" , {params = {next=next}})
     view = INVITEFRIENDS
 end
+
+-----------------------------------------------------------------------------------------
+
+function openWhitePage()
+    resetScreen()
+    storyboard.gotoScene( "src.views.inside.WhitePage")
+end

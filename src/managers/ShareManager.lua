@@ -313,7 +313,7 @@ function ShareManager:shareForInstants(popup)
 
     hud.popin.title         = display.newImage( hud.popin, I "instant.playnow.png")  
     hud.popin.title.x       = - display.contentWidth * 0.485
-    hud.popin.title.y       = hud.popin.headerMiddle
+    hud.popin.title.y       = hud.popin.headerMiddle + display.contentHeight * 0.005
     hud.popin.title.anchorX = 0
 
     hud.popin.what          = display.newImage( hud.popin, I "what.png")  
