@@ -4,6 +4,10 @@ local translations =
         ["fr"] = "Chargement...",
     },
 
+    ["(We will never post without your consent)"] = {
+        ["fr"] = "(Nous ne posterons jamais sans votre accord)",
+    },
+
     ["Waiting for drawing"] = {
         ["fr"] = "En attente du tirage",
     },

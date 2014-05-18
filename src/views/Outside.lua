@@ -64,6 +64,14 @@ function scene:refreshScene()
 
     utils.onTouch(hud.fb, facebook.login)
 
+    hud.textFB = viewManager.newText({
+        parent      = hud,
+        text        = T "(We will never post without your consent)",       
+        fontSize    = 30,  
+        x           = display.contentWidth * 0.5,
+        y           = display.contentHeight*0.665
+    })
+
     ---------------------------------------------------------------
 
     hud.line = display.newImage( hud, "assets/images/hud/Sign_Filet.png")  
