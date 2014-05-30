@@ -25,7 +25,7 @@ function VideoManager:play(afterVideoSeen, resetCounter)
         self.nbVideoToSee = 1
     end
     
-    if(self.nbVideoToSee == 0) then
+    if(SIMULATOR or self.nbVideoToSee == 0) then
         self.afterVideoSeen()
 
     else

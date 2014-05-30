@@ -1027,7 +1027,10 @@ function UserManager:checkTicketTiming()
 
         utils.onTouch(popup.increase, function()
             analytics.event("Gaming", "increaseJackpot")  
-            videoManager:play(function() end, true)
+            videoManager:play(function() 
+                 viewManager.closePopup(popup) 
+                 userManager:openIncreaseConfirmation()
+            end, true)
         end)
 
         --------------------------
@@ -1547,6 +1550,86 @@ function UserManager:openPrizes()
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
+end
+
+----------------------------------------
+
+function UserManager:openIncreaseConfirmation()
+
+    local height    = display.contentHeight * 0.8
+    local top       = (display.contentHeight - height) * 0.5
+    local yGap      = display.contentHeight * 0.082
+
+    local popup     = viewManager.showPopup(height)
+
+    ---------------------------------------------------------------
+    --
+    
+    popup.bg                = display.newImage( popup, "assets/images/hud/home/BG_adillions.png")
+    popup.bg.x              = display.contentWidth*0.5
+    popup.bg.y              = display.contentHeight*0.5
+         
+    popup.congratz          = display.newImage( popup, I "TxtCongratulations.png")  
+    popup.congratz.x        = display.contentWidth*0.5
+    popup.congratz.y        = top + height*0.15
+    
+    popup.multiLineText = display.newText({
+        parent      = popup,
+        text        = T "You successfully contributed to increase the Prize Fund and the Charity Fund",
+        width       = display.contentWidth*0.6,  
+        height      = height*0.4,  
+        x           = display.contentWidth*0.5,
+        y           = top + height*0.46,
+        anchorY     = 0, 
+        font        = FONT, 
+        fontSize    = 32,
+        align       = "center"
+    })
+    
+    popup.multiLineText:setFillColor(0)
+
+    popup.schema            = display.newImage( popup, "assets/images/hud/confirmation/increase.schema.png")
+    popup.schema.x          = display.contentWidth*0.5
+    popup.schema.y          = top + height*0.55
+
+    ---------------------------------------------------------------
+        
+    popup.increase         = display.newImage( popup, I "increase.again.png")  
+    popup.increase.x       = display.contentWidth*0.5
+    popup.increase.y       = top + height * 0.79
+
+    utils.onTouch(popup.increase, function()
+        analytics.event("Gaming", "increaseJackpotAgain")  
+        videoManager:play(function() 
+             viewManager.closePopup(popup) 
+             userManager:openIncreaseConfirmation()
+        end, true)
+    end)
+    
+    ---------------------------------------------------------------
+    
+    popup.textBottom = display.newText({
+        parent      = popup,
+        text        = T "You should not use this feature without a free connection (cf. terms)",
+        x           = display.contentWidth*0.1,
+        y           = top + height - display.contentHeight * 0.03,
+        font        = FONT, 
+        fontSize    = 18
+    })
+
+    popup.textBottom.anchorX = 0
+    popup.textBottom.anchorY = 1
+    popup.textBottom:setFillColor(0)
+    
+    ---------------------------------------------------------------
+
+    popup.close         = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    popup.close.anchorY = 0
+    popup.close.y       = top + display.contentHeight * 0.01
+    popup.close.x       = display.contentWidth*0.89
+
+    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
+    
 end
 
 -----------------------------------------------------------------------------------------

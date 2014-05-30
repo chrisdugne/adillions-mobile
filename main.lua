@@ -39,9 +39,9 @@ else
     FACEBOOK_APP_ID         = "534196239997712"
     FACEBOOK_API_SECRET     = "46383d827867d50ef5d87b66c81f1a8e"
     FACEBOOK_APP_NAMESPACE  = "adillions-dev"
-    API_URL                 = "http://192.168.0.13:9000/"
-    WEB_URL                 = "http://192.168.0.13:9000/"
-    SERVER_OG_URL           = "http://192.168.0.13:9000/"
+    API_URL                 = "http://192.168.0.6:9000/"
+    WEB_URL                 = "http://192.168.0.6:9000/"
+    SERVER_OG_URL           = "http://192.168.0.6:9000/"
 end
 
 -----------------------------------------------------------------------------------------

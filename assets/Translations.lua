@@ -1,5 +1,7 @@
 local translations =
 {
+    ------------------------------------------------------
+        
     ["Loading..."] = {
         ["fr"] = "Chargement...",
     },
@@ -11,6 +13,18 @@ local translations =
     ["Waiting for drawing"] = {
         ["fr"] = "En attente du tirage",
     },
+
+    ------------------------------------------------------
+        
+    ["You successfully contributed to increase the Prize Fund and the Charity Fund"] = {
+        ["fr"] = "Vous avez contribué à l'augmentation de la cagnotte et des dons",
+    },
+    
+    ["You should not use this feature without a free connection (cf. terms)"] = {
+        ["fr"] = "N'activez cette fonction qu'avec une connexion gratuite (cf. réglement)",
+    },
+
+    ------------------------------------------------------    
 
     ["Please download the latest version of Adillions"] = {
         ["fr"] = "Téléchargez la dernière version d'Adillions",

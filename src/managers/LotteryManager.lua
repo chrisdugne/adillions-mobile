@@ -41,8 +41,10 @@ function LotteryManager:refreshNextLottery(classic, waiting)
         userManager:checkUserCurrentLottery(function()
             
             if(appStatus.state ~= 1) then
+                print("waiting")
                 waiting()
             else
+                print("classic")
                 classic()
             end
             

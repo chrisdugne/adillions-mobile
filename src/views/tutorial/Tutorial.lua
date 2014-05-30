@@ -93,21 +93,19 @@ function scene:createTuto1()
     hud.tuto1.bande.x    = display.contentWidth*0.5
     hud.tuto1.bande.y    = display.contentHeight*0.33
 
-    hud.tuto1.longtext    = display.newImage( hud.tuto1, I "Tuto_SubHeader_Txt.png")
+    hud.tuto1.longtext    = display.newImage( hud.tuto1, I "tuto1.title.png")
     hud.tuto1.longtext.x   = display.contentWidth*0.5
     hud.tuto1.longtext.y   = display.contentHeight*0.33
-
-    --------------------
-
-    hud.tuto1.longtext    = display.newImage( hud.tuto1, I "funded.png")
-    hud.tuto1.longtext.x   = display.contentWidth*0.6
-    hud.tuto1.longtext.y   = display.contentHeight*0.415
 
     --------------------
 
     hud.tuto1.ball1     = display.newImage( hud.tuto1, "assets/images/icons/watch.png")
     hud.tuto1.ball1.x    = display.contentWidth*0.15
     hud.tuto1.ball1.y    = display.contentHeight*0.52
+
+    hud.tuto1.num1     = display.newImage( hud.tuto1, "assets/images/hud/tuto/tuto1.n1.png")
+    hud.tuto1.num1.x    = hud.tuto1.ball1.x - 40
+    hud.tuto1.num1.y    = hud.tuto1.ball1.y - 40
 
     hud.tuto1.play    = display.newImage( hud.tuto1, "assets/images/icons/arrow_down.png")
     hud.tuto1.play.x    = display.contentWidth*0.15
@@ -140,6 +138,10 @@ function scene:createTuto1()
     hud.tuto1.ball2.x    = display.contentWidth*0.15
     hud.tuto1.ball2.y    = display.contentHeight*0.66
 
+    hud.tuto1.num2     = display.newImage( hud.tuto1, "assets/images/hud/tuto/tuto1.n2.png")
+    hud.tuto1.num2.x    = hud.tuto1.ball2.x - 40
+    hud.tuto1.num2.y    = hud.tuto1.ball2.y - 40
+
     hud.tuto1.play    = display.newImage( hud.tuto1, "assets/images/icons/arrow_down.png")
     hud.tuto1.play.x    = display.contentWidth*0.15
     hud.tuto1.play.y    = display.contentHeight*0.725
@@ -170,6 +172,10 @@ function scene:createTuto1()
     hud.tuto1.ball3     = display.newImage( hud.tuto1, "assets/images/icons/win.png")
     hud.tuto1.ball3.x    = display.contentWidth*0.15
     hud.tuto1.ball3.y    = display.contentHeight*0.8
+    
+    hud.tuto1.num3     = display.newImage( hud.tuto1, "assets/images/hud/tuto/tuto1.n3.png")
+    hud.tuto1.num3.x    = hud.tuto1.ball3.x - 40
+    hud.tuto1.num3.y    = hud.tuto1.ball3.y - 40
 
     hud.tuto1.win = viewManager.newText({
         parent    = hud.tuto1,
@@ -229,7 +235,7 @@ function scene:createTuto2()
     hud.tuto2.visuel.x  = display.viewableContentWidth*0.5 
     hud.tuto2.visuel.y  = display.viewableContentHeight*0.5
 
-    hud.tuto2.title    = display.newImage( hud.tuto2, I "Tuto_Txt2.png")
+    hud.tuto2.title    = display.newImage( hud.tuto2, I "tuto2.title.png")
     hud.tuto2.title.x   = display.contentWidth*0.5
     hud.tuto2.title.y   = display.contentHeight*0.15
 
@@ -310,100 +316,106 @@ function scene:createTuto3()
     hud.tuto3.bg.x    = display.viewableContentWidth*0.5 
     hud.tuto3.bg.y   = display.viewableContentHeight*0.44
 
-    hud.tuto3.title    = display.newImage( hud.tuto3, I "Tuto_Txt3.png")
+    hud.tuto3.title    = display.newImage( hud.tuto3, I "tuto3.title.png")
     hud.tuto3.title.x   = display.contentWidth*0.5
-    hud.tuto3.title.y   = display.contentHeight*0.13
+    hud.tuto3.title.y   = display.contentHeight*0.2
 
-    hud.tuto3.finalText1 = viewManager.newText({
-        parent    = hud.tuto3,
-        text     = T "... give to charity !", 
-        fontSize   = 45,  
-        x      = display.contentWidth * 0.5,
-        y      = display.contentHeight*0.78,
-    })
-
-    hud.tuto3.finalText1:setFillColor(40/255)
+--    hud.tuto3.finalText1 = viewManager.newText({
+--        parent    = hud.tuto3,
+--        text     = T "... give to charity !", 
+--        fontSize   = 45,  
+--        x      = display.contentWidth * 0.5,
+--        y      = display.contentHeight*0.78,
+--    })
+--
+--    hud.tuto3.finalText1:setFillColor(40/255)
 
     hud.tuto3.finalText2 = viewManager.newText({
         parent    = hud.tuto3,
         text     = T "... likely you are to win the jackpot !", 
         fontSize   = 45,  
         x      = display.contentWidth * 0.5,
-        y      = display.contentHeight*0.82,
+        y      = display.contentHeight*0.75,
     })
 
     hud.tuto3.finalText2:setFillColor(40/255)
 
     -------------------
-
-    hud.tuto3.charityprofile = viewManager.newText({
-        parent    = hud.tuto3,
-        text     = T "Charity Profile", 
-        fontSize   = 32,  
-        x      = display.contentWidth * 0.5,
-        y      = display.contentHeight*0.315,
-    })
-
-    hud.tuto3.charityprofile:setFillColor(40/255)
-
-    hud.tuto3.winners = viewManager.newText({
-        parent    = hud.tuto3,
-        text     = T "Winners", 
-        fontSize   = 32,  
-        x      = display.contentWidth * 0.3,
-        y      = display.contentHeight* 0.72,
-    })
-
-    hud.tuto3.winners:setFillColor(40/255)
-
-    hud.tuto3.charity = viewManager.newText({
-        parent    = hud.tuto3,
-        text     = T "Charities", 
-        fontSize   = 32,  
-        x      = display.contentWidth * 0.7,
-        y      = display.contentHeight* 0.72,
-    })
-
-    hud.tuto3.charity:setFillColor(40/255)
+    
+    hud.tuto3.schema    = display.newImage( hud.tuto3, "assets/images/hud/tuto/tuto3.schema.png")
+    hud.tuto3.schema.x    = display.contentWidth*0.5
+    hud.tuto3.schema.y    = display.contentHeight*0.5
+    
+    -------------------
+--
+--    hud.tuto3.charityprofile = viewManager.newText({
+--        parent    = hud.tuto3,
+--        text     = T "Charity Profile", 
+--        fontSize   = 32,  
+--        x      = display.contentWidth * 0.5,
+--        y      = display.contentHeight*0.315,
+--    })
+--
+--    hud.tuto3.charityprofile:setFillColor(40/255)
+--
+--    hud.tuto3.winners = viewManager.newText({
+--        parent    = hud.tuto3,
+--        text     = T "Winners", 
+--        fontSize   = 32,  
+--        x      = display.contentWidth * 0.3,
+--        y      = display.contentHeight* 0.72,
+--    })
+--
+--    hud.tuto3.winners:setFillColor(40/255)
+--
+--    hud.tuto3.charity = viewManager.newText({
+--        parent    = hud.tuto3,
+--        text     = T "Charities", 
+--        fontSize   = 32,  
+--        x      = display.contentWidth * 0.7,
+--        y      = display.contentHeight* 0.72,
+--    })
+--
+--    hud.tuto3.charity:setFillColor(40/255)
 
     -------------------
 
-    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Body.png")
-    hud.tuto3.play.x    = display.contentWidth*0.5
-    hud.tuto3.play.y    = display.contentHeight*0.25
-
-
-    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/CharityLevel.png")
-    hud.tuto3.play.x    = display.contentWidth*0.5
-    hud.tuto3.play.y    = display.contentHeight*0.35
-
-    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Bar.png")
-    hud.tuto3.play.x    = display.contentWidth*0.5
-    hud.tuto3.play.y    = display.contentHeight*0.4
-
-    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Time.png")
-    hud.tuto3.play.x    = display.contentWidth*0.5
-    hud.tuto3.play.y    = display.contentHeight*0.45
-
-    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Bar.png")
-    hud.tuto3.play.x    = display.contentWidth*0.5
-    hud.tuto3.play.y    = display.contentHeight*0.49
-
-    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Fund.png")
-    hud.tuto3.play.x    = display.contentWidth*0.5
-    hud.tuto3.play.y    = display.contentHeight*0.55
-
-    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Bar3.png")
-    hud.tuto3.play.x    = display.contentWidth*0.5
-    hud.tuto3.play.y    = display.contentHeight*0.63
-
-    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Winners.png")
-    hud.tuto3.play.x    = display.contentWidth*0.3
-    hud.tuto3.play.y    = display.contentHeight*0.65
-
-    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Charities.png")
-    hud.tuto3.play.x    = display.contentWidth*0.7
-    hud.tuto3.play.y    = display.contentHeight*0.65
+--    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Body.png")
+--    hud.tuto3.play.x    = display.contentWidth*0.5
+--    hud.tuto3.play.y    = display.contentHeight*0.25
+--
+--
+--    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/CharityLevel.png")
+--    hud.tuto3.play.x    = display.contentWidth*0.5
+--    hud.tuto3.play.y    = display.contentHeight*0.35
+--
+--    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Bar.png")
+--    hud.tuto3.play.x    = display.contentWidth*0.5
+--    hud.tuto3.play.y    = display.contentHeight*0.4
+--
+--    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Time.png")
+--    hud.tuto3.play.x    = display.contentWidth*0.5
+--    hud.tuto3.play.y    = display.contentHeight*0.45
+--
+--    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Bar.png")
+--    hud.tuto3.play.x    = display.contentWidth*0.5
+--    hud.tuto3.play.y    = display.contentHeight*0.49
+--
+--    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Fund.png")
+--    hud.tuto3.play.x    = display.contentWidth*0.5
+--    hud.tuto3.play.y    = display.contentHeight*0.55
+--
+--    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Bar3.png")
+--    hud.tuto3.play.x    = display.contentWidth*0.5
+--    hud.tuto3.play.y    = display.contentHeight*0.63
+--
+--    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Winners.png")
+--    hud.tuto3.play.x    = display.contentWidth*0.3
+--    hud.tuto3.play.y    = display.contentHeight*0.65
+--
+--    hud.tuto3.play    = display.newImage( hud.tuto3, "assets/images/hud/tuto3/Charities.png")
+--    hud.tuto3.play.x    = display.contentWidth*0.7
+--    hud.tuto3.play.y    = display.contentHeight*0.65
 
     -------------------
     -- controls
