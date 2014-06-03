@@ -80,8 +80,8 @@ function scene:drawNextLottery( waitingForDrawing )
 --    userManager.user.notifications.instants = 2
 --    userManager:notifyInstants()
 
---    lotteryManager.currentSelection = {1,2,3,4,5,6}
---    lotteryManager:showLastTicket()
+    lotteryManager.currentSelection = {1,2,3,4,5,6}
+    lotteryManager:showLastTicket()
 
     if(router.view ~= router.HOME) then
         return

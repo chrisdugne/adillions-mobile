@@ -1568,28 +1568,28 @@ function UserManager:openIncreaseConfirmation()
     popup.bg.x              = display.contentWidth*0.5
     popup.bg.y              = display.contentHeight*0.5
          
-    popup.congratz          = display.newImage( popup, I "increase.congratulations.png")  
-    popup.congratz.x        = display.contentWidth*0.5
-    popup.congratz.y        = top + height*0.15
-    
+    popup.schema            = display.newImage( popup, "assets/images/hud/confirmation/increase.schema.png")
+    popup.schema.x          = display.contentWidth*0.5
+    popup.schema.y          = top + height*0.15
+
     popup.multiLineText = display.newText({
         parent      = popup,
         text        = T "You successfully contributed to increase the Prize Fund and the Charity Fund",
-        width       = display.contentWidth*0.6,  
+        width       = display.contentWidth*0.75,  
         height      = height*0.4,  
         x           = display.contentWidth*0.5,
-        y           = top + height*0.46,
+        y           = top + height*0.6,
         anchorY     = 0, 
         font        = FONT, 
-        fontSize    = 36,
+        fontSize    = 50,
         align       = "center"
     })
     
     popup.multiLineText:setFillColor(0)
 
-    popup.schema            = display.newImage( popup, "assets/images/hud/confirmation/increase.schema.png")
-    popup.schema.x          = display.contentWidth*0.5
-    popup.schema.y          = top + height*0.55
+    popup.congratz          = display.newImage( popup, I "increase.congratulations.png")  
+    popup.congratz.x        = display.contentWidth*0.5
+    popup.congratz.y        = top + height*0.3
 
     ---------------------------------------------------------------
         
@@ -1613,7 +1613,7 @@ function UserManager:openIncreaseConfirmation()
         x           = display.contentWidth*0.1,
         y           = top + height - display.contentHeight * 0.03,
         font        = FONT, 
-        fontSize    = 18
+        fontSize    = 23
     })
 
     popup.textBottom.anchorX = 0
