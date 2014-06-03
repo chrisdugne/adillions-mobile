@@ -1563,13 +1563,12 @@ function UserManager:openIncreaseConfirmation()
     local popup     = viewManager.showPopup(height)
 
     ---------------------------------------------------------------
-    --
     
     popup.bg                = display.newImage( popup, "assets/images/hud/home/BG_adillions.png")
     popup.bg.x              = display.contentWidth*0.5
     popup.bg.y              = display.contentHeight*0.5
          
-    popup.congratz          = display.newImage( popup, I "TxtCongratulations.png")  
+    popup.congratz          = display.newImage( popup, I "increase.congratulations.png")  
     popup.congratz.x        = display.contentWidth*0.5
     popup.congratz.y        = top + height*0.15
     
@@ -1582,7 +1581,7 @@ function UserManager:openIncreaseConfirmation()
         y           = top + height*0.46,
         anchorY     = 0, 
         font        = FONT, 
-        fontSize    = 32,
+        fontSize    = 36,
         align       = "center"
     })
     

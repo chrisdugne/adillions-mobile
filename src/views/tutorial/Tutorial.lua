@@ -316,35 +316,53 @@ function scene:createTuto3()
     hud.tuto3.bg.x    = display.viewableContentWidth*0.5 
     hud.tuto3.bg.y   = display.viewableContentHeight*0.44
 
-    hud.tuto3.title    = display.newImage( hud.tuto3, I "tuto3.title.png")
-    hud.tuto3.title.x   = display.contentWidth*0.5
-    hud.tuto3.title.y   = display.contentHeight*0.2
-
---    hud.tuto3.finalText1 = viewManager.newText({
---        parent    = hud.tuto3,
---        text     = T "... give to charity !", 
---        fontSize   = 45,  
---        x      = display.contentWidth * 0.5,
---        y      = display.contentHeight*0.78,
---    })
---
---    hud.tuto3.finalText1:setFillColor(40/255)
-
-    hud.tuto3.finalText2 = viewManager.newText({
-        parent    = hud.tuto3,
-        text     = T "... likely you are to win the jackpot !", 
-        fontSize   = 45,  
-        x      = display.contentWidth * 0.5,
-        y      = display.contentHeight*0.75,
-    })
-
-    hud.tuto3.finalText2:setFillColor(40/255)
-
     -------------------
     
-    hud.tuto3.schema    = display.newImage( hud.tuto3, "assets/images/hud/tuto/tuto3.schema.png")
+    hud.tuto3.schema    = display.newImage( hud.tuto3, "assets/images/hud/tuto/tuto3.bg.png")
     hud.tuto3.schema.x    = display.contentWidth*0.5
     hud.tuto3.schema.y    = display.contentHeight*0.5
+    
+    -------------------
+
+    hud.tuto3.p1        = display.newImage( hud.tuto3, I "tuto3.p1.png")
+    hud.tuto3.p1.x      = display.contentWidth*0.5
+    hud.tuto3.p1.y      = display.contentHeight*0.15
+
+    hud.tuto3.p2        = display.newImage( hud.tuto3, I "tuto3.p2.png")
+    hud.tuto3.p2.x      = display.contentWidth*0.5
+    hud.tuto3.p2.y      = display.contentHeight*0.3
+
+    hud.tuto3.p3        = display.newImage( hud.tuto3, I "tuto3.p3.png")
+    hud.tuto3.p3.anchorX= 0
+    hud.tuto3.p3.x      = display.contentWidth*0.16
+    hud.tuto3.p3.y      = display.contentHeight*0.45
+
+    hud.tuto3.p4        = display.newImage( hud.tuto3, I "tuto3.p4.png")
+    hud.tuto3.p4.anchorX= 0
+    hud.tuto3.p4.x      = display.contentWidth*0.16
+    hud.tuto3.p4.y      = display.contentHeight*0.6
+
+    hud.tuto3.p5        = display.newImage( hud.tuto3, I "tuto3.p5.png")
+    hud.tuto3.p5.anchorX= 0
+    hud.tuto3.p5.x      = display.contentWidth*0.16
+    hud.tuto3.p5.y      = display.contentHeight*0.75
+    
+    -------------------
+    
+    hud.tuto3.ball1     = display.newImage( hud.tuto3, "assets/images/hud/tuto/tuto3.ball1.png")
+    hud.tuto3.ball1.x   = display.contentWidth*0.07
+    hud.tuto3.ball1.anchorY = 0
+    hud.tuto3.ball1.y   = display.contentHeight*0.45 - hud.tuto3.p3.height/2
+
+    hud.tuto3.ball2     = display.newImage( hud.tuto3, "assets/images/hud/tuto/tuto3.ball2.png")
+    hud.tuto3.ball2.x   = display.contentWidth*0.07
+    hud.tuto3.ball2.anchorY = 0
+    hud.tuto3.ball2.y   = display.contentHeight*0.6 - hud.tuto3.p4.height/2
+
+    hud.tuto3.ball3     = display.newImage( hud.tuto3, "assets/images/hud/tuto/tuto3.ball3.png")
+    hud.tuto3.ball3.x   = display.contentWidth*0.07
+    hud.tuto3.ball3.anchorY = 0
+    hud.tuto3.ball3.y   = display.contentHeight*0.75 - hud.tuto3.p5.height/2
     
     -------------------
 --
