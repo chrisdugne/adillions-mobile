@@ -931,6 +931,9 @@ function UserManager:checkTicketTiming()
     if(tonumber(spentMillis) >= (lotteryManager.nextLottery.ticketTimer * 60 * 1000) or self.user.extraTickets > 0) then
         return true
     else
+    
+        print("==========>>>  popup ")
+        
         ----------------------------------------------------------------------------------------------------
 
         local popup = viewManager.showPopup()
@@ -1027,8 +1030,8 @@ function UserManager:checkTicketTiming()
 
         utils.onTouch(popup.increase, function()
             analytics.event("Gaming", "increaseJackpot")  
+            viewManager.closePopup(popup) 
             videoManager:play(function() 
-                 viewManager.closePopup(popup) 
                  userManager:openIncreaseConfirmation()
             end, true)
         end)
@@ -1556,15 +1559,13 @@ end
 
 function UserManager:openIncreaseConfirmation()
 
-    router.openWhitePage()
-    
     ---------------------------------------------------------------
 
     local height    = display.contentHeight * 0.8
     local top       = (display.contentHeight - height) * 0.5
     local yGap      = display.contentHeight * 0.082
 
-    local popup     = viewManager.showPopup(height)
+    local popup     = viewManager.showPopup(height, false, true)
 
     ---------------------------------------------------------------
     

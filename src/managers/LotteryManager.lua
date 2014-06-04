@@ -398,8 +398,7 @@ end
 
 function LotteryManager:showLastTicket()
 
-    router.openWhitePage()
-    local popup = viewManager.showPopup(display.contentHeight*0.75)
+    local popup = viewManager.showPopup(display.contentHeight*0.75, false, true)
     
     ----------------------------------------
     

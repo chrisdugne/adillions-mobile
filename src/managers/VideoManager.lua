@@ -40,12 +40,12 @@ end
 function VideoManager:playYume()
     
     self.tryYume = self.tryYume + 1
-     
+    
     self.webView = native.newWebView( 
-        display.contentCenterX, 
-        display.contentCenterY, 
-        display.contentWidth, 
-        display.contentHeight
+        display.viewableContentWidth*0.5, 
+        display.viewableContentHeight*0.5, 
+        display.viewableContentWidth+5, 
+        display.viewableContentHeight+5
     )
 
     local platform      = "Android"

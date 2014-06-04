@@ -53,13 +53,13 @@ function Vungle:adListener(event)
 
     native.setActivityIndicator( false )
 
-    if event.type == "adStart" then
+    if(event.isError) then
+        viewManager.message(T "Vungle has no ad, please try later")
+        self.afterVideoSeen = nil
+        self.vungleON = false
+    
+    elseif event.type == "adStart" then
         
-        if(event.isError) then
-            viewManager.message(T "Vungle has no ad, please try later")
-            self.afterVideoSeen = nil
-            self.vungleON = false
-        end
 
     elseif event.type == "adEnd" then
 

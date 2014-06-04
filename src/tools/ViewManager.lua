@@ -195,7 +195,6 @@ end
 
 function openWeb(url, listener, customOnClose)
     
-    print(url)
     ------------------
 
     local webContainer = {}
@@ -211,6 +210,18 @@ function openWeb(url, listener, customOnClose)
     utils.onTouch(webContainer.headerRect, function() return true end)
     utils.onTouch(webContainer.logo, function() return true end)
 
+    ------------------
+    
+    webContainer.backBlack = drawBorder( hud, 
+        0, 0, 
+        display.contentWidth+50, display.viewableContentHeight+50,
+        0/255,0/255,0/255
+        )  
+    
+    webContainer.backBlack.x   = display.viewableContentWidth*0.5 
+    webContainer.backBlack.y   = display.viewableContentHeight*0.5
+    webContainer.backBlack.alpha = 1
+    
     ------------------
 
     local webView = native.newWebView( display.contentCenterX, display.contentCenterY + HEADER_HEIGHT/2, display.contentWidth, display.contentHeight - HEADER_HEIGHT )
@@ -240,6 +251,7 @@ function openWeb(url, listener, customOnClose)
         display.remove(webContainer.headerRect)
         display.remove(webContainer.logo)
         display.remove(webContainer.close)
+        display.remove(webContainer.backBlack)
         webContainer = nil
 
         if(customOnClose) then
@@ -356,7 +368,7 @@ end
 --- no parameter : display.contentWidth*0.95, display.contentHeight*0.95
 --  only height  : square : height, height
 --  note : square grey BG doesnt close
-function showPopup(height, square)
+function showPopup(height, square, white)
 
     local width = display.contentWidth*0.95
 
@@ -368,27 +380,36 @@ function showPopup(height, square)
 
     local popup = display.newGroup()
 
-    local backGrey = drawBorder( popup, 
-    0, 0, 
-    display.contentWidth+50, display.viewableContentHeight+50,
-    50/255,50/255,50/255
-    )  
-
-    backGrey.x   = display.viewableContentWidth*0.5 
-    backGrey.y   = display.viewableContentHeight*0.5
-    backGrey.alpha = 0.45
+    if(white) then
+        local backWhite = drawBorder( popup, 
+        0, 0, 
+        display.contentWidth+50, display.viewableContentHeight+50,
+        200/255,200/255,200/255
+        )  
+    
+        backWhite.x   = display.viewableContentWidth*0.5 
+        backWhite.y   = display.viewableContentHeight*0.5
+        backWhite.alpha = 1
+        utils.onTap(backWhite, function() return true end)
+        
+    else
+        local backGrey = drawBorder( popup, 
+        0, 0, 
+        display.contentWidth+50, display.viewableContentHeight+50,
+        50/255,50/255,50/255
+        )  
+    
+        backGrey.x   = display.viewableContentWidth*0.5 
+        backGrey.y   = display.viewableContentHeight*0.5
+        backGrey.alpha = 0.45
+        utils.onTap(backGrey, function() return true end)
+    end
 
     popup.bg = display.newImageRect( popup, "assets/images/hud/Popup_BG.png", width, height)
     popup.bg.x = display.contentWidth*0.5 
     popup.bg.y = display.contentHeight*0.5
 
     popup:toFront()
-
---    if(square) then
---        utils.onTap(backGrey, function() return true end)
---    else
---        utils.onTap(backGrey, function() closePopup(popup) return true end)
---    end
 
     utils.onTap(popup.bg, function() return true end)
 
