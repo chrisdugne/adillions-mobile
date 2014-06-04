@@ -54,6 +54,7 @@ function Vungle:tryToShowAd(retrying)
         self.afterVideoSeen = nil
         self.vungleON = false
     end
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -65,22 +66,31 @@ function Vungle:adListener(event)
         print("Downloading video ad ... " .. self.attemptGetVideo )
 
         -- wait 3 seconds before retrying to display ad
-        timer.performWithDelay(3000, function() self:tryToShowAd(true) end)
+        timer.performWithDelay(3000, function() 
+            native.setActivityIndicator( false )
+            timer.performWithDelay(50, function() 
+                self:tryToShowAd(true)
+            end)
+        end)
         -- video ad displayed and then closed
 
     elseif event.type == "adEnd" then
-        print ( "videoSeen" )
+        timer.performWithDelay(50, function() 
+            native.setActivityIndicator( false )
+        end)
+
         if(self.afterVideoSeen) then
             self.afterVideoSeen()
         end
 
-        native.setActivityIndicator( false )
         self.afterVideoSeen = nil
         self.vungleON = false
 
     else
-        print( "Received event:")
-        utils.vardump( event )
+        if(DEV) then
+            print( "Vungle | Received an other event :")
+            utils.vardump( event )
+        end
     end
 end
 
