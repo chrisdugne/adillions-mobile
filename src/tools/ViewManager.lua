@@ -384,11 +384,11 @@ function showPopup(height, square)
 
     popup:toFront()
 
-    if(square) then
-        utils.onTap(backGrey, function() return true end)
-    else
-        utils.onTap(backGrey, function() closePopup(popup) return true end)
-    end
+--    if(square) then
+--        utils.onTap(backGrey, function() return true end)
+--    else
+--        utils.onTap(backGrey, function() closePopup(popup) return true end)
+--    end
 
     utils.onTap(popup.bg, function() return true end)
 

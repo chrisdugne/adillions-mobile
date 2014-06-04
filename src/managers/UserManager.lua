@@ -1556,6 +1556,10 @@ end
 
 function UserManager:openIncreaseConfirmation()
 
+    router.openWhitePage()
+    
+    ---------------------------------------------------------------
+
     local height    = display.contentHeight * 0.8
     local top       = (display.contentHeight - height) * 0.5
     local yGap      = display.contentHeight * 0.082
@@ -1564,9 +1568,9 @@ function UserManager:openIncreaseConfirmation()
 
     ---------------------------------------------------------------
     
-    popup.bg                = display.newImage( popup, "assets/images/hud/home/BG_adillions.png")
-    popup.bg.x              = display.contentWidth*0.5
-    popup.bg.y              = display.contentHeight*0.5
+--    popup.bg                = display.newImage( popup, "assets/images/hud/home/BG_adillions.png")
+--    popup.bg.x              = display.contentWidth*0.5
+--    popup.bg.y              = display.contentHeight*0.5
          
     popup.schema            = display.newImage( popup, "assets/images/hud/confirmation/increase.schema.png")
     popup.schema.x          = display.contentWidth*0.5
@@ -1627,7 +1631,10 @@ function UserManager:openIncreaseConfirmation()
     popup.close.y       = top + display.contentHeight * 0.01
     popup.close.x       = display.contentWidth*0.89
 
-    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
+    utils.onTouch(popup.close, function()
+        router.openHome()  
+        viewManager.closePopup(popup)
+    end)
     
 end
 
