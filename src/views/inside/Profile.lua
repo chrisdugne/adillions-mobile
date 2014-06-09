@@ -307,7 +307,7 @@ function scene:drawScene()
     
     local value = viewManager.newText({
         parent      = hud.board, 
-        text        = START_AVAILABLE_TICKETS,          
+        text        = lotteryManager.nextLottery.startTickets,          
         x           = self.column2 - display.contentWidth * 0.07,
         y           = self.top + self.yGap*(stockTop+1.5),
         fontSize    = self.fontSizeLeft,
@@ -438,7 +438,7 @@ function scene:drawScene()
     
     local text = viewManager.newText({
         parent      = hud.board, 
-        text        = (START_AVAILABLE_TICKETS + userManager.user.temporaryBonusTickets + userManager.user.fanBonusTickets + userManager.user.charityBonusTickets),
+        text        = (lotteryManager.nextLottery.startTickets + userManager.user.temporaryBonusTickets + userManager.user.fanBonusTickets + userManager.user.charityBonusTickets),
         x           = self.column2 - display.contentWidth * 0.07,
         y           = self.top + self.yGap*(stockTop+7.5),
         fontSize    = self.fontSizeLeft,

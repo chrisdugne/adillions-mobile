@@ -646,17 +646,15 @@ function UserManager:checkUserCurrentLottery(next)
             next()
         end 
     
-        print("%%%%%%%%%%%%")
-        print("UserManager asks to refreshNotifications")
         lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
     end 
-        
+
     ----------------------------------------
     
     if(self.user.currentLotteryUID ~= lotteryManager.nextLottery.uid) then
 
         self.user.currentLotteryUID         = lotteryManager.nextLottery.uid
-        self.user.availableTickets          = START_AVAILABLE_TICKETS 
+        self.user.availableTickets          = lotteryManager.nextLottery.startTickets 
         self.user.playedBonusTickets        = 0
 
         self.user.hasTweet                  = false
@@ -666,8 +664,6 @@ function UserManager:checkUserCurrentLottery(next)
         self.user.hasTweetAnInvite          = false
         self.user.hasInvitedOnFacebook      = false
 
-        print("%%%%%%%%%%%%")
-        print("UserManager must update player")
         self:updatePlayer(checkDone)
 
         ----------------------------------------
@@ -1352,7 +1348,7 @@ function UserManager:showStatus()
 
     popup.availableTickets = viewManager.newText({
         parent    = popup,
-        text    = (self:remainingTickets()) .. " / " .. (START_AVAILABLE_TICKETS + self.user.temporaryBonusTickets + self.user.fanBonusTickets + self.user.charityBonusTickets), 
+        text    = (self:remainingTickets()) .. " / " .. (lotteryManager.nextLottery.startTickets + self.user.temporaryBonusTickets + self.user.fanBonusTickets + self.user.charityBonusTickets), 
         fontSize  = 55,  
         x     = display.contentWidth * 0.5,
         y     = display.contentHeight*0.34,

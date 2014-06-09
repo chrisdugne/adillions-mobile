@@ -14,6 +14,10 @@ local translations =
         ["fr"] = "En attente du tirage",
     },
 
+    ["Drawing !"] = {
+        ["fr"] = "Tirage en cours !",
+    },
+
     ------------------------------------------------------
         
     ["You successfully contributed to increase the Prize Fund and the Charity Fund"] = {

@@ -121,7 +121,7 @@ function scene:drawNextLottery( waitingForDrawing )
     local daysX = display.contentWidth*0.305
     if(LANG == "en") then daysX = display.contentWidth*0.3 end
 
-    viewManager.newText({
+    hud.days = viewManager.newText({
         parent = hud, 
         text = T "DAYS", 
         x = daysX + paddingTextX,
@@ -129,7 +129,7 @@ function scene:drawNextLottery( waitingForDrawing )
         fontSize = timerLegendSize,
     })
 
-    viewManager.newText({
+    hud.hrs = viewManager.newText({
         parent = hud, 
         text = T "HRS", 
         x = display.contentWidth*0.437 + paddingTextX,
@@ -137,7 +137,7 @@ function scene:drawNextLottery( waitingForDrawing )
         fontSize = timerLegendSize,
     })
 
-    viewManager.newText({
+    hud.min = viewManager.newText({
         parent = hud, 
         text = T "MIN", 
         x = display.contentWidth*0.567 + paddingTextX,
@@ -145,7 +145,7 @@ function scene:drawNextLottery( waitingForDrawing )
         fontSize = timerLegendSize,
     })
 
-    viewManager.newText({
+    hud.sec = viewManager.newText({
         parent = hud, 
         text = T "SEC", 
         x = display.contentWidth*0.698 + paddingTextX,

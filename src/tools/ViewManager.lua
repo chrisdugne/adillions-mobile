@@ -479,21 +479,37 @@ function refreshHomeTimer()
     else
         local days,hours,min,sec = utils.getDaysHoursMinSec(math.round(timeRemaining/1000))
 
-        if(days <= 0 and hours <= 0 and min <= 0 and sec <= 0) then
-            days,hours,min,sec = utils.getDaysHoursMinSec(math.round(timeRemaining/1000))
+        if(days == -1 and lotteryManager.global.appStatus.state == 2) then
+            if(hud.timerDisplay.alpha == 1) then
+                hud.timerHidder = transition.to(hud.timerDisplay, {alpha=0.5, time=1000})
+            end
+
+            if(hud.timerDisplay.alpha <= 0.5) then
+                hud.timerDisplay.alpha = 1
+            end
+            
+        else
+            if(days < 10) then days = "0"..days end 
+            if(hours < 10) then hours = "0"..hours end 
+            if(min < 10) then min = "0"..min end 
+            if(sec < 10) then sec = "0"..sec end 
+    
+            if(hud.days) then
+                if(hud.timerHidder) then
+                    transition.cancel(hud.timerHidder)
+                end
+                hud.timerDisplay.alpha = 1 
+            end
+    
+            hud.timerDisplay.text = days .. " : " .. hours .. " : " .. min .. " : " .. sec
+    
         end
-
-        if(days < 10) then days = "0"..days end 
-        if(hours < 10) then hours = "0"..hours end 
-        if(min < 10) then min = "0"..min end 
-        if(sec < 10) then sec = "0"..sec end 
-
-        hud.timerDisplay.text = days .. " : " .. hours .. " : " .. min .. " : " .. sec
 
         local next = utils.getDaysHoursMinSec(math.round((time.now() - time.elapsedTime()) - TIMER)/1000)
         hud.timer = timer.performWithDelay((math.round(next/15) + 1) * 150, function ()
             refreshHomeTimer()
         end)
+
     end
 
 end
