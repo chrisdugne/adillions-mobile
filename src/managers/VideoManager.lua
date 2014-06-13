@@ -1,8 +1,8 @@
------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 VideoManager = {} 
 
------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 function VideoManager:new()  
 
@@ -15,7 +15,7 @@ function VideoManager:new()
     return object
 end
 
------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 function VideoManager:play(afterVideoSeen, resetCounter)
 
@@ -32,10 +32,11 @@ function VideoManager:play(afterVideoSeen, resetCounter)
         self.nbVideoToSee = self.nbVideoToSee - 1
         self.tryYume = 0 
         self:playYume()
+--        self:playVungle()
     end
 end
 
------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 function VideoManager:playYume()
     
@@ -59,14 +60,14 @@ function VideoManager:playYume()
     self.webView:addEventListener( "urlRequest", self.listener) 
 end
 
------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 function VideoManager:playVungle()
     vungle.afterVideoSeen = self.afterVideoSeen
     vungle:tryToShowAd()
 end
 
------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 function VideoManager:closeYumeVideo(event)
     self.webView:removeEventListener( "urlRequest", self.listener )
@@ -74,7 +75,7 @@ function VideoManager:closeYumeVideo(event)
     self.webView = nil
 end
 
------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 function VideoManager:videoListener(event)
     
@@ -91,19 +92,23 @@ function VideoManager:videoListener(event)
             if(self.tryYume < 3 ) then
                 self:playYume()
             else
-                self:playVungle()  
+                timer.performWithDelay(200, function()
+                    self:playVungle()
+                end)  
             end
 
         elseif  event.url == API_URL .. "yume_novideo" 
         or      event.url == API_URL .. "yume_error" then
             self:closeYumeVideo()  
-            self:playVungle()  
+            timer.performWithDelay(200, function()
+                self:playVungle()
+            end)  
         end
 
     end
 
 end
 
------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 return VideoManager
