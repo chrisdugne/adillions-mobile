@@ -89,7 +89,7 @@ function VideoManager:videoListener(event)
         elseif  event.url == API_URL .. "yume_completed?status=false"
         or      event.url == API_URL .. "yume_wrong_playing" then
             self:closeYumeVideo()
-            if(self.tryYume < 3 ) then
+            if(self.tryYume < 2 ) then
                 self:playYume()
             else
                 timer.performWithDelay(200, function()

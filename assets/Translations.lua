@@ -325,8 +325,8 @@ local translations =
         ["fr"] = "Combinaison",
     },
 
-    ["n° + LB"] = {
-        ["fr"] = "n° + BC",
+    ["n° + LB*"] = {
+        ["fr"] = "n° + BC*",
     },
 
     ["Prize"] = {
