@@ -6,7 +6,7 @@
 -- Version: 1.0
 --
 -- File name : Facebook.lua
--- 
+--
 -- Author: Chris Dugne @ Uralys - www.uralys.com
 --
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ function login()
     print("--- facebook login")
     coronaFacebook.logout()
     native.setActivityIndicator( true )
-    
+
     facebookON = true
     coronaFacebook.login( FACEBOOK_APP_ID, loginListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
 end
@@ -37,7 +37,7 @@ function connect(success, before)
     print("--- facebook connect")
     coronaFacebook.logout()
     native.setActivityIndicator( true )
-    
+
     facebookON = true
     coronaFacebook.login( FACEBOOK_APP_ID, connectListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
     connectionSuccessful    = success
@@ -53,9 +53,9 @@ function loginListener( event )
     utils.tprint(event)
 
     if ( "session" == event.type ) then
-    
+
         facebookON = false
-        
+
         -- upon successful login, request list of friends of the signed in user
         if ( "login" == event.phase ) then
 
@@ -107,9 +107,9 @@ function connectListener( event )
 
     if ( "session" == event.type ) then
         -- upon successful login, request list of friends of the signed in user
-        
+
         facebookON = false
-        
+
         if ( "login" == event.phase ) then
 
             if(event.token) then
@@ -123,7 +123,7 @@ function connectListener( event )
             end
 
         elseif ( "loginFailed" == event.phase or "loginCancelled"  == event.phase ) then
-            print("--- false") 
+            print("--- false")
             native.setActivityIndicator( false )
             viewManager.message(T "Connection failed")
 
@@ -156,7 +156,7 @@ function getMe(failure)
         network.request(url , "GET", function(result)
 
             response = json.decode(result.response)
-            native.setActivityIndicator( false )         
+            native.setActivityIndicator( false )
 
             if(not response.error) then
                 print("--> connected to FB")
@@ -185,8 +185,8 @@ function mergeMe()
         local url = "https://graph.facebook.com/me?fields=name,first_name,last_name,picture,locale,birthday,email&access_token=" .. GLOBALS.savedData.facebookAccessToken
         network.request(url , "GET", function(result)
 
-            response = json.decode(result.response)     
-            native.setActivityIndicator( false )    
+            response = json.decode(result.response)
+            native.setActivityIndicator( false )
 
             if(not response.error) then
                 print("--> connected to FB")
@@ -261,34 +261,34 @@ function checkThemeLiked(next)
         network.request(url , "GET", function(result)
             print("theme result")
             utils.tprint(result)
-        
+
             local response = json.decode(result.response)
             local liked = false
 
             if(response.data and #response.data > 0) then
-                
+
                 for i = 1,#response.data do
                     -- FB.OG BUG pas possible de rajouter uid today... check title pour linstant
                     --      if(response.data[i].data.theme.uid == theme.uid) then
                     if(response.data[i].data and response.data[i].data.theme and response.data[i].data.theme.title == theme.title) then
                         liked = true
                     end
-                end 
+                end
             end
 
             if(liked) then
                 userManager.user.themeLiked = true
                 print("themeAlreadyLiked")
             end
-            
+
             print("checked FB theme like, proceed")
             if(next) then
                 next()
             end
-        
+
         end)
-        
-        
+
+
     else
         print("cannot check FB theme like, proceed")
         if(next) then
@@ -309,11 +309,11 @@ function likeTheme(next)
 
     local locale   = facebook.data.locale
 
-    local themeURL =  SERVER_OG_URL        .. 'theme'
+    local themeURL =  API_URL        .. 'theme'
     .. '?title='           .. theme.title
     .. '&uid='             .. theme.uid
     .. '&description='     .. theme.description
-    .. '&imageURL='        .. theme.image 
+    .. '&imageURL='        .. theme.image
     .. '&locale='          .. locale
 
     themeURL = utils.urlEncode(themeURL)
@@ -327,7 +327,7 @@ function likeTheme(next)
         local response = json.decode(result.response)
         native.setActivityIndicator( false )
         utils.tprint(response)
-        
+
         if(response.id) then
             userManager.user.themeLiked = true
             userManager:giftInstants(NB_INSTANTS_PER_THEME_LIKED, function()
@@ -335,11 +335,11 @@ function likeTheme(next)
                     next()
                 end
             end)
-        
+
         elseif(response.error.code == 200) then
             facebook.reloginDone = function() facebook.checkThemeLiked() end
-            coronaFacebook.login( FACEBOOK_APP_ID, askPermissionListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )      
-        
+            coronaFacebook.login( FACEBOOK_APP_ID, askPermissionListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
+
         end
     end)
 end
@@ -366,7 +366,7 @@ function postOnWall(message, next)
             elseif(response.error.code == 200) then
                 facebook.reloginDone = nil
                 coronaFacebook.login( FACEBOOK_APP_ID, askPermissionListener, {"publish_stream", "email", "user_likes", "user_birthday", "friends_birthday", "publish_actions"} )
-            else      
+            else
                 print(response.id)
 
                 if(response.error ~= nil) then

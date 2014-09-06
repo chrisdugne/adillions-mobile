@@ -1,7 +1,7 @@
 local translations =
 {
     ------------------------------------------------------
-        
+
     ["Loading..."] = {
         ["fr"] = "Chargement...",
     },
@@ -19,16 +19,22 @@ local translations =
     },
 
     ------------------------------------------------------
-        
+
+    ["Ambass. profile"] = {
+        ["fr"] = "Badge Ambass.",
+    },
+
+    ------------------------------------------------------
+
     ["You successfully contributed to increase the Prize Fund and the Charity Fund"] = {
         ["fr"] = "Vous avez contribué à l'augmentation de la cagnotte et des dons",
     },
-    
+
     ["You should not use this feature without a free connection (cf. terms)"] = {
         ["fr"] = "N'activez cette fonction qu'avec une connexion gratuite (cf. réglement)",
     },
 
-    ------------------------------------------------------    
+    ------------------------------------------------------
 
     ["Please download the latest version of Adillions"] = {
         ["fr"] = "Téléchargez la dernière version d'Adillions",
@@ -122,7 +128,7 @@ local translations =
 
     ["Thank you for being a fan !"] = {
         ["fr"] = "Merci d'être fan !",
-    },  
+    },
     ---- SHOOTER ? ou bannière pour certain ? ------------------
 
 
@@ -231,13 +237,13 @@ local translations =
         ["fr"] = "grossir la cagnotte",
     },
 
-    ---POPUP INVITE----------------------------------------------------------- 
+    ---POPUP INVITE-----------------------------------------------------------
 
     ["Earn Instant Tickets and increase the jackpot"] = {
         ["fr"] = "Gagnez des Tickets Instantanés et faites augmenter la cagnotte",
     },
 
-    ---POPUP SHARE----------------------------------------------------------- 
+    ---POPUP SHARE-----------------------------------------------------------
 
     ["Earn points and get Instant Tickets"] = {
         ["fr"] = "Gagnez des points \n et obtenez des Tickets Instantanés",
@@ -251,7 +257,7 @@ local translations =
         ["fr"] = "Tweeté !",
     },
 
-    ---POPUP MAX TICKET----------------------------------------------------------- 
+    ---POPUP MAX TICKET-----------------------------------------------------------
 
     ["You have reached the maximum number of Tickets for this draw"] = {
         ["fr"] = "Vous avez atteint le nombre maximum de Tickets pour ce tirage",
@@ -261,7 +267,7 @@ local translations =
         ["fr"] = "Augmentez votre stock de Tickets",
     },
 
-    ---POPUP WAIT ----------------------------------------------------------- 
+    ---POPUP WAIT -----------------------------------------------------------
 
     ["You can fill out a new Ticket in :"] = {
         ["fr"] = "Un Ticket sera disponible dans :",
@@ -391,35 +397,35 @@ local translations =
     },
 
     ---PROFILE -----------------------------------------------------------
-    
+
     ["Available Tickets"] = {
         ["fr"] = "Tickets pour ce tirage",
     },
-    
+
     ["Total Tickets"] = {
         ["fr"] = "Tickets joués",
     },
-    
+
     ["Initial stock"] = {
         ["fr"] = "Stock initial",
     },
-    
+
     ["Social networks"] = {
         ["fr"] = "Réseaux sociaux",
     },
-    
+
     ["Winning Tickets"] = {
         ["fr"] = "Tickets gagnants",
     },
-    
+
     ["Available Tickets"] = {
         ["fr"] = "Tickets disponibles",
     },
-    
+
     ["Sponsorship code"] = {
         ["fr"] = "Code parrain",
     },
-   
+
     ---PROFILE CASHOUT-----------------------------------------------------------
 
     ["You can cash out when your winnings have reached a minimum total balance of "] = {
@@ -518,6 +524,40 @@ local translations =
 
     ["Philanthropist"] = {
         ["fr"] = "Philanthrope",
+    },
+
+    ----------
+
+    ["Player"] = {
+        ["fr"] = "Joueur",
+    },
+
+    ["Representative"] = {
+        ["fr"] = "Représentant",
+    },
+
+    ["Agent"] = {
+        ["fr"] = "Agent",
+    },
+
+    ["Spokesperson"] = {
+        ["fr"] = "Porte-parole",
+    },
+
+    ["Emisary"] = {
+        ["fr"] = "Emissaire",
+    },
+
+    ["Consul"] = {
+        ["fr"] = "Consul",
+    },
+
+    ["Diplomat"] = {
+        ["fr"] = "Diplomate",
+    },
+
+    ["Ambassador"] = {
+        ["fr"] = "Ambassadeur",
     },
 
     ---PROFILE WINNINGS-----------------------------------------------------------

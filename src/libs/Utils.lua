@@ -6,7 +6,7 @@
 -- Version: 1.5
 --
 -- File name : Utils.lua
--- 
+--
 -- Author: Chris Dugne @ Uralys - www.uralys.com
 --
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ function onTouch(object, action)
         elseif event.phase == "ended" or event.phase == "cancelled" then
             object.alpha = 1
             display.getCurrentStage():setFocus( nil )
-            action() 
+            action()
         end
         return true
     end)
@@ -64,7 +64,7 @@ function onTap(object, action)
         end
 
         return true
-         
+
     end)
 end
 
@@ -161,10 +161,10 @@ function fillNextParam(params, paramsString)
     local indexAnd = string.find(paramsString,"&")
 
     local indexEndValue
-    if(indexAnd == nil) then 
-        indexEndValue = string.len(paramsString) 
-    else 
-        indexEndValue = indexAnd - 1 
+    if(indexAnd == nil) then
+        indexEndValue = string.len(paramsString)
+    else
+        indexEndValue = indexAnd - 1
     end
 
     if ( indexEqual ~= nil ) then
@@ -231,12 +231,12 @@ function joinTables(t1, t2)
     if(t2 == nil) then t2 = {} end
 
     for k,v in pairs(t1) do
-        result[k] = v 
-    end 
+        result[k] = v
+    end
 
     for k,v in pairs(t2) do
-        result[k] = v 
-    end 
+        result[k] = v
+    end
 
     return result
 end
@@ -250,8 +250,8 @@ function removeFromTable(t, object)
             break
         end
 
-        index = index + 1 
-    end 
+        index = index + 1
+    end
 
     table.remove(t, index)
 end
@@ -261,11 +261,11 @@ end
 function imageName( url )
     local rep = url:gsub("/", "_")
     return rep:sub(string.len(rep)-30, string.len(rep))
---    
---    
+--
+--
 --    local index = string.find(url,"/")
 --
---    if(index == nil) then 
+--    if(index == nil) then
 --        if(not string.endsWith(url, ".png")) then
 --            url = url .. ".png"
 --        end
@@ -308,7 +308,7 @@ end
 
 function post(url, data, next, type)
 
-    if(next == nil) then 
+    if(next == nil) then
         next = function() end
     end
 
@@ -328,6 +328,22 @@ function post(url, data, next, type)
     network.request( url, "POST", next, params)
 end
 
+--------------------------------------------------------
+
+function get(url, next)
+
+    if(next == nil) then
+        next = function() end
+    end
+
+    local headers = {}
+    headers["X-Auth-Token"] = GLOBALS.savedData.authToken
+
+    local params = {}
+    params.headers = headers
+
+    network.request( url, "GET", next, params)
+end
 
 --------------------------------------------------------
 
@@ -352,7 +368,7 @@ function urlEncode(str)
         function (c) return string.format ("%%%02X", string.byte(c)) end)
         str = string.gsub (str, " ", "%%20")
     end
-    return str 
+    return str
 end
 
 --------------------------------------------------------
@@ -384,7 +400,7 @@ function timestampToReadableDate(date, withDay, withYear)
         local y = ""
         if(withYear) then y = " " .. year end
 
-        if(withDay) then 
+        if(withDay) then
             return day .. " " .. numDay .. " " .. month .. y
         else
             return numDay .. " " .. month .. y
@@ -393,7 +409,7 @@ function timestampToReadableDate(date, withDay, withYear)
         local y = ""
         if(withYear) then y = ", " .. year end
 
-        if(withDay) then 
+        if(withDay) then
             return day .. ", " .. month .. " " .. numDay .. y
         else
             return month .. " " .. numDay .. y
@@ -449,7 +465,7 @@ function loadTable(path)
         local contents = file:read( "*a" )
         myTable = json.decode(contents);
         io.close( file )
-        return myTable 
+        return myTable
     end
     return nil
 end
@@ -530,7 +546,7 @@ end
 --------------------------------------------------------
 --
 
-function isEuroCountry (country) 
+function isEuroCountry (country)
 
     local isEuro = country == "AT"
     or  country == "BE"
@@ -619,7 +635,7 @@ function networkConnection()
 
     local socket = require("socket")
     local test = socket.tcp()
-    test:settimeout(2000) 
+    test:settimeout(2000)
 
     -- Note that the test does not work if we put http:// in front
     status = not(test:connect("www.google.com", 80) == nil)

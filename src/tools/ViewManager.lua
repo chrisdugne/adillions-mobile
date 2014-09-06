@@ -27,8 +27,8 @@ end
 
 -- globalBack not to have a black screen while changing views
 function initGlobalBack()
--- local globalBack = display.newImageRect( "assets/images/bg.jpg", display.contentWidth, display.contentHeight)  
--- globalBack.x = display.viewableContentWidth*0.5 
+-- local globalBack = display.newImageRect( "assets/images/bg.jpg", display.contentWidth, display.contentHeight)
+-- globalBack.x = display.viewableContentWidth*0.5
 -- globalBack.y = display.viewableContentHeight*0.5
 -- globalBack:toBack()
 
@@ -53,17 +53,17 @@ function initHeader(selectedTab)
 
     if(whiteHeader) then
         hud.headerRect = display.newImageRect( hud, "assets/images/header.png", display.contentWidth, HEADER_HEIGHT)
-    else  
-        hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
+    else
+        hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)
     end
-    
-    hud.headerRect.x = display.viewableContentWidth*0.5 
+
+    hud.headerRect.x = display.viewableContentWidth*0.5
     hud.headerRect.y = HEADER_HEIGHT*0.5
 
     if(whiteHeader) then
-        hud.logo = display.newImage( hud, "assets/images/logo.png")  
-    else  
-        hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
+        hud.logo = display.newImage( hud, "assets/images/logo.png")
+    else
+        hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")
     end
 
     hud.logo.x = display.contentWidth*0.5
@@ -71,19 +71,19 @@ function initHeader(selectedTab)
 
 
 --    if(whiteHeader) then
---        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.green.jpg")  
---    else  
---        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.jpg")  
+--        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.green.jpg")
+--    else
+--        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.jpg")
 --    end
 
-    hud.headerButton            = display.newImage( hud, "assets/images/icons/info.ticket.png")  
+    hud.headerButton            = display.newImage( hud, "assets/images/icons/info.ticket.png")
     hud.headerButton.x          = display.contentWidth*0.9
     hud.headerButton.y          = HEADER_HEIGHT*0.5
     hud.headerButton.anchorX    = 0.5
     hud.headerButton.anchorY    = 0.5
 
     utils.onTouch(hud.headerButton, function()
-        analytics.event("Gaming", "showStatus") 
+        analytics.event("Gaming", "showStatus")
         userManager:showStatus()
     end)
 end
@@ -112,8 +112,8 @@ end
 
 function showPoints(nbPoints)
     -- local text = viewManager.newText({
-    --  parent    = hud, 
-    --  text     = "+ " .. nbPoints,     
+    --  parent    = hud,
+    --  text     = "+ " .. nbPoints,
     --  x      = display.contentWidth*0.97,
     --  y      = display.contentHeight*0.05,
     --  fontSize   = 65
@@ -134,18 +134,18 @@ function message(message)
     messager.y = -200
     messager.alpha = 0.4
 
-    messager.popupRect   = drawBorder( messager, 
-    0, HEADER_HEIGHT, 
+    messager.popupRect   = drawBorder( messager,
+    0, HEADER_HEIGHT,
     display.contentWidth+100, HEADER_HEIGHT,
     27/255,92/255,100/255
-    )  
+    )
 
     messager.popupRect.x = display.contentWidth*0.5
     messager.popupRect.alpha = 0.75
 
     messager.text = viewManager.newText({
-        parent      = messager, 
-        text        = message,     
+        parent      = messager,
+        text        = message,
         x           = display.contentWidth*0.5,
         y           = HEADER_HEIGHT,
         fonr        = NUM_FONT,
@@ -171,8 +171,8 @@ function closePopup(popup, now, action)
 
         if(not now) then
             transition.to(popup, {
-                time        = 250, 
-                alpha       = 0, 
+                time        = 250,
+                alpha       = 0,
                 onComplete  = function()
                     utils.emptyGroup(popup)
                     if(action ~= nil) then
@@ -194,16 +194,16 @@ end
 ------------------------------------------------------------------
 
 function openWeb(url, listener, customOnClose)
-    
+
     ------------------
 
     local webContainer = {}
 
-    webContainer.headerRect = display.newImageRect( "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
-    webContainer.headerRect.x = display.viewableContentWidth*0.5 
+    webContainer.headerRect = display.newImageRect( "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)
+    webContainer.headerRect.x = display.viewableContentWidth*0.5
     webContainer.headerRect.y = HEADER_HEIGHT*0.5
 
-    webContainer.logo = display.newImage(  "assets/images/hud/game/logo.game.png")  
+    webContainer.logo = display.newImage(  "assets/images/hud/game/logo.game.png")
     webContainer.logo.x = display.contentWidth*0.5
     webContainer.logo.y = HEADER_HEIGHT*0.5
 
@@ -211,17 +211,17 @@ function openWeb(url, listener, customOnClose)
     utils.onTouch(webContainer.logo, function() return true end)
 
     ------------------
-    
-    webContainer.backBlack = drawBorder( hud, 
-        0, 0, 
+
+    webContainer.backBlack = drawBorder( hud,
+        0, 0,
         display.contentWidth+50, display.viewableContentHeight+50,
         0/255,0/255,0/255
-        )  
-    
-    webContainer.backBlack.x   = display.viewableContentWidth*0.5 
+        )
+
+    webContainer.backBlack.x   = display.viewableContentWidth*0.5
     webContainer.backBlack.y   = display.viewableContentHeight*0.5
     webContainer.backBlack.alpha = 1
-    
+
     ------------------
 
     local webView = native.newWebView( display.contentCenterX, display.contentCenterY + HEADER_HEIGHT/2, display.contentWidth, display.contentHeight - HEADER_HEIGHT )
@@ -257,7 +257,7 @@ function openWeb(url, listener, customOnClose)
         if(customOnClose) then
             customOnClose()
         end
-    end 
+    end
 
     utils.onTouch(webContainer.close, function()
         onClose()
@@ -277,8 +277,8 @@ function closePopin(now, action)
 
         if(not now) then
             transition.to(hud.popin, {
-                time        = 250, 
-                y           = hud.contentHeight*1.5, 
+                time        = 250,
+                y           = hud.contentHeight*1.5,
                 onComplete  = function()
                     utils.emptyGroup(popin)
                     if(action ~= nil) then
@@ -316,24 +316,24 @@ function showPopin()
     ----------------------------------------------------------
 
     hud.popin.popinRect = display.newImageRect( hud.popin, "assets/images/menus/popin.bg.png", display.contentWidth, height)
-    hud.popin.popinRect.x = 0 
+    hud.popin.popinRect.x = 0
     hud.popin.popinRect.y = 0
     hud.popin:insert(hud.popin.popinRect)
 
     ----------------------------------------------------------
     -- header
 
-    hud.popin.closedown     = display.newImage( hud.popin, I "closedown.png")  
+    hud.popin.closedown     = display.newImage( hud.popin, I "closedown.png")
     hud.popin.closedown.x   = display.contentWidth * 0.45
     hud.popin.closedown.y   = hud.popin.headerMiddle
 
     ----------------------------------------------------------
 
-    hud.popin.touchBack = drawBorder( hud.popin, 
-    0, 0, 
+    hud.popin.touchBack = drawBorder( hud.popin,
+    0, 0,
     display.contentWidth, display.contentHeight,
     50/255,50/255,50/255
-    )  
+    )
     hud.popin.touchBack.x      = 0
     hud.popin.touchBack.y      = -display.contentHeight*0.7
     hud.popin.touchBack.alpha  = 0.01
@@ -351,14 +351,14 @@ function showPopin()
 
     ----------------------------------------------------------
 
-    utils.onTap(hud.popin.touchBack, function() 
-        closePopin() 
+    utils.onTap(hud.popin.touchBack, function()
+        closePopin()
         return false
     end)
 
-    utils.onTap(hud.popin.popinRect, function() 
-        closePopin() 
-        return true 
+    utils.onTap(hud.popin.popinRect, function()
+        closePopin()
+        return true
     end)
 
 end
@@ -381,32 +381,32 @@ function showPopup(height, square, white)
     local popup = display.newGroup()
 
     if(white) then
-        local backWhite = drawBorder( popup, 
-        0, 0, 
+        local backWhite = drawBorder( popup,
+        0, 0,
         display.contentWidth+50, display.viewableContentHeight+50,
         200/255,200/255,200/255
-        )  
-    
-        backWhite.x   = display.viewableContentWidth*0.5 
+        )
+
+        backWhite.x   = display.viewableContentWidth*0.5
         backWhite.y   = display.viewableContentHeight*0.5
         backWhite.alpha = 1
         utils.onTap(backWhite, function() return true end)
-        
+
     else
-        local backGrey = drawBorder( popup, 
-        0, 0, 
+        local backGrey = drawBorder( popup,
+        0, 0,
         display.contentWidth+50, display.viewableContentHeight+50,
         50/255,50/255,50/255
-        )  
-    
-        backGrey.x   = display.viewableContentWidth*0.5 
+        )
+
+        backGrey.x   = display.viewableContentWidth*0.5
         backGrey.y   = display.viewableContentHeight*0.5
         backGrey.alpha = 0.45
         utils.onTap(backGrey, function() return true end)
     end
 
     popup.bg = display.newImageRect( popup, "assets/images/hud/Popup_BG.png", width, height)
-    popup.bg.x = display.contentWidth*0.5 
+    popup.bg.x = display.contentWidth*0.5
     popup.bg.y = display.contentHeight*0.5
 
     popup:toFront()
@@ -419,11 +419,11 @@ end
 ------------------------------------------------------------------
 
 function prepareToWaitForResults()
-    
+
     bannerManager:stop()
     lotteryManager.global.appStatus.state = 2
     native.setActivityIndicator( true )
-    
+
     timer.performWithDelay(math.random(3000, 6000), function()
         native.setActivityIndicator( false )
         refreshHomeTimer()
@@ -431,23 +431,23 @@ function prepareToWaitForResults()
             bannerManager:waitingForDrawing(lottery)
         end)
     end)
-    
+
 end
 
 ------------------------------------------------------------------
 
 function refreshPlayButton(waitingForDrawing)
-    
+
     if(router.view ~= router.HOME) then return end
-    
-    if(hud.playTicketButton) then 
+
+    if(hud.playTicketButton) then
         display.remove(hud.playTicketButton)
     end
-    
+
     if(not waitingForDrawing and lotteryManager.nextDrawing.uid == lotteryManager.nextLottery.uid) then
         if(userManager.user.extraTickets > 0) then
             hud.playTicketButton = display.newImage( hud, I "fillout.instant.ticket.png")
-        else  
+        else
             hud.playTicketButton = display.newImage( hud, I "filloutticket.button.png")
         end
 
@@ -455,14 +455,14 @@ function refreshPlayButton(waitingForDrawing)
             gameManager:play()
         end)
 
-    else  
+    else
         hud.playTicketButton = display.newImage( hud, I "waiting.png")
         hud.playTicketButton.alpha = 0.5
     end
 
     hud.playTicketButton.x = display.contentWidth*0.5
     hud.playTicketButton.y = display.contentHeight*0.51
-    
+
 end
 
 ------------------------------------------------------------------
@@ -475,7 +475,7 @@ function refreshHomeTimer()
 
     if(timeRemaining < 2 * 60 * 60 * 1000 and lotteryManager.global.appStatus.state ~= 2) then
         prepareToWaitForResults()
-        
+
     else
         local days,hours,min,sec = utils.getDaysHoursMinSec(math.round(timeRemaining/1000))
 
@@ -487,26 +487,25 @@ function refreshHomeTimer()
             if(hud.timerDisplay.alpha <= 0.5) then
                 hud.timerDisplay.alpha = 1
             end
-            
+
         else
-            if(days < 10) then days = "0"..days end 
-            if(hours < 10) then hours = "0"..hours end 
-            if(min < 10) then min = "0"..min end 
-            if(sec < 10) then sec = "0"..sec end 
-    
+            if(days < 10) then days = "0"..days end
+            if(hours < 10) then hours = "0"..hours end
+            if(min < 10) then min = "0"..min end
+            if(sec < 10) then sec = "0"..sec end
+
             if(hud.days) then
                 if(hud.timerHidder) then
                     transition.cancel(hud.timerHidder)
                 end
-                hud.timerDisplay.alpha = 1 
+                hud.timerDisplay.alpha = 1
             end
-    
+
             hud.timerDisplay.text = days .. " : " .. hours .. " : " .. min .. " : " .. sec
-    
+
         end
 
-        local next = utils.getDaysHoursMinSec(math.round((time.now() - time.elapsedTime()) - TIMER)/1000)
-        hud.timer = timer.performWithDelay((math.round(next/15) + 1) * 150, function ()
+        hud.timer = timer.performWithDelay(250, function ()
             refreshHomeTimer()
         end)
 
@@ -524,27 +523,27 @@ function refreshPopupTimer(popup, lastTime)
     local now = time.now()
     local hoursSpent, minSpent, secSpent, msSpent = utils.getHoursMinSecMillis(now - lastTime)
 
-    if(tonumber(minSpent) >= lotteryManager.nextLottery.ticketTimer) then 
+    if(tonumber(minSpent) >= lotteryManager.nextLottery.ticketTimer) then
         viewManager.closePopup(popup)
-    
+
     elseif(tonumber(hoursSpent) > 0) then
         viewManager.closePopup(popup)
-    
+
     else
         -- local h = 1 - tonumber(hoursSpent)
         local m = lotteryManager.nextLottery.ticketTimer - 1 - tonumber(minSpent)
-        local s = 59 - tonumber(secSpent) 
+        local s = 59 - tonumber(secSpent)
 
-        -- if(h < 10) then h = "0"..h end 
-        if(m < 10) then m = "0"..m end 
-        if(s < 10) then s = "0"..s end 
+        -- if(h < 10) then h = "0"..h end
+        if(m < 10) then m = "0"..m end
+        if(s < 10) then s = "0"..s end
 
         -- popup.timerDisplay.text = h .. " : " .. m .. " : " .. s
         popup.timerDisplay.text = m .. " : " .. s
         popup.timer = timer.performWithDelay(1000, function ()
             refreshPopupTimer(popup, lastTime)
         end)
-    end 
+    end
 
 end
 
@@ -565,7 +564,7 @@ function animatePrice(nextMillis)
         hud.priceCurrentDisplay = math.round(hud.priceCurrentDisplay + toAdd)
 
         if(hud.priceCurrentDisplay >= priceToReach) then
-            hud.priceCurrentDisplay = math.round(priceToReach) 
+            hud.priceCurrentDisplay = math.round(priceToReach)
         else
             nextMillis = 1000/(priceToReach - hud.priceCurrentDisplay)
             animatePrice(nextMillis)
@@ -640,9 +639,9 @@ function drawBorder(parent, x, y, width, height, r, g, b, anchorX, anchorY)
     -- rounded buttons 1 color
 
     local border = display.newRoundedRect(parent, 0, 0, width, height, 17)
-    border.anchorX = anchorX 
+    border.anchorX = anchorX
     border.anchorY = anchorY
-    border.x = x 
+    border.x = x
     border.y = y
     border.strokeWidth = 1
     border:setFillColor(r,g,b)
@@ -664,10 +663,10 @@ function drawButton(parent, text, x, y, action, width, height)
 
     button.text = display.newText( {
         parent = parent,
-        text = text,     
+        text = text,
         x = x,
         y = y-6,
-        font = FONT,   
+        font = FONT,
         fontSize = 45,
     } )
 
@@ -700,11 +699,11 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
 
     if not image then
         local view = router.view
-        local imageReceived = function(event) 
-            if(router.view == view) then 
+        local imageReceived = function(event)
+            if(router.view == view) then
                 print("insert")
                 return insertImage(event.target, parent, x, y, anchorX, anchorY, scale, alpha, next)
-            else 
+            else
                 print("bunk")
                 display.remove(event.target)
             end
@@ -715,7 +714,7 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
         insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
     end
 
-end 
+end
 
 function insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
 
@@ -738,10 +737,10 @@ end
 ------------------------------------------------------------------
 
 --- menuType
---  none |  1 : classic, white 
+--  none |  1 : classic, white
 --     2 : confirmation,green
 --     3 : grey, white
---     
+--
 function buildMenu(tabSelected, menuType)
 
     local buttonWidth = display.contentWidth/5 - 1
@@ -765,63 +764,63 @@ function buildMenu(tabSelected, menuType)
         playImage = I "OFF3.png"
     end
 
-    local centerOn  = I "ON3_" .. menuType ..  ".png" 
-    local centerOff  = I "OFF3_" .. menuType ..  ".png" 
+    local centerOn  = I "ON3_" .. menuType ..  ".png"
+    local centerOff  = I "OFF3_" .. menuType ..  ".png"
 
     -- Create the tabBar's buttons
-    local tabButtons = 
+    local tabButtons =
     {
         {
-            width     = buttonWidth, 
+            width     = buttonWidth,
             height     = ICON_SIZE,
             defaultFile   = I "OFF1.png",
             overFile    = I "ON1.png",
             onPress = function( event )
-                if(tabSelected ~= 1) then 
-                    router.openProfile() 
-                end 
+                if(tabSelected ~= 1) then
+                    router.openProfile()
+                end
             end,
             selected = tabSelected == 1
         },
         {
-            width     = buttonWidth, 
+            width     = buttonWidth,
             height     = ICON_SIZE,
             defaultFile   = I "OFF2.png",
             overFile    = I "ON2.png",
             onPress = function( event )
-                if(tabSelected ~= 2) then 
-                    router.openMyTickets() 
-                end 
+                if(tabSelected ~= 2) then
+                    router.openMyTickets()
+                end
             end,
             selected =  tabSelected == 2
         },
         {
-            width     = buttonWidth, 
+            width     = buttonWidth,
             height     = ICON_SIZE,
             defaultFile   = "assets/images/menus/empty.png",
             overFile    = "assets/images/menus/empty.png",
         },
         {
-            width     = buttonWidth, 
+            width     = buttonWidth,
             height     = ICON_SIZE,
             defaultFile   = I "OFF4.png",
             overFile    = I "ON4.png",
             onPress = function( event )
-                if(tabSelected ~= 4) then 
-                    router.openResults() 
-                end 
+                if(tabSelected ~= 4) then
+                    router.openResults()
+                end
             end,
             selected =  tabSelected == 4
         },
         {
-            width     = buttonWidth, 
+            width     = buttonWidth,
             height     = ICON_SIZE,
             defaultFile   = I "OFF5.png",
             overFile    = I "ON5.png",
             onPress = function( event )
-                if(tabSelected ~= 5) then 
-                    router.openInfo() 
-                end 
+                if(tabSelected ~= 5) then
+                    router.openInfo()
+                end
             end,
             selected = tabSelected == 5
         },
@@ -860,11 +859,11 @@ function buildMenu(tabSelected, menuType)
 
 
     utils.onTap(hud.playButton, function()
-        if(tabSelected ~= 0) then 
-            router.openHome() 
+        if(tabSelected ~= 0) then
+            router.openHome()
         elseif(router.view == router.HOME and lotteryManager.global.appStatus.state == 1) then
             gameManager:play()
-        end 
+        end
     end)
 
     hud.playButton:toFront()
@@ -881,10 +880,10 @@ function drawBallToPick(num,x,y)
 
     ball.text = display.newText( {
         parent = hud,
-        text = num,     
+        text = num,
         x = x,
         y = y,
-        font = NUM_FONT,   
+        font = NUM_FONT,
         fontSize = 37,
     } )
 
@@ -914,10 +913,10 @@ function drawBallPicked(num)
 
     ball.text = display.newText( {
         parent = hud,
-        text = num,     
+        text = num,
         x = x,
         y = y,
-        font = NUM_FONT,   
+        font = NUM_FONT,
         fontSize = 33,
     } )
 
@@ -963,8 +962,8 @@ function drawThemeToPick(num,x,y)
     end)
 
     hud.text = viewManager.newText({
-        parent    = hud, 
-        text     = content[num].name,     
+        parent    = hud,
+        text     = content[num].name,
         x      = x,
         y      = y + display.contentHeight*0.08,
         fontSize   = 40
@@ -972,8 +971,8 @@ function drawThemeToPick(num,x,y)
 
     if(content[num].name2) then
         viewManager.newText({
-            parent    = hud, 
-            text     = content[num].name2,     
+            parent    = hud,
+            text     = content[num].name2,
             x      = x,
             y      = y + display.contentHeight*0.12,
             fontSize   = 40
@@ -990,14 +989,14 @@ end
 
 -----------------------------------------------------------------------------------------
 
---- 
+---
 -- theme sur un ticket ou un result
 function drawTheme(parent, lottery, num,x,y, alpha, requireCheck, bigBall)
 
     if(not alpha) then alpha = 1 end
 
     local scale = SMALL_THEME_SCALE
-    if(bigBall) then 
+    if(bigBall) then
         scale = 0.78
     end
 
@@ -1033,9 +1032,9 @@ function drawBall(parent, num,x,y, bigBall)
 
     local size = "small"
     local fontSize = 37
-    if(bigBall) then 
+    if(bigBall) then
         size = "big"
-        fontSize = 45 
+        fontSize = 45
     end
 
     local ball = display.newImage(hud, "assets/images/balls/ball.".. size..".green.png")
@@ -1045,10 +1044,10 @@ function drawBall(parent, num,x,y, bigBall)
     parent:insert(ball)
 
     ball.text = display.newText( {
-        text = num,     
+        text = num,
         x = x,
         y = y,
-        font = NUM_FONT,   
+        font = NUM_FONT,
         fontSize = fontSize,
     } )
 
@@ -1080,10 +1079,10 @@ function drawSelectedBall(selected, x, y, action)
 
     ball.text = display.newText( {
         parent = hud.selection,
-        text = selected,     
+        text = selected,
         x = x,
         y = y,
-        font = NUM_FONT,   
+        font = NUM_FONT,
         fontSize = 47,
     } )
 
@@ -1177,14 +1176,14 @@ function drawTicket(parent, lottery, numbers, x, y)
         end
     end
 
-    local alpha = 1 
+    local alpha = 1
     local themeWon = false
 
     if(lottery.result) then
         themeWon = lottery.result[#lottery.result] == numbers[#numbers]
         if(not themeWon) then
             alpha = 0.34
-        end 
+        end
     end
 
     drawTheme(parent, lottery, numbers[#numbers], x + xGap*#numbers, y, alpha, themeWon)
