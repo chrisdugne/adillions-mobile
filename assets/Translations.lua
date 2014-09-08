@@ -20,7 +20,7 @@ local translations =
 
     ------------------------------------------------------
 
-    ["Ambass. profile"] = {
+    ["Ambass. Profile"] = {
         ["fr"] = "Badge Ambass.",
     },
 

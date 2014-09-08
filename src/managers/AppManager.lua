@@ -33,12 +33,12 @@ function AppManager:start()
         FACEBOOK_API_SECRET    = "887e8f7abb9b1cb9238a097e06585ae2"
         FACEBOOK_APP_NAMESPACE = "adillions"
         MOBILE_SETTINGS_URL    = "http://www.adillions.com/api/mobile/settings/"
-        MOBILE_SETTINGS_URL    = "http://192.168.0.9:1337/api/mobile/settings/"  ------- TO REMOVE
+        MOBILE_SETTINGS_URL    = "http://192.168.0.4:1337/api/mobile/settings/"  ------- TO REMOVE
     else
         FACEBOOK_APP_ID        = "534196239997712"
         FACEBOOK_API_SECRET    = "46383d827867d50ef5d87b66c81f1a8e"
         FACEBOOK_APP_NAMESPACE = "adillions-dev"
-        MOBILE_SETTINGS_URL    = "http://192.168.0.9:1337/api/mobile/settings/"
+        MOBILE_SETTINGS_URL    = "http://192.168.0.4:1337/api/mobile/settings/"
     end
 
     ------------------------------------------------------------------------------
@@ -63,8 +63,10 @@ function AppManager:start()
 
     ----------------------------------------------------------------------------
 
+    print("retrieving settings...("..MOBILE_SETTINGS_URL .. APP_VERSION..")")
     utils.get(MOBILE_SETTINGS_URL .. APP_VERSION, function(res)
         local settings = json.decode(res.response)
+        utils.tprint(settings)
 
         API_URL                = settings.api.play
         WEB_URL                = settings.api.play
@@ -95,52 +97,6 @@ function AppManager:setup()
     BONUS_2         = 12; -- rang 8
     BONUS_3         = 13; -- rang 9
     BONUS_4         = 14; -- rang 10
-
-    ----------------------------------------------------------------------------
-    --- charity levels
-
-    SCOUT           = 1     -- 1
-    CONTRIBUTOR     = 2     -- 50
-    JUNIOR_DONOR    = 3     -- 100
-    DONOR           = 4     -- 200
-    BENEFACTOR      = 5     -- 500
-    MAJOR           = 6     -- ?
-    PATRON          = 7     -- ?
-    PHILANTHROPIST  = 8     -- ?
-
-    CHARITY_LEVEL = {
-        "Boy Scout",
-        "Contributor",
-        "Junior donor",
-        "Donor",
-        "Benefactor",
-        "Major Donor",
-        "Patron",
-        "Philanthropist"
-    }
-
-    ----------------------------------------------------------------------------
-    --- ambassador levels
-
-    PLAYER         = 1     -- ?
-    REPRESENTATIVE = 2     -- ?
-    AGENT          = 3     -- ?
-    SPOKESPERSON   = 4     -- ?
-    EMISARY        = 5     -- ?
-    CONSUL         = 6     -- ?
-    DIPLOMAT       = 7     -- ?
-    AMBASSADOR     = 8     -- ?
-
-    AMBASSADOR_LEVEL = {
-        "Player",
-        "Representative",
-        "Agent",
-        "Spokesperson",
-        "Emisary",
-        "Consul",
-        "Diplomat",
-        "Ambassador"
-    }
 
     ----------------------------------------------------------------------------
 
@@ -399,6 +355,11 @@ end
 -- Translations
 
 function T(enText)
+    if(not translations[enText]) then
+        print('Missing Translation : ' .. enText)
+        return '&&&&&'
+    end
+
     return translations[enText][LANG] or enText
 end
 

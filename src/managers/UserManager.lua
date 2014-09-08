@@ -21,10 +21,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:getGlobals(onGoodVersion, onBadVersion)
-    print("getGlobals : " .. API_URL .. "globals")
-    utils.postWithJSON({},
-    API_URL .. "globals",
-    function(result)
+
+    utils.get( NODE_URL .. "/api/globals", function(result)
 
         if(result.isError) then
             -- android....
@@ -36,35 +34,43 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
             local response = json.decode(result.response)
 
             lotteryManager.global                   = response.global
-            lotteryManager.global.appStatus         = json.decode(lotteryManager.global.appStatus)
-            lotteryManager.global.tweet             = json.decode(lotteryManager.global.tweet)
-            lotteryManager.global.tweetTheme        = json.decode(lotteryManager.global.tweetTheme)
-            lotteryManager.global.tweetShare        = json.decode(lotteryManager.global.tweetShare)
-            lotteryManager.global.fbPost            = json.decode(lotteryManager.global.fbPost)
-            lotteryManager.global.fbPostTheme       = json.decode(lotteryManager.global.fbPostTheme)
-            lotteryManager.global.fbSharePrize      = json.decode(lotteryManager.global.fbSharePrize)
-            lotteryManager.global.sms               = json.decode(lotteryManager.global.sms)
-            lotteryManager.global.email             = json.decode(lotteryManager.global.email)
-            lotteryManager.global.text48h           = json.decode(lotteryManager.global.text48h)
-            lotteryManager.global.text3min          = json.decode(lotteryManager.global.text3min)
-            lotteryManager.global.lastUpdatedPrizes = json.decode(lotteryManager.global.lastUpdatedPrizes)
+            lotteryManager.global.appStatus         = lotteryManager.global.appStatus
+            lotteryManager.global.tweet             = lotteryManager.global.tweet
+            lotteryManager.global.tweetTheme        = lotteryManager.global.tweetTheme
+            lotteryManager.global.tweetShare        = lotteryManager.global.tweetShare
+            lotteryManager.global.fbPost            = lotteryManager.global.fbPost
+            lotteryManager.global.fbPostTheme       = lotteryManager.global.fbPostTheme
+            lotteryManager.global.fbSharePrize      = lotteryManager.global.fbSharePrize
+            lotteryManager.global.sms               = lotteryManager.global.sms
+            lotteryManager.global.email             = lotteryManager.global.email
+            lotteryManager.global.text48h           = lotteryManager.global.text48h
+            lotteryManager.global.text3min          = lotteryManager.global.text3min
+            lotteryManager.global.lastUpdatedPrizes = lotteryManager.global.lastUpdatedPrizes
 
-            lotteryManager.global.minEuro           = json.decode(lotteryManager.global.minMoney).euro
-            lotteryManager.global.minUSD            = json.decode(lotteryManager.global.minMoney).usd
+            lotteryManager.global.minEuro           = lotteryManager.global.minMoney.euro
+            lotteryManager.global.minUSD            = lotteryManager.global.minMoney.usd
 
             time.setServerTime(response.serverTime)
             TIMER                                   = lotteryManager.global.lastUpdate or response.serverTime
             VERSION_REQUIRED                        = response.global.versionRequired
-            bannerManager.banners                   = json.decode(lotteryManager.global.banners)
+            bannerManager.banners                   = lotteryManager.global.banners
 
-            if(APP_VERSION >= VERSION_REQUIRED) then
-                print("onGoodVersion")
-                onGoodVersion()
-            else
-                print("onBadVersion")
-                onBadVersion()
-            end
+            utils.get( NODE_URL .. "/api/charity/levels", function(result)
 
+                CHARITY_LEVELS = json.decode(result.response)
+                utils.get( NODE_URL .. "/api/ambassador/levels", function(result)
+                    AMBASSADOR_LEVELS = json.decode(result.response)
+
+                    if(APP_VERSION >= VERSION_REQUIRED) then
+                        print("onGoodVersion")
+                        onGoodVersion()
+                    else
+                        print("onBadVersion")
+                        onBadVersion()
+                    end
+
+                end)
+            end)
         end
     end)
 end
@@ -361,47 +367,21 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:charityLevel()
-
-    if(self.user.totalPlayedTickets         >= 500) then
-        return BENEFACTOR
-
-    elseif(self.user.totalPlayedTickets     >= 200) then
-        return DONOR
-
-    elseif(self.user.totalPlayedTickets     >= 100) then
-        return JUNIOR_DONOR
-
-    elseif(self.user.totalPlayedTickets     >= 50) then
-        return CONTRIBUTOR
-
-    else
-        return SCOUT
-
+    for i = #CHARITY_LEVELS, 1, -1 do
+        if(self.user.totalPlayedTickets >= tonumber(CHARITY_LEVELS[i].reach)) then
+            return CHARITY_LEVELS[i].level
+        end
     end
-
 end
 
 -----------------------------------------------------------------------------------------
 
 function UserManager:ambassadorLevel()
-
-    if(self.user.godChildren         >= 500) then
-        return BENEFACTOR
-
-    elseif(self.user.godChildren     >= 200) then
-        return DONOR
-
-    elseif(self.user.godChildren     >= 100) then
-        return JUNIOR_DONOR
-
-    elseif(self.user.godChildren     >= 50) then
-        return CONTRIBUTOR
-
-    else
-        return SCOUT
-
+    for i = #AMBASSADOR_LEVELS, 1, -1 do
+        if(self.user.godChildren >= tonumber(AMBASSADOR_LEVELS[i].reach)) then
+            return AMBASSADOR_LEVELS[i].level
+        end
     end
-
 end
 
 -----------------------------------------------------------------------------------------
