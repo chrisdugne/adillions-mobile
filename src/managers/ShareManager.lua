@@ -846,46 +846,46 @@ function ShareManager:openRewards1()
     --------------------------
 
 
-    hud.title    = display.newImage(popup, I "rewards.stock.title.png")
-    hud.title.anchorX  = 0
-    hud.title.anchorY  = 0.5
-    hud.title.x   = display.contentWidth*0.1
-    hud.title.y   = display.contentHeight*0.15
+    hud.title         = display.newImage(popup, I "rewards.stock.title.png")
+    hud.title.anchorX = 0
+    hud.title.anchorY = 0.5
+    hud.title.x       = display.contentWidth*0.1
+    hud.title.y       = display.contentHeight*0.15
 
     --------------------------
 
-    hud.sep    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
-    hud.sep.x        = display.contentWidth*0.5
-    hud.sep.y       = display.contentHeight*0.2
+    hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x = display.contentWidth*0.5
+    hud.sep.y = display.contentHeight*0.2
 
     --------------------------
 
     hud.next = viewManager.newText({
-        parent          = popup,
-        text            = T "Increase your stock of Tickets",
-        fontSize        = 35,
-        x               = display.contentWidth * 0.1,
-        y               = display.contentHeight*0.23,
-        anchorX         = 0,
+        parent   = popup,
+        text     = T "Increase your stock of Tickets",
+        fontSize = 35,
+        x        = display.contentWidth * 0.1,
+        y        = display.contentHeight*0.23,
+        anchorX  = 0,
     })
 
     --------------------------
 
     for i = 1,6 do
-        hud.line    = display.newImage(popup, I "rewards.stock".. i ..".png")
-        hud.line.x    = display.contentWidth*0.5
-        hud.line.y    = display.contentHeight*0.215 + display.contentHeight*0.09 *i
+        hud.line   = display.newImage(popup, I "rewards.stock".. i ..".png")
+        hud.line.x = display.contentWidth*0.5
+        hud.line.y = display.contentHeight*0.215 + display.contentHeight*0.09 *i
     end
 
     --------------------------
 
     hud.next = viewManager.newText({
-        parent          = popup,
-        text            = T "*Only for the next drawing",
-        fontSize        = 29,
-        x               = display.contentWidth * 0.1,
-        y               = display.contentHeight*0.82,
-        anchorX         = 0,
+        parent   = popup,
+        text     = T "*Only for the next drawing",
+        fontSize = 29,
+        x        = display.contentWidth * 0.1,
+        y        = display.contentHeight*0.82,
+        anchorX  = 0,
     })
 
     --------------------------
@@ -895,11 +895,11 @@ function ShareManager:openRewards1()
     hud.sep.y   = display.contentHeight*0.84
 
     hud.next = viewManager.newText({
-        parent    = popup,
-        text    = T "NEXT" .. "  >",
-        fontSize  = 49,
-        x     = display.contentWidth * 0.5,
-        y     = display.contentHeight*0.895,
+        parent   = popup,
+        text     = T "NEXT" .. "  >",
+        fontSize = 49,
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight*0.895,
     })
 
     utils.setGreen(hud.next)
@@ -911,9 +911,9 @@ function ShareManager:openRewards1()
 
     ---------------------------------------------------------------
 
-    hud.close    = display.newImage( popup, "assets/images/hud/CroixClose.png")
-    hud.close.x   = display.contentWidth*0.89
-    hud.close.y   = display.contentHeight*0.085
+    hud.close   = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    hud.close.x = display.contentWidth*0.89
+    hud.close.y = display.contentHeight*0.085
 
     utils.onTouch(hud.close, function() viewManager.closePopup(popup) end)
 
@@ -1020,7 +1020,7 @@ function ShareManager:openRewards2()
 
     utils.onTouch(hud.next, function()
         viewManager.closePopup(popup)
-        self:openRewards3()
+        self:openCharityRewards()
     end)
 
     ---------------------------------------------------------------
@@ -1036,7 +1036,7 @@ end
 
 -----------------------------------------------------------------------------------------
 
-function ShareManager:openRewards3()
+function ShareManager:openCharityRewards()
 
     local top  = display.contentHeight * 0.3
     local yGap = display.contentHeight*0.082
@@ -1156,12 +1156,168 @@ function ShareManager:openRewards3()
         self:openRewards2()
     end)
 
+    --------------------------
+
+    hud.next = viewManager.newText({
+        parent          = popup,
+        text            = T "NEXT" .. "  >",
+        fontSize        = 49,
+        x               = display.contentWidth * 0.6,
+        y               = display.contentHeight*0.895,
+        anchorX         = 0,
+    })
+
+    utils.setGreen(hud.next)
+
+    utils.onTouch(hud.next, function()
+        viewManager.closePopup(popup)
+        self:openAmbassadorRewards()
+    end)
+
+    ---------------------------------------------------------------
+
+    hud.close           = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    hud.close.x         = display.contentWidth*0.89
+    hud.close.y         = display.contentHeight*0.085
+
+    utils.onTouch(hud.close, function() viewManager.closePopup(popup) end)
+end
+
+-----------------------------------------------------------------------------------------
+
+function ShareManager:openAmbassadorRewards()
+
+    local top  = display.contentHeight * 0.3
+    local yGap = display.contentHeight*0.082
+
+    local popup = viewManager.showPopup()
+
+    --------------------------
+
+    hud.title         = display.newImage(popup, I "rewards.ambassador.title.png")
+    hud.title.anchorX = 0
+    hud.title.anchorY = 0.5
+    hud.title.x       = display.contentWidth*0.05
+    hud.title.y       = display.contentHeight*0.15
+
+    --------------------------
+
+    hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x = display.contentWidth*0.5
+    hud.sep.y = display.contentHeight*0.2
+
+    --------------------------
+
+    hud.next = viewManager.newText({
+        parent   = popup,
+        text     = T "The more you play Adillions, the more you contribute to charities",
+        fontSize = 35,
+        x        = display.contentWidth  * 0.1,
+        y        = display.contentHeight * 0.24,
+        width    = display.contentWidth  * 0.8,
+        heigth   = display.contentHeight * 0.02,
+        anchorX  = 0,
+        align    = "left"
+    })
+
+    --------------------------
+
+    local line = function ( i )
+
+        local lineY = display.contentHeight*0.3 + display.contentHeight*0.05 *i
+
+        viewManager.newText({
+            parent   = popup,
+            text     = AMBASSADOR_LEVELS[i].reach,
+            fontSize = 32,
+            x        = display.contentWidth * 0.1,
+            y        = lineY,
+            anchorX  = 0,
+        })
+
+        local ticket   = display.newImage(popup, "assets/images/hud/rewards/rewards.ticket.png")
+        ticket.x       = display.contentWidth*0.26
+        ticket.anchorX = 1
+        ticket.y       = lineY
+
+        viewManager.newText({
+            parent   = popup,
+            text     = '= ' .. AMBASSADOR_LEVELS[i].level .. 'x',
+            fontSize = 32,
+            x        = display.contentWidth * 0.31,
+            y        = lineY,
+            anchorX  = 0,
+        })
+
+        local charity   = display.newImage(popup, "assets/images/hud/rewards/rewards.ambassador.png")
+        charity.x       = display.contentWidth*0.45
+        charity.anchorX = 1
+        charity.y       = lineY
+
+        viewManager.newText({
+            parent   = popup,
+            text     = AMBASSADOR_LEVELS[i].names[LANG],
+            fontSize = 32,
+            x        = display.contentWidth * 0.47,
+            y        = lineY,
+            anchorX  = 0,
+        })
+
+        viewManager.newText({
+            parent   = popup,
+            text     = '= ' .. AMBASSADOR_LEVELS[i].bonus,
+            fontSize = 32,
+            x        = display.contentWidth * 0.77,
+            y        = lineY,
+            anchorX  = 0,
+        })
+
+        local reward   = display.newImage(popup, "assets/images/hud/rewards/rewards.bonusticket.png")
+        reward.x       = display.contentWidth*0.95
+        reward.anchorX = 1
+        reward.y       = lineY
+
+    end
+
+    for i = 1, #AMBASSADOR_LEVELS do
+        line(i)
+    end
+
+    --------------------------
+
+    hud.sep         = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x       = display.contentWidth*0.5
+    hud.sep.y       = display.contentHeight*0.84
+
+    hud.next = viewManager.newText({
+        parent    = popup,
+        text    = "<  " .. T "PREVIOUS",
+        fontSize  = 49,
+        x               = display.contentWidth * 0.5,
+        y               = display.contentHeight*0.895,
+        anchorX         = 1,
+    })
+
+    utils.setGreen(hud.next)
+
+    utils.onTouch(hud.next, function()
+        viewManager.closePopup(popup)
+        self:openCharityRewards()
+    end)
+
     popup.close   = display.newImage( popup, I "popup.Bt_close.png")
     popup.close.x   = display.contentWidth*0.75
     popup.close.y   = display.contentHeight*0.895
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
+    ---------------------------------------------------------------
+
+    hud.close           = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    hud.close.x         = display.contentWidth*0.89
+    hud.close.y         = display.contentHeight*0.085
+
+    utils.onTouch(hud.close, function() viewManager.closePopup(popup) end)
 end
 
 -----------------------------------------------------------------------------------------

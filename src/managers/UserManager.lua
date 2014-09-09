@@ -88,14 +88,15 @@ function UserManager:fetchPlayer()
     print("fetchPlayer")
     native.setActivityIndicator( true )
 
-    userManager.user.fanBonusTickets = 0
-    userManager.user.charityBonusTickets = 0
+    userManager.user.fanBonusTickets        = 0
+    userManager.user.charityBonusTickets    = 0
+    userManager.user.ambassadorBonusTickets = 0
 
     self.attemptFetchPlayer = self.attemptFetchPlayer + 1
 
     utils.postWithJSON({
-        mobileVersion   = APP_VERSION,
-        country         = COUNTRY
+        mobileVersion = APP_VERSION,
+        country       = COUNTRY
     },
     API_URL .. "player",
     function(result)
@@ -322,8 +323,10 @@ function UserManager:refreshBonusTickets(next)
     print("-------------------------- refreshBonusTickets ")
     self.user.fanBonusTickets       = 0
     self.user.charityBonusTickets   = 0
+    self.user.ambassadorBonusTickets   = 0
 
     self:setCharityBonus()
+    self:setAmbassadorBonus()
 
     self:checkFanStatus(function()
         --- NOTE : pour remettre le OG theme il faut virer le next d'ici et decommenter checkThemeLiked
@@ -348,20 +351,15 @@ end
 -----------------------------------------------------------------------------------------
 
 function UserManager:setCharityBonus()
+    local level = self:charityLevel()
+    self.user.charityBonusTickets = self.user.charityBonusTickets + CHARITY_LEVELS[level].bonus
+end
 
-    local charityLevel = self:charityLevel()
+-----------------------------------------------------------------------------------------
 
-    if(charityLevel == BENEFACTOR) then
-        self.user.charityBonusTickets = self.user.charityBonusTickets + 5
-
-    elseif(charityLevel == DONOR) then
-        self.user.charityBonusTickets = self.user.charityBonusTickets + 2
-
-    elseif(charityLevel == JUNIOR_DONOR) then
-        self.user.charityBonusTickets = self.user.charityBonusTickets + 1
-
-    end
-
+function UserManager:setAmbassadorBonus()
+    local level = self:ambassadorLevel()
+    self.user.ambassadorBonusTickets = self.user.ambassadorBonusTickets + AMBASSADOR_LEVELS[level].bonus
 end
 
 -----------------------------------------------------------------------------------------
@@ -914,11 +912,20 @@ function UserManager:hasTicketsToPlay()
 end
 
 function UserManager:remainingTickets()
-    return self.user.availableTickets + self.user.temporaryBonusTickets + self.user.fanBonusTickets + self.user.charityBonusTickets - self.user.playedBonusTickets
+    return self.user.availableTickets
+            + self.user.temporaryBonusTickets
+            + self.user.fanBonusTickets
+            + self.user.charityBonusTickets
+            + self.user.ambassadorBonusTickets
+            - self.user.playedBonusTickets
 end
 
 function UserManager:totalAvailableTickets()
-    return lotteryManager.nextLottery.startTickets + self.user.temporaryBonusTickets + self.user.fanBonusTickets + self.user.charityBonusTickets
+    return lotteryManager.nextLottery.startTickets
+            + self.user.temporaryBonusTickets
+            + self.user.fanBonusTickets
+            + self.user.charityBonusTickets
+            + self.user.ambassadorBonusTickets
 end
 
 -----------------------------------------------------------------------------------------

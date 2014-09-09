@@ -118,7 +118,7 @@ function scene:drawScene()
     hud.board:insert(hud.what)
 
     utils.onTouch(hud.what, function()
-        shareManager:openRewards3()
+        shareManager:openCharityRewards()
     end)
 
     --------------------------
@@ -188,10 +188,10 @@ function scene:drawScene()
 
     hud.titleStatus    = display.newImage( hud.board, I "profile.ambassador.png")
 
-    hud.titleStatus.anchorX     = 0
-    hud.titleStatus.anchorY     = 0.5
-    hud.titleStatus.x           = self.column1 - display.contentWidth * 0.03
-    hud.titleStatus.y           = self.top + self.yGap*ambassadorTop
+    hud.titleStatus.anchorX = 0
+    hud.titleStatus.anchorY = 0.5
+    hud.titleStatus.x       = self.column1 - display.contentWidth * 0.03
+    hud.titleStatus.y       = self.top + self.yGap*ambassadorTop
     hud.board:insert(hud.titleStatus)
 
     hud.what                = display.newImage( hud.board, "assets/images/hud/profile/profile.what.png")
@@ -200,7 +200,7 @@ function scene:drawScene()
     hud.board:insert(hud.what)
 
     utils.onTouch(hud.what, function()
-        shareManager:openRewards3()
+        shareManager:openAmbassadorRewards()
     end)
 
     --------------------------
@@ -405,7 +405,7 @@ function scene:drawScene()
 
     local text = viewManager.newText({
         parent      = hud.board,
-        text        = userManager.user.temporaryBonusTickets,
+        text        = userManager.user.ambassadorBonusTickets,
         x           = self.column2 - display.contentWidth * 0.07,
         y           = self.top + self.yGap*(stockTop+6),
         fontSize    = self.fontSizeLeft,
@@ -469,7 +469,7 @@ function scene:drawScene()
 
     local text = viewManager.newText({
         parent      = hud.board,
-        text        = (lotteryManager.nextLottery.startTickets + userManager.user.temporaryBonusTickets + userManager.user.fanBonusTickets + userManager.user.charityBonusTickets),
+        text        = userManager:totalAvailableTickets(),
         x           = self.column2 - display.contentWidth * 0.07,
         y           = self.top + self.yGap*(stockTop+9),
         fontSize    = self.fontSizeLeft,
