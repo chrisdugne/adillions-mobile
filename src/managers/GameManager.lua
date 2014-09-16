@@ -23,6 +23,11 @@ function GameManager:start()
     if(not GLOBALS.savedData) then
         self:firstStart()
     else
+        --- for old players 1.4- going to 1.5 : prepare notifications
+        if(not GLOBALS.notifications) then
+            self:initNotifications()
+        end
+
         self:open()
     end
 
@@ -55,7 +60,21 @@ function GameManager:firstStart()
     router.openLoading()
     self:initGameData()
     self:initOptions()
+    self:initNotifications()
     router.openTutorial()
+end
+
+-----------------------------------------------------------------------------------------
+
+function GameManager:initNotifications()
+
+    GLOBALS.notifications = {
+        _48hBefore = {},
+        _3minAfter = {}
+    }
+
+    utils.saveTable(GLOBALS.notifications, "notifications.json")
+
 end
 
 -----------------------------------------------------------------------------------------

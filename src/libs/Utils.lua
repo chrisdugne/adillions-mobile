@@ -337,7 +337,13 @@ function get(url, next)
     end
 
     local headers = {}
-    headers["X-Auth-Token"] = GLOBALS.savedData.authToken
+    local authToken = ''
+
+    if (GLOBALS.savedData) then
+        authToken = GLOBALS.savedData.authToken
+    end
+
+    headers["X-Auth-Token"] = authToken
 
     local params = {}
     params.headers = headers

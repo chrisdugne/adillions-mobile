@@ -643,49 +643,6 @@ function UserManager:cashout(next)
 end
 
 -----------------------------------------------------------------------------------------
--- en arrivant on check si on passe sur une nouvelle lotterie
--- ce check est donc fait avant le concertIdlePoints
--- donc les tickets convertis de idlepoints sont bien rajoutés aux nouveaux availableTickets
-
-function UserManager:checkUserCurrentLottery(next)
-
-    local checkDone = function()
-        if(next) then
-            next()
-        end
-
-        lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
-    end
-
-    ----------------------------------------
-
-    if(self.user.currentLotteryUID ~= lotteryManager.nextLottery.uid) then
-
-        self.user.currentLotteryUID         = lotteryManager.nextLottery.uid
-        self.user.availableTickets          = lotteryManager.nextLottery.startTickets
-        self.user.playedBonusTickets        = 0
-
-        self.user.hasTweet                  = false
-        self.user.hasTweetTheme             = false
-        self.user.hasPostOnFacebook         = false
-        self.user.hasPostThemeOnFacebook    = false
-        self.user.hasTweetAnInvite          = false
-        self.user.hasInvitedOnFacebook      = false
-
-        self:updatePlayer(checkDone)
-
-        ----------------------------------------
-
-    else
-        checkDone()
-
-    end
-
-    --------------------------------------------------------------------------------------
-
-end
-
------------------------------------------------------------------------------------------
 
 function UserManager:storeLotteryTicket(numbers)
 
