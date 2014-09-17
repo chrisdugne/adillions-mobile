@@ -46,8 +46,7 @@ function AppManager:start()
 
     GLOBALS = {
         savedData     = utils.loadUserData("savedData.json"),
-        options       = utils.loadUserData("options.json"),
-        notifications = utils.loadUserData("notifications.json")
+        options       = utils.loadUserData("options.json")
     }
 
     ----------------------------------------------------------------------------

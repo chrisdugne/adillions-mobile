@@ -125,30 +125,7 @@ end
 
 function LotteryManager:refreshNotifications(lotteryDateMillis)
 
-
-    print('@@@@@@@@@@@@@@@   refreshNotifications')
-    utils.tprint(GLOBALS.notifications)
-    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     local weeks = 4
-
-    if(#GLOBALS.notifications["_48hBefore"] > 0) then
-        print('reset _48hBefore')
-        system.cancelNotification(GLOBALS.notifications["_48hBefore"][1])
-        for week=1,weeks do
-            system.cancelNotification(GLOBALS.notifications["_48hBefore"][1+week])
-        end
-    end
-
-    if(#GLOBALS.notifications["_3minAfter"] > 0) then
-        print('reset _3minAfter')
-        system.cancelNotification(GLOBALS.notifications["_3minAfter"][1])
-        for week=1,weeks do
-            system.cancelNotification(GLOBALS.notifications["_3minAfter"][1+week])
-        end
-    end
-
-    ---------------------------------------------------------------------------------
-
     local now = time.now()
 
     ---------------------------------------------------------------------------------
@@ -162,36 +139,27 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
     local _48hBefore = lotteryDateMillis - 48 * 60 * 60 * 1000
     local _3minAfter = lotteryDateMillis + 3 * 60 * 1000
 
-    print(GLOBALS.options.notificationBeforeDraw)
-    print(now)
-    print(_48hBefore)
-    print(now < _48hBefore)
-    print(GLOBALS.options.notificationBeforeDraw and now < _48hBefore)
-
-
     if(GLOBALS.options.notificationBeforeDraw and now < _48hBefore) then
-        local notificationTimeSeconds = os.date( "!*t",  _48hBefore)
+        local notificationTimeSeconds = (_48hBefore - now)/1000
 
         local options = {
             alert = _48hText,
             badge = 1,
         }
 
-        print('set ["_48hBefore"][1] : ' .. tostring(notificationTimeSeconds))
-        GLOBALS.notifications["_48hBefore"][1] = system.scheduleNotification( notificationTimeSeconds, options )
+        system.scheduleNotification( notificationTimeSeconds, options )
     end
 
 
     if(GLOBALS.options.notificationAfterDraw and now < _3minAfter) then
-        local notificationTimeSeconds = os.date( "!*t", _3minAfter)
+        local notificationTimeSeconds = (_3minAfter - now)/1000
 
         local options = {
             alert = _3minText,
             badge = 1,
         }
 
-        print('set ["_3minAfter"][1] : ' .. tostring(notificationTimeSeconds))
-        GLOBALS.notifications["_3minAfter"][1] = system.scheduleNotification( notificationTimeSeconds, options )
+        system.scheduleNotification( notificationTimeSeconds, options )
     end
 
     ---------------------------------------------------------------------------------
@@ -203,39 +171,28 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
         local _3minAfter = lotteryDateMillis + 3 * 60 * 1000 + week * 7 * 24 * 60 * 60 * 1000
 
         if(GLOBALS.options.notificationBeforeDraw) then
-            local notificationTimeSeconds = os.date( "!*t",  _48hBefore)
+            local notificationTimeSeconds = (_48hBefore - now)/1000
 
             local options = {
                 alert = _48hText,
                 badge = 1,
             }
 
-            GLOBALS.notifications["_48hBefore"][1+week] = system.scheduleNotification( notificationTimeSeconds, options )
+            system.scheduleNotification( notificationTimeSeconds, options )
         end
 
 
         if(GLOBALS.options.notificationAfterDraw) then
-            local notificationTimeSeconds = os.date( "!*t", _3minAfter)
+            local notificationTimeSeconds = (_3minAfter - now)/1000
 
             local options = {
                 alert = _3minText,
                 badge = 1,
             }
 
-            GLOBALS.notifications["_3minAfter"][1+week] = system.scheduleNotification( notificationTimeSeconds, options )
+            system.scheduleNotification( notificationTimeSeconds, options )
         end
     end
-
-    ---------------------------------------------------------------------------------
-
-    if(#GLOBALS.notifications["_48hBefore"] > 0) then
-        print(GLOBALS.notifications["_48hBefore"][1])
-        for week=1,weeks do
-            print(GLOBALS.notifications["_48hBefore"][1+week])
-        end
-    end
-
-    utils.saveTable(GLOBALS.notifications, "notifications.json")
 
 end
 

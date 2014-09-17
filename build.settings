@@ -20,13 +20,13 @@ settings = {
 
                 CFBundleIconFile = "Icon",
                 CFBundleIconFiles = {
-                    "Icon57" , 
-                    "Icon60" , 
-                    "Icon72" , 
-                    "Icon76" , 
+                    "Icon57" ,
+                    "Icon60" ,
+                    "Icon72" ,
+                    "Icon76" ,
                 },
 
-                UIAppFonts = 
+                UIAppFonts =
                 {
                     "GillSans.ttf",
                     "HelveticaBold.ttf"
@@ -51,8 +51,7 @@ settings = {
         {
             ["facebook"] =
             {
-                publisherId = "com.coronalabs",
-                supportedPlatforms = { iphone=true, ["iphone-sim"]=true },
+                publisherId = "com.coronalabs"
             },
             ["plugin.sponsorpay"] =
             {
