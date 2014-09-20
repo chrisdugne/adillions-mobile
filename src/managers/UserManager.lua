@@ -1,8 +1,8 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 UserManager = {}
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:new()
 
@@ -18,7 +18,7 @@ function UserManager:new()
     return object
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:getGlobals(onGoodVersion, onBadVersion)
 
@@ -75,13 +75,13 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:refreshPlayer()
     gameManager:open()
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:fetchPlayer()
 
@@ -138,7 +138,7 @@ function UserManager:fetchPlayer()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:getPlayerByFacebookId()
 
@@ -185,7 +185,7 @@ function UserManager:getPlayerByFacebookId()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:loadMoreTickets(lastLotteryUID, onReceivedTickets)
     utils.postWithJSON({
@@ -198,7 +198,7 @@ function UserManager:loadMoreTickets(lastLotteryUID, onReceivedTickets)
     )
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:checkExistPlayerByFacebookId(proceedWithMerge, connectionSuccessful, beforeForceLogin)
 
@@ -236,7 +236,7 @@ function UserManager:checkExistPlayerByFacebookId(proceedWithMerge, connectionSu
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:receivedPlayer(player, next)
 
@@ -251,7 +251,7 @@ function UserManager:receivedPlayer(player, next)
     self:updatedPlayer(player, next)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:updatedPlayer(player, next)
 
@@ -316,7 +316,7 @@ function UserManager:updatedPlayer(player, next)
     self:refreshBonusTickets(next)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:refreshBonusTickets(next)
 
@@ -340,7 +340,7 @@ function UserManager:refreshBonusTickets(next)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:checkExistingUser(connectionSuccessful, beforeForceLogin)
     self:checkExistPlayerByFacebookId(function()
@@ -348,21 +348,21 @@ function UserManager:checkExistingUser(connectionSuccessful, beforeForceLogin)
     end, connectionSuccessful, beforeForceLogin)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:setCharityBonus()
     local level = self:charityLevel()
     self.user.charityBonusTickets = self.user.charityBonusTickets + CHARITY_LEVELS[level].bonus
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:setAmbassadorBonus()
     local level = self:ambassadorLevel()
     self.user.ambassadorBonusTickets = self.user.ambassadorBonusTickets + AMBASSADOR_LEVELS[level].bonus
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:charityLevel()
     for i = #CHARITY_LEVELS, 1, -1 do
@@ -372,7 +372,7 @@ function UserManager:charityLevel()
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:ambassadorLevel()
     for i = #AMBASSADOR_LEVELS, 1, -1 do
@@ -382,7 +382,7 @@ function UserManager:ambassadorLevel()
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- popup affichee uniquement si facebookId libre pour adillions
 -- (sinon on a logout puis login le user FB existant)
 -- si confirm : on pose link facebookId,
@@ -453,7 +453,7 @@ function UserManager:showConfirmMerge(next)
 end
 
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- popup affichee uniquement si facebookId pas libre et nouveau compte FB
 function UserManager:showWrongAccount()
 
@@ -523,7 +523,7 @@ function UserManager:showWrongAccount()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:checkFanStatus(next)
 
@@ -614,7 +614,7 @@ function UserManager:checkFanStatus(next)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:giveToCharity(next)
     viewManager.closePopup(popup)
@@ -642,7 +642,7 @@ function UserManager:cashout(next)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:storeLotteryTicket(numbers)
 
@@ -683,7 +683,7 @@ function UserManager:storeLotteryTicket(numbers)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:updatePlayer(next)
 
@@ -725,7 +725,7 @@ function UserManager:updatePlayer(next)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:showMultiAccountPopup(next)
 
@@ -785,7 +785,7 @@ function UserManager:showMultiAccountPopup(next)
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
 
@@ -832,7 +832,7 @@ function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:twitterConnection(twitterId, twitterName, next)
 
@@ -847,7 +847,7 @@ function UserManager:twitterConnection(twitterId, twitterName, next)
     self:updatePlayer(next)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:mergePlayerWithFacebook(next)
 
@@ -862,7 +862,7 @@ function UserManager:mergePlayerWithFacebook(next)
     self:updatePlayer(next)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:hasTicketsToPlay()
     return self:remainingTickets()  > 0
@@ -885,7 +885,7 @@ function UserManager:totalAvailableTickets()
             + self.user.ambassadorBonusTickets
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:checkTicketTiming()
 
@@ -905,125 +905,13 @@ function UserManager:checkTicketTiming()
     if(tonumber(spentMillis) >= (lotteryManager.nextLottery.ticketTimer * 60 * 1000) or self.user.extraTickets > 0) then
         return true
     else
-
-        print("==========>>>  popup ")
-
-        ----------------------------------------------------------------------------------------------------
-
-        local popup = viewManager.showPopup()
-
-        ----------------------------------------------------------------------------------------------------
-
-        popup.icon      = display.newImage( popup, "assets/images/hud/home/timer.ticket.png")
-        popup.icon.x    = display.contentWidth*0.5
-        popup.icon.y    = display.contentHeight*0.16
-
-        popup.bg        = display.newImage( popup, "assets/images/hud/home/timer.bg.png")
-        popup.bg.x      = display.contentWidth*0.5
-        popup.bg.y      = display.contentHeight*0.5
-
-        ----------------------------------------------------------------------------------------------------
-
-        popup.multiLineText = display.newText({
-            parent      = popup,
-            text        = T "You can fill out a new Ticket in :",
-            width       = display.contentWidth*0.85,
-            height      = display.contentHeight*0.25,
-            x           = display.contentWidth*0.5,
-            y           = display.contentHeight*0.345,
-            font        = FONT,
-            fontSize    = 47,
-            align       = "center",
-        })
-
-        popup.multiLineText:setFillColor(0)
-
-        popup.pictoTimer     = display.newImage( popup, "assets/images/hud/home/timer.timer.png")
-        popup.pictoTimer.x   = display.contentWidth*0.37
-        popup.pictoTimer.y   = display.contentHeight*0.31
-
-        popup.timerDisplay = viewManager.newText({
-            parent      = popup,
-            text        = '',
-            x           = display.contentWidth*0.57,
-            y           = display.contentHeight*0.305,
-            fontSize    = 53,
-            font        = NUM_FONT
-        })
-
-        viewManager.refreshPopupTimer(popup, lastTime)
-
-        -------------------------------
-
-        local timerLegendY   = display.contentHeight*0.335
-        local timerLegendSize  = 22
-
-        viewManager.newText({
-            parent = popup,
-            text = T "MIN",
-            x = display.contentWidth*0.5,
-            y = timerLegendY,
-            fontSize = timerLegendSize,
-        })
-
-        viewManager.newText({
-            parent = popup,
-            text = T "SEC",
-            x = display.contentWidth*0.638,
-            y = timerLegendY,
-            fontSize = timerLegendSize,
-        })
-
-        ----------------------------------------------------
-
-        popup.textor          = display.newImage( popup, I "timer.or.png")
-        popup.textor.x        = display.contentWidth*0.5
-        popup.textor.y        = display.contentHeight*0.4
-
-        --------------------------
-
-        popup.more          = display.newImage( popup, I "timer.play.png")
-        popup.more.x        = display.contentWidth*0.5
-        popup.more.y        = display.contentHeight*0.51
-
-        utils.onTouch(popup.more, function()
-            shareManager:shareForInstants(popup)
-        end)
-
-        ----------------------------------------------------
-
-        popup.textor          = display.newImage( popup, I "timer.or.png")
-        popup.textor.x        = display.contentWidth*0.5
-        popup.textor.y        = display.contentHeight*0.62
-
-        --------------------------
-
-        popup.increase          = display.newImage( popup, I "timer.jackpot.png")
-        popup.increase.x        = display.contentWidth*0.5
-        popup.increase.y        = display.contentHeight*0.73
-
-        utils.onTouch(popup.increase, function()
-            analytics.event("Gaming", "increaseJackpot")
-            viewManager.closePopup(popup)
-            videoManager:play(function()
-                 userManager:openIncreaseConfirmation()
-            end, true)
-        end)
-
-        --------------------------
-
-        popup.close     = display.newImage( popup, I "popup.Bt_close.png")
-        popup.close.x    = display.contentWidth*0.5
-        popup.close.y    = display.contentHeight*0.89
-
-        utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
-
+        self:openTimerPopup(lastTime)
         return false
     end
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:logout()
     coronaFacebook.logout()
@@ -1032,9 +920,9 @@ function UserManager:logout()
     router.openOutside()
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- NOTIFICATIONS
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:checkNotifications()
 
@@ -1053,7 +941,7 @@ function UserManager:checkNotifications()
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:notifyPrizes(next)
     if(self.user.notifications.prizes == 0) then
@@ -1129,7 +1017,7 @@ function UserManager:notifyPrizes(next)
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:notifyStocks(next)
 
@@ -1190,7 +1078,7 @@ function UserManager:notifyStocks(next)
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:giftInstants(nbInstants, next)
     self.user.idlePoints = self.user.idlePoints + nbInstants
@@ -1203,7 +1091,7 @@ function UserManager:giftInstants(nbInstants, next)
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:giftStock(nbStock, next)
     self.user.notifications.stocks = nbStock
@@ -1214,7 +1102,7 @@ function UserManager:giftStock(nbStock, next)
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:notifyInstants(next)
 
@@ -1287,7 +1175,7 @@ function UserManager:notifyInstants(next)
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function UserManager:showStatus()
 
@@ -1336,14 +1224,14 @@ function UserManager:showStatus()
     popup.availableTickets.anchorY = 0.55
 
     popup.iconTicket   = display.newImage( popup, "assets/images/icons/status/ticket.png")
-    popup.iconTicket.x   = display.contentWidth*0.6
-    popup.iconTicket.y   = display.contentHeight*0.34
+    popup.iconTicket.x = display.contentWidth*0.6
+    popup.iconTicket.y = display.contentHeight*0.34
 
     --------------------------
 
-    popup.more     = display.newImage( popup, I "more.tickets.png")
-    popup.more.x    = display.contentWidth*0.5
-    popup.more.y    = display.contentHeight*0.47
+    popup.more   = display.newImage( popup, I "more.tickets.png")
+    popup.more.x = display.contentWidth*0.5
+    popup.more.y = display.contentHeight*0.47
 
     utils.onTouch(popup.more, function()
         shareManager:moreTickets(popup)
@@ -1351,27 +1239,27 @@ function UserManager:showStatus()
 
     --------------------------
 
-    popup.sep      = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
-    popup.sep.x     = display.contentWidth*0.5
-    popup.sep.y     = display.contentHeight*0.58
+    popup.sep   = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
+    popup.sep.x = display.contentWidth*0.5
+    popup.sep.y = display.contentHeight*0.58
     popup.sep:scale(0.9,1);
 
     ----------------------------
 
     popup.earnText = viewManager.newText({
-        parent    = popup,
-        text    = T "Instant Tickets" .. ":",
-        fontSize  = 55,
-        x     = display.contentWidth * 0.5,
-        y     = display.contentHeight*0.63,
+        parent   = popup,
+        text     = T "Instant Tickets" .. ":",
+        fontSize = 55,
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight*0.63,
     })
 
     popup.extraTickets = viewManager.newText({
-        parent    = popup,
-        text    = self.user.extraTickets,
-        fontSize  = 55,
-        x     = display.contentWidth * 0.45,
-        y     = display.contentHeight*0.71,
+        parent   = popup,
+        text     = self.user.extraTickets,
+        fontSize = 55,
+        x        = display.contentWidth * 0.45,
+        y        = display.contentHeight*0.71,
     })
 
     popup.extraTickets.anchorX = 1
@@ -1417,53 +1305,53 @@ function UserManager:openPrizes()
 
     --------------------------
 
-    hud.picto       = display.newImage(popup, "assets/images/icons/PrizeTitle.png")
-    hud.picto.x     = display.contentWidth*0.14
-    hud.picto.y     = display.contentHeight*0.15
+    hud.picto   = display.newImage(popup, "assets/images/icons/PrizeTitle.png")
+    hud.picto.x = display.contentWidth*0.14
+    hud.picto.y = display.contentHeight*0.15
     hud.picto:scale(0.7,0.7)
 
     hud.title       = display.newImage(popup, I "Prize.png")
 
-    hud.title.anchorX    = 0
-    hud.title.anchorY    = 0.5
-    hud.title.x   = display.contentWidth*0.22
-    hud.title.y   = display.contentHeight*0.15
+    hud.title.anchorX = 0
+    hud.title.anchorY = 0.5
+    hud.title.x       = display.contentWidth*0.22
+    hud.title.y       = display.contentHeight*0.15
 
-    hud.sep    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
-    hud.sep.x   = display.contentWidth*0.5
-    hud.sep.y   = display.contentHeight*0.2
+    hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x = display.contentWidth*0.5
+    hud.sep.y = display.contentHeight*0.2
 
     --------------------------
 
     viewManager.newText({
-        parent = popup,
-        text = T "Match",
-        x = display.contentWidth*0.45,
-        y = display.contentHeight * 0.255,
+        parent   = popup,
+        text     = T "Match",
+        x        = display.contentWidth*0.45,
+        y        = display.contentHeight * 0.255,
         fontSize = 32,
-        font = NUM_FONT
+        font     = NUM_FONT
     })
 
     viewManager.newText({
-        parent = popup,
-        text = T "Prize",
-        x = display.contentWidth * 0.8,
-        y = display.contentHeight * 0.24,
+        parent   = popup,
+        text     = T "Prize",
+        x        = display.contentWidth * 0.8,
+        y        = display.contentHeight * 0.24,
         fontSize = 32,
-        font = NUM_FONT
+        font     = NUM_FONT
     })
 
     viewManager.newText({
-        parent = popup,
-        text = T "breakdown",
-        x = display.contentWidth * 0.8,
-        y = display.contentHeight * 0.27,
+        parent   = popup,
+        text     = T "breakdown",
+        x        = display.contentWidth * 0.8,
+        y        = display.contentHeight * 0.27,
         fontSize = 32,
-        font = NUM_FONT
+        font     = NUM_FONT
     })
 
-    local matches   = lotteryManager.nextDrawing.rangs.matches[LANG]
-    local percents  = lotteryManager.nextDrawing.rangs.percents
+    local matches  = lotteryManager.nextDrawing.rangs.matches[LANG]
+    local percents = lotteryManager.nextDrawing.rangs.percents
 
     for i = 1, #matches do
 
@@ -1472,24 +1360,24 @@ function UserManager:openPrizes()
         hud.iconRang.y   = top + yGap * (i-1)
 
         viewManager.newText({
-            parent      = popup,
-            text        = matches[i],
-            x           = display.contentWidth*0.45,
-            y           = top + yGap * (i-1) ,
-            fontSize    = 35,
+            parent   = popup,
+            text     = matches[i],
+            x        = display.contentWidth*0.45,
+            y        = top + yGap * (i-1) ,
+            fontSize = 35,
         })
 
         viewManager.newText({
-            parent    = popup,
+            parent   = popup,
             text     = percents[i] .. '%',
-            x      = display.contentWidth*0.75,
-            y      = top + yGap * (i-1) ,
-            fontSize   = 35,
+            x        = display.contentWidth*0.75,
+            y        = top + yGap * (i-1) ,
+            fontSize = 35,
         })
 
-        hud.iconPieces    = display.newImage( popup, "assets/images/icons/PictoPrize.png")
-        hud.iconPieces.x    = display.contentWidth * 0.86
-        hud.iconPieces.y    = top + yGap * (i-1) - display.contentHeight*0.0005
+        hud.iconPieces   = display.newImage( popup, "assets/images/icons/PictoPrize.png")
+        hud.iconPieces.x = display.contentWidth * 0.86
+        hud.iconPieces.y = top + yGap * (i-1) - display.contentHeight*0.0005
 
     end
 
@@ -1527,6 +1415,176 @@ function UserManager:openPrizes()
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
+end
+
+--------------------------------------------------------------------------------
+
+function UserManager:openTimerPopup(lastTime)
+
+    local popup = viewManager.showPopup()
+
+    ----------------------------------------------------------------------------
+
+    popup.bgImage   = display.newImage( popup, "assets/images/hud/home/timer.bg.png")
+    popup.bgImage.x = display.contentWidth*0.5
+    popup.bgImage.y = display.contentHeight*0.5
+
+    ----------------------------------------------------------------------------
+
+    local headerY = popup.bg.y - popup.bg.contentHeight*0.5
+
+    popup.header         = display.newImageRect(popup, "assets/images/hud/timer/timer.header.png", popup.bg.contentWidth*0.9583, display.viewableContentHeight*0.08)
+    popup.header.anchorY = 0
+    popup.header.x       = display.contentWidth*0.5
+    popup.header.y       = headerY
+
+    local headerContentY = headerY + popup.header.contentHeight*0.5
+
+    popup.box1   = display.newImage( popup, "assets/images/hud/timer/timer.box.png")
+    popup.box1.x = display.contentWidth*0.29
+    popup.box1.y = headerContentY
+
+    popup.icon1   = display.newImage( popup, "assets/images/hud/timer/timer.ticket.png")
+    popup.icon1.x = popup.box1.x - popup.box1.contentWidth*0.5
+    popup.icon1.y = headerContentY
+
+    popup.button1   = display.newImage( popup, "assets/images/hud/timer/timer.plus.png")
+    popup.button1.x = popup.box1.x + popup.box1.contentWidth*0.32
+    popup.button1.y = headerContentY
+
+    popup.availableTickets = viewManager.newText({
+        parent   = popup,
+        text     = self:remainingTickets() .. " / " .. self:totalAvailableTickets(),
+        fontSize = 45,
+        anchorX  = 1,
+        anchorY  = 0.6,
+        x        = popup.button1.x - popup.button1.contentWidth*0.55,
+        y        = popup.button1.y
+    })
+
+    ----------------------------------------------------------------------------
+
+    popup.box2   = display.newImage( popup, "assets/images/hud/timer/timer.box.png")
+    popup.box2.x = display.contentWidth*0.73
+    popup.box2.y = headerContentY
+
+    popup.icon2   = display.newImage( popup, "assets/images/hud/timer/timer.booster.png")
+    popup.icon2.x = popup.box2.x - popup.box2.contentWidth*0.5
+    popup.icon2.y = headerContentY
+
+    popup.button2   = display.newImage( popup, "assets/images/hud/timer/timer.plus.png")
+    popup.button2.x = popup.box2.x + popup.box2.contentWidth*0.32
+    popup.button2.y = headerContentY
+
+    popup.extraTickets = viewManager.newText({
+        parent   = popup,
+        text     = self.user.extraTickets,
+        fontSize = 45,
+        anchorX  = 1,
+        anchorY  = 0.6,
+        x        = popup.button2.x - popup.button2.contentWidth*0.55,
+        y        = headerContentY
+    })
+
+    ----------------------------------------------------------------------------
+
+    utils.onTouch(popup.button1, function()
+        shareManager:shareForInstants(popup)
+    end)
+
+    utils.onTouch(popup.button2, function()
+        shareManager:shareForInstants(popup)
+    end)
+
+    ----------------------------------------------------------------------------
+
+    popup.multiLineText = display.newText({
+        parent   = popup,
+        text     = T "You can fill out a new Ticket in :",
+        width    = display.contentWidth*0.85,
+        height   = display.contentHeight*0.25,
+        x        = display.contentWidth*0.5,
+        y        = display.contentHeight*0.345,
+        font     = FONT,
+        fontSize = 47,
+        align    = "center",
+    })
+
+    popup.multiLineText:setFillColor(0)
+
+    popup.pictoTimer   = display.newImage( popup, "assets/images/hud/home/timer.timer.png")
+    popup.pictoTimer.x = display.contentWidth*0.37
+    popup.pictoTimer.y = display.contentHeight*0.31
+
+    popup.timerDisplay = viewManager.newText({
+        parent   = popup,
+        text     = '',
+        x        = display.contentWidth*0.57,
+        y        = display.contentHeight*0.305,
+        fontSize = 53,
+        font     = NUM_FONT
+    })
+
+    viewManager.refreshPopupTimer(popup, lastTime)
+
+    -------------------------------
+
+    local timerLegendY   = display.contentHeight*0.335
+    local timerLegendSize  = 22
+
+    viewManager.newText({
+        parent   = popup,
+        text     = T "MIN",
+        x        = display.contentWidth*0.5,
+        y        = timerLegendY,
+        fontSize = timerLegendSize,
+    })
+
+    viewManager.newText({
+        parent   = popup,
+        text     = T "SEC",
+        x        = display.contentWidth*0.638,
+        y        = timerLegendY,
+        fontSize = timerLegendSize,
+    })
+
+    ----------------------------------------------------
+
+    popup.more   = display.newImage( popup, I "timer.play.png")
+    popup.more.x = display.contentWidth*0.5
+    popup.more.y = display.contentHeight*0.48
+
+    utils.onTouch(popup.more, function()
+        shareManager:shareForInstants(popup)
+    end)
+
+    ----------------------------------------------------
+
+    popup.textor   = display.newImage( popup, I "timer.or.png")
+    popup.textor.x = display.contentWidth*0.5
+    popup.textor.y = display.contentHeight*0.59
+
+    --------------------------
+
+    popup.increase   = display.newImage( popup, I "timer.jackpot.png")
+    popup.increase.x = display.contentWidth*0.5
+    popup.increase.y = display.contentHeight*0.7
+
+    utils.onTouch(popup.increase, function()
+        analytics.event("Gaming", "increaseJackpot")
+        viewManager.closePopup(popup)
+        videoManager:play(function()
+             userManager:openIncreaseConfirmation()
+        end, true)
+    end)
+
+    --------------------------
+
+    popup.close   = display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x = display.contentWidth*0.5
+    popup.close.y = display.contentHeight*0.89
+
+    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 end
 
 ----------------------------------------
@@ -1613,6 +1671,6 @@ function UserManager:openIncreaseConfirmation()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return UserManager

@@ -1,10 +1,10 @@
 ----------------------------------------------------------------------------
 
-Vungle = {} 
+Vungle = {}
 
 ----------------------------------------------------------------------------
 
-function Vungle:new()  
+function Vungle:new()
 
     local object = {
         afterVideoSeen      = nil,
@@ -26,6 +26,7 @@ function Vungle:init()
         appId = "com.adillions.v1"
     end
 
+    print("Vungle init : " .. appId)
     vungleON = false
     ads.init( "vungle", appId , function(event) self:adListener(event) end )
 end
@@ -40,9 +41,9 @@ function Vungle:tryToShowAd(retrying)
 
     native.setActivityIndicator( true )
 
-    ads.show( "incentivized", { 
-        isBackButtonEnabled = true, 
-        isCloseShown = false 
+    print("Vungle tryToShowAd")
+    ads.show( "incentivized", {
+        isBackButtonEnabled = true,
     } )
 
 end
@@ -53,13 +54,14 @@ function Vungle:adListener(event)
 
     native.setActivityIndicator( false )
 
+    print("Vungle adListener", event)
     if(event.isError) then
         viewManager.message(T "Vungle has no ad, please try later")
         self.afterVideoSeen = nil
         self.vungleON = false
-    
+
     elseif event.type == "adStart" then
-        
+
 
     elseif event.type == "adEnd" then
 

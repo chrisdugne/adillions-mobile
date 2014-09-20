@@ -57,7 +57,10 @@ settings = {
             {
                 publisherId = "com.sponsorpay",
             },
-
+            ["plugin.google.play.services"] =
+            {
+                publisherId = "com.coronalabs"
+            },
             ["CoronaProvider.ads.vungle"] =
             {
                 publisherId = "com.vungle",

@@ -76,16 +76,16 @@ function initHeader(selectedTab)
 --        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.jpg")
 --    end
 
-    hud.headerButton            = display.newImage( hud, "assets/images/icons/info.ticket.png")
-    hud.headerButton.x          = display.contentWidth*0.9
-    hud.headerButton.y          = HEADER_HEIGHT*0.5
-    hud.headerButton.anchorX    = 0.5
-    hud.headerButton.anchorY    = 0.5
+    -- hud.headerButton            = display.newImage( hud, "assets/images/icons/info.ticket.png")
+    -- hud.headerButton.x          = display.contentWidth*0.9
+    -- hud.headerButton.y          = HEADER_HEIGHT*0.5
+    -- hud.headerButton.anchorX    = 0.5
+    -- hud.headerButton.anchorY    = 0.5
 
-    utils.onTouch(hud.headerButton, function()
-        analytics.event("Gaming", "showStatus")
-        userManager:showStatus()
-    end)
+    -- utils.onTouch(hud.headerButton, function()
+    --     analytics.event("Gaming", "showStatus")
+    --     userManager:showStatus()
+    -- end)
 end
 
 -----------------------------------------------------------------------------------------

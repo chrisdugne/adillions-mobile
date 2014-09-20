@@ -1325,7 +1325,6 @@ end
 function ShareManager:twitterFollow(popup)
     native.setActivityIndicator( true )
     twitter.follow(function()
-
             print("follow ok : sharemanager asks to refreshBonusTickets")
             userManager:refreshBonusTickets(function()
                 native.setActivityIndicator( false )
