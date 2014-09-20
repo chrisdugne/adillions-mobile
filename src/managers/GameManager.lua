@@ -1,8 +1,8 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 GameManager = {}
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function GameManager:new()
 
@@ -13,10 +13,18 @@ function GameManager:new()
     return object
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function GameManager:start()
-    analytics.init(ANALYTICS_VERSION, ANALYTICS_TRACKING_ID, ANALYTICS_PROFILE_ID, APP_NAME, APP_VERSION)
+
+    analytics.init(
+        ANALYTICS_VERSION,
+        ANALYTICS_TRACKING_ID,
+        ANALYTICS_PROFILE_ID,
+        APP_NAME,
+        APP_VERSION
+    )
+
     viewManager.initGlobalBack()
     vungle:init()
 
@@ -28,7 +36,7 @@ function GameManager:start()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function GameManager:open()
 
@@ -49,7 +57,7 @@ function GameManager:open()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function GameManager:firstStart()
     router.openLoading()
@@ -58,7 +66,7 @@ function GameManager:firstStart()
     router.openTutorial()
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function GameManager:initGameData(tutorialSeen)
 
@@ -84,7 +92,7 @@ function GameManager:initOptions()
     utils.saveTable(GLOBALS.options, "options.json")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function GameManager:tryAutoOpenFacebookAccount()
     native.setActivityIndicator( true )
@@ -110,7 +118,7 @@ function GameManager:tryAutoOpenAdillionsAccount()
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function GameManager:showBadVersion()
 
@@ -151,7 +159,7 @@ function GameManager:showBadVersion()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function GameManager:play()
     if(userManager:hasTicketsToPlay()) then
@@ -163,6 +171,8 @@ function GameManager:play()
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return GameManager
+
+--------------------------------------------------------------------------------

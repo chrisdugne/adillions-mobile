@@ -1,10 +1,10 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-SigninManager = {} 
+SigninManager = {}
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-function SigninManager:new()  
+function SigninManager:new()
 
     local object = {
         listener         = {},
@@ -15,13 +15,20 @@ function SigninManager:new()
     return object
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function SigninManager:openLogin()
     local url           = API_URL .. "mlogin2?lang=" .. LANG
     self.listener       = function(event) self:loginViewListener(event) end
     self.closeWebView   = viewManager.openWeb(url, self.listener)
 end
+
+-- using new signin
+-- function SigninManager:openLogin()
+--     local url           = NODE_URL .. "/" .. LANG .. "/login"
+--     self.listener       = function(event) self:loginViewListener(event) end
+--     self.closeWebView   = viewManager.openWeb(url, self.listener)
+-- end
 
 ------------------------------------------
 
@@ -33,27 +40,27 @@ function SigninManager:loginViewListener( event )
         print(event.url)
 
         if string.find(string.lower(event.url), API_URL .. "loggedin") then
-            self:closeWebView()      
+            self:closeWebView()
             local params = utils.getUrlParams(event.url);
 
-            GLOBALS.savedData.authToken  = params.authToken         
-            GLOBALS.savedData.user.email  = params.email   
+            GLOBALS.savedData.authToken  = params.authToken
+            GLOBALS.savedData.user.email  = params.email
             utils.saveTable(GLOBALS.savedData, "savedData.json")
 
             userManager:fetchPlayer()
 
         elseif event.url == API_URL .. "backToMobile" then
-            self:closeWebView()     
+            self:closeWebView()
 
         elseif event.url == API_URL .. "connectWithFB" then
-            self:closeWebView()      
+            self:closeWebView()
             facebook.login()
         end
 
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function SigninManager:openSignin()
     local url           = API_URL .. "msignin3?lang=" .. LANG
@@ -72,29 +79,29 @@ function SigninManager:signinViewListener( event )
 
         -- idem login
         if string.find(string.lower(event.url), API_URL .. "loggedin") then
-            self:closeWebView()      
+            self:closeWebView()
             local params = utils.getUrlParams(event.url);
 
-            GLOBALS.savedData.authToken  = params.authToken         
-            GLOBALS.savedData.user.email  = params.email   
+            GLOBALS.savedData.authToken  = params.authToken
+            GLOBALS.savedData.user.email  = params.email
             utils.saveTable(GLOBALS.savedData, "savedData.json")
 
             userManager:fetchPlayer()
 
         elseif event.url == API_URL .. "backToMobile" then
-            self:closeWebView()      
-            print("signin : backToMobile : outside")  
+            self:closeWebView()
+            print("signin : backToMobile : outside")
             router.openOutside()
 
         elseif event.url == API_URL .. "connectWithFB" then
-            self:closeWebView()    
+            self:closeWebView()
             facebook.login()
         end
 
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function SigninManager:openSigninFB()
 
@@ -118,7 +125,7 @@ function SigninManager:openSigninFB()
     url = url .. "&facebookName="  .. utils.urlEncode(facebook.data.name)
     url = url .. "&facebookId="    .. facebook.data.id
     url = url .. "&lang="          .. LANG
-    
+
     self.listener       = function(event) self:signinFBViewListener(event) end
     self.closeWebView   = viewManager.openWeb(url, self.listener)
 end
@@ -130,29 +137,29 @@ function SigninManager:signinFBViewListener( event )
     if event.url then
 
         if event.url == API_URL .. "backToMobile" then
-            self:closeWebView()   
+            self:closeWebView()
             router.openOutside()
 
         elseif event.url == API_URL .. "requireLogout" then  -- changeAccount
             self:closeWebView()
-            print("signinFB : requireLogout")     
-            userManager:logout()      
+            print("signinFB : requireLogout")
+            userManager:logout()
 
         elseif string.find(event.url, "signedIn") then
-            print("signinFB : success : requireFacebookConnectionTickets")     
-            self:closeWebView()      
+            print("signinFB : success : requireFacebookConnectionTickets")
+            self:closeWebView()
             local playerRealNames = utils.getUrlParams(event.url);
 
             GLOBALS.savedData.authToken = playerRealNames.authToken
             utils.saveTable(GLOBALS.savedData, "savedData.json")
 
             userManager.requireFacebookConnectionTickets = true
-            
+
             userManager:fetchPlayer()
         end
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return SigninManager

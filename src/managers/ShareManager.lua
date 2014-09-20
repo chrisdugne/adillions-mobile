@@ -559,43 +559,43 @@ function ShareManager:noMoreTickets()
 
     ----------------------------------------------------------------------------------------------------
 
-    popup.icon    = display.newImage( popup, "assets/images/hud/home/maxticket.png")
-    popup.icon.x    = display.contentWidth*0.5
-    popup.icon.y    = display.contentHeight*0.18
+    popup.icon   = display.newImage( popup, "assets/images/hud/home/maxticket.png")
+    popup.icon.x = display.contentWidth*0.5
+    popup.icon.y = display.contentHeight*0.18
 
-    popup.icon    = display.newImage( popup, I "Sorry.png")
-    popup.icon.x    = display.contentWidth*0.5
-    popup.icon.y    = display.contentHeight*0.29
+    popup.icon   = display.newImage( popup, I "Sorry.png")
+    popup.icon.x = display.contentWidth*0.5
+    popup.icon.y = display.contentHeight*0.29
 
-    popup.bg    = display.newImage( popup, "assets/images/hud/home/maxticket.bg.png")
-    popup.bg.x    = display.contentWidth*0.5
-    popup.bg.y    = display.contentHeight*0.5
+    popup.bg   = display.newImage( popup, "assets/images/hud/home/maxticket.bg.png")
+    popup.bg.x = display.contentWidth*0.5
+    popup.bg.y = display.contentHeight*0.5
 
 
     ----------------------------------------------------------------------------------------------------
 
     viewManager.newText({
-        parent    = popup,
-        text    = T "You have reached the maximum number of Tickets for this draw",
-        x     = display.contentWidth * 0.5,
-        y     = display.contentHeight*0.4,
-        width   = display.contentWidth * 0.75,
-        fontSize  = 45,
+        parent   = popup,
+        text     = T "You have reached the maximum number of Tickets for this draw",
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight*0.4,
+        width    = display.contentWidth * 0.75,
+        fontSize = 45,
     })
 
     viewManager.newText({
-        parent    = popup,
-        text    = T "You can increase your stock of Tickets",
-        x     = display.contentWidth * 0.5,
-        y     = display.contentHeight*0.56,
-        fontSize  = 42,
+        parent   = popup,
+        text     = T "You can increase your stock of Tickets",
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight*0.56,
+        fontSize = 42,
     })
 
     --------------------------
 
-    popup.more    = display.newImage( popup, I "more.tickets.png")
-    popup.more.x   = display.contentWidth*0.5
-    popup.more.y   = display.contentHeight*0.65
+    popup.more   = display.newImage( popup, I "more.tickets.png")
+    popup.more.x = display.contentWidth*0.5
+    popup.more.y = display.contentHeight*0.65
 
     utils.onTouch(popup.more, function()
         self:moreTickets(popup)
@@ -604,8 +604,8 @@ function ShareManager:noMoreTickets()
     --------------------------
 
     popup.close   = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x   = display.contentWidth*0.5
-    popup.close.y   = display.contentHeight*0.83
+    popup.close.x = display.contentWidth*0.5
+    popup.close.y = display.contentHeight*0.83
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
