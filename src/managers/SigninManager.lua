@@ -25,7 +25,7 @@ end
 
 -- using new signin
 -- function SigninManager:openLogin()
---     local url           = NODE_URL .. "/" .. LANG .. "/login"
+--     local url           = NODE_URL .. "/" .. LANG .. "/m/login"
 --     self.listener       = function(event) self:loginViewListener(event) end
 --     self.closeWebView   = viewManager.openWeb(url, self.listener)
 -- end
@@ -37,9 +37,9 @@ function SigninManager:loginViewListener( event )
     if event.url then
 
         print("---   login listener")
-        print(event.url)
+        print(event.url, API_URL .. "loggedin")
 
-        if string.find(string.lower(event.url), API_URL .. "loggedin") then
+        if string.find(string.lower(event.url), "loggedin") then
             self:closeWebView()
             local params = utils.getUrlParams(event.url);
 

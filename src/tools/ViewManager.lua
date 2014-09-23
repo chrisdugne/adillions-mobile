@@ -233,9 +233,9 @@ function openWeb(url, listener, customOnClose)
 
     ------------------
 
-    webContainer.close     = display.newImage( "assets/images/hud/game/exit.game.png")
-    webContainer.close.x    = display.contentWidth*0.89
-    webContainer.close.y    = HEADER_HEIGHT/2
+    webContainer.close   = display.newImage( "assets/images/hud/game/exit.game.png")
+    webContainer.close.x = display.contentWidth*0.89
+    webContainer.close.y = HEADER_HEIGHT/2
 
     ------------------
 
@@ -445,16 +445,11 @@ function refreshPlayButton(waitingForDrawing)
     end
 
     if(not waitingForDrawing and lotteryManager.nextDrawing.uid == lotteryManager.nextLottery.uid) then
-        if(userManager.user.extraTickets > 0) then
-            hud.playTicketButton = display.newImage( hud, I "fillout.instant.ticket.png")
-        else
-            hud.playTicketButton = display.newImage( hud, I "filloutticket.button.png")
-        end
+        hud.playTicketButton = display.newImage( hud, I "filloutticket.button.png")
 
         utils.onTouch(hud.playTicketButton, function()
             gameManager:play()
         end)
-
     else
         hud.playTicketButton = display.newImage( hud, I "waiting.png")
         hud.playTicketButton.alpha = 0.5
@@ -520,6 +515,8 @@ function refreshPopupTimer(popup, lastTime)
     if(popup.timer) then timer.cancel(popup.timer) end
     if(not popup.timerDisplay) then return end
 
+    viewManager.timerPopup = popup
+
     local now = time.now()
     local hoursSpent, minSpent, secSpent, msSpent = utils.getHoursMinSecMillis(now - lastTime)
 
@@ -539,12 +536,43 @@ function refreshPopupTimer(popup, lastTime)
         if(s < 10) then s = "0"..s end
 
         -- popup.timerDisplay.text = h .. " : " .. m .. " : " .. s
-        popup.timerDisplay.text = m .. " : " .. s
-        popup.timer = timer.performWithDelay(1000, function ()
+        popup.timerDisplay.text    = m .. " : " .. s
+        viewManager.minutes        = m
+        viewManager.secondes       = s
+        popup.timer                = timer.performWithDelay(1000, function ()
             refreshPopupTimer(popup, lastTime)
         end)
     end
 
+end
+
+------------------------------------------------------------------
+
+function decreaseTimer(next, nextMillis)
+
+    if(not nextMillis) then
+        timer.cancel(viewManager.timerPopup.timer)
+        viewManager.totalSecondsToDecrease     = viewManager.minutes * 60 + viewManager.secondes
+        viewManager.remainingSecondsToDecrease = viewManager.totalSecondsToDecrease
+        nextMillis                             = 3
+    end
+
+    timer.performWithDelay(nextMillis, function()
+        local toRemove = math.round(math.max(viewManager.remainingSecondsToDecrease*0.1, 1))
+        viewManager.remainingSecondsToDecrease = viewManager.remainingSecondsToDecrease - toRemove
+        if(viewManager.remainingSecondsToDecrease > 0) then
+            local m = math.floor(viewManager.remainingSecondsToDecrease/60)
+            local s = viewManager.remainingSecondsToDecrease - m * 60
+            if(m < 10) then m = "0"..m end
+            if(s < 10) then s = "0"..s end
+            viewManager.timerPopup.timerDisplay.text    = m .. " : " .. s
+            decreaseTimer(next, nextMillis)
+        else
+            viewManager.timerPopup.timerDisplay.text    = "00 : 00"
+            next()
+        end
+
+    end)
 end
 
 ------------------------------------------------------------------
@@ -578,11 +606,11 @@ end
 
 function newText(options)
 
-    local finalOptions = {}
-    finalOptions.text   = options.text
-    finalOptions.font   = options.font or FONT
-    finalOptions.fontSize  = options.fontSize or 48
-    finalOptions.align   = options.align or "center"
+    local finalOptions    = {}
+    finalOptions.text     = options.text
+    finalOptions.font     = options.font or FONT
+    finalOptions.fontSize = options.fontSize or 48
+    finalOptions.align    = options.align or "center"
 
     if(options.width) then
         finalOptions.width = options.width

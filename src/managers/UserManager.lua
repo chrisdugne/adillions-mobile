@@ -7,11 +7,11 @@ UserManager = {}
 function UserManager:new()
 
     local object = {
-        user                    = {},
-        attemptFBPlayer         = 0,       -- attemptFBPlayer pour compter les getPlayerByFacebookId pour android reco apres retour app
-        attemptFetchPlayer      = 0,
+        user               = {},
+        attemptFBPlayer    = 0,       -- attemptFBPlayer pour compter les getPlayerByFacebookId pour android reco apres retour app
+        attemptFetchPlayer = 0,
 
-        userHasReceivedBonus    = false    -- while receiving BT and IT, set to true. One updatedPlayer after all bonus are received
+        userHasReceivedBonus = false    -- while receiving BT and IT, set to true. One updatedPlayer after all bonus are received
     }
 
     setmetatable(object, { __index = UserManager })
@@ -27,7 +27,9 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
         if(result.isError) then
             -- android....
             print("globals on error...")
-            timer.performWithDelay(2000, function() userManager:getGlobals(onGoodVersion, onBadVersion) end)
+            timer.performWithDelay(2000, function()
+                userManager:getGlobals(onGoodVersion, onBadVersion)
+            end)
 
         else
 
@@ -902,7 +904,7 @@ function UserManager:checkTicketTiming()
     local spentMillis = now - lastTime
     local h,m,s,ms = utils.getHoursMinSecMillis(spentMillis)
 
-    if(tonumber(spentMillis) >= (lotteryManager.nextLottery.ticketTimer * 60 * 1000) or self.user.extraTickets > 0) then
+    if(tonumber(spentMillis) >= (lotteryManager.nextLottery.ticketTimer * 60 * 1000)) then
         return true
     else
         self:openTimerPopup(lastTime)
@@ -1430,6 +1432,8 @@ function UserManager:openTimerPopup(lastTime)
     popup.bgImage.y = display.contentHeight*0.5
 
     ----------------------------------------------------------------------------
+    --                             Header
+    ----------------------------------------------------------------------------
 
     local headerY = popup.bg.y - popup.bg.contentHeight*0.5
 
@@ -1439,6 +1443,8 @@ function UserManager:openTimerPopup(lastTime)
     popup.header.y       = headerY
 
     local headerContentY = headerY + popup.header.contentHeight*0.5
+
+    ----------------------------------------------------------------------------
 
     popup.box1   = display.newImage( popup, "assets/images/hud/timer/timer.box.png")
     popup.box1.x = display.contentWidth*0.29
@@ -1489,13 +1495,15 @@ function UserManager:openTimerPopup(lastTime)
     ----------------------------------------------------------------------------
 
     utils.onTouch(popup.button1, function()
-        shareManager:shareForInstants(popup)
+        shareManager:moreTickets(popup)
     end)
 
     utils.onTouch(popup.button2, function()
         shareManager:shareForInstants(popup)
     end)
 
+    ----------------------------------------------------------------------------
+    --                             Content
     ----------------------------------------------------------------------------
 
     popup.multiLineText = display.newText({
@@ -1532,7 +1540,7 @@ function UserManager:openTimerPopup(lastTime)
     local timerLegendY   = display.contentHeight*0.335
     local timerLegendSize  = 22
 
-    viewManager.newText({
+    popup.minText = viewManager.newText({
         parent   = popup,
         text     = T "MIN",
         x        = display.contentWidth*0.5,
@@ -1540,7 +1548,7 @@ function UserManager:openTimerPopup(lastTime)
         fontSize = timerLegendSize,
     })
 
-    viewManager.newText({
+    popup.secText = viewManager.newText({
         parent   = popup,
         text     = T "SEC",
         x        = display.contentWidth*0.638,
@@ -1550,12 +1558,38 @@ function UserManager:openTimerPopup(lastTime)
 
     ----------------------------------------------------
 
-    popup.more   = display.newImage( popup, I "timer.play.png")
-    popup.more.x = display.contentWidth*0.5
-    popup.more.y = display.contentHeight*0.48
+    popup.playNow   = display.newImage( popup, I "timer.play.png")
+    popup.playNow.x = display.contentWidth*0.5
+    popup.playNow.y = display.contentHeight*0.48
 
-    utils.onTouch(popup.more, function()
-        shareManager:shareForInstants(popup)
+    utils.onTouch(popup.playNow, function()
+
+        if(self.user.extraTickets > 0) then
+            display.remove(popup.multiLineText)
+            display.remove(popup.minText)
+            display.remove(popup.secText)
+            display.remove(popup.pictoTimer)
+            display.remove(popup.playNow)
+            display.remove(popup.textor)
+            display.remove(popup.increase)
+            display.remove(popup.close)
+
+            transition.to(popup.timerDisplay, {
+                x = display.contentWidth*0.5,
+                y = display.contentHeight*0.5,
+                xScale = 2.5,
+                yScale = 2.5
+            })
+
+            viewManager.decreaseTimer(function()
+                viewManager.closePopup(popup)
+                gameManager:startTicket()
+            end)
+
+        else
+            shareManager:shareForInstants(popup)
+        end
+
     end)
 
     ----------------------------------------------------

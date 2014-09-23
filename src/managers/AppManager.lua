@@ -17,8 +17,24 @@ end
 
 function AppManager:start()
 
-    APP_NAME                = "Adillions"
-    APP_VERSION             = 1.5
+    APP_NAME = "Adillions"
+
+    ----------------------------------------------------------------------------
+    PROD = true
+
+    if(PROD) then
+        APP_VERSION             = 1.5
+        FACEBOOK_APP_ID        = "170148346520274"
+        FACEBOOK_API_SECRET    = "887e8f7abb9b1cb9238a097e06585ae2"
+        FACEBOOK_APP_NAMESPACE = "adillions"
+        MOBILE_SETTINGS_URL    = "http://adillions-dev.herokuapp.com/api/mobile/settings/"
+    else
+        APP_VERSION            = 999
+        FACEBOOK_APP_ID        = "534196239997712"
+        FACEBOOK_API_SECRET    = "46383d827867d50ef5d87b66c81f1a8e"
+        FACEBOOK_APP_NAMESPACE = "adillions-dev"
+        MOBILE_SETTINGS_URL    = "http://192.168.0.10:1337/api/mobile/settings/"
+    end
 
     print("---------------------- "
         .. APP_NAME
@@ -26,34 +42,19 @@ function AppManager:start()
         .. " ----------------")
     print("application setup...")
 
-    ----------------------------------------------------------------------------
-
-    if(PROD) then
-        FACEBOOK_APP_ID        = "170148346520274"
-        FACEBOOK_API_SECRET    = "887e8f7abb9b1cb9238a097e06585ae2"
-        FACEBOOK_APP_NAMESPACE = "adillions"
-        MOBILE_SETTINGS_URL    = "http://www.adillions.com/api/mobile/settings/"
-        MOBILE_SETTINGS_URL    = "http://192.168.0.10:1337/api/mobile/settings/"  ------- TO REMOVE
-    else
-        FACEBOOK_APP_ID        = "534196239997712"
-        FACEBOOK_API_SECRET    = "46383d827867d50ef5d87b66c81f1a8e"
-        FACEBOOK_APP_NAMESPACE = "adillions-dev"
-        MOBILE_SETTINGS_URL    = "http://192.168.0.10:1337/api/mobile/settings/"
-    end
-
     ------------------------------------------------------------------------------
     ---- App globals
 
     GLOBALS = {
-        savedData     = utils.loadUserData("savedData.json"),
-        options       = utils.loadUserData("options.json")
+        savedData = utils.loadUserData("savedData.json"),
+        options   = utils.loadUserData("options.json")
     }
 
     ----------------------------------------------------------------------------
 
-    FACEBOOK_PAGE_ID        = "379432705492888"
-    FACEBOOK_PAGE           = "https://www.facebook.com/adillions"
-    TWITTER_ID              = "1922939570"
+    FACEBOOK_PAGE_ID = "379432705492888"
+    FACEBOOK_PAGE    = "https://www.facebook.com/adillions"
+    TWITTER_ID       = "1922939570"
 
     ----------------------------------------------------------------------------
 

@@ -122,40 +122,37 @@ end
 
 function GameManager:showBadVersion()
 
-        local popup = viewManager.showPopup(display.contentWidth*0.95, true)
+    local popup = viewManager.showPopup(display.contentWidth*0.95, true)
 
-        ----------------------------------------
+    ----------------------------------------
 
-        popup.bg   = display.newImage( popup, "assets/images/hud/home/BG_adillions.png")
-        popup.bg.x = display.contentWidth*0.5
-        popup.bg.y = display.contentHeight*0.5
+    popup.bg   = display.newImage( popup, "assets/images/hud/home/BG_adillions.png")
+    popup.bg.x = display.contentWidth*0.5
+    popup.bg.y = display.contentHeight*0.5
 
+    popup.congratz   = display.newImage( popup, I "wrongversion.title.png")
+    popup.congratz.x = display.contentWidth*0.5
+    popup.congratz.y = display.contentHeight*0.3
 
-        popup.congratz   = display.newImage( popup, I "wrongversion.title.png")
-        popup.congratz.x = display.contentWidth*0.5
-        popup.congratz.y = display.contentHeight*0.3
+    ----------------------------------------
 
-        ----------------------------------------
+    popup.earnText = viewManager.newText({
+        parent   = popup,
+        text     = T "Please download the latest version of Adillions" .. "(v" .. VERSION_REQUIRED .. ") !",
+        fontSize = 55,
+        width    = display.contentWidth * 0.8,
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight * 0.47
+    })
 
-        popup.earnText = viewManager.newText({
-            parent   = popup,
-            text     = T "Please download the latest version of Adillions" .. "(v" .. VERSION_REQUIRED .. ") !",
-            fontSize = 55,
-            width    = display.contentWidth * 0.8,
-            x        = display.contentWidth * 0.5,
-            y        = display.contentHeight * 0.47
-        })
-
-        popup.earnText = viewManager.newText({
-            parent   = popup,
-            text     = T "Thank you",
-            fontSize = 55,
-            width    = display.contentWidth * 0.5,
-            x        = display.contentWidth * 0.5,
-            y        = display.contentHeight * 0.65
-        })
-
-        --------------------------
+    popup.earnText = viewManager.newText({
+        parent   = popup,
+        text     = T "Thank you",
+        fontSize = 55,
+        width    = display.contentWidth * 0.5,
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight * 0.65
+    })
 
 end
 
@@ -163,15 +160,17 @@ end
 
 function GameManager:play()
 
-    userManager:openTimerPopup(1411240695453)
+    if(userManager:hasTicketsToPlay()) then
+        if(userManager:checkTicketTiming()) then
+            self:startTicket()
+        end
+    else
+        shareManager:noMoreTickets()
+    end
+end
 
-    -- if(userManager:hasTicketsToPlay()) then
-    --     if(userManager:checkTicketTiming()) then
-    --         videoManager:play(router.openFillLotteryTicket, true)
-    --     end
-    -- else
-    --     shareManager:noMoreTickets()
-    -- end
+function GameManager:startTicket()
+    videoManager:play(router.openFillLotteryTicket, true)
 end
 
 --------------------------------------------------------------------------------

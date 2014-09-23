@@ -1,12 +1,8 @@
-------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --
 -- main.lua
 --
-------------------------------------------------------------------------------
-
--- PROD = true
-
-------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --- Corona's libraries
 coronaFacebook      = require "facebook"
 json                = require "json"
@@ -25,7 +21,7 @@ sponsorpayTools     = require "src.libs.SponsorpayTools"
 twitter             = require "src.libs.Twitter"
 analytics           = require "src.libs.google.Analytics"
 
-------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 ---- App Tools
 router              = require "src.tools.Router"
 viewManager         = require "src.tools.ViewManager"
@@ -39,7 +35,7 @@ ShareManager        = require "src.managers.ShareManager"
 BannerManager       = require "src.managers.BannerManager"
 SigninManager       = require "src.managers.SigninManager"
 
-------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 ---- Server access Managers
 
 appManager     = AppManager:new()
@@ -51,8 +47,6 @@ shareManager   = ShareManager:new()
 bannerManager  = BannerManager:new()
 signinManager  = SigninManager:new()
 
-------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 appManager.start()
-
-
