@@ -17,18 +17,19 @@ end
 
 --------------------------------------------------------------------------------
 
-function SigninManager:openLogin()
-    local url           = API_URL .. "mlogin2?lang=" .. LANG
-    self.listener       = function(event) self:loginViewListener(event) end
-    self.closeWebView   = viewManager.openWeb(url, self.listener)
-end
-
--- using new signin
+-- 1.4- Login
 -- function SigninManager:openLogin()
---     local url           = NODE_URL .. "/" .. LANG .. "/m/login"
+--     local url           = API_URL .. "mlogin2?lang=" .. LANG
 --     self.listener       = function(event) self:loginViewListener(event) end
 --     self.closeWebView   = viewManager.openWeb(url, self.listener)
 -- end
+
+-- 1.5+ Login
+function SigninManager:openLogin()
+    local url           = NODE_URL .. "/" .. LANG .. "/m/login"
+    self.listener       = function(event) self:loginViewListener(event) end
+    self.closeWebView   = viewManager.openWeb(url, self.listener)
+end
 
 ------------------------------------------
 

@@ -24,6 +24,10 @@ local translations =
         ["fr"] = "Badge Ambass.",
     },
 
+    ["The more you invite friends, the more likely you are to win the Jackpot"] = {
+        ["fr"] = "Plus vous invitez des amis, plus vous avez de chances de gagner",
+    },
+
     ------------------------------------------------------
 
     ["You successfully contributed to increase the Prize Fund and the Charity Fund"] = {

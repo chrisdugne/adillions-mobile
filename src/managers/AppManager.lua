@@ -20,7 +20,7 @@ function AppManager:start()
     APP_NAME = "Adillions"
 
     ----------------------------------------------------------------------------
-    PROD = true
+    -- PROD = true
 
     if(PROD) then
         APP_VERSION             = 1.5
@@ -29,11 +29,13 @@ function AppManager:start()
         FACEBOOK_APP_NAMESPACE = "adillions"
         MOBILE_SETTINGS_URL    = "http://adillions-dev.herokuapp.com/api/mobile/settings/"
     else
+        -- LOCAL_IP               = "192.168.0.10"
+        LOCAL_IP               = "10.17.100.223"
         APP_VERSION            = 999
         FACEBOOK_APP_ID        = "534196239997712"
         FACEBOOK_API_SECRET    = "46383d827867d50ef5d87b66c81f1a8e"
         FACEBOOK_APP_NAMESPACE = "adillions-dev"
-        MOBILE_SETTINGS_URL    = "http://192.168.0.10:1337/api/mobile/settings/"
+        MOBILE_SETTINGS_URL    = "http://" .. LOCAL_IP .. ":1337/api/mobile/settings/"
     end
 
     print("---------------------- "
@@ -64,18 +66,37 @@ function AppManager:start()
 
     ----------------------------------------------------------------------------
 
-    print("retrieving settings...("..MOBILE_SETTINGS_URL .. APP_VERSION..")")
-    utils.get(MOBILE_SETTINGS_URL .. APP_VERSION, function(res)
-        local settings = json.decode(res.response)
-        utils.tprint(settings)
+    if(PROD) then
+        print("retrieving settings...("..MOBILE_SETTINGS_URL .. APP_VERSION..")")
+        utils.get(MOBILE_SETTINGS_URL .. APP_VERSION, function(res)
+            local settings = json.decode(res.response)
+            utils.tprint(settings)
 
-        API_URL                = settings.api.play
-        WEB_URL                = settings.api.play
-        NODE_URL               = settings.api.node
+            API_URL  = settings.api.play
+            WEB_URL  = settings.api.play
+            NODE_URL = settings.api.node
 
-        appManager.setup()
-        appManager.open()
-    end)
+            appManager.onSettingsReady()
+
+        end)
+    else
+        -- DEV : local servers ONLY
+        print("DEV settings : local servers")
+
+        API_URL  = "http://" .. LOCAL_IP .. ":9000/"
+        WEB_URL  = "http://" .. LOCAL_IP .. ":9000/"
+        NODE_URL = "http://" .. LOCAL_IP .. ":1337"
+
+        appManager.onSettingsReady()
+
+    end
+end
+
+--------------------------------------------------------------------------------
+
+function AppManager:onSettingsReady()
+    appManager.setup()
+    appManager.open()
 end
 
 --------------------------------------------------------------------------------

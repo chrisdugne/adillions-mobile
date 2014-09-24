@@ -1116,62 +1116,62 @@ function UserManager:notifyInstants(next)
 
         ----------------------------------------
 
-        popup.bg        = display.newImage( popup, "assets/images/icons/notification/BG_Instant.png")
-        popup.bg.x      = display.contentWidth*0.5
-        popup.bg.y      = display.contentHeight*0.5
+        popup.bg   = display.newImage( popup, "assets/images/icons/notification/BG_Instant.png")
+        popup.bg.x = display.contentWidth*0.5
+        popup.bg.y = display.contentHeight*0.5
 
         ----------------------------------------
 
-        popup.congratz    = display.newImage( popup, I "popup.Txt1.png")
-        popup.congratz.x   = display.contentWidth*0.5
-        popup.congratz.y  = display.contentHeight*0.35
+        popup.congratz   = display.newImage( popup, I "popup.Txt1.png")
+        popup.congratz.x = display.contentWidth*0.5
+        popup.congratz.y = display.contentHeight*0.35
 
         popup.earnText = viewManager.newText({
-            parent    = popup,
-            text    = T "You have won" .. " :",
-            fontSize  = 55,
-            x     = display.contentWidth * 0.5,
-            y     = display.contentHeight*0.42,
+            parent   = popup,
+            text     = T "You have won" .. " :",
+            fontSize = 55,
+            x        = display.contentWidth * 0.5,
+            y        = display.contentHeight*0.42,
         })
 
         popup.prizeText = viewManager.newText({
-            parent    = popup,
-            text    = self.user.notifications.instants + self.user.idlePoints,
-            fontSize  = 75,
-            anchorX   = 1,
-            anchorY   = 0.5,
-            x     = display.contentWidth * 0.44,
-            y     = display.contentHeight*0.52,
+            parent   = popup,
+            text     = self.user.notifications.instants + self.user.idlePoints,
+            fontSize = 75,
+            anchorX  = 1,
+            anchorY  = 0.5,
+            x        = display.contentWidth * 0.44,
+            y        = display.contentHeight*0.52,
         })
 
-        popup.iconTicket  = display.newImage( popup, "assets/images/icons/notification/instants.popup.png")
-        popup.iconTicket.x  = display.contentWidth*0.57
-        popup.iconTicket.y  = display.contentHeight*0.53
+        popup.iconTicket   = display.newImage( popup, "assets/images/icons/notification/instants.popup.png")
+        popup.iconTicket.x = display.contentWidth*0.57
+        popup.iconTicket.y = display.contentHeight*0.53
 
         --------------------------
 
-        popup.close    = display.newImage( popup, "assets/images/hud/CroixClose.png")
-        popup.close.x    = display.contentWidth*0.89
-        popup.close.y    = display.contentHeight*0.55 - display.contentWidth*0.95/2
+        popup.close   = display.newImage( popup, "assets/images/hud/CroixClose.png")
+        popup.close.x = display.contentWidth*0.89
+        popup.close.y = display.contentHeight*0.55 - display.contentWidth*0.95/2
 
         utils.onTouch(popup.close, function()
             viewManager.closePopup(popup)
         end)
 
+        -- @TIMER_ASSETS
         popup.play   = display.newImage( popup, I "play.png")
-        popup.play.x   = display.contentWidth*0.5
-        popup.play.y   = display.contentHeight*0.7
+        popup.play.x = display.contentWidth*0.5
+        popup.play.y = display.contentHeight*0.7
 
         utils.onTouch(popup.play, function()
             viewManager.closePopup(popup)
-            gameManager:play()
         end)
 
         ----------------------------------------
 
-        self.user.extraTickets      = self.user.extraTickets + self.user.idlePoints
-        self.user.idlePoints        = 0
-        self.userHasReceivedBonus   = true
+        self.user.extraTickets    = self.user.extraTickets + self.user.idlePoints
+        self.user.idlePoints      = 0
+        self.userHasReceivedBonus = true
 
         next()
     end
@@ -1192,26 +1192,26 @@ function UserManager:showStatus()
 
     ----------------------------
 
-    popup.congratz          = display.newImage( popup, I "title.status.png")
-    popup.congratz.x        = display.contentWidth*0.5
-    popup.congratz.y        = display.contentHeight*0.15
+    popup.congratz   = display.newImage( popup, I "title.status.png")
+    popup.congratz.x = display.contentWidth*0.5
+    popup.congratz.y = display.contentHeight*0.15
 
-    popup.iconTicket        = display.newImage( popup, "assets/images/icons/info.big.png")
-    popup.iconTicket.x      = display.contentWidth*0.15
-    popup.iconTicket.y      = display.contentHeight*0.15
+    popup.iconTicket   = display.newImage( popup, "assets/images/icons/info.big.png")
+    popup.iconTicket.x = display.contentWidth*0.15
+    popup.iconTicket.y = display.contentHeight*0.15
 
-    popup.sep               = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
-    popup.sep.x             = display.contentWidth*0.5
-    popup.sep.y             = display.contentHeight*0.21
+    popup.sep   = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
+    popup.sep.x = display.contentWidth*0.5
+    popup.sep.y = display.contentHeight*0.21
 
     ----------------------------
 
     popup.earnText = viewManager.newText({
-        parent    = popup,
-        text    = T "Remaining Tickets" .. ":",
-        fontSize  = 55,
-        x     = display.contentWidth * 0.5,
-        y     = display.contentHeight*0.26,
+        parent   = popup,
+        text     = T "Remaining Tickets" .. ":",
+        fontSize = 55,
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight*0.26,
     })
 
     popup.availableTickets = viewManager.newText({

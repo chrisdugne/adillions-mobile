@@ -930,52 +930,52 @@ function ShareManager:openRewards2()
 
     --------------------------
 
-    hud.title           = display.newImage(popup, I "rewards.instant.title.png")
-    hud.title.anchorX  = 0
-    hud.title.anchorY  = 0.5
-    hud.title.x   = display.contentWidth*0.1
-    hud.title.y   = display.contentHeight*0.15
+    hud.title         = display.newImage(popup, I "rewards.instant.title.png")
+    hud.title.anchorX = 0
+    hud.title.anchorY = 0.5
+    hud.title.x       = display.contentWidth*0.1
+    hud.title.y       = display.contentHeight*0.15
 
     --------------------------
 
-    hud.sep       = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
-    hud.sep.x       = display.contentWidth*0.5
-    hud.sep.y       = display.contentHeight*0.2
+    hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x = display.contentWidth*0.5
+    hud.sep.y = display.contentHeight*0.2
 
     --------------------------
 
     hud.next = viewManager.newText({
-        parent          = popup,
-        text            = T "Play right now thanks to Instant Tickets",
-        fontSize        = 34,
-        x               = display.contentWidth * 0.1,
-        y               = display.contentHeight*0.23,
-        anchorX         = 0,
+        parent   = popup,
+        text     = T "Play right now thanks to Instant Tickets",
+        fontSize = 34,
+        x        = display.contentWidth * 0.1,
+        y        = display.contentHeight*0.23,
+        anchorX  = 0,
     })
 
     --------------------------
 
     for i = 1,4 do
-        hud.line        = display.newImage(popup, I "rewards.instant".. i ..".png")
-        hud.line.x      = display.contentWidth*0.5
-        hud.line.y      = display.contentHeight*0.205 + display.contentHeight*0.125 *i
+        hud.line   = display.newImage(popup, I "rewards.instant".. i ..".png")
+        hud.line.x = display.contentWidth*0.5
+        hud.line.y = display.contentHeight*0.205 + display.contentHeight*0.125 *i
     end
 
     --------------------------
 
-    hud.sep       = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
-    hud.sep.x       = display.contentWidth*0.5
-    hud.sep.y       = display.contentHeight*0.84
+    hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x = display.contentWidth*0.5
+    hud.sep.y = display.contentHeight*0.84
 
     --------------------------
 
     hud.next = viewManager.newText({
-        parent    = popup,
-        text    = "<  " .. T "PREVIOUS",
-        fontSize  = 49,
-        x     = display.contentWidth * 0.5,
-        y     = display.contentHeight*0.895,
-        anchorX         = 1,
+        parent   = popup,
+        text     = "<  " .. T "PREVIOUS",
+        fontSize = 49,
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight*0.895,
+        anchorX  = 1,
     })
 
     utils.setGreen(hud.next)
@@ -988,32 +988,32 @@ function ShareManager:openRewards2()
     --------------------------
 
     hud.next = viewManager.newText({
-        parent          = popup,
-        text            = T "*For the sponsor and the sponsored user (2 draws min.)",
-        fontSize        = 29,
-        x               = display.contentWidth * 0.1,
-        y               = display.contentHeight*0.785,
-        anchorX         = 0,
+        parent   = popup,
+        text     = T "*For the sponsor and the sponsored user (2 draws min.)",
+        fontSize = 29,
+        x        = display.contentWidth * 0.1,
+        y        = display.contentHeight*0.785,
+        anchorX  = 0,
     })
 
     hud.next = viewManager.newText({
-        parent          = popup,
-        text            = T "**Per post (max. 4 Instants per draw)",
-        fontSize        = 29,
-        x               = display.contentWidth * 0.1,
-        y               = display.contentHeight*0.81,
-        anchorX         = 0,
+        parent   = popup,
+        text     = T "**Per post (max. 4 Instants per draw)",
+        fontSize = 29,
+        x        = display.contentWidth * 0.1,
+        y        = display.contentHeight*0.81,
+        anchorX  = 0,
     })
 
     --------------------------
 
     hud.next = viewManager.newText({
-        parent          = popup,
-        text            = T "NEXT" .. "  >",
-        fontSize        = 49,
-        x               = display.contentWidth * 0.6,
-        y               = display.contentHeight*0.895,
-        anchorX         = 0,
+        parent   = popup,
+        text     = T "NEXT" .. "  >",
+        fontSize = 49,
+        x        = display.contentWidth * 0.6,
+        y        = display.contentHeight*0.895,
+        anchorX  = 0,
     })
 
     utils.setGreen(hud.next)
@@ -1025,9 +1025,9 @@ function ShareManager:openRewards2()
 
     ---------------------------------------------------------------
 
-    hud.close           = display.newImage( popup, "assets/images/hud/CroixClose.png")
-    hud.close.x         = display.contentWidth*0.89
-    hud.close.y         = display.contentHeight*0.085
+    hud.close   = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    hud.close.x = display.contentWidth*0.89
+    hud.close.y = display.contentHeight*0.085
 
     utils.onTouch(hud.close, function() viewManager.closePopup(popup) end)
 
@@ -1045,30 +1045,30 @@ function ShareManager:openCharityRewards()
 
     --------------------------
 
-    hud.title           = display.newImage(popup, I "rewards.charity.title.png")
-    hud.title.anchorX  = 0
-    hud.title.anchorY  = 0.5
-    hud.title.x   = display.contentWidth*0.1
-    hud.title.y   = display.contentHeight*0.15
+    hud.title         = display.newImage(popup, I "rewards.charity.title.png")
+    hud.title.anchorX = 0
+    hud.title.anchorY = 0.5
+    hud.title.x       = display.contentWidth*0.1
+    hud.title.y       = display.contentHeight*0.15
 
     --------------------------
 
-    hud.sep       = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
-    hud.sep.x       = display.contentWidth*0.5
-    hud.sep.y       = display.contentHeight*0.2
+    hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x = display.contentWidth*0.5
+    hud.sep.y = display.contentHeight*0.2
 
     --------------------------
 
     hud.next = viewManager.newText({
-        parent          = popup,
-        text            = T "The more you play Adillions, the more you contribute to charities",
-        fontSize        = 35,
-        x               = display.contentWidth  * 0.1,
-        y               = display.contentHeight * 0.24,
-        width           = display.contentWidth  * 0.8,
-        heigth          = display.contentHeight * 0.02,
-        anchorX         = 0,
-        align           = "left"
+        parent   = popup,
+        text     = T "The more you play Adillions, the more you contribute to charities",
+        fontSize = 35,
+        x        = display.contentWidth  * 0.1,
+        y        = display.contentHeight * 0.24,
+        width    = display.contentWidth  * 0.8,
+        heigth   = display.contentHeight * 0.02,
+        anchorX  = 0,
+        align    = "left"
     })
 
     --------------------------
@@ -1136,17 +1136,17 @@ function ShareManager:openCharityRewards()
 
     --------------------------
 
-    hud.sep         = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
-    hud.sep.x       = display.contentWidth*0.5
-    hud.sep.y       = display.contentHeight*0.84
+    hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x = display.contentWidth*0.5
+    hud.sep.y = display.contentHeight*0.84
 
     hud.next = viewManager.newText({
-        parent    = popup,
-        text    = "<  " .. T "PREVIOUS",
-        fontSize  = 49,
-        x               = display.contentWidth * 0.5,
-        y               = display.contentHeight*0.895,
-        anchorX         = 1,
+        parent   = popup,
+        text     = "<  " .. T "PREVIOUS",
+        fontSize = 49,
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight*0.895,
+        anchorX  = 1,
     })
 
     utils.setGreen(hud.next)
@@ -1159,12 +1159,12 @@ function ShareManager:openCharityRewards()
     --------------------------
 
     hud.next = viewManager.newText({
-        parent          = popup,
-        text            = T "NEXT" .. "  >",
-        fontSize        = 49,
-        x               = display.contentWidth * 0.6,
-        y               = display.contentHeight*0.895,
-        anchorX         = 0,
+        parent   = popup,
+        text     = T "NEXT" .. "  >",
+        fontSize = 49,
+        x        = display.contentWidth * 0.6,
+        y        = display.contentHeight*0.895,
+        anchorX  = 0,
     })
 
     utils.setGreen(hud.next)
@@ -1176,9 +1176,9 @@ function ShareManager:openCharityRewards()
 
     ---------------------------------------------------------------
 
-    hud.close           = display.newImage( popup, "assets/images/hud/CroixClose.png")
-    hud.close.x         = display.contentWidth*0.89
-    hud.close.y         = display.contentHeight*0.085
+    hud.close   = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    hud.close.x = display.contentWidth*0.89
+    hud.close.y = display.contentHeight*0.085
 
     utils.onTouch(hud.close, function() viewManager.closePopup(popup) end)
 end
@@ -1210,7 +1210,7 @@ function ShareManager:openAmbassadorRewards()
 
     hud.next = viewManager.newText({
         parent   = popup,
-        text     = T "The more you play Adillions, the more you contribute to charities",
+        text     = T "The more you invite friends, the more likely you are to win the Jackpot",
         fontSize = 35,
         x        = display.contentWidth  * 0.1,
         y        = display.contentHeight * 0.24,
@@ -1235,10 +1235,10 @@ function ShareManager:openAmbassadorRewards()
             anchorX  = 0,
         })
 
-        local ticket   = display.newImage(popup, "assets/images/hud/rewards/rewards.ticket.png")
-        ticket.x       = display.contentWidth*0.26
-        ticket.anchorX = 1
-        ticket.y       = lineY
+        local ambassador   = display.newImage(popup, "assets/images/hud/rewards/rewards.sponsoree.png")
+        ambassador.x       = display.contentWidth*0.26
+        ambassador.anchorX = 1
+        ambassador.y       = lineY
 
         viewManager.newText({
             parent   = popup,
@@ -1249,10 +1249,10 @@ function ShareManager:openAmbassadorRewards()
             anchorX  = 0,
         })
 
-        local charity   = display.newImage(popup, "assets/images/hud/rewards/rewards.ambassador.png")
-        charity.x       = display.contentWidth*0.45
-        charity.anchorX = 1
-        charity.y       = lineY
+        local badge   = display.newImage(popup, "assets/images/hud/rewards/rewards.ambassador.png")
+        badge.x       = display.contentWidth*0.45
+        badge.anchorX = 1
+        badge.y       = lineY
 
         viewManager.newText({
             parent   = popup,
