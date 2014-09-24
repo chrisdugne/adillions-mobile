@@ -1290,12 +1290,12 @@ function ShareManager:openAmbassadorRewards()
     hud.sep.y       = display.contentHeight*0.84
 
     hud.next = viewManager.newText({
-        parent    = popup,
-        text    = "<  " .. T "PREVIOUS",
-        fontSize  = 49,
-        x               = display.contentWidth * 0.5,
-        y               = display.contentHeight*0.895,
-        anchorX         = 1,
+        parent   = popup,
+        text     = "<  " .. T "PREVIOUS",
+        fontSize = 49,
+        x        = display.contentWidth * 0.5,
+        y        = display.contentHeight*0.895,
+        anchorX  = 1,
     })
 
     utils.setGreen(hud.next)

@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------------------
 --
--- AppHome.lua
+-- Loading.lua
 --
 -----------------------------------------------------------------------------------------
 
@@ -8,10 +8,10 @@ local scene = storyboard.newScene()
 
 -----------------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
--- 
+--
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --   unless storyboard.removeScene() is called.
--- 
+--
 -----------------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
@@ -22,38 +22,38 @@ end
 
 function scene:refreshScene()
 
-    hud.bg = display.newImageRect( hud, "assets/images/hud/SignUp_Bg.jpg", display.contentWidth, display.contentHeight)  
-    hud.bg.x = display.viewableContentWidth*0.5 
+    hud.bg = display.newImageRect( hud, "assets/images/hud/SignUp_Bg.jpg", display.contentWidth, display.contentHeight)
+    hud.bg.x = display.viewableContentWidth*0.5
     hud.bg.y = display.viewableContentHeight*0.5
 
-    hud.logo = display.newImage( hud, "assets/images/hud/Sign_Logo.png")  
-    hud.logo.x = display.contentWidth*0.5 
+    hud.logo = display.newImage( hud, "assets/images/hud/Sign_Logo.png")
+    hud.logo.x = display.contentWidth*0.5
     hud.logo.y = display.contentHeight*0.15
 
-    hud.logo = display.newImage( hud, "assets/images/hud/map.loading.png")  
-    hud.logo.x = display.contentWidth*0.5 
+    hud.logo = display.newImage( hud, "assets/images/hud/map.loading.png")
+    hud.logo.x = display.contentWidth*0.5
     hud.logo.y = display.contentHeight*0.5
 
-    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_BigBall.png")  
-    hud.logo.x = display.contentWidth*0.27 
+    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_BigBall.png")
+    hud.logo.x = display.contentWidth*0.27
     hud.logo.y = display.contentHeight*0.81
 
-    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall.png")  
-    hud.logo.x = display.contentWidth*0.17 
+    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall.png")
+    hud.logo.x = display.contentWidth*0.17
     hud.logo.y = display.contentHeight*0.04
 
-    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall2.png")  
-    hud.logo.x = display.contentWidth*0.96 
+    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_MedBall2.png")
+    hud.logo.x = display.contentWidth*0.96
     hud.logo.y = display.contentHeight*0.25
 
-    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_SmallBall.png")  
-    hud.logo.x = display.contentWidth*0.9 
+    hud.logo = display.newImage( hud, "assets/images/hud/SignUp_SmallBall.png")
+    hud.logo.x = display.contentWidth*0.9
     hud.logo.y = display.contentHeight*0.05
 
     hud.loading = viewManager.newText({
         parent      = hud,
-        text        = T "Loading...", 
-        fontSize    = 44,  
+        text        = T "Loading...",
+        fontSize    = 44,
         x           = display.contentWidth*0.5 ,
         y           = display.contentHeight*0.55,
     })

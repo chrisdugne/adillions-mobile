@@ -20,7 +20,7 @@ function AppManager:start()
     APP_NAME = "Adillions"
 
     ----------------------------------------------------------------------------
-    -- PROD = true
+    PROD = true
 
     if(PROD) then
         APP_VERSION             = 1.5
@@ -29,8 +29,8 @@ function AppManager:start()
         FACEBOOK_APP_NAMESPACE = "adillions"
         MOBILE_SETTINGS_URL    = "http://adillions-dev.herokuapp.com/api/mobile/settings/"
     else
-        -- LOCAL_IP               = "192.168.0.10"
-        LOCAL_IP               = "10.17.100.223"
+        LOCAL_IP               = "192.168.0.10"
+        -- LOCAL_IP               = "10.17.100.223"
         APP_VERSION            = 999
         FACEBOOK_APP_ID        = "534196239997712"
         FACEBOOK_API_SECRET    = "46383d827867d50ef5d87b66c81f1a8e"
@@ -42,6 +42,19 @@ function AppManager:start()
         .. APP_NAME
         .. " " .. APP_VERSION
         .. " ----------------")
+
+    ----------------------------------------------------------------------------
+
+    appManager.setup()
+    appManager:deviceSetup()
+    appManager:checkInternetConnection()
+
+end
+
+--------------------------------------------------------------------------------
+
+function AppManager:setup()
+
     print("application setup...")
 
     ------------------------------------------------------------------------------
@@ -60,65 +73,28 @@ function AppManager:start()
 
     ----------------------------------------------------------------------------
 
-    ANALYTICS_VERSION       = 1
-    ANALYTICS_TRACKING_ID   = "UA-45586817-2"
-    ANALYTICS_PROFILE_ID    = "78871292"
+    ANALYTICS_VERSION     = 1
+    ANALYTICS_TRACKING_ID = "UA-45586817-2"
+    ANALYTICS_PROFILE_ID  = "78871292"
 
     ----------------------------------------------------------------------------
 
-    if(PROD) then
-        print("retrieving settings...("..MOBILE_SETTINGS_URL .. APP_VERSION..")")
-        utils.get(MOBILE_SETTINGS_URL .. APP_VERSION, function(res)
-            local settings = json.decode(res.response)
-            utils.tprint(settings)
-
-            API_URL  = settings.api.play
-            WEB_URL  = settings.api.play
-            NODE_URL = settings.api.node
-
-            appManager.onSettingsReady()
-
-        end)
-    else
-        -- DEV : local servers ONLY
-        print("DEV settings : local servers")
-
-        API_URL  = "http://" .. LOCAL_IP .. ":9000/"
-        WEB_URL  = "http://" .. LOCAL_IP .. ":9000/"
-        NODE_URL = "http://" .. LOCAL_IP .. ":1337"
-
-        appManager.onSettingsReady()
-
-    end
-end
-
---------------------------------------------------------------------------------
-
-function AppManager:onSettingsReady()
-    appManager.setup()
-    appManager.open()
-end
-
---------------------------------------------------------------------------------
-
-function AppManager:setup()
-
-    IOS                         = system.getInfo( "platformName" )  == "iPhone OS"
-    ANDROID                     = system.getInfo( "platformName" )  == "Android"
-    SIMULATOR                   = system.getInfo( "environment" )   == "simulator"
+    IOS         = system.getInfo( "platformName" )  == "iPhone OS"
+    ANDROID     = system.getInfo( "platformName" )  == "Android"
+    SIMULATOR   = system.getInfo( "environment" )   == "simulator"
 
     ----------------------------------------------------------------------------
     --- lottery tickets status
 
-    BLOCKED         = 1; -- set as winning ticket, notification/popup read, cashout blocked (<10)
-    PENDING         = 2; -- cashout requested
-    PAYED           = 3; -- to set manually when paiement is done
-    GIFT            = 4; --  gift to charity
+    BLOCKED = 1; -- set as winning ticket, notification/popup read, cashout blocked (<10)
+    PENDING = 2; -- cashout requested
+    PAYED   = 3; -- to set manually when paiement is done
+    GIFT    = 4; --  gift to charity
 
-    BONUS_1         = 11; -- rang 7
-    BONUS_2         = 12; -- rang 8
-    BONUS_3         = 13; -- rang 9
-    BONUS_4         = 14; -- rang 10
+    BONUS_1 = 11; -- rang 7
+    BONUS_2 = 12; -- rang 8
+    BONUS_3 = 13; -- rang 9
+    BONUS_4 = 14; -- rang 10
 
     ----------------------------------------------------------------------------
 
@@ -134,9 +110,9 @@ function AppManager:setup()
 
     ----------------------------------------------------------------------------
 
-    HEADER_HEIGHT       = display.contentHeight * 0.095
-    MENU_HEIGHT         = 124
-    TICKET_HEIGHT       = 100
+    HEADER_HEIGHT = display.contentHeight * 0.095
+    MENU_HEIGHT   = 124
+    TICKET_HEIGHT = 100
 
     ------------------------------------------------------------------------------
 
@@ -167,23 +143,6 @@ function AppManager:setup()
 
     ------------------------------------------------------------------------------
 
-    if(PROD) then
-        print("     -------->  PROD")
-    else
-        print("     -------->  DEV")
-        LANG = "fr"
-        COUNTRY = "FR"
-    end
-
-    print("     api:      " .. API_URL)
-    print("     node:     " .. NODE_URL)
-    print("     webviews: " .. WEB_URL)
-    print("     fb-app:   " .. FACEBOOK_APP_NAMESPACE)
-    print("     lang:     " .. LANG)
-    print("     country:  " .. COUNTRY)
-
-    ------------------------------------------------------------------------------
-
     aspectRatio = display.pixelHeight / display.pixelWidth
 
     ------------------------------------------------------------------------------
@@ -196,9 +155,6 @@ function AppManager:setup()
 
     hud = display.newGroup()
 
-    ------------------------------------------------------------------------------
-
-    appManager:deviceSetup()
 end
 
 --------------------------------------------------------------------------------
@@ -334,7 +290,7 @@ function AppManager:deviceSetup()
 
     Runtime:addEventListener("unhandledError", myUnhandledErrorListener)
 
-    ---------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     --
     --
@@ -362,16 +318,71 @@ end
 
 --------------------------------------------------------------------------------
 
-function AppManager:open()
-    print("open application")
+function AppManager:checkInternetConnection(test)
 
+    print("checking internet connection")
     if(utils.networkConnection()) then
-        gameManager:start()
+        appManager.getMobileSettings()
     else
-        router.openNoInternet()
+        if(not test) then
+            router.openNoInternet()
+        end
+    end
+end
+
+--------------------------------------------------------------------------------
+
+function AppManager:getMobileSettings()
+
+    if(PROD) then
+        print("retrieving settings...("..MOBILE_SETTINGS_URL .. APP_VERSION..")")
+        utils.get(MOBILE_SETTINGS_URL .. APP_VERSION, function(res)
+            local settings = json.decode(res.response)
+            utils.tprint(settings)
+
+            API_URL  = settings.api.play
+            WEB_URL  = settings.api.play
+            NODE_URL = settings.api.node
+
+            appManager.onSettingsReady()
+
+        end)
+    else
+        -- DEV : local servers ONLY
+        print("DEV settings : local servers")
+
+        API_URL  = "http://" .. LOCAL_IP .. ":9000/"
+        WEB_URL  = "http://" .. LOCAL_IP .. ":9000/"
+        NODE_URL = "http://" .. LOCAL_IP .. ":1337"
+
+        appManager.onSettingsReady()
+
+    end
+end
+
+--------------------------------------------------------------------------------
+
+function AppManager:onSettingsReady()
+
+    if(PROD) then
+        print("     -------->  PROD")
+    else
+        print("     -------->  DEV")
+        LANG = "fr"
+        COUNTRY = "FR"
     end
 
+    print("     api:      " .. API_URL)
+    print("     node:     " .. NODE_URL)
+    print("     webviews: " .. WEB_URL)
+    print("     fb-app:   " .. FACEBOOK_APP_NAMESPACE)
+    print("     lang:     " .. LANG)
+    print("     country:  " .. COUNTRY)
+
+    gameManager:start()
+
 end
+
 
 --------------------------------------------------------------------------------
 -- Translations

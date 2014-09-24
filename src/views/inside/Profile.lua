@@ -728,18 +728,18 @@ function scene:drawScene()
     -----------------------------------------------
 
     hud.logoutLine    = display.newImage( hud.board, "assets/images/hud/Filet.png")
-    hud.logoutLine .x   = display.contentWidth*0.5
-    hud.logoutLine .y   = self.top + self.yGap*(logoutTop)
+    hud.logoutLine .x = display.contentWidth*0.5
+    hud.logoutLine .y = self.top + self.yGap*(logoutTop)
     hud.board:insert(hud.logoutLine )
 
     hud.logoutCadenas    = display.newImage( hud.board, "assets/images/hud/Cadenas.png")
-    hud.logoutCadenas .x   = display.contentWidth*0.5
-    hud.logoutCadenas .y   = self.top + self.yGap*(logoutTop)
+    hud.logoutCadenas .x = display.contentWidth*0.5
+    hud.logoutCadenas .y = self.top + self.yGap*(logoutTop)
     hud.board:insert(hud.logoutCadenas )
 
-    hud.board.logout = display.newImage( hud.board, I "Logout.png")
+    hud.board.logout   = display.newImage( hud.board, I "Logout.png")
     hud.board.logout.x = display.contentWidth*0.5
-    hud.board.logout.y =  self.top + self.yGap * (logoutTop+2)
+    hud.board.logout.y = self.top + self.yGap * (logoutTop+2)
     hud.board:insert( hud.board.logout )
 
     utils.onTouch(hud.board.logout, function()
@@ -768,24 +768,24 @@ end
 function scene:drawTextEntry(title, value, position, fontSizeLeft, fontSizeRight)
 
     viewManager.newText({
-        parent    = hud.board,
-        text    = title,
-        x     = self.column1,
-        y     = self.top + self.yGap*position,
-        fontSize   = fontSizeLeft or self.fontSizeLeft,
-        anchorX   = 0,
-        anchorY   = 0.5,
+        parent   = hud.board,
+        text     = title,
+        x        = self.column1,
+        y        = self.top + self.yGap*position,
+        fontSize = fontSizeLeft or self.fontSizeLeft,
+        anchorX  = 0,
+        anchorY  = 0.5,
     })
 
     viewManager.newText({
-        parent    = hud.board,
+        parent   = hud.board,
         text     = value,
-        x      = self.column2,
-        y      = self.top + self.yGap*position,
-        fontSize   = fontSizeRight or self.fontSizeRight,
-        font    = NUM_FONT,
-        anchorX    = 1,
-        anchorY    = 0.5,
+        x        = self.column2,
+        y        = self.top + self.yGap*position,
+        fontSize = fontSizeRight or self.fontSizeRight,
+        font     = NUM_FONT,
+        anchorX  = 1,
+        anchorY  = 0.5,
     })
 
 end
@@ -795,13 +795,13 @@ end
 function scene:drawConnection(title, state, position)
 
     viewManager.newText({
-        parent    = hud.board,
+        parent   = hud.board,
         text     = title,
-        x      = display.contentWidth*0.75,
-        y      = self.top + self.yGap*position,
-        fontSize   = 21,
-        anchorX    = 1,
-        anchorY    = 0.5,
+        x        = display.contentWidth*0.75,
+        y        = self.top + self.yGap*position,
+        fontSize = 21,
+        anchorX  = 1,
+        anchorY  = 0.5,
     })
 
     local light  = display.newImage(hud.board, "assets/images/hud/".. state ..".png")

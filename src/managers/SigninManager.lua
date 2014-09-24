@@ -37,15 +37,11 @@ function SigninManager:loginViewListener( event )
 
     if event.url then
 
-        print("---   login listener")
-        print(event.url, API_URL .. "loggedin")
-
         if string.find(string.lower(event.url), "loggedin") then
             self:closeWebView()
             local params = utils.getUrlParams(event.url);
 
-            GLOBALS.savedData.authToken  = params.authToken
-            GLOBALS.savedData.user.email  = params.email
+            GLOBALS.savedData.authToken  = params["auth_token"]
             utils.saveTable(GLOBALS.savedData, "savedData.json")
 
             userManager:fetchPlayer()

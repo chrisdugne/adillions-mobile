@@ -8,21 +8,21 @@ module(..., package.seeall)
 
 -----------------------------------------------------------------------------------------
 
-LOADING             = 0
-OUTSIDE             = 1
-NO_INTERNET         = 2
-TUTORIAL            = 3
-LOGIN               = 4
-SIGNIN              = 5
-SIGNINFB            = 6
-HOME                = 7
-MYTICKETS           = 8
-RESULTS             = 9
-PROFILE             = 10
-FILLLOTTERYTICKET   = 11
-INFO                = 12
-INVITEFRIENDS       = 13
-SELECTADDITIONALNUMBER = 14
+LOADING             = 1
+OUTSIDE             = 2
+NO_INTERNET         = 3
+TUTORIAL            = 4
+LOGIN               = 5
+SIGNIN              = 6
+SIGNINFB            = 7
+HOME                = 8
+MYTICKETS           = 9
+RESULTS             = 10
+PROFILE             = 11
+FILLLOTTERYTICKET   = 12
+INFO                = 13
+INVITEFRIENDS       = 14
+SELECTADDITIONALNUMBER = 15
 
 -----------------------------------------------------------------------------------------
 
@@ -39,6 +39,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function openLoading()
+    resetScreen()
     storyboard.gotoScene( "src.views.Loading" )
     view = LOADING
 end
@@ -49,7 +50,7 @@ function openOutside()
     analytics.pageview("Outside")
 
     resetScreen()
-    print("router : openOutside") 
+    print("router : openOutside")
     storyboard.gotoScene( "src.views.Outside" )
     view = OUTSIDE
 end
