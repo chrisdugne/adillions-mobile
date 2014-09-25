@@ -367,6 +367,10 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:charityLevel()
+    if(self.user.totalPlayedTickets == 0) then
+       return CHARITY_LEVELS[1].level
+    end
+
     for i = #CHARITY_LEVELS, 1, -1 do
         if(self.user.totalPlayedTickets >= tonumber(CHARITY_LEVELS[i].reach)) then
             return CHARITY_LEVELS[i].level
@@ -377,6 +381,10 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:ambassadorLevel()
+    if(self.user.godChildren == 0) then
+       return AMBASSADOR_LEVELS[1].level
+    end
+
     for i = #AMBASSADOR_LEVELS, 1, -1 do
         if(self.user.godChildren >= tonumber(AMBASSADOR_LEVELS[i].reach)) then
             return AMBASSADOR_LEVELS[i].level

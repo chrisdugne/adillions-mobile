@@ -634,11 +634,11 @@ function scene:drawScene()
 
     ------------------
 
-    self:drawTextEntry(T "First name"  .. " : ", userManager.user.firstName, detailsTop+1.5)
-    self:drawTextEntry(T "Last name"  .. " : ", userManager.user.lastName, detailsTop+2.7)
-    self:drawTextEntry(T "Email"    .. " : ", userManager.user.email, detailsTop+3.9)
-    self:drawTextEntry(T "Date of birth"   .. " : ", utils.readableDate(userManager.user.birthDate, false, true), detailsTop+5.1)
-    self:drawTextEntry(T "Sponsorship code"  .. " : ", userManager.user.sponsorCode, detailsTop+6.3)
+    self:drawTextEntry(T "First name"           .. " : ", userManager.user.firstName or '-', detailsTop+1.5)
+    self:drawTextEntry(T "Last name"            .. " : ", userManager.user.lastName or '-', detailsTop+2.7)
+    self:drawTextEntry(T "Email"                .. " : ", userManager.user.email or '-', detailsTop+3.9)
+    self:drawTextEntry(T "Date of birth"        .. " : ", utils.readableDate(userManager.user.birthDate, false, true), detailsTop+5.1)
+    self:drawTextEntry(T "Sponsorship code"     .. " : ", userManager.user.sponsorCode or '-', detailsTop+6.3)
 
     ------------------
 

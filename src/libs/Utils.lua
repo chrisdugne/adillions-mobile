@@ -392,6 +392,7 @@ end
 ---
 -- Y-M-D to readableDate
 function readableDate(date, withDay, withYear)
+    if(not date) then return '-' end
     return timestampToReadableDate(parseDateTime(date)*1000, withDay, withYear)
 end
 

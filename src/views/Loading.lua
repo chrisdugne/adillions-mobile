@@ -51,11 +51,11 @@ function scene:refreshScene()
     hud.logo.y = display.contentHeight*0.05
 
     hud.loading = viewManager.newText({
-        parent      = hud,
-        text        = T "Loading...",
-        fontSize    = 44,
-        x           = display.contentWidth*0.5 ,
-        y           = display.contentHeight*0.55,
+        parent   = hud,
+        text     = T "Loading...",
+        fontSize = 44,
+        x        = display.contentWidth*0.5 ,
+        y        = display.contentHeight*0.55,
     })
 
     ---------------------------------------------------------------

@@ -23,13 +23,13 @@ function AppManager:start()
     PROD = true
 
     if(PROD) then
-        APP_VERSION             = 1.5
+        APP_VERSION            = 1.5
         FACEBOOK_APP_ID        = "170148346520274"
         FACEBOOK_API_SECRET    = "887e8f7abb9b1cb9238a097e06585ae2"
         FACEBOOK_APP_NAMESPACE = "adillions"
-        MOBILE_SETTINGS_URL    = "http://adillions-dev.herokuapp.com/api/mobile/settings/"
+        MOBILE_SETTINGS_URL    = "http://adillions-desv.herokuapp.com/api/mobile/settings/"
     else
-        LOCAL_IP               = "192.168.0.10"
+        LOCAL_IP               = "192.168.0.9"
         -- LOCAL_IP               = "10.17.100.223"
         APP_VERSION            = 999
         FACEBOOK_APP_ID        = "534196239997712"

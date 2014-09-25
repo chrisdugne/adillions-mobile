@@ -17,14 +17,6 @@ end
 
 --------------------------------------------------------------------------------
 
--- 1.4- Login
--- function SigninManager:openLogin()
---     local url           = API_URL .. "mlogin2?lang=" .. LANG
---     self.listener       = function(event) self:loginViewListener(event) end
---     self.closeWebView   = viewManager.openWeb(url, self.listener)
--- end
-
--- 1.5+ Login
 function SigninManager:openLogin()
     local url           = NODE_URL .. "/" .. LANG .. "/m/login"
     self.listener       = function(event) self:loginViewListener(event) end
@@ -60,7 +52,7 @@ end
 --------------------------------------------------------------------------------
 
 function SigninManager:openSignin()
-    local url           = API_URL .. "msignin3?lang=" .. LANG
+    local url           = NODE_URL .. "/" .. LANG .. "/m/register"
     self.listener       = function(event) self:signinViewListener(event) end
     self.closeWebView   = viewManager.openWeb(url, self.listener)
 end
@@ -74,25 +66,20 @@ function SigninManager:signinViewListener( event )
         print("---   signin listener")
         print(event.url)
 
-        -- idem login
-        if string.find(string.lower(event.url), API_URL .. "loggedin") then
+        if string.find(string.lower(event.url), "loggedin") then
             self:closeWebView()
             local params = utils.getUrlParams(event.url);
 
-            GLOBALS.savedData.authToken  = params.authToken
-            GLOBALS.savedData.user.email  = params.email
+            GLOBALS.savedData.authToken  = params.auth_token
             utils.saveTable(GLOBALS.savedData, "savedData.json")
 
             userManager:fetchPlayer()
 
         elseif event.url == API_URL .. "backToMobile" then
             self:closeWebView()
-            print("signin : backToMobile : outside")
+            print("signin : backToMobile from url")
             router.openOutside()
 
-        elseif event.url == API_URL .. "connectWithFB" then
-            self:closeWebView()
-            facebook.login()
         end
 
     end
