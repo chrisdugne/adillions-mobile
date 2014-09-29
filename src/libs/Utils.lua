@@ -318,6 +318,7 @@ function post(url, data, next, type)
         headers["Content-Type"] = "application/x-www-form-urlencoded"
     elseif(type == "json") then
         headers["Content-Type"] = "application/json"
+        headers["Authorization"] = 'Bearer ' .. GLOBALS.savedData.authToken
         headers["X-Auth-Token"] = GLOBALS.savedData.authToken
     end
 
@@ -344,9 +345,13 @@ function get(url, next)
     end
 
     headers["X-Auth-Token"] = authToken
+    headers["Authorization"] = 'Bearer ' .. (GLOBALS.savedData.authToken or '')
 
     local params = {}
     params.headers = headers
+
+    utils.tprint(params)
+    print(url)
 
     network.request( url, "GET", next, params)
 end

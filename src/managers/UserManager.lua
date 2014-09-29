@@ -96,12 +96,12 @@ function UserManager:fetchPlayer()
 
     self.attemptFetchPlayer = self.attemptFetchPlayer + 1
 
-    utils.postWithJSON({
-        mobileVersion = APP_VERSION,
-        country       = COUNTRY
-    },
-    API_URL .. "player",
-    function(result)
+    -- {
+    --     mobileVersion = APP_VERSION,
+    --     country       = COUNTRY
+    -- }
+
+    utils.get( NODE_URL .. "/api/user", function(result)
 
         if(result.isError) then
 
@@ -121,6 +121,9 @@ function UserManager:fetchPlayer()
             native.setActivityIndicator( false )
 
             self.attemptFetchPlayer = 0
+            print('===================')
+            utils.tprint(result.response)
+            print('===================')
 
             local player = json.decode(result.response)
             if(not player) then
@@ -142,48 +145,50 @@ end
 
 --------------------------------------------------------------------------------
 
+
+--- DEPRECATED from 1.5
 function UserManager:getPlayerByFacebookId()
 
-    native.setActivityIndicator( true )
-    print("getPlayerByFacebookId")
-    self.attemptFBPlayer = self.attemptFBPlayer + 1
+    -- native.setActivityIndicator( true )
+    -- print("getPlayerByFacebookId")
+    -- self.attemptFBPlayer = self.attemptFBPlayer + 1
 
-    utils.postWithJSON({
-        mobileVersion   = APP_VERSION,
-        country         = COUNTRY,
-        facebookData    = facebook.data,
-        accessToken     = GLOBALS.savedData.facebookAccessToken
-    },
-    API_URL .. "playerFromFB",
-    function(result)
-        print("received PlayerByFacebookId")
+    -- utils.postWithJSON({
+    --     mobileVersion   = APP_VERSION,
+    --     country         = COUNTRY,
+    --     facebookData    = facebook.data,
+    --     accessToken     = GLOBALS.savedData.facebookAccessToken
+    -- },
+    -- API_URL .. "playerFromFB",
+    -- function(result)
+    --     print("received PlayerByFacebookId")
 
-        if(result.status < 0 and self.attemptFBPlayer < 3) then
-            print("--> try again getPlayerByFacebookId")
-            timer.performWithDelay(1000, function() userManager:getPlayerByFacebookId() end)
-        else
-            native.setActivityIndicator( false )
-            self.attemptFBPlayer = 0
+    --     if(result.status < 0 and self.attemptFBPlayer < 3) then
+    --         print("--> try again getPlayerByFacebookId")
+    --         timer.performWithDelay(1000, function() userManager:getPlayerByFacebookId() end)
+    --     else
+    --         native.setActivityIndicator( false )
+    --         self.attemptFBPlayer = 0
 
-            if(result.isError) then
-                print("--> error = signinFB")
-                signinManager:openSigninFB()
+    --         if(result.isError) then
+    --             print("--> error = signinFB")
+    --             signinManager:openSigninFB()
 
-            elseif(result.status == 401 or result.status == '401') then
-                print("--> 401 = signinFB")
-                signinManager:openSigninFB()
-            else
-                print("--> test player")
-                response        = json.decode(result.response)
-                local player       = response.player
-                GLOBALS.savedData.authToken  = response.authToken
+    --         elseif(result.status == 401 or result.status == '401') then
+    --             print("--> 401 = signinFB")
+    --             signinManager:openSigninFB()
+    --         else
+    --             print("--> test player")
+    --             response        = json.decode(result.response)
+    --             local player       = response.player
+    --             GLOBALS.savedData.authToken  = response.authToken
 
-                userManager:receivedPlayer(player, router.openHome)
-            end
-        end
+    --             userManager:receivedPlayer(player, router.openHome)
+    --         end
+    --     end
 
-    end
-    )
+    -- end
+    -- )
 
 end
 

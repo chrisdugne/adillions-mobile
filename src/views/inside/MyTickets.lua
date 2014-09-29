@@ -23,38 +23,46 @@ end
 
 function scene:refreshScene()
 
-    viewManager.initBoard(function(event) self:scrollListener(event) end)
-
-    ------------------
-
     local latestTickets = userManager.user.lotteryTickets
 
     if(latestTickets) then
 
-        ------------------
-
         self.currentLottery = nil
         self.lotteries   = {}
 
-        ------------------
+        if(#latestTickets == 0) then
+            viewManager.newText({
+                parent   = hud,
+                text     = T "No ticket",
+                x        = display.contentWidth*0.5,
+                y        = display.contentHeight*0.15,
+                fontSize = 43
+            })
+            hud.bg               = display.newImage( hud, "assets/images/hud/home/BG_adillions.png")
+            hud.playTicketButton = display.newImage( hud, I "filloutticket.button.png")
 
-        self:prepareLotteryHeights(latestTickets)
+            hud.bg.x = display.contentWidth*0.5
+            hud.bg.y = display.contentHeight*0.5
+            hud.playTicketButton.x = display.contentWidth*0.5
+            hud.playTicketButton.y = display.contentHeight*0.5
 
-        ------------------
+            utils.onTouch(hud.playTicketButton, function()
+                print('qwdfsvd')
+                gameManager:play()
+            end)
 
-        self:drawNextLottery()
+        else
+            viewManager.initBoard(function(event) self:scrollListener(event) end)
+            self:prepareLotteryHeights(latestTickets)
+            self:drawNextLottery()
 
-        ------------------
+            self.currentLottery    = nil
+            self.nbLotteries       = 0
+            self.nbPreviousTickets = 0
 
-        self.currentLottery         = nil
-        self.nbLotteries            = 0
-        self.nbPreviousTickets      = 0
-
-        self:drawPreviousLotteries(latestTickets)
-
-        ------------------
-
-        hud:insert(hud.board)
+            self:drawPreviousLotteries(latestTickets)
+            hud:insert(hud.board)
+        end
 
     end
 
@@ -94,12 +102,12 @@ end
 
 function scene:drawNextLottery()
 
-    local marginLeft   = display.contentWidth * 0.02
-    local xGap     = display.contentWidth *0.1
-    local yGap     = display.contentHeight *0.08
-    local top     = HEADER_HEIGHT + 80
+    local marginLeft = display.contentWidth * 0.02
+    local xGap       = display.contentWidth *0.1
+    local yGap       = display.contentHeight *0.08
+    local top        = HEADER_HEIGHT + 80
 
-    local nbNewTickets = 0
+    local nbNewTickets  = 0
     self.currentLottery = nil
     local borderHeight  = 0
 
@@ -126,22 +134,22 @@ function scene:drawNextLottery()
                 borderHeight   = yGap + yGap*self.nbTickets + 20
 
                 viewManager.drawBorder(
-                hud.board,
-                display.contentWidth*0.5,             -- x
-                top + (yGap)*(nbNewTickets+self.nbLotteries-2) + borderHeight/2 - 55,  -- y
-                display.contentWidth*0.95,             -- width
-                borderHeight,                 -- height
-                240,240,240
+                    hud.board,
+                    display.contentWidth*0.5,             -- x
+                    top + (yGap)*(nbNewTickets+self.nbLotteries-2) + borderHeight/2 - 55,  -- y
+                    display.contentWidth*0.95,             -- width
+                    borderHeight,                 -- height
+                    240,240,240
                 )
 
                 viewManager.newText({
-                    parent = hud.board,
-                    text = T "Next drawing" .. " : " .. lotteryManager:date(ticket.lottery, true),
-                    x = display.contentWidth*0.08,
-                    y = top + yGap*(nbNewTickets+self.nbLotteries-2),
+                    parent   = hud.board,
+                    text     = T "Next drawing" .. " : " .. lotteryManager:date(ticket.lottery, true),
+                    x        = display.contentWidth*0.08,
+                    y        = top + yGap*(nbNewTickets+self.nbLotteries-2),
                     fontSize = 43,
-                    anchorX    = 0,
-                    anchorY    = 0.5,
+                    anchorX  = 0,
+                    anchorY  = 0.5,
                 })
 
             end

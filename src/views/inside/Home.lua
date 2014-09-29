@@ -232,7 +232,6 @@ function scene:drawNextLottery( waitingForDrawing )
         bannerManager:start()
     end
 
-    -------------------------------
 end
 
 ------------------------------------------

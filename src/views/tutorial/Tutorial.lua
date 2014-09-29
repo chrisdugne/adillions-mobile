@@ -8,10 +8,10 @@ local scene = storyboard.newScene()
 
 -----------------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
--- 
+--
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --   unless storyboard.removeScene() is called.
--- 
+--
 -----------------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
@@ -25,7 +25,7 @@ function scene:refreshScene()
     if(self.ready) then
         return
     end
-    
+
     ---------------------------------------------------------------
 
     viewManager.initBack()
@@ -64,12 +64,12 @@ function scene:refreshScene()
     hud.close.alpha  = 0.45
 
     utils.onTouch(hud.close, function() self:exit() end)
-    
+
     ---------------------------------------------------------------
 
     self.view:insert(hud)
     self.ready = true
-    
+
     ---------------------------------------------------------------
 
 end
@@ -77,9 +77,9 @@ end
 ------------------------------------------
 
 function scene:createTuto1()
-    
+
     print("createTuto1")
-    
+
     hud.tuto1.welcome    = display.newImage( hud.tuto1, I "Tuto_Welcome.png")
     hud.tuto1.welcome.x    = display.contentWidth*0.5
     hud.tuto1.welcome.y    = display.contentHeight*0.08
@@ -113,8 +113,8 @@ function scene:createTuto1()
 
     hud.tuto1.watch = viewManager.newText({
         parent    = hud.tuto1,
-        text     = T "Watch", 
-        fontSize   = 44,  
+        text     = T "Watch",
+        fontSize   = 44,
         x      = display.contentWidth * 0.3,
         y      = display.contentHeight* (0.52 + 0.015),
         anchorX   = 0,
@@ -124,8 +124,8 @@ function scene:createTuto1()
 
     hud.tuto1.anad = viewManager.newText({
         parent    = hud.tuto1,
-        text     = T "an ad", 
-        fontSize   = 44,  
+        text     = T "an ad",
+        fontSize   = 44,
         x      = hud.tuto1.watch.x + hud.tuto1.watch.width + display.contentWidth*0.02,
         y      = display.contentHeight* (0.52 + 0.015),
         anchorX   = 0,
@@ -148,8 +148,8 @@ function scene:createTuto1()
 
     hud.tuto1.fillout = viewManager.newText({
         parent    = hud.tuto1,
-        text     = T "Fill out", 
-        fontSize   = 44,  
+        text     = T "Fill out",
+        fontSize   = 44,
         x      = display.contentWidth * 0.3,
         y      = display.contentHeight* (0.66 + 0.015),
         anchorX   = 0,
@@ -159,8 +159,8 @@ function scene:createTuto1()
 
     hud.tuto1.anad = viewManager.newText({
         parent    = hud.tuto1,
-        text     = T "a ticket", 
-        fontSize   = 44,  
+        text     = T "a ticket",
+        fontSize   = 44,
         x      = hud.tuto1.fillout.x + hud.tuto1.fillout.width + display.contentWidth*0.02,
         y      = display.contentHeight*(0.66 + 0.015),
         anchorX   = 0,
@@ -172,16 +172,16 @@ function scene:createTuto1()
     hud.tuto1.ball3     = display.newImage( hud.tuto1, "assets/images/icons/win.png")
     hud.tuto1.ball3.x    = display.contentWidth*0.15
     hud.tuto1.ball3.y    = display.contentHeight*0.8
-    
+
     hud.tuto1.num3     = display.newImage( hud.tuto1, "assets/images/hud/tuto/tuto1.n3.png")
     hud.tuto1.num3.x    = hud.tuto1.ball3.x - 40
     hud.tuto1.num3.y    = hud.tuto1.ball3.y - 40
 
     hud.tuto1.win = viewManager.newText({
         parent    = hud.tuto1,
-        text     = T "Try", 
-        fontSize   = 44,  
-        --  font    = NUM_FONT,  
+        text     = T "Try",
+        fontSize   = 44,
+        --  font    = NUM_FONT,
         x      = display.contentWidth * 0.3,
         y      = display.contentHeight*(0.8 + 0.015),
         anchorX   = 0,
@@ -190,8 +190,8 @@ function scene:createTuto1()
 
     hud.tuto1.anad = viewManager.newText({
         parent    = hud.tuto1,
-        text     = T "your luck" .. " !", 
-        fontSize   = 44,  
+        text     = T "your luck" .. " !",
+        fontSize   = 44,
         x      = hud.tuto1.win.x + hud.tuto1.win.width + display.contentWidth*0.02,
         y      = display.contentHeight*(0.8 + 0.015),
         anchorX   = 0,
@@ -202,11 +202,11 @@ function scene:createTuto1()
     -- controls
     hud.tuto1.next = viewManager.newText({
         parent      = hud.tuto1,
-        text        = T "NEXT",  
+        text        = T "NEXT",
         anchorX     = 0.5,
         anchorY     = 1,
         y           = display.contentHeight*0.964,
-        fontSize    = 52,  
+        fontSize    = 52,
         x           = display.contentWidth * 0.5,
     })
 
@@ -218,7 +218,6 @@ function scene:createTuto1()
     hud.tuto1.arrowright.x   = display.contentWidth*0.5 + hud.tuto1.next.contentWidth/2 + 50
     hud.tuto1.arrowright.y   = hud.tuto1.next.y
 
-
     utils.onTouch(hud.tuto1.next,    function()  self:goTuto(2) end)
     utils.onTouch(hud.tuto1.arrowright,  function()  self:goTuto(2) end)
 end
@@ -227,12 +226,12 @@ end
 
 function scene:createTuto2()
 
-    hud.tuto2.bg    = display.newImageRect( hud.tuto2, "assets/images/hud/Tuto_2_Bg.png", display.contentWidth, display.contentHeight*0.88)  
-    hud.tuto2.bg.x    = display.viewableContentWidth*0.5 
+    hud.tuto2.bg    = display.newImageRect( hud.tuto2, "assets/images/hud/Tuto_2_Bg.png", display.contentWidth, display.contentHeight*0.88)
+    hud.tuto2.bg.x    = display.viewableContentWidth*0.5
     hud.tuto2.bg.y   = display.viewableContentHeight*0.44
 
-    hud.tuto2.visuel   = display.newImage( hud.tuto2, "assets/images/hud/world.png")  
-    hud.tuto2.visuel.x  = display.viewableContentWidth*0.5 
+    hud.tuto2.visuel   = display.newImage( hud.tuto2, "assets/images/hud/world.png")
+    hud.tuto2.visuel.x  = display.viewableContentWidth*0.5
     hud.tuto2.visuel.y  = display.viewableContentHeight*0.5
 
     hud.tuto2.title    = display.newImage( hud.tuto2, I "tuto2.title.png")
@@ -241,8 +240,8 @@ function scene:createTuto2()
 
     hud.tuto2.finalText1 = viewManager.newText({
         parent    = hud.tuto2,
-        text     = T "Each new player contributes", 
-        fontSize   = 45,  
+        text     = T "Each new player contributes",
+        fontSize   = 45,
         x      = display.contentWidth * 0.5,
         y      = display.contentHeight*0.78,
     })
@@ -251,8 +250,8 @@ function scene:createTuto2()
 
     hud.tuto2.finalText2 = viewManager.newText({
         parent    = hud.tuto2,
-        text     = T "to increase the jackpot", 
-        fontSize   = 45,  
+        text     = T "to increase the jackpot",
+        fontSize   = 45,
         x      = display.contentWidth * 0.5,
         y      = display.contentHeight*0.82,
     })
@@ -264,10 +263,10 @@ function scene:createTuto2()
 
     hud.tuto2.next = viewManager.newText({
         parent    = hud.tuto2,
-        text     = T "NEXT",       
+        text     = T "NEXT",
         anchorX   = 1,
         anchorY   = 1,
-        fontSize   = 52,  
+        fontSize   = 52,
         x      = display.contentWidth * 0.86,
         y      = display.contentHeight*0.964,
     })
@@ -283,10 +282,10 @@ function scene:createTuto2()
 
     hud.tuto2.previous = viewManager.newText({
         parent    = hud.tuto2,
-        text     = T "PREVIOUS",            
+        text     = T "PREVIOUS",
         anchorX   = 0,
         anchorY   = 1,
-        fontSize   = 52,  
+        fontSize   = 52,
         x      = display.contentWidth * 0.14,
         y      = display.contentHeight*0.964,
     })
@@ -312,16 +311,16 @@ end
 function scene:createTuto3()
 
 
-    hud.tuto3.bg    = display.newImageRect( hud.tuto3, "assets/images/hud/Tuto_2_Bg.png", display.contentWidth, display.contentHeight*0.88)  
-    hud.tuto3.bg.x    = display.viewableContentWidth*0.5 
+    hud.tuto3.bg    = display.newImageRect( hud.tuto3, "assets/images/hud/Tuto_2_Bg.png", display.contentWidth, display.contentHeight*0.88)
+    hud.tuto3.bg.x    = display.viewableContentWidth*0.5
     hud.tuto3.bg.y   = display.viewableContentHeight*0.44
 
     -------------------
-    
+
     hud.tuto3.schema    = display.newImage( hud.tuto3, "assets/images/hud/tuto/tuto3.bg.png")
     hud.tuto3.schema.x    = display.contentWidth*0.5
     hud.tuto3.schema.y    = display.contentHeight*0.5
-    
+
     -------------------
 
     hud.tuto3.p1        = display.newImage( hud.tuto3, I "tuto3.p1.png")
@@ -346,9 +345,9 @@ function scene:createTuto3()
     hud.tuto3.p5.anchorX= 0
     hud.tuto3.p5.x      = display.contentWidth*0.16
     hud.tuto3.p5.y      = display.contentHeight*0.75
-    
+
     -------------------
-    
+
     hud.tuto3.ball1     = display.newImage( hud.tuto3, "assets/images/hud/tuto/tuto3.ball1.png")
     hud.tuto3.ball1.x   = display.contentWidth*0.07
     hud.tuto3.ball1.anchorY = 0
@@ -363,13 +362,13 @@ function scene:createTuto3()
     hud.tuto3.ball3.x   = display.contentWidth*0.07
     hud.tuto3.ball3.anchorY = 0
     hud.tuto3.ball3.y   = display.contentHeight*0.75 - hud.tuto3.p5.height/2
-    
+
     -------------------
 --
 --    hud.tuto3.charityprofile = viewManager.newText({
 --        parent    = hud.tuto3,
---        text     = T "Charity Profile", 
---        fontSize   = 32,  
+--        text     = T "Charity Profile",
+--        fontSize   = 32,
 --        x      = display.contentWidth * 0.5,
 --        y      = display.contentHeight*0.315,
 --    })
@@ -378,8 +377,8 @@ function scene:createTuto3()
 --
 --    hud.tuto3.winners = viewManager.newText({
 --        parent    = hud.tuto3,
---        text     = T "Winners", 
---        fontSize   = 32,  
+--        text     = T "Winners",
+--        fontSize   = 32,
 --        x      = display.contentWidth * 0.3,
 --        y      = display.contentHeight* 0.72,
 --    })
@@ -388,8 +387,8 @@ function scene:createTuto3()
 --
 --    hud.tuto3.charity = viewManager.newText({
 --        parent    = hud.tuto3,
---        text     = T "Charities", 
---        fontSize   = 32,  
+--        text     = T "Charities",
+--        fontSize   = 32,
 --        x      = display.contentWidth * 0.7,
 --        y      = display.contentHeight* 0.72,
 --    })
@@ -445,10 +444,10 @@ function scene:createTuto3()
 
     hud.tuto3.previous = viewManager.newText({
         parent    = hud.tuto3,
-        text     = T "PREVIOUS",         
+        text     = T "PREVIOUS",
         anchorX   = 0,
         anchorY   = 1,
-        fontSize   = 52,  
+        fontSize   = 52,
         x      = display.contentWidth * 0.14,
         y      = display.contentHeight*0.964,
     })

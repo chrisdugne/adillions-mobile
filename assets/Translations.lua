@@ -177,6 +177,10 @@ local translations =
         ["fr"] = "un ticket",
     },
 
+    ["No ticket"] = {
+        ["fr"] = "Pas de ticket",
+    },
+
     ["Try"] = {
         ["fr"] = "Vous tentez",
     },

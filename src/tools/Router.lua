@@ -1,12 +1,12 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --
 -- router.lua
 --
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 module(..., package.seeall)
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 LOADING             = 1
 OUTSIDE             = 2
@@ -24,11 +24,11 @@ INFO                = 13
 INVITEFRIENDS       = 14
 SELECTADDITIONALNUMBER = 15
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 view = nil
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function resetScreen()
     if(hud.timer) then timer.cancel(hud.timer) end
@@ -36,7 +36,23 @@ function resetScreen()
     utils.emptyGroup(hud.selection)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+function openView(id, class, params)
+
+    if( router.view == LOADING ) then
+        timer.performWithDelay(250, function()
+            router.openView(id, class)
+        end)
+    else
+        resetScreen()
+        storyboard.gotoScene( class, params )
+    end
+
+    view = id
+end
+
+--------------------------------------------------------------------------------
 
 function openLoading()
     resetScreen()
@@ -44,143 +60,95 @@ function openLoading()
     view = LOADING
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openOutside()
     analytics.pageview("Outside")
-
-    resetScreen()
     print("router : openOutside")
-    storyboard.gotoScene( "src.views.Outside" )
-    view = OUTSIDE
+    router.openView(OUTSIDE, "src.views.Outside")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openNoInternet()
-    resetScreen()
-    storyboard.gotoScene( "src.views.NoInternet" )
-    view = NO_INTERNET
+    router.openView(NO_INTERNET, "src.views.NoInternet")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openTutorial()
     analytics.pageview("Tutorial")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.tutorial.Tutorial" )
-    view = TUTORIAL
+    router.openView(TUTORIAL, "src.views.tutorial.Tutorial")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openLogin()
     analytics.pageview("Login")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.Login" )
-    view = LOGIN
+    router.openView(LOGIN, "src.views.Login")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openSignin()
     analytics.pageview("Signin")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.Signin" )
-    view = SIGNIN
+    router.openView(SIGNIN, "src.views.Signin")
 end
 
------------------------------------------------------------------------------------------
-
-function openSigninFB()
-    analytics.pageview("SigninFB")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.SigninFB" )
-    view = SIGNINFB
-end
-
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openHome()
     analytics.pageview("Home")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Home" )
-    view = HOME
+    router.openView(HOME, "src.views.inside.Home")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openMyTickets()
     analytics.pageview("MyTickets")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.MyTickets" )
-    view = MYTICKETS
+    router.openView(MYTICKETS, "src.views.inside.MyTickets")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openResults()
     analytics.pageview("Results")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Results" )
-    view = RESULTS
+    router.openView(RESULTS, "src.views.inside.Results")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openProfile()
     analytics.pageview("Profile")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Profile" )
-    view = PROFILE
+    router.openView(PROFILE, "src.views.inside.Profile")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openInfo()
     analytics.pageview("Info")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.Info" )
-    view = INFO
+    router.openView(INFO, "src.views.inside.Info")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openFillLotteryTicket()
     analytics.pageview("FillLotteryTicket")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.FillLotteryTicket" )
-    view = FILLLOTTERYTICKET
+    router.openView(FILLLOTTERYTICKET, "src.views.inside.FillLotteryTicket")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openSelectAdditionalNumber()
     analytics.pageview("SelectAdditionalNumber")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.SelectAdditionalNumber" )
-    view = SELECTADDITIONALNUMBER
+    router.openView(SELECTADDITIONALNUMBER, "src.views.inside.SelectAdditionalNumber")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function openInviteFriends(next)
     analytics.pageview("InviteFriends")
-
-    resetScreen()
-    storyboard.gotoScene( "src.views.inside.InviteFriends" , {params = {next=next}})
-    view = INVITEFRIENDS
+    router.openView(INVITEFRIENDS, "src.views.inside.InviteFriends" , {params = {next=next}})
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------

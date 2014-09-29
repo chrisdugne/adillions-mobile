@@ -20,33 +20,37 @@ function AppManager:start()
     APP_NAME = "Adillions"
 
     ----------------------------------------------------------------------------
-    PROD = true
 
-    if(PROD) then
-        APP_VERSION            = 1.5
-        FACEBOOK_APP_ID        = "170148346520274"
-        FACEBOOK_API_SECRET    = "887e8f7abb9b1cb9238a097e06585ae2"
-        FACEBOOK_APP_NAMESPACE = "adillions"
-        MOBILE_SETTINGS_URL    = "http://adillions-desv.herokuapp.com/api/mobile/settings/"
-    else
+    LOCAL = true
+
+    ----------------------------------------------------------------------------
+
+    if(LOCAL) then
+        SETTINGS_ID            = 'local'
         LOCAL_IP               = "192.168.0.9"
         -- LOCAL_IP               = "10.17.100.223"
-        APP_VERSION            = 999
-        FACEBOOK_APP_ID        = "534196239997712"
-        FACEBOOK_API_SECRET    = "46383d827867d50ef5d87b66c81f1a8e"
-        FACEBOOK_APP_NAMESPACE = "adillions-dev"
         MOBILE_SETTINGS_URL    = "http://" .. LOCAL_IP .. ":1337/api/mobile/settings/"
+    else
+        SETTINGS_ID            = 'dev'
+        -- SETTINGS_ID            = 'stage-1.5'
+        -- SETTINGS_ID            = 'prod-1.5'
+        MOBILE_SETTINGS_URL    = "http://api-dev.adillions.com/api/mobile/settings/"
     end
+
+    ----------------------------------------------------------------------------
 
     print("---------------------- "
         .. APP_NAME
-        .. " " .. APP_VERSION
+        .. " " .. SETTINGS_ID
         .. " ----------------")
 
     ----------------------------------------------------------------------------
 
-    appManager.setup()
+    appManager:setup()
     appManager:deviceSetup()
+
+    router.openLoading()
+    LANG = 'fr'
     appManager:checkInternetConnection()
 
 end
@@ -334,26 +338,36 @@ end
 
 function AppManager:getMobileSettings()
 
-    if(PROD) then
-        print("retrieving settings...("..MOBILE_SETTINGS_URL .. APP_VERSION..")")
-        utils.get(MOBILE_SETTINGS_URL .. APP_VERSION, function(res)
+    if(not LOCAL) then
+        print("retrieving settings...("..MOBILE_SETTINGS_URL .. SETTINGS_ID ..")")
+        utils.get(MOBILE_SETTINGS_URL .. SETTINGS_ID, function(res)
             local settings = json.decode(res.response)
             utils.tprint(settings)
 
-            API_URL  = settings.api.play
-            WEB_URL  = settings.api.play
-            NODE_URL = settings.api.node
+            APP_VERSION = tonumber(settings.version)
+            API_URL     = settings.api.play
+            WEB_URL     = settings.api.play
+            NODE_URL    = settings.api.node
+
+            FACEBOOK_APP_ID        = settings.facebookAppId
+            FACEBOOK_API_SECRET    = settings.facebookApiSecret
+            FACEBOOK_APP_NAMESPACE = "-"
 
             appManager.onSettingsReady()
 
         end)
     else
         -- DEV : local servers ONLY
-        print("DEV settings : local servers")
+        print("DEV settings : local servers + FB adillions-localhost")
+        APP_VERSION = 999
 
         API_URL  = "http://" .. LOCAL_IP .. ":9000/"
         WEB_URL  = "http://" .. LOCAL_IP .. ":9000/"
         NODE_URL = "http://" .. LOCAL_IP .. ":1337"
+
+        FACEBOOK_APP_ID        = "293489340852840"
+        FACEBOOK_API_SECRET    = "3aa23c8b8176c84791b19d8778cf3974"
+        FACEBOOK_APP_NAMESPACE = "adillions-localhost"
 
         appManager.onSettingsReady()
 
@@ -364,20 +378,19 @@ end
 
 function AppManager:onSettingsReady()
 
-    if(PROD) then
-        print("     -------->  PROD")
-    else
-        print("     -------->  DEV")
+    if(LOCAL) then
+        print("     -------->  LOCAL ")
         LANG = "fr"
         COUNTRY = "FR"
     end
 
+    print("     version:  " .. APP_VERSION)
     print("     api:      " .. API_URL)
     print("     node:     " .. NODE_URL)
     print("     webviews: " .. WEB_URL)
-    print("     fb-app:   " .. FACEBOOK_APP_NAMESPACE)
     print("     lang:     " .. LANG)
     print("     country:  " .. COUNTRY)
+    print("     fbApp:    " .. FACEBOOK_APP_ID)
 
     gameManager:start()
 

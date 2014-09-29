@@ -67,40 +67,41 @@ function scene:refreshScene()
 
     ---------------------------------------------------------------
 
-    hud.fb = display.newImage( hud, I "Sign_Facebook.png")
-    hud.fb.x = display.contentWidth*0.5
-    hud.fb.y = display.contentHeight*0.6
+    -- hud.fb = display.newImage( hud, I "Sign_Facebook.png")
+    -- hud.fb.x = display.contentWidth*0.5
+    -- hud.fb.y = display.contentHeight*0.6
 
-    utils.onTouch(hud.fb, facebook.login)
+    -- utils.onTouch(hud.fb, facebook.login)
 
-    hud.textFB = viewManager.newText({
-        parent   = hud,
-        text     = T "(We will never post without your consent)",
-        fontSize = 30,
-        x        = display.contentWidth * 0.5,
-        y        = display.contentHeight*0.665
-    })
+    -- hud.textFB = viewManager.newText({
+    --     parent   = hud,
+    --     text     = T "(We will never post without your consent)",
+    --     fontSize = 30,
+    --     x        = display.contentWidth * 0.5,
+    --     y        = display.contentHeight*0.665
+    -- })
 
     ---------------------------------------------------------------
 
-    hud.line   = display.newImage( hud, "assets/images/hud/Sign_Filet.png")
-    hud.line.x = display.contentWidth*0.5
-    hud.line.y = display.contentHeight*0.7
+    -- hud.line   = display.newImage( hud, "assets/images/hud/Sign_Filet.png")
+    -- hud.line.x = display.contentWidth*0.5
+    -- hud.line.y = display.contentHeight*0.7
 
-    hud.textor = viewManager.newText({
-        parent   = hud,
-        text     = "or",
-        fontSize = 39,
-        x        = display.contentWidth * 0.5,
-        y        = display.contentHeight*0.694
-    })
+    -- hud.textor = viewManager.newText({
+    --     parent   = hud,
+    --     text     = "or",
+    --     fontSize = 39,
+    --     x        = display.contentWidth * 0.5,
+    --     y        = display.contentHeight*0.694
+    -- })
 
-    hud.textor.alpha = 0.4
+    -- hud.textor.alpha = 0.4
 
     ---------------------------------------------------------------
 
     hud.login   = display.newImage( hud, I "Sign_Login.png")
     hud.login.x = display.contentWidth*0.5
+    -- hud.login.y = display.contentHeight*0.71
     hud.login.y = display.contentHeight*0.79
 
     utils.onTouch(hud.login, function() signinManager:openLogin() end)
