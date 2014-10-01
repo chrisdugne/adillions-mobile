@@ -96,12 +96,7 @@ function UserManager:fetchPlayer()
 
     self.attemptFetchPlayer = self.attemptFetchPlayer + 1
 
-    -- {
-    --     mobileVersion = APP_VERSION,
-    --     country       = COUNTRY
-    -- }
-
-    utils.get( NODE_URL .. "/api/user", function(result)
+    utils.put( NODE_URL .. "/api/user/?country=" .. COUNTRY .. '&mobileVersion=' .. APP_VERSION , function(result)
 
         if(result.isError) then
 
@@ -247,7 +242,6 @@ end
 
 function UserManager:receivedPlayer(player, next)
 
-    print('------->  ' .. player.godChildren)
     native.setActivityIndicator( false )
 
     if(next == router.openHome) then
@@ -308,7 +302,6 @@ function UserManager:updatedPlayer(player, next)
     ------------------------------------------------------------------
 
     if(self.user.notifications) then
-        self.user.notifications = json.decode(self.user.notifications)
         self:checkNotifications()
     else
         self.user.notifications = {
@@ -372,12 +365,12 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:charityLevel()
-    if(self.user.totalPlayedTickets == 0) then
+    if(self.user.playedTickets == 0) then
        return CHARITY_LEVELS[1].level
     end
 
     for i = #CHARITY_LEVELS, 1, -1 do
-        if(self.user.totalPlayedTickets >= tonumber(CHARITY_LEVELS[i].reach)) then
+        if(self.user.playedTickets >= tonumber(CHARITY_LEVELS[i].reach)) then
             return CHARITY_LEVELS[i].level
         end
     end

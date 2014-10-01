@@ -331,7 +331,7 @@ end
 
 --------------------------------------------------------
 
-function get(url, next)
+function request(url, method, next)
 
     if(next == nil) then
         next = function() end
@@ -353,7 +353,22 @@ function get(url, next)
     utils.tprint(params)
     print(url)
 
-    network.request( url, "GET", next, params)
+    network.request( url, method, next, params)
+
+end
+
+--------------------------------------------------------
+
+function get(url, next)
+    utils.request(url, "GET", next)
+end
+
+function put(url, next)
+    utils.request(url, "PUT", next)
+end
+
+function delete(url, next)
+    utils.request(url, "DELETE", next)
 end
 
 --------------------------------------------------------
