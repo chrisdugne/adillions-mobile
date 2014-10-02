@@ -1,30 +1,30 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --
--- AppHome.lua
+-- Profile.lua
 --
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 local scene = storyboard.newScene()
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 --
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --   unless storyboard.removeScene() is called.
 --
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:refreshScene()
     self:drawScene()
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:drawScene()
 
@@ -49,9 +49,9 @@ function scene:drawScene()
     self.column1 = display.contentWidth*0.1
     self.column2 = display.contentWidth*0.9
 
-    -- ----------------------------------------------------------------------------
-    -- -- Top picture
-    -- ----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
+    -- Top picture
+    ----------------------------------------------------------------------------
 
     viewManager.drawBorder( hud.board,
         display.contentWidth*0.65, self.top + display.contentHeight*0.02,
@@ -135,7 +135,7 @@ function scene:drawScene()
 
     local textTotal = viewManager.newText({
         parent      = hud.board,
-        text        = userManager.user.totalPlayedTickets,
+        text        = userManager.user.playedTickets,
         x           = self.column1 + display.contentWidth*0.1,
         y           = self.top + self.yGap*(charityTop+2.8),
         fontSize    = 40,
@@ -614,9 +614,9 @@ function scene:drawScene()
     end)
 
 
-    -- ----------------------------------------------------------------------------
-    -- -- Personal Details
-    -- ----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
+    -- Personal Details
+    ----------------------------------------------------------------------------
 
     viewManager.drawBorder( hud.board,
         display.contentWidth*0.5, self.top + self.yGap * ( detailsTop - 0.8 ),
@@ -757,13 +757,13 @@ function scene:drawScene()
     self.view:insert(hud)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:openFacebookPage()
     viewManager.openWeb(FACEBOOK_PAGE)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:drawTextEntry(title, value, position, fontSizeLeft, fontSizeRight)
 
@@ -790,7 +790,7 @@ function scene:drawTextEntry(title, value, position, fontSizeLeft, fontSizeRight
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:drawConnection(title, state, position)
 
@@ -811,7 +811,7 @@ function scene:drawConnection(title, state, position)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:openCashout()
 
@@ -820,7 +820,7 @@ function scene:openCashout()
     local popup = viewManager.showPopup()
     analytics.event("Gaming", "opencashout")
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     popup.infoBG                    = display.newImage(popup, "assets/images/hud/info.bg.png")
     popup.infoBG.x                  = display.contentWidth*0.5
@@ -834,7 +834,7 @@ function scene:openCashout()
     popup.TxtInformation.x          = display.contentWidth*0.5
     popup.TxtInformation.y          = display.contentHeight*0.28
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     local value = ""
     if(utils.isEuroCountry(COUNTRY)) then
@@ -857,7 +857,7 @@ function scene:openCashout()
 
     popup.multiLineText:setFillColor(0)
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     local min = lotteryManager.global.minEuro
     if(not utils.isEuroCountry(COUNTRY)) then
@@ -892,7 +892,7 @@ function scene:openCashout()
     -- end
 
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     popup.close         = display.newImage( popup, I "popup.Bt_close.png")
     popup.close.x       = display.contentWidth*0.5
@@ -902,7 +902,7 @@ function scene:openCashout()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:openGiveToCharity()
 
@@ -911,7 +911,7 @@ function scene:openGiveToCharity()
     local popup = viewManager.showPopup()
     analytics.event("Gaming", "openGiveToCharity")
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     popup.shareIcon         = display.newImage( popup, "assets/images/icons/PictoCoeur.png")
     popup.shareIcon.x       = display.contentWidth*0.5
@@ -921,7 +921,7 @@ function scene:openGiveToCharity()
     popup.thanks.x          = display.contentWidth*0.5
     popup.thanks.y          = display.contentHeight*0.23
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     --
     --   local multiLineText = display.newMultiLineText
     --     {
@@ -939,7 +939,7 @@ function scene:openGiveToCharity()
     -- multiLineText.y = display.contentHeight*0.3
     -- popup:insert(multiLineText)
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     hud.giveToCharity     = display.newImage( popup, I "confirm.png")
     hud.giveToCharity.x     = display.contentWidth*0.5
@@ -956,7 +956,7 @@ function scene:openGiveToCharity()
         end)
     end)
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     popup.close     = display.newImage( popup, I "popup.Bt_close.png")
     popup.close.x    = display.contentWidth*0.5
@@ -966,7 +966,7 @@ function scene:openGiveToCharity()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene: openConfirmCashout()
 
@@ -975,7 +975,7 @@ function scene: openConfirmCashout()
     local popup = viewManager.showPopup()
     analytics.event("Gaming", "openConfirmCashout")
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     popup.infoBG                    = display.newImage(popup, "assets/images/hud/info.bg.png")
     popup.infoBG.x                  = display.contentWidth*0.5
@@ -989,7 +989,7 @@ function scene: openConfirmCashout()
     popup.congratz.x                = display.contentWidth*0.5
     popup.congratz.y                = display.contentHeight*0.25
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     popup.multiLineText = display.newText({
         parent      = popup,
@@ -1005,7 +1005,7 @@ function scene: openConfirmCashout()
 
     popup.multiLineText:setFillColor(0)
 
-    -----------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     hud.confirm     = display.newImage( popup, I "confirm.png")
     hud.confirm.x   = display.contentWidth*0.5
@@ -1030,7 +1030,7 @@ function scene: openConfirmCashout()
         end)
     end)
 
-    -----------------------------------------------------------------------------------------------------------------
+    ------------------------------------------
 
     popup.close     = display.newImage( popup, I "popup.Bt_close.png")
     popup.close.x    = display.contentWidth*0.5
@@ -1038,9 +1038,9 @@ function scene: openConfirmCashout()
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
-
 end
-------------------------------------------
+
+--------------------------------------------------------------------------------
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
@@ -1055,9 +1055,9 @@ end
 function scene:destroyScene( event )
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- END OF YOUR IMPLEMENTATION
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- "createScene" event is dispatched if scene's view does not exist
 scene:addEventListener( "createScene", scene )
@@ -1073,6 +1073,6 @@ scene:addEventListener( "exitScene", scene )
 -- storyboard.purgeScene() or storyboard.removeScene().
 scene:addEventListener( "destroyScene", scene )
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return scene

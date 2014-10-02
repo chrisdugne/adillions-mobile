@@ -118,7 +118,7 @@ function LotteryManager:finalPrice(lottery)
 end
 
 function LotteryManager:date(lottery, viewDay, viewYear)
-    return utils.timestampToReadableDate(lottery.date, viewDay, viewYear)
+    return utils.timestampToReadableDate(lottery.timestamp, viewDay, viewYear)
 end
 
 -----------------------------------------------------------------------------------------

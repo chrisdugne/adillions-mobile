@@ -1,36 +1,52 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --
--- AppHome.lua
+-- MyTickets.lua
 --
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 local scene = storyboard.newScene()
 local widget = require "widget"
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 --
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --   unless storyboard.removeScene() is called.
 --
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+function scene:initBoard()
+    viewManager.initBoard(function(event) self:scrollListener(event) end)
+    self.currentLottery    = nil
+    self.lotteries         = {}
+    self.currentLottery    = nil
+    self.nbLotteries       = 0
+    self.nbPreviousTickets = 0
+end
+
+function scene:drawFirstTickets(tickets)
+    self:initBoard()
+    self:prepareLotteryHeights(tickets)
+    self:drawNextLottery()
+    self:drawPreviousLotteries(tickets)
+    hud:insert(hud.board)
+
+    viewManager.setupView(2)
+    viewManager.darkerBack()
+    self.view:insert(hud)
+end
 
 function scene:refreshScene()
 
-    local latestTickets = userManager.user.lotteryTickets
+    if(userManager.tickets) then
 
-    if(latestTickets) then
-
-        self.currentLottery = nil
-        self.lotteries   = {}
-
-        if(#latestTickets == 0) then
+        if(#userManager.tickets == 0) then
             viewManager.newText({
                 parent   = hud,
                 text     = T "No ticket",
@@ -52,29 +68,17 @@ function scene:refreshScene()
             end)
 
         else
-            viewManager.initBoard(function(event) self:scrollListener(event) end)
-            self:prepareLotteryHeights(latestTickets)
-            self:drawNextLottery()
-
-            self.currentLottery    = nil
-            self.nbLotteries       = 0
-            self.nbPreviousTickets = 0
-
-            self:drawPreviousLotteries(latestTickets)
-            hud:insert(hud.board)
+            self:drawFirstTickets(userManager.tickets)
         end
+
+    else
+        self:loadMoreTickets(true)
 
     end
 
-    ------------------
-
-    viewManager.setupView(2)
-    viewManager.darkerBack()
-    self.view:insert(hud)
-
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:prepareLotteryHeights(tickets)
 
@@ -98,7 +102,7 @@ function scene:prepareLotteryHeights(tickets)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:drawNextLottery()
 
@@ -111,9 +115,9 @@ function scene:drawNextLottery()
     self.currentLottery = nil
     local borderHeight  = 0
 
-    for i = 1,#userManager.user.lotteryTickets do
+    for i = 1,#userManager.tickets do
 
-        local ticket = userManager.user.lotteryTickets[i]
+        local ticket = userManager.tickets[i]
 
         if(ticket.lottery.uid == lotteryManager.nextLottery.uid) then
 
@@ -163,7 +167,7 @@ function scene:drawNextLottery()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:drawPreviousLotteries(tickets)
 
@@ -183,7 +187,7 @@ function scene:drawPreviousLotteries(tickets)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:drawTicket(ticket, marginLeft, xGap, yGap)
 
@@ -193,43 +197,45 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
 
         -----------------------------------------------------------
 
-        local numbers  = json.decode(ticket.numbers)
+        local numbers  = ticket.numbers
         self.nbPreviousTickets = self.nbPreviousTickets + 1
 
-        if(type(ticket.lottery.theme) == "string") then ticket.lottery.theme = json.decode(ticket.lottery.theme) end
+        -- if(type(ticket.lottery.theme) == "string") then ticket.lottery.theme = json.decode(ticket.lottery.theme) end
 
         -----------------------------------------------------------
 
         if(self.currentLottery ~= ticket.lottery.uid) then
 
-            self.currentLottery     = ticket.lottery.uid
-            self.nbLotteries        = self.nbLotteries + 1
-            self.nbTickets          = self.lotteries[self.currentLottery].nbTickets
-            local borderHeight = yGap + yGap*self.nbTickets - 80
+            self.currentLottery = ticket.lottery.uid
+            self.nbLotteries    = self.nbLotteries + 1
+            self.nbTickets      = self.lotteries[self.currentLottery].nbTickets
+            local borderHeight  = yGap + yGap*self.nbTickets - 80
 
             viewManager.drawBorder(
-            hud.board,
-            display.contentWidth*0.5,             -- x
-            top + (yGap)*(self.nbPreviousTickets+self.nbLotteries-2) + borderHeight/2 - 45,  -- y
-            display.contentWidth*0.95,             -- width
-            borderHeight                 -- height
+                hud.board,
+                display.contentWidth*0.5,             -- x
+                top + (yGap)*(self.nbPreviousTickets+self.nbLotteries-2) + borderHeight/2 - 45,  -- y
+                display.contentWidth*0.95,             -- width
+                borderHeight                 -- height
             )
 
+            utils.tprint(ticket.lottery)
+
             viewManager.newText({
-                parent = hud.board,
-                text = T "Drawing" .. " : " .. lotteryManager:date(ticket.lottery, true, true),
-                x = display.contentWidth*0.08,
-                y = top + yGap*(self.nbPreviousTickets+self.nbLotteries-2),
+                parent   = hud.board,
+                text     = T "Drawing" .. " : " .. lotteryManager:date(ticket.lottery, true, true),
+                x        = display.contentWidth*0.08,
+                y        = top + yGap*(self.nbPreviousTickets+self.nbLotteries-2),
                 fontSize = 42,
-                anchorX    = 0,
-                anchorY    = 0.5,
+                anchorX  = 0,
+                anchorY  = 0.5,
             })
 
         else
 
             local separator = display.newImage(hud.board, "assets/images/icons/separateur.horizontal.png")
-            separator.x = display.contentWidth*0.5
-            separator.y = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.82)
+            separator.x     = display.contentWidth*0.5
+            separator.y     = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.82)
             hud.board:insert(separator)
         end
 
@@ -360,20 +366,26 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-function scene:loadMoreTickets()
+function scene:loadMoreTickets(first)
+    local skip = 0
+    if(userManager.tickets) then skip = #userManager.tickets end
 
-    if(self.currentLottery) then
-
+    if(first or self.currentLottery) then
         native.setActivityIndicator( true )
-        userManager:loadMoreTickets(self.currentLottery, function(tickets)
+        userManager:loadMoreTickets(skip, function(tickets)
 
             if(#tickets > 0) then
-                self:prepareLotteryHeights(tickets)
-                self:drawPreviousLotteries(tickets)
+                if(first) then
+                    self:drawFirstTickets(tickets)
+                else
+                    self:prepareLotteryHeights(tickets)
+                    self:drawPreviousLotteries(tickets)
+                end
             else
                 self.currentLottery = nil
+
             end
 
             native.setActivityIndicator( false )
@@ -382,7 +394,7 @@ function scene:loadMoreTickets()
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:scrollListener(event)
 
@@ -410,9 +422,9 @@ end
 function scene:destroyScene( event )
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- END OF YOUR IMPLEMENTATION
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- "createScene" event is dispatched if scene's view does not exist
 scene:addEventListener( "createScene", scene )
@@ -428,6 +440,6 @@ scene:addEventListener( "exitScene", scene )
 -- storyboard.purgeScene() or storyboard.removeScene().
 scene:addEventListener( "destroyScene", scene )
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return scene

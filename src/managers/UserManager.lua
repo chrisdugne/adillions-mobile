@@ -32,7 +32,6 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
             end)
 
         else
-
             local response = json.decode(result.response)
 
             lotteryManager.global                   = response.global
@@ -189,15 +188,24 @@ end
 
 --------------------------------------------------------------------------------
 
-function UserManager:loadMoreTickets(lastLotteryUID, onReceivedTickets)
-    utils.postWithJSON({
-            lastLotteryUID = lastLotteryUID
-        },
-        API_URL .. "lotteryTickets",
-        function(result)
-            onReceivedTickets(json.decode(result.response))
+function UserManager:loadMoreTickets(skip, next)
+    utils.get( NODE_URL .. "/api/ticket/" .. skip, function(result)
+        local response = json.decode(result.response);
+        local tickets = response.tickets;
+        local lotteries = response.lotteries;
+
+        for t = 1, #tickets do
+            for l = 1, #lotteries do
+                if(tickets[t].lottery == lotteries[l].uid) then
+                    tickets[t].lottery = lotteries[l]
+                    break
+                end
+            end
         end
-    )
+
+        userManager.tickets = tickets
+        next(tickets)
+    end)
 end
 
 --------------------------------------------------------------------------------
@@ -328,15 +336,15 @@ function UserManager:refreshBonusTickets(next)
     self:setCharityBonus()
     self:setAmbassadorBonus()
 
-    self:checkFanStatus(function()
-        --- NOTE : pour remettre le OG theme il faut virer le next d'ici et decommenter checkThemeLiked
-        -- facebook.checkThemeLiked(next)
-        if(next) then
-            next()
-        end
-    end)
+    next()
 
-
+    -- self:checkFanStatus(function()
+    --     --- NOTE : pour remettre le OG theme il faut virer le next d'ici et decommenter checkThemeLiked
+    --     -- facebook.checkThemeLiked(next)
+    --     if(next) then
+    --         next()
+    --     end
+    -- end)
 
 end
 
@@ -696,7 +704,6 @@ end
 function UserManager:updatePlayer(next)
 
     print("------------- updatePlayer ")
-    self.user.lotteryTickets = nil -- just remove all that long json useless for updates (BUG 2014-02-03). it'll be back at server callback.
     self.user.lang = LANG
     self.userBackup = {}
 
@@ -900,8 +907,8 @@ function UserManager:checkTicketTiming()
     local lastTime  = 0
     local now       = time.now()
 
-    for i = 1,#self.user.lotteryTickets do
-        local ticket = self.user.lotteryTickets[i]
+    for i = 1,#userManager.tickets do
+        local ticket = userManager.tickets[i]
         if((self.user.currentLotteryUID == ticket.lottery.uid) and (ticket.creationDate > lastTime) and (ticket.type == 1)) then
             lastTime = ticket.creationDate
         end
