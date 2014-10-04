@@ -268,12 +268,7 @@ function UserManager:charityLevel()
        return CHARITY_LEVELS[1].level
     end
 
-    print('---')
-    print(self.user.playedTickets)
-    utils.tprint(CHARITY_LEVELS)
-
     for i = #CHARITY_LEVELS, 1, -1 do
-        print(tonumber(CHARITY_LEVELS[i].reach))
         if(self.user.playedTickets >= tonumber(CHARITY_LEVELS[i].reach)) then
             return CHARITY_LEVELS[i].level
         end
