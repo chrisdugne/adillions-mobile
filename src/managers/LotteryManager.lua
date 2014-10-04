@@ -21,22 +21,20 @@ end
 
 function LotteryManager:refreshNextLottery(classic, waiting)
 
+    -- TODO : GET /api/drawing/status
     print("LotteryManager:refreshNextLottery")
-    utils.postWithJSON(
-    {},
-    API_URL .. "nextLottery",
-    function(result)
+    utils.post( API_URL .. "nextLottery", {}, function(result)
 
         local response  = json.decode(result.response)
         local appStatus = json.decode(response.appStatus)
 
-        self.nextLottery          = response.nextLottery
-        self.nextDrawing          = response.nextDrawing
+        self.nextLottery = response.nextLottery
+        self.nextDrawing = response.nextDrawing
 
-        self.nextLottery.theme    = json.decode(self.nextLottery.theme)
-        self.nextDrawing.theme    = json.decode(self.nextDrawing.theme)
-        self.nextLottery.rangs    = json.decode(self.nextLottery.rangs)
-        self.nextDrawing.rangs    = json.decode(self.nextDrawing.rangs)
+        self.nextLottery.theme = json.decode(self.nextLottery.theme)
+        self.nextDrawing.theme = json.decode(self.nextDrawing.theme)
+        self.nextLottery.rangs = json.decode(self.nextLottery.rangs)
+        self.nextDrawing.rangs = json.decode(self.nextDrawing.rangs)
 
         lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
 
@@ -52,7 +50,6 @@ function LotteryManager:refreshNextLottery(classic, waiting)
 end
 
 -----------------------------------------------------------------------------------------
--- todo : timer + timer.cancel + random time 6000,10000
 
 function LotteryManager:checkAppStatus(waiting)
 
@@ -62,10 +59,8 @@ function LotteryManager:checkAppStatus(waiting)
         timer.cancel(self.appStatusTimer)
     end
 
-    utils.postWithJSON(
-    {},
-    API_URL .. "appStatus",
-    function(result)
+    -- TODO GET /api/lottery/status
+    utils.post( API_URL .. "appStatus", {}, function(result)
         local response  = json.decode(result.response)
         local appStatus = json.decode(response.appStatus)
 
@@ -90,10 +85,8 @@ end
 -----------------------------------------------------------------------------------------
 
 function LotteryManager:getFinishedLotteries(next)
-    utils.postWithJSON(
-    {},
-    API_URL .. "finishedLotteries",
-    function(result)
+    -- TODO GET /api/lottery/finished
+    utils.post( API_URL .. "finishedLotteries", {}, function(result)
         self.finishedLotteries = json.decode(result.response)
         next()
     end)
@@ -118,7 +111,8 @@ function LotteryManager:finalPrice(lottery)
 end
 
 function LotteryManager:date(lottery, viewDay, viewYear)
-    return utils.timestampToReadableDate(lottery.timestamp, viewDay, viewYear)
+    -- TODO : all lotteries fetch from adillions-sails ==> remove lottery.date, use lottery.timestamp
+    return utils.timestampToReadableDate(lottery.timestamp or lottery.date, viewDay, viewYear)
 end
 
 -----------------------------------------------------------------------------------------

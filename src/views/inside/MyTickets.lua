@@ -158,7 +158,7 @@ function scene:drawNextLottery()
         end
     end
 
-    self.nextLotteryTop = top + borderHeight - 170
+    self.nextLotteryTop = top + borderHeight
 
 end
 

@@ -1,4 +1,4 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Project: Utils for uralys.libs
 --
 -- Date: May 8, 2013
@@ -9,11 +9,11 @@
 --
 -- Author: Chris Dugne @ Uralys - www.uralys.com
 --
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 module(..., package.seeall)
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function initGameData()
 
@@ -36,7 +36,7 @@ function initOptions()
     utils.saveTable(GLOBALS.options, "options.json")
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function onTouch(object, action)
     object:addEventListener ("touch", function(event)
@@ -52,7 +52,7 @@ function onTouch(object, action)
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function onTap(object, action)
     object:addEventListener ("touch", function(event)
@@ -68,13 +68,13 @@ function onTap(object, action)
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function setGreen(text)
     text:setFillColor(27/255,92/255,100/255)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function getDaysHoursMinSec(sec)
     local days = math.floor(sec/(24*60*60))
@@ -182,7 +182,7 @@ function fillNextParam(params, paramsString)
 end
 
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function split(value, sep)
     local sep, fields = sep or ":", {}
@@ -191,7 +191,7 @@ function split(value, sep)
     return fields
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function emptyGroup( group )
     if(group ~= nil and group.numChildren ~= nil and group.numChildren > 0) then
@@ -212,7 +212,7 @@ function destroyFromDisplay(object)
 end
 
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function string.startsWith(String,Start)
     return string.sub(String,1,string.len(Start))==Start
@@ -222,7 +222,7 @@ function string.endsWith(String,End)
     return End=='' or string.sub(String,-string.len(End))==End
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function appendToTable(table, toAppend)
     local L = #table
@@ -246,7 +246,7 @@ function joinTables(t1, t2)
     return result
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function removeFromTable(t, object)
     local index = 1
@@ -261,7 +261,7 @@ function removeFromTable(t, object)
     table.remove(t, index)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function imageName( url )
     local rep = url:gsub("/", "_")
@@ -281,7 +281,7 @@ function imageName( url )
 --    end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 --a tester  https://gist.github.com/874792
 
@@ -303,46 +303,16 @@ function tprint (tbl, indent)
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-function postWithJSON(data, url, next)
-    post(url, json.encode(data), next, "json")
-end
-
---------------------------------------------------------
-
-function post(url, data, next, type)
+function request(url, method, next, data, type)
 
     if(next == nil) then
         next = function() end
     end
 
-    local headers = {}
+    ----------------------------------------
 
-    if(type == nil) then
-        headers["Content-Type"] = "application/x-www-form-urlencoded"
-    elseif(type == "json") then
-        headers["Content-Type"] = "application/json"
-        headers["Authorization"] = 'Bearer ' .. GLOBALS.savedData.authToken
-        headers["X-Auth-Token"] = GLOBALS.savedData.authToken
-    end
-
-    local params = {}
-    params.headers = headers
-    params.body = data
-
-    network.request( url, "POST", next, params)
-end
-
---------------------------------------------------------
-
-function request(url, method, next)
-
-    if(next == nil) then
-        next = function() end
-    end
-
-    local headers = {}
     local authToken = ''
 
     if (GLOBALS.savedData and GLOBALS.savedData.authToken) then
@@ -355,24 +325,40 @@ function request(url, method, next)
         print(url)
     end
 
+    ----------------------------------------
+
+    local headers = {}
+
+    if(type == nil) then
+        headers["Content-Type"] = "application/json"
+    elseif(type == "urlencoded") then
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
+    end
+
     headers["X-Auth-Token"] = authToken
     headers["Authorization"] = 'Bearer ' .. authToken
 
-    local params = {}
-    params.headers = headers
+    ----------------------------------------
 
-    network.request( url, method, next, params)
+    network.request( url, method, next, {
+        headers = headers,
+        body    = data
+    })
 
 end
 
 --------------------------------------------------------
 
+function post(url, dataJSON, next, type)
+    utils.request(url, "POST", next, json.encode(dataJSON), type)
+end
+
 function get(url, next)
     utils.request(url, "GET", next)
 end
 
-function put(url, next)
-    utils.request(url, "PUT", next)
+function put(url, dataJSON, next)
+    utils.request(url, "PUT", next, json.encode(dataJSON))
 end
 
 function delete(url, next)

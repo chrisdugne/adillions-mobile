@@ -8,10 +8,10 @@ local scene = storyboard.newScene()
 
 -----------------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
--- 
+--
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --   unless storyboard.removeScene() is called.
--- 
+--
 -----------------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
@@ -39,7 +39,7 @@ function scene:refreshScene()
     -- hack android user idle
     timer.performWithDelay(5000, function()
         if(not self.backWithResults) then
-            self:refreshScene()     
+            self:refreshScene()
         end
     end)
 end
@@ -75,17 +75,16 @@ function scene:drawBoard()
 
         ------------------------------------------------
 
+        utils.tprint(lottery)
         viewManager.newText({
-            parent = hud.board, 
-            text = lotteryManager:date(lottery, true, true), 
-            x = display.contentWidth*0.5,
-            anchorX     = 0.5,
---            x = display.contentWidth*0.1,
---            anchorX     = 0,
-            anchorY     = 0.5,
-            y = marginTop + yGap*(i-1), 
-            fontSize    = 44,
-            font        = NUM_FONT, 
+            parent   = hud.board,
+            text     = lotteryManager:date(lottery, true, true),
+            x        = display.contentWidth*0.5,
+            anchorX  = 0.5,
+            anchorY  = 0.5,
+            y        = marginTop + yGap*(i-1),
+            fontSize = 44,
+            font     = NUM_FONT,
         })
 
         ------------------------------------------------
@@ -98,20 +97,20 @@ function scene:drawBoard()
 
         ------------------------------------------------
 
-        hud.iconWinners = display.newImage( hud.board, "assets/images/icons/winners.png")  
+        hud.iconWinners   = display.newImage( hud.board, "assets/images/icons/winners.png")
         hud.iconWinners.x = display.contentWidth*0.12
         hud.iconWinners.y = marginTop + yGap*(i-1)+270,
         hud.board:insert(hud.iconWinners)
 
         viewManager.newText({
-            parent = hud.board, 
-            text = lottery.nbWinners, 
-            x = display.contentWidth*0.19,
-            y = marginTop + yGap*(i-1)+270, 
+            parent   = hud.board,
+            text     = lottery.nbWinners,
+            x        = display.contentWidth*0.19,
+            y        = marginTop + yGap*(i-1)+270,
             fontSize = 45,
-            font = NUM_FONT,
-            anchorX    = 0,
-            anchorY    = 0.5,
+            font     = NUM_FONT,
+            anchorX  = 0,
+            anchorY  = 0.5,
         })
 
         local winners = T "Winner"
@@ -120,10 +119,10 @@ function scene:drawBoard()
         end
 
         viewManager.newText({
-            parent = hud.board, 
-            text = winners, 
+            parent = hud.board,
+            text = winners,
             x = display.contentWidth*0.28,
-            y = marginTop + yGap*(i-1)+270, 
+            y = marginTop + yGap*(i-1)+270,
             fontSize = 39,
             anchorX    = 0,
             anchorY    = 0.5,
@@ -133,16 +132,16 @@ function scene:drawBoard()
 
         local price = lotteryManager:finalPrice(lottery)
 
-        hud.iconMoney = display.newImage( hud.board, "assets/images/icons/money.png")  
+        hud.iconMoney = display.newImage( hud.board, "assets/images/icons/money.png")
         hud.iconMoney.x = display.contentWidth*0.12
         hud.iconMoney.y = marginTop + yGap*(i-1)+340,
         hud.board:insert(hud.iconMoney)
 
         viewManager.newText({
-            parent = hud.board, 
-            text = price, 
+            parent = hud.board,
+            text = price,
             x = display.contentWidth*0.19,
-            y = marginTop + yGap*(i-1)+340, 
+            y = marginTop + yGap*(i-1)+340,
             fontSize = 45,
             font = NUM_FONT,
             anchorX    = 0,
@@ -151,23 +150,23 @@ function scene:drawBoard()
 
         ------------------------------------------------
 
-        hud.separator = display.newImage( hud.board, "assets/images/icons/separateur.big.png")  
+        hud.separator = display.newImage( hud.board, "assets/images/icons/separateur.big.png")
         hud.separator.x = display.contentWidth*0.5
         hud.separator.y = marginTop + yGap*(i-1)+310,
         hud.board:insert(hud.separator)
 
         ------------------------------------------------
 
-        hud.iconCharity = display.newImage( hud.board, "assets/images/icons/charity.png")  
+        hud.iconCharity = display.newImage( hud.board, "assets/images/icons/charity.png")
         hud.iconCharity.x = display.contentWidth*0.64
         hud.iconCharity.y = marginTop + yGap*(i-1)+305,
         hud.board:insert(hud.iconCharity)
 
         viewManager.newText({
-            parent    = hud.board, 
-            text     = T "Charity", 
+            parent    = hud.board,
+            text     = T "Charity",
             x      = display.contentWidth*0.7,
-            y      = marginTop + yGap*(i-1)+270, 
+            y      = marginTop + yGap*(i-1)+270,
             fontSize   = 39,
             anchorX    = 0,
             anchorY    = 0.5,
@@ -175,10 +174,10 @@ function scene:drawBoard()
 
 
         viewManager.newText({
-            parent   = hud.board, 
-            text     = utils.convertAndDisplayPrice(lottery.charity, COUNTRY, lottery.rateUSDtoEUR), 
+            parent   = hud.board,
+            text     = utils.convertAndDisplayPrice(lottery.charity, COUNTRY, lottery.rateUSDtoEUR),
             x      = display.contentWidth*0.7,
-            y      = marginTop + yGap*(i-1)+315, 
+            y      = marginTop + yGap*(i-1)+315,
             fontSize   = 45,
             font     = NUM_FONT,
             anchorX    = 0,
@@ -188,15 +187,15 @@ function scene:drawBoard()
         ------------------------------------------------
 --
 --        local more = viewManager.newText({
---            parent    = hud.board, 
---            text     = "+ " .. T "See more", 
+--            parent    = hud.board,
+--            text     = "+ " .. T "See more",
 --            x      = display.contentWidth*0.5,
---            y      = marginTop + yGap*(i-1)+420, 
+--            y      = marginTop + yGap*(i-1)+420,
 --            fontSize   = 37,
 --            font     = NUM_FONT
 --        })
 
-        hud.seemore = display.newImage( hud.board, I "seemore.png")  
+        hud.seemore = display.newImage( hud.board, I "seemore.png")
         hud.seemore.x = display.contentWidth*0.5
         hud.seemore.y = marginTop + yGap*(i-1)+480
         hud.seemore.anchorY = 1
@@ -220,11 +219,11 @@ function scene:openMoreResults( lottery )
     local yGap  = display.contentHeight * 0.082
 
     local popup = viewManager.showPopup()
-    analytics.event("Gaming", "popupMoreResults") 
+    analytics.event("Gaming", "popupMoreResults")
 
     viewManager.newText({
-        parent = popup, 
-        text = T "Drawing" .. " " .. lotteryManager:date(lottery, true, true), 
+        parent = popup,
+        text = T "Drawing" .. " " .. lotteryManager:date(lottery, true, true),
         x = display.contentWidth*0.5,
         y = display.contentHeight * 0.11,
         fontSize = 40,
@@ -241,8 +240,8 @@ function scene:openMoreResults( lottery )
 
 
     viewManager.newText({
-        parent = popup, 
-        text = T "Total", 
+        parent = popup,
+        text = T "Total",
         x = display.contentWidth*0.45,
         y = display.contentHeight * 0.19,
         fontSize = 32,
@@ -250,8 +249,8 @@ function scene:openMoreResults( lottery )
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = T "winning Tickets", 
+        parent = popup,
+        text = T "winning Tickets",
         x = display.contentWidth*0.45,
         y = display.contentHeight * 0.22,
         fontSize = 32,
@@ -259,8 +258,8 @@ function scene:openMoreResults( lottery )
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = T "Prize / ", 
+        parent = popup,
+        text = T "Prize / ",
         x = display.contentWidth*0.77,
         y = display.contentHeight * 0.19,
         fontSize = 32,
@@ -268,8 +267,8 @@ function scene:openMoreResults( lottery )
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = T "Winning Ticket", 
+        parent = popup,
+        text = T "Winning Ticket",
         x = display.contentWidth*0.77,
         y = display.contentHeight * 0.22,
         fontSize = 32,
@@ -284,8 +283,8 @@ function scene:openMoreResults( lottery )
         hud.iconRang.y   = top + yGap * (i-1) - display.contentHeight*0.005
 
         viewManager.newText({
-            parent    = popup, 
-            text    = lottery.prizes[i].winners,     
+            parent    = popup,
+            text    = lottery.prizes[i].winners,
             x     = display.contentWidth*0.45,
             y     = top + yGap * (i-1) - display.contentHeight*0.005,
             fontSize   = 35,
@@ -294,8 +293,8 @@ function scene:openMoreResults( lottery )
         })
 
         viewManager.newText({
-            parent    = popup, 
-            text    = utils.convertAndDisplayPrice(lottery.prizes[i].share, COUNTRY, lottery.rateUSDtoEUR),     
+            parent    = popup,
+            text    = utils.convertAndDisplayPrice(lottery.prizes[i].share, COUNTRY, lottery.rateUSDtoEUR),
             x     = display.contentWidth*0.8,
             y     = top + yGap * (i-1) - display.contentHeight*0.005,
             fontSize   = 35,

@@ -30,7 +30,6 @@ function AppManager:start()
         SETTINGS_ID            = 'local'
         LOCAL_IP               = "192.168.0.9"
         -- LOCAL_IP               = "10.17.100.223"
-        MOBILE_SETTINGS_URL    = "http://" .. LOCAL_IP .. ":1337/api/mobile/settings/"
     else
         SETTINGS_ID            = 'dev'
         -- SETTINGS_ID            = 'stage-1.5'
@@ -198,14 +197,11 @@ function AppManager:deviceSetup()
 
         elseif event.type == "applicationStart" then
             native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
-            twitter.reconnect()
 
         elseif event.type == "applicationResume" then
 
-            print("----->  ON RESUME", vungle.vungleON, facebook.facebookON, twitter.twitterON, router.view)
+            print("----->  ON RESUME", vungle.vungleON, router.view)
             if( not vungle.vungleON
-            and not facebook.facebookON
-            and not twitter.twitterON
             and not (router.view == router.NO_INTERNET)
             and not (router.view == router.LOADING)
             and not (router.view == router.OUTSIDE)
@@ -216,7 +212,6 @@ function AppManager:deviceSetup()
                 print("RESET PLAYER")
                 native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
                 gameManager:open()
-                twitter.reconnect()
             end
         end
     end
@@ -362,8 +357,10 @@ function AppManager:getMobileSettings()
         print("DEV settings : local servers + FB adillions-localhost")
         APP_VERSION = 999
 
-        API_URL  = "http://" .. LOCAL_IP .. ":9000/"
-        WEB_URL  = "http://" .. LOCAL_IP .. ":9000/"
+        -- API_URL  = "http://" .. LOCAL_IP .. ":9000/"
+        -- WEB_URL  = "http://" .. LOCAL_IP .. ":9000/"
+        API_URL  = "http://adillions-play-stage.herokuapp.com/"
+        WEB_URL  = "http://adillions-play-stage.herokuapp.com/"
         NODE_URL = "http://" .. LOCAL_IP .. ":1337"
 
         FACEBOOK_APP_ID        = "293489340852840"
