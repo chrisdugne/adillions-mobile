@@ -785,8 +785,6 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:logout()
-    coronaFacebook.logout()
-    twitter.logout()
     gameManager.initGameData()
     router.openOutside()
 end

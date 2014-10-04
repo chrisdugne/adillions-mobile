@@ -1355,18 +1355,18 @@ function ShareManager:openFacebookPage(popup)
         timer.performWithDelay(5000, function()
             userManager:refreshBonusTickets(function()
 
-                    native.setActivityIndicator( false )
-                    self.checkingFBLike = false
+                native.setActivityIndicator( false )
+                self.checkingFBLike = false
 
-                    if(userManager.user.isFacebookFan) then
-                        if(popup.refresh) then
-                            popup.refresh()
-                        end
-                    else
-                        viewManager.message(T "You haven't liked our page :-(")
+                if(userManager.user.isFacebookFan) then
+                    if(popup.refresh) then
+                        popup.refresh()
                     end
+                else
+                    viewManager.message(T "You haven't liked our page :-(")
+                end
 
-                    self:moreTickets(popup)
+                self:moreTickets(popup)
 
             end)
         end)
@@ -1380,7 +1380,7 @@ function ShareManager:inviteFBFriends()
     local title         = utils.urlEncode(T "Try your luck on Adillions !")
     local message       = utils.urlEncode(T "It's a free, fun and responsible game")
 
-    local redirect_uri  = utils.urlEncode(API_URL.."backToMobile")
+    local redirect_uri  = utils.urlEncode(NODE_URL.."backToMobile")
     local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorCode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
 
     self.listener       = function(event) self:inviteListener(event) end
@@ -1395,11 +1395,11 @@ function ShareManager:inviteListener( event )
     if event.url then
         print (event.url)
 
-        if string.startsWith(event.url, API_URL .. "backToMobile?request=")
+        if string.startsWith(event.url, NODE_URL .. "backToMobile?request=")
             or string.startsWith(event.url, "https://m.facebook.com/home.php") then
             self:closeWebView()
 
-        elseif string.startsWith(event.url, API_URL .. "backToMobile") then
+        elseif string.startsWith(event.url, NODE_URL .. "backToMobile") then
 
             self:closeWebView()
             local params = utils.getUrlParams(event.url);

@@ -244,9 +244,9 @@ end
 
 -----------------------------------------------------------------------------------------
 
--- 1 login - updatedPlayer - checkThemeLiked : nil
+-- 1 login - refreshPlayer - checkThemeLiked : nil
 -- 2 nextlottery : false/true
--- 3 update - updatedPlayer - checkThemeLiked : false/true
+-- 3 update - refreshPlayer - checkThemeLiked : false/true
 function checkThemeLiked(next)
 
     print("checkThemeLiked", GLOBALS.savedData.facebookAccessToken)
