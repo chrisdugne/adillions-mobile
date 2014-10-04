@@ -98,7 +98,7 @@ function scene:prepareLotteryHeights(tickets)
     end
 
     -- reset
-    self.currentLottery         = nil
+    self.currentLottery = nil
 
 end
 
@@ -108,7 +108,7 @@ function scene:drawNextLottery()
 
     local marginLeft = display.contentWidth * 0.02
     local xGap       = display.contentWidth *0.1
-    local yGap       = display.contentHeight *0.08
+    local yGap       = display.contentHeight *0.07
     local top        = HEADER_HEIGHT + 80
 
     local nbNewTickets  = 0
@@ -118,31 +118,27 @@ function scene:drawNextLottery()
     for i = 1,#userManager.tickets do
 
         local ticket = userManager.tickets[i]
-
         if(ticket.lottery.uid == lotteryManager.nextLottery.uid) then
 
-            local numbers  = json.decode(ticket.numbers)
-            nbNewTickets  = nbNewTickets + 1
-
-            if(type(ticket.lottery.theme) == "string") then ticket.lottery.theme = json.decode(ticket.lottery.theme) end
+            local numbers  = ticket.numbers
+            nbNewTickets = nbNewTickets + 1
 
             if(self.currentLottery ~= ticket.lottery.uid) then
 
                 -----
                 -- juste pour le premier ticket du coup.
 
-                self.currentLottery     = ticket.lottery.uid
-                self.nbLotteries        = 1
-                self.nbTickets         = self.lotteries[self.currentLottery].nbTickets
-
-                borderHeight   = yGap + yGap*self.nbTickets + 20
+                self.currentLottery = ticket.lottery.uid
+                self.nbLotteries    = 1
+                self.nbTickets      = self.lotteries[self.currentLottery].nbTickets
+                borderHeight        = yGap + yGap*self.nbTickets + 20
 
                 viewManager.drawBorder(
                     hud.board,
-                    display.contentWidth*0.5,             -- x
-                    top + (yGap)*(nbNewTickets+self.nbLotteries-2) + borderHeight/2 - 55,  -- y
-                    display.contentWidth*0.95,             -- width
-                    borderHeight,                 -- height
+                    display.contentWidth*0.5,                                               -- x
+                    top + (yGap)*(nbNewTickets+self.nbLotteries-2) + borderHeight/2 - 55,   -- y
+                    display.contentWidth*0.95,                                              -- width
+                    borderHeight,                                                           -- height
                     240,240,240
                 )
 

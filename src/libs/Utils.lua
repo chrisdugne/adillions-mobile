@@ -224,6 +224,11 @@ end
 
 -----------------------------------------------------------------------------------------
 
+function appendToTable(table, toAppend)
+    local L = #table
+    for k,v in pairs(toAppend) do table[k + L] = v end
+end
+
 function joinTables(t1, t2)
 
     local result = {}
@@ -340,18 +345,21 @@ function request(url, method, next)
     local headers = {}
     local authToken = ''
 
-    if (GLOBALS.savedData) then
+    if (GLOBALS.savedData and GLOBALS.savedData.authToken) then
         authToken = GLOBALS.savedData.authToken
     end
 
+    if (DEV) then
+        authToken = 'b5a8d743-9317-4f37-9537-0787fa245f19'
+        print('DEV bearer : ' .. authToken)
+        print(url)
+    end
+
     headers["X-Auth-Token"] = authToken
-    headers["Authorization"] = 'Bearer ' .. (GLOBALS.savedData.authToken or '')
+    headers["Authorization"] = 'Bearer ' .. authToken
 
     local params = {}
     params.headers = headers
-
-    utils.tprint(params)
-    print(url)
 
     network.request( url, method, next, params)
 

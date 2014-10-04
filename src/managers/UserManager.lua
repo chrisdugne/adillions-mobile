@@ -10,8 +10,6 @@ function UserManager:new()
         user               = {},
         attemptFBPlayer    = 0,       -- attemptFBPlayer pour compter les getPlayerByFacebookId pour android reco apres retour app
         attemptFetchPlayer = 0,
-
-        userHasReceivedBonus = false    -- while receiving BT and IT, set to true. One updatedPlayer after all bonus are received
     }
 
     setmetatable(object, { __index = UserManager })
@@ -74,12 +72,6 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
             end)
         end
     end)
-end
-
---------------------------------------------------------------------------------
-
-function UserManager:refreshPlayer()
-    gameManager:open()
 end
 
 --------------------------------------------------------------------------------
@@ -203,7 +195,12 @@ function UserManager:loadMoreTickets(skip, next)
             end
         end
 
-        userManager.tickets = tickets
+        if(not userManager.tickets) then
+            userManager.tickets = {}
+        end
+
+        utils.appendToTable(userManager.tickets, tickets)
+
         next(tickets)
     end)
 end
@@ -253,18 +250,17 @@ function UserManager:receivedPlayer(player, next)
     native.setActivityIndicator( false )
 
     if(next == router.openHome) then
-        sponsorpayTools:init(player.uid)
         viewManager.message(T "Welcome" .. " " .. player.userName .. " !")
     end
 
-    self:updatedPlayer(player, next)
+    self:refreshPlayer(player, next)
 end
 
 --------------------------------------------------------------------------------
 
-function UserManager:updatedPlayer(player, next)
+function UserManager:refreshPlayer(player, next)
 
-    print("------------------------ updatedPlayer ")
+    print("------------------------ refreshPlayer ")
 
     ------------------------------------------------------------------
     -- backup transient data
@@ -327,8 +323,6 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:refreshBonusTickets(next)
-
-    print("-------------------------- refreshBonusTickets ")
     self.user.fanBonusTickets       = 0
     self.user.charityBonusTickets   = 0
     self.user.ambassadorBonusTickets   = 0
@@ -337,15 +331,6 @@ function UserManager:refreshBonusTickets(next)
     self:setAmbassadorBonus()
 
     next()
-
-    -- self:checkFanStatus(function()
-    --     --- NOTE : pour remettre le OG theme il faut virer le next d'ici et decommenter checkThemeLiked
-    --     -- facebook.checkThemeLiked(next)
-    --     if(next) then
-    --         next()
-    --     end
-    -- end)
-
 end
 
 --------------------------------------------------------------------------------
@@ -632,29 +617,15 @@ end
 
 --------------------------------------------------------------------------------
 
-function UserManager:giveToCharity(next)
-    viewManager.closePopup(popup)
-
-    print("giveToCharity")
-    if(next)then  print("next ready") end
-    utils.postWithJSON({},
-    API_URL .. "giveToCharity",
-    function(result)
-        userManager:updatePlayer(next)
-    end
-    )
-
-end
-
 function UserManager:cashout(next)
     viewManager.closePopup(popup)
 
-    utils.postWithJSON({},
-    API_URL .. "cashout",
-    function(result)
-        userManager:updatePlayer(next)
-    end
-    )
+    -- TODO
+    -- utils.postWithJSON({},
+    -- API_URL .. "cashout",
+    -- function(result)
+    --     userManager:updatePlayer(next)
+    -- end)
 
 end
 
@@ -674,9 +645,8 @@ function UserManager:storeLotteryTicket(numbers)
         native.setActivityIndicator( false )
         local player = json.decode(result.response)
         if(player) then
-            utils.tprint(player)
             lotteryManager.wasExtraTicket = extraTicket
-            userManager:receivedPlayer(player, function()
+            userManager:refreshPlayer(player, function()
                 lotteryManager:showLastTicket()
             end)
         else
@@ -703,101 +673,17 @@ end
 
 function UserManager:updatePlayer(next)
 
-    print("------------- updatePlayer ")
     self.user.lang = LANG
-    self.userBackup = {}
-
-    -- themeLiked is only client side, and fetched at startup
-    self.userBackup.themeLiked = self.user.themeLiked
 
     utils.postWithJSON({
         user = self.user,
     },
     API_URL .. "updatePlayer",
     function(result)
-
         local player = json.decode(result.response)
-
-        if(player) then
-            player.themeLiked = self.userBackup.themeLiked
-            userManager:updatedPlayer(player, next)
-        else
-            print("multiFB")
-            analytics.event("Social", "multiFB")
-
-            -- cancel FB connection
-            self.user.facebookId     = nil
-            GLOBALS.savedData.user.facebookId   = nil
-            GLOBALS.savedData.user.facebookName   = nil
-            GLOBALS.savedData.facebookAccessToken  = nil
-            utils.saveTable(GLOBALS.savedData, "savedData.json")
-
-            self:showMultiAccountPopup(next)
-        end
-
-
+        userManager:refreshPlayer(player, next)
     end)
 
-end
-
---------------------------------------------------------------------------------
-
-function UserManager:showMultiAccountPopup(next)
-
-    local popup = viewManager.showPopup()
-
-    popup.shareIcon     = display.newImage( popup, "assets/images/icons/PictoInfo.png")
-    popup.shareIcon.x    = display.contentWidth*0.5
-    popup.shareIcon.y   = display.contentHeight*0.22
-
-    popup.shareText     = display.newImage( popup, I "important.png")
-    popup.shareText.x    = display.contentWidth*0.5
-    popup.shareText.y   = display.contentHeight*0.32
-
-    -------------------------------------------------------
-
-    local text1 = facebook.data.name .. "'s Facebook account is already an Adillions user"
-    if(LANG == "fr") then text1 = "Le compte Facebook " .. facebook.data.name .. " est \n déjà un utilisateur d’Adillions" end
-
-    popup.multiLineText = display.newText({
-        parent = popup,
-        text   = text1,
-        width  = display.contentWidth*0.6,
-        height  = display.contentHeight*0.25,
-        x    = display.contentWidth*0.5,
-        y    = display.contentHeight*0.5,
-        font   = FONT,
-        fontSize = 38,
-        align  = "center",
-    })
-
-    popup.multiLineText2 = display.newText({
-        parent = popup,
-        text   = T "If this is not your Facebook account, you must log out this Facebook session on your device and log in with your own Facebook profile in order to connect your accounts",
-        width  = display.contentWidth*0.6,
-        height  = display.contentHeight*0.25,
-        x    = display.contentWidth*0.5,
-        y    = display.contentHeight*0.63,
-        font   = FONT,
-        fontSize = 38,
-        align  = "center",
-    })
-
-    popup.multiLineText:setFillColor(0)
-    popup.multiLineText2:setFillColor(0)
-
-    -------------------------------------------------------
-
-    popup.close     = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x    = display.contentWidth*0.5
-    popup.close.y    = display.contentHeight*0.83
-
-    utils.onTouch(popup.close, function()
-        viewManager.closePopup(popup)
-        if(next) then
-            next()
-        end
-    end)
 end
 
 --------------------------------------------------------------------------------
@@ -845,36 +731,6 @@ function UserManager:updateFanStatus(next, notifyFBBonus, notifyTWBonus)
         end
 
     end)
-end
-
---------------------------------------------------------------------------------
-
-function UserManager:twitterConnection(twitterId, twitterName, next)
-
-    GLOBALS.savedData.user.twitterId        = twitterId
-    GLOBALS.savedData.user.twitterName      = twitterName
-
-    utils.saveTable(GLOBALS.savedData, "savedData.json")
-
-    self.user.twitterId   = twitterId
-    self.user.twitterName  = twitterName
-
-    self:updatePlayer(next)
-end
-
---------------------------------------------------------------------------------
-
-function UserManager:mergePlayerWithFacebook(next)
-
-    GLOBALS.savedData.user.facebookId   = facebook.data.id
-    GLOBALS.savedData.user.facebookName   = facebook.data.name
-
-    utils.saveTable(GLOBALS.savedData, "savedData.json")
-
-    self.user.facebookId  = facebook.data.id
-    self.user.facebookName  = facebook.data.name
-
-    self:updatePlayer(next)
 end
 
 --------------------------------------------------------------------------------
@@ -940,17 +796,9 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:checkNotifications()
-
-    self.userHasReceivedBonus = false
-
     self:notifyPrizes(function()
         self:notifyStocks(function()
             self:notifyInstants(function()
-
-                if(self.userHasReceivedBonus) then
-                    self:updatePlayer()
-                end
-
             end)
         end)
     end)
@@ -1099,7 +947,7 @@ function UserManager:giftInstants(nbInstants, next)
     self.user.idlePoints = self.user.idlePoints + nbInstants
 
     self:notifyInstants(function()
-        self:updatePlayer()
+        self:updatePlayer() --  to store extraTickets
         if(next) then
             next()
         end
@@ -1184,7 +1032,6 @@ function UserManager:notifyInstants(next)
 
         self.user.extraTickets    = self.user.extraTickets + self.user.idlePoints
         self.user.idlePoints      = 0
-        self.userHasReceivedBonus = true
 
         next()
     end

@@ -1398,16 +1398,6 @@ function ShareManager:inviteListener( event )
         if string.startsWith(event.url, API_URL .. "backToMobile?request=")
             or string.startsWith(event.url, "https://m.facebook.com/home.php") then
             self:closeWebView()
-            --      if(not userManager.user.hasInvitedOnFacebook) then
-            --       timer.performWithDelay(800, function()
-            --         viewManager.showPoints(NB_POINTS_PER_FB_INVITATION)
-            --         userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_FB_INVITATION
-            --         userManager.user.hasInvitedOnFacebook = true
-            --         userManager:updatePlayer()
-            --         userManager:checkIdlePoints()
-            --       end)
-            --
-            --      end
 
         elseif string.startsWith(event.url, API_URL .. "backToMobile") then
 

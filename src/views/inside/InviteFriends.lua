@@ -6,10 +6,10 @@ local scene = storyboard.newScene()
 
 -----------------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
--- 
+--
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --   unless storyboard.removeScene() is called.
--- 
+--
 -----------------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
@@ -40,26 +40,15 @@ function scene:inviteListener( event )
 
         if string.startsWith(event.url, API_URL .. "backToMobile?request=")
         or string.startsWith(event.url, "https://m.facebook.com/home.php") then
-            self:closeWebView()   
-            if(self.next) then  
+            self:closeWebView()
+            if(self.next) then
                 self.next()
             end
 
-            --      if(not userManager.user.hasInvitedOnFacebook) then
-            --       timer.performWithDelay(800, function()
-            --         viewManager.showPoints(NB_POINTS_PER_FB_INVITATION)
-            --         userManager.user.currentPoints = userManager.user.currentPoints + NB_POINTS_PER_FB_INVITATION
-            --         userManager.user.hasInvitedOnFacebook = true
-            --         userManager:updatePlayer()
-            --         userManager:checkIdlePoints()
-            --       end)
-            --
-            --      end 
-
         elseif string.startsWith(event.url, API_URL .. "backToMobile") then
 
-            self:closeWebView()      
-            if(self.next) then  
+            self:closeWebView()
+            if(self.next) then
                 self.next()
             end
             local params = utils.getUrlParams(event.url);

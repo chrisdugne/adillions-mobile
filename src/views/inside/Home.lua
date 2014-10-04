@@ -69,20 +69,6 @@ end
 
 function scene:drawNextLottery( waitingForDrawing )
 
---    userManager:giftStock(2, function()
---        userManager:showStatus()
---    end)
-
---    userManager.user.notifications.prizes = 22.3
---    userManager.user.notifications.prizesUSD = 32.3
---    userManager:notifyPrizes()
-
---    userManager.user.notifications.instants = 2
---    userManager:notifyInstants()
-
---    lotteryManager.currentSelection = {1,2,3,4,5,6}
---    lotteryManager:showLastTicket()
-
     if(router.view ~= router.HOME) then
         return
     end

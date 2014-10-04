@@ -4,21 +4,16 @@
 --
 --------------------------------------------------------------------------------
 --- Corona's libraries
-coronaFacebook      = require "facebook"
 json                = require "json"
 storyboard          = require "storyboard"
 widget              = require "widget"
-sponsorpay          = require "plugin.sponsorpay"
 ads                 = require "ads"
 
 ---- Additional libs
 xml                 = require "src.libs.Xml"
 utils               = require "src.libs.Utils"
 time                = require "src.libs.Time"
-facebook            = require "src.libs.Facebook"
 vungle              = require "src.libs.Vungle"
-sponsorpayTools     = require "src.libs.SponsorpayTools"
-twitter             = require "src.libs.Twitter"
 analytics           = require "src.libs.google.Analytics"
 
 --------------------------------------------------------------------------------

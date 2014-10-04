@@ -880,87 +880,11 @@ function scene:openCashout()
 
     end
 
-    -- if(userManager.user.balance > 0) then
-    --    hud.giveToCharity     = display.newImage( popup, I "donate.on.png")
-    --    hud.giveToCharity.x     = display.contentWidth*0.5
-    --      hud.giveToCharity.y    = display.contentHeight*0.73
-    --    utils.onTouch(hud.giveToCharity, function() self.openGiveToCharity() end)
-    --   else
-    --  hud.giftDisabled      = display.newImage( popup, I "donate.off.png")
-    --  hud.giftDisabled.x     = display.contentWidth*0.5
-    --      hud.giftDisabled.y    = display.contentHeight*0.73
-    -- end
-
-
     ----------------------------------------------------------------------------
 
     popup.close         = display.newImage( popup, I "popup.Bt_close.png")
     popup.close.x       = display.contentWidth*0.5
     popup.close.y       = display.contentHeight*0.86
-
-    utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
-
-end
-
---------------------------------------------------------------------------------
-
-function scene:openGiveToCharity()
-
-    -----------------------------------
-
-    local popup = viewManager.showPopup()
-    analytics.event("Gaming", "openGiveToCharity")
-
-    ----------------------------------------------------------------------------
-
-    popup.shareIcon         = display.newImage( popup, "assets/images/icons/PictoCoeur.png")
-    popup.shareIcon.x       = display.contentWidth*0.5
-    popup.shareIcon.y       = display.contentHeight*0.15
-
-    popup.thanks            = display.newImage( popup, I "thanks.png")
-    popup.thanks.x          = display.contentWidth*0.5
-    popup.thanks.y          = display.contentHeight*0.23
-
-    ----------------------------------------------------------------------------
-    --
-    --   local multiLineText = display.newMultiLineText
-    --     {
-    --           text = T "Your winnings will be donated to Adillions Solidarity \n and Sustainable Development Fund \n \n \n Soon users will be able to \n directly choose their own charity …",
-    --           width = display.contentWidth*0.8,
-    --           left = display.contentWidth*0.5,
-    --           font = FONT,
-    --           fontSize = 40,
-    --           align = "center"
-    --     }
-    --
-    -- multiLineText.anchorX = 0.5
-    -- multiLineText.anchorY = 0
-    -- multiLineText.x = display.contentWidth*0.5
-    -- multiLineText.y = display.contentHeight*0.3
-    -- popup:insert(multiLineText)
-
-    ----------------------------------------------------------------------------
-
-    hud.giveToCharity     = display.newImage( popup, I "confirm.png")
-    hud.giveToCharity.x     = display.contentWidth*0.5
-    hud.giveToCharity.y    = display.contentHeight*0.7
-
-    local refresh = function() scene:refreshScene() end
-
-    utils.onTouch(hud.giveToCharity, function()
-        analytics.event("Gaming", "giveToCharity")
-        userManager:giveToCharity(function()
-            router.resetScreen()
-            refresh()
-            viewManager.message(T "Thank you" .. "!")
-        end)
-    end)
-
-    ----------------------------------------------------------------------------
-
-    popup.close     = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x    = display.contentWidth*0.5
-    popup.close.y    = display.contentHeight*0.86
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
