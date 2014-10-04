@@ -57,13 +57,12 @@ function scene:refreshScene()
             hud.bg               = display.newImage( hud, "assets/images/hud/home/BG_adillions.png")
             hud.playTicketButton = display.newImage( hud, I "filloutticket.button.png")
 
-            hud.bg.x = display.contentWidth*0.5
-            hud.bg.y = display.contentHeight*0.5
+            hud.bg.x               = display.contentWidth*0.5
+            hud.bg.y               = display.contentHeight*0.5
             hud.playTicketButton.x = display.contentWidth*0.5
             hud.playTicketButton.y = display.contentHeight*0.5
 
             utils.onTouch(hud.playTicketButton, function()
-                print('qwdfsvd')
                 gameManager:play()
             end)
 
@@ -159,7 +158,7 @@ function scene:drawNextLottery()
         end
     end
 
-    self.nextLotteryTop = top + borderHeight + 20
+    self.nextLotteryTop = top + borderHeight - 170
 
 end
 
@@ -167,18 +166,12 @@ end
 
 function scene:drawPreviousLotteries(tickets)
 
-    ------------------
-
     local marginLeft = display.contentWidth * 0.02
-    local xGap =  display.contentWidth *0.1
-    local yGap =  display.contentHeight *0.17
-
-    ------------------
+    local xGap       = display.contentWidth *0.1
+    local yGap       = display.contentHeight *0.17
 
     for i = 1,#tickets do
-
-        local ticket = tickets[i]
-        self:drawTicket(ticket, marginLeft, xGap, yGap)
+        self:drawTicket(tickets[i], marginLeft, xGap, yGap)
     end
 
 end
@@ -195,8 +188,6 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
 
         local numbers  = ticket.numbers
         self.nbPreviousTickets = self.nbPreviousTickets + 1
-
-        -- if(type(ticket.lottery.theme) == "string") then ticket.lottery.theme = json.decode(ticket.lottery.theme) end
 
         -----------------------------------------------------------
 
@@ -242,13 +233,13 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
         -----------------------------------------------------------
 
         viewManager.newText({
-            parent = hud.board,
-            text = T "Winnings" .. " :",
-            x = display.contentWidth*0.1,
-            y = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
+            parent   = hud.board,
+            text     = T "Winnings" .. " :",
+            x        = display.contentWidth*0.1,
+            y        = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
             fontSize = 34,
-            anchorX    = 0,
-            anchorY    = 0.5,
+            anchorX  = 0,
+            anchorY  = 0.5,
         })
 
         -----------------------------------------------------------
@@ -259,34 +250,32 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
             -- waiting for the drawing
 
             viewManager.newText({
-                parent = hud.board,
-                text = "?",
-                x = display.contentWidth*0.87,
-                y = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
+                parent   = hud.board,
+                text     = "?",
+                x        = display.contentWidth*0.87,
+                y        = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
                 fontSize = 37,
-                font = NUM_FONT,
-                anchorX    = 1,
-                anchorY    = 0.5,
+                font     = NUM_FONT,
+                anchorX  = 1,
+                anchorY  = 0.5,
             })
 
         else
             if(ticket.bonus) then
-
-                if type(ticket.bonus) == "string" then ticket.bonus = json.decode(ticket.bonus) end
 
                 ---------------------------------------------------------------------
                 -- Stocks (BT)
 
                 if(tonumber(ticket.bonus.stocks) > 0) then
                     viewManager.newText({
-                        parent = hud.board,
-                        text =  ticket.bonus.stocks,
-                        x = display.contentWidth*0.87,
-                        y = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
+                        parent   = hud.board,
+                        text     = ticket.bonus.stocks,
+                        x        = display.contentWidth*0.87,
+                        y        = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
                         fontSize = 37,
-                        font = NUM_FONT,
-                        anchorX    = 1,
-                        anchorY    = 0.5,
+                        font     = NUM_FONT,
+                        anchorX  = 1,
+                        anchorY  = 0.5,
                     })
 
                     local iconMoney  = display.newImage( hud.board, "assets/images/icons/notification/stocks.popup.png")
@@ -300,19 +289,19 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
                     -- Instants (IT)
 
                     viewManager.newText({
-                        parent = hud.board,
-                        text =  ticket.bonus.instants,
-                        x = display.contentWidth*0.87,
-                        y = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
+                        parent   = hud.board,
+                        text     = ticket.bonus.instants,
+                        x        = display.contentWidth*0.87,
+                        y        = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
                         fontSize = 37,
-                        font = NUM_FONT,
-                        anchorX    = 1,
-                        anchorY    = 0.5,
+                        font     = NUM_FONT,
+                        anchorX  = 1,
+                        anchorY  = 0.5,
                     })
 
-                    local iconMoney  = display.newImage( hud.board, "assets/images/icons/notification/instants.popup.png")
-                    iconMoney.x   = display.contentWidth*0.92
-                    iconMoney.y    = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.08)
+                    local iconMoney = display.newImage( hud.board, "assets/images/icons/notification/instants.popup.png")
+                    iconMoney.x     = display.contentWidth*0.92
+                    iconMoney.y     = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.08)
                     iconMoney:scale(0.5,0.5)
                     hud.board:insert(iconMoney)
                 end
@@ -326,33 +315,33 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
                     local price = utils.convertAndDisplayPrice(ticket.price, COUNTRY, ticket.lottery.rateUSDtoEUR)
 
                     viewManager.newText({
-                        parent = hud.board,
-                        text =  price,
-                        x = display.contentWidth*0.87,
-                        y = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
+                        parent   = hud.board,
+                        text     = price,
+                        x        = display.contentWidth*0.87,
+                        y        = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
                         fontSize = 37,
-                        font = NUM_FONT,
-                        anchorX    = 1,
-                        anchorY    = 0.5,
+                        font     = NUM_FONT,
+                        anchorX  = 1,
+                        anchorY  = 0.5,
 
                     })
 
-                    local iconMoney  = display.newImage( hud.board, "assets/images/icons/money.png")
-                    iconMoney.x   = display.contentWidth*0.92
-                    iconMoney.y    = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.12)
+                    local iconMoney = display.newImage( hud.board, "assets/images/icons/money.png")
+                    iconMoney.x     = display.contentWidth*0.92
+                    iconMoney.y     = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.12)
                     hud.board:insert(iconMoney)
                 else
                     --- no price, no bonus : '-'
 
                     viewManager.newText({
-                        parent = hud.board,
-                        text =  '-',
-                        x = display.contentWidth*0.92,
-                        y = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
+                        parent   = hud.board,
+                        text     = '-',
+                        x        = display.contentWidth*0.92,
+                        y        = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
                         fontSize = 37,
-                        font = NUM_FONT,
-                        anchorX    = 1,
-                        anchorY    = 0.5,
+                        font     = NUM_FONT,
+                        anchorX  = 1,
+                        anchorY  = 0.5,
 
                     })
                 end
