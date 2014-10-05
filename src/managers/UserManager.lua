@@ -31,26 +31,27 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
         else
             local response = json.decode(result.response)
 
-            lotteryManager.global                   = response.global
-            lotteryManager.global.appStatus         = lotteryManager.global.appStatus
-            lotteryManager.global.tweet             = lotteryManager.global.tweet
-            lotteryManager.global.tweetTheme        = lotteryManager.global.tweetTheme
-            lotteryManager.global.tweetShare        = lotteryManager.global.tweetShare
-            lotteryManager.global.fbPost            = lotteryManager.global.fbPost
-            lotteryManager.global.fbPostTheme       = lotteryManager.global.fbPostTheme
-            lotteryManager.global.fbSharePrize      = lotteryManager.global.fbSharePrize
-            lotteryManager.global.sms               = lotteryManager.global.sms
-            lotteryManager.global.email             = lotteryManager.global.email
-            lotteryManager.global.text48h           = lotteryManager.global.text48h
-            lotteryManager.global.text3min          = lotteryManager.global.text3min
-            lotteryManager.global.lastUpdatedPrizes = lotteryManager.global.lastUpdatedPrizes
+            lotteryManager.globals                   = response.globals
+            lotteryManager.globals.appStatus         = lotteryManager.globals.appStatus
+            lotteryManager.globals.tweet             = lotteryManager.globals.tweet
+            lotteryManager.globals.tweetTheme        = lotteryManager.globals.tweetTheme
+            lotteryManager.globals.tweetShare        = lotteryManager.globals.tweetShare
+            lotteryManager.globals.fbPost            = lotteryManager.globals.fbPost
+            lotteryManager.globals.fbPostTheme       = lotteryManager.globals.fbPostTheme
+            lotteryManager.globals.fbSharePrize      = lotteryManager.globals.fbSharePrize
+            lotteryManager.globals.sms               = lotteryManager.globals.sms
+            lotteryManager.globals.email             = lotteryManager.globals.email
+            lotteryManager.globals.text48h           = lotteryManager.globals.text48h
+            lotteryManager.globals.text3min          = lotteryManager.globals.text3min
+            lotteryManager.globals.lastUpdatedPrizes = lotteryManager.globals.lastUpdatedPrizes
 
-            lotteryManager.global.minEuro           = lotteryManager.global.minMoney.euro
-            lotteryManager.global.minUSD            = lotteryManager.global.minMoney.usd
+            lotteryManager.globals.minEuro           = lotteryManager.globals.minMoney.euro
+            lotteryManager.globals.minUSD            = lotteryManager.globals.minMoney.usd
+
+            VERSION_REQUIRED                        = lotteryManager.globals.versionRequired
+            bannerManager.banners                   = lotteryManager.globals.banners
 
             time.setServerTime(response.serverTime)
-            VERSION_REQUIRED                        = response.global.versionRequired
-            bannerManager.banners                   = lotteryManager.global.banners
 
             utils.get( NODE_URL .. "/api/charity/levels", function(result)
 
@@ -74,7 +75,6 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:fetchPlayer()
-
     native.setActivityIndicator( true )
 
     userManager.user.fanBonusTickets        = 0
@@ -114,6 +114,8 @@ function UserManager:fetchPlayer()
                 router.openOutside()
 
             else
+                print('-------------')
+                utils.tprint(player)
                 userManager:receivedPlayer(player, function()
                     router.openHome()
                 end)
@@ -451,29 +453,28 @@ end
 function UserManager:storeLotteryTicket(numbers)
 
     native.setActivityIndicator( true )
-    local extraTicket = self.user.extraTickets > 0
 
-    utils.post( API_URL .. "storeLotteryTicket", {
-        numbers     = numbers,
-        extraTicket = extraTicket
+    utils.post( NODE_URL .. "/api/ticket/", {
+        numbers = numbers,
     },
     function(result)
         native.setActivityIndicator( false )
-        local player = json.decode(result.response)
-        if(player) then
-            lotteryManager.wasExtraTicket = extraTicket
-            userManager:refreshPlayer(player, function()
-                lotteryManager:showLastTicket()
-            end)
-        else
+        local response = json.decode(result.response)
+        if(response == 'too late') then
             gameManager:open()
             viewManager.message(T "Waiting for drawing")
+        else
+            print('ticket stored', response)
+            utils.tprint(response)
+            -- userManager:refreshPlayer(response, function()
+            --     lotteryManager:showLastTicket()
+            -- end)
         end
     end)
 
     --- just to be sync waiting the post result
     -- updating availableTickets DURING popup display
-    if(extraTicket) then
+    if(self.user.extraTickets > 0) then
         self.user.extraTickets = self.user.extraTickets - 1
     end
 
@@ -523,16 +524,8 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:checkTicketTiming()
-
-    local lastTime  = 0
+    local lastTime  = self.user.lastTicketTime
     local now       = time.now()
-
-    for i = 1,#userManager.tickets do
-        local ticket = userManager.tickets[i]
-        if((self.user.currentLotteryUID == ticket.lottery.uid) and (ticket.creationDate > lastTime) and (ticket.type == 1)) then
-            lastTime = ticket.creationDate
-        end
-    end
 
     local spentMillis = now - lastTime
     local h,m,s,ms = utils.getHoursMinSecMillis(spentMillis)
@@ -1003,7 +996,7 @@ function UserManager:openPrizes()
 
     ---------------------------------------------------------------
 
-    local lastUpdatedPrizes = translate(lotteryManager.global.lastUpdatedPrizes)
+    local lastUpdatedPrizes = translate(lotteryManager.globals.lastUpdatedPrizes)
 
     viewManager.newText({
         parent      = popup,

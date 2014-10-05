@@ -8,10 +8,10 @@ local scene = storyboard.newScene()
 
 -----------------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
--- 
+--
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --   unless storyboard.removeScene() is called.
--- 
+--
 -----------------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
@@ -32,11 +32,11 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
-    hud.headerRect.x = display.viewableContentWidth*0.5 
+    hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)
+    hud.headerRect.x = display.viewableContentWidth*0.5
     hud.headerRect.y = HEADER_HEIGHT*0.5
 
-    hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
+    hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")
     hud.logo.x = display.contentWidth*0.5
     hud.logo.y = HEADER_HEIGHT*0.5
 
@@ -48,7 +48,7 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.options     = display.newImage( hud, I "info.Options.png")  
+    hud.options     = display.newImage( hud, I "info.Options.png")
     hud.options.x   = self.column1
     hud.options.y   = self.top
 
@@ -56,7 +56,7 @@ function scene:refreshScene()
         self:openOptions()
     end)
 
-    hud.tutorial    = display.newImage( hud, I "info.Tutorial.png")  
+    hud.tutorial    = display.newImage( hud, I "info.Tutorial.png")
     hud.tutorial.x       = self.column2
     hud.tutorial.y   = self.top
 
@@ -66,27 +66,27 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.prize     = display.newImage( hud, I "info.Prize.png")  
+    hud.prize     = display.newImage( hud, I "info.Prize.png")
     hud.prize.x    = self.column1
     hud.prize.y    = self.top + self.yGap
 
     utils.onTouch(hud.prize, function()
-        analytics.event("Links", "prizes") 
+        analytics.event("Links", "prizes")
         userManager:openPrizes()
     end)
 
-    hud.rewards    = display.newImage( hud, I "info.Rewards.png")  
+    hud.rewards    = display.newImage( hud, I "info.Rewards.png")
     hud.rewards.x    = self.column2
     hud.rewards.y   = self.top + self.yGap
 
     utils.onTouch(hud.rewards, function()
-        analytics.event("Links", "rewards") 
+        analytics.event("Links", "rewards")
         shareManager:openRewards1()
     end)
 
     ------------------
 
-    hud.contact    = display.newImage( hud, I "info.Contact.png")  
+    hud.contact    = display.newImage( hud, I "info.Contact.png")
     hud.contact.x    = self.column1
     hud.contact.y   = self.top + self.yGap * 2
 
@@ -94,7 +94,7 @@ function scene:refreshScene()
         self:openContact()
     end)
 
-    hud.faq        = display.newImage( hud, I "info.Faq.png")  
+    hud.faq        = display.newImage( hud, I "info.Faq.png")
     hud.faq.x     = self.column2
     hud.faq.y    = self.top + self.yGap * 2
 
@@ -103,12 +103,12 @@ function scene:refreshScene()
 
         viewManager.openWeb(API_URL .. "mfaq?lang=" .. LANG, function(event)
             print(event.url)
-        end) 
+        end)
     end)
 
     ------------------
 
-    hud.terms     = display.newImage( hud, I "info.Terms.png")  
+    hud.terms     = display.newImage( hud, I "info.Terms.png")
     hud.terms.x    = self.column1
     hud.terms.y    = self.top + self.yGap * 3
 
@@ -119,32 +119,32 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.privacy    = display.newImage( hud, I "info.Privacy.png")  
+    hud.privacy    = display.newImage( hud, I "info.Privacy.png")
     hud.privacy.x    = self.column2
     hud.privacy.y   = self.top + self.yGap * 3
 
     utils.onTouch(hud.privacy, function()
-        analytics.event("Links", "privacy") 
+        analytics.event("Links", "privacy")
         viewManager.openWeb(API_URL .. "mprivacy?lang=" .. LANG, function(event)
             print(event.url)
-        end) 
+        end)
     end)
 
     ------------------
     --
-    --    hud.write     = display.newImage( hud, I "info.Write.png")  
+    --    hud.write     = display.newImage( hud, I "info.Write.png")
     --    hud.write.x    = display.contentWidth * 0.5
     --    hud.write.y    = self.top + self.yGap * 4
     --
     --    utils.onTouch(hud.write, function()
-    --        analytics.event("Links", "writeReview") 
+    --        analytics.event("Links", "writeReview")
     --        local options =
     --        {
     --            iOSAppId = "739060819",
     --            androidAppPackageName = "com.adillions.v1",
     --            supportedAndroidStores = { "google" },
     --        }
-    --        native.showPopup("appStore", options) 
+    --        native.showPopup("appStore", options)
     --    end)
 
     ---------------------------------------------------------------------------------
@@ -182,8 +182,8 @@ function scene:openTerms()
     --------------------------
 
     hud.textImportant = display.newText(
-        popup, 
-        "Important", 
+        popup,
+        "Important",
         0, 0, display.contentWidth*0.8, display.contentHeight*0.25, NUM_FONT, 35 )
 
     hud.textImportant.x = display.contentWidth*0.5
@@ -191,8 +191,8 @@ function scene:openTerms()
     hud.textImportant:setFillColor(0)
 
     hud.text = display.newText(
-        popup, 
-        T "Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.", 
+        popup,
+        T "Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.",
         0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
 
     hud.text.x = display.contentWidth*0.5
@@ -203,8 +203,8 @@ function scene:openTerms()
     if(ANDROID) then company = "Google Inc " end
 
     hud.text2 = display.newText(
-        popup, 
-        company .. (T "is not an organizer, a co-organizer or a partner of Adillions. ") .. company .. (T "is not involved in any way in the organization of the Adillions lottery and does not sponsor it."), 
+        popup,
+        company .. (T "is not an organizer, a co-organizer or a partner of Adillions. ") .. company .. (T "is not involved in any way in the organization of the Adillions lottery and does not sponsor it."),
         0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
 
     hud.text2.x = display.contentWidth*0.5
@@ -217,10 +217,10 @@ function scene:openTerms()
     popup.keyrules.x   = display.contentWidth*0.5
     popup.keyrules.y   = display.contentHeight*0.65
 
-    utils.onTouch(popup.keyrules, function() 
+    utils.onTouch(popup.keyrules, function()
         viewManager.openWeb(API_URL .. "mkeyrules?lang=" .. LANG, function(event)
             print(event.url)
-        end) 
+        end)
     end)
 
     --------------------------
@@ -229,7 +229,7 @@ function scene:openTerms()
     popup.read.x   = display.contentWidth*0.5
     popup.read.y   = display.contentHeight*0.78
 
-    utils.onTouch(popup.read, function() 
+    utils.onTouch(popup.read, function()
 
             local terms = ""
             if(COUNTRY == "FR") then
@@ -240,7 +240,7 @@ function scene:openTerms()
 
             viewManager.openWeb( API_URL .. terms .. "?lang=" .. LANG, function(event)
                 print(event.url)
-            end) 
+            end)
     end)
 
     --------------------------
@@ -293,21 +293,21 @@ function scene:openOptions()
         GLOBALS.options.notificationBeforeDraw = event.target.isOn
         utils.saveTable(GLOBALS.options, "options.json")
 
-        lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
+        lotteryManager:refreshNotifications(lotteryManager.nextLottery.timestamp)
     end
 
     local function afterDrawSwitchListener( event )
         GLOBALS.options.notificationAfterDraw = event.target.isOn
         utils.saveTable(GLOBALS.options, "options.json")
 
-        lotteryManager:refreshNotifications(lotteryManager.nextLottery.date) 
+        lotteryManager:refreshNotifications(lotteryManager.nextLottery.timestamp)
     end
 
     ---------------------------------------------------------------
 
     viewManager.newText({
-        parent    = popup, 
-        text     = T "Notification 48h before the next draw",         
+        parent    = popup,
+        text     = T "Notification 48h before the next draw",
         x      = display.contentWidth*0.11,
         y      = top + yGap*(optionsTop),
         fontSize   = fontSizeLeft,
@@ -326,11 +326,11 @@ function scene:openOptions()
             onRelease      = beforeDrawSwitchListener,
     }
 
-    beforeDrawSwitch:scale(2.5,2.5) 
+    beforeDrawSwitch:scale(2.5,2.5)
 
     viewManager.newText({
-        parent    = popup, 
-        text     = T "Notification for the results",         
+        parent    = popup,
+        text     = T "Notification for the results",
         x      = display.contentWidth*0.11,
         y      = top + yGap*(optionsTop+0.5),
         fontSize   = fontSizeLeft,
@@ -348,10 +348,10 @@ function scene:openOptions()
             onRelease      = afterDrawSwitchListener,
     }
 
-    afterDrawSwitch:scale(2.5,2.5) 
+    afterDrawSwitch:scale(2.5,2.5)
 
-    popup:insert( beforeDrawSwitch ) 
-    popup:insert( afterDrawSwitch ) 
+    popup:insert( beforeDrawSwitch )
+    popup:insert( afterDrawSwitch )
 
     --------------------------
 
@@ -392,8 +392,8 @@ function scene:openContact()
     --------------------------
 
     viewManager.newText({
-        parent = popup, 
-        text = T "By email", 
+        parent = popup,
+        text = T "By email",
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.27,
         fontSize = 40,
@@ -405,8 +405,8 @@ function scene:openContact()
     --------------------------
 
     viewManager.newText({
-        parent = popup, 
-        text = T "General information" .. " :", 
+        parent = popup,
+        text = T "General information" .. " :",
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.31,
         fontSize = 26,
@@ -415,8 +415,8 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = "contact@adillions.com", 
+        parent = popup,
+        text = "contact@adillions.com",
         x = display.contentWidth*0.9,
         y = display.contentHeight * 0.31,
         fontSize = 26,
@@ -426,8 +426,8 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = T "For technical issues" .. " :", 
+        parent = popup,
+        text = T "For technical issues" .. " :",
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.36,
         fontSize = 26,
@@ -436,8 +436,8 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = "support@adillions.com", 
+        parent = popup,
+        text = "support@adillions.com",
         x = display.contentWidth*0.9,
         y = display.contentHeight * 0.36,
         fontSize = 26,
@@ -447,8 +447,8 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = T "For payments" .. " :", 
+        parent = popup,
+        text = T "For payments" .. " :",
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.41,
         fontSize = 26,
@@ -457,8 +457,8 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = "winners@adillions.com", 
+        parent = popup,
+        text = "winners@adillions.com",
         x = display.contentWidth*0.9,
         y = display.contentHeight * 0.41,
         fontSize = 26,
@@ -468,8 +468,8 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = T "For advertisers" .. " :", 
+        parent = popup,
+        text = T "For advertisers" .. " :",
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.46,
         fontSize = 26,
@@ -478,8 +478,8 @@ function scene:openContact()
     })
 
     viewManager.newText({
-        parent = popup, 
-        text = "advertisers@adillions.com", 
+        parent = popup,
+        text = "advertisers@adillions.com",
         x = display.contentWidth*0.9,
         y = display.contentHeight * 0.46,
         fontSize = 26,
@@ -491,8 +491,8 @@ function scene:openContact()
     --------------------------
 
     viewManager.newText({
-        parent = popup, 
-        text = T "On the web", 
+        parent = popup,
+        text = T "On the web",
         x = display.contentWidth*0.1,
         y = display.contentHeight * 0.6,
         fontSize = 40,
@@ -504,8 +504,8 @@ function scene:openContact()
     --------------------------
 
     viewManager.newText({
-        parent = popup, 
-        text = "www.adillions.com", 
+        parent = popup,
+        text = "www.adillions.com",
         x = display.contentWidth*0.5,
         y = display.contentHeight * 0.65,
         fontSize = 56,

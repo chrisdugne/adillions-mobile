@@ -421,7 +421,7 @@ end
 function prepareToWaitForResults()
 
     bannerManager:stop()
-    lotteryManager.global.appStatus.state = 2
+    lotteryManager.globals.appStatus.state = 2
     native.setActivityIndicator( true )
 
     timer.performWithDelay(math.random(3000, 6000), function()
@@ -466,15 +466,15 @@ function refreshHomeTimer()
 
     if(hud.timer) then timer.cancel(hud.timer) end
     local now = time.now()
-    local timeRemaining = lotteryManager.nextDrawing.date - now
+    local timeRemaining = lotteryManager.nextDrawing.timestamp - now
 
-    if(timeRemaining < 2 * 60 * 60 * 1000 and lotteryManager.global.appStatus.state ~= 2) then
+    if(timeRemaining < 2 * 60 * 60 * 1000 and lotteryManager.globals.appStatus.state ~= 2) then
         prepareToWaitForResults()
 
     else
         local days,hours,min,sec = utils.getDaysHoursMinSec(math.round(timeRemaining/1000))
 
-        if(days == -1 and lotteryManager.global.appStatus.state == 2) then
+        if(days == -1 and lotteryManager.globals.appStatus.state == 2) then
             if(hud.timerDisplay.alpha == 1) then
                 hud.timerHidder = transition.to(hud.timerDisplay, {alpha=0.5, time=1000})
             end
@@ -582,8 +582,8 @@ function animatePrice(nextMillis)
     if(not nextMillis) then nextMillis = 3 end
 
     timer.performWithDelay(nextMillis, function()
-        local lotteryPriceDollars = lotteryManager:priceDollars(lotteryManager.nextDrawing)
-        local priceToReach = utils.countryPrice(lotteryPriceDollars, COUNTRY, lotteryManager.nextDrawing.rateUSDtoEUR, 0)
+        local lotteryPriceEuros = lotteryManager:priceEuros(lotteryManager.nextDrawing)
+        local priceToReach = utils.countryPrice(lotteryPriceEuros, COUNTRY, lotteryManager.nextDrawing.rateUSDtoEUR, 0)
 
         local ratio = (20 * priceToReach)/(priceToReach - hud.priceCurrentDisplay)
         local toAdd = math.floor(priceToReach/ratio)
@@ -729,10 +729,8 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
         local view = router.view
         local imageReceived = function(event)
             if(router.view == view) then
-                print("insert")
                 return insertImage(event.target, parent, x, y, anchorX, anchorY, scale, alpha, next)
             else
-                print("bunk")
                 display.remove(event.target)
             end
         end
@@ -889,7 +887,7 @@ function buildMenu(tabSelected, menuType)
     utils.onTap(hud.playButton, function()
         if(tabSelected ~= 0) then
             router.openHome()
-        elseif(router.view == router.HOME and lotteryManager.global.appStatus.state == 1) then
+        elseif(router.view == router.HOME and lotteryManager.globals.appStatus.state == 1) then
             gameManager:play()
         end
     end)

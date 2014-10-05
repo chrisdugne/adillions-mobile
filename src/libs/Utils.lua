@@ -306,7 +306,7 @@ end
 --------------------------------------------------------------------------------
 
 function request(url, method, next, data, type)
-
+    print(method, url)
     if(next == nil) then
         next = function() end
     end
@@ -627,7 +627,7 @@ function displayPrice(price, country)
 
 end
 
-function countryPrice(euros, country, rateUSDtoEUR, decimals)
+function countryPrice(euros, country, rateEURToUSD, decimals)
 
     if(not euros) then
         euros = 0
@@ -640,13 +640,13 @@ function countryPrice(euros, country, rateUSDtoEUR, decimals)
     if(isEuroCountry(country)) then
         return euros;
     else
-        return tonumber(string.format("%.".. decimals .."f", euros*rateUSDtoEUR));
+        return tonumber(string.format("%.".. decimals .."f", euros*rateEURToUSD));
     end
 
 end
 
-function convertAndDisplayPrice(price, country, rateUSDtoEUR)
-    return displayPrice(countryPrice(price, country, rateUSDtoEUR), country)
+function convertAndDisplayPrice(price, country, rateEURToUSD)
+    return displayPrice(countryPrice(price, country, rateEURToUSD), country)
 end
 
 --------------------------------------------------------

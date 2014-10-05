@@ -5,10 +5,7 @@ AppManager = {}
 --------------------------------------------------------------------------------
 
 function AppManager:new()
-
-    local object = {
-    }
-
+    local object = {}
     setmetatable(object, { __index = AppManager })
     return object
 end
@@ -21,7 +18,7 @@ function AppManager:start()
 
     ----------------------------------------------------------------------------
 
-    -- LOCAL = true
+    LOCAL = true
     -- DEV = true
 
     ----------------------------------------------------------------------------

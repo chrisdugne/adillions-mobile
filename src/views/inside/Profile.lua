@@ -838,9 +838,9 @@ function scene:openCashout()
 
     local value = ""
     if(utils.isEuroCountry(COUNTRY)) then
-        value = lotteryManager.global.minEuro .. "€"
+        value = lotteryManager.globals.minEuro .. "€"
     else
-        value = "US$" .. lotteryManager.global.minUSD
+        value = "US$" .. lotteryManager.globals.minUSD
     end
 
     popup.multiLineText = display.newText({
@@ -859,9 +859,9 @@ function scene:openCashout()
 
     ----------------------------------------------------------------------------
 
-    local min = lotteryManager.global.minEuro
+    local min = lotteryManager.globals.minEuro
     if(not utils.isEuroCountry(COUNTRY)) then
-        min = lotteryManager.global.minUSD
+        min = lotteryManager.globals.minUSD
     end
 
     if(userManager.user.balance >= min) then

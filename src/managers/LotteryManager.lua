@@ -1,10 +1,10 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 LotteryManager = {}
 
 VALIDATE_Y = 0.92
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:new()
 
@@ -17,25 +17,18 @@ function LotteryManager:new()
     return object
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:refreshNextLottery(classic, waiting)
 
-    -- TODO : GET /api/drawing/status
-    utils.post( API_URL .. "nextLottery", {}, function(result)
-
+    utils.get( NODE_URL .. "/api/status", function(result)
         local response  = json.decode(result.response)
-        local appStatus = json.decode(response.appStatus)
+        local appStatus = response.globals.appStatus
 
         self.nextLottery = response.nextLottery
         self.nextDrawing = response.nextDrawing
 
-        self.nextLottery.theme = json.decode(self.nextLottery.theme)
-        self.nextDrawing.theme = json.decode(self.nextDrawing.theme)
-        self.nextLottery.rangs = json.decode(self.nextLottery.rangs)
-        self.nextDrawing.rangs = json.decode(self.nextDrawing.rangs)
-
-        lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
+        self:refreshNotifications(self.nextLottery.timestamp)
 
         if(appStatus.state ~= 1) then
             print("appStatus : waiting")
@@ -47,31 +40,24 @@ function LotteryManager:refreshNextLottery(classic, waiting)
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:checkAppStatus(waiting)
-
-    print("checkAppStatus")
 
     if(self.appStatusTimer) then
         timer.cancel(self.appStatusTimer)
     end
 
-    -- TODO GET /api/lottery/status
-    utils.post( API_URL .. "appStatus", {}, function(result)
+    utils.get( NODE_URL .. "/api/status", function(result)
         local response  = json.decode(result.response)
-        local appStatus = json.decode(response.appStatus)
+        local appStatus = response.globals.appStatus
 
         if(appStatus.state == 1) then
-            if(lotteryManager.global.appStatus.state ~= 1) then
+            if(lotteryManager.globals.appStatus.state ~= 1) then
                 print("game is back in the room : reload")
                 gameManager:open()
             end
         else
-            local lottery = response.lottery
-            if(lottery.result) then lottery.result = json.decode(lottery.result) end
-            lottery.theme = json.decode(lottery.theme)
-            waiting(lottery)
             viewManager.refreshPlayButton(true)
             self.appStatusTimer = timer.performWithDelay(math.random(6000, 12000), function() self:checkAppStatus(waiting) end)
         end
@@ -80,24 +66,23 @@ function LotteryManager:checkAppStatus(waiting)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:getFinishedLotteries(next)
-    -- TODO GET /api/lottery/finished
-    utils.post( API_URL .. "finishedLotteries", {}, function(result)
+    utils.get( NODE_URL .. "/api/lottery/archive/5", function(result)
         self.finishedLotteries = json.decode(result.response)
         next()
     end)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-function LotteryManager:priceDollars(lottery)
-    return math.min(lottery.maxPrice, math.max(lottery.minPrice, lottery.nbTickets/1000 * lottery.cpm))
+function LotteryManager:priceEuros(lottery)
+    return lottery.euros
 end
 
 function LotteryManager:price(lottery)
-    return utils.convertAndDisplayPrice(self:priceDollars(lottery), COUNTRY, lottery.rateUSDtoEUR)
+    return utils.convertAndDisplayPrice(self:priceEuros(lottery), COUNTRY, lottery.rateUSDtoEUR)
 end
 
 function LotteryManager:charityPerTicket(lottery)
@@ -113,19 +98,19 @@ function LotteryManager:date(lottery, viewDay, viewYear)
     return utils.timestampToReadableDate(lottery.timestamp or lottery.date, viewDay, viewYear)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:refreshNotifications(lotteryDateMillis)
 
     local weeks = 4
     local now = time.now()
 
-    ---------------------------------------------------------------------------------
+    --------------------------------------------------------------------------
 
-    local _48hText  = translate(lotteryManager.global.text48h)
-    local _3minText = translate(lotteryManager.global.text3min)
+    local _48hText  = translate(lotteryManager.globals.text48h)
+    local _3minText = translate(lotteryManager.globals.text3min)
 
-    ---------------------------------------------------------------------------------
+    --------------------------------------------------------------------------
     -- notif next lottery
 
     local _48hBefore = lotteryDateMillis - 48 * 60 * 60 * 1000
@@ -154,7 +139,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
         system.scheduleNotification( notificationTimeSeconds, options )
     end
 
-    ---------------------------------------------------------------------------------
+    --------------------------------------------------------------------------
     -- notif lottery weeks later
 
     for week=1,weeks do
@@ -188,7 +173,7 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:addToSelection(num)
     self.currentSelection[#self.currentSelection+1] = num
@@ -216,10 +201,11 @@ function LotteryManager:removeFromSelection(num)
 end
 
 function LotteryManager:canAddToSelection()
-    return #self.currentSelection < self.nextLottery.maxPicks
+    utils.tprint(self.nextLottery)
+    return #self.currentSelection < self.nextLottery.picks
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:addToAdditionalSelection(ball)
     if(self.currentAdditionalBall) then
@@ -240,7 +226,7 @@ function LotteryManager:cancelAdditionalSelection()
     self:refreshThemeSelectionDisplay()
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:startSelection()
     self.currentSelection = {}
@@ -248,7 +234,7 @@ function LotteryManager:startSelection()
     self:refreshNumberSelectionDisplay()
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:refreshNumberSelectionDisplay()
 
@@ -269,7 +255,7 @@ function LotteryManager:refreshNumberSelectionDisplay()
     -------------------------------------
     -- numbers
 
-    for i = 1,self.nextLottery.maxPicks do
+    for i = 1,self.nextLottery.picks do
         local num = self.currentSelection[i]
         if(self.currentSelection[i]) then
 
@@ -286,7 +272,7 @@ function LotteryManager:refreshNumberSelectionDisplay()
     -------------------------------------
     -- ok button
 
-    if(#self.currentSelection == self.nextLottery.maxPicks) then
+    if(#self.currentSelection == self.nextLottery.picks) then
         hud.validate = display.newImage( hud.selection, I "ValidateON.png")
         hud.validate.x = display.contentWidth*0.5
         hud.validate.y = display.contentHeight*VALIDATE_Y
@@ -306,7 +292,7 @@ function LotteryManager:refreshNumberSelectionDisplay()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:refreshThemeSelectionDisplay()
 
@@ -326,7 +312,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
     -------------------------------------
     -- numbers
 
-    for i = 1,self.nextLottery.maxPicks do
+    for i = 1,self.nextLottery.picks do
 
         local num = self.currentSelection[i]
         local x = marginLeft + i*xGap
@@ -339,7 +325,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
     -------------------------------------
     -- additional theme
 
-    viewManager.drawSelectedAdditional(self.currentAdditionalBall, marginLeft + xGap*(self.nextLottery.maxPicks+1), hud.selector.y, function()
+    viewManager.drawSelectedAdditional(self.currentAdditionalBall, marginLeft + xGap*(self.nextLottery.picks+1), hud.selector.y, function()
         self:cancelAdditionalSelection()
     end)
 
@@ -348,7 +334,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
     -------------------------------------
     -- ok button
 
-    if(nbSelected == self.nextLottery.maxPicks+1) then
+    if(nbSelected == self.nextLottery.picks+1) then
         hud.validate = display.newImage( hud.selection, I "ValidateON.png")
         hud.validate.x = display.contentWidth*0.5
         hud.validate.y = display.contentHeight*VALIDATE_Y
@@ -371,18 +357,18 @@ function LotteryManager:refreshThemeSelectionDisplay()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:validateSelection()
-    self.currentSelection[self.nextLottery.maxPicks+1] = self.currentAdditionalBall.num
+    self.currentSelection[self.nextLottery.picks+1] = self.currentAdditionalBall.num
 
     -- security (tim a reussi a enregistrer plusieurs LB...?) ---
-    if(#self.currentSelection == (self.nextLottery.maxPicks+1)) then
+    if(#self.currentSelection == (self.nextLottery.picks+1)) then
         userManager:storeLotteryTicket(self.currentSelection)
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function LotteryManager:showLastTicket()
 
@@ -392,25 +378,25 @@ function LotteryManager:showLastTicket()
 
     local headerY   = popup.bg.y - popup.bg.contentHeight*0.5
 
-    popup.header            = display.newImageRect(popup, "assets/images/hud/confirmation/confirmation.title.bg.png", popup.bg.contentWidth*0.95835, display.viewableContentHeight*0.08)
-    popup.header.anchorY    = 0
-    popup.header.x          = display.contentWidth*0.5
-    popup.header.y          = headerY
+    popup.header         = display.newImageRect(popup, "assets/images/hud/confirmation/confirmation.title.bg.png", popup.bg.contentWidth*0.95835, display.viewableContentHeight*0.08)
+    popup.header.anchorY = 0
+    popup.header.x       = display.contentWidth*0.5
+    popup.header.y       = headerY
 
-    popup.title             = display.newImage( popup, I "confirmation.next.drawing.png")
-    popup.title.x           = display.contentWidth*0.5
-    popup.title.y           = headerY +  popup.header.contentHeight*0.5
+    popup.title   = display.newImage( popup, I "confirmation.next.drawing.png")
+    popup.title.x = display.contentWidth*0.5
+    popup.title.y = headerY +  popup.header.contentHeight*0.5
 --    popup.title.y           = headerY + display.contentHeight*0.06
 
-    popup.subtitle          = display.newImage( popup, I "confirmation.selection.png")
-    popup.subtitle.x        = display.contentWidth*0.5
-    popup.subtitle.y        = display.contentHeight*0.28
+    popup.subtitle   = display.newImage( popup, I "confirmation.selection.png")
+    popup.subtitle.x = display.contentWidth*0.5
+    popup.subtitle.y = display.contentHeight*0.28
 
     ----------------------------------------
 
-    popup.imageBG        = display.newImage( popup, "assets/images/hud/confirmation/confirmation.bg.png")
-    popup.imageBG.x      = display.contentWidth*0.5
-    popup.imageBG.y      = display.contentHeight*0.53
+    popup.imageBG   = display.newImage( popup, "assets/images/hud/confirmation/confirmation.bg.png")
+    popup.imageBG.x = display.contentWidth*0.5
+    popup.imageBG.y = display.contentHeight*0.53
 
     ----------------------------------------
 
@@ -419,12 +405,12 @@ function LotteryManager:showLastTicket()
     ---------------------------------------
 --
 --    viewManager.newText({
---        parent = popup,
---        text = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery),
---        x = display.contentWidth*0.5,
---        y = display.contentHeight*0.25,
+--        parent   = popup,
+--        text     = T("Next drawing") .. " : " .. lotteryManager:date(lotteryManager.nextLottery),
+--        x        = display.contentWidth*0.5,
+--        y        = display.contentHeight*0.25,
 --        fontSize = 48,
---        font = NUM_FONT,
+--        font     = NUM_FONT,
 --    })
 
     ----------------------------------------
@@ -432,9 +418,9 @@ function LotteryManager:showLastTicket()
     local nbTickets = userManager:remainingTickets()
     local lineY     = display.contentHeight*0.46
 
-    popup.pictoTicket = display.newImage( popup, "assets/images/hud/confirmation/confirmation.ticket.png")
-    popup.pictoTicket.x = display.contentWidth*0.81
-    popup.pictoTicket.y = lineY
+    popup.pictoTicket         = display.newImage( popup, "assets/images/hud/confirmation/confirmation.ticket.png")
+    popup.pictoTicket.x       = display.contentWidth*0.81
+    popup.pictoTicket.y       = lineY
     popup.pictoTicket.anchorY = 0.45
     popup.pictoTicket.anchorX = 1
 
@@ -444,45 +430,45 @@ function LotteryManager:showLastTicket()
     end
 
     viewManager.newText({
-        parent = popup,
-        text = remainingTickets .. " :",
-        x = display.contentWidth*0.19,
-        y = lineY,
+        parent   = popup,
+        text     = remainingTickets .. " :",
+        x        = display.contentWidth*0.19,
+        y        = lineY,
         fontSize = 44,
-        anchorX    = 0,
-        anchorY    = 0.5,
+        anchorX  = 0,
+        anchorY  = 0.5,
     })
 
     viewManager.newText({
-        parent = popup,
-        text = nbTickets,
-        x = popup.pictoTicket.x - popup.pictoTicket.contentWidth - display.contentWidth*0.01,
-        y = lineY,
+        parent   = popup,
+        text     = nbTickets,
+        x        = popup.pictoTicket.x - popup.pictoTicket.contentWidth - display.contentWidth*0.01,
+        y        = lineY,
         fontSize = 54,
-        font = NUM_FONT,
-        anchorX    = 1,
-        anchorY    = 0.45,
+        font     = NUM_FONT,
+        anchorX  = 1,
+        anchorY  = 0.45,
     })
 
     ----------------------------------------
 
-    popup.line        = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
-    popup.line.x      = display.contentWidth*0.5
-    popup.line.y      = display.contentHeight*0.545
+    popup.line   = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
+    popup.line.x = display.contentWidth*0.5
+    popup.line.y = display.contentHeight*0.545
 
-    popup.more          = display.newImage( popup, I "confirmation.jackpot.png")
-    popup.more.x        = display.contentWidth*0.5
-    popup.more.y        = display.contentHeight*0.62
+    popup.more   = display.newImage( popup, I "confirmation.jackpot.png")
+    popup.more.x = display.contentWidth*0.5
+    popup.more.y = display.contentHeight*0.62
 
-    popup.arrow        = display.newImage( popup, "assets/images/hud/confirmation/confirmation.arrow.png")
-    popup.arrow.x      = display.contentWidth*0.5
-    popup.arrow.y      = display.contentHeight*0.675
+    popup.arrow   = display.newImage( popup, "assets/images/hud/confirmation/confirmation.arrow.png")
+    popup.arrow.x = display.contentWidth*0.5
+    popup.arrow.y = display.contentHeight*0.675
 
     --------------------------
 
-    popup.share          = display.newImage( popup, I "confirmation.share.png")
-    popup.share.x        = display.contentWidth*0.5
-    popup.share.y        = display.contentHeight*0.765
+    popup.share   = display.newImage( popup, I "confirmation.share.png")
+    popup.share.x = display.contentWidth*0.5
+    popup.share.y = display.contentHeight*0.765
 
     utils.onTouch(popup.share, function()
         shareManager:simpleShare()
@@ -490,9 +476,9 @@ function LotteryManager:showLastTicket()
 
     --------------------------
 
-    popup.close         = display.newImage( popup, "assets/images/hud/CroixClose.png")
-    popup.close.x       = display.contentWidth*0.88
-    popup.close.y       = display.contentHeight*0.165
+    popup.close   = display.newImage( popup, "assets/images/hud/CroixClose.png")
+    popup.close.x = display.contentWidth*0.88
+    popup.close.y = display.contentHeight*0.165
 --    popup.close.y       = display.contentHeight*0.175
 
     utils.onTouch(popup.close, function()
@@ -506,6 +492,6 @@ function LotteryManager:showLastTicket()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return LotteryManager

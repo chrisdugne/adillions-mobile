@@ -347,7 +347,7 @@ function ShareManager:shareForInstants(popup)
         if(userManager.user.hasPostThemeOnFacebook) then
             print("hasPostThemeOnFacebook")
 
-            local fbPost = translate(lotteryManager.global.fbPost)
+            local fbPost = translate(lotteryManager.globals.fbPost)
 
             if(userManager.user.hasPostOnFacebook) then
 
@@ -389,7 +389,7 @@ function ShareManager:shareForInstants(popup)
             -- theme not posted
             print("! hasPostThemeOnFacebook")
 
-            local fbPostTheme = translate(lotteryManager.global.fbPostTheme)
+            local fbPostTheme = translate(lotteryManager.globals.fbPostTheme)
 
             if(GLOBALS.savedData.facebookAccessToken) then
 
@@ -617,7 +617,7 @@ end
 function ShareManager:sms()
     analytics.event("Social", "askSMS")
 
-    local body = translate(lotteryManager.global.sms)
+    local body = translate(lotteryManager.globals.sms)
 
     --    local body = T "Join me on Adillions and get a chance to win the jackpot !"
     --    body = body .. "\n\n"
@@ -642,7 +642,7 @@ end
 function ShareManager:email()
     analytics.event("Social", "askEmail")
 
-    local body = translate(lotteryManager.global.email):gsub("___", userManager.user.sponsorCode)
+    local body = translate(lotteryManager.globals.email):gsub("___", userManager.user.sponsorCode)
 
     --    local body = "<html><body>"
     --    body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
@@ -743,7 +743,7 @@ end
 
 function ShareManager:shareWinningsOnWall(prize, popup)
 
-    local text = translate(lotteryManager.global.fbSharePrize):gsub("___", prize)
+    local text = translate(lotteryManager.globals.fbSharePrize):gsub("___", prize)
 
     -------
 
@@ -792,7 +792,7 @@ end
 
 function ShareManager:tweetTheme(close, closeAndPlay)
 
-    local text = translate(lotteryManager.global.tweetTheme)
+    local text = translate(lotteryManager.globals.tweetTheme)
 
     print(userManager.user.hasTweetTheme)
     twitter.tweetMessage(text, function()
@@ -815,7 +815,7 @@ end
 function ShareManager:tweet(close, closeAndPlay)
 
     print("sharemanager tweet")
-    local text = translate(lotteryManager.global.tweet)
+    local text = translate(lotteryManager.globals.tweet)
     native.setActivityIndicator( true )
 
     twitter.tweetMessage(text, function()
@@ -1426,7 +1426,7 @@ function ShareManager:simpleShare()
     if(ANDROID or canTweet) then
         options = {
             service  = "twitter",
-            message  = translate(lotteryManager.global.tweetShare),
+            message  = translate(lotteryManager.globals.tweetShare),
             url      = "http://adillions.com",
             image    = {
                 baseDir     = system.ResourceDirectory ,
@@ -1439,7 +1439,7 @@ function ShareManager:simpleShare()
     elseif(canPost) then
         options = {
             service  = "facebook",
-            message  = translate(lotteryManager.global.tweetShare):gsub("#", ""),
+            message  = translate(lotteryManager.globals.tweetShare):gsub("#", ""),
             url      = "http://adillions.com",
             image    = {
                 baseDir     = system.ResourceDirectory ,
@@ -1451,7 +1451,7 @@ function ShareManager:simpleShare()
 
     else
         options = {
-            body = translate(lotteryManager.global.tweetShare):gsub("#", "")
+            body = translate(lotteryManager.globals.tweetShare):gsub("#", "")
         }
 
         native.showPopup( "sms", options )

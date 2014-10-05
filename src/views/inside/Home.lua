@@ -143,7 +143,7 @@ function scene:drawNextLottery( waitingForDrawing )
 
     local priceX
     local priceY = top + display.contentHeight*0.13
-    if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.toolPlayers) then
+    if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.thresholdPlayers) then
         priceX = display.contentWidth*0.4
     else
         priceX = display.contentWidth*0.8
@@ -176,7 +176,7 @@ function scene:drawNextLottery( waitingForDrawing )
 
     -------------------------------
 
-    if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.toolPlayers) then
+    if(lotteryManager.nextDrawing.nbPlayers > lotteryManager.nextDrawing.thresholdPlayers) then
 
         hud.separateur   = display.newImage( hud, "assets/images/icons/separateur.png")
         hud.separateur.x = display.contentWidth*0.7

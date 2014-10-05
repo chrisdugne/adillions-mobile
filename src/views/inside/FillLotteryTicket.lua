@@ -8,10 +8,10 @@ local scene = storyboard.newScene()
 
 -----------------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
--- 
+--
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --   unless storyboard.removeScene() is called.
--- 
+--
 -----------------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
@@ -36,50 +36,50 @@ function scene:refreshScene()
 
     --------------------------------------------------------------
     -- Actions
-    -- 
+    --
     --  3 actions random / favorites / restart
-    --  
+    --
     -- viewManager.newText({
-    --  parent = hud, 
-    --  text = T "Random",     
+    --  parent = hud,
+    --  text = T "Random",
     --  x = display.contentWidth*0.2,
     --  y = top - display.contentHeight*0.07,
     --  fontSize = 33,
     -- })
     --
-    -- hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+    -- hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")
     -- hud.separateur.x = display.contentWidth*0.35
     -- hud.separateur.y = top - display.contentHeight*0.065
     --
     -- viewManager.newText({
-    --  parent = hud, 
-    --  text = T "Favorites",     
+    --  parent = hud,
+    --  text = T "Favorites",
     --  x = display.contentWidth*0.5,
     --  y = top - display.contentHeight*0.07,
     --  fontSize = 33,
     -- })
     --
-    -- hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+    -- hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")
     -- hud.separateur.x = display.contentWidth*0.65
     -- hud.separateur.y = top - display.contentHeight*0.065
     --
     -- viewManager.newText({
-    --  parent = hud, 
-    --  text = T "Restart",     
+    --  parent = hud,
+    --  text = T "Restart",
     --  x = display.contentWidth*0.8,
     --  y = top - display.contentHeight*0.07,
     --  fontSize = 33,
     -- })
-    -- 
-    -- 
+    --
+    --
     --------------------------------------------------------------
     -- Actions
-    -- 
+    --
     --  2 actions random / restart
 
     local random = viewManager.newText({
-        parent = hud, 
-        text = T "RANDOM",     
+        parent = hud,
+        text = T "RANDOM",
         x = display.contentWidth*0.3,
         y = top - display.contentHeight*0.085,
         fontSize = 35,
@@ -91,13 +91,13 @@ function scene:refreshScene()
         self:randomSelection()
     end)
 
-    hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")  
+    hud.separateur = display.newImage( hud, "assets/images/icons/separateur.png")
     hud.separateur.x = display.contentWidth*0.5
     hud.separateur.y = top - display.contentHeight*0.08
 
     local restart = viewManager.newText({
-        parent = hud, 
-        text = T "CLEAR ALL",     
+        parent = hud,
+        text = T "CLEAR ALL",
         x = display.contentWidth*0.7,
         y = top - display.contentHeight*0.085,
         fontSize = 35,
@@ -111,7 +111,7 @@ function scene:refreshScene()
     --------------------------------------------------------------
     -- Classic nums
 
-    local totalNums    = lotteryManager.nextLottery.maxNumbers  
+    local totalNums    = lotteryManager.nextLottery.numbers
     local nbNumPerLine  = 7
 
     ------------------
@@ -136,7 +136,7 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.selector = display.newImage( hud, "assets/images/hud/selector.green.png")  
+    hud.selector = display.newImage( hud, "assets/images/hud/selector.green.png")
     hud.selector.x = display.contentWidth*0.5
     hud.selector.y = top + display.contentHeight*0.56
 
@@ -146,11 +146,11 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)  
-    hud.headerRect.x = display.viewableContentWidth*0.5 
+    hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)
+    hud.headerRect.x = display.viewableContentWidth*0.5
     hud.headerRect.y = HEADER_HEIGHT*0.5
 
-    hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")  
+    hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")
     hud.logo.x = display.contentWidth*0.5
     hud.logo.y = HEADER_HEIGHT*0.5
 
@@ -171,7 +171,7 @@ function scene:getNum()
 
     local s = system.getTimer()/100
     local os = os.time()
-    local seed = os / s 
+    local seed = os / s
     math.randomseed(seed)
 
     local num     = math.random(1,49)
@@ -185,7 +185,7 @@ function scene:getNum()
 
     if not alreadyChosen then
         return num
-    else  
+    else
         return self:getNum()
     end
 end
