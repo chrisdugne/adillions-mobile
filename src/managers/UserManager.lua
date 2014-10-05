@@ -107,9 +107,6 @@ function UserManager:fetchPlayer()
             native.setActivityIndicator( false )
 
             self.attemptFetchPlayer = 0
-            print('===================')
-            utils.tprint(result.response)
-            print('===================')
 
             local player = json.decode(result.response)
             if(not player) then
@@ -117,9 +114,7 @@ function UserManager:fetchPlayer()
                 router.openOutside()
 
             else
-                print("receivedPlayer")
                 userManager:receivedPlayer(player, function()
-                    print("fetch success, openHOme")
                     router.openHome()
                 end)
             end
@@ -172,9 +167,6 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:refreshPlayer(player, next)
-
-    print("------------------------ refreshPlayer ")
-    utils.tprint(player)
 
     ------------------------------------------------------------------
     -- backup transient data

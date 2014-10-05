@@ -75,7 +75,6 @@ function scene:drawBoard()
 
         ------------------------------------------------
 
-        utils.tprint(lottery)
         viewManager.newText({
             parent   = hud.board,
             text     = lotteryManager:date(lottery, true, true),

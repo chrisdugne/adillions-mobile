@@ -22,7 +22,6 @@ end
 function LotteryManager:refreshNextLottery(classic, waiting)
 
     -- TODO : GET /api/drawing/status
-    print("LotteryManager:refreshNextLottery")
     utils.post( API_URL .. "nextLottery", {}, function(result)
 
         local response  = json.decode(result.response)
@@ -39,10 +38,9 @@ function LotteryManager:refreshNextLottery(classic, waiting)
         lotteryManager:refreshNotifications(lotteryManager.nextLottery.date)
 
         if(appStatus.state ~= 1) then
-            print("waiting")
+            print("appStatus : waiting")
             waiting()
         else
-            print("classic")
             classic()
         end
 

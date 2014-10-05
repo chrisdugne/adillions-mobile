@@ -206,8 +206,6 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
                 borderHeight                 -- height
             )
 
-            utils.tprint(ticket.lottery)
-
             viewManager.newText({
                 parent   = hud.board,
                 text     = T "Drawing" .. " : " .. lotteryManager:date(ticket.lottery, true, true),
