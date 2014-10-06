@@ -583,7 +583,7 @@ function animatePrice(nextMillis)
 
     timer.performWithDelay(nextMillis, function()
         local lotteryPriceEuros = lotteryManager:priceEuros(lotteryManager.nextDrawing)
-        local priceToReach = utils.countryPrice(lotteryPriceEuros, COUNTRY, lotteryManager.nextDrawing.rateUSDtoEUR, 0)
+        local priceToReach = utils.countryPrice(lotteryPriceEuros, COUNTRY, lotteryManager.nextDrawing.rateToUSD, 0)
 
         local ratio = (20 * priceToReach)/(priceToReach - hud.priceCurrentDisplay)
         local toAdd = math.floor(priceToReach/ratio)

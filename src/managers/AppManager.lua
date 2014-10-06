@@ -18,7 +18,7 @@ function AppManager:start()
 
     ----------------------------------------------------------------------------
 
-    LOCAL = true
+    -- LOCAL = true
     -- DEV = true
 
     ----------------------------------------------------------------------------
@@ -338,9 +338,8 @@ function AppManager:getMobileSettings()
             utils.tprint(settings)
 
             APP_VERSION = tonumber(settings.version)
-            API_URL     = settings.api.play
-            WEB_URL     = settings.api.play
-            NODE_URL    = settings.api.node
+            OLD_API_URL = settings.api.play
+            SAILS_URL    = settings.api.node
 
             FACEBOOK_APP_ID        = settings.facebookAppId
             FACEBOOK_API_SECRET    = settings.facebookApiSecret
@@ -354,11 +353,8 @@ function AppManager:getMobileSettings()
         print("DEV settings : local servers + FB adillions-localhost")
         APP_VERSION = 999
 
-        -- API_URL  = "http://" .. LOCAL_IP .. ":9000/"
-        -- WEB_URL  = "http://" .. LOCAL_IP .. ":9000/"
-        API_URL  = "http://adillions-play-stage.herokuapp.com/"
-        WEB_URL  = "http://adillions-play-stage.herokuapp.com/"
-        NODE_URL = "http://" .. LOCAL_IP .. ":1337"
+        OLD_API_URL  = "http://api.adillions.com/"
+        SAILS_URL = "http://" .. LOCAL_IP .. ":1337"
 
         FACEBOOK_APP_ID        = "293489340852840"
         FACEBOOK_API_SECRET    = "3aa23c8b8176c84791b19d8778cf3974"
@@ -380,9 +376,8 @@ function AppManager:onSettingsReady()
     end
 
     print("     version:  " .. APP_VERSION)
-    print("     api:      " .. API_URL)
-    print("     node:     " .. NODE_URL)
-    print("     webviews: " .. WEB_URL)
+    print("     api:      " .. SAILS_URL)
+    print("     old api:  " .. OLD_API_URL)
     print("     lang:     " .. LANG)
     print("     country:  " .. COUNTRY)
     print("     fbApp:    " .. FACEBOOK_APP_ID)

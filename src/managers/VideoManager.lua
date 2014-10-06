@@ -51,9 +51,9 @@ function VideoManager:playYume()
 
     local platform      = "Android"
 --    if(IOS) then platform = "IOS" end
---    local url           = API_URL .. "mvideo" .. platform .. "?lang=" .. LANG
+--    local url           = OLD_API_URL .. "mvideo" .. platform .. "?lang=" .. LANG
 
-    local url           = API_URL .. "mvideo?lang=" .. LANG
+    local url           = OLD_API_URL .. "mvideo?lang=" .. LANG
     self.listener       = function(event) self:videoListener(event) end
 
     self.webView:request( url )
@@ -83,14 +83,14 @@ function VideoManager:videoListener(event)
     if event.url then
         print(event.url)
 
-        if event.url == API_URL .. "yume_completed?status=true" then
+        if event.url == OLD_API_URL .. "yume_completed?status=true" then
 
             print('--> 1 : ok')
             self:closeYumeVideo()
             self.afterVideoSeen()
 
-        elseif  event.url == API_URL .. "yume_completed?status=false"
-        or      event.url == API_URL .. "yume_wrong_playing" then
+        elseif  event.url == OLD_API_URL .. "yume_completed?status=false"
+        or      event.url == OLD_API_URL .. "yume_wrong_playing" then
             print('--> 2 : retry or leave  ' .. self.tryYume)
             self:closeYumeVideo()
             if(self.tryYume < 2 ) then
@@ -101,8 +101,8 @@ function VideoManager:videoListener(event)
                 end)
             end
 
-        elseif  event.url == API_URL .. "yume_novideo"
-        or      event.url == API_URL .. "yume_error" then
+        elseif  event.url == OLD_API_URL .. "yume_novideo"
+        or      event.url == OLD_API_URL .. "yume_error" then
             print('--> 3 : leave')
             self:closeYumeVideo()
             timer.performWithDelay(200, function()

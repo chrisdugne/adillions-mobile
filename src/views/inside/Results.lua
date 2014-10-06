@@ -24,17 +24,25 @@ function scene:refreshScene()
 
     self.backWithResults = false
 
-    native.setActivityIndicator( true )
     viewManager.setupView(4)
     viewManager.darkerBack()
     self.view:insert(hud)
 
-    lotteryManager:getFinishedLotteries(function()
+    local drawView = function ()
         self.backWithResults = true
         self:drawBoard()
         hud.board:toBack()
-        native.setActivityIndicator( false )
-    end)
+    end
+
+    if(not lotteryManager.finishedLotteries) then
+        native.setActivityIndicator( true )
+        lotteryManager:getFinishedLotteries(function()
+            drawView()
+            native.setActivityIndicator( false )
+        end)
+    else
+        drawView()
+    end
 
     -- hack android user idle
     timer.performWithDelay(5000, function()
@@ -129,20 +137,20 @@ function scene:drawBoard()
 
         local price = lotteryManager:finalPrice(lottery)
 
-        hud.iconMoney = display.newImage( hud.board, "assets/images/icons/money.png")
+        hud.iconMoney   = display.newImage( hud.board, "assets/images/icons/money.png")
         hud.iconMoney.x = display.contentWidth*0.12
         hud.iconMoney.y = marginTop + yGap*(i-1)+340,
         hud.board:insert(hud.iconMoney)
 
         viewManager.newText({
-            parent = hud.board,
-            text = price,
-            x = display.contentWidth*0.19,
-            y = marginTop + yGap*(i-1)+340,
+            parent   = hud.board,
+            text     = price,
+            x        = display.contentWidth*0.19,
+            y        = marginTop + yGap*(i-1)+340,
             fontSize = 45,
-            font = NUM_FONT,
-            anchorX    = 0,
-            anchorY    = 0.5,
+            font     = NUM_FONT,
+            anchorX  = 0,
+            anchorY  = 0.5,
         })
 
         ------------------------------------------------
@@ -172,7 +180,7 @@ function scene:drawBoard()
 
         viewManager.newText({
             parent   = hud.board,
-            text     = utils.convertAndDisplayPrice(lottery.charity, COUNTRY, lottery.rateUSDtoEUR),
+            text     = utils.convertAndDisplayPrice(lottery.charity, COUNTRY, lottery.rateToUSD),
             x      = display.contentWidth*0.7,
             y      = marginTop + yGap*(i-1)+315,
             fontSize   = 45,
@@ -291,7 +299,7 @@ function scene:openMoreResults( lottery )
 
         viewManager.newText({
             parent    = popup,
-            text    = utils.convertAndDisplayPrice(lottery.prizes[i].share, COUNTRY, lottery.rateUSDtoEUR),
+            text    = utils.convertAndDisplayPrice(lottery.prizes[i].share, COUNTRY, lottery.rateToUSD),
             x     = display.contentWidth*0.8,
             y     = top + yGap * (i-1) - display.contentHeight*0.005,
             fontSize   = 35,

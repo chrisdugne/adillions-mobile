@@ -275,12 +275,12 @@ function ShareManager:inviteForInstants(popup)
     -----------------------------------
 
     viewManager.newText({
-        parent      = hud.popin,
-        text        = T "* Cf. sponsorship rules",
-        x           = -display.contentWidth * 0.45,
-        y           = hud.popin.bottom,
-        anchorX     = 0,
-        fontSize    = 27
+        parent   = hud.popin,
+        text     = T "* Cf. sponsorship rules",
+        x        = -display.contentWidth * 0.45,
+        y        = hud.popin.bottom,
+        anchorX  = 0,
+        fontSize = 27
     })
 
 end
@@ -583,19 +583,11 @@ function ShareManager:noMoreTickets()
         fontSize = 45,
     })
 
-    viewManager.newText({
-        parent   = popup,
-        text     = T "You can increase your stock of Tickets",
-        x        = display.contentWidth * 0.5,
-        y        = display.contentHeight*0.56,
-        fontSize = 42,
-    })
-
     --------------------------
 
     popup.more   = display.newImage( popup, I "more.tickets.png")
     popup.more.x = display.contentWidth*0.5
-    popup.more.y = display.contentHeight*0.65
+    popup.more.y = display.contentHeight*0.55
 
     utils.onTouch(popup.more, function()
         self:moreTickets(popup)
@@ -603,9 +595,30 @@ function ShareManager:noMoreTickets()
 
     --------------------------
 
+    popup.textor   = display.newImage( popup, I "timer.or.png")
+    popup.textor.x = display.contentWidth*0.5
+    popup.textor.y = display.contentHeight*0.63
+
+    --------------------------
+
+    popup.increase   = display.newImage( popup, I "timer.jackpot.png")
+    popup.increase.x = display.contentWidth*0.5
+    popup.increase.y = display.contentHeight*0.72
+
+    utils.onTouch(popup.increase, function()
+        analytics.event("Gaming", "increaseJackpot")
+        viewManager.closePopup(popup)
+        videoManager:play(function()
+             userManager:openIncreaseConfirmation()
+        end, true)
+    end)
+
+
+    --------------------------
+
     popup.close   = display.newImage( popup, I "popup.Bt_close.png")
     popup.close.x = display.contentWidth*0.5
-    popup.close.y = display.contentHeight*0.83
+    popup.close.y = display.contentHeight*0.87
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 
@@ -624,7 +637,7 @@ function ShareManager:sms()
     --    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
     --    body = body .. "\n\n"
     --    body = body .. T "Free and fun - Sign up now using my sponsorship code : "
-    --    body = body .. userManager.user.sponsorCode
+    --    body = body .. userManager.user.sponsorcode
     --    body = body .. "\n\n"
     --    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
     --    body = body .. "\n\n"
@@ -642,7 +655,7 @@ end
 function ShareManager:email()
     analytics.event("Social", "askEmail")
 
-    local body = translate(lotteryManager.globals.email):gsub("___", userManager.user.sponsorCode)
+    local body = translate(lotteryManager.globals.email):gsub("___", userManager.user.sponsorcode)
 
     --    local body = "<html><body>"
     --    body = body .. T "Join me on Adillions and get a chance to win the jackpot !"
@@ -650,7 +663,7 @@ function ShareManager:email()
     --    body = body .. T "MORE PLAYERS = A BIGGER JACKPOT"
     --    body = body .. "<br/><br/>"
     --    body = body .. T "Free and fun - Sign up now using my sponsorship code : "
-    --    body = body .. userManager.user.sponsorCode
+    --    body = body .. userManager.user.sponsorcode
     --    body = body .. "<br/><br/>"
     --    body = body .. T "Available on the App Store, Google Play, Facebook and on www.adillions.com"
     --    body = body .. "<br/><br/>"
@@ -1380,8 +1393,8 @@ function ShareManager:inviteFBFriends()
     local title         = utils.urlEncode(T "Try your luck on Adillions !")
     local message       = utils.urlEncode(T "It's a free, fun and responsible game")
 
-    local redirect_uri  = utils.urlEncode(NODE_URL.."backToMobile")
-    local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorCode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
+    local redirect_uri  = utils.urlEncode(SAILS_URL.."backToMobile")
+    local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID .. "&message=".. message .."&title=".. title .."&data=".. userManager.user.sponsorcode .."&redirect_uri=" .. redirect_uri .."&access_token=" .. GLOBALS.savedData.facebookAccessToken
 
     self.listener       = function(event) self:inviteListener(event) end
     self.closeWebView   = viewManager.openWeb(url, self.listener)
@@ -1395,11 +1408,11 @@ function ShareManager:inviteListener( event )
     if event.url then
         print (event.url)
 
-        if string.startsWith(event.url, NODE_URL .. "backToMobile?request=")
+        if string.startsWith(event.url, SAILS_URL .. "backToMobile?request=")
             or string.startsWith(event.url, "https://m.facebook.com/home.php") then
             self:closeWebView()
 
-        elseif string.startsWith(event.url, NODE_URL .. "backToMobile") then
+        elseif string.startsWith(event.url, SAILS_URL .. "backToMobile") then
 
             self:closeWebView()
             local params = utils.getUrlParams(event.url);

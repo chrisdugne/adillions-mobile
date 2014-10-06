@@ -20,8 +20,8 @@ end
 --------------------------------------------------------------------------------
 
 function LotteryManager:refreshNextLottery(classic, waiting)
-
-    utils.get( NODE_URL .. "/api/status", function(result)
+    native.setActivityIndicator( true )
+    utils.get( SAILS_URL .. "/api/status", function(result)
         local response  = json.decode(result.response)
         local appStatus = response.globals.appStatus
 
@@ -29,6 +29,7 @@ function LotteryManager:refreshNextLottery(classic, waiting)
         self.nextDrawing = response.nextDrawing
 
         self:refreshNotifications(self.nextLottery.timestamp)
+        native.setActivityIndicator( false )
 
         if(appStatus.state ~= 1) then
             print("appStatus : waiting")
@@ -48,7 +49,7 @@ function LotteryManager:checkAppStatus(waiting)
         timer.cancel(self.appStatusTimer)
     end
 
-    utils.get( NODE_URL .. "/api/status", function(result)
+    utils.get( SAILS_URL .. "/api/status", function(result)
         local response  = json.decode(result.response)
         local appStatus = response.globals.appStatus
 
@@ -69,7 +70,7 @@ end
 --------------------------------------------------------------------------------
 
 function LotteryManager:getFinishedLotteries(next)
-    utils.get( NODE_URL .. "/api/lottery/archive/5", function(result)
+    utils.get( SAILS_URL .. "/api/lottery/archive/5", function(result)
         self.finishedLotteries = json.decode(result.response)
         next()
     end)
@@ -82,7 +83,7 @@ function LotteryManager:priceEuros(lottery)
 end
 
 function LotteryManager:price(lottery)
-    return utils.convertAndDisplayPrice(self:priceEuros(lottery), COUNTRY, lottery.rateUSDtoEUR)
+    return utils.convertAndDisplayPrice(self:priceEuros(lottery), COUNTRY, lottery.rateToUSD)
 end
 
 function LotteryManager:charityPerTicket(lottery)
@@ -90,7 +91,7 @@ function LotteryManager:charityPerTicket(lottery)
 end
 
 function LotteryManager:finalPrice(lottery)
-    return utils.convertAndDisplayPrice(lottery.finalPrice, COUNTRY, lottery.rateUSDtoEUR )
+    return utils.convertAndDisplayPrice(lottery.finalPrice, COUNTRY, lottery.rateToUSD )
 end
 
 function LotteryManager:date(lottery, viewDay, viewYear)
@@ -201,7 +202,6 @@ function LotteryManager:removeFromSelection(num)
 end
 
 function LotteryManager:canAddToSelection()
-    utils.tprint(self.nextLottery)
     return #self.currentSelection < self.nextLottery.picks
 end
 
@@ -345,9 +345,7 @@ function LotteryManager:refreshThemeSelectionDisplay()
             display.remove(hud.validate)
             self:validateSelection()
         end)
-
     else
-
         hud.selector.alpha = 1
 
         hud.validate = display.newImage( hud.selection, I "ValidateOFF.png")

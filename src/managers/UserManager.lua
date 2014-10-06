@@ -8,7 +8,9 @@ function UserManager:new()
 
     local object = {
         user               = {},
-        attemptFetchPlayer = 0,
+        tickets            = {},
+        attemptFetchTicket = false,
+        attemptFetchPlayer = 0
     }
 
     setmetatable(object, { __index = UserManager })
@@ -19,7 +21,7 @@ end
 
 function UserManager:getGlobals(onGoodVersion, onBadVersion)
 
-    utils.get( NODE_URL .. "/api/globals", function(result)
+    utils.get( SAILS_URL .. "/api/globals", function(result)
 
         if(result.isError) then
             -- android....
@@ -53,10 +55,10 @@ function UserManager:getGlobals(onGoodVersion, onBadVersion)
 
             time.setServerTime(response.serverTime)
 
-            utils.get( NODE_URL .. "/api/charity/levels", function(result)
+            utils.get( SAILS_URL .. "/api/charity/levels", function(result)
 
                 CHARITY_LEVELS = json.decode(result.response)
-                utils.get( NODE_URL .. "/api/ambassador/levels", function(result)
+                utils.get( SAILS_URL .. "/api/ambassador/levels", function(result)
                     AMBASSADOR_LEVELS = json.decode(result.response)
 
                     if(APP_VERSION >= VERSION_REQUIRED) then
@@ -83,7 +85,7 @@ function UserManager:fetchPlayer()
 
     self.attemptFetchPlayer = self.attemptFetchPlayer + 1
 
-    utils.put( NODE_URL .. "/api/user/fetch", {
+    utils.put( SAILS_URL .. "/api/user/fetch", {
         country       = COUNTRY,
         mobileVersion = APP_VERSION
     },
@@ -114,8 +116,6 @@ function UserManager:fetchPlayer()
                 router.openOutside()
 
             else
-                print('-------------')
-                utils.tprint(player)
                 userManager:receivedPlayer(player, function()
                     router.openHome()
                 end)
@@ -129,7 +129,7 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:loadMoreTickets(skip, next)
-    utils.get( NODE_URL .. "/api/ticket/" .. skip, function(result)
+    utils.get( SAILS_URL .. "/api/ticket/" .. skip, function(result)
         local response = json.decode(result.response);
         local tickets = response.tickets;
         local lotteries = response.lotteries;
@@ -143,13 +143,18 @@ function UserManager:loadMoreTickets(skip, next)
             end
         end
 
-        if(not userManager.tickets) then
-            userManager.tickets = {}
-        end
-
         utils.appendToTable(userManager.tickets, tickets)
 
-        next(tickets)
+        -- loadMoreTickets + attemptFetchTicket + MyTickets (with first etc)
+        -- would need a clean refacto !!!!!!!
+        --> #uglyAndNotReadableButItWorks
+        if( self.attemptFetchTicket ) then
+            next(tickets)
+        else
+            self.attemptFetchTicket = true;
+            next(userManager.tickets)
+        end
+
     end)
 end
 
@@ -202,7 +207,7 @@ function UserManager:refreshPlayer(player, next)
     GLOBALS.savedData.user.lastName      = player.lastName
     GLOBALS.savedData.user.birthDate     = player.birthDate
     GLOBALS.savedData.user.referrerId    = player.referrerId
-    GLOBALS.savedData.user.sponsorCode   = player.sponsorCode
+    GLOBALS.savedData.user.sponsorcode   = player.sponsorcode
     GLOBALS.savedData.user.facebookId    = player.facebookId
     GLOBALS.savedData.user.twitterId     = player.twitterId
     GLOBALS.savedData.user.twitterName   = player.twitterName
@@ -439,12 +444,10 @@ end
 function UserManager:cashout(next)
     viewManager.closePopup(popup)
 
-    -- TODO
-    -- utils.post({},
-    -- API_URL .. "cashout",
-    -- function(result)
-    --     userManager:updatePlayer(next)
-    -- end)
+    -- TODO : migration sur Sails
+    utils.post( OLD_API_URL .. "cashout", {}, function(result)
+        self:fetchPlayer()
+    end)
 
 end
 
@@ -454,7 +457,7 @@ function UserManager:storeLotteryTicket(numbers)
 
     native.setActivityIndicator( true )
 
-    utils.post( NODE_URL .. "/api/ticket/", {
+    utils.post( SAILS_URL .. "/api/ticket/", {
         numbers = numbers,
     },
     function(result)
@@ -464,11 +467,8 @@ function UserManager:storeLotteryTicket(numbers)
             gameManager:open()
             viewManager.message(T "Waiting for drawing")
         else
-            print('ticket stored', response)
-            utils.tprint(response)
-            -- userManager:refreshPlayer(response, function()
-            --     lotteryManager:showLastTicket()
-            -- end)
+            table.insert(userManager.tickets, 1, response)
+            lotteryManager:showLastTicket()
         end
     end)
 
@@ -492,7 +492,7 @@ function UserManager:updatePlayer(next)
     self.user.lang = LANG
     self.user.passports = nil
 
-    utils.put( NODE_URL .. "/api/user/update", {
+    utils.put( SAILS_URL .. "/api/user/update", {
         user = self.user,
     }, next)
 

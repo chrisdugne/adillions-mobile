@@ -21,19 +21,22 @@ end
 
 --------------------------------------------------------------------------------
 
-function scene:initBoard()
-    viewManager.initBoard(function(event) self:scrollListener(event) end)
-    self.currentLottery    = nil
-    self.lotteries         = {}
-    self.currentLottery    = nil
-    self.nbLotteries       = 0
-    self.nbPreviousTickets = 0
+function scene:refreshScene()
+    if(not userManager.attemptFetchTicket) then
+        self:loadMoreTickets(true)
+    else
+        self:drawFirstTickets(userManager.tickets)
+    end
 end
 
 function scene:drawFirstTickets(tickets)
     self:initBoard()
     self:prepareLotteryHeights(tickets)
-    self:drawNextLottery()
+
+    if(lotteryManager.nextDrawing.uid == tickets[1].lottery.uid) then
+        self:drawNextLottery()
+    end
+
     self:drawPreviousLotteries(tickets)
     hud:insert(hud.board)
 
@@ -42,46 +45,43 @@ function scene:drawFirstTickets(tickets)
     self.view:insert(hud)
 end
 
-function scene:refreshScene()
-
-    if(userManager.tickets) then
-
-        if(#userManager.tickets == 0) then
-            viewManager.newText({
-                parent   = hud,
-                text     = T "No ticket",
-                x        = display.contentWidth*0.5,
-                y        = display.contentHeight*0.15,
-                fontSize = 43
-            })
-            hud.bg               = display.newImage( hud, "assets/images/hud/home/BG_adillions.png")
-            hud.playTicketButton = display.newImage( hud, I "filloutticket.button.png")
-
-            hud.bg.x               = display.contentWidth*0.5
-            hud.bg.y               = display.contentHeight*0.5
-            hud.playTicketButton.x = display.contentWidth*0.5
-            hud.playTicketButton.y = display.contentHeight*0.5
-
-            utils.onTouch(hud.playTicketButton, function()
-                gameManager:play()
-            end)
-
-        else
-            self:drawFirstTickets(userManager.tickets)
-        end
-
-    else
-        self:loadMoreTickets(true)
-
-    end
-
+function scene:initBoard()
+    viewManager.initBoard(function(event) self:scrollListener(event) end)
+    self.currentLottery    = nil
+    self.lotteries         = {}
+    self.currentLottery    = nil
+    self.nbLotteries       = 0
+    self.nbPreviousTickets = 0
+    self.nextDrawingHeight = HEADER_HEIGHT + 80
 end
 
 --------------------------------------------------------------------------------
 
-function scene:prepareLotteryHeights(tickets)
+function scene:tellNoTickets()
+    viewManager.newText({
+        parent   = hud,
+        text     = T "No ticket",
+        x        = display.contentWidth*0.5,
+        y        = display.contentHeight*0.15,
+        fontSize = 43
+    })
+    hud.bg               = display.newImage( hud, "assets/images/hud/home/BG_adillions.png")
+    hud.playTicketButton = display.newImage( hud, I "filloutticket.button.png")
 
-    -- compte le nombre de tickets pour calculer la hauteur de drawBorder
+    hud.bg.x               = display.contentWidth*0.5
+    hud.bg.y               = display.contentHeight*0.5
+    hud.playTicketButton.x = display.contentWidth*0.5
+    hud.playTicketButton.y = display.contentHeight*0.5
+
+    utils.onTouch(hud.playTicketButton, function()
+        gameManager:play()
+    end)
+end
+
+--------------------------------------------------------------------------------
+
+-- compte le nombre de tickets pour calculer la hauteur de drawBorder
+function scene:prepareLotteryHeights(tickets)
 
     for i = 1,#tickets do
 
@@ -114,51 +114,42 @@ function scene:drawNextLottery()
     self.currentLottery = nil
     local borderHeight  = 0
 
+    self.currentLottery = userManager.tickets[1].lottery.uid
+    self.nbLotteries    = 1
+    self.nbTickets      = self.lotteries[self.currentLottery].nbTickets
+    borderHeight        = yGap + yGap*self.nbTickets + 20
+
+    viewManager.drawBorder(
+        hud.board,
+        display.contentWidth*0.5,                                  -- x
+        top + (yGap)*(self.nbLotteries-1) + borderHeight/2 - 55,   -- y
+        display.contentWidth*0.95,                                 -- width
+        borderHeight,                                              -- height
+        240,240,240
+    )
+
+    viewManager.newText({
+        parent   = hud.board,
+        text     = T "Next drawing" .. " : " .. lotteryManager:date(lotteryManager.nextDrawing, true),
+        x        = display.contentWidth*0.08,
+        y        = top + yGap*(self.nbLotteries-1),
+        fontSize = 43,
+        anchorX  = 0,
+        anchorY  = 0.5,
+    })
+
     for i = 1,#userManager.tickets do
 
         local ticket = userManager.tickets[i]
-        if(ticket.lottery.uid == lotteryManager.nextLottery.uid) then
+        if(ticket.lottery.uid == lotteryManager.nextDrawing.uid) then
 
             local numbers  = ticket.numbers
             nbNewTickets = nbNewTickets + 1
-
-            if(self.currentLottery ~= ticket.lottery.uid) then
-
-                -----
-                -- juste pour le premier ticket du coup.
-
-                self.currentLottery = ticket.lottery.uid
-                self.nbLotteries    = 1
-                self.nbTickets      = self.lotteries[self.currentLottery].nbTickets
-                borderHeight        = yGap + yGap*self.nbTickets + 20
-
-                viewManager.drawBorder(
-                    hud.board,
-                    display.contentWidth*0.5,                                               -- x
-                    top + (yGap)*(nbNewTickets+self.nbLotteries-2) + borderHeight/2 - 55,   -- y
-                    display.contentWidth*0.95,                                              -- width
-                    borderHeight,                                                           -- height
-                    240,240,240
-                )
-
-                viewManager.newText({
-                    parent   = hud.board,
-                    text     = T "Next drawing" .. " : " .. lotteryManager:date(ticket.lottery, true),
-                    x        = display.contentWidth*0.08,
-                    y        = top + yGap*(nbNewTickets+self.nbLotteries-2),
-                    fontSize = 43,
-                    anchorX  = 0,
-                    anchorY  = 0.5,
-                })
-
-            end
-
             viewManager.drawTicket(hud.board, ticket.lottery, numbers, marginLeft, top + 50 + yGap*(nbNewTickets-0.5))
-
         end
     end
 
-    self.nextLotteryTop = top + borderHeight
+    self.nextDrawingHeight = borderHeight + 20
 
 end
 
@@ -171,16 +162,16 @@ function scene:drawPreviousLotteries(tickets)
     local yGap       = display.contentHeight *0.17
 
     for i = 1,#tickets do
-        self:drawTicket(tickets[i], marginLeft, xGap, yGap)
+        self:drawTicketForPreviousLottery(tickets[i], marginLeft, xGap, yGap)
     end
 
 end
 
 --------------------------------------------------------------------------------
 
-function scene:drawTicket(ticket, marginLeft, xGap, yGap)
+function scene:drawTicketForPreviousLottery(ticket, marginLeft, xGap, yGap)
 
-    local top = self.nextLotteryTop
+    local top = self.nextDrawingHeight
 
     if(ticket.lottery.uid ~= lotteryManager.nextLottery.uid) then
 
@@ -309,12 +300,12 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
                 ---------------------------------------------------------------------
                 -- Money
 
-                if(ticket.price) then
-                    local price = utils.convertAndDisplayPrice(ticket.price, COUNTRY, ticket.lottery.rateUSDtoEUR)
+                if(ticket.euros) then
+                    local euros = utils.convertAndDisplayPrice(ticket.euros, COUNTRY, ticket.lottery.rateToUSD)
 
                     viewManager.newText({
                         parent   = hud.board,
-                        text     = price,
+                        text     = euros,
                         x        = display.contentWidth*0.87,
                         y        = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1),
                         fontSize = 37,
@@ -329,7 +320,7 @@ function scene:drawTicket(ticket, marginLeft, xGap, yGap)
                     iconMoney.y     = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.12)
                     hud.board:insert(iconMoney)
                 else
-                    --- no price, no bonus : '-'
+                    --- no euros, no bonus : '-'
 
                     viewManager.newText({
                         parent   = hud.board,
@@ -367,8 +358,11 @@ function scene:loadMoreTickets(first)
                     self:drawPreviousLotteries(tickets)
                 end
             else
-                self.currentLottery = nil
+                if(first) then
+                    self:tellNoTickets()
+                end
 
+                self.currentLottery = nil
             end
 
             native.setActivityIndicator( false )

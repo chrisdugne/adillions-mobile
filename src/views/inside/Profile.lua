@@ -638,7 +638,7 @@ function scene:drawScene()
     self:drawTextEntry(T "Last name"            .. " : ", userManager.user.lastName or '-', detailsTop+2.7)
     self:drawTextEntry(T "Email"                .. " : ", userManager.user.email or '-', detailsTop+3.9)
     self:drawTextEntry(T "Date of birth"        .. " : ", utils.readableDate(userManager.user.birthDate, false, true), detailsTop+5.1)
-    self:drawTextEntry(T "Sponsorship code"     .. " : ", userManager.user.sponsorCode or '-', detailsTop+6.3)
+    self:drawTextEntry(T "Sponsorship code"     .. " : ", userManager.user.sponsorcode or '-', detailsTop+6.3)
 
     ------------------
 

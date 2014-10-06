@@ -18,7 +18,7 @@ end
 --------------------------------------------------------------------------------
 
 function SigninManager:openLogin()
-    local url         = NODE_URL .. "/" .. LANG .. "/m/login"
+    local url         = SAILS_URL .. "/" .. LANG .. "/m/login"
     self.listener     = function(event) self:loginListener(event) end
     self.closeWebView = viewManager.openWeb(url, self.listener)
 end
@@ -26,7 +26,7 @@ end
 --------------------------------------------------------------------------------
 
 function SigninManager:openSignin()
-    local url         = NODE_URL .. "/" .. LANG .. "/m/register"
+    local url         = SAILS_URL .. "/" .. LANG .. "/m/register"
     self.listener     = function(event) self:loginListener(event) end
     self.closeWebView = viewManager.openWeb(url, self.listener)
 end
