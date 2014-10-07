@@ -319,10 +319,9 @@ function request(url, method, next, data, type)
         authToken = GLOBALS.savedData.authToken
     end
 
-    if (DEV) then
-        authToken = 'b5a8d743-9317-4f37-9537-0787fa245f19'
-        print('DEV bearer : ' .. authToken)
-        print(url)
+    if (DEV_BEARER) then
+        authToken = DEV_BEARER
+        print('Warning : DEV bearer : ' .. DEV_BEARER)
     end
 
     ----------------------------------------

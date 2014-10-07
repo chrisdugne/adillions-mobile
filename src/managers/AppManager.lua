@@ -19,7 +19,14 @@ function AppManager:start()
     ----------------------------------------------------------------------------
 
     -- LOCAL = true
-    -- DEV = true
+    DEV = true
+
+    ----------------------------------------------------------------------------
+    -- Dev overiddes
+
+    -- DEV_BEARER = 'b5a8d743-9317-4f37-9537-0787fa245f19'
+    -- DEV_LANG = "en" -- "FR"
+    -- DEV_COUNTRY = "FR" -- "US"
 
     ----------------------------------------------------------------------------
 
@@ -47,7 +54,6 @@ function AppManager:start()
     appManager:deviceSetup()
 
     router.openLoading()
-    LANG = 'fr'
     appManager:checkInternetConnection()
 
 end
@@ -58,7 +64,7 @@ function AppManager:setup()
 
     print("application setup...")
 
-    ------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     ---- App globals
 
     GLOBALS = {
@@ -138,9 +144,15 @@ function AppManager:setup()
     -- LANG not supported : default en
     if(LANG ~= "en" and LANG ~= "fr") then LANG = "en" end
 
+    -- dev overiddes
+    if(DEV_LANG) then LANG = DEV_LANG end
+
     ------------------------------------------------------------------------------
 
     COUNTRY = system.getPreference( "locale", "country" ) or "US"
+
+    -- dev overiddes
+    if(DEV_COUNTRY) then COUNTRY = DEV_COUNTRY end
 
     ------------------------------------------------------------------------------
 
@@ -369,9 +381,9 @@ end
 
 function AppManager:onSettingsReady()
 
-    if(LOCAL) then
+    if(DEV_LANG) then
         print("     -------->  LOCAL ")
-        LANG = "fr"
+        LANG = "en"
         COUNTRY = "FR"
     end
 

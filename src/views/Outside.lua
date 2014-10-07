@@ -102,15 +102,23 @@ function scene:refreshScene()
     hud.login   = display.newImage( hud, I "Sign_Login.png")
     hud.login.x = display.contentWidth*0.5
     -- hud.login.y = display.contentHeight*0.71
-    hud.login.y = display.contentHeight*0.79
+    hud.login.y = display.contentHeight*0.65
 
-    utils.onTouch(hud.login, function() signinManager:openLogin() end)
+    utils.onTouch(hud.login, function()
+        signinManager:openLogin()
+    end)
+
+    hud.textor   = display.newImage( hud, I "timer.or.png")
+    hud.textor.x = display.contentWidth*0.5
+    hud.textor.y = display.contentHeight*0.75
 
     hud.signin   = display.newImage( hud, I "Sign_Signup.png")
     hud.signin.x = display.contentWidth*0.5
-    hud.signin.y = display.contentHeight*0.91
+    hud.signin.y = display.contentHeight*0.85
 
-    utils.onTouch(hud.signin, function() signinManager:openSignin() end)
+    utils.onTouch(hud.signin, function()
+        signinManager:openSignin()
+    end)
 
     ---------------------------------------------------------------
 

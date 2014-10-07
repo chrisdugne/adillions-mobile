@@ -116,6 +116,7 @@ function UserManager:fetchPlayer()
                 router.openOutside()
 
             else
+                utils.tprint(player)
                 userManager:receivedPlayer(player, function()
                     router.openHome()
                 end)
