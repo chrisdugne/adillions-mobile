@@ -116,7 +116,6 @@ function UserManager:fetchPlayer()
                 router.openOutside()
 
             else
-                utils.tprint(player)
                 userManager:receivedPlayer(player, function()
                     router.openHome()
                 end)
@@ -129,34 +128,18 @@ end
 
 --------------------------------------------------------------------------------
 
-function UserManager:loadMoreTickets(skip, next)
-    utils.get( SAILS_URL .. "/api/ticket/" .. skip, function(result)
-        local response = json.decode(result.response);
-        local tickets = response.tickets;
-        local lotteries = response.lotteries;
-
-        for t = 1, #tickets do
-            for l = 1, #lotteries do
-                if(tickets[t].lottery == lotteries[l].uid) then
-                    tickets[t].lottery = lotteries[l]
-                    break
-                end
-            end
-        end
-
-        utils.appendToTable(userManager.tickets, tickets)
-
-        -- loadMoreTickets + attemptFetchTicket + MyTickets (with first etc)
-        -- would need a clean refacto !!!!!!!
-        --> #uglyAndNotReadableButItWorks
-        if( self.attemptFetchTicket ) then
-            next(tickets)
-        else
-            self.attemptFetchTicket = true;
-            next(userManager.tickets)
-        end
-
+function UserManager:readPlayer(next)
+    print('--> readPlayer')
+    native.setActivityIndicator( true )
+    utils.get( SAILS_URL .. "/api/user", function(result)
+        native.setActivityIndicator( false )
+        local newData       = json.decode(result.response)
+        self.user.passports = newData.passports
+        self.user.networks  = newData.networks
+        utils.tprint(self.user)
+        self:refreshBonusTickets(next)
     end)
+
 end
 
 --------------------------------------------------------------------------------
@@ -168,13 +151,6 @@ function UserManager:receivedPlayer(player, next)
     if(next == router.openHome) then
         viewManager.message(T "Welcome" .. " " .. player.userName .. " !")
     end
-
-    self:refreshPlayer(player, next)
-end
-
---------------------------------------------------------------------------------
-
-function UserManager:refreshPlayer(player, next)
 
     ------------------------------------------------------------------
     -- backup transient data
@@ -209,11 +185,6 @@ function UserManager:refreshPlayer(player, next)
     GLOBALS.savedData.user.birthDate     = player.birthDate
     GLOBALS.savedData.user.referrerId    = player.referrerId
     GLOBALS.savedData.user.sponsorcode   = player.sponsorcode
-    GLOBALS.savedData.user.facebookId    = player.facebookId
-    GLOBALS.savedData.user.twitterId     = player.twitterId
-    GLOBALS.savedData.user.twitterName   = player.twitterName
-    GLOBALS.savedData.user.isFacebookFan = player.isFacebookFan
-    GLOBALS.savedData.user.isTwitterFan  = player.isTwitterFan
 
     utils.saveTable(GLOBALS.savedData, "savedData.json")
 
@@ -243,6 +214,7 @@ function UserManager:refreshBonusTickets(next)
 
     self:setCharityBonus()
     self:setAmbassadorBonus()
+    self:checkNetworksBonuses()
 
     next()
 end
@@ -290,154 +262,25 @@ function UserManager:ambassadorLevel()
 end
 
 --------------------------------------------------------------------------------
--- popup affichee uniquement si facebookId libre pour adillions
--- (sinon on a logout puis login le user FB existant)
--- si confirm : on pose link facebookId,
-function UserManager:showConfirmMerge(next)
 
-    -----------------
+function UserManager:checkNetworksBonuses()
 
-    local popup = viewManager.showPopup()
-
-    popup.infoBG                    = display.newImage(popup, "assets/images/hud/info.bg.png")
-    popup.infoBG.x                  = display.contentWidth*0.5
-    popup.infoBG.y                  = display.contentHeight * 0.5
-
-    popup.shareIcon                 = display.newImage( popup, "assets/images/icons/PictoInfo.png")
-    popup.shareIcon.x               = display.contentWidth*0.5
-    popup.shareIcon.y               = display.contentHeight*0.22
-
-    popup.shareIcon                 = display.newImage( popup, I "watchout.png")
-    popup.shareIcon.x               = display.contentWidth*0.5
-    popup.shareIcon.y               = display.contentHeight*0.31
-
-    -----------------
-
-    local message = ""
-    if(LANG == "fr") then
-        message = "Vous allez connecter le compte Facebook " .. facebook.data.name .. " avec le compte Adillions de " .. self.user.firstName
-    else
-        message = "You are about to connect " .. facebook.data.name .. " Facebook profile with " .. self.user.firstName .. "'s Adillions account"
+    if(self.user.networks.isFan) then
+        self.user.fanBonusTickets = self.user.fanBonusTickets + FACEBOOK_FAN_TICKETS
     end
 
-    popup.multiLineText = display.newText({
-        parent          = popup,
-        text            = message,
-        width           = display.contentWidth*0.6,
-        height          = display.contentHeight*0.25,
-        x               = display.contentWidth*0.5,
-        y               = display.contentHeight*0.5,
-        font            = FONT,
-        fontSize        = 44,
-        align           = "center",
-    })
-
-    popup.multiLineText:setFillColor(0)
-
-    -----------------
-
-    popup.confirm       = display.newImage( popup, I "confirm.png")
-    popup.confirm.x     = display.contentWidth*0.5
-    popup.confirm.y     = display.contentHeight*0.65
-
-    utils.onTouch(popup.confirm, function()
-        viewManager.closePopup(popup)
-        userManager:mergePlayerWithFacebook(next)
-    end)
-
-    -----------------
-
-    popup.close         = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x       = display.contentWidth*0.5
-    popup.close.y       = display.contentHeight*0.83
-
-    utils.onTouch(popup.close, function()
-        viewManager.message(T "Connection failed")
-        viewManager.closePopup(popup)
-    end)
-
-
-end
-
-
---------------------------------------------------------------------------------
--- popup affichee uniquement si facebookId pas libre et nouveau compte FB
-function UserManager:showWrongAccount()
-
-    -----------------
-
-    local popup = viewManager.showPopup()
-
-    popup.shareIcon    = display.newImage( popup, "assets/images/icons/PictoInfo.png")
-    popup.shareIcon.x    = display.contentWidth*0.5
-    popup.shareIcon.y   = display.contentHeight*0.22
-
-    popup.shareIcon    = display.newImage( popup, I "Sorry.png")
-    popup.shareIcon.x    = display.contentWidth*0.5
-    popup.shareIcon.y   = display.contentHeight*0.31
-
-    -----------------
-
-    local message = ""
-    local message2 = ""
-
-    if(LANG == "fr") then
-        message = "Le compte Adillions de " .. self.user.firstName .. " est déjà lié au profil Facebook de " .. self.user.userName
-        message2 = "Il n’est pas possible de connecter plusieurs comptes Facebook au même compte Adillions, veuillez vous connecter avec " .. self.user.userName
-    else
-        message = "The Adillions account " .. self.user.firstName .. " is already linked to " .. self.user.userName .. " Facebook profile"
-        message2 = "It is not possible to connect multiple Facebook profiles to a single Adillions account, please log in with " .. self.user.userName .. " profile"
+    if(self.user.networks.connectedToFacebook) then
+        self.user.fanBonusTickets = self.user.fanBonusTickets + FACEBOOK_CONNECTION_TICKETS
     end
 
+    if(self.user.networks.isFollower) then
+        self.user.fanBonusTickets = self.user.fanBonusTickets + TWITTER_FAN_TICKETS
+    end
 
-    popup.multiLineText = display.newText({
-        parent = popup,
-        text   = message,
-        width  = display.contentWidth*0.6,
-        height  = display.contentHeight*0.25,
-        x    = display.contentWidth*0.5,
-        y    = display.contentHeight*0.5,
-        font   = FONT,
-        fontSize = 38,
-        align  = "center",
-    })
+    if(self.user.networks.connectedToTwitter) then
+        self.user.fanBonusTickets = self.user.fanBonusTickets + TWITTER_CONNECTION_TICKETS
+    end
 
-
-    popup.multiLineText2 = display.newText({
-        parent = popup,
-        text   = message2,
-        width  = display.contentWidth*0.6,
-        height  = display.contentHeight*0.25,
-        x    = display.contentWidth*0.5,
-        y    = display.contentHeight*0.67,
-        font   = FONT,
-        fontSize = 38,
-        align  = "center",
-    })
-
-    popup.multiLineText:setFillColor(0)
-    popup.multiLineText2:setFillColor(0)
-
-    -----------------
-
-    popup.close     = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x    = display.contentWidth*0.5
-    popup.close.y    = display.contentHeight*0.83
-
-    utils.onTouch(popup.close, function()
-        viewManager.closePopup(popup)
-    end)
-
-end
-
---------------------------------------------------------------------------------
-
--- TODO sails.server side
-function UserManager:checkFanStatus(next)
-    -- self.user.fanBonusTickets = self.user.fanBonusTickets + FACEBOOK_CONNECTION_TICKETS
-    -- self.user.fanBonusTickets = self.user.fanBonusTickets + TWITTER_CONNECTION_TICKETS
-    -- self.user.fanBonusTickets = self.user.fanBonusTickets + FACEBOOK_FAN_TICKETS
-    -- self.user.fanBonusTickets = self.user.fanBonusTickets + TWITTER_FAN_TICKETS
 end
 
 --------------------------------------------------------------------------------
@@ -450,6 +293,38 @@ function UserManager:cashout(next)
         self:fetchPlayer()
     end)
 
+end
+
+--------------------------------------------------------------------------------
+
+function UserManager:loadMoreTickets(skip, next)
+    utils.get( SAILS_URL .. "/api/ticket/" .. skip, function(result)
+        local response = json.decode(result.response);
+        local tickets = response.tickets;
+        local lotteries = response.lotteries;
+
+        for t = 1, #tickets do
+            for l = 1, #lotteries do
+                if(tickets[t].lottery == lotteries[l].uid) then
+                    tickets[t].lottery = lotteries[l]
+                    break
+                end
+            end
+        end
+
+        utils.appendToTable(userManager.tickets, tickets)
+
+        -- loadMoreTickets + attemptFetchTicket + MyTickets (with first etc)
+        -- would need a clean refacto !!!!!!!
+        --> #uglyAndNotReadableButItWorks
+        if( self.attemptFetchTicket ) then
+            next(tickets)
+        else
+            self.attemptFetchTicket = true;
+            next(userManager.tickets)
+        end
+
+    end)
 end
 
 --------------------------------------------------------------------------------
@@ -616,7 +491,7 @@ function UserManager:notifyPrizes(next)
 
         --------------------------
 
-        if(userManager.user.facebookId) then
+        if(userManager.user.networks.connectedToFacebook) then
             popup.share   = display.newImage( popup, I "share.notification.png")
             popup.share.x = display.contentWidth*0.5
             popup.share.y = display.contentHeight*0.68

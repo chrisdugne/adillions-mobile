@@ -642,58 +642,58 @@ function scene:drawScene()
 
     ------------------
 
-    hud.fb                = display.newImage( hud.board, "assets/images/hud/profile/facebook.details.png")
-    hud.fb.anchorX        = 0
-    hud.fb.anchorY        = 0.4
-    hud.fb.x              = self.column1
-    hud.fb.y              = self.top + self.yGap*(detailsTop+7.5)
+    hud.fb         = display.newImage( hud.board, "assets/images/hud/profile/facebook.details.png")
+    hud.fb.anchorX = 0
+    hud.fb.anchorY = 0.4
+    hud.fb.x       = self.column1
+    hud.fb.y       = self.top + self.yGap*(detailsTop+7.5)
     hud.board:insert(hud.fb)
 
     local textFB = viewManager.newText({
-        parent      = hud.board,
-        text        = "Facebook :",
-        x           = hud.fb.x + hud.fb.contentWidth + display.contentWidth * 0.02,
-        y           = self.top + self.yGap*(detailsTop+7.5),
-        fontSize    = self.fontSizeLeft,
-        font        = FONT,
-        anchorX     = 0,
-        anchorY     = 0.5
+        parent   = hud.board,
+        text     = "Facebook :",
+        x        = hud.fb.x + hud.fb.contentWidth + display.contentWidth * 0.02,
+        y        = self.top + self.yGap*(detailsTop+7.5),
+        fontSize = self.fontSizeLeft,
+        font     = FONT,
+        anchorX  = 0,
+        anchorY  = 0.5
     })
 
     local valueFB = "-"
-    if(userManager.user.facebookId) then
+    if(userManager.user.networks.connectedToFacebook) then
         valueFB = userManager.user.userName
     end
 
     viewManager.newText({
-        parent      = hud.board,
-        text        = valueFB,
-        x           = self.column2,
-        y           = self.top + self.yGap*(detailsTop+7.5),
-        fontSize    = self.fontSizeRight,
-        font        = NUM_FONT,
-        anchorX     = 1,
-        anchorY     = 0.5
+        parent   = hud.board,
+        text     = valueFB,
+        x        = self.column2,
+        y        = self.top + self.yGap*(detailsTop+7.5),
+        fontSize = self.fontSizeRight,
+        font     = NUM_FONT,
+        anchorX  = 1,
+        anchorY  = 0.5
     })
 
     ------------------
 
-    hud.tw                = display.newImage( hud.board, "assets/images/hud/profile/twitter.details.png")
-    hud.tw.anchorX        = 0
-    hud.tw.anchorY        = 0.4
-    hud.tw.x              = self.column1
-    hud.tw.y              = self.top + self.yGap*(detailsTop+8.7)
+    hud.tw         = display.newImage( hud.board, "assets/images/hud/profile/twitter.details.png")
+    hud.tw.anchorX = 0
+    hud.tw.anchorY = 0.4
+    hud.tw.x       = self.column1
+    hud.tw.y       = self.top + self.yGap*(detailsTop+8.7)
     hud.board:insert(hud.tw)
 
     local textTW = viewManager.newText({
-        parent      = hud.board,
-        text        = "Twitter :",
-        x           = hud.tw.x + hud.tw.contentWidth + display.contentWidth * 0.02,
-        y           = self.top + self.yGap*(detailsTop+8.7),
-        fontSize    = self.fontSizeLeft,
-        font        = FONT,
-        anchorX     = 0,
-        anchorY     = 0.5
+        parent   = hud.board,
+        text     = "Twitter :",
+        x        = hud.tw.x + hud.tw.contentWidth + display.contentWidth * 0.02,
+        y        = self.top + self.yGap*(detailsTop+8.7),
+        fontSize = self.fontSizeLeft,
+        font     = FONT,
+        anchorX  = 0,
+        anchorY  = 0.5
     })
 
     local valueTW = "-"
@@ -702,14 +702,14 @@ function scene:drawScene()
     end
 
     viewManager.newText({
-        parent      = hud.board,
-        text        = valueTW,
-        x           = self.column2,
-        y           = self.top + self.yGap*(detailsTop+8.7),
-        fontSize    = self.fontSizeRight,
-        font        = NUM_FONT,
-        anchorX     = 1,
-        anchorY     = 0.5
+        parent   = hud.board,
+        text     = valueTW,
+        x        = self.column2,
+        y        = self.top + self.yGap*(detailsTop+8.7),
+        fontSize = self.fontSizeRight,
+        font     = NUM_FONT,
+        anchorX  = 1,
+        anchorY  = 0.5
     })
 
     --------------------------

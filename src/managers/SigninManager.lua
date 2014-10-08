@@ -27,14 +27,35 @@ end
 
 function SigninManager:openSignin()
     local url         = SAILS_URL .. "/" .. LANG .. "/m/register"
-    self.listener     = function(event) self:loginListener(event) end
+
+    self.listener     = function(event)
+        self:loginListener(event, function()
+            userManager:fetchPlayer()
+        end)
+    end
+
     self.closeWebView = viewManager.openWeb(url, self.listener)
 end
 
-------------------------------------------
+--------------------------------------------------------------------------------
 
-function SigninManager:loginListener( event )
+function SigninManager:connect(network, next)
+    print('connection to : ' + network)
+    local url         = SAILS_URL .. "/m/auth/" .. network
 
+    self.listener     = function(event)
+        self:loginListener(event, function()
+            userManager:readPlayer()
+            next()
+        end)
+    end
+
+    self.closeWebView = viewManager.openWeb(url, self.listener)
+end
+
+--------------------------------------------------------------------------------
+
+function SigninManager:loginListener( event, next )
     if event.url then
         if string.find(string.lower(event.url), "loggedin") then
             self:closeWebView()
@@ -43,7 +64,7 @@ function SigninManager:loginListener( event )
             GLOBALS.savedData.authToken  = params["auth_token"]
             utils.saveTable(GLOBALS.savedData, "savedData.json")
 
-            userManager:fetchPlayer()
+            next()
         end
     end
 end

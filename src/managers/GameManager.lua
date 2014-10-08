@@ -42,16 +42,8 @@ function GameManager:open()
 
     router.openLoading()
 
-    local onGoodVersion = function()
-        if(GLOBALS.savedData.user.facebookId) then
-            gameManager:tryAutoOpenFacebookAccount()
-        else
-            print("tryAutoOpenFacebookAccount")
-            gameManager:tryAutoOpenAdillionsAccount()
-        end
-    end
-
-    local onBadVersion = function() gameManager:showBadVersion() end
+    local onGoodVersion = function() self:tryAutoLogin() end
+    local onBadVersion = function() self:showBadVersion() end
 
     userManager:getGlobals(onGoodVersion, onBadVersion)
 
@@ -94,24 +86,9 @@ end
 
 --------------------------------------------------------------------------------
 
-function GameManager:tryAutoOpenFacebookAccount()
-    native.setActivityIndicator( true )
-    facebook.getMe(function()
-        native.setActivityIndicator( false )
-        print("start : getMe : fail : try adillions account")
-        self:tryAutoOpenAdillionsAccount()
-    end)
-end
-
-function GameManager:tryAutoOpenAdillionsAccount()
-
-    GLOBALS.savedData.facebookAccessToken  = nil
-    GLOBALS.savedData.twitterAccessToken  = nil
-    utils.saveTable(GLOBALS.savedData, "savedData.json")
-
+function GameManager:tryAutoLogin()
     if(GLOBALS.savedData.user.uid) then
         userManager:fetchPlayer()
-
     else
         print("start : no user data : outside")
         router.openOutside()
