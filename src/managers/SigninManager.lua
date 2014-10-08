@@ -17,18 +17,11 @@ end
 
 --------------------------------------------------------------------------------
 
-function SigninManager:openLogin()
-    local url         = SAILS_URL .. "/" .. LANG .. "/m/login"
-    self.listener     = function(event) self:loginListener(event) end
-    self.closeWebView = viewManager.openWeb(url, self.listener)
-end
+--- route = login or register
+function SigninManager:open(route)
+    local url = SAILS_URL .. "/" .. LANG .. "/m/" .. route
 
---------------------------------------------------------------------------------
-
-function SigninManager:openSignin()
-    local url         = SAILS_URL .. "/" .. LANG .. "/m/register"
-
-    self.listener     = function(event)
+    self.listener = function(event)
         self:loginListener(event, function()
             userManager:fetchPlayer()
         end)
@@ -39,18 +32,17 @@ end
 
 --------------------------------------------------------------------------------
 
-function SigninManager:connect(network, next)
+function SigninManager:connect(network, success, fail)
     print('connection to : ' + network)
-    local url         = SAILS_URL .. "/m/auth/" .. network
+    local url = SAILS_URL .. "/m/auth/" .. network
 
-    self.listener     = function(event)
+    self.listener = function(event)
         self:loginListener(event, function()
-            userManager:readPlayer()
-            next()
+            userManager:readPlayer(success)
         end)
     end
 
-    self.closeWebView = viewManager.openWeb(url, self.listener)
+    self.closeWebView = viewManager.openWeb(url, self.listener, fail)
 end
 
 --------------------------------------------------------------------------------
@@ -64,6 +56,9 @@ function SigninManager:loginListener( event, next )
             GLOBALS.savedData.authToken  = params["auth_token"]
             utils.saveTable(GLOBALS.savedData, "savedData.json")
 
+            print('-----')
+            print(GLOBALS.savedData.authToken)
+            print('-----')
             next()
         end
     end

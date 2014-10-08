@@ -71,10 +71,9 @@ function scene:drawScene()
         anchorY     = 0.5,
     })
 
-    if(GLOBALS.savedData.facebookAccessToken and facebook.data) then
-        print(facebook.data.picture.data.url)
+    if(userManager.user.photo) then
         viewManager.drawRemoteImage(
-            facebook.data.picture.data.url,
+            userManager.user.photo,
             hud.board,
             display.contentWidth*0.2,
             self.top + display.contentHeight*0.02,

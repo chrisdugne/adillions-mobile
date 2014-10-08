@@ -137,6 +137,7 @@ function UserManager:readPlayer(next)
         self.user.passports = newData.passports
         self.user.networks  = newData.networks
         utils.tprint(self.user)
+        print('---')
         self:refreshBonusTickets(next)
     end)
 
@@ -343,7 +344,8 @@ function UserManager:storeLotteryTicket(numbers)
             gameManager:open()
             viewManager.message(T "Waiting for drawing")
         else
-            table.insert(userManager.tickets, 1, response)
+            table.insert(self.tickets, 1, response)
+            self.user.lastTicketTime = response.timestamp
             lotteryManager:showLastTicket()
         end
     end)
@@ -367,6 +369,7 @@ function UserManager:updatePlayer(next)
 
     self.user.lang = LANG
     self.user.passports = nil
+    self.user.tickets = nil
 
     utils.put( SAILS_URL .. "/api/user/update", {
         user = self.user,
@@ -405,14 +408,27 @@ function UserManager:checkTicketTiming()
 
     local spentMillis = now - lastTime
     local h,m,s,ms = utils.getHoursMinSecMillis(spentMillis)
-
+    print('checkTicketTiming lastTime : ' .. lastTime)
     if(tonumber(spentMillis) >= (lotteryManager.nextLottery.ticketTimer * 60 * 1000)) then
+        print('TRUE : ' .. spentMillis)
         return true
     else
         self:openTimerPopup(lastTime)
         return false
     end
 
+end
+
+--------------------------------------------------------------------------------
+
+function UserManager:passport(provider)
+    for i = 1, #self.user.passports do
+        if(self.user.passports[i].provider == provider) then
+            return self.user.passports[i]
+        end
+    end
+
+    return nil
 end
 
 --------------------------------------------------------------------------------

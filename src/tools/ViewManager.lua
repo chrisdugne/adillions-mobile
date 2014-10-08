@@ -728,7 +728,9 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
     if not image then
         local view = router.view
         local imageReceived = function(event)
+            print('imageReceived')
             if(router.view == view) then
+                print('insert')
                 return insertImage(event.target, parent, x, y, anchorX, anchorY, scale, alpha, next)
             else
                 display.remove(event.target)

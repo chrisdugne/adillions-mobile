@@ -83,20 +83,6 @@ end
 
 --------------------------------------------------------------------------------
 
-function openLogin()
-    analytics.pageview("Login")
-    router.openView(LOGIN, "src.views.Login")
-end
-
---------------------------------------------------------------------------------
-
-function openSignin()
-    analytics.pageview("Signin")
-    router.openView(SIGNIN, "src.views.Signin")
-end
-
---------------------------------------------------------------------------------
-
 function openHome()
     analytics.pageview("Home")
     router.openView(HOME, "src.views.inside.Home")

@@ -339,6 +339,17 @@ function request(url, method, next, data, type)
 
     ----------------------------------------
 
+    -- TODO use this + success/fail instead of next
+    -- local listener = function(event)
+    --     if ( event.isError ) then
+    --         print( "Network error!" )
+    --     else
+    --         next()
+    --     end
+    -- end
+
+    ----------------------------------------
+
     network.request( url, method, next, {
         headers = headers,
         body    = data

@@ -38,7 +38,7 @@ function scene:refreshScene()
 
     hud.logo   = display.newImage( hud, "assets/images/hud/SignUp_BigBall.png")
     hud.logo.x = display.contentWidth*0.27
-    hud.logo.y = display.contentHeight*0.81
+    hud.logo.y = display.contentHeight*0.86
 
     hud.logo   = display.newImage( hud, "assets/images/hud/SignUp_MedBall.png")
     hud.logo.x = display.contentWidth*0.17
@@ -62,9 +62,9 @@ function scene:refreshScene()
 
     ---------------------------------------------------------------
 
-    hud.tryAgain   = display.newImage( hud, I "profile.complete.png")
+    hud.tryAgain   = display.newImage( hud, I "connection.retry.png")
     hud.tryAgain.x = display.contentWidth*0.5
-    hud.tryAgain.y = display.contentHeight*0.625
+    hud.tryAgain.y = display.contentHeight*0.66
     hud:insert(hud.tryAgain)
 
     utils.onTouch(hud.tryAgain, function()

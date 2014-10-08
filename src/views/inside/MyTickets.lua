@@ -107,7 +107,7 @@ function scene:drawNextLottery()
 
     local marginLeft = display.contentWidth * 0.02
     local xGap       = display.contentWidth *0.1
-    local yGap       = display.contentHeight *0.07
+    local yGap       = display.contentHeight *0.08
     local top        = HEADER_HEIGHT + 80
 
     local nbNewTickets  = 0
@@ -122,7 +122,7 @@ function scene:drawNextLottery()
     viewManager.drawBorder(
         hud.board,
         display.contentWidth*0.5,                                  -- x
-        top + (yGap)*(self.nbLotteries-1) + borderHeight/2 - 55,   -- y
+        top + (yGap)*(self.nbLotteries-1) + borderHeight/2 - 45,   -- y
         display.contentWidth*0.95,                                 -- width
         borderHeight,                                              -- height
         240,240,240

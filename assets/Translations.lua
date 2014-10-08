@@ -18,6 +18,10 @@ local translations =
         ["fr"] = "Tirage en cours !",
     },
 
+    ["Try again"] = {
+        ["fr"] = "Veuillez réessayer",
+    },
+
     ------------------------------------------------------
 
     ["Ambass. Profile"] = {
