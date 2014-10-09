@@ -227,7 +227,7 @@ function BannerManager:action(source, element)
     end
 
     if(element.action == 3) then
-        shareManager:simpleShare(element.share)
+        shareManager:simplePost(element.share)
     end
 
 end
