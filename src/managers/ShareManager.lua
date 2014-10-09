@@ -325,7 +325,7 @@ function ShareManager:shareForInstants(popup)
                 end
 
             else
-                local success = function
+                local success = function()
                     if(not userManager.user.hasPostOnFacebook) then
                         userManager.user.hasPostOnFacebook = true
                         userManager:giftInstants(NB_INSTANTS_PER_POST, close)
@@ -350,7 +350,7 @@ function ShareManager:shareForInstants(popup)
             -- theme not liked et connecte | button v3 : like theme
             imageFacebook = I "share.facebook.3.png"
             actionFacebook = function()
-                local success = function
+                local success = function()
                     if(not userManager.user.hasPostThemeOnFacebook) then
                         userManager.user.hasPostThemeOnFacebook = true
                         userManager:giftInstants(NB_INSTANTS_PER_POST, close)
@@ -414,7 +414,7 @@ function ShareManager:shareForInstants(popup)
                 -- pas encore tweet et connecte | button v4 : tweet
                 imageTwitter = I "share.twitter.4.png"
                 actionTwitter = function()
-                    local success = function
+                    local success = function()
                         if(not userManager.user.hasTweet) then
                             userManager.user.hasTweet = true
                             userManager:giftInstants(NB_INSTANTS_PER_TWEET, close)
@@ -433,7 +433,7 @@ function ShareManager:shareForInstants(popup)
             -- theme not tweeted et connecte | button v3 : tweet theme
             imageTwitter = I "share.twitter.3.png"
             actionTwitter = function()
-                local success = function
+                local success = function()
                     if(not userManager.user.hasTweetTheme) then
                         userManager.user.hasTweetTheme = true
                         userManager:giftInstants(NB_INSTANTS_PER_TWEET, close)
