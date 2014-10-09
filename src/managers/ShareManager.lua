@@ -109,7 +109,7 @@ function ShareManager:moreTickets(popup)
             -- pas follower et connecte | button v3
             imageTwitter = I "stock.twitter.3.png"
             actionTwitter = function()
-                self:twitterFollow(popup)
+                self:follow(popup)
             end
         end
     else
@@ -320,7 +320,7 @@ function ShareManager:shareForInstants(popup)
                 -- theme liked + hasPost | button v5
                 imageFacebook   = I "share.facebook.5.png"
                 actionFacebook  = function()
-                    self:shareOnWall(fbPost, close, close)
+                    self:write('facebook', fbPost, close, close)
                     analytics.event("Social", "facebookShareWithoutReward")
                 end
 
@@ -336,7 +336,7 @@ function ShareManager:shareForInstants(popup)
 
                 imageFacebook = I "share.facebook.4.png"
                 actionFacebook = function()
-                    self:shareOnWall(fbPost, success, close)
+                    self:write('facebook', fbPost, success, close)
                     analytics.event("Social", "facebookShare")
                 end
             end
@@ -358,7 +358,7 @@ function ShareManager:shareForInstants(popup)
                         close()
                     end
                 end
-                self:shareOnWall(fbPostTheme, success, close)
+                self:write('facebook', fbPostTheme, success, close)
                 analytics.event("Social", "facebookShareTheme")
             end
 
@@ -405,15 +405,26 @@ function ShareManager:shareForInstants(popup)
                 -- theme tweeted + tweet | button v5
                 imageTwitter = I "share.twitter.5.png"
                 actionTwitter  = function()
+                    local text = translate(lotteryManager.globals.tweet)
                     viewManager.closePopin()
-                    self:tweet(close)
+                    self:write('twitter', text, close, close)
                     analytics.event("Social", "tweetWithoutReward")
                 end
             else
                 -- pas encore tweet et connecte | button v4 : tweet
                 imageTwitter = I "share.twitter.4.png"
                 actionTwitter = function()
-                    self:tweet(close)
+                    local success = function
+                        if(not userManager.user.hasTweet) then
+                            userManager.user.hasTweet = true
+                            userManager:giftInstants(NB_INSTANTS_PER_TWEET, close)
+                        else
+                            close()
+                        end
+                    end
+
+                    local text = translate(lotteryManager.globals.tweet)
+                    self:write('twitter', text, success, close)
                     analytics.event("Social", "tweet")
                 end
             end
@@ -422,7 +433,17 @@ function ShareManager:shareForInstants(popup)
             -- theme not tweeted et connecte | button v3 : tweet theme
             imageTwitter = I "share.twitter.3.png"
             actionTwitter = function()
-                self:tweetTheme(close)
+                local success = function
+                    if(not userManager.user.hasTweetTheme) then
+                        userManager.user.hasTweetTheme = true
+                        userManager:giftInstants(NB_INSTANTS_PER_TWEET, close)
+                    else
+                        close()
+                    end
+                end
+
+                local text = translate(lotteryManager.globals.tweetTheme)
+                self:write('twitter', text, success, close)
                 analytics.event("Social", "tweetTheme")
             end
         end
@@ -562,16 +583,16 @@ end
 
 --------------------------------------------------------------------------------
 
-function ShareManager:shareOnWall(text, success, close)
+function ShareManager:write(network, text, success, close)
     native.setActivityIndicator( true )
 
-    utils.post( SAILS_URL .. '/api/facebook/', {text = text}, function(event)
+    utils.post( SAILS_URL .. '/api/'.. network ..'/', {text = text}, function(event)
         native.setActivityIndicator( false )
         viewManager.closePopup(popup)
         local successful = json.decode(event.response)
 
         if(successful) then
-            viewManager.message(T "Thank you" .. " !  " .. T "Successfully posted on your wall !")
+            viewManager.message(T "Thank you" .. " !  ")
             success()
         else
             viewManager.message(T "Try again")
@@ -583,6 +604,27 @@ end
 
 --------------------------------------------------------------------------------
 
+--- follower = twitter.following @Adillions
+function ShareManager:follow(popup)
+    native.setActivityIndicator( true )
+    utils.post( SAILS_URL .. '/api/twitter/follow', {}, function(event)
+        local successful = json.decode(event.response)
+
+        userManager:readUser(function()
+            native.setActivityIndicator( false )
+            analytics.event("Social", "followTwitter")
+
+            if(popup.refresh) then
+                popup.refresh()
+            end
+
+            viewManager.closePopin()
+            self:moreTickets(popup)
+        end)
+    end)
+end
+
+--------------------------------------------------------------------------------
 ---
 --  "share" : {
 --    "twitter": {
@@ -606,7 +648,7 @@ end
 
 function ShareManager:simplePost(share)
     local text = translate(share.facebook)
-    self:shareOnWall(text, function()end, function()end)
+    self:write('facebook', text, function()end, function()end)
 end
 
 --------------------------------------------------------------------------------
@@ -625,7 +667,7 @@ function ShareManager:shareWinningsOnWall(prize, popup)
 
     local share = function()
         analytics.event("Social", "shareWinnings")
-        self:shareOnWall(text, close, close)
+        self:write('facebook', text, close, close)
     end
 
     -------
@@ -636,50 +678,6 @@ function ShareManager:shareWinningsOnWall(prize, popup)
         signinManager:connect('facebook', share, close)
     end
 
-end
-
---------------------------------------------------------------------------------
-TODO
-function ShareManager:tweetTheme(close)
-
-    local text = translate(lotteryManager.globals.tweetTheme)
-
-    print(userManager.user.hasTweetTheme)
-    twitter.tweetMessage(text, function()
-
-            viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
-
-            if(not userManager.user.hasTweetTheme) then
-                userManager.user.hasTweetTheme = true
-                userManager:giftInstants(NB_INSTANTS_PER_TWEET, close)
-            else
-                close()
-            end
-
-    end)
-end
-
---------------------------------------------------------------------------------
-
-function ShareManager:tweet(close)
-
-    print("sharemanager tweet")
-    local text = translate(lotteryManager.globals.tweet)
-    native.setActivityIndicator( true )
-
-    twitter.tweetMessage(text, function()
-
-            viewManager.message(T "Thank you" .. " !  " .. T "Successfully tweeted")
-            native.setActivityIndicator( false )
-
-            if(not userManager.user.hasTweet) then
-                userManager.user.hasTweet = true
-                userManager:giftInstants(NB_INSTANTS_PER_TWEET, close)
-            else
-                close()
-            end
-
-    end)
 end
 
 --------------------------------------------------------------------------------
@@ -1166,26 +1164,6 @@ function ShareManager:openAmbassadorRewards()
     hud.close.y         = display.contentHeight*0.085
 
     utils.onTouch(hud.close, function() viewManager.closePopup(popup) end)
-end
-
---------------------------------------------------------------------------------
-
-function ShareManager:twitterFollow(popup)
-    native.setActivityIndicator( true )
-    twitter.follow(function()
-            print("follow ok : sharemanager asks to refreshBonusTickets")
-            userManager:refreshBonusTickets(function()
-                native.setActivityIndicator( false )
-                analytics.event("Social", "followTwitter")
-
-                if(popup.refresh) then
-                    popup.refresh()
-                end
-
-                viewManager.closePopin()
-                self:moreTickets(popup)
-            end)
-    end)
 end
 
 --------------------------------------------------------------------------------
