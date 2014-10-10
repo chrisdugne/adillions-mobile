@@ -33,7 +33,6 @@ end
 --------------------------------------------------------------------------------
 
 function SigninManager:connect(network, success, fail)
-    print('connection to : ' + network)
     local url = SAILS_URL .. "/m/auth/" .. network
 
     self.listener = function(event)

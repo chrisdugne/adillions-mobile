@@ -1062,9 +1062,15 @@ function UserManager:openTimerPopup(lastTime)
 
     ----------------------------------------------------
 
+    popup.textor1   = display.newImage( popup, I "timer.or.png")
+    popup.textor1.x = display.contentWidth*0.5
+    popup.textor1.y = display.contentHeight*0.4
+
+    ----------------------------------------------------
+
     popup.playNow   = display.newImage( popup, I "timer.play.png")
     popup.playNow.x = display.contentWidth*0.5
-    popup.playNow.y = display.contentHeight*0.48
+    popup.playNow.y = display.contentHeight*0.52
 
     utils.onTouch(popup.playNow, function()
 
@@ -1074,15 +1080,16 @@ function UserManager:openTimerPopup(lastTime)
             display.remove(popup.secText)
             display.remove(popup.pictoTimer)
             display.remove(popup.playNow)
-            display.remove(popup.textor)
+            display.remove(popup.textor1)
+            display.remove(popup.textor2)
             display.remove(popup.increase)
             display.remove(popup.close)
 
             transition.to(popup.timerDisplay, {
                 x = display.contentWidth*0.5,
                 y = display.contentHeight*0.5,
-                xScale = 2.5,
-                yScale = 2.5
+                xScale = 1.8,
+                yScale = 1.8
             })
 
             viewManager.decreaseTimer(function()
@@ -1098,15 +1105,15 @@ function UserManager:openTimerPopup(lastTime)
 
     ----------------------------------------------------
 
-    popup.textor   = display.newImage( popup, I "timer.or.png")
-    popup.textor.x = display.contentWidth*0.5
-    popup.textor.y = display.contentHeight*0.59
+    popup.textor2   = display.newImage( popup, I "timer.or.png")
+    popup.textor2.x = display.contentWidth*0.5
+    popup.textor2.y = display.contentHeight*0.63
 
     --------------------------
 
     popup.increase   = display.newImage( popup, I "timer.jackpot.png")
     popup.increase.x = display.contentWidth*0.5
-    popup.increase.y = display.contentHeight*0.7
+    popup.increase.y = display.contentHeight*0.74
 
     utils.onTouch(popup.increase, function()
         analytics.event("Gaming", "increaseJackpot")

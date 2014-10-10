@@ -109,12 +109,12 @@ function initHeader(selectedTab)
         if(hud.headerBoard.open) then
             hud.headerBoard.open      = false
             hud.headerBoard.translate = transition.to(hud.headerBoard, {x = display.contentWidth * 0.85, time = 500, transition=easing.outQuad})
-            hud.headerBoard.rotate    = transition.to(hud.headerBoard.toggler, {rotation = 0, time = 500})
+            hud.headerBoard.rotate    = transition.to(hud.headerBoard.toggler, {rotation = 0, time = 450})
             hud.headerBoard.opaciter  = transition.to(hud.headerRect, {alpha = 1, time = 500})
         else
             hud.headerBoard.open = true
             hud.headerBoard.translate = transition.to(hud.headerBoard, {x = 0, time = 500, transition=easing.outQuad})
-            hud.headerBoard.rotate    = transition.to(hud.headerBoard.toggler, {rotation = -45, time = 500})
+            hud.headerBoard.rotate    = transition.to(hud.headerBoard.toggler, {rotation = 135-360, time = 450})
             hud.headerBoard.opaciter  = transition.to(hud.headerRect, {alpha = 0.8, time = 500})
         end
     end)

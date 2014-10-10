@@ -290,7 +290,7 @@ function scene:drawTicketForPreviousLottery(ticket, marginLeft, xGap, yGap)
 
                     local iconMoney = display.newImage( hud.board, "assets/images/icons/notification/instants.popup.png")
                     iconMoney.x     = display.contentWidth*0.92
-                    iconMoney.y     = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.08)
+                    iconMoney.y     = top + yGap*(self.nbPreviousTickets+self.nbLotteries-1.1)
                     iconMoney:scale(0.5,0.5)
                     hud.board:insert(iconMoney)
                 end
