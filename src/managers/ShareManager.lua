@@ -610,7 +610,7 @@ function ShareManager:follow(popup)
     utils.post( SAILS_URL .. '/api/twitter/follow', {}, function(event)
         local successful = json.decode(event.response)
 
-        userManager:readUser(function()
+        userManager:readPlayer(function()
             native.setActivityIndicator( false )
             analytics.event("Social", "followTwitter")
 
@@ -1179,7 +1179,7 @@ function ShareManager:openFacebookPage(popup)
 
         native.setActivityIndicator( true )
         timer.performWithDelay(5000, function()
-            userManager:readUser(function()
+            userManager:readPlayer(function()
 
                 native.setActivityIndicator( false )
                 self.checkingFBLike = false

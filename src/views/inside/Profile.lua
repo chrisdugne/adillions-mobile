@@ -713,13 +713,18 @@ function scene:drawScene()
 
     --------------------------
 
-    hud.complete         = display.newImage( hud.board, I "profile.complete.png")
-    hud.complete.x       = display.contentWidth*0.5
-    hud.complete.y       = self.top + self.yGap*(detailsTop+10.5)
+    hud.complete   = display.newImage( hud.board, I "profile.complete.png")
+    hud.complete.x = display.contentWidth*0.5
+    hud.complete.y = self.top + self.yGap*(detailsTop+10.5)
     hud.board:insert(hud.complete)
 
     utils.onTouch(hud.complete, function()
-        shareManager:moreTickets()
+        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/account" , function()end, function()
+            userManager:readPlayer(function()
+                print('Profile : finally, refreshScene')
+                scene:refreshScene()
+            end)
+        end)
     end)
 
     -----------------------------------------------
