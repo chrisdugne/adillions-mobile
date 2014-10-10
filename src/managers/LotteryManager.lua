@@ -19,6 +19,17 @@ end
 
 --------------------------------------------------------------------------------
 
+function LotteryManager:readNextDrawing(next)
+    native.setActivityIndicator( true )
+    utils.get( SAILS_URL .. "/api/lottery/next", function(result)
+        self.nextLottery = json.decode(result.response)
+        native.setActivityIndicator( false )
+        next()
+    end)
+end
+
+--------------------------------------------------------------------------------
+
 function LotteryManager:refreshNextLottery(classic, waiting)
     native.setActivityIndicator( true )
     utils.get( SAILS_URL .. "/api/status", function(result)

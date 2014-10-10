@@ -45,7 +45,9 @@ function GameManager:open()
     local onGoodVersion = function() self:tryAutoLogin() end
     local onBadVersion = function() self:showBadVersion() end
 
-    userManager:getGlobals(onGoodVersion, onBadVersion)
+    lotteryManager:readNextDrawing(function()
+        userManager:getGlobals(onGoodVersion, onBadVersion)
+    end)
 
 end
 

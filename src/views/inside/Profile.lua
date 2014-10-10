@@ -660,8 +660,9 @@ function scene:drawScene()
     })
 
     local valueFB = "-"
+    local facebook = userManager:passport('facebook')
     if(userManager.user.networks.connectedToFacebook) then
-        valueFB = userManager.user.userName
+        valueFB = facebook.profile.displayName
     end
 
     viewManager.newText({
@@ -719,9 +720,9 @@ function scene:drawScene()
     hud.board:insert(hud.complete)
 
     utils.onTouch(hud.complete, function()
-        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/account" , function()end, function()
+        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/account/?access_token=" .. GLOBALS.savedData.authToken , function()end, function()
             userManager:readPlayer(function()
-                print('Profile : finally, refreshScene')
+                display.remove(hud.board)
                 scene:refreshScene()
             end)
         end)
@@ -905,17 +906,17 @@ function scene: openConfirmCashout()
 
     ----------------------------------------------------------------------------
 
-    popup.infoBG                    = display.newImage(popup, "assets/images/hud/info.bg.png")
-    popup.infoBG.x                  = display.contentWidth*0.5
-    popup.infoBG.y                  = display.contentHeight * 0.5
+    popup.infoBG   = display.newImage(popup, "assets/images/hud/info.bg.png")
+    popup.infoBG.x = display.contentWidth*0.5
+    popup.infoBG.y = display.contentHeight * 0.5
 
-    popup.shareIcon                 = display.newImage( popup, "assets/images/icons/notification/prizes.popup.png")
-    popup.shareIcon.x               = display.contentWidth*0.5
-    popup.shareIcon.y               = display.contentHeight*0.15
+    popup.shareIcon   = display.newImage( popup, "assets/images/icons/notification/prizes.popup.png")
+    popup.shareIcon.x = display.contentWidth*0.5
+    popup.shareIcon.y = display.contentHeight*0.15
 
-    popup.congratz                  = display.newImage( popup, I "TxtCongratulations.png")
-    popup.congratz.x                = display.contentWidth*0.5
-    popup.congratz.y                = display.contentHeight*0.25
+    popup.congratz   = display.newImage( popup, I "TxtCongratulations.png")
+    popup.congratz.x = display.contentWidth*0.5
+    popup.congratz.y = display.contentHeight*0.25
 
     ----------------------------------------------------------------------------
 
@@ -939,7 +940,10 @@ function scene: openConfirmCashout()
     hud.confirm.x   = display.contentWidth*0.5
     hud.confirm.y   = display.contentHeight*0.7
 
-    local refresh = function() scene:refreshScene() end
+    local refresh = function()
+        display.remove(hud.board)
+        scene:refreshScene()
+    end
 
     utils.onTouch(hud.confirm, function()
         analytics.event("Gaming", "cashout")

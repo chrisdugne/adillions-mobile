@@ -60,15 +60,126 @@ function initHeader(selectedTab)
     hud.headerRect.x = display.viewableContentWidth*0.5
     hud.headerRect.y = HEADER_HEIGHT*0.5
 
-    if(whiteHeader) then
-        hud.logo = display.newImage( hud, "assets/images/logo.png")
-    else
-        hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")
-    end
+    -- if(whiteHeader) then
+    --     hud.logo = display.newImage( hud, "assets/images/logo.png")
+    -- else
+    --     hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")
+    -- end
 
-    hud.logo.x = display.contentWidth*0.5
+    -- hud.logo.x = display.contentWidth*0.5
+    -- hud.logo.y = HEADER_HEIGHT*0.5
+
+    ----------------------------------------------------------------------------
+    --  BOARD
+    ----------------------------------------------------------------------------
+
+    local middleBoard = HEADER_HEIGHT * 0.5
+    hud.headerBoard = display.newGroup();
+    hud.headerBoard.contentHeight   = HEADER_HEIGHT
+    hud.headerBoard.contentWidth    = display.contentWidth * 1.2
+    hud.headerBoard.x = display.contentWidth * 0.85
+    hud.headerBoard.y = 0
+    hud.headerBoard.anchorX = 0
+    hud.headerBoard.open = false
+
+    hud.logo = display.newImage( hud.headerBoard, "assets/images/hud/game/logo.game.png")
+    hud.logo.x = -display.contentWidth * 0.15
     hud.logo.y = HEADER_HEIGHT*0.5
+    hud.logo.anchorX = 1
 
+    -- hud.headerBoard.bg = drawBorder(hud.headerBoard,
+    --     0, HEADER_HEIGHT*0.5,
+    --     display.contentWidth * 1.2, HEADER_HEIGHT,
+    --     155/255,155/255,155/255
+    -- )
+    -- hud.headerBoard.bg.anchorX = 0
+
+    ----------------------------------------------------------------------------
+
+    hud.headerBoard.toggler   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.plus.png")
+    hud.headerBoard.toggler.x = display.contentWidth*0.07
+    hud.headerBoard.toggler.y = middleBoard
+    hud.headerBoard.toggler:scale(1.4, 1.4)
+
+    utils.onTouch(hud.headerBoard.toggler, function()
+        if(hud.headerBoard.translate) then transition.cancel (hud.headerBoard.translate) end
+        if(hud.headerBoard.rotate) then transition.cancel (hud.headerBoard.rotate) end
+        if(hud.headerBoard.opaciter) then transition.cancel (hud.headerBoard.rotate) end
+
+        if(hud.headerBoard.open) then
+            hud.headerBoard.open      = false
+            hud.headerBoard.translate = transition.to(hud.headerBoard, {x = display.contentWidth * 0.85, time = 500, transition=easing.outQuad})
+            hud.headerBoard.rotate    = transition.to(hud.headerBoard.toggler, {rotation = 0, time = 500})
+            hud.headerBoard.opaciter  = transition.to(hud.headerRect, {alpha = 1, time = 500})
+        else
+            hud.headerBoard.open = true
+            hud.headerBoard.translate = transition.to(hud.headerBoard, {x = 0, time = 500, transition=easing.outQuad})
+            hud.headerBoard.rotate    = transition.to(hud.headerBoard.toggler, {rotation = -45, time = 500})
+            hud.headerBoard.opaciter  = transition.to(hud.headerRect, {alpha = 0.8, time = 500})
+        end
+    end)
+
+    ----------------------------------------------------------------------------
+
+    hud.headerBoard.box1   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.box.png")
+    hud.headerBoard.box1.x = display.contentWidth*0.37
+    hud.headerBoard.box1.y = middleBoard
+
+    hud.headerBoard.icon1   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.ticket.png")
+    hud.headerBoard.icon1.x = hud.headerBoard.box1.x - hud.headerBoard.box1.contentWidth*0.5
+    hud.headerBoard.icon1.y = middleBoard
+
+    hud.headerBoard.button1   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.plus.png")
+    hud.headerBoard.button1.x = hud.headerBoard.box1.x + hud.headerBoard.box1.contentWidth*0.32
+    hud.headerBoard.button1.y = middleBoard
+
+    hud.headerBoard.availableTickets = viewManager.newText({
+        parent   = hud.headerBoard,
+        text     = userManager:remainingTickets() .. " / " .. userManager:totalAvailableTickets(),
+        fontSize = 45,
+        anchorX  = 1,
+        anchorY  = 0.6,
+        x        = hud.headerBoard.button1.x - hud.headerBoard.button1.contentWidth*0.55,
+        y        = hud.headerBoard.button1.y
+    })
+
+    ----------------------------------------------------------------------------
+
+    hud.headerBoard.box2   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.box.png")
+    hud.headerBoard.box2.x = display.contentWidth*0.81
+    hud.headerBoard.box2.y = middleBoard
+
+    hud.headerBoard.icon2   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.booster.png")
+    hud.headerBoard.icon2.x = hud.headerBoard.box2.x - hud.headerBoard.box2.contentWidth*0.5
+    hud.headerBoard.icon2.y = middleBoard
+
+    hud.headerBoard.button2   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.plus.png")
+    hud.headerBoard.button2.x = hud.headerBoard.box2.x + hud.headerBoard.box2.contentWidth*0.32
+    hud.headerBoard.button2.y = middleBoard
+
+    hud.headerBoard.extraTickets = viewManager.newText({
+        parent   = hud.headerBoard,
+        text     = userManager.user.extraTickets,
+        fontSize = 45,
+        anchorX  = 1,
+        anchorY  = 0.6,
+        x        = hud.headerBoard.button2.x - hud.headerBoard.button2.contentWidth*0.55,
+        y        = middleBoard
+    })
+
+    hud:insert(hud.headerBoard)
+
+    ----------------------------------------------------------------------------
+
+    utils.onTouch(hud.headerBoard.button1, function()
+        shareManager:moreTickets()
+    end)
+
+    utils.onTouch(hud.headerBoard.button2, function()
+        shareManager:shareForInstants()
+    end)
+
+    ----------------------------------------------------------------------------
 
 --    if(whiteHeader) then
 --        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.green.jpg")

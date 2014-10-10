@@ -349,13 +349,10 @@ function AppManager:getMobileSettings()
             local settings = json.decode(res.response)
             utils.tprint(settings)
 
-            APP_VERSION = tonumber(settings.version)
-            OLD_API_URL = settings.api.play
-            SAILS_URL    = settings.api.node
-
-            FACEBOOK_APP_ID        = settings.facebookAppId
-            FACEBOOK_API_SECRET    = settings.facebookApiSecret
-            FACEBOOK_APP_NAMESPACE = "-"
+            APP_VERSION     = tonumber(settings.version)
+            OLD_API_URL     = settings.api.play
+            SAILS_URL       = settings.api.node
+            FACEBOOK_APP_ID = settings.facebookAppId
 
             appManager.onSettingsReady()
 
@@ -368,9 +365,7 @@ function AppManager:getMobileSettings()
         OLD_API_URL  = "http://api.adillions.com/"
         SAILS_URL = "http://" .. LOCAL_IP .. ":1337"
 
-        FACEBOOK_APP_ID        = "293489340852840"
-        FACEBOOK_API_SECRET    = "3aa23c8b8176c84791b19d8778cf3974"
-        FACEBOOK_APP_NAMESPACE = "adillions-localhost"
+        FACEBOOK_APP_ID = "293489340852840"
 
         appManager.onSettingsReady()
 

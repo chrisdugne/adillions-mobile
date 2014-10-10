@@ -1,24 +1,24 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --
 -- AppHome.lua
 --
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 local scene = storyboard.newScene()
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 --
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --   unless storyboard.removeScene() is called.
 --
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function scene:refreshScene()
 
@@ -29,16 +29,6 @@ function scene:refreshScene()
 
     self.column1 = display.contentWidth*0.3
     self.column2 = display.contentWidth*0.7
-
-    ------------------
-
-    hud.headerRect   = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)
-    hud.headerRect.x = display.viewableContentWidth*0.5
-    hud.headerRect.y = HEADER_HEIGHT*0.5
-
-    hud.logo   = display.newImage( hud, "assets/images/hud/game/logo.game.png")
-    hud.logo.x = display.contentWidth*0.5
-    hud.logo.y = HEADER_HEIGHT*0.5
 
     ------------------
 
@@ -148,7 +138,7 @@ function scene:refreshScene()
 
     ---------------------------------------------------------------------------------
 
-    viewManager.setupCustomView(5)
+    viewManager.setupView(5)
     self.view:insert(hud)
 end
 
@@ -531,9 +521,9 @@ end
 function scene:destroyScene( event )
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- END OF YOUR IMPLEMENTATION
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- "createScene" event is dispatched if scene's view does not exist
 scene:addEventListener( "createScene", scene )
@@ -549,6 +539,6 @@ scene:addEventListener( "exitScene", scene )
 -- storyboard.purgeScene() or storyboard.removeScene().
 scene:addEventListener( "destroyScene", scene )
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return scene
