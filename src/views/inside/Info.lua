@@ -24,41 +24,41 @@ function scene:refreshScene()
 
     ------------------
 
-    self.top                = HEADER_HEIGHT + display.contentHeight*0.15
-    self.yGap               = display.contentHeight*0.17
+    self.top  = HEADER_HEIGHT + display.contentHeight*0.15
+    self.yGap = display.contentHeight*0.17
 
     self.column1 = display.contentWidth*0.3
     self.column2 = display.contentWidth*0.7
 
     ------------------
 
-    hud.headerRect = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)
+    hud.headerRect   = display.newImageRect( hud, "assets/images/hud/game/header.game.png", display.contentWidth, HEADER_HEIGHT)
     hud.headerRect.x = display.viewableContentWidth*0.5
     hud.headerRect.y = HEADER_HEIGHT*0.5
 
-    hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")
+    hud.logo   = display.newImage( hud, "assets/images/hud/game/logo.game.png")
     hud.logo.x = display.contentWidth*0.5
     hud.logo.y = HEADER_HEIGHT*0.5
 
     ------------------
 
-    hud.infoBG      = display.newImage(hud, "assets/images/hud/info.bg.png")
-    hud.infoBG.x    = display.contentWidth*0.5
-    hud.infoBG.y    = display.contentHeight * 0.5
+    hud.infoBG   = display.newImage(hud, "assets/images/hud/info.bg.png")
+    hud.infoBG.x = display.contentWidth*0.5
+    hud.infoBG.y = display.contentHeight * 0.5
 
     ------------------
 
-    hud.options     = display.newImage( hud, I "info.Options.png")
-    hud.options.x   = self.column1
-    hud.options.y   = self.top
+    hud.options   = display.newImage( hud, I "info.Options.png")
+    hud.options.x = self.column1
+    hud.options.y = self.top
 
     utils.onTouch(hud.options, function()
         self:openOptions()
     end)
 
-    hud.tutorial    = display.newImage( hud, I "info.Tutorial.png")
-    hud.tutorial.x       = self.column2
-    hud.tutorial.y   = self.top
+    hud.tutorial   = display.newImage( hud, I "info.Tutorial.png")
+    hud.tutorial.x = self.column2
+    hud.tutorial.y = self.top
 
     utils.onTouch(hud.tutorial, function()
         router.openTutorial()
@@ -66,18 +66,18 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.prize     = display.newImage( hud, I "info.Prize.png")
-    hud.prize.x    = self.column1
-    hud.prize.y    = self.top + self.yGap
+    hud.prize   = display.newImage( hud, I "info.Prize.png")
+    hud.prize.x = self.column1
+    hud.prize.y = self.top + self.yGap
 
     utils.onTouch(hud.prize, function()
         analytics.event("Links", "prizes")
         userManager:openPrizes()
     end)
 
-    hud.rewards    = display.newImage( hud, I "info.Rewards.png")
-    hud.rewards.x    = self.column2
-    hud.rewards.y   = self.top + self.yGap
+    hud.rewards   = display.newImage( hud, I "info.Rewards.png")
+    hud.rewards.x = self.column2
+    hud.rewards.y = self.top + self.yGap
 
     utils.onTouch(hud.rewards, function()
         analytics.event("Links", "rewards")
@@ -86,30 +86,30 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.contact    = display.newImage( hud, I "info.Contact.png")
-    hud.contact.x    = self.column1
-    hud.contact.y   = self.top + self.yGap * 2
+    hud.contact   = display.newImage( hud, I "info.Contact.png")
+    hud.contact.x = self.column1
+    hud.contact.y = self.top + self.yGap * 2
 
     utils.onTouch(hud.contact, function()
         self:openContact()
     end)
 
-    hud.faq        = display.newImage( hud, I "info.Faq.png")
-    hud.faq.x     = self.column2
-    hud.faq.y    = self.top + self.yGap * 2
+    hud.faq   = display.newImage( hud, I "info.Faq.png")
+    hud.faq.x = self.column2
+    hud.faq.y = self.top + self.yGap * 2
 
     utils.onTouch(hud.faq, function()
         analytics.event("Links", "faq")
-        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/faq" , function(event)
+        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/about/faq" , function(event)
             print(event.url)
         end)
     end)
 
     ------------------
 
-    hud.terms     = display.newImage( hud, I "info.Terms.png")
-    hud.terms.x    = self.column1
-    hud.terms.y    = self.top + self.yGap * 3
+    hud.terms   = display.newImage( hud, I "info.Terms.png")
+    hud.terms.x = self.column1
+    hud.terms.y = self.top + self.yGap * 3
 
     utils.onTouch(hud.terms, function()
         analytics.event("Links", "terms")
@@ -118,13 +118,13 @@ function scene:refreshScene()
 
     ------------------
 
-    hud.privacy    = display.newImage( hud, I "info.Privacy.png")
-    hud.privacy.x    = self.column2
-    hud.privacy.y   = self.top + self.yGap * 3
+    hud.privacy   = display.newImage( hud, I "info.Privacy.png")
+    hud.privacy.x = self.column2
+    hud.privacy.y = self.top + self.yGap * 3
 
     utils.onTouch(hud.privacy, function()
         analytics.event("Links", "privacy")
-        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/privacy" , function(event)
+        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/about/privacy" , function(event)
             print(event.url)
         end)
     end)
@@ -156,34 +156,35 @@ end
 
 function scene:openTerms()
 
-    local top   = display.contentHeight * 0.35
-    local yGap  = display.contentHeight*0.082
+    local top  = display.contentHeight * 0.35
+    local yGap = display.contentHeight*0.082
 
     local popup = viewManager.showPopup()
 
     --------------------------
 
-    hud.picto    = display.newImage(popup, "assets/images/icons/PictoTerms.png")
-    hud.picto.x   = display.contentWidth*0.14
-    hud.picto.y   = display.contentHeight*0.1
+    hud.picto   = display.newImage(popup, "assets/images/icons/PictoTerms.png")
+    hud.picto.x = display.contentWidth*0.14
+    hud.picto.y = display.contentHeight*0.1
 
-    hud.title    = display.newImage(popup, I "terms.png")
+    hud.title = display.newImage(popup, I "terms.png")
 
-    hud.title.anchorX    = 0
-    hud.title.anchorY    = 0.5
-    hud.title.x   = display.contentWidth*0.22
-    hud.title.y   = display.contentHeight*0.1
+    hud.title.anchorX = 0
+    hud.title.anchorY = 0.5
+    hud.title.x       = display.contentWidth*0.22
+    hud.title.y       = display.contentHeight*0.1
 
-    hud.sep    = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
-    hud.sep.x   = display.contentWidth*0.5
-    hud.sep.y   = display.contentHeight*0.15
+    hud.sep   = display.newImage(popup, "assets/images/icons/separateur.horizontal.png")
+    hud.sep.x = display.contentWidth*0.5
+    hud.sep.y = display.contentHeight*0.15
 
     --------------------------
 
     hud.textImportant = display.newText(
         popup,
         "Important",
-        0, 0, display.contentWidth*0.8, display.contentHeight*0.25, NUM_FONT, 35 )
+        0, 0, display.contentWidth*0.8, display.contentHeight*0.25, NUM_FONT, 35
+    )
 
     hud.textImportant.x = display.contentWidth*0.5
     hud.textImportant.y = display.contentHeight*0.29
@@ -192,7 +193,8 @@ function scene:openTerms()
     hud.text = display.newText(
         popup,
         T "Adillions - a simplified joint-stock company (S.A.S.), registered at the Paris RCS (France) under No. 797 736 261, organizes free games without any purchase obligation, for an indefinite period.",
-        0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
+        0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35
+    )
 
     hud.text.x = display.contentWidth*0.5
     hud.text.y = display.contentHeight*0.33
@@ -204,7 +206,8 @@ function scene:openTerms()
     hud.text2 = display.newText(
         popup,
         company .. (T "is not an organizer, a co-organizer or a partner of Adillions. ") .. company .. (T "is not involved in any way in the organization of the Adillions lottery and does not sponsor it."),
-        0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35 )
+        0, 0, display.contentWidth*0.8, display.contentHeight*0.25, FONT, 35
+    )
 
     hud.text2.x = display.contentWidth*0.5
     hud.text2.y = display.contentHeight*0.53
@@ -217,7 +220,7 @@ function scene:openTerms()
     popup.keyrules.y   = display.contentHeight*0.65
 
     utils.onTouch(popup.keyrules, function()
-        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/rules" , function(event)
+        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/about/rules" , function(event)
             print(event.url)
         end)
     end)
@@ -229,7 +232,7 @@ function scene:openTerms()
     popup.read.y   = display.contentHeight*0.78
 
     utils.onTouch(popup.read, function()
-        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/terms" , function(event)
+        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/about/terms" , function(event)
             print(event.url)
         end)
     end)
