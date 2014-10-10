@@ -53,12 +53,8 @@ function SigninManager:loginListener( event, next )
             self:closeWebView()
             local params = utils.getUrlParams(event.url);
 
-            GLOBALS.savedData.authToken  = params["auth_token"]
+            GLOBALS.savedData.authToken = params["auth_token"]:gsub('#_=_', '')
             utils.saveTable(GLOBALS.savedData, "savedData.json")
-
-            print('-----')
-            print(GLOBALS.savedData.authToken)
-            print('-----')
             next()
         end
     end

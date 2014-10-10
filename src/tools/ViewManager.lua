@@ -132,6 +132,7 @@ function initHeader(selectedTab)
     hud.headerBoard.button1   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.plus.png")
     hud.headerBoard.button1.x = hud.headerBoard.box1.x + hud.headerBoard.box1.contentWidth*0.32
     hud.headerBoard.button1.y = middleBoard
+    hud.headerBoard.button1:scale(1.2, 1.2)
 
     hud.headerBoard.availableTickets = viewManager.newText({
         parent   = hud.headerBoard,
@@ -156,6 +157,7 @@ function initHeader(selectedTab)
     hud.headerBoard.button2   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.plus.png")
     hud.headerBoard.button2.x = hud.headerBoard.box2.x + hud.headerBoard.box2.contentWidth*0.32
     hud.headerBoard.button2.y = middleBoard
+    hud.headerBoard.button2:scale(1.2, 1.2)
 
     hud.headerBoard.extraTickets = viewManager.newText({
         parent   = hud.headerBoard,

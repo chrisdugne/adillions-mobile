@@ -939,72 +939,72 @@ function UserManager:openTimerPopup(lastTime)
     --                             Header
     ----------------------------------------------------------------------------
 
-    -- local headerY = popup.bg.y - popup.bg.contentHeight*0.5
+    local headerY = popup.bg.y - popup.bg.contentHeight*0.5
 
-    -- popup.header         = display.newImageRect(popup, "assets/images/hud/timer/timer.header.png", popup.bg.contentWidth*0.9583, display.viewableContentHeight*0.08)
-    -- popup.header.anchorY = 0
-    -- popup.header.x       = display.contentWidth*0.5
-    -- popup.header.y       = headerY
+    popup.header         = display.newImageRect(popup, "assets/images/hud/timer/timer.header.png", popup.bg.contentWidth*0.9583, display.viewableContentHeight*0.08)
+    popup.header.anchorY = 0
+    popup.header.x       = display.contentWidth*0.5
+    popup.header.y       = headerY
 
-    -- local headerContentY = headerY + popup.header.contentHeight*0.5
+    local headerContentY = headerY + popup.header.contentHeight*0.5
 
-    -- ----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
-    -- popup.box1   = display.newImage( popup, "assets/images/hud/timer/timer.box.png")
-    -- popup.box1.x = display.contentWidth*0.29
-    -- popup.box1.y = headerContentY
+    popup.box1   = display.newImage( popup, "assets/images/hud/timer/timer.box.png")
+    popup.box1.x = display.contentWidth*0.29
+    popup.box1.y = headerContentY
 
-    -- popup.icon1   = display.newImage( popup, "assets/images/hud/timer/timer.ticket.png")
-    -- popup.icon1.x = popup.box1.x - popup.box1.contentWidth*0.5
-    -- popup.icon1.y = headerContentY
+    popup.icon1   = display.newImage( popup, "assets/images/hud/timer/timer.ticket.png")
+    popup.icon1.x = popup.box1.x - popup.box1.contentWidth*0.5
+    popup.icon1.y = headerContentY
 
-    -- popup.button1   = display.newImage( popup, "assets/images/hud/timer/timer.plus.png")
-    -- popup.button1.x = popup.box1.x + popup.box1.contentWidth*0.32
-    -- popup.button1.y = headerContentY
+    popup.button1   = display.newImage( popup, "assets/images/hud/timer/timer.plus.png")
+    popup.button1.x = popup.box1.x + popup.box1.contentWidth*0.32
+    popup.button1.y = headerContentY
 
-    -- popup.availableTickets = viewManager.newText({
-    --     parent   = popup,
-    --     text     = self:remainingTickets() .. " / " .. self:totalAvailableTickets(),
-    --     fontSize = 45,
-    --     anchorX  = 1,
-    --     anchorY  = 0.6,
-    --     x        = popup.button1.x - popup.button1.contentWidth*0.55,
-    --     y        = popup.button1.y
-    -- })
+    popup.availableTickets = viewManager.newText({
+        parent   = popup,
+        text     = self:remainingTickets() .. " / " .. self:totalAvailableTickets(),
+        fontSize = 45,
+        anchorX  = 1,
+        anchorY  = 0.6,
+        x        = popup.button1.x - popup.button1.contentWidth*0.55,
+        y        = popup.button1.y
+    })
 
-    -- ----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
-    -- popup.box2   = display.newImage( popup, "assets/images/hud/timer/timer.box.png")
-    -- popup.box2.x = display.contentWidth*0.73
-    -- popup.box2.y = headerContentY
+    popup.box2   = display.newImage( popup, "assets/images/hud/timer/timer.box.png")
+    popup.box2.x = display.contentWidth*0.73
+    popup.box2.y = headerContentY
 
-    -- popup.icon2   = display.newImage( popup, "assets/images/hud/timer/timer.booster.png")
-    -- popup.icon2.x = popup.box2.x - popup.box2.contentWidth*0.5
-    -- popup.icon2.y = headerContentY
+    popup.icon2   = display.newImage( popup, "assets/images/hud/timer/timer.booster.png")
+    popup.icon2.x = popup.box2.x - popup.box2.contentWidth*0.5
+    popup.icon2.y = headerContentY
 
-    -- popup.button2   = display.newImage( popup, "assets/images/hud/timer/timer.plus.png")
-    -- popup.button2.x = popup.box2.x + popup.box2.contentWidth*0.32
-    -- popup.button2.y = headerContentY
+    popup.button2   = display.newImage( popup, "assets/images/hud/timer/timer.plus.png")
+    popup.button2.x = popup.box2.x + popup.box2.contentWidth*0.32
+    popup.button2.y = headerContentY
 
-    -- popup.extraTickets = viewManager.newText({
-    --     parent   = popup,
-    --     text     = self.user.extraTickets,
-    --     fontSize = 45,
-    --     anchorX  = 1,
-    --     anchorY  = 0.6,
-    --     x        = popup.button2.x - popup.button2.contentWidth*0.55,
-    --     y        = headerContentY
-    -- })
+    popup.extraTickets = viewManager.newText({
+        parent   = popup,
+        text     = self.user.extraTickets,
+        fontSize = 45,
+        anchorX  = 1,
+        anchorY  = 0.6,
+        x        = popup.button2.x - popup.button2.contentWidth*0.55,
+        y        = headerContentY
+    })
 
-    -- ----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
-    -- utils.onTouch(popup.button1, function()
-    --     shareManager:moreTickets(popup)
-    -- end)
+    utils.onTouch(popup.button1, function()
+        shareManager:moreTickets(popup)
+    end)
 
-    -- utils.onTouch(popup.button2, function()
-    --     shareManager:shareForInstants(popup)
-    -- end)
+    utils.onTouch(popup.button2, function()
+        shareManager:shareForInstants(popup)
+    end)
 
     ----------------------------------------------------------------------------
     --                             Content
