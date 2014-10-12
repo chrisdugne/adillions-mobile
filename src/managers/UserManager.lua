@@ -368,9 +368,12 @@ end
 
 function UserManager:updatePlayer(next)
 
-    self.user.lang = LANG
+    self.user.lang      = LANG
     self.user.passports = nil
-    self.user.tickets = nil
+    self.user.tickets   = nil
+
+    print('--------- update')
+    utils.tprint(self.user)
 
     utils.put( SAILS_URL .. "/api/user/update", {
         user = self.user,
@@ -595,6 +598,7 @@ end
 function UserManager:giftInstants(nbInstants, next)
     self.user.extraTickets = self.user.extraTickets + nbInstants
     self:updatePlayer(function()
+        viewManager.refreshHeaderContent()
         self:notifyInstants(nbInstants, function()
             if(next) then
                 next()
@@ -609,6 +613,7 @@ end
 function UserManager:giftStock(nbStock, next)
     self.user.notifications.stocks = nbStock
     self:notifyStocks(function()
+        viewManager.refreshHeaderContent()
         if(next) then
             next()
         end
@@ -682,125 +687,6 @@ function UserManager:notifyInstants(num, next)
 end
 
 --------------------------------------------------------------------------------
-
-function UserManager:showStatus()
-
-    local popup = viewManager.showPopup()
-
-    popup.refresh = function()
-        viewManager.refreshPlayButton()
-        viewManager.closePopin()
-        viewManager.closePopup(popup)
-        popup = userManager:showStatus()
-    end
-
-    ----------------------------
-
-    popup.congratz   = display.newImage( popup, I "title.status.png")
-    popup.congratz.x = display.contentWidth*0.5
-    popup.congratz.y = display.contentHeight*0.15
-
-    popup.iconTicket   = display.newImage( popup, "assets/images/icons/info.big.png")
-    popup.iconTicket.x = display.contentWidth*0.15
-    popup.iconTicket.y = display.contentHeight*0.15
-
-    popup.sep   = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
-    popup.sep.x = display.contentWidth*0.5
-    popup.sep.y = display.contentHeight*0.21
-
-    ----------------------------
-
-    popup.earnText = viewManager.newText({
-        parent   = popup,
-        text     = T "Remaining Tickets" .. ":",
-        fontSize = 55,
-        x        = display.contentWidth * 0.5,
-        y        = display.contentHeight*0.26,
-    })
-
-    popup.availableTickets = viewManager.newText({
-        parent   = popup,
-        text     = self:remainingTickets() .. " / " .. self:totalAvailableTickets(),
-        fontSize = 55,
-        x        = display.contentWidth * 0.5,
-        y        = display.contentHeight*0.34,
-    })
-
-    popup.availableTickets.anchorX = 1
-    popup.availableTickets.anchorY = 0.55
-
-    popup.iconTicket   = display.newImage( popup, "assets/images/icons/status/ticket.png")
-    popup.iconTicket.x = display.contentWidth*0.6
-    popup.iconTicket.y = display.contentHeight*0.34
-
-    --------------------------
-
-    popup.more   = display.newImage( popup, I "more.tickets.png")
-    popup.more.x = display.contentWidth*0.5
-    popup.more.y = display.contentHeight*0.47
-
-    utils.onTouch(popup.more, function()
-        shareManager:moreTickets(popup)
-    end)
-
-    --------------------------
-
-    popup.sep   = display.newImage( popup, "assets/images/icons/separateur.horizontal.png")
-    popup.sep.x = display.contentWidth*0.5
-    popup.sep.y = display.contentHeight*0.58
-    popup.sep:scale(0.9,1);
-
-    ----------------------------
-
-    popup.earnText = viewManager.newText({
-        parent   = popup,
-        text     = T "Instant Tickets" .. ":",
-        fontSize = 55,
-        x        = display.contentWidth * 0.5,
-        y        = display.contentHeight*0.63,
-    })
-
-    popup.extraTickets = viewManager.newText({
-        parent   = popup,
-        text     = self.user.extraTickets,
-        fontSize = 55,
-        x        = display.contentWidth * 0.45,
-        y        = display.contentHeight*0.71,
-    })
-
-    popup.extraTickets.anchorX = 1
-    popup.extraTickets.anchorY = 0.6
-
-    popup.iconITicket   = display.newImage( popup, "assets/images/icons/status/instant.ticket.png")
-    popup.iconITicket.x  = display.contentWidth*0.57
-    popup.iconITicket.y  = display.contentHeight*0.715
-
-    --------------------------
-
-    popup.more     = display.newImage( popup, I "more.instant.png")
-    popup.more.x    = display.contentWidth*0.5
-    popup.more.y    = display.contentHeight*0.84
-
-    utils.onTouch(popup.more, function()
-        shareManager:inviteForInstants(popup)
-    end)
-
-    --------------------------
-
-    popup.close    = display.newImage( popup, "assets/images/hud/CroixClose.png")
-    popup.close.x    = display.contentWidth*0.88
-    popup.close.y    = display.contentHeight*0.09
-
-    utils.onTouch(popup.close, function()
-        viewManager.closePopin()
-        viewManager.closePopup(popup)
-    end)
-
-    return popup
-end
-
-
-----------------------------------------
 
 function UserManager:openPrizes()
 

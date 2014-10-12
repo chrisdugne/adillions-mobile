@@ -80,7 +80,7 @@ function ShareManager:moreTickets(popup)
                 viewManager.closePopin()
                 analytics.event("Social", "linkedFacebookFromMore")
                 userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
-                    if(popup.refresh) then
+                    if(popup and popup.refresh) then
                         popup.refresh()
                     end
                     self:moreTickets(popup)
@@ -120,7 +120,7 @@ function ShareManager:moreTickets(popup)
                 viewManager.closePopin()
                 analytics.event("Social", "linkedTwitterFromMore")
                 userManager:giftStock(TWITTER_CONNECTION_TICKETS, function()
-                    if(popup.refresh) then
+                    if(popup and popup.refresh) then
                         popup.refresh()
                     end
                     self:moreTickets(popup)
@@ -132,17 +132,17 @@ function ShareManager:moreTickets(popup)
 
     -----------------------------------
 
-    hud.popin.buttonFacebook         = display.newImage( hud.popin, imageFacebook)
-    hud.popin.buttonFacebook.x       = display.contentWidth * -0.2
-    hud.popin.buttonFacebook.y       = hud.popin.contentMiddle
+    hud.popin.buttonFacebook   = display.newImage( hud.popin, imageFacebook)
+    hud.popin.buttonFacebook.x = display.contentWidth * -0.2
+    hud.popin.buttonFacebook.y = hud.popin.contentMiddle
 
     if(actionFacebook) then
         utils.onTouch(hud.popin.buttonFacebook, actionFacebook)
     end
 
-    hud.popin.buttonTwitter         = display.newImage( hud.popin, imageTwitter)
-    hud.popin.buttonTwitter.x       = display.contentWidth * 0.2
-    hud.popin.buttonTwitter.y       = hud.popin.contentMiddle
+    hud.popin.buttonTwitter   = display.newImage( hud.popin, imageTwitter)
+    hud.popin.buttonTwitter.x = display.contentWidth * 0.2
+    hud.popin.buttonTwitter.y = hud.popin.contentMiddle
 
     if(actionTwitter) then
         utils.onTouch(hud.popin.buttonTwitter, actionTwitter)
@@ -309,15 +309,15 @@ function ShareManager:shareForInstants(popup)
 
         -- NOTE : pour back to OG theme changer ce if
         --        if(userManager.user.themeLiked) then
-        if(userManager.user.hasPostThemeOnFacebook) then
-            print("hasPostThemeOnFacebook")
+        if(userManager.user.postThemeOnFacebook) then
+            print("postThemeOnFacebook")
 
             local fbPost = translate(lotteryManager.globals.fbPost)
 
-            if(userManager.user.hasPostOnFacebook) then
+            if(userManager.user.postOnFacebook) then
 
-                print("hasPostOnFacebook")
-                -- theme liked + hasPost | button v5
+                print("postOnFacebook")
+                -- theme liked + has post | button v5
                 imageFacebook   = I "share.facebook.5.png"
                 actionFacebook  = function()
                     self:write('facebook', fbPost, close, close)
@@ -326,8 +326,8 @@ function ShareManager:shareForInstants(popup)
 
             else
                 local success = function()
-                    if(not userManager.user.hasPostOnFacebook) then
-                        userManager.user.hasPostOnFacebook = true
+                    if(not userManager.user.postOnFacebook) then
+                        userManager.user.postOnFacebook = true
                         userManager:giftInstants(NB_INSTANTS_PER_POST, close)
                     else
                         close()
@@ -343,7 +343,7 @@ function ShareManager:shareForInstants(popup)
 
         else
             -- theme not posted
-            print("! hasPostThemeOnFacebook")
+            print("! postThemeOnFacebook")
 
             local fbPostTheme = translate(lotteryManager.globals.fbPostTheme)
 
@@ -351,8 +351,8 @@ function ShareManager:shareForInstants(popup)
             imageFacebook = I "share.facebook.3.png"
             actionFacebook = function()
                 local success = function()
-                    if(not userManager.user.hasPostThemeOnFacebook) then
-                        userManager.user.hasPostThemeOnFacebook = true
+                    if(not userManager.user.postThemeOnFacebook) then
+                        userManager.user.postThemeOnFacebook = true
                         userManager:giftInstants(NB_INSTANTS_PER_POST, close)
                     else
                         close()
@@ -361,7 +361,6 @@ function ShareManager:shareForInstants(popup)
                 self:write('facebook', fbPostTheme, success, close)
                 analytics.event("Social", "facebookShareTheme")
             end
-
 
         end
 
@@ -396,12 +395,12 @@ function ShareManager:shareForInstants(popup)
     if(userManager.user.networks.connectedToTwitter) then
         print("connectedToTwitter")
 
-        if(userManager.user.hasTweetTheme) then
-            print("hasTweetTheme")
+        if(userManager.user.tweetTheme) then
+            print("tweetTheme")
 
-            if(userManager.user.hasTweet) then
+            if(userManager.user.tweet) then
 
-                print("hasTweet")
+                print("tweet")
                 -- theme tweeted + tweet | button v5
                 imageTwitter = I "share.twitter.5.png"
                 actionTwitter  = function()
@@ -415,8 +414,8 @@ function ShareManager:shareForInstants(popup)
                 imageTwitter = I "share.twitter.4.png"
                 actionTwitter = function()
                     local success = function()
-                        if(not userManager.user.hasTweet) then
-                            userManager.user.hasTweet = true
+                        if(not userManager.user.tweet) then
+                            userManager.user.tweet = true
                             userManager:giftInstants(NB_INSTANTS_PER_TWEET, close)
                         else
                             close()
@@ -434,8 +433,8 @@ function ShareManager:shareForInstants(popup)
             imageTwitter = I "share.twitter.3.png"
             actionTwitter = function()
                 local success = function()
-                    if(not userManager.user.hasTweetTheme) then
-                        userManager.user.hasTweetTheme = true
+                    if(not userManager.user.tweetTheme) then
+                        userManager.user.tweetTheme = true
                         userManager:giftInstants(NB_INSTANTS_PER_TWEET, close)
                     else
                         close()

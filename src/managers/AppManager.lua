@@ -32,7 +32,8 @@ function AppManager:start()
 
     if(LOCAL) then
         SETTINGS_ID            = 'local'
-        LOCAL_IP               = "192.168.0.9"
+        -- LOCAL_IP               = "192.168.0.9"
+        LOCAL_IP               = "192.168.0.19"
         -- LOCAL_IP               = "10.17.100.223"
     else
         SETTINGS_ID            = 'dev'
@@ -107,6 +108,17 @@ function AppManager:setup()
 
     NB_INSTANTS_PER_TWEET           = 1
     NB_INSTANTS_PER_POST            = 1
+    NB_INSTANTS_PER_THEME_LIKED     = 1
+    NB_SDONSDLN_PER_TWEET           = 2
+
+    NB_SDONSDLN_PER_POST            = 2
+
+    NB_SDONSDLN_PER_THEME_LIKED     = 2
+
+    NB_SDONSDLN_PER_TWEET           = 2
+
+    NB_SDONSDLN_PER_POST            = 2
+
     NB_INSTANTS_PER_THEME_LIKED     = 1
 
     FACEBOOK_CONNECTION_TICKETS     = 1

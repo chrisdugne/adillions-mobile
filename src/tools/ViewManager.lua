@@ -1,16 +1,16 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 module(..., package.seeall)
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 local widget = require( "widget" )
 
-local ICON_SIZE = 95
-local SMALL_THEME_SCALE = 0.59
+local ICON_SIZE          = 95
+local SMALL_THEME_SCALE  = 0.59
 local MEDIUM_THEME_SCALE = 0.79
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function setupView(selectedTab, menuType)
     initBack()
@@ -23,7 +23,7 @@ function setupCustomView(selectedTab)
     buildMenu(selectedTab)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- globalBack not to have a black screen while changing views
 function initGlobalBack()
@@ -35,7 +35,7 @@ function initGlobalBack()
 -- display.setDefault( "background", 227, 225, 226 )
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function initBack()
     display.setDefault( "background", 237/255, 235/255, 236/255 )
@@ -45,7 +45,14 @@ function darkerBack()
     display.setDefault( "background", 227/255, 225/255, 226/255 )
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+function refreshHeaderContent()
+    hud.headerBoard.availableTickets.text = userManager:remainingTickets() .. " / " .. userManager:totalAvailableTickets()
+    hud.headerBoard.extraTickets.text     = userManager.user.extraTickets
+end
+
+--------------------------------------------------------------------------------
 
 function initHeader(selectedTab)
 
@@ -59,15 +66,6 @@ function initHeader(selectedTab)
 
     hud.headerRect.x = display.viewableContentWidth*0.5
     hud.headerRect.y = HEADER_HEIGHT*0.5
-
-    -- if(whiteHeader) then
-    --     hud.logo = display.newImage( hud, "assets/images/logo.png")
-    -- else
-    --     hud.logo = display.newImage( hud, "assets/images/hud/game/logo.game.png")
-    -- end
-
-    -- hud.logo.x = display.contentWidth*0.5
-    -- hud.logo.y = HEADER_HEIGHT*0.5
 
     ----------------------------------------------------------------------------
     --  BOARD
@@ -87,13 +85,6 @@ function initHeader(selectedTab)
     hud.logo.y = HEADER_HEIGHT*0.5
     hud.logo.anchorX = 1
 
-    -- hud.headerBoard.bg = drawBorder(hud.headerBoard,
-    --     0, HEADER_HEIGHT*0.5,
-    --     display.contentWidth * 1.2, HEADER_HEIGHT,
-    --     155/255,155/255,155/255
-    -- )
-    -- hud.headerBoard.bg.anchorX = 0
-
     ----------------------------------------------------------------------------
 
     hud.headerBoard.toggler   = display.newImage( hud.headerBoard, "assets/images/hud/timer/timer.plus.png")
@@ -102,6 +93,7 @@ function initHeader(selectedTab)
     hud.headerBoard.toggler:scale(1.4, 1.4)
 
     utils.onTouch(hud.headerBoard.toggler, function()
+
         if(hud.headerBoard.translate) then transition.cancel (hud.headerBoard.translate) end
         if(hud.headerBoard.rotate) then transition.cancel (hud.headerBoard.rotate) end
         if(hud.headerBoard.opaciter) then transition.cancel (hud.headerBoard.rotate) end
@@ -112,6 +104,7 @@ function initHeader(selectedTab)
             hud.headerBoard.rotate    = transition.to(hud.headerBoard.toggler, {rotation = 0, time = 450})
             hud.headerBoard.opaciter  = transition.to(hud.headerRect, {alpha = 1, time = 500})
         else
+            analytics.event("Gaming", "showHeaderBoard")
             hud.headerBoard.open = true
             hud.headerBoard.translate = transition.to(hud.headerBoard, {x = 0, time = 500, transition=easing.outQuad})
             hud.headerBoard.rotate    = transition.to(hud.headerBoard.toggler, {rotation = 135-360, time = 450})
@@ -136,7 +129,7 @@ function initHeader(selectedTab)
 
     hud.headerBoard.availableTickets = viewManager.newText({
         parent   = hud.headerBoard,
-        text     = userManager:remainingTickets() .. " / " .. userManager:totalAvailableTickets(),
+        text     = '',
         fontSize = 45,
         anchorX  = 1,
         anchorY  = 0.6,
@@ -161,7 +154,7 @@ function initHeader(selectedTab)
 
     hud.headerBoard.extraTickets = viewManager.newText({
         parent   = hud.headerBoard,
-        text     = userManager.user.extraTickets,
+        text     = '',
         fontSize = 45,
         anchorX  = 1,
         anchorY  = 0.6,
@@ -170,38 +163,24 @@ function initHeader(selectedTab)
     })
 
     hud:insert(hud.headerBoard)
-
     ----------------------------------------------------------------------------
 
     utils.onTouch(hud.headerBoard.button1, function()
+        analytics.event("Gaming", "wantMoreTickets")
         shareManager:moreTickets()
     end)
 
     utils.onTouch(hud.headerBoard.button2, function()
+        analytics.event("Gaming", "wantMoreTimers")
         shareManager:shareForInstants()
     end)
 
     ----------------------------------------------------------------------------
 
---    if(whiteHeader) then
---        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.green.jpg")
---    else
---        hud.headerButton = display.newImage( hud, "assets/images/icons/info.ticket.jpg")
---    end
-
-    -- hud.headerButton            = display.newImage( hud, "assets/images/icons/info.ticket.png")
-    -- hud.headerButton.x          = display.contentWidth*0.9
-    -- hud.headerButton.y          = HEADER_HEIGHT*0.5
-    -- hud.headerButton.anchorX    = 0.5
-    -- hud.headerButton.anchorY    = 0.5
-
-    -- utils.onTouch(hud.headerButton, function()
-    --     analytics.event("Gaming", "showStatus")
-    --     userManager:showStatus()
-    -- end)
+    refreshHeaderContent()
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function initBoard(scrollListener)
     hud.board = widget.newScrollView
@@ -221,7 +200,7 @@ function initBoard(scrollListener)
     }
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function showPoints(nbPoints)
     -- local text = viewManager.newText({
@@ -239,7 +218,7 @@ function showPoints(nbPoints)
     message("+ " .. nbPoints .. " pt" .. plural)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function message(message)
 
@@ -274,7 +253,7 @@ function message(message)
         end })
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function closePopup(popup, now, action)
 
@@ -1011,7 +990,7 @@ function buildMenu(tabSelected, menuType)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function drawBallToPick(num,x,y)
 
@@ -1072,7 +1051,7 @@ function drawBallPicked(num)
     hud.balls[num] = ball
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function drawThemeToPick(num,x,y)
 
@@ -1128,7 +1107,7 @@ function drawThemeIcon(num, parent, content, x, y, scale, alpha, next)
     drawRemoteImage(content[num].image, parent, x, y, 0.5, 0.5, scale, alpha, next)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 ---
 -- theme sur un ticket ou un result
@@ -1167,7 +1146,7 @@ function drawTheme(parent, lottery, num,x,y, alpha, requireCheck, bigBall)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function drawBall(parent, num,x,y, bigBall)
 
@@ -1201,7 +1180,7 @@ function drawBall(parent, num,x,y, bigBall)
     return ball
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function drawSelectedBall(selected, x, y, action)
 
@@ -1232,7 +1211,7 @@ function drawSelectedBall(selected, x, y, action)
     return ball
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function drawSelectedAdditional(ball,x,y, action)
 
@@ -1260,7 +1239,7 @@ function drawSelectedAdditional(ball,x,y, action)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function drawSelection(parent, numbers, y)
 
@@ -1280,7 +1259,7 @@ function drawSelection(parent, numbers, y)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function drawTicket(parent, lottery, numbers, x, y)
 
@@ -1331,4 +1310,4 @@ function drawTicket(parent, lottery, numbers, x, y)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
