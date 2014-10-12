@@ -646,7 +646,7 @@ function decreaseTimer(next, nextMillis)
         timer.cancel(viewManager.timerPopup.timer)
         viewManager.totalSecondsToDecrease     = viewManager.minutes * 60 + viewManager.secondes
         viewManager.remainingSecondsToDecrease = viewManager.totalSecondsToDecrease
-        nextMillis                             = 3
+        nextMillis                             = 30
     end
 
     timer.performWithDelay(nextMillis, function()
