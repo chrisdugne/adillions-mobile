@@ -76,7 +76,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function UserManager:fetchPlayer()
+function UserManager:fetchPlayer(next)
     native.setActivityIndicator( true )
 
     userManager.user.fanBonusTickets        = 0
@@ -117,7 +117,11 @@ function UserManager:fetchPlayer()
 
             else
                 userManager:receivedPlayer(player, function()
-                    router.openHome()
+                    if(next) then
+                        next()
+                    else
+                        router.openHome()
+                    end
                 end)
             end
         end
@@ -288,13 +292,10 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:cashout(next)
-    viewManager.closePopup(popup)
-
     -- TODO : migration sur Sails
     utils.post( OLD_API_URL .. "cashout", {}, function(result)
-        self:fetchPlayer()
+        self:fetchPlayer(next)
     end)
-
 end
 
 --------------------------------------------------------------------------------
