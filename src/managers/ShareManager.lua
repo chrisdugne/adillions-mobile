@@ -1206,13 +1206,13 @@ function ShareManager:inviteFBFriends()
     local title         = utils.urlEncode(T "Try your luck on Adillions !")
     local message       = utils.urlEncode(T "It's a free, fun and responsible game")
 
-    local redirect_uri  = utils.urlEncode(SAILS_URL.."backToMobile")
+    local redirect_uri  = utils.urlEncode(SAILS_URL.."/backToMobile")
     local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID ..
-                            "&message=".. message ..
-                            "&title=".. title ..
-                            "&data=".. userManager.user.sponsorcode ..
-                            "&redirect_uri=" .. redirect_uri ..
-                            "&access_token=" .. userManager:passport('facebook').tokens.accessToken
+                            "&message="         .. message ..
+                            "&title="           .. title ..
+                            "&data="            .. userManager.user.sponsorcode ..
+                            "&redirect_uri="    .. redirect_uri ..
+                            "&access_token="    .. userManager:passport('facebook').tokens.accessToken
 
     self.listener       = function(event) self:inviteListener(event) end
     self.closeWebView   = viewManager.openWeb(url, self.listener)
@@ -1226,11 +1226,11 @@ function ShareManager:inviteListener( event )
     if event.url then
         print (event.url)
 
-        if string.startsWith(event.url, SAILS_URL .. "backToMobile?request=")
+        if string.startsWith(event.url, SAILS_URL .. "/backToMobile?request=")
             or string.startsWith(event.url, "https://m.facebook.com/home.php") then
             self:closeWebView()
 
-        elseif string.startsWith(event.url, SAILS_URL .. "backToMobile") then
+        elseif string.startsWith(event.url, SAILS_URL .. "/backToMobile") then
 
             self:closeWebView()
             local params = utils.getUrlParams(event.url);

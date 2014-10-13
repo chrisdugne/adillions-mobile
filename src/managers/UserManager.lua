@@ -427,9 +427,11 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:passport(provider)
-    for i = 1, #self.user.passports do
-        if(self.user.passports[i].provider == provider) then
-            return self.user.passports[i]
+    if(self.user.passports) then
+        for i = 1, #self.user.passports do
+            if(self.user.passports[i].provider == provider) then
+                return self.user.passports[i]
+            end
         end
     end
 

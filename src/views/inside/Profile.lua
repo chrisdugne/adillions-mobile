@@ -660,8 +660,8 @@ function scene:drawScene()
     })
 
     local valueFB = "-"
-    local facebook = userManager:passport('facebook')
     if(userManager.user.networks.connectedToFacebook) then
+        local facebook = userManager:passport('facebook')
         valueFB = facebook.profile.displayName
     end
 
@@ -697,9 +697,8 @@ function scene:drawScene()
     })
 
     local valueTW = "-"
-    local twitter = userManager:passport('twitter')
-    utils.tprint(twitter)
     if(userManager.user.networks.connectedToTwitter) then
+        local twitter = userManager:passport('twitter')
         valueTW = twitter.profile.displayName
     end
 
