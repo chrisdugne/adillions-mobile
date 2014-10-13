@@ -93,7 +93,6 @@ function initHeader(selectedTab)
     hud.headerBoard.toggler:scale(1.4, 1.4)
 
     utils.onTouch(hud.headerBoard.toggler, function()
-
         if(hud.headerBoard.translate) then transition.cancel (hud.headerBoard.translate) end
         if(hud.headerBoard.rotate) then transition.cancel (hud.headerBoard.rotate) end
         if(hud.headerBoard.opaciter) then transition.cancel (hud.headerBoard.rotate) end
@@ -802,7 +801,7 @@ end
 ------------------------------------------------------------------
 
 function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, next, prefix, fitToScreen, heightRatio )
-
+    print(url)
     if(not scale) then scale = 1 end
     if(not alpha) then alpha = 1 end
     if(not prefix) then prefix = "" end
@@ -837,6 +836,8 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
 end
 
 function insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
+
+    if(not image) then return end
 
     image.x             = x
     image.y             = y

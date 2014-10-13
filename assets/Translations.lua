@@ -313,8 +313,8 @@ local translations =
         ["fr"] = "Augmentez votre stock de Tickets",
     },
 
-    ["Play right now thanks to Instant Tickets"] = {
-        ["fr"] = "Jouez sans attendre grâce aux Tickets Instantanés",
+    ["Play right now thanks to Timers"] = {
+        ["fr"] = "Jouez sans attendre grâce aux Timers",
     },
 
     ["The more you play Adillions, the more you contribute to charities"] = {
@@ -329,8 +329,8 @@ local translations =
         ["fr"] = "*Pour le parrain et le filleul (2 tirages min.)",
     },
 
-    ["**Per post (max. 4 Instants per draw)"] = {
-        ["fr"] = "**Par post (max. 4 Instantanés par tirage)",
+    ["**Per post (max. 4 Timers per draw)"] = {
+        ["fr"] = "**Par post (max. 4 Timers par tirage)",
     },
 
     ["You have won"] = {

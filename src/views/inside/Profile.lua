@@ -225,11 +225,12 @@ function scene:drawScene()
         anchorY     = 0.5
     })
 
-    hud.ticketIcon         = display.newImage( hud.board, "assets/images/hud/profile/profile.ambassador.sponsoree.png")
-    hud.ticketIcon.x       = textTotal.x + display.contentWidth*0.1
-    hud.ticketIcon.y       = textTotal.y
-    hud.ticketIcon.anchorX = 0.5
-    hud.board:insert(hud.ticketIcon)
+    hud.ambassadorIcon         = display.newImage( hud.board, "assets/images/hud/profile/profile.ambassador.sponsoree.png")
+    hud.ambassadorIcon.x       = textTotal.x + display.contentWidth*0.1
+    hud.ambassadorIcon.y       = textTotal.y
+    hud.ambassadorIcon.anchorX = 0.7
+    hud.ambassadorIcon:scale(0.75, 0.75)
+    hud.board:insert(hud.ambassadorIcon)
 
     hud.arrow               = display.newImage( hud.board, "assets/images/hud/profile/profile.status.arrow.png")
     hud.arrow.x             = display.contentWidth*0.45
@@ -252,8 +253,7 @@ function scene:drawScene()
     hud.iconAmbassador         = display.newImage( hud.board, I "profile.ambassador.".. ambassadorLevel ..".png")
     hud.iconAmbassador.anchorX = 0.91
     hud.iconAmbassador.x       = self.column2
-    hud.iconAmbassador.x       = self.column2
-    hud.iconAmbassador.y       = self.top + self.yGap*(ambassadorTop+3.1),
+    hud.iconAmbassador.y       = self.top + self.yGap*(ambassadorTop+3.1)
     hud.board:insert(hud.iconAmbassador)
 
     --------------------------
@@ -625,10 +625,10 @@ function scene:drawScene()
 
     hud.titleDetails   = display.newImage( hud.board, I "profile.personal.png")
 
-    hud.titleDetails.anchorX    = 0
-    hud.titleDetails.anchorY    = 0.5
-    hud.titleDetails.x      = self.column1 - display.contentWidth*0.03
-    hud.titleDetails.y      = self.top + self.yGap*(detailsTop)
+    hud.titleDetails.anchorX = 0
+    hud.titleDetails.anchorY = 0.5
+    hud.titleDetails.x       = self.column1 - display.contentWidth*0.03
+    hud.titleDetails.y       = self.top + self.yGap*(detailsTop)
     hud.board:insert(hud.titleDetails)
 
     ------------------
@@ -697,8 +697,10 @@ function scene:drawScene()
     })
 
     local valueTW = "-"
-    if(userManager.user.twitterId) then
-        valueTW = userManager.user.twitterName
+    local twitter = userManager:passport('twitter')
+    utils.tprint(twitter)
+    if(userManager.user.networks.connectedToTwitter) then
+        valueTW = twitter.profile.displayName
     end
 
     viewManager.newText({
@@ -964,9 +966,9 @@ function scene: openConfirmCashout()
 
     ------------------------------------------
 
-    popup.close     = display.newImage( popup, I "popup.Bt_close.png")
-    popup.close.x    = display.contentWidth*0.5
-    popup.close.y    = display.contentHeight*0.86
+    popup.close   = display.newImage( popup, I "popup.Bt_close.png")
+    popup.close.x = display.contentWidth*0.5
+    popup.close.y = display.contentHeight*0.86
 
     utils.onTouch(popup.close, function() viewManager.closePopup(popup) end)
 

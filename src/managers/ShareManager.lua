@@ -613,12 +613,13 @@ function ShareManager:follow(popup)
             native.setActivityIndicator( false )
             analytics.event("Social", "followTwitter")
 
-            if(popup.refresh) then
-                popup.refresh()
-            end
-
-            viewManager.closePopin()
             self:moreTickets(popup)
+
+            userManager:giftStock(TWITTER_FAN_TICKETS, function()
+                if(popup and popup.refresh) then
+                    popup.refresh()
+                end
+            end)
         end)
     end)
 end
@@ -791,7 +792,7 @@ function ShareManager:openRewards2()
 
     hud.next = viewManager.newText({
         parent   = popup,
-        text     = T "Play right now thanks to Instant Tickets",
+        text     = T "Play right now thanks to Timers",
         fontSize = 34,
         x        = display.contentWidth * 0.1,
         y        = display.contentHeight*0.23,
@@ -843,7 +844,7 @@ function ShareManager:openRewards2()
 
     hud.next = viewManager.newText({
         parent   = popup,
-        text     = T "**Per post (max. 4 Instants per draw)",
+        text     = T "**Per post (max. 4 Timers per draw)",
         fontSize = 29,
         x        = display.contentWidth * 0.1,
         y        = display.contentHeight*0.81,
@@ -1249,13 +1250,21 @@ end
 
 function ShareManager:simpleShare()
 
-    local options   = {}
-    local canTweet  = native.canShowPopup( "social", "twitter" )
-    local canPost   = native.canShowPopup( "social", "facebook" )
+    local canTweet = userManager.user.networks.connectedToTwitter
+    local canPost  = userManager.user.networks.connectedToFacebook
 
-    if(ANDROID or canTweet) then
-        options = {
-            service  = "twitter",
+    if(userManager.user.networks.connectedToTwitter) then
+        local text = translate(lotteryManager.globals.tweetShare)
+        self:write('twitter', text, function()end, function()end)
+    end
+
+    if(userManager.user.networks.connectedToFacebook) then
+        local text = translate(lotteryManager.globals.tweetShare):gsub("#", "")
+        self:write('facebook', text, function()end, function()end)
+    end
+
+    if(not canPost and not canTweet) then
+        local options = {
             message  = translate(lotteryManager.globals.tweetShare),
             url      = "http://adillions.com",
             image    = {
@@ -1265,28 +1274,7 @@ function ShareManager:simpleShare()
         }
 
         native.showPopup( "social", options )
-
-    elseif(canPost) then
-        options = {
-            service  = "facebook",
-            message  = translate(lotteryManager.globals.tweetShare):gsub("#", ""),
-            url      = "http://adillions.com",
-            image    = {
-                baseDir     = system.ResourceDirectory ,
-                filename    = "assets/images/bylang/"..LANG.."/tweet.share.jpg"
-            }
-        }
-
-        native.showPopup( "social", options )
-
-    else
-        options = {
-            body = translate(lotteryManager.globals.tweetShare):gsub("#", "")
-        }
-
-        native.showPopup( "sms", options )
     end
-
 
 end
 

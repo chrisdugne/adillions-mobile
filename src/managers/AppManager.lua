@@ -25,7 +25,7 @@ function AppManager:start()
     -- Dev overiddes
 
     -- DEV_BEARER = 'b5a8d743-9317-4f37-9537-0787fa245f19'
-    -- DEV_LANG = "en" -- "FR"
+    DEV_LANG = "fr" -- "en"
     -- DEV_COUNTRY = "FR" -- "US"
 
     ----------------------------------------------------------------------------
@@ -387,12 +387,6 @@ end
 --------------------------------------------------------------------------------
 
 function AppManager:onSettingsReady()
-
-    if(DEV_LANG) then
-        print("     -------->  LOCAL ")
-        LANG = "en"
-        COUNTRY = "FR"
-    end
 
     print("     version:  " .. APP_VERSION)
     print("     api:      " .. SAILS_URL)

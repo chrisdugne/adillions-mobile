@@ -22,10 +22,14 @@ end
 --------------------------------------------------------------------------------
 
 function scene:refreshScene()
-    if(not userManager.attemptFetchTicket) then
-        self:loadMoreTickets(true)
+    if(userManager.attemptFetchTicket) then
+        if(#userManager.tickets > 0) then
+            self:drawFirstTickets(userManager.tickets)
+        else
+            self:tellNoTickets()
+        end
     else
-        self:drawFirstTickets(userManager.tickets)
+        self:loadMoreTickets(true)
     end
 end
 
@@ -58,6 +62,9 @@ end
 --------------------------------------------------------------------------------
 
 function scene:tellNoTickets()
+
+    print('-----> tellNoTickets')
+
     viewManager.newText({
         parent   = hud,
         text     = T "No ticket",
@@ -76,6 +83,10 @@ function scene:tellNoTickets()
     utils.onTouch(hud.playTicketButton, function()
         gameManager:play()
     end)
+
+    viewManager.setupView(2)
+    viewManager.darkerBack()
+    self.view:insert(hud)
 end
 
 --------------------------------------------------------------------------------
