@@ -611,7 +611,7 @@ function refreshPopupTimer(popup, lastTime)
     local now = time.now()
     local hoursSpent, minSpent, secSpent, msSpent = utils.getHoursMinSecMillis(now - lastTime)
 
-    if(tonumber(minSpent) >= lotteryManager.nextLottery.ticketTimer) then
+    if(tonumber(minSpent) >= lotteryManager.nextDrawing.ticketTimer) then
         viewManager.closePopup(popup)
 
     elseif(tonumber(hoursSpent) > 0) then
@@ -619,7 +619,7 @@ function refreshPopupTimer(popup, lastTime)
 
     else
         -- local h = 1 - tonumber(hoursSpent)
-        local m = lotteryManager.nextLottery.ticketTimer - 1 - tonumber(minSpent)
+        local m = lotteryManager.nextDrawing.ticketTimer - 1 - tonumber(minSpent)
         local s = 59 - tonumber(secSpent)
 
         -- if(h < 10) then h = "0"..h end

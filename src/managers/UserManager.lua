@@ -353,6 +353,15 @@ function UserManager:storeLotteryTicket(numbers)
             table.insert(self.tickets, 1, response)
             self.user.lastTicketTime = response.timestamp
             lotteryManager:showLastTicket()
+
+            local secondsToWait = lotteryManager.nextDrawing.ticketTimer
+
+            appManager:deviceNotification(
+                T 'You can fill out a new ticket !',
+                response.timestamp/1000 + secondsToWait,
+                'ticket-ready'
+            )
+
         end
     end)
 

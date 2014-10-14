@@ -94,7 +94,7 @@ function AppManager:setup()
     ----------------------------------------------------------------------------
     --- lottery tickets status
 
-    BLOCKED = 1; -- set as winning ticket, notification/popup read, cashout blocked (<10)
+    BLOCKED = 1; -- set as winning ticket, notification/popup read, w84 cashout
     PENDING = 2; -- cashout requested
     PAYED   = 3; -- to set manually when paiement is done
     GIFT    = 4; --  gift to charity
@@ -133,7 +133,7 @@ function AppManager:setup()
     MENU_HEIGHT   = 124
     TICKET_HEIGHT = 100
 
-    ------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     translations = require("assets.Translations")
 
@@ -145,12 +145,12 @@ function AppManager:setup()
         NUM_FONT = "Helvetica-Bold"
     end
 
-    ------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     if(ANDROID) then
-        LANG =  userDefinedLanguage or system.getPreference("locale", "language")
+        LANG = userDefinedLanguage or system.getPreference("locale", "language")
     else
-        LANG =  userDefinedLanguage or system.getPreference("ui", "language")
+        LANG = userDefinedLanguage or system.getPreference("ui", "language")
     end
 
     -- LANG not supported : default en
@@ -159,23 +159,23 @@ function AppManager:setup()
     -- dev overiddes
     if(DEV_LANG) then LANG = DEV_LANG end
 
-    ------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     COUNTRY = system.getPreference( "locale", "country" ) or "US"
 
     -- dev overiddes
     if(DEV_COUNTRY) then COUNTRY = DEV_COUNTRY end
 
-    ------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     aspectRatio = display.pixelHeight / display.pixelWidth
 
-    ------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     abs         = math.abs
     random      = math.random
 
-    ------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     --- Display Container
 
     hud = display.newGroup()
@@ -185,39 +185,24 @@ end
 --------------------------------------------------------------------------------
 
 function AppManager:deviceSetup()
+
     print("device setup...")
-    -------
-    --- NOTIFICATIONS
-    --- pas d'ecoute des notifs In-APP : pas besoin.
-    --local function notificationListener( event )
-    --
-    --   print("------------------ notificationListener")
-    -- utils.tprint(event)
-    -- if ( event.type == "remote" ) then
-    --  native.showPopup("Notification", "remote", { "Ok" })
-    --
-    -- elseif ( event.type == "local" ) then
-    --  native.showPopup("Notification", "local", { "Ok" })
-    --
-    -- elseif ( event.type == "remoteRegistration" ) then
-    --  native.showPopup("Notification", "remoteRegistration", { "Ok" })
-    --
-    -- end
-    --
-    --   native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
-    --end
-    --
-    --Runtime:addEventListener( "notification", notificationListener )
 
+    ----------------------------------------------------------------------------
+    -- prepare notifications for this session
+    -- these notifications can be removed as long as the app is ON
 
-    ------------------------------------------------------------------------------
+    self.deviceNotifications = {}
+
+    ----------------------------------------------------------------------------
 
     -- create a function to handle all of the system events
     local onSystem = function( event )
         if event.type == "applicationSuspend" then
 
         elseif event.type == "applicationStart" then
-            native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
+             -- iOS badges (+n on icon)
+            native.setProperty( "applicationIconBadgeNumber", 0 )
 
         elseif event.type == "applicationResume" then
 
@@ -231,7 +216,8 @@ function AppManager:deviceSetup()
             and not (router.view == router.SIGNINFB)
             ) then
                 print("RESET PLAYER")
-                native.setProperty( "applicationIconBadgeNumber", 0 ) -- iOS badges (+n on icon)
+                 -- iOS badges (+n on icon)
+                native.setProperty( "applicationIconBadgeNumber", 0 )
                 gameManager:open()
             end
         end
@@ -240,8 +226,7 @@ function AppManager:deviceSetup()
     -- setup a system event listener
     Runtime:addEventListener( "system", onSystem )
 
-
-    ------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     --- iOS Status Bar
     display.setStatusBar( display.HiddenStatusBar )
 
@@ -264,7 +249,10 @@ function AppManager:deviceSetup()
                     local lastScene = storyboard.returnTo
                     print( "previous scene", lastScene )
                     if ( lastScene ) then
-                        storyboard.gotoScene( lastScene, { effect="crossFade", time=500 } )
+                        storyboard.gotoScene( lastScene, {
+                            effect="crossFade",
+                            time=500
+                        })
                     else
                         native.requestExit()
                     end
@@ -294,7 +282,7 @@ function AppManager:deviceSetup()
     --add the key callback
     Runtime:addEventListener( "key", onKeyEvent )
 
-    ---------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
     local function myUnhandledErrorListener( event )
 
@@ -356,7 +344,7 @@ end
 function AppManager:getMobileSettings()
 
     if(not LOCAL) then
-        print("retrieving settings...("..MOBILE_SETTINGS_URL .. SETTINGS_ID ..")")
+        print("--> settings...("..MOBILE_SETTINGS_URL .. SETTINGS_ID ..")")
         utils.get(MOBILE_SETTINGS_URL .. SETTINGS_ID, function(res)
             local settings = json.decode(res.response)
             utils.tprint(settings)
@@ -418,6 +406,29 @@ end
 
 function translate(texts)
     return texts[LANG]
+end
+
+--------------------------------------------------------------------------------
+
+function AppManager:deviceNotification(text, notificationTimeSeconds, id)
+
+    print('----> deviceNotification')
+
+    local options = {
+        alert = text,
+        badge = 1,
+    }
+
+    if(self.deviceNotifications[id]) then
+        print('cancelling device notification : ', self.deviceNotifications[id])
+        system.cancelNotification( self.deviceNotifications[id] )
+    end
+
+    self.deviceNotifications[id] = system.scheduleNotification(
+        notificationTimeSeconds,
+        options
+    )
+
 end
 
 --------------------------------------------------------------------------------

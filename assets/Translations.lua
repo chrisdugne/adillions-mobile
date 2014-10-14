@@ -658,6 +658,10 @@ local translations =
         ["fr"] = "Prochain tirage",
     },
 
+    ["You can fill out a new ticket !"] = {
+        ["fr"] = "Vous pouvez remplir un nouveau ticket !",
+    },
+
     ---INFO OPTIONS-----------------------------------------------------------
 
     ["Notification 48h before the next draw"] = {
