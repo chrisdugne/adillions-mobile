@@ -22,7 +22,7 @@ end
 function LotteryManager:readNextDrawing(next)
     native.setActivityIndicator( true )
     utils.get( SAILS_URL .. "/api/lottery/next", function(result)
-        self.nextLottery = json.decode(result.response)
+        self.nextDrawing = json.decode(result.response)
         native.setActivityIndicator( false )
         next()
     end)
@@ -39,7 +39,6 @@ function LotteryManager:refreshNextLottery(classic, waiting)
         self.nextLottery = response.nextLottery
         self.nextDrawing = response.nextDrawing
 
-        self:refreshNotifications(self.nextLottery.timestamp)
         native.setActivityIndicator( false )
 
         if(appStatus.state ~= 1) then
@@ -112,9 +111,9 @@ end
 
 --------------------------------------------------------------------------------
 
-function LotteryManager:refreshNotifications(lotteryDateMillis)
+function LotteryManager:refreshDeviceNotifications()
 
-    local weeks = 4
+    print('----> refreshDeviceNotifications')
     local now = time.now()
 
     --------------------------------------------------------------------------
@@ -125,8 +124,8 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
     --------------------------------------------------------------------------
     -- notif next lottery
 
-    local _48hBefore = lotteryDateMillis - 48 * 60 * 60 * 1000
-    local _3minAfter = lotteryDateMillis + 3 * 60 * 1000
+    local _48hBefore = self.nextDrawing.timestamp - 48 * 60 * 60 * 1000
+    local _3minAfter = self.nextDrawing.timestamp + 3 * 60 * 1000
 
     if(GLOBALS.options.notificationBeforeDraw and now < _48hBefore) then
         local notificationTimeSeconds = (_48hBefore - now)/1000
@@ -149,38 +148,6 @@ function LotteryManager:refreshNotifications(lotteryDateMillis)
         }
 
         system.scheduleNotification( notificationTimeSeconds, options )
-    end
-
-    --------------------------------------------------------------------------
-    -- notif lottery weeks later
-
-    for week=1,weeks do
-
-        local _48hBefore = lotteryDateMillis - 48 * 60 * 60 * 1000 + week * 7 * 24 * 60 * 60 * 1000
-        local _3minAfter = lotteryDateMillis + 3 * 60 * 1000 + week * 7 * 24 * 60 * 60 * 1000
-
-        if(GLOBALS.options.notificationBeforeDraw) then
-            local notificationTimeSeconds = (_48hBefore - now)/1000
-
-            local options = {
-                alert = _48hText,
-                badge = 1,
-            }
-
-            system.scheduleNotification( notificationTimeSeconds, options )
-        end
-
-
-        if(GLOBALS.options.notificationAfterDraw) then
-            local notificationTimeSeconds = (_3minAfter - now)/1000
-
-            local options = {
-                alert = _3minText,
-                badge = 1,
-            }
-
-            system.scheduleNotification( notificationTimeSeconds, options )
-        end
     end
 
 end

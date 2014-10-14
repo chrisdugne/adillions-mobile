@@ -208,6 +208,10 @@ function UserManager:receivedPlayer(player, next)
 
     ------------------------------------------------------------------
 
+    if(player.newDrawing) then
+        lotteryManager:refreshDeviceNotifications()
+    end
+
     self:refreshBonusTickets(next)
 end
 
@@ -398,7 +402,7 @@ function UserManager:remainingTickets()
 end
 
 function UserManager:totalAvailableTickets()
-    return lotteryManager.nextLottery.startTickets
+    return lotteryManager.nextDrawing.startTickets
             + self.user.temporaryBonusTickets
             + self.user.fanBonusTickets
             + self.user.charityBonusTickets
