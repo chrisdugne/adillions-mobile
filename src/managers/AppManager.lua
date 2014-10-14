@@ -25,7 +25,7 @@ function AppManager:start()
     -- Dev overiddes
 
     -- DEV_BEARER = 'b5a8d743-9317-4f37-9537-0787fa245f19'
-    DEV_LANG = "fr" -- "en"
+    -- DEV_LANG = "fr" -- "en"
     -- DEV_COUNTRY = "FR" -- "US"
 
     ----------------------------------------------------------------------------
