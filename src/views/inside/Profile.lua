@@ -75,7 +75,7 @@ function scene:drawScene()
         viewManager.drawRemoteImage(
             userManager.user.photo,
             hud.board,
-            1,
+            -1,
             display.contentWidth*0.2,
             self.top + display.contentHeight*0.02,
             0.5,

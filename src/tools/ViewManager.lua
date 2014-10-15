@@ -644,7 +644,7 @@ function decreaseTimer(next, nextMillis)
         timer.cancel(viewManager.timerPopup.timer)
         viewManager.totalSecondsToDecrease     = viewManager.minutes * 60 + viewManager.secondes
         viewManager.remainingSecondsToDecrease = viewManager.totalSecondsToDecrease
-        nextMillis                             = 3
+        nextMillis                             = 6
     end
 
     viewManager.timerPopup.timer = timer.performWithDelay(nextMillis, function()
@@ -655,7 +655,6 @@ function decreaseTimer(next, nextMillis)
             local s = viewManager.remainingSecondsToDecrease - m * 60
             if(m < 10) then m = "0"..m end
             if(s < 10) then s = "0"..s end
-            print(m .. " : " .. s)
             viewManager.timerPopup.timerDisplay.text    = m .. " : " .. s
             decreaseTimer(next, nextMillis)
         else
@@ -801,10 +800,10 @@ end
 ------------------------------------------------------------------
 
 ---
--- position : element position in the group
+-- position : element position in the group, > 0 if to take into consideration
+--                                           -1 for a classic insert
 --
 function drawRemoteImage( url, parent, position, x, y, anchorX, anchorY, scale, alpha, next, prefix, fitToScreen, heightRatio )
-    print(url)
     if(not scale) then scale = 1 end
     if(not alpha) then alpha = 1 end
     if(not prefix) then prefix = "" end
@@ -814,22 +813,24 @@ function drawRemoteImage( url, parent, position, x, y, anchorX, anchorY, scale, 
     local image
 
     if(fitToScreen) then
-        image = display.newImageRect( parent, fileName, system.TemporaryDirectory,  display.contentWidth, display.contentHeight * heightRatio)
+        if(parent) then
+            image = display.newImageRect( parent, fileName, system.TemporaryDirectory,  display.contentWidth, display.contentHeight * heightRatio)
+        end
     else
-        image = display.newImage( parent, fileName, system.TemporaryDirectory)
+        if(parent) then
+            image = display.newImage( parent, fileName, system.TemporaryDirectory)
+        end
     end
 
     if not image then
         local view = router.view
         local imageReceived = function(event)
-            print('imageReceived')
+            -- remove the received image
+            display.remove(event.target)
             if(router.view == view) then
                 -- this time image will be here
                 drawRemoteImage( url, parent, position, x, y, anchorX, anchorY, scale, alpha, next, prefix, fitToScreen, heightRatio )
             end
-
-            -- remove the received image
-            display.remove(event.target)
         end
 
         display.loadRemoteImage( url, "GET", imageReceived, fileName, system.TemporaryDirectory )
@@ -851,7 +852,11 @@ function insertImage(image, parent, position, x, y, anchorX, anchorY, scale, alp
     image.yScale  = scale
     image.alpha   = alpha
 
-    parent:insert(position+1, image)
+    if(position > 0 and parent.numChildren > position) then
+        parent:insert(position, image)
+    else
+        parent:insert(image)
+    end
 
     if(next) then
         next(image)
@@ -890,17 +895,17 @@ function buildMenu(tabSelected, menuType)
     end
 
     local centerOn  = I "ON3_" .. menuType ..  ".png"
-    local centerOff  = I "OFF3_" .. menuType ..  ".png"
+    local centerOff = I "OFF3_" .. menuType ..  ".png"
 
     -- Create the tabBar's buttons
     local tabButtons =
     {
         {
-            width     = buttonWidth,
-            height     = ICON_SIZE,
-            defaultFile   = I "OFF1.png",
+            width       = buttonWidth,
+            height      = ICON_SIZE,
+            defaultFile = I "OFF1.png",
             overFile    = I "ON1.png",
-            onPress = function( event )
+            onPress     = function( event )
                 if(tabSelected ~= 1) then
                     router.openProfile()
                 end
@@ -908,11 +913,11 @@ function buildMenu(tabSelected, menuType)
             selected = tabSelected == 1
         },
         {
-            width     = buttonWidth,
-            height     = ICON_SIZE,
-            defaultFile   = I "OFF2.png",
+            width       = buttonWidth,
+            height      = ICON_SIZE,
+            defaultFile = I "OFF2.png",
             overFile    = I "ON2.png",
-            onPress = function( event )
+            onPress     = function( event )
                 if(tabSelected ~= 2) then
                     router.openMyTickets()
                 end
@@ -920,17 +925,17 @@ function buildMenu(tabSelected, menuType)
             selected =  tabSelected == 2
         },
         {
-            width     = buttonWidth,
-            height     = ICON_SIZE,
-            defaultFile   = "assets/images/menus/empty.png",
+            width       = buttonWidth,
+            height      = ICON_SIZE,
+            defaultFile = "assets/images/menus/empty.png",
             overFile    = "assets/images/menus/empty.png",
         },
         {
-            width     = buttonWidth,
-            height     = ICON_SIZE,
-            defaultFile   = I "OFF4.png",
+            width       = buttonWidth,
+            height      = ICON_SIZE,
+            defaultFile = I "OFF4.png",
             overFile    = I "ON4.png",
-            onPress = function( event )
+            onPress     = function( event )
                 if(tabSelected ~= 4) then
                     router.openResults()
                 end
@@ -938,11 +943,11 @@ function buildMenu(tabSelected, menuType)
             selected =  tabSelected == 4
         },
         {
-            width     = buttonWidth,
-            height     = ICON_SIZE,
-            defaultFile   = I "OFF5.png",
+            width       = buttonWidth,
+            height      = ICON_SIZE,
+            defaultFile = I "OFF5.png",
             overFile    = I "ON5.png",
-            onPress = function( event )
+            onPress     = function( event )
                 if(tabSelected ~= 5) then
                     router.openInfo()
                 end
@@ -957,17 +962,17 @@ function buildMenu(tabSelected, menuType)
 
     -- Create a tabBar
     local tabBar = widget.newTabBar({
-        left          = 0,
-        top          = display.contentHeight - MENU_HEIGHT,
-        width         = display.contentWidth,
-        height         = MENU_HEIGHT,
-        backgroundFile      = "assets/images/menus/menu.bg.png",
-        tabSelectedLeftFile     = leftEdge,
-        tabSelectedRightFile    = rightEdge,
-        tabSelectedMiddleFile    = middle,
-        tabSelectedFrameWidth    = 20,
-        tabSelectedFrameHeight    = MENU_HEIGHT,
-        buttons         = tabButtons,
+        left                   = 0,
+        top                    = display.contentHeight - MENU_HEIGHT,
+        width                  = display.contentWidth,
+        height                 = MENU_HEIGHT,
+        backgroundFile         = "assets/images/menus/menu.bg.png",
+        tabSelectedLeftFile    = leftEdge,
+        tabSelectedRightFile   = rightEdge,
+        tabSelectedMiddleFile  = middle,
+        tabSelectedFrameWidth  = 20,
+        tabSelectedFrameHeight = MENU_HEIGHT,
+        buttons                = tabButtons,
     })
 
     if(tabSelected == 0 or tabSelected == 6) then
@@ -1000,20 +1005,20 @@ end
 function drawBallToPick(num,x,y)
 
     local ball = display.newImage(hud, "assets/images/balls/ball.small.white.png")
-    ball.x = x
-    ball.y = y
+    ball.x     = x
+    ball.y     = y
 
     ball.text = display.newText( {
-        parent = hud,
-        text = num,
-        x = x,
-        y = y,
-        font = NUM_FONT,
+        parent   = hud,
+        text     = num,
+        x        = x,
+        y        = y,
+        font     = NUM_FONT,
         fontSize = 37,
     } )
 
     ball.text:setFillColor(0)
-    ball.num = num
+    ball.num      = num
     ball.selected = false
 
     utils.onTouch(ball, function()
@@ -1087,20 +1092,20 @@ function drawThemeToPick(num,x,y)
     end)
 
     hud.text = viewManager.newText({
-        parent    = hud,
+        parent   = hud,
         text     = content[num].name,
-        x      = x,
-        y      = y + display.contentHeight*0.08,
-        fontSize   = 40
+        x        = x,
+        y        = y + display.contentHeight*0.08,
+        fontSize = 40
     })
 
     if(content[num].name2) then
         viewManager.newText({
-            parent    = hud,
+            parent   = hud,
             text     = content[num].name2,
-            x      = x,
-            y      = y + display.contentHeight*0.12,
-            fontSize   = 40
+            x        = x,
+            y        = y + display.contentHeight*0.12,
+            fontSize = 40
         })
     else
         hud.text.y = hud.text.y + display.contentHeight*0.02
@@ -1109,7 +1114,7 @@ function drawThemeToPick(num,x,y)
 end
 
 function drawThemeIcon(num, parent, content, x, y, scale, alpha, next)
-    drawRemoteImage(content[num].image, parent, 1, x, y, 0.5, 0.5, scale, alpha, next)
+    drawRemoteImage(content[num].image, parent, -1, x, y, 0.5, 0.5, scale, alpha, next)
 end
 
 --------------------------------------------------------------------------------

@@ -306,7 +306,7 @@ end
 --------------------------------------------------------------------------------
 
 function request(url, method, next, data, type)
-    print(method, url)
+    if(VERBOSE) then print(method, url) end
     if(next == nil) then
         next = function() end
     end

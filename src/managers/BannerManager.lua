@@ -196,18 +196,6 @@ function BannerManager:drawComponent(source, element, parent, position)
     end
 
     local url = source .. "/" .. element.name
-
-    ---
-    -- a tester
-    --
-    --for n = 1, group.numChildren do
-    --    if group[n] == do1 then
-    --        group:insert(n, do2) -- this puts do2 behind do1
-    --        break
-    --    end
-    --end
-    --
-
     local banner = self.needle
 
     viewManager.drawRemoteImage(
