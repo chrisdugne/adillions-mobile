@@ -1,22 +1,22 @@
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 BannerManager = {}
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:new()
 
     local object = {
-        banners     = {},
-        needle      = 0,
-        timing      = 5000
+        banners = {},
+        needle  = 0,
+        timing  = 5000
     }
 
     setmetatable(object, { __index = BannerManager })
     return object
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:reset()
     if(self.timer) then
@@ -24,21 +24,21 @@ function BannerManager:reset()
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:start()
     self:reset()
     self:next()
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:stop()
     self:reset()
     display.remove(hud.currentBanner)
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:next()
 
@@ -55,7 +55,7 @@ function BannerManager:next()
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:waitingForDrawing(lottery)
 
@@ -67,44 +67,68 @@ function BannerManager:waitingForDrawing(lottery)
 
     ------------------------
 
-    local bg            = display.newImageRect( hud.newBanner, "assets/images/hud/home/winnings.bg.png", display.contentWidth, display.contentHeight * 0.32)
-    bg.x                = display.viewableContentWidth*0.5
-    bg.y                = display.contentHeight*0.16
+    local bg = display.newImageRect(
+        hud.newBanner,
+        "assets/images/hud/home/winnings.bg.png",
+        display.contentWidth,
+        display.contentHeight * 0.32
+    )
+
+    bg.x = display.viewableContentWidth*0.5
+    bg.y = display.contentHeight*0.16
 
     ------------------------
 
-    local marginLeft    = display.contentWidth  * 0.077
-    local xGap          = display.contentWidth  * 0.12
-    local ballsY        = display.contentHeight * 0.15
-    local numbers       = lottery.result
+    local marginLeft = display.contentWidth  * 0.077
+    local xGap       = display.contentWidth  * 0.12
+    local ballsY     = display.contentHeight * 0.15
+    local numbers    = lottery.result
 
     ------------------------
 
     if(numbers) then
 
-        local text1         = display.newImage( hud.newBanner, I "banner.winningselection.png")
-        text1.anchorX       = 0
-        text1.x             = display.viewableContentWidth*0.01
-        text1.y             = display.contentHeight*0.03
+        local text1   = display.newImage(
+            hud.newBanner,
+            I "banner.winningselection.png"
+        )
 
-        local text2         = display.newImage( hud.newBanner, I "banner.winners.png")
-        text2.x             = display.viewableContentWidth*0.5
-        text2.y             = display.contentHeight*0.235
+        text1.anchorX = 0
+        text1.x       = display.viewableContentWidth*0.01
+        text1.y       = display.contentHeight*0.03
+
+        local text2 = display.newImage(
+            hud.newBanner,
+            I "banner.winners.png"
+        )
+
+        text2.x = display.viewableContentWidth*0.5
+        text2.y = display.contentHeight*0.235
 
 
         for j = 1,#numbers-1 do
-            viewManager.drawBall(hud.newBanner, numbers[j], marginLeft + xGap*j, ballsY)
+            viewManager.drawBall(
+                hud.newBanner,
+                numbers[j],
+                marginLeft + xGap*j,
+                ballsY
+            )
         end
 
-        viewManager.drawTheme(hud.newBanner, lottery, numbers[#numbers], marginLeft + xGap*#numbers, ballsY)
+        viewManager.drawTheme(
+            hud.newBanner,
+            lottery,
+            numbers[#numbers],
+            marginLeft + xGap*#numbers,
+            ballsY
+        )
 
     ------------------------
 
     else
-
-        local text2         = display.newImage( hud.newBanner, I "waitingdrawing.png")
-        text2.x             = display.viewableContentWidth*0.5
-        text2.y             = display.contentHeight*0.15
+        local text2 = display.newImage( hud.newBanner, I "waitingdrawing.png")
+        text2.x     = display.viewableContentWidth*0.5
+        text2.y     = display.contentHeight*0.15
 
     end
 
@@ -114,7 +138,7 @@ function BannerManager:waitingForDrawing(lottery)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:prepareNewBanner()
     self.needle = self.needle + 1
@@ -124,11 +148,11 @@ function BannerManager:prepareNewBanner()
     local banner = self.banners[self.needle]
 
     for i = 1,#banner.elements do
-        self:drawComponent(banner.source, banner.elements[i], hud.newBanner)
+        self:drawComponent(banner.source, banner.elements[i], hud.newBanner, i)
     end
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:createNewBanner()
 
@@ -143,7 +167,7 @@ function BannerManager:createNewBanner()
     hud.newBanner:toBack()
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:applyBanner()
     if(hud.currentBanner) then
@@ -156,11 +180,14 @@ function BannerManager:applyBanner()
     end})
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-function BannerManager:drawComponent(source, element, parent)
+function BannerManager:drawComponent(source, element, parent, position)
 
-    if(element.action and element.action == 3 and not userManager.user.networks.connectedToFacebook) then
+    if(element.action
+    and element.action == 3
+    and not userManager.user.networks.connectedToFacebook)
+    then
         return
     end
 
@@ -186,6 +213,7 @@ function BannerManager:drawComponent(source, element, parent)
     viewManager.drawRemoteImage(
         url,
         parent,
+        position,
         parent.contentWidth  * element.x,
         parent.contentHeight * element.y,
         element.anchorX     or 0.5,
@@ -210,7 +238,7 @@ function BannerManager:drawComponent(source, element, parent)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:action(source, element)
 
@@ -232,7 +260,7 @@ function BannerManager:action(source, element)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 function BannerManager:openPopup(source, elements)
 
@@ -241,7 +269,7 @@ function BannerManager:openPopup(source, elements)
     --------------------------
 
     for i = 1,#elements do
-        self:drawComponent(source, elements[i], popup)
+        self:drawComponent(source, elements[i], popup, i)
     end
 
     --------------------------
@@ -256,6 +284,6 @@ function BannerManager:openPopup(source, elements)
 
 end
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return BannerManager

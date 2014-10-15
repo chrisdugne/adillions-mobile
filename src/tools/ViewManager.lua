@@ -800,7 +800,10 @@ end
 
 ------------------------------------------------------------------
 
-function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, next, prefix, fitToScreen, heightRatio )
+---
+-- position : element position in the group
+--
+function drawRemoteImage( url, parent, position, x, y, anchorX, anchorY, scale, alpha, next, prefix, fitToScreen, heightRatio )
     print(url)
     if(not scale) then scale = 1 end
     if(not alpha) then alpha = 1 end
@@ -821,33 +824,34 @@ function drawRemoteImage( url, parent, x, y, anchorX, anchorY, scale, alpha, nex
         local imageReceived = function(event)
             print('imageReceived')
             if(router.view == view) then
-                print('insert')
-                return insertImage(event.target, parent, x, y, anchorX, anchorY, scale, alpha, next)
-            else
-                display.remove(event.target)
+                -- this time image will be here
+                drawRemoteImage( url, parent, position, x, y, anchorX, anchorY, scale, alpha, next, prefix, fitToScreen, heightRatio )
             end
+
+            -- remove the received image
+            display.remove(event.target)
         end
 
         display.loadRemoteImage( url, "GET", imageReceived, fileName, system.TemporaryDirectory )
     else
-        insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
+        insertImage(image, parent, position, x, y, anchorX, anchorY, scale, alpha, next)
     end
 
 end
 
-function insertImage(image, parent, x, y, anchorX, anchorY, scale, alpha, next)
+function insertImage(image, parent, position, x, y, anchorX, anchorY, scale, alpha, next)
 
     if(not image) then return end
 
-    image.x             = x
-    image.y             = y
-    image.anchorX       = anchorX
-    image.anchorY       = anchorY
-    image.xScale        = scale
-    image.yScale        = scale
-    image.alpha         = alpha
+    image.x       = x
+    image.y       = y
+    image.anchorX = anchorX
+    image.anchorY = anchorY
+    image.xScale  = scale
+    image.yScale  = scale
+    image.alpha   = alpha
 
-    parent:insert(image)
+    parent:insert(position+1, image)
 
     if(next) then
         next(image)
@@ -1105,7 +1109,7 @@ function drawThemeToPick(num,x,y)
 end
 
 function drawThemeIcon(num, parent, content, x, y, scale, alpha, next)
-    drawRemoteImage(content[num].image, parent, x, y, 0.5, 0.5, scale, alpha, next)
+    drawRemoteImage(content[num].image, parent, 1, x, y, 0.5, 0.5, scale, alpha, next)
 end
 
 --------------------------------------------------------------------------------

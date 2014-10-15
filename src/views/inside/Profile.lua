@@ -60,21 +60,22 @@ function scene:drawScene()
     )
 
     viewManager.newText({
-        parent      = hud.board,
-        text        = userManager.user.userName,
-        x           = display.contentWidth*0.65,
-        y           = self.top + display.contentHeight*0.02,
-        width       = display.contentWidth * 0.5,
-        align       = "center" ,
-        fontSize    = 44,
-        anchorX     = 0.5,
-        anchorY     = 0.5,
+        parent   = hud.board,
+        text     = userManager.user.userName,
+        x        = display.contentWidth*0.65,
+        y        = self.top + display.contentHeight*0.02,
+        width    = display.contentWidth * 0.5,
+        align    = "center" ,
+        fontSize = 44,
+        anchorX  = 0.5,
+        anchorY  = 0.5,
     })
 
     if(userManager.user.photo) then
         viewManager.drawRemoteImage(
             userManager.user.photo,
             hud.board,
+            1,
             display.contentWidth*0.2,
             self.top + display.contentHeight*0.02,
             0.5,
@@ -87,9 +88,9 @@ function scene:drawScene()
             "profilePicture_"
         )
     else
-        hud.dummyPicture        = display.newImage( hud.board, "assets/images/hud/dummy.profile.png")
-        hud.dummyPicture.x      = display.contentWidth*0.2
-        hud.dummyPicture.y      = self.top + display.contentHeight*0.02
+        hud.dummyPicture   = display.newImage( hud.board, "assets/images/hud/dummy.profile.png")
+        hud.dummyPicture.x = display.contentWidth*0.2
+        hud.dummyPicture.y = self.top + display.contentHeight*0.02
         hud.board:insert(hud.dummyPicture)
     end
 
