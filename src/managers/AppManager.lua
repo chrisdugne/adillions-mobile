@@ -410,9 +410,9 @@ end
 
 --------------------------------------------------------------------------------
 
-function AppManager:deviceNotification(text, notificationTimeSeconds, id)
+function AppManager:deviceNotification(text, secondsFromNow, id)
 
-    print('----> deviceNotification')
+    print('----> deviceNotification : [' .. id .. '] --> ' .. text .. ' (' .. secondsFromNow .. ')')
 
     local options = {
         alert = text,
@@ -424,10 +424,12 @@ function AppManager:deviceNotification(text, notificationTimeSeconds, id)
         system.cancelNotification( self.deviceNotifications[id] )
     end
 
+    print('scheduling : ', id)
     self.deviceNotifications[id] = system.scheduleNotification(
-        notificationTimeSeconds,
+        secondsFromNow,
         options
     )
+    print('scheduled : ', self.deviceNotifications[id])
 
 end
 

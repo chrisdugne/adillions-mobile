@@ -354,11 +354,11 @@ function UserManager:storeLotteryTicket(numbers)
             self.user.lastTicketTime = response.timestamp
             lotteryManager:showLastTicket()
 
-            local secondsToWait = lotteryManager.nextDrawing.ticketTimer
+            local secondsToWait = lotteryManager.nextDrawing.ticketTimer * 60
 
             appManager:deviceNotification(
                 T 'You can fill out a new ticket !',
-                response.timestamp/1000 + secondsToWait,
+                math.floor(secondsToWait),
                 'ticket-ready'
             )
 
