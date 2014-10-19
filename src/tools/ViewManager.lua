@@ -641,22 +641,26 @@ end
 ------------------------------------------------------------------
 
 function countdownTimer(next, nextMillis)
+    print('countdown', nextMillis)
     if(not nextMillis) then
         timer.cancel(viewManager.timerPopup.timer)
         viewManager.totalSecondsToDecrease     = viewManager.minutes * 60 + viewManager.secondes
         viewManager.remainingSecondsToDecrease = viewManager.totalSecondsToDecrease
-        nextMillis                             = 17
+        nextMillis                             = 37
     end
 
     viewManager.timerPopup.timer = timer.performWithDelay(nextMillis, function()
-        local toRemove = 89
+        local toRemove = 129
         viewManager.remainingSecondsToDecrease = viewManager.remainingSecondsToDecrease - toRemove
+        print('viewManager.remainingSecondsToDecrease ', viewManager.remainingSecondsToDecrease)
         if(viewManager.remainingSecondsToDecrease > 0) then
             local m = math.floor(viewManager.remainingSecondsToDecrease/60)
             local s = viewManager.remainingSecondsToDecrease - m * 60
             if(m < 10) then m = "0"..m end
             if(s < 10) then s = "0"..s end
             viewManager.timerPopup.timerDisplay.text    = m .. " : " .. s
+            print(viewManager.timerPopup.timerDisplay.text)
+            print('countagain')
             countdownTimer(next, nextMillis)
         else
             viewManager.timerPopup.timerDisplay.text    = "00 : 00"

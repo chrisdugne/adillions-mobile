@@ -6,10 +6,7 @@ ShareManager = {}
 
 function ShareManager:new()
 
-    local object = {
-        lastSimpleTweet = 0,
-        lastSimplePost = 0,
-    }
+    local object = {}
 
     setmetatable(object, { __index = ShareManager })
     return object
@@ -1268,7 +1265,11 @@ end
 --------------------------------------------------------------------------------
 
 function ShareManager:prefixMessage(i)
-    print(i)
+
+    if(i == 0) then
+        i = 1
+    end
+
     if(i == 1) then
         return T "Hey !"
     elseif(i == 2) then
@@ -1288,22 +1289,41 @@ end
 
 function ShareManager:simpleShare()
 
+    if(not GLOBALS.savedData.lastSimpleTweet) then
+        GLOBALS.savedData.lastSimpleTweet = 1
+        utils.saveTable(GLOBALS.savedData, "savedData.json")
+    end
+
+    if(not GLOBALS.savedData.lastSimplePost) then
+        GLOBALS.savedData.lastSimplePost = 1
+        utils.saveTable(GLOBALS.savedData, "savedData.json")
+    end
+
+    -----------------
+
     local canTweet = userManager.user.networks.connectedToTwitter
     local canPost  = userManager.user.networks.connectedToFacebook
 
+
     if(userManager.user.networks.connectedToTwitter) then
-        self.lastSimpleTweet = (self.lastSimpleTweet + 1)%6
-        local prefix = self:prefixMessage(self.lastSimpleTweet)
+        GLOBALS.savedData.lastSimpleTweet = (GLOBALS.savedData.lastSimpleTweet + 1)%6
+        utils.saveTable(GLOBALS.savedData, "savedData.json")
+        local prefix = self:prefixMessage(GLOBALS.savedData.lastSimpleTweet)
         local text = prefix .. ' ' .. translate(lotteryManager.globals.tweetShare)
         self:write('twitter', text, function()end, function()end)
     end
 
+    -----------------
+
     if(userManager.user.networks.connectedToFacebook) then
-        self.lastSimplePost = (self.lastSimplePost + 1)%6
-        local prefix = self:prefixMessage(self.lastSimplePost)
+        GLOBALS.savedData.lastSimplePost = (GLOBALS.savedData.lastSimplePost + 1)%6
+        utils.saveTable(GLOBALS.savedData, "savedData.json")
+        local prefix = self:prefixMessage(GLOBALS.savedData.lastSimplePost)
         local text = prefix .. ' ' .. translate(lotteryManager.globals.tweetShare):gsub("#", "")
         self:write('facebook', text, function()end, function()end)
     end
+
+    -----------------
 
     if(not canPost and not canTweet) then
         local options = {
