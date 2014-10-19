@@ -217,6 +217,18 @@ end
 
 --------------------------------------------------------------------------------
 
+function UserManager:mayCashout(next)
+
+    local min = lotteryManager.globals.minEuro
+    if(not utils.isEuroCountry(COUNTRY)) then
+        min = lotteryManager.globals.minUSD
+    end
+
+    return self.user.balance >= min
+end
+
+--------------------------------------------------------------------------------
+
 function UserManager:refreshBonusTickets(next)
     self.user.fanBonusTickets        = 0
     self.user.charityBonusTickets    = 0
@@ -1012,7 +1024,7 @@ function UserManager:openTimerPopup(lastTime)
                 yScale = 1.8
             })
 
-            viewManager.decreaseTimer(function()
+            viewManager.countdownTimer(function()
                 viewManager.closePopup(popup)
                 gameManager:startTicket()
             end)

@@ -610,7 +610,11 @@ function scene:drawScene()
     hud.board:insert(hud.cashout)
 
     utils.onTouch(hud.cashout, function()
-        self:verifyProfile()
+        if(userManager:mayCashout()) then
+            self:verifyProfile()
+        else
+            self:openCashout()
+        end
     end)
 
 
@@ -834,9 +838,7 @@ end
 function scene:verifyProfile()
     local missing = userManager:missingInfo()
     if(missing) then
-        self:openWebAccount(function()
-            self:verifyProfile()
-        end)
+        self:openWebAccount()
         viewManager.message(missing)
     else
         self:openCashout()
@@ -891,12 +893,7 @@ function scene:openCashout()
 
     ----------------------------------------------------------------------------
 
-    local min = lotteryManager.globals.minEuro
-    if(not utils.isEuroCountry(COUNTRY)) then
-        min = lotteryManager.globals.minUSD
-    end
-
-    if(userManager.user.balance >= min) then
+    if(userManager:mayCashout()) then
         hud.cashoutEnabled          = display.newImage( popup, I "cashout.on.png")
         hud.cashoutEnabled.x        = display.contentWidth*0.5
         hud.cashoutEnabled.y        = display.contentHeight*0.7

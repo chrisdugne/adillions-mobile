@@ -640,16 +640,16 @@ end
 
 ------------------------------------------------------------------
 
-function decreaseTimer(next, nextMillis)
+function countdownTimer(next, nextMillis)
     if(not nextMillis) then
         timer.cancel(viewManager.timerPopup.timer)
         viewManager.totalSecondsToDecrease     = viewManager.minutes * 60 + viewManager.secondes
         viewManager.remainingSecondsToDecrease = viewManager.totalSecondsToDecrease
-        nextMillis                             = 6
+        nextMillis                             = 3
     end
 
     viewManager.timerPopup.timer = timer.performWithDelay(nextMillis, function()
-        local toRemove = math.round(math.max(viewManager.remainingSecondsToDecrease*0.2, 3))
+        local toRemove = 49
         viewManager.remainingSecondsToDecrease = viewManager.remainingSecondsToDecrease - toRemove
         if(viewManager.remainingSecondsToDecrease > 0) then
             local m = math.floor(viewManager.remainingSecondsToDecrease/60)
@@ -657,7 +657,7 @@ function decreaseTimer(next, nextMillis)
             if(m < 10) then m = "0"..m end
             if(s < 10) then s = "0"..s end
             viewManager.timerPopup.timerDisplay.text    = m .. " : " .. s
-            decreaseTimer(next, nextMillis)
+            countdownTimer(next, nextMillis)
         else
             viewManager.timerPopup.timerDisplay.text    = "00 : 00"
             timer.performWithDelay(100, next)
