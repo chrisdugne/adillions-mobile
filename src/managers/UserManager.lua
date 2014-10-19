@@ -208,9 +208,9 @@ function UserManager:receivedPlayer(player, next)
 
     ------------------------------------------------------------------
 
-    if(player.newDrawing) then
+    -- if(player.newDrawing) then
         lotteryManager:refreshDeviceNotifications()
-    end
+    -- end
 
     self:refreshBonusTickets(next)
 end
@@ -296,8 +296,7 @@ end
 --------------------------------------------------------------------------------
 
 function UserManager:cashout(next)
-    -- TODO : migration sur Sails
-    utils.post( OLD_API_URL .. "cashout", {}, function(result)
+    utils.get( SAILS_URL .. "/api/cashout", function(result)
         self:fetchPlayer(next)
     end)
 end

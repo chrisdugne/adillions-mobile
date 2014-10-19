@@ -33,8 +33,7 @@ end
 --------------------------------------------------------------------------------
 
 function SigninManager:connect(network, success, fail)
-    local url = SAILS_URL .. "/m/auth/" .. network
-
+    local url = SAILS_URL .. "/m/auth/" .. network .. "?access_token=" .. GLOBALS.savedData.authToken
     self.listener = function(event)
         self:loginListener(event, function()
             userManager:readPlayer(success)

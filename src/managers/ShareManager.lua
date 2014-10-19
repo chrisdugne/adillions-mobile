@@ -79,11 +79,20 @@ function ShareManager:moreTickets(popup)
             local success = function()
                 viewManager.closePopin()
                 analytics.event("Social", "linkedFacebookFromMore")
-                userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
-                    if(popup and popup.refresh) then
-                        popup.refresh()
+                userManager:readPlayer(function()
+                    local bonus = 0;
+                    if(userManager.user.networks.connectedToFacebook) then
+                        bonus = bonus + FACEBOOK_CONNECTION_TICKETS
                     end
-                    self:moreTickets(popup)
+                    if(userManager.user.networks.isFan) then
+                        bonus = bonus + FACEBOOK_FAN_TICKETS
+                    end
+                    userManager:giftStock(bonus, function()
+                        if(popup and popup.refresh) then
+                            popup.refresh()
+                        end
+                        self:moreTickets(popup)
+                    end)
                 end)
             end
             signinManager:connect('facebook', success, close)
@@ -213,7 +222,7 @@ function ShareManager:inviteForInstants(popup)
                 analytics.event("Social", "linkedFacebookFromInvite")
                 viewManager.closePopin()
                 userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
-                    if(popup.refresh) then
+                    if(popup and popup.refresh) then
                         popup.refresh()
                     end
                     self:inviteForInstants(popup)
@@ -373,7 +382,7 @@ function ShareManager:shareForInstants(popup)
                 viewManager.closePopin()
                 analytics.event("Social", "linkedFacebookFromShare")
                 userManager:giftStock(FACEBOOK_CONNECTION_TICKETS, function()
-                    if(popup.refresh) then
+                    if(popup and popup.refresh) then
                         popup.refresh()
                     end
                     self:shareForInstants(popup)
@@ -387,7 +396,7 @@ function ShareManager:shareForInstants(popup)
     -- TWITTER BUTTON
     -----------------------------------
 
-    print("TWITTER")
+    print("----- twitter")
 
     local imageTwitter     = nil
     local actionTwitter    = nil
@@ -455,11 +464,20 @@ function ShareManager:shareForInstants(popup)
             local success = function()
                 viewManager.closePopin()
                 analytics.event("Social", "linkedTwitterFromShare")
-                userManager:giftStock(TWITTER_CONNECTION_TICKETS, function()
-                    if(popup.refresh) then
-                        popup.refresh()
+                userManager:readPlayer(function()
+                    local bonus = 0;
+                    if(userManager.user.networks.connectedToTwitter) then
+                        bonus = bonus + TWITTER_CONNECTION_TICKETS
                     end
-                    self:shareForInstants(popup)
+                    if(userManager.user.networks.isFollower) then
+                        bonus = bonus + TWITTER_FAN_TICKETS
+                    end
+                    userManager:giftStock(bonus, function()
+                        if(popup and popup.refresh) then
+                            popup.refresh()
+                        end
+                        self:shareForInstants(popup)
+                    end)
                 end)
             end
             signinManager:connect('twitter', success, close)
@@ -1185,7 +1203,7 @@ function ShareManager:openFacebookPage(popup)
                 self.checkingFBLike = false
 
                 if(userManager.user.networks.isFan) then
-                    if(popup.refresh) then
+                    if(popup and popup.refresh) then
                         popup.refresh()
                     end
                 else
