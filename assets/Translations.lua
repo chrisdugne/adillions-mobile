@@ -484,6 +484,24 @@ local translations =
 
     ---PROFILE STATUS-----------------------------------------------------------
 
+    ["Please check your email"] = {
+        ["fr"] = "Veuillez vérifier votre email",
+    },
+
+    ["Please check your first name"] = {
+        ["fr"] = "Veuillez vérifier votre prénom",
+    },
+
+    ["Please check your last name"] = {
+        ["fr"] = "Veuillez vérifier votre nom",
+    },
+
+    ["Please check your birthdate"] = {
+        ["fr"] = "Veuillez vérifier votre date de naissance",
+    },
+
+    ---PROFILE STATUS-----------------------------------------------------------
+
     ["Total points"] = {
         ["fr"] = "Total des points",
     },

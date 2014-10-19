@@ -610,7 +610,7 @@ function scene:drawScene()
     hud.board:insert(hud.cashout)
 
     utils.onTouch(hud.cashout, function()
-        self:openCashout()
+        self:verifyProfile()
     end)
 
 
@@ -722,12 +722,7 @@ function scene:drawScene()
     hud.board:insert(hud.complete)
 
     utils.onTouch(hud.complete, function()
-        viewManager.openWeb( SAILS_URL .. '/' .. LANG .. "/m/account/?access_token=" .. GLOBALS.savedData.authToken , function()end, function()
-            userManager:readPlayer(function()
-                display.remove(hud.board)
-                scene:refreshScene()
-            end)
-        end)
+        self:openWebAccount()
     end)
 
     -----------------------------------------------
@@ -762,6 +757,22 @@ function scene:drawScene()
 
     viewManager.setupView(1)
     self.view:insert(hud)
+end
+
+--------------------------------------------------------------------------------
+
+function scene:openWebAccount(next)
+    viewManager.openWeb( SAILS_URL .. '/' .. LANG ..
+        "/m/account/?access_token=" .. GLOBALS.savedData.authToken,
+        function() end,
+        function()
+            userManager:readPlayer(function()
+                display.remove(hud.board)
+                scene:refreshScene()
+                if(next) then next() end
+            end)
+        end
+    )
 end
 
 --------------------------------------------------------------------------------
@@ -820,6 +831,20 @@ end
 
 --------------------------------------------------------------------------------
 
+function scene:verifyProfile()
+    local missing = userManager:missingInfo()
+    if(missing) then
+        self:openWebAccount(function()
+            self:verifyProfile()
+        end)
+        viewManager.message(missing)
+    else
+        self:openCashout()
+    end
+end
+
+--------------------------------------------------------------------------------
+
 function scene:openCashout()
 
     -----------------------------------
@@ -829,17 +854,17 @@ function scene:openCashout()
 
     ----------------------------------------------------------------------------
 
-    popup.infoBG                    = display.newImage(popup, "assets/images/hud/info.bg.png")
-    popup.infoBG.x                  = display.contentWidth*0.5
-    popup.infoBG.y                  = display.contentHeight * 0.5
+    popup.infoBG   = display.newImage(popup, "assets/images/hud/info.bg.png")
+    popup.infoBG.x = display.contentWidth*0.5
+    popup.infoBG.y = display.contentHeight * 0.5
 
-    popup.shareIcon                 = display.newImage( popup, "assets/images/icons/PictoInfo.png")
-    popup.shareIcon.x               = display.contentWidth*0.5
-    popup.shareIcon.y               = display.contentHeight*0.2
+    popup.shareIcon   = display.newImage( popup, "assets/images/icons/PictoInfo.png")
+    popup.shareIcon.x = display.contentWidth*0.5
+    popup.shareIcon.y = display.contentHeight*0.2
 
-    popup.TxtInformation            = display.newImage( popup, I "TxtInformation.png")
-    popup.TxtInformation.x          = display.contentWidth*0.5
-    popup.TxtInformation.y          = display.contentHeight*0.28
+    popup.TxtInformation   = display.newImage( popup, I "TxtInformation.png")
+    popup.TxtInformation.x = display.contentWidth*0.5
+    popup.TxtInformation.y = display.contentHeight*0.28
 
     ----------------------------------------------------------------------------
 

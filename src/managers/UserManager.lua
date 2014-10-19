@@ -295,6 +295,28 @@ end
 
 --------------------------------------------------------------------------------
 
+function UserManager:missingInfo()
+    if(not self.user.email) then
+        return T 'Please check your email'
+    end
+
+    if( self.user.firstName) then
+        return T 'Please check your first name'
+    end
+
+    if(not self.user.lastName) then
+        return T 'Please check your last name'
+    end
+
+    if(not self.user.birthDate) then
+        return T 'Please check your birthdate'
+    end
+
+    return false
+end
+
+--------------------------------------------------------------------------------
+
 function UserManager:cashout(next)
     utils.get( SAILS_URL .. "/api/cashout", function(result)
         self:fetchPlayer(next)
@@ -384,9 +406,6 @@ function UserManager:updatePlayer(next)
     self.user.lang      = LANG
     self.user.passports = nil
     self.user.tickets   = nil
-
-    print('--------- update')
-    utils.tprint(self.user)
 
     utils.put( SAILS_URL .. "/api/user/update", {
         user = self.user,

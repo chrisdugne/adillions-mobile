@@ -48,7 +48,6 @@ end
 --------------------------------------------------------------------------------
 
 function refreshHeaderContent()
-    utils.tprint(userManager.user)
     hud.headerBoard.availableTickets.text = userManager:remainingTickets() .. " / " .. userManager:totalAvailableTickets()
     hud.headerBoard.extraTickets.text     = userManager.user.extraTickets
 end

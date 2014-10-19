@@ -205,8 +205,6 @@ function ShareManager:inviteForInstants(popup)
     local imageFacebook     = nil
     local backToHome        = function() router.openHome() end
 
-    utils.tprint(userManager.user.networks)
-
     if(userManager.user.networks.connectedToFacebook) then
         imageFacebook = I "invite.facebook.3.png"
         actionFacebook = function()

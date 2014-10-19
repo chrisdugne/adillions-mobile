@@ -18,7 +18,7 @@ function AppManager:start()
 
     ----------------------------------------------------------------------------
 
-    LOCAL = true
+    -- LOCAL = true
     -- VERBOSE = true
 
     ----------------------------------------------------------------------------
@@ -36,8 +36,8 @@ function AppManager:start()
         -- LOCAL_IP               = "10.17.100.223"
     else
         -- SETTINGS_ID            = 'dev'
-        SETTINGS_ID            = 'stage-1.5'
-        -- SETTINGS_ID            = 'prod-1.5'
+        -- SETTINGS_ID            = 'stage-1.5'
+        SETTINGS_ID            = 'prod-1.5'
         MOBILE_SETTINGS_URL    = "http://www.adillions.com/api/mobile/settings/"
     end
 

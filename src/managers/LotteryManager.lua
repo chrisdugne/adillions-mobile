@@ -23,7 +23,6 @@ function LotteryManager:readNextDrawing(next)
     native.setActivityIndicator( true )
     utils.get( SAILS_URL .. "/api/lottery/next", function(result)
         self.nextDrawing = json.decode(result.response)
-        utils.tprint(self.nextDrawing)
         native.setActivityIndicator( false )
         next()
     end)
@@ -117,7 +116,6 @@ function LotteryManager:refreshDeviceNotifications()
     print('----> refreshDeviceNotifications')
     local now = time.now()
 
-    utils.tprint(self.nextDrawing)
     --------------------------------------------------------------------------
 
     local _48hText  = translate(lotteryManager.globals.text48h)
