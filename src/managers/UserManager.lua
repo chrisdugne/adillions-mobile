@@ -300,7 +300,7 @@ function UserManager:missingInfo()
         return T 'Please check your email'
     end
 
-    if( self.user.firstName) then
+    if(not self.user.firstName) then
         return T 'Please check your first name'
     end
 
