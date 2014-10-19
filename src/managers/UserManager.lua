@@ -208,9 +208,9 @@ function UserManager:receivedPlayer(player, next)
 
     ------------------------------------------------------------------
 
-    -- if(player.newDrawing) then
+    if(player.newDrawing) then
         lotteryManager:refreshDeviceNotifications()
-    -- end
+    end
 
     self:refreshBonusTickets(next)
 end
