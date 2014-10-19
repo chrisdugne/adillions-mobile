@@ -645,11 +645,11 @@ function countdownTimer(next, nextMillis)
         timer.cancel(viewManager.timerPopup.timer)
         viewManager.totalSecondsToDecrease     = viewManager.minutes * 60 + viewManager.secondes
         viewManager.remainingSecondsToDecrease = viewManager.totalSecondsToDecrease
-        nextMillis                             = 3
+        nextMillis                             = 17
     end
 
     viewManager.timerPopup.timer = timer.performWithDelay(nextMillis, function()
-        local toRemove = 49
+        local toRemove = 89
         viewManager.remainingSecondsToDecrease = viewManager.remainingSecondsToDecrease - toRemove
         if(viewManager.remainingSecondsToDecrease > 0) then
             local m = math.floor(viewManager.remainingSecondsToDecrease/60)

@@ -2,6 +2,32 @@ local translations =
 {
     ------------------------------------------------------
 
+    ["Hey !"] = {
+        ["fr"] = "Genial !",
+    },
+
+    ["Super !"] = {
+        ["fr"] = "Super !",
+    },
+
+    ["Great !"] = {
+        ["fr"] = "Excellent !",
+    },
+
+    ["Fantatisc !"] = {
+        ["fr"] = "Fantastique !",
+    },
+
+    ["Marvelous !"] = {
+        ["fr"] = "Merveilleux !",
+    },
+
+    ["Awesome !"] = {
+        ["fr"] = "Extraordinaire !",
+    },
+
+    ------------------------------------------------------
+
     ["Loading..."] = {
         ["fr"] = "Chargement...",
     },

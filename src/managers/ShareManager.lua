@@ -6,7 +6,10 @@ ShareManager = {}
 
 function ShareManager:new()
 
-    local object = {}
+    local object = {
+        lastSimpleTweet = 0,
+        lastSimplePost = 0,
+    }
 
     setmetatable(object, { __index = ShareManager })
     return object
@@ -1264,18 +1267,41 @@ end
 
 --------------------------------------------------------------------------------
 
+function ShareManager:prefixMessage(i)
+    print(i)
+    if(i == 1) then
+        return T "Hey !"
+    elseif(i == 2) then
+        return T "Super !"
+    elseif(i == 3) then
+        return T "Great !"
+    elseif(i == 4) then
+        return T "Awesome !"
+    elseif(i == 5) then
+        return T "Fantatisc !"
+    elseif(i == 6) then
+        return T "Marvelous !"
+    end
+end
+
+--------------------------------------------------------------------------------
+
 function ShareManager:simpleShare()
 
     local canTweet = userManager.user.networks.connectedToTwitter
     local canPost  = userManager.user.networks.connectedToFacebook
 
     if(userManager.user.networks.connectedToTwitter) then
-        local text = translate(lotteryManager.globals.tweetShare)
+        self.lastSimpleTweet = (self.lastSimpleTweet + 1)%6
+        local prefix = self:prefixMessage(self.lastSimpleTweet)
+        local text = prefix .. ' ' .. translate(lotteryManager.globals.tweetShare)
         self:write('twitter', text, function()end, function()end)
     end
 
     if(userManager.user.networks.connectedToFacebook) then
-        local text = translate(lotteryManager.globals.tweetShare):gsub("#", "")
+        self.lastSimplePost = (self.lastSimplePost + 1)%6
+        local prefix = self:prefixMessage(self.lastSimplePost)
+        local text = prefix .. ' ' .. translate(lotteryManager.globals.tweetShare):gsub("#", "")
         self:write('facebook', text, function()end, function()end)
     end
 

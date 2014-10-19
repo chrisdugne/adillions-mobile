@@ -448,6 +448,12 @@ function LotteryManager:showLastTicket()
 
     utils.onTouch(popup.share, function()
         shareManager:simpleShare()
+        display.remove(popup.share)
+
+        popup.disabledShare   = display.newImage( popup, I "confirmation.share.png")
+        popup.disabledShare.x = display.contentWidth*0.5
+        popup.disabledShare.y = display.contentHeight*0.765
+        popup.disabledShare.alpha = 0.6
     end)
 
     --------------------------
