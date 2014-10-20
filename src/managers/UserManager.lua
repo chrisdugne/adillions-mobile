@@ -638,7 +638,7 @@ function UserManager:giftInstants(nbInstants, next, doNotNotify)
     self.user.extraTickets = self.user.extraTickets + nbInstants
     self:updatePlayer(function()
         viewManager.refreshHeaderContent()
-        if(doNotNotify) then
+        if(not doNotNotify) then
             self:notifyInstants(nbInstants, function()
                 if(next) then
                     next()
