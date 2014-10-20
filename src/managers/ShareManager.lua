@@ -1218,17 +1218,16 @@ end
 --------------------------------------------------------------------------------
 
 function ShareManager:inviteFBFriends()
-
     local title         = utils.urlEncode(T "Try your luck on Adillions !")
     local message       = utils.urlEncode(T "It's a free, fun and responsible game")
+    local accessToken   = userManager:passport('facebook').tokens.accessToken
 
     local redirect_uri  = utils.urlEncode(SAILS_URL.."/backToMobile")
     local url           = "https://www.facebook.com/dialog/apprequests?app_id=".. FACEBOOK_APP_ID ..
                             "&message="         .. message ..
                             "&title="           .. title ..
                             "&data="            .. userManager.user.sponsorcode ..
-                            "&redirect_uri="    .. redirect_uri ..
-                            "&access_token="    .. userManager:passport('facebook').tokens.accessToken
+                            "&redirect_uri="    .. redirect_uri
 
     self.listener       = function(event) self:inviteListener(event) end
     self.closeWebView   = viewManager.openWeb(url, self.listener)
@@ -1265,22 +1264,17 @@ end
 --------------------------------------------------------------------------------
 
 function ShareManager:prefixMessage(i)
-
     if(i == 0) then
-        i = 1
-    end
-
-    if(i == 1) then
         return T "Hey !"
-    elseif(i == 2) then
+    elseif(i == 1) then
         return T "Super !"
-    elseif(i == 3) then
+    elseif(i == 2) then
         return T "Great !"
-    elseif(i == 4) then
+    elseif(i == 3) then
         return T "Awesome !"
-    elseif(i == 5) then
+    elseif(i == 4) then
         return T "Fantatisc !"
-    elseif(i == 6) then
+    elseif(i == 5) then
         return T "Marvelous !"
     end
 end
