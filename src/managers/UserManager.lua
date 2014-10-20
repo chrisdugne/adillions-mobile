@@ -400,14 +400,7 @@ function UserManager:storeLotteryTicket(numbers)
 
     --- just to be sync waiting the post result
     -- updating availableTickets DURING popup display
-    if(self.user.extraTickets > 0) then
-        self.user.extraTickets = self.user.extraTickets - 1
-    end
-
     self.user.availableTickets = self.user.availableTickets - 1
-
-    --- end sync
-    -------------
 
 end
 
@@ -641,15 +634,17 @@ end
 
 --------------------------------------------------------------------------------
 
-function UserManager:giftInstants(nbInstants, next)
+function UserManager:giftInstants(nbInstants, next, doNotNotify)
     self.user.extraTickets = self.user.extraTickets + nbInstants
     self:updatePlayer(function()
         viewManager.refreshHeaderContent()
-        self:notifyInstants(nbInstants, function()
-            if(next) then
-                next()
-            end
-        end)
+        if(doNotNotify) then
+            self:notifyInstants(nbInstants, function()
+                if(next) then
+                    next()
+                end
+            end)
+        end
     end)
 
 end
@@ -1007,6 +1002,7 @@ function UserManager:openTimerPopup(lastTime)
     utils.onTouch(popup.playNow, function()
 
         if(self.user.extraTickets > 0) then
+
             display.remove(popup.multiLineText)
             display.remove(popup.minText)
             display.remove(popup.secText)
@@ -1025,8 +1021,10 @@ function UserManager:openTimerPopup(lastTime)
             })
 
             viewManager.countdownTimer(function()
-                viewManager.closePopup(popup)
-                gameManager:startTicket()
+                self:giftInstants(-1, function()
+                    viewManager.closePopup(popup)
+                    gameManager:startTicket()
+                end, true)
             end)
 
         else
