@@ -383,18 +383,29 @@ function UserManager:storeLotteryTicket(numbers)
             gameManager:open()
             viewManager.message(T "Waiting for drawing")
         else
+
+            local setupDeviceNotification = function()
+                local secondsToWait = lotteryManager.nextDrawing.ticketTimer * 60
+
+                appManager:deviceNotification(
+                    T 'You can fill out a new ticket !',
+                    math.floor(secondsToWait),
+                    'ticket-ready'
+                )
+            end
+
+            if(userManager.hasUsedTimer) then
+                userManager.hasUsedTimer = false
+                self:giftInstants(-1, function()
+                    setupDeviceNotification()
+                end, true)
+            else
+                setupDeviceNotification()
+            end
+
             table.insert(self.tickets, 1, response)
             self.user.lastTicketTime = response.timestamp
             lotteryManager:showLastTicket()
-
-            local secondsToWait = lotteryManager.nextDrawing.ticketTimer * 60
-
-            appManager:deviceNotification(
-                T 'You can fill out a new ticket !',
-                math.floor(secondsToWait),
-                'ticket-ready'
-            )
-
         end
     end)
 
@@ -644,6 +655,11 @@ function UserManager:giftInstants(nbInstants, next, doNotNotify)
                     next()
                 end
             end)
+
+        else
+            if(next) then
+                next()
+            end
         end
     end)
 
@@ -855,6 +871,7 @@ end
 function UserManager:openTimerPopup(lastTime)
 
     local popup = viewManager.showPopup()
+    userManager.hasUsedTimer = false
 
     ----------------------------------------------------------------------------
 
@@ -1021,10 +1038,9 @@ function UserManager:openTimerPopup(lastTime)
             })
 
             viewManager.countdownTimer(function()
-                self:giftInstants(-1, function()
-                    viewManager.closePopup(popup)
-                    gameManager:startTicket()
-                end, true)
+                userManager.hasUsedTimer = true
+                viewManager.closePopup(popup)
+                gameManager:startTicket()
             end)
 
         else

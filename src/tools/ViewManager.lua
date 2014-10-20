@@ -642,20 +642,21 @@ end
 
 function countdownTimer(next, nextMillis)
 
+    if(hud.timer) then timer.cancel(hud.timer) end
+    if(viewManager.timerPopup.timer) then timer.cancel(viewManager.timerPopup.timer) end
+
     if(not nextMillis) then
-        viewManager.totalSecondsToDecrease     = viewManager.minutes * 60 + viewManager.secondes
-        viewManager.remainingSecondsToDecrease = viewManager.totalSecondsToDecrease
-        nextMillis                             = 27
+        viewManager.totalMinToDecrease     = viewManager.minutes
+        viewManager.remainingMinDecrease   = viewManager.totalMinToDecrease
+        nextMillis                         = 37
     end
 
     timer.performWithDelay(nextMillis, function()
-        local toRemove = 119
-        viewManager.remainingSecondsToDecrease = viewManager.remainingSecondsToDecrease - toRemove
-        if(viewManager.remainingSecondsToDecrease > 0) then
-            local m = math.floor(viewManager.remainingSecondsToDecrease/60)
-            local s = viewManager.remainingSecondsToDecrease - m * 60
+        viewManager.remainingMinDecrease = viewManager.remainingMinDecrease - 3
+        if(viewManager.remainingMinDecrease > 0) then
+            local m = viewManager.remainingMinDecrease
+            local s = random(11,58)
             if(m < 10) then m = "0"..m end
-            if(s < 10) then s = "0"..s end
             viewManager.timerPopup.timerDisplay.text    = m .. " : " .. s
             countdownTimer(next, nextMillis)
         else

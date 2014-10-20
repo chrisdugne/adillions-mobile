@@ -128,26 +128,26 @@ function LotteryManager:refreshDeviceNotifications()
     local _3minAfter = self.nextDrawing.timestamp + 3 * 60 * 1000
 
     if(GLOBALS.options.notificationBeforeDraw and now < _48hBefore) then
-        local notificationTimeSeconds = (_48hBefore - now)/1000
+        local secondsToWait = (_48hBefore - now)/1000
 
         local options = {
             alert = _48hText,
             badge = 1,
         }
 
-        system.scheduleNotification( notificationTimeSeconds, options )
+        system.scheduleNotification( secondsToWait, options )
     end
 
 
     if(GLOBALS.options.notificationAfterDraw and now < _3minAfter) then
-        local notificationTimeSeconds = (_3minAfter - now)/1000
+        local secondsToWait = (_3minAfter - now)/1000
 
         local options = {
             alert = _3minText,
             badge = 1,
         }
 
-        system.scheduleNotification( notificationTimeSeconds, options )
+        system.scheduleNotification( secondsToWait, options )
     end
 
 end

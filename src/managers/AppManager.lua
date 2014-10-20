@@ -423,7 +423,7 @@ function AppManager:deviceNotification(text, secondsFromNow, id)
         system.cancelNotification( self.deviceNotifications[id] )
     end
 
-    print('scheduling : ', id)
+    print('scheduling : ', id, secondsFromNow)
     self.deviceNotifications[id] = system.scheduleNotification(
         secondsFromNow,
         options
