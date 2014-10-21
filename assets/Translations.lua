@@ -14,16 +14,16 @@ local translations =
         ["fr"] = "Excellent !",
     },
 
+    ["Awesome !"] = {
+        ["fr"] = "Extraordinaire !",
+    },
+
     ["Fantatisc !"] = {
         ["fr"] = "Fantastique !",
     },
 
     ["Marvelous !"] = {
         ["fr"] = "Merveilleux !",
-    },
-
-    ["Awesome !"] = {
-        ["fr"] = "Extraordinaire !",
     },
 
     ------------------------------------------------------
