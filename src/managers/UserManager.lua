@@ -373,6 +373,10 @@ function UserManager:storeLotteryTicket(numbers)
 
     native.setActivityIndicator( true )
 
+    --- just to be sync waiting the post result
+    -- updating availableTickets DURING popup display
+    self.user.availableTickets = self.user.availableTickets - 1
+
     utils.post( SAILS_URL .. "/api/ticket/", {
         numbers = numbers,
     },
@@ -385,13 +389,15 @@ function UserManager:storeLotteryTicket(numbers)
         else
 
             local setupDeviceNotification = function()
-                local secondsToWait = lotteryManager.nextDrawing.ticketTimer * 60
+                if(self.user.availableTickets > 0) then
+                    local secondsToWait = lotteryManager.nextDrawing.ticketTimer * 60
 
-                appManager:deviceNotification(
-                    T 'You can fill out a new ticket !',
-                    math.floor(secondsToWait),
-                    'ticket-ready'
-                )
+                    appManager:deviceNotification(
+                        T 'You can fill out a new ticket !',
+                        math.floor(secondsToWait),
+                        'ticket-ready'
+                    )
+                end
             end
 
             if(userManager.hasUsedTimer) then
@@ -408,10 +414,6 @@ function UserManager:storeLotteryTicket(numbers)
             lotteryManager:showLastTicket()
         end
     end)
-
-    --- just to be sync waiting the post result
-    -- updating availableTickets DURING popup display
-    self.user.availableTickets = self.user.availableTickets - 1
 
 end
 

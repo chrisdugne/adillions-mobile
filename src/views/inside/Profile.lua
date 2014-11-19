@@ -486,7 +486,7 @@ function scene:drawScene()
 
     --------------------------
 
-    hud.moreTickets         = display.newImage( hud.board, I "profile.stock.more.png")
+    hud.moreTickets         = display.newImage( hud.board, I "profile.more.tickets.png")
     hud.moreTickets.x       = display.contentWidth*0.5
     hud.moreTickets.y       = self.top + self.yGap*(stockTop+11.5)
     hud.board:insert(hud.moreTickets)
