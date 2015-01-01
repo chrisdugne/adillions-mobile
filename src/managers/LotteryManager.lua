@@ -54,7 +54,6 @@ end
 --------------------------------------------------------------------------------
 
 function LotteryManager:checkAppStatus(waiting)
-
     if(self.appStatusTimer) then
         timer.cancel(self.appStatusTimer)
     end
@@ -70,6 +69,8 @@ function LotteryManager:checkAppStatus(waiting)
             end
         else
             viewManager.refreshPlayButton(true)
+            print('-----')
+            waiting()
             self.appStatusTimer = timer.performWithDelay(math.random(6000, 12000), function() self:checkAppStatus(waiting) end)
         end
 

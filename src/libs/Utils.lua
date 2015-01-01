@@ -330,12 +330,12 @@ function request(url, method, next, data, type)
 
     if(type == nil) then
         headers["Content-Type"] = "application/json"
+        headers["X-Auth-Token"] = authToken
+        headers["Authorization"] = 'Bearer ' .. authToken
     elseif(type == "urlencoded") then
         headers["Content-Type"] = "application/x-www-form-urlencoded"
     end
 
-    headers["X-Auth-Token"] = authToken
-    headers["Authorization"] = 'Bearer ' .. authToken
 
     ----------------------------------------
 
@@ -359,8 +359,12 @@ end
 
 --------------------------------------------------------
 
-function post(url, dataJSON, next, type)
-    utils.request(url, "POST", next, json.encode(dataJSON), type)
+function post(url, data, next, _type)
+    if(type(data) ~= 'string') then
+        data = json.encode(data)
+    end
+
+    utils.request(url, "POST", next, data, _type)
 end
 
 function get(url, next)
